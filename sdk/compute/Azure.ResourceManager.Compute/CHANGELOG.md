@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.0.1 (2022-11-29)
+
+### Bugs Fixed
+
+- Fixes [a bug](https://github.com/Azure/azure-sdk-for-net/issues/32599) that exceptions are thrown during serialization when constructor `VirtualMachineScaleSetExtensionData(string name)` is called
+
 ## 1.0.0 (2022-07-11)
 
 This is the first stable release of the Compute Management client library.

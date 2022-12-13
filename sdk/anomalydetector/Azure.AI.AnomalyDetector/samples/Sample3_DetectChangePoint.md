@@ -5,7 +5,7 @@ To get started, make sure you have satisfied all the prerequisites and got all t
 
 ## Create an AnomalyDetectorClient
 
-To create a new `AnomalyDetectorClient` you need the endpoint and credentials from your resource. In the sample below you'll use an Anomaly Detector API key credential by creating an `AzureKeyCredential` object.
+To create a new `AnomalyDetectorClient` you need the endpoint, apiVersion, and credentials from your resource. In the sample below you'll use an Anomaly Detector API key credential by creating an `AzureKeyCredential` object.
 
 You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
 
@@ -13,7 +13,8 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 //read endpoint and apiKey
 string endpoint = TestEnvironment.Endpoint;
 string apiKey = TestEnvironment.ApiKey;
-
+string datasource = TestEnvironment.DataSource;
+Console.WriteLine(endpoint);
 var endpointUri = new Uri(endpoint);
 var credential = new AzureKeyCredential(apiKey);
 
@@ -40,17 +41,17 @@ List<TimeSeriesPoint> list = File.ReadAllLines(datapath, Encoding.UTF8)
     .Select(e => new TimeSeriesPoint(float.Parse(e[1])){ Timestamp = DateTime.Parse(e[0])}).ToList();
 
 //create request
-ChangePointDetectRequest request = new ChangePointDetectRequest(list, TimeGranularity.Daily);
+UnivariateChangePointDetectionOptions request = new UnivariateChangePointDetectionOptions(list, TimeGranularity.Daily);
 ```
 
 ## Detect change point
-Call the client's `DetectChangePointAsync` method with the `ChangePointDetectRequest` object and await the response as a `ChangePointDetectResponse` object. Iterate through the response's `IsChangePoint` values and print any that are true. These values correspond to the index of change points, if any were found.
+Call the client's `DetectUnivariateChangePoint` method with the `ChangePointDetectRequest` object and await the response as a `ChangePointDetectResponse` object. Iterate through the response's `IsChangePoint` values and print any that are true. These values correspond to the index of change points, if any were found.
 
 ```C# Snippet:DetectChangePoint
 //detect
 Console.WriteLine("Detecting the change point in the series.");
 
-ChangePointDetectResponse result = await client.DetectChangePointAsync(request).ConfigureAwait(false);
+UnivariateChangePointDetectionResult result = client.DetectUnivariateChangePoint(request);
 
 if (result.IsChangePoint.Contains(true))
 {

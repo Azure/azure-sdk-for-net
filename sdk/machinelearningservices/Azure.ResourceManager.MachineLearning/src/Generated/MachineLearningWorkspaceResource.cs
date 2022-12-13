@@ -171,15 +171,14 @@ namespace Azure.ResourceManager.MachineLearning
             return GetMachineLearningPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WorkspaceConnectionResources in the MachineLearningWorkspace. </summary>
-        /// <returns> An object representing collection of WorkspaceConnectionResources and their operations over a WorkspaceConnectionResource. </returns>
-        public virtual WorkspaceConnectionCollection GetWorkspaceConnections()
+        /// <summary> Gets a collection of MachineLearningWorkspaceConnectionResources in the MachineLearningWorkspace. </summary>
+        /// <returns> An object representing collection of MachineLearningWorkspaceConnectionResources and their operations over a MachineLearningWorkspaceConnectionResource. </returns>
+        public virtual MachineLearningWorkspaceConnectionCollection GetMachineLearningWorkspaceConnections()
         {
-            return GetCachedClient(Client => new WorkspaceConnectionCollection(Client, Id));
+            return GetCachedClient(Client => new MachineLearningWorkspaceConnectionCollection(Client, Id));
         }
 
         /// <summary>
-        /// Get the detail of a workspace connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}
         /// Operation Id: WorkspaceConnections_Get
         /// </summary>
@@ -188,13 +187,12 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<WorkspaceConnectionResource>> GetWorkspaceConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningWorkspaceConnectionResource>> GetMachineLearningWorkspaceConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
         {
-            return await GetWorkspaceConnections().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
+            return await GetMachineLearningWorkspaceConnections().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get the detail of a workspace connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}
         /// Operation Id: WorkspaceConnections_Get
         /// </summary>
@@ -203,16 +201,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<WorkspaceConnectionResource> GetWorkspaceConnection(string connectionName, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningWorkspaceConnectionResource> GetMachineLearningWorkspaceConnection(string connectionName, CancellationToken cancellationToken = default)
         {
-            return GetWorkspaceConnections().Get(connectionName, cancellationToken);
+            return GetMachineLearningWorkspaceConnections().Get(connectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of BatchEndpointResources in the MachineLearningWorkspace. </summary>
-        /// <returns> An object representing collection of BatchEndpointResources and their operations over a BatchEndpointResource. </returns>
-        public virtual BatchEndpointCollection GetBatchEndpoints()
+        /// <summary> Gets a collection of MachineLearningBatchEndpointResources in the MachineLearningWorkspace. </summary>
+        /// <returns> An object representing collection of MachineLearningBatchEndpointResources and their operations over a MachineLearningBatchEndpointResource. </returns>
+        public virtual MachineLearningBatchEndpointCollection GetMachineLearningBatchEndpoints()
         {
-            return GetCachedClient(Client => new BatchEndpointCollection(Client, Id));
+            return GetCachedClient(Client => new MachineLearningBatchEndpointCollection(Client, Id));
         }
 
         /// <summary>
@@ -225,9 +223,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BatchEndpointResource>> GetBatchEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningBatchEndpointResource>> GetMachineLearningBatchEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            return await GetBatchEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
+            return await GetMachineLearningBatchEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -240,31 +238,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BatchEndpointResource> GetBatchEndpoint(string endpointName, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningBatchEndpointResource> GetMachineLearningBatchEndpoint(string endpointName, CancellationToken cancellationToken = default)
         {
-            return GetBatchEndpoints().Get(endpointName, cancellationToken);
+            return GetMachineLearningBatchEndpoints().Get(endpointName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CodeContainerResources in the MachineLearningWorkspace. </summary>
-        /// <returns> An object representing collection of CodeContainerResources and their operations over a CodeContainerResource. </returns>
-        public virtual CodeContainerCollection GetCodeContainers()
+        /// <summary> Gets a collection of MachineLearningCodeContainerResources in the MachineLearningWorkspace. </summary>
+        /// <returns> An object representing collection of MachineLearningCodeContainerResources and their operations over a MachineLearningCodeContainerResource. </returns>
+        public virtual MachineLearningCodeContainerCollection GetMachineLearningCodeContainers()
         {
-            return GetCachedClient(Client => new CodeContainerCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get container.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/codes/{name}
-        /// Operation Id: CodeContainers_Get
-        /// </summary>
-        /// <param name="name"> Container name. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CodeContainerResource>> GetCodeContainerAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetCodeContainers().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new MachineLearningCodeContainerCollection(Client, Id));
         }
 
         /// <summary>
@@ -277,16 +260,31 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CodeContainerResource> GetCodeContainer(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningCodeContainerResource>> GetMachineLearningCodeContainerAsync(string name, CancellationToken cancellationToken = default)
         {
-            return GetCodeContainers().Get(name, cancellationToken);
+            return await GetMachineLearningCodeContainers().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of ComponentContainerResources in the MachineLearningWorkspace. </summary>
-        /// <returns> An object representing collection of ComponentContainerResources and their operations over a ComponentContainerResource. </returns>
-        public virtual ComponentContainerCollection GetComponentContainers()
+        /// <summary>
+        /// Get container.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/codes/{name}
+        /// Operation Id: CodeContainers_Get
+        /// </summary>
+        /// <param name="name"> Container name. This is case-sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MachineLearningCodeContainerResource> GetMachineLearningCodeContainer(string name, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new ComponentContainerCollection(Client, Id));
+            return GetMachineLearningCodeContainers().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of MachineLearningComponentContainerResources in the MachineLearningWorkspace. </summary>
+        /// <returns> An object representing collection of MachineLearningComponentContainerResources and their operations over a MachineLearningComponentContainerResource. </returns>
+        public virtual MachineLearningComponentContainerCollection GetMachineLearningComponentContainers()
+        {
+            return GetCachedClient(Client => new MachineLearningComponentContainerCollection(Client, Id));
         }
 
         /// <summary>
@@ -299,9 +297,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ComponentContainerResource>> GetComponentContainerAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningComponentContainerResource>> GetMachineLearningComponentContainerAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetComponentContainers().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMachineLearningComponentContainers().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -314,31 +312,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ComponentContainerResource> GetComponentContainer(string name, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningComponentContainerResource> GetMachineLearningComponentContainer(string name, CancellationToken cancellationToken = default)
         {
-            return GetComponentContainers().Get(name, cancellationToken);
+            return GetMachineLearningComponentContainers().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DataContainerResources in the MachineLearningWorkspace. </summary>
-        /// <returns> An object representing collection of DataContainerResources and their operations over a DataContainerResource. </returns>
-        public virtual DataContainerCollection GetDataContainers()
+        /// <summary> Gets a collection of MachineLearningDataContainerResources in the MachineLearningWorkspace. </summary>
+        /// <returns> An object representing collection of MachineLearningDataContainerResources and their operations over a MachineLearningDataContainerResource. </returns>
+        public virtual MachineLearningDataContainerCollection GetMachineLearningDataContainers()
         {
-            return GetCachedClient(Client => new DataContainerCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get container.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}
-        /// Operation Id: DataContainers_Get
-        /// </summary>
-        /// <param name="name"> Container name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataContainerResource>> GetDataContainerAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetDataContainers().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new MachineLearningDataContainerCollection(Client, Id));
         }
 
         /// <summary>
@@ -351,16 +334,31 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DataContainerResource> GetDataContainer(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningDataContainerResource>> GetMachineLearningDataContainerAsync(string name, CancellationToken cancellationToken = default)
         {
-            return GetDataContainers().Get(name, cancellationToken);
+            return await GetMachineLearningDataContainers().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of DatastoreResources in the MachineLearningWorkspace. </summary>
-        /// <returns> An object representing collection of DatastoreResources and their operations over a DatastoreResource. </returns>
-        public virtual DatastoreCollection GetDatastores()
+        /// <summary>
+        /// Get container.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}
+        /// Operation Id: DataContainers_Get
+        /// </summary>
+        /// <param name="name"> Container name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MachineLearningDataContainerResource> GetMachineLearningDataContainer(string name, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new DatastoreCollection(Client, Id));
+            return GetMachineLearningDataContainers().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of MachineLearningDatastoreResources in the MachineLearningWorkspace. </summary>
+        /// <returns> An object representing collection of MachineLearningDatastoreResources and their operations over a MachineLearningDatastoreResource. </returns>
+        public virtual MachineLearningDatastoreCollection GetMachineLearningDatastores()
+        {
+            return GetCachedClient(Client => new MachineLearningDatastoreCollection(Client, Id));
         }
 
         /// <summary>
@@ -373,9 +371,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DatastoreResource>> GetDatastoreAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningDatastoreResource>> GetMachineLearningDatastoreAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetDatastores().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMachineLearningDatastores().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -388,31 +386,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DatastoreResource> GetDatastore(string name, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningDatastoreResource> GetMachineLearningDatastore(string name, CancellationToken cancellationToken = default)
         {
-            return GetDatastores().Get(name, cancellationToken);
+            return GetMachineLearningDatastores().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EnvironmentContainerResources in the MachineLearningWorkspace. </summary>
-        /// <returns> An object representing collection of EnvironmentContainerResources and their operations over a EnvironmentContainerResource. </returns>
-        public virtual EnvironmentContainerCollection GetEnvironmentContainers()
+        /// <summary> Gets a collection of MachineLearningEnvironmentContainerResources in the MachineLearningWorkspace. </summary>
+        /// <returns> An object representing collection of MachineLearningEnvironmentContainerResources and their operations over a MachineLearningEnvironmentContainerResource. </returns>
+        public virtual MachineLearningEnvironmentContainerCollection GetMachineLearningEnvironmentContainers()
         {
-            return GetCachedClient(Client => new EnvironmentContainerCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get container.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/environments/{name}
-        /// Operation Id: EnvironmentContainers_Get
-        /// </summary>
-        /// <param name="name"> Container name. This is case-sensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EnvironmentContainerResource>> GetEnvironmentContainerAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetEnvironmentContainers().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new MachineLearningEnvironmentContainerCollection(Client, Id));
         }
 
         /// <summary>
@@ -425,9 +408,24 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EnvironmentContainerResource> GetEnvironmentContainer(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningEnvironmentContainerResource>> GetMachineLearningEnvironmentContainerAsync(string name, CancellationToken cancellationToken = default)
         {
-            return GetEnvironmentContainers().Get(name, cancellationToken);
+            return await GetMachineLearningEnvironmentContainers().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get container.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/environments/{name}
+        /// Operation Id: EnvironmentContainers_Get
+        /// </summary>
+        /// <param name="name"> Container name. This is case-sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MachineLearningEnvironmentContainerResource> GetMachineLearningEnvironmentContainer(string name, CancellationToken cancellationToken = default)
+        {
+            return GetMachineLearningEnvironmentContainers().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of MachineLearningJobResources in the MachineLearningWorkspace. </summary>
@@ -467,11 +465,11 @@ namespace Azure.ResourceManager.MachineLearning
             return GetMachineLearningJobs().Get(id, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ModelContainerResources in the MachineLearningWorkspace. </summary>
-        /// <returns> An object representing collection of ModelContainerResources and their operations over a ModelContainerResource. </returns>
-        public virtual ModelContainerCollection GetModelContainers()
+        /// <summary> Gets a collection of MachineLearningModelContainerResources in the MachineLearningWorkspace. </summary>
+        /// <returns> An object representing collection of MachineLearningModelContainerResources and their operations over a MachineLearningModelContainerResource. </returns>
+        public virtual MachineLearningModelContainerCollection GetMachineLearningModelContainers()
         {
-            return GetCachedClient(Client => new ModelContainerCollection(Client, Id));
+            return GetCachedClient(Client => new MachineLearningModelContainerCollection(Client, Id));
         }
 
         /// <summary>
@@ -484,9 +482,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ModelContainerResource>> GetModelContainerAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningModelContainerResource>> GetMachineLearningModelContainerAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetModelContainers().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMachineLearningModelContainers().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -499,31 +497,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ModelContainerResource> GetModelContainer(string name, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningModelContainerResource> GetMachineLearningModelContainer(string name, CancellationToken cancellationToken = default)
         {
-            return GetModelContainers().Get(name, cancellationToken);
+            return GetMachineLearningModelContainers().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of OnlineEndpointResources in the MachineLearningWorkspace. </summary>
-        /// <returns> An object representing collection of OnlineEndpointResources and their operations over a OnlineEndpointResource. </returns>
-        public virtual OnlineEndpointCollection GetOnlineEndpoints()
+        /// <summary> Gets a collection of MachineLearningOnlineEndpointResources in the MachineLearningWorkspace. </summary>
+        /// <returns> An object representing collection of MachineLearningOnlineEndpointResources and their operations over a MachineLearningOnlineEndpointResource. </returns>
+        public virtual MachineLearningOnlineEndpointCollection GetMachineLearningOnlineEndpoints()
         {
-            return GetCachedClient(Client => new OnlineEndpointCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get Online Endpoint.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/onlineEndpoints/{endpointName}
-        /// Operation Id: OnlineEndpoints_Get
-        /// </summary>
-        /// <param name="endpointName"> Online Endpoint name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<OnlineEndpointResource>> GetOnlineEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
-        {
-            return await GetOnlineEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new MachineLearningOnlineEndpointCollection(Client, Id));
         }
 
         /// <summary>
@@ -536,9 +519,61 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<OnlineEndpointResource> GetOnlineEndpoint(string endpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningOnlineEndpointResource>> GetMachineLearningOnlineEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            return GetOnlineEndpoints().Get(endpointName, cancellationToken);
+            return await GetMachineLearningOnlineEndpoints().GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Online Endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/onlineEndpoints/{endpointName}
+        /// Operation Id: OnlineEndpoints_Get
+        /// </summary>
+        /// <param name="endpointName"> Online Endpoint name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MachineLearningOnlineEndpointResource> GetMachineLearningOnlineEndpoint(string endpointName, CancellationToken cancellationToken = default)
+        {
+            return GetMachineLearningOnlineEndpoints().Get(endpointName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of MachineLearningScheduleResources in the MachineLearningWorkspace. </summary>
+        /// <returns> An object representing collection of MachineLearningScheduleResources and their operations over a MachineLearningScheduleResource. </returns>
+        public virtual MachineLearningScheduleCollection GetMachineLearningSchedules()
+        {
+            return GetCachedClient(Client => new MachineLearningScheduleCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get schedule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/schedules/{name}
+        /// Operation Id: Schedules_Get
+        /// </summary>
+        /// <param name="name"> Schedule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MachineLearningScheduleResource>> GetMachineLearningScheduleAsync(string name, CancellationToken cancellationToken = default)
+        {
+            return await GetMachineLearningSchedules().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get schedule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/schedules/{name}
+        /// Operation Id: Schedules_Get
+        /// </summary>
+        /// <param name="name"> Schedule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MachineLearningScheduleResource> GetMachineLearningSchedule(string name, CancellationToken cancellationToken = default)
+        {
+            return GetMachineLearningSchedules().Get(name, cancellationToken);
         }
 
         /// <summary>
@@ -709,14 +744,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The parameter of diagnosing workspace health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<DiagnoseResponseResult>> DiagnoseAsync(WaitUntil waitUntil, DiagnoseWorkspaceContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MachineLearningWorkspaceDiagnoseResult>> DiagnoseAsync(WaitUntil waitUntil, MachineLearningWorkspaceDiagnoseContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.Diagnose");
             scope.Start();
             try
             {
                 var response = await _machineLearningWorkspaceWorkspacesRestClient.DiagnoseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<DiagnoseResponseResult>(new DiagnoseResponseResultOperationSource(), _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreateDiagnoseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningWorkspaceDiagnoseResult>(new MachineLearningWorkspaceDiagnoseResultOperationSource(), _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreateDiagnoseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -736,14 +771,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The parameter of diagnosing workspace health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<DiagnoseResponseResult> Diagnose(WaitUntil waitUntil, DiagnoseWorkspaceContent content = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MachineLearningWorkspaceDiagnoseResult> Diagnose(WaitUntil waitUntil, MachineLearningWorkspaceDiagnoseContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.Diagnose");
             scope.Start();
             try
             {
                 var response = _machineLearningWorkspaceWorkspacesRestClient.Diagnose(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new MachineLearningArmOperation<DiagnoseResponseResult>(new DiagnoseResponseResultOperationSource(), _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreateDiagnoseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningWorkspaceDiagnoseResult>(new MachineLearningWorkspaceDiagnoseResultOperationSource(), _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreateDiagnoseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -761,7 +796,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: Workspaces_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ListWorkspaceKeysResult>> GetKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningWorkspaceGetKeysResult>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.GetKeys");
             scope.Start();
@@ -783,7 +818,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: Workspaces_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ListWorkspaceKeysResult> GetKeys(CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningWorkspaceGetKeysResult> GetKeys(CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.GetKeys");
             scope.Start();
@@ -857,7 +892,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: Workspaces_ListNotebookAccessToken
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NotebookAccessTokenResult>> GetNotebookAccessTokenAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningWorkspaceNotebookAccessTokenResult>> GetNotebookAccessTokenAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.GetNotebookAccessToken");
             scope.Start();
@@ -879,7 +914,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: Workspaces_ListNotebookAccessToken
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NotebookAccessTokenResult> GetNotebookAccessToken(CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningWorkspaceNotebookAccessTokenResult> GetNotebookAccessToken(CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.GetNotebookAccessToken");
             scope.Start();
@@ -902,14 +937,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NotebookResourceInfo>> PrepareNotebookAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MachineLearningNotebookResourceInfo>> PrepareNotebookAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.PrepareNotebook");
             scope.Start();
             try
             {
                 var response = await _machineLearningWorkspaceWorkspacesRestClient.PrepareNotebookAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<NotebookResourceInfo>(new NotebookResourceInfoOperationSource(), _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreatePrepareNotebookRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningNotebookResourceInfo>(new MachineLearningNotebookResourceInfoOperationSource(), _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreatePrepareNotebookRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -928,14 +963,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NotebookResourceInfo> PrepareNotebook(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MachineLearningNotebookResourceInfo> PrepareNotebook(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.PrepareNotebook");
             scope.Start();
             try
             {
                 var response = _machineLearningWorkspaceWorkspacesRestClient.PrepareNotebook(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MachineLearningArmOperation<NotebookResourceInfo>(new NotebookResourceInfoOperationSource(), _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreatePrepareNotebookRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningNotebookResourceInfo>(new MachineLearningNotebookResourceInfoOperationSource(), _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, _machineLearningWorkspaceWorkspacesRestClient.CreatePrepareNotebookRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -953,7 +988,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: Workspaces_ListStorageAccountKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ListStorageAccountKeysResult>> GetStorageAccountKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningWorkspaceGetStorageAccountKeysResult>> GetStorageAccountKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.GetStorageAccountKeys");
             scope.Start();
@@ -975,7 +1010,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: Workspaces_ListStorageAccountKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ListStorageAccountKeysResult> GetStorageAccountKeys(CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningWorkspaceGetStorageAccountKeysResult> GetStorageAccountKeys(CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.GetStorageAccountKeys");
             scope.Start();
@@ -997,7 +1032,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: Workspaces_ListNotebookKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ListNotebookKeysResult>> GetNotebookKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningWorkspaceGetNotebookKeysResult>> GetNotebookKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.GetNotebookKeys");
             scope.Start();
@@ -1019,7 +1054,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: Workspaces_ListNotebookKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ListNotebookKeysResult> GetNotebookKeys(CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningWorkspaceGetNotebookKeysResult> GetNotebookKeys(CancellationToken cancellationToken = default)
         {
             using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.GetNotebookKeys");
             scope.Start();
@@ -1041,10 +1076,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: Workspaces_ListOutboundNetworkDependenciesEndpoints
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FqdnEndpoints" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FqdnEndpoints> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MachineLearningFqdnEndpoints" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MachineLearningFqdnEndpoints> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<FqdnEndpoints>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MachineLearningFqdnEndpoints>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.GetOutboundNetworkDependenciesEndpoints");
                 scope.Start();
@@ -1068,10 +1103,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: Workspaces_ListOutboundNetworkDependenciesEndpoints
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FqdnEndpoints" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FqdnEndpoints> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningFqdnEndpoints" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MachineLearningFqdnEndpoints> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
-            Page<FqdnEndpoints> FirstPageFunc(int? pageSizeHint)
+            Page<MachineLearningFqdnEndpoints> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _machineLearningWorkspaceWorkspacesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.GetOutboundNetworkDependenciesEndpoints");
                 scope.Start();
@@ -1149,10 +1184,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: WorkspaceFeatures_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AmlUserFeature" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AmlUserFeature> GetWorkspaceFeaturesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MachineLearningUserFeature" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MachineLearningUserFeature> GetWorkspaceFeaturesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AmlUserFeature>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MachineLearningUserFeature>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _workspaceFeaturesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.GetWorkspaceFeatures");
                 scope.Start();
@@ -1167,7 +1202,7 @@ namespace Azure.ResourceManager.MachineLearning
                     throw;
                 }
             }
-            async Task<Page<AmlUserFeature>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<MachineLearningUserFeature>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _workspaceFeaturesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.GetWorkspaceFeatures");
                 scope.Start();
@@ -1191,10 +1226,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// Operation Id: WorkspaceFeatures_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AmlUserFeature" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AmlUserFeature> GetWorkspaceFeatures(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningUserFeature" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MachineLearningUserFeature> GetWorkspaceFeatures(CancellationToken cancellationToken = default)
         {
-            Page<AmlUserFeature> FirstPageFunc(int? pageSizeHint)
+            Page<MachineLearningUserFeature> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _workspaceFeaturesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.GetWorkspaceFeatures");
                 scope.Start();
@@ -1209,7 +1244,7 @@ namespace Azure.ResourceManager.MachineLearning
                     throw;
                 }
             }
-            Page<AmlUserFeature> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<MachineLearningUserFeature> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _workspaceFeaturesClientDiagnostics.CreateScope("MachineLearningWorkspaceResource.GetWorkspaceFeatures");
                 scope.Start();

@@ -32,11 +32,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("dtmfOptions");
                 writer.WriteObjectValue(DtmfOptions);
             }
-            if (Optional.IsCollectionDefined(IvrChoiceOptions))
+            if (Optional.IsCollectionDefined(Choices))
             {
-                writer.WritePropertyName("ivrChoiceOptions");
+                writer.WritePropertyName("choices");
                 writer.WriteStartArray();
-                foreach (var item in IvrChoiceOptions)
+                foreach (var item in Choices)
                 {
                     writer.WriteObjectValue(item);
                 }

@@ -17,14 +17,14 @@ namespace Azure.Communication.MediaComposition.Tests
         }
 
         /// <summary>
-        /// Creates a <see cref="MediaCompositionClient" /> with the connectionstring via environment
+        /// Creates a <see cref="MediaCompositionClient" /> with the connection string via environment
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="MediaCompositionClient" />.</returns>
         protected MediaCompositionClient CreateClientWithConnectionString(bool isInstrumented = true)
         {
             var client = new MediaCompositionClient(
-                    TestEnvironment.LiveTestStaticConnectionString,
+                    TestEnvironment.LiveTestDynamicConnectionString,
                     CreateMediaCompositionClientOptionsWithCorrelationVectorLogs());
 
             // We always create the instrumented client to suppress the instrumentation check
@@ -40,8 +40,8 @@ namespace Azure.Communication.MediaComposition.Tests
         protected MediaCompositionClient CreateClientWithAzureKeyCredential(bool isInstrumented = true)
         {
             var client = new MediaCompositionClient(
-                    TestEnvironment.LiveTestStaticEndpoint,
-                     new AzureKeyCredential(TestEnvironment.LiveTestStaticAccessKey),
+                    TestEnvironment.LiveTestDynamicEndpoint,
+                     new AzureKeyCredential(TestEnvironment.LiveTestDynamicAccessKey),
                     CreateMediaCompositionClientOptionsWithCorrelationVectorLogs());
 
             return isInstrumented ? InstrumentClient(client) : client;
@@ -55,7 +55,7 @@ namespace Azure.Communication.MediaComposition.Tests
         protected MediaCompositionClient CreateClientWithTokenCredential(bool isInstrumented = true)
         {
             var client = new MediaCompositionClient(
-                    TestEnvironment.LiveTestStaticEndpoint,
+                    TestEnvironment.LiveTestDynamicEndpoint,
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
                     CreateMediaCompositionClientOptionsWithCorrelationVectorLogs());
 

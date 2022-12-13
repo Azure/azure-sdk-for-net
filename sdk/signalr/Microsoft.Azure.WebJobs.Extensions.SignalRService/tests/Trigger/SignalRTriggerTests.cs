@@ -5,11 +5,12 @@ using System;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.SignalR;
+using Microsoft.Azure.SignalR.Management;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
+using Microsoft.Extensions.Options;
 using Moq;
 using SignalRServiceExtension.Tests.Utils;
 using Xunit;
@@ -19,7 +20,7 @@ namespace SignalRServiceExtension.Tests
     public class SignalRTriggerTests
     {
         private const string ConnectionString = "Endpoint=http://localhost;AccessKey=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789;Version=1.0;";
-        private static readonly AccessKey[] AccessKeys = new AccessKey[] { new ServiceEndpoint(ConnectionString).AccessKey };
+        private static readonly IOptionsMonitor<SignatureValidationOptions> SignatureValidationOptions = Mock.Of<IOptionsMonitor<SignatureValidationOptions>>(o => o.CurrentValue == new SignatureValidationOptions() { RequireValidation = false });
 
         [Fact]
         public async Task BindAsyncTest()
@@ -44,7 +45,7 @@ namespace SignalRServiceExtension.Tests
             var hub = Guid.NewGuid().ToString();
             var method = Guid.NewGuid().ToString();
             var category = Guid.NewGuid().ToString();
-            var binding = new SignalRTriggerBinding(parameterInfo, new SignalRTriggerAttribute(hub, category, method), dispatcher, AccessKeys, null);
+            var binding = new SignalRTriggerBinding(parameterInfo, new SignalRTriggerAttribute(hub, category, method), dispatcher, SignatureValidationOptions, Mock.Of<ServiceHubContext>());
             await binding.CreateListenerAsync(listenerFactoryContext);
             Assert.Equal(executor, dispatcher.Executors[(hub, category, method)].Executor);
         }
@@ -106,7 +107,7 @@ namespace SignalRServiceExtension.Tests
         {
             var parameterInfo = GetType().GetMethod(functionName, BindingFlags.Instance | BindingFlags.NonPublic).GetParameters()[0];
             var dispatcher = new TestTriggerDispatcher();
-            return new SignalRTriggerBinding(parameterInfo, new SignalRTriggerAttribute(string.Empty, string.Empty, string.Empty, parameterNames), dispatcher, AccessKeys, null);
+            return new SignalRTriggerBinding(parameterInfo, new SignalRTriggerAttribute(string.Empty, string.Empty, string.Empty, parameterNames), dispatcher, SignatureValidationOptions, Mock.Of<ServiceHubContext>());
         }
 
         internal void TestFunction(InvocationContext context)

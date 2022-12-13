@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Maps.Models;
 
 namespace Azure.ResourceManager.Maps
 {
@@ -22,8 +21,6 @@ namespace Azure.ResourceManager.Maps
     {
         private ClientDiagnostics _mapsAccountAccountsClientDiagnostics;
         private AccountsRestOperations _mapsAccountAccountsRestClient;
-        private ClientDiagnostics _mapsClientDiagnostics;
-        private MapsRestOperations _mapsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -39,8 +36,6 @@ namespace Azure.ResourceManager.Maps
 
         private ClientDiagnostics MapsAccountAccountsClientDiagnostics => _mapsAccountAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maps", MapsAccountResource.ResourceType.Namespace, Diagnostics);
         private AccountsRestOperations MapsAccountAccountsRestClient => _mapsAccountAccountsRestClient ??= new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MapsAccountResource.ResourceType));
-        private ClientDiagnostics MapsClientDiagnostics => _mapsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maps", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private MapsRestOperations MapsRestClient => _mapsRestClient ??= new MapsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -122,90 +117,6 @@ namespace Azure.ResourceManager.Maps
                 {
                     var response = MapsAccountAccountsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MapsAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// List operations available for the Maps Resource Provider
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Maps/operations
-        /// Operation Id: Maps_ListSubscriptionOperations
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationDetail" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OperationDetail> GetSubscriptionOperationsMapsAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<OperationDetail>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = MapsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSubscriptionOperationsMaps");
-                scope.Start();
-                try
-                {
-                    var response = await MapsRestClient.ListSubscriptionOperationsAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<OperationDetail>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = MapsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSubscriptionOperationsMaps");
-                scope.Start();
-                try
-                {
-                    var response = await MapsRestClient.ListSubscriptionOperationsNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// List operations available for the Maps Resource Provider
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Maps/operations
-        /// Operation Id: Maps_ListSubscriptionOperations
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationDetail" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OperationDetail> GetSubscriptionOperationsMaps(CancellationToken cancellationToken = default)
-        {
-            Page<OperationDetail> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = MapsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSubscriptionOperationsMaps");
-                scope.Start();
-                try
-                {
-                    var response = MapsRestClient.ListSubscriptionOperations(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<OperationDetail> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = MapsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSubscriptionOperationsMaps");
-                scope.Start();
-                try
-                {
-                    var response = MapsRestClient.ListSubscriptionOperationsNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

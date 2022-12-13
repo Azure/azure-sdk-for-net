@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Peering.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    peerAsn = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    peerAsn = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
             }
