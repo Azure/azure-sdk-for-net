@@ -18,6 +18,8 @@ namespace Azure.Storage.DataMovement
         private StorageTransferStatus _status;
         private long _currentTransferredBytes;
 
+        public StorageTransferStatus Status => _status;
+
         /// <summary>
         /// constructor
         /// </summary>
