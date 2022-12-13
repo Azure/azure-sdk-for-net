@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "Custom": return CustomTargetRollingWindowSize.DeserializeCustomTargetRollingWindowSize(element);
                 }
             }
-            TargetRollingWindowSizeMode mode = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("mode"))
-                {
-                    mode = new TargetRollingWindowSizeMode(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownTargetRollingWindowSize(mode);
+            return UnknownTargetRollingWindowSize.DeserializeUnknownTargetRollingWindowSize(element);
         }
     }
 }

@@ -6,8 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -25,38 +23,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     case "DataBoxHeavy": return DataBoxHeavyJobSecrets.DeserializeDataBoxHeavyJobSecrets(element);
                 }
             }
-            DataBoxOrderType jobSecretsType = default;
-            Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
-            Optional<ResponseError> error = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("jobSecretsType"))
-                {
-                    jobSecretsType = property.Value.GetString().ToDataBoxOrderType();
-                    continue;
-                }
-                if (property.NameEquals("dcAccessSecurityCode"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("error"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.ToString());
-                    continue;
-                }
-            }
-            return new UnknownJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value);
+            return UnknownJobSecrets.DeserializeUnknownJobSecrets(element);
         }
     }
 }

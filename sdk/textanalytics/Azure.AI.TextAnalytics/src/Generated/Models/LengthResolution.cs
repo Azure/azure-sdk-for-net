@@ -5,35 +5,12 @@
 
 #nullable disable
 
-namespace Azure.AI.TextAnalytics.Models
+using Azure.AI.TextAnalytics.Models;
+
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> Represents the length entity resolution model. </summary>
-    internal partial class LengthResolution : BaseResolution
+    public partial class LengthResolution : BaseResolution
     {
-        /// <summary> Initializes a new instance of LengthResolution. </summary>
-        /// <param name="unit"> The length Unit of measurement. </param>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        public LengthResolution(LengthUnit unit, double value)
-        {
-            Unit = unit;
-            Value = value;
-            ResolutionKind = ResolutionKind.LengthResolution;
-        }
-
-        /// <summary> Initializes a new instance of LengthResolution. </summary>
-        /// <param name="resolutionKind"> The entity resolution object kind. </param>
-        /// <param name="unit"> The length Unit of measurement. </param>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        internal LengthResolution(ResolutionKind resolutionKind, LengthUnit unit, double value) : base(resolutionKind)
-        {
-            Unit = unit;
-            Value = value;
-            ResolutionKind = resolutionKind;
-        }
-
-        /// <summary> The length Unit of measurement. </summary>
-        public LengthUnit Unit { get; set; }
-        /// <summary> The numeric value that the extracted text denotes. </summary>
-        public double Value { get; set; }
     }
 }

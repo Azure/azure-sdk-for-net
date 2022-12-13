@@ -6,8 +6,6 @@ Azure Storage is a Microsoft-managed service providing cloud storage that is hig
 
 - [Azure.Storage.Blobs.Batch][blobs_batch] allows you to batch multiple Azure Blob Storage operations in a single request.
 
-- [Azure.Storage.Blobs.Cryptography][blobs_cryptography] supports client-side encryption for Azure Storage block blobs.
-
 - [Azure.Storage.Queues][queues] is a service for storing large numbers of messages.  A queue message can be up to 64 KB in size and a queue may contain millions of messages, up to the total capacity limit of a storage account.
 
 - [Azure.Storage.Files.Shares][files] offers fully managed file shares in the cloud that are accessible via the industry standard Server Message Block (SMB) protocol.  Azure file shares can be mounted concurrently by cloud or on-premises deployments of Windows, Linux, and macOS.

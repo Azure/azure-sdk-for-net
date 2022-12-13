@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<ProtectedItemHealthStatus> protectedItemHealthStatus = default;
             Optional<AzureVmWorkloadProtectedItemExtendedInfo> extendedInfo = default;
             Optional<IDictionary<string, KPIResourceHealthDetails>> kpisHealths = default;
-            string protectedItemType = default;
+            string protectedItemType = "AzureVmWorkloadProtectedItem";
             Optional<BackupManagementType> backupManagementType = default;
             Optional<DataSourceType> workloadType = default;
             Optional<string> containerName = default;

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownIdentityConfiguration DeserializeUnknownIdentityConfiguration(JsonElement element)
         {
-            IdentityConfigurationType identityType = default;
+            IdentityConfigurationType identityType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identityType"))

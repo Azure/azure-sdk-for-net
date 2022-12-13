@@ -49,7 +49,7 @@ namespace Azure.Maps.Search
         public Azure.Core.GeoJson.GeoBoundingBox BoundingBox { get { throw null; } set { } }
         public Azure.Maps.Search.GeographicEntity? EntityType { get { throw null; } set { } }
         public new System.Collections.Generic.IEnumerable<Azure.Maps.Search.SearchIndex> ExtendedPostalCodesFor { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Maps.Search.SearchIndex> IndexFilter { get { throw null; } }
+        public System.Collections.Generic.IEnumerable<Azure.Maps.Search.SearchIndex> IndexFilter { get { throw null; } set { } }
         public bool? IsTypeAhead { get { throw null; } set { } }
         public int? MaxFuzzyLevel { get { throw null; } set { } }
         public int? MinFuzzyLevel { get { throw null; } set { } }
@@ -503,9 +503,9 @@ namespace Azure.Maps.Search.Models
         public GeoJsonMultiPolygonData(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>>> coordinates) { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<double>>>> Coordinates { get { throw null; } }
     }
-    public partial class GeoJsonObject
+    public abstract partial class GeoJsonObject
     {
-        public GeoJsonObject() { }
+        protected GeoJsonObject() { }
     }
     public enum GeoJsonObjectType
     {

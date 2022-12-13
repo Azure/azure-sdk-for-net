@@ -37,33 +37,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     case "#Microsoft.VideoAnalyzer.UnsecuredEndpoint": return UnsecuredEndpoint.DeserializeUnsecuredEndpoint(element);
                 }
             }
-            string type = default;
-            Optional<CredentialsBase> credentials = default;
-            string url = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("credentials"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    credentials = CredentialsBase.DeserializeCredentialsBase(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("url"))
-                {
-                    url = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new EndpointBase(type, credentials.Value, url);
+            return UnknownEndpointBase.DeserializeUnknownEndpointBase(element);
         }
     }
 }

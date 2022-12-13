@@ -43,22 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "InformationProtectionAws": return InformationProtectionAwsOffering.DeserializeInformationProtectionAwsOffering(element);
                 }
             }
-            OfferingType offeringType = default;
-            Optional<string> description = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("offeringType"))
-                {
-                    offeringType = new OfferingType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("description"))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownSecurityCenterCloudOffering(offeringType, description.Value);
+            return UnknownCloudOffering.DeserializeUnknownCloudOffering(element);
         }
     }
 }

@@ -227,6 +227,25 @@ namespace Azure.ResourceManager.Chaos
         }
         #endregion
 
+        #region CapabilityTypeResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CapabilityTypeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CapabilityTypeResource.CreateResourceIdentifier" /> to create a <see cref="CapabilityTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CapabilityTypeResource" /> object. </returns>
+        public static CapabilityTypeResource GetCapabilityTypeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                CapabilityTypeResource.ValidateResourceId(id);
+                return new CapabilityTypeResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region ExperimentResource
         /// <summary>
         /// Gets an object representing an <see cref="ExperimentResource" /> along with the instance operations that can be performed on it but with no data.
@@ -284,25 +303,6 @@ namespace Azure.ResourceManager.Chaos
         }
         #endregion
 
-        #region TargetResource
-        /// <summary>
-        /// Gets an object representing a <see cref="TargetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TargetResource.CreateResourceIdentifier" /> to create a <see cref="TargetResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TargetResource" /> object. </returns>
-        public static TargetResource GetTargetResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                TargetResource.ValidateResourceId(id);
-                return new TargetResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region TargetTypeResource
         /// <summary>
         /// Gets an object representing a <see cref="TargetTypeResource" /> along with the instance operations that can be performed on it but with no data.
@@ -322,20 +322,20 @@ namespace Azure.ResourceManager.Chaos
         }
         #endregion
 
-        #region CapabilityTypeResource
+        #region TargetResource
         /// <summary>
-        /// Gets an object representing a <see cref="CapabilityTypeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CapabilityTypeResource.CreateResourceIdentifier" /> to create a <see cref="CapabilityTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TargetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TargetResource.CreateResourceIdentifier" /> to create a <see cref="TargetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CapabilityTypeResource" /> object. </returns>
-        public static CapabilityTypeResource GetCapabilityTypeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TargetResource" /> object. </returns>
+        public static TargetResource GetTargetResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CapabilityTypeResource.ValidateResourceId(id);
-                return new CapabilityTypeResource(client, id);
+                TargetResource.ValidateResourceId(id);
+                return new TargetResource(client, id);
             }
             );
         }

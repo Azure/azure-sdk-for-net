@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.OperationalInsights
     {
         private ClientDiagnostics _logAnalyticsQueryPackQueryPacksClientDiagnostics;
         private QueryPacksRestOperations _logAnalyticsQueryPackQueryPacksRestClient;
-        private ClientDiagnostics _clusterClientDiagnostics;
-        private ClustersRestOperations _clusterRestClient;
-        private ClientDiagnostics _workspaceClientDiagnostics;
-        private WorkspacesRestOperations _workspaceRestClient;
+        private ClientDiagnostics _operationalInsightsClusterClustersClientDiagnostics;
+        private ClustersRestOperations _operationalInsightsClusterClustersRestClient;
+        private ClientDiagnostics _operationalInsightsWorkspaceWorkspacesClientDiagnostics;
+        private WorkspacesRestOperations _operationalInsightsWorkspaceWorkspacesRestClient;
         private ClientDiagnostics _deletedWorkspacesClientDiagnostics;
         private DeletedWorkspacesRestOperations _deletedWorkspacesRestClient;
 
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.OperationalInsights
 
         private ClientDiagnostics LogAnalyticsQueryPackQueryPacksClientDiagnostics => _logAnalyticsQueryPackQueryPacksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", LogAnalyticsQueryPackResource.ResourceType.Namespace, Diagnostics);
         private QueryPacksRestOperations LogAnalyticsQueryPackQueryPacksRestClient => _logAnalyticsQueryPackQueryPacksRestClient ??= new QueryPacksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LogAnalyticsQueryPackResource.ResourceType));
-        private ClientDiagnostics ClusterClientDiagnostics => _clusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ClusterResource.ResourceType.Namespace, Diagnostics);
-        private ClustersRestOperations ClusterRestClient => _clusterRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ClusterResource.ResourceType));
-        private ClientDiagnostics WorkspaceClientDiagnostics => _workspaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", WorkspaceResource.ResourceType.Namespace, Diagnostics);
-        private WorkspacesRestOperations WorkspaceRestClient => _workspaceRestClient ??= new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(WorkspaceResource.ResourceType));
+        private ClientDiagnostics OperationalInsightsClusterClustersClientDiagnostics => _operationalInsightsClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", OperationalInsightsClusterResource.ResourceType.Namespace, Diagnostics);
+        private ClustersRestOperations OperationalInsightsClusterClustersRestClient => _operationalInsightsClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(OperationalInsightsClusterResource.ResourceType));
+        private ClientDiagnostics OperationalInsightsWorkspaceWorkspacesClientDiagnostics => _operationalInsightsWorkspaceWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", OperationalInsightsWorkspaceResource.ResourceType.Namespace, Diagnostics);
+        private WorkspacesRestOperations OperationalInsightsWorkspaceWorkspacesRestClient => _operationalInsightsWorkspaceWorkspacesRestClient ??= new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(OperationalInsightsWorkspaceResource.ResourceType));
         private ClientDiagnostics DeletedWorkspacesClientDiagnostics => _deletedWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private DeletedWorkspacesRestOperations DeletedWorkspacesRestClient => _deletedWorkspacesRestClient ??= new DeletedWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -145,17 +145,17 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Operation Id: Clusters_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ClusterResource> GetClustersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="OperationalInsightsClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OperationalInsightsClusterResource> GetOperationalInsightsClustersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ClusterResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<OperationalInsightsClusterResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetClusters");
+                using var scope = OperationalInsightsClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationalInsightsClusters");
                 scope.Start();
                 try
                 {
-                    var response = await ClusterRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await OperationalInsightsClusterClustersRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new OperationalInsightsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -163,14 +163,14 @@ namespace Azure.ResourceManager.OperationalInsights
                     throw;
                 }
             }
-            async Task<Page<ClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<OperationalInsightsClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetClusters");
+                using var scope = OperationalInsightsClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationalInsightsClusters");
                 scope.Start();
                 try
                 {
-                    var response = await ClusterRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await OperationalInsightsClusterClustersRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new OperationalInsightsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -187,17 +187,17 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Operation Id: Clusters_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ClusterResource> GetClusters(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OperationalInsightsClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OperationalInsightsClusterResource> GetOperationalInsightsClusters(CancellationToken cancellationToken = default)
         {
-            Page<ClusterResource> FirstPageFunc(int? pageSizeHint)
+            Page<OperationalInsightsClusterResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetClusters");
+                using var scope = OperationalInsightsClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationalInsightsClusters");
                 scope.Start();
                 try
                 {
-                    var response = ClusterRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = OperationalInsightsClusterClustersRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new OperationalInsightsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -205,14 +205,14 @@ namespace Azure.ResourceManager.OperationalInsights
                     throw;
                 }
             }
-            Page<ClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<OperationalInsightsClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetClusters");
+                using var scope = OperationalInsightsClusterClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationalInsightsClusters");
                 scope.Start();
                 try
                 {
-                    var response = ClusterRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = OperationalInsightsClusterClustersRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new OperationalInsightsClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -229,17 +229,17 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Operation Id: Workspaces_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkspaceResource> GetWorkspacesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspacesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WorkspaceResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<OperationalInsightsWorkspaceResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = WorkspaceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWorkspaces");
+                using var scope = OperationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationalInsightsWorkspaces");
                 scope.Start();
                 try
                 {
-                    var response = await WorkspaceRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceResource(Client, value)), null, response.GetRawResponse());
+                    var response = await OperationalInsightsWorkspaceWorkspacesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new OperationalInsightsWorkspaceResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -256,17 +256,17 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Operation Id: Workspaces_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkspaceResource> GetWorkspaces(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspaces(CancellationToken cancellationToken = default)
         {
-            Page<WorkspaceResource> FirstPageFunc(int? pageSizeHint)
+            Page<OperationalInsightsWorkspaceResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = WorkspaceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWorkspaces");
+                using var scope = OperationalInsightsWorkspaceWorkspacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationalInsightsWorkspaces");
                 scope.Start();
                 try
                 {
-                    var response = WorkspaceRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceResource(Client, value)), null, response.GetRawResponse());
+                    var response = OperationalInsightsWorkspaceWorkspacesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new OperationalInsightsWorkspaceResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -283,17 +283,17 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Operation Id: DeletedWorkspaces_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkspaceResource> GetWorkspacesByDeletedWorkspaceAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<WorkspaceResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<OperationalInsightsWorkspaceResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DeletedWorkspacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWorkspacesByDeletedWorkspace");
+                using var scope = DeletedWorkspacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedWorkspaces");
                 scope.Start();
                 try
                 {
                     var response = await DeletedWorkspacesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceResource(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OperationalInsightsWorkspaceResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -310,17 +310,17 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Operation Id: DeletedWorkspaces_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkspaceResource> GetWorkspacesByDeletedWorkspace(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(CancellationToken cancellationToken = default)
         {
-            Page<WorkspaceResource> FirstPageFunc(int? pageSizeHint)
+            Page<OperationalInsightsWorkspaceResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = DeletedWorkspacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetWorkspacesByDeletedWorkspace");
+                using var scope = DeletedWorkspacesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedWorkspaces");
                 scope.Start();
                 try
                 {
                     var response = DeletedWorkspacesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new WorkspaceResource(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new OperationalInsightsWorkspaceResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

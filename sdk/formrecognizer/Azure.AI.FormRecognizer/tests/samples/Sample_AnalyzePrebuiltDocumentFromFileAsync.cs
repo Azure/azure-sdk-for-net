@@ -9,9 +9,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 {
-    [LiveOnly]
-    [IgnoreServiceError(400, "InvalidRequest", Message = "Content is not accessible: Invalid data URL", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28923")]
-    public partial class DocumentAnalysisSamples : SamplesBase<DocumentAnalysisTestEnvironment>
+    public partial class DocumentAnalysisSamples
     {
         [RecordedTest]
         public async Task AnalyzePrebuiltDocumentFromFileAsync()

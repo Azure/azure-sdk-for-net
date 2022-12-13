@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="location"> The location. </param>
         public DscConfigurationData(AzureLocation location) : base(location)
         {
-            Parameters = new ChangeTrackingDictionary<string, DscConfigurationParameter>();
+            Parameters = new ChangeTrackingDictionary<string, DscConfigurationParameterDefinition>();
         }
 
         /// <summary> Initializes a new instance of DscConfigurationData. </summary>
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.Automation
         /// <param name="parameters"> Gets or sets the configuration parameters. </param>
         /// <param name="source"> Gets or sets the source. </param>
         /// <param name="state"> Gets or sets the state of the configuration. </param>
-        /// <param name="logVerbose"> Gets or sets verbose log option. </param>
+        /// <param name="isLogVerboseEnabled"> Gets or sets verbose log option. </param>
         /// <param name="createdOn"> Gets or sets the creation time. </param>
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
         /// <param name="nodeConfigurationCount"> Gets the number of compiled node configurations. </param>
         /// <param name="description"> Gets or sets the description. </param>
-        internal DscConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, DscConfigurationProvisioningState? provisioningState, int? jobCount, IDictionary<string, DscConfigurationParameter> parameters, ContentSource source, DscConfigurationState? state, bool? logVerbose, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, int? nodeConfigurationCount, string description) : base(id, name, resourceType, systemData, tags, location)
+        internal DscConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, DscConfigurationProvisioningState? provisioningState, int? jobCount, IDictionary<string, DscConfigurationParameterDefinition> parameters, AutomationContentSource source, DscConfigurationState? state, bool? isLogVerboseEnabled, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, int? nodeConfigurationCount, string description) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             ProvisioningState = provisioningState;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Automation
             Parameters = parameters;
             Source = source;
             State = state;
-            LogVerbose = logVerbose;
+            IsLogVerboseEnabled = isLogVerboseEnabled;
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             NodeConfigurationCount = nodeConfigurationCount;
@@ -64,13 +64,13 @@ namespace Azure.ResourceManager.Automation
         /// <summary> Gets or sets the job count of the configuration. </summary>
         public int? JobCount { get; set; }
         /// <summary> Gets or sets the configuration parameters. </summary>
-        public IDictionary<string, DscConfigurationParameter> Parameters { get; }
+        public IDictionary<string, DscConfigurationParameterDefinition> Parameters { get; }
         /// <summary> Gets or sets the source. </summary>
-        public ContentSource Source { get; set; }
+        public AutomationContentSource Source { get; set; }
         /// <summary> Gets or sets the state of the configuration. </summary>
         public DscConfigurationState? State { get; set; }
         /// <summary> Gets or sets verbose log option. </summary>
-        public bool? LogVerbose { get; set; }
+        public bool? IsLogVerboseEnabled { get; set; }
         /// <summary> Gets or sets the creation time. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> Gets or sets the last modified time. </summary>

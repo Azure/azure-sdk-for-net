@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Primary metrics for Image ObjectDetection task. </summary>
+    /// <summary>
+    /// Primary metrics for Image ObjectDetection task.
+    /// Serialized Name: ObjectDetectionPrimaryMetrics
+    /// </summary>
     public readonly partial struct ObjectDetectionPrimaryMetric : IEquatable<ObjectDetectionPrimaryMetric>
     {
         private readonly string _value;
@@ -27,6 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Mean Average Precision (MAP) is the average of AP (Average Precision).
         /// AP is calculated for each class and averaged to get the MAP.
+        /// Serialized Name: ObjectDetectionPrimaryMetrics.MeanAveragePrecision
         /// </summary>
         public static ObjectDetectionPrimaryMetric MeanAveragePrecision { get; } = new ObjectDetectionPrimaryMetric(MeanAveragePrecisionValue);
         /// <summary> Determines if two <see cref="ObjectDetectionPrimaryMetric"/> values are the same. </summary>

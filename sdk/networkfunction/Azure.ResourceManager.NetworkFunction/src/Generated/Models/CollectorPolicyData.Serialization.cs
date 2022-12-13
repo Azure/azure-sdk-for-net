@@ -19,6 +19,19 @@ namespace Azure.ResourceManager.NetworkFunction
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WritePropertyName("location");
+            writer.WriteStringValue(Location);
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
             if (Optional.IsDefined(IngestionPolicy))
@@ -43,6 +56,8 @@ namespace Azure.ResourceManager.NetworkFunction
         internal static CollectorPolicyData DeserializeCollectorPolicyData(JsonElement element)
         {
             Optional<ETag> etag = default;
+            Optional<IDictionary<string, string>> tags = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -60,6 +75,26 @@ namespace Azure.ResourceManager.NetworkFunction
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tags"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"))
+                {
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -84,7 +119,7 @@ namespace Azure.ResourceManager.NetworkFunction
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -135,7 +170,7 @@ namespace Azure.ResourceManager.NetworkFunction
                     continue;
                 }
             }
-            return new CollectorPolicyData(id, name, type, systemData.Value, Optional.ToNullable(etag), ingestionPolicy.Value, Optional.ToList(emissionPolicies), Optional.ToNullable(provisioningState));
+            return new CollectorPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), ingestionPolicy.Value, Optional.ToList(emissionPolicies), Optional.ToNullable(provisioningState));
         }
     }
 }

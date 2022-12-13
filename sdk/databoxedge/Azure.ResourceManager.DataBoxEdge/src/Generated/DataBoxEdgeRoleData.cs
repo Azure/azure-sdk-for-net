@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// A class representing the DataBoxEdgeRole data model.
     /// Please note <see cref="DataBoxEdgeRoleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CloudEdgeManagementRole"/>, <see cref="EdgeIotRole"/>, <see cref="EdgeKubernetesRole"/> and <see cref="MecRole"/>.
+    /// Please note <see cref="DataBoxEdgeRoleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="CloudEdgeManagementRole"/>, <see cref="EdgeIotRole"/>, <see cref="EdgeKubernetesRole"/> and <see cref="MecRole"/>.
     /// </summary>
     public partial class DataBoxEdgeRoleData : ResourceData
     {

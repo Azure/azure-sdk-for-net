@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
@@ -38,6 +37,11 @@ namespace Azure.Communication.MediaComposition
                 writer.WritePropertyName("layer");
                 writer.WriteStringValue(Layer);
             }
+            if (Optional.IsDefined(ScalingMode))
+            {
+                writer.WritePropertyName("scalingMode");
+                writer.WriteStringValue(ScalingMode.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -51,45 +55,7 @@ namespace Azure.Communication.MediaComposition
                     case "gridBased": return GridInputGroup.DeserializeGridInputGroup(element);
                 }
             }
-            InputGroupType kind = default;
-            Optional<InputPosition> position = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
-            Optional<string> layer = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"))
-                {
-                    kind = new InputGroupType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("position"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    position = InputPosition.DeserializeInputPosition(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("width"))
-                {
-                    width = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("height"))
-                {
-                    height = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("layer"))
-                {
-                    layer = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new InputGroup(kind, position.Value, width.Value, height.Value, layer.Value);
+            return UnknownInputGroup.DeserializeUnknownInputGroup(element);
         }
     }
 }

@@ -7,11 +7,17 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The CustomTargetRollingWindowSize. </summary>
+    /// <summary>
+    /// The CustomTargetRollingWindowSize.
+    /// Serialized Name: CustomTargetRollingWindowSize
+    /// </summary>
     public partial class CustomTargetRollingWindowSize : TargetRollingWindowSize
     {
         /// <summary> Initializes a new instance of CustomTargetRollingWindowSize. </summary>
-        /// <param name="value"> [Required] TargetRollingWindowSize value. </param>
+        /// <param name="value">
+        /// [Required] TargetRollingWindowSize value.
+        /// Serialized Name: CustomTargetRollingWindowSize.value
+        /// </param>
         public CustomTargetRollingWindowSize(int value)
         {
             Value = value;
@@ -19,15 +25,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of CustomTargetRollingWindowSize. </summary>
-        /// <param name="mode"> [Required] TargetRollingWindowSiz detection mode. </param>
-        /// <param name="value"> [Required] TargetRollingWindowSize value. </param>
+        /// <param name="mode">
+        /// [Required] TargetRollingWindowSiz detection mode.
+        /// Serialized Name: TargetRollingWindowSize.mode
+        /// </param>
+        /// <param name="value">
+        /// [Required] TargetRollingWindowSize value.
+        /// Serialized Name: CustomTargetRollingWindowSize.value
+        /// </param>
         internal CustomTargetRollingWindowSize(TargetRollingWindowSizeMode mode, int value) : base(mode)
         {
             Value = value;
             Mode = mode;
         }
 
-        /// <summary> [Required] TargetRollingWindowSize value. </summary>
+        /// <summary>
+        /// [Required] TargetRollingWindowSize value.
+        /// Serialized Name: CustomTargetRollingWindowSize.value
+        /// </summary>
         public int Value { get; set; }
     }
 }

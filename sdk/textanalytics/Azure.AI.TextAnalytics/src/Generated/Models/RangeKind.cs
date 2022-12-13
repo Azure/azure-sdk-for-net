@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> The kind of range that the resolution object represents. </summary>
-    internal readonly partial struct RangeKind : IEquatable<RangeKind>
+    public readonly partial struct RangeKind : IEquatable<RangeKind>
     {
         private readonly string _value;
 

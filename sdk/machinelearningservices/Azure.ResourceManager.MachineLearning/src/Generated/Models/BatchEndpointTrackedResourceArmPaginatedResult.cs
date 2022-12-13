@@ -11,27 +11,42 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> A paginated list of BatchEndpoint entities. </summary>
+    /// <summary>
+    /// A paginated list of BatchEndpoint entities.
+    /// Serialized Name: BatchEndpointTrackedResourceArmPaginatedResult
+    /// </summary>
     internal partial class BatchEndpointTrackedResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of BatchEndpointTrackedResourceArmPaginatedResult. </summary>
         internal BatchEndpointTrackedResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<BatchEndpointData>();
+            Value = new ChangeTrackingList<MachineLearningBatchEndpointData>();
         }
 
         /// <summary> Initializes a new instance of BatchEndpointTrackedResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"> The link to the next page of BatchEndpoint objects. If null, there are no additional pages. </param>
-        /// <param name="value"> An array of objects of type BatchEndpoint. </param>
-        internal BatchEndpointTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<BatchEndpointData> value)
+        /// <param name="nextLink">
+        /// The link to the next page of BatchEndpoint objects. If null, there are no additional pages.
+        /// Serialized Name: BatchEndpointTrackedResourceArmPaginatedResult.nextLink
+        /// </param>
+        /// <param name="value">
+        /// An array of objects of type BatchEndpoint.
+        /// Serialized Name: BatchEndpointTrackedResourceArmPaginatedResult.value
+        /// </param>
+        internal BatchEndpointTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningBatchEndpointData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> The link to the next page of BatchEndpoint objects. If null, there are no additional pages. </summary>
+        /// <summary>
+        /// The link to the next page of BatchEndpoint objects. If null, there are no additional pages.
+        /// Serialized Name: BatchEndpointTrackedResourceArmPaginatedResult.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> An array of objects of type BatchEndpoint. </summary>
-        public IReadOnlyList<BatchEndpointData> Value { get; }
+        /// <summary>
+        /// An array of objects of type BatchEndpoint.
+        /// Serialized Name: BatchEndpointTrackedResourceArmPaginatedResult.value
+        /// </summary>
+        public IReadOnlyList<MachineLearningBatchEndpointData> Value { get; }
     }
 }

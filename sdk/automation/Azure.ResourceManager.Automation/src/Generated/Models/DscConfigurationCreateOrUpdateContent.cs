@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of DscConfigurationCreateOrUpdateContent. </summary>
         /// <param name="source"> Gets or sets the source. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
-        public DscConfigurationCreateOrUpdateContent(ContentSource source)
+        public DscConfigurationCreateOrUpdateContent(AutomationContentSource source)
         {
             Argument.AssertNotNull(source, nameof(source));
 
             Tags = new ChangeTrackingDictionary<string, string>();
             Source = source;
-            Parameters = new ChangeTrackingDictionary<string, DscConfigurationParameter>();
+            Parameters = new ChangeTrackingDictionary<string, DscConfigurationParameterDefinition>();
         }
 
         /// <summary> Gets or sets name of the resource. </summary>
@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Gets or sets the tags attached to the resource. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Gets or sets verbose log option. </summary>
-        public bool? LogVerbose { get; set; }
+        public bool? IsLogVerboseEnabled { get; set; }
         /// <summary> Gets or sets progress log option. </summary>
-        public bool? LogProgress { get; set; }
+        public bool? IsLogProgressEnabled { get; set; }
         /// <summary> Gets or sets the source. </summary>
-        public ContentSource Source { get; }
+        public AutomationContentSource Source { get; }
         /// <summary> Gets or sets the configuration parameters. </summary>
-        public IDictionary<string, DscConfigurationParameter> Parameters { get; }
+        public IDictionary<string, DscConfigurationParameterDefinition> Parameters { get; }
         /// <summary> Gets or sets the description of the configuration. </summary>
         public string Description { get; set; }
     }

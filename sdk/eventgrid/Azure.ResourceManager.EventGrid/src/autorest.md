@@ -24,12 +24,12 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}|Microsoft.EventGrid/partnerNamespaces/privateLinkResources: PartnerNamespacePrivateLinkResource
 
 override-operation-name:
-  EventSubscriptions_ListGlobalByResourceGroupForTopicType: GetGlobalEventSubscriptionsForTopicType
-  EventSubscriptions_ListRegionalByResourceGroup: GetRegionalEventSubscriptions
-  EventSubscriptions_ListRegionalByResourceGroupForTopicType: GetRegionalEventSubscriptionsForTopicType
-  EventSubscriptions_ListGlobalBySubscriptionForTopicType: GetGlobalEventSubscriptionsForTopicType
-  EventSubscriptions_ListRegionalBySubscription: GetRegionalEventSubscriptions
-  EventSubscriptions_ListRegionalBySubscriptionForTopicType: GetRegionalEventSubscriptionsForTopicType
+  EventSubscriptions_ListGlobalByResourceGroupForTopicType: GetGlobalEventSubscriptionsDataForTopicType
+  EventSubscriptions_ListRegionalByResourceGroup: GetRegionalEventSubscriptionsData
+  EventSubscriptions_ListRegionalByResourceGroupForTopicType: GetRegionalEventSubscriptionsDataForTopicType
+  EventSubscriptions_ListGlobalBySubscriptionForTopicType: GetGlobalEventSubscriptionsDataForTopicType
+  EventSubscriptions_ListRegionalBySubscription: GetRegionalEventSubscriptionsData
+  EventSubscriptions_ListRegionalBySubscriptionForTopicType: GetRegionalEventSubscriptionsDataForTopicType
   Topics_ListEventTypes: GetEventTypes
 
 format-by-name-rules:
@@ -74,7 +74,8 @@ rename-mapping:
   Domain.properties.disableLocalAuth: IsLocalAuthDisabled
   Domain.properties.endpoint: Endpoint|Uri
   DomainUpdateParameters.properties.disableLocalAuth: IsLocalAuthDisabled
-  EventSubscriptionUpdateParameters: EventSubscriptionPatch
+  EventSubscription: EventGridSubscription
+  EventSubscriptionUpdateParameters: EventGridSubscriptionPatch
   EventSubscriptionUpdateParameters.expirationTimeUtc: ExpireOn
   DomainRegenerateKeyRequest: EventGridDomainRegenerateKeyContent
   ConnectionState: EventGridPrivateEndpointConnectionState
