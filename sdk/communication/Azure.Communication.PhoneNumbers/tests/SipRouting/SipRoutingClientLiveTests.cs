@@ -30,20 +30,20 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         }
 
         [TearDown]
-        public void ClearConfiguration()
+        public async Task ClearConfiguration()
         {
             var client = CreateClient();
-            if (client.GetRoutesAsync().Result.Value.Count > 0)
+            var routes = await client.GetRoutesAsync();
+            var trunks = await client.GetTrunksAsync();
+            if (routes.Value.Count > 0)
             {
-                var task = client.SetRoutesAsync(new List<SipTrunkRoute>());
-                task.Wait();
-                task.EnsureCompleted();
+                var response = await client.SetRoutesAsync(new List<SipTrunkRoute>());
+                Assert.AreEqual(200, response.Status);
             }
-            if (client.GetTrunksAsync().Result.Value.Count > 0)
+            if (trunks.Value.Count > 0)
             {
-                var task = client.SetTrunksAsync(new List<SipTrunk>());
-                task.Wait();
-                task.EnsureCompleted();
+                var response = await client.SetTrunksAsync(new List<SipTrunk>());
+                Assert.AreEqual(200, response.Status);
             }
         }
 
