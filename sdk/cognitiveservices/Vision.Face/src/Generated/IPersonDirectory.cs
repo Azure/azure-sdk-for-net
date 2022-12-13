@@ -280,10 +280,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// 'detection_03', 'detection_preview_1904', 'ir_detection_01',
         /// 'expression_01'
         /// </param>
-        /// <param name='faceFeature'>
-        /// </param>
-        /// <param name='persistedFaceId1'>
-        /// </param>
         /// <param name='userData'>
         /// </param>
         /// <param name='customHeaders'>
