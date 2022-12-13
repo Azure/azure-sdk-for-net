@@ -11,27 +11,42 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> A paginated list of DataVersionBase entities. </summary>
+    /// <summary>
+    /// A paginated list of DataVersionBase entities.
+    /// Serialized Name: DataVersionBaseResourceArmPaginatedResult
+    /// </summary>
     internal partial class DataVersionBaseResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of DataVersionBaseResourceArmPaginatedResult. </summary>
         internal DataVersionBaseResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<DataVersionData>();
+            Value = new ChangeTrackingList<MachineLearningDataVersionData>();
         }
 
         /// <summary> Initializes a new instance of DataVersionBaseResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"> The link to the next page of DataVersionBase objects. If null, there are no additional pages. </param>
-        /// <param name="value"> An array of objects of type DataVersionBase. </param>
-        internal DataVersionBaseResourceArmPaginatedResult(string nextLink, IReadOnlyList<DataVersionData> value)
+        /// <param name="nextLink">
+        /// The link to the next page of DataVersionBase objects. If null, there are no additional pages.
+        /// Serialized Name: DataVersionBaseResourceArmPaginatedResult.nextLink
+        /// </param>
+        /// <param name="value">
+        /// An array of objects of type DataVersionBase.
+        /// Serialized Name: DataVersionBaseResourceArmPaginatedResult.value
+        /// </param>
+        internal DataVersionBaseResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningDataVersionData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> The link to the next page of DataVersionBase objects. If null, there are no additional pages. </summary>
+        /// <summary>
+        /// The link to the next page of DataVersionBase objects. If null, there are no additional pages.
+        /// Serialized Name: DataVersionBaseResourceArmPaginatedResult.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> An array of objects of type DataVersionBase. </summary>
-        public IReadOnlyList<DataVersionData> Value { get; }
+        /// <summary>
+        /// An array of objects of type DataVersionBase.
+        /// Serialized Name: DataVersionBaseResourceArmPaginatedResult.value
+        /// </summary>
+        public IReadOnlyList<MachineLearningDataVersionData> Value { get; }
     }
 }

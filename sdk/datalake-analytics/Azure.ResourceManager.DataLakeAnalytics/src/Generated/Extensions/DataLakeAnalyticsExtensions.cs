@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="content"> Parameters supplied to check the Data Lake Analytics account name availability. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<NameAvailabilityInformation>> CheckNameAvailabilityAccountAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataLakeAnalyticsAccountNameAvailabilityResult>> CheckDataLakeAnalyticsAccountNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataLakeAnalyticsAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityAccountAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckDataLakeAnalyticsAccountNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="content"> Parameters supplied to check the Data Lake Analytics account name availability. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<NameAvailabilityInformation> CheckNameAvailabilityAccount(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<DataLakeAnalyticsAccountNameAvailabilityResult> CheckDataLakeAnalyticsAccountNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, DataLakeAnalyticsAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityAccount(location, content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckDataLakeAnalyticsAccountNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<CapabilityInformation>> GetCapabilityLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataLakeAnalyticsCapabilityInformation>> GetCapabilityLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             return await GetExtensionClient(subscriptionResource).GetCapabilityLocationAsync(location, cancellationToken).ConfigureAwait(false);
         }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<CapabilityInformation> GetCapabilityLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Response<DataLakeAnalyticsCapabilityInformation> GetCapabilityLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetCapabilityLocation(location, cancellationToken);
         }
@@ -213,77 +213,77 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         }
         #endregion
 
-        #region StorageAccountInformationResource
+        #region DataLakeAnalyticsStorageAccountInformationResource
         /// <summary>
-        /// Gets an object representing a <see cref="StorageAccountInformationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageAccountInformationResource.CreateResourceIdentifier" /> to create a <see cref="StorageAccountInformationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataLakeAnalyticsStorageAccountInformationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataLakeAnalyticsStorageAccountInformationResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeAnalyticsStorageAccountInformationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageAccountInformationResource" /> object. </returns>
-        public static StorageAccountInformationResource GetStorageAccountInformationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataLakeAnalyticsStorageAccountInformationResource" /> object. </returns>
+        public static DataLakeAnalyticsStorageAccountInformationResource GetDataLakeAnalyticsStorageAccountInformationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                StorageAccountInformationResource.ValidateResourceId(id);
-                return new StorageAccountInformationResource(client, id);
+                DataLakeAnalyticsStorageAccountInformationResource.ValidateResourceId(id);
+                return new DataLakeAnalyticsStorageAccountInformationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region StorageContainerResource
+        #region DataLakeAnalyticsStorageContainerResource
         /// <summary>
-        /// Gets an object representing a <see cref="StorageContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageContainerResource.CreateResourceIdentifier" /> to create a <see cref="StorageContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataLakeAnalyticsStorageContainerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataLakeAnalyticsStorageContainerResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeAnalyticsStorageContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageContainerResource" /> object. </returns>
-        public static StorageContainerResource GetStorageContainerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataLakeAnalyticsStorageContainerResource" /> object. </returns>
+        public static DataLakeAnalyticsStorageContainerResource GetDataLakeAnalyticsStorageContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                StorageContainerResource.ValidateResourceId(id);
-                return new StorageContainerResource(client, id);
+                DataLakeAnalyticsStorageContainerResource.ValidateResourceId(id);
+                return new DataLakeAnalyticsStorageContainerResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ComputePolicyResource
+        #region DataLakeAnalyticsComputePolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="ComputePolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ComputePolicyResource.CreateResourceIdentifier" /> to create a <see cref="ComputePolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataLakeAnalyticsComputePolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataLakeAnalyticsComputePolicyResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeAnalyticsComputePolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ComputePolicyResource" /> object. </returns>
-        public static ComputePolicyResource GetComputePolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataLakeAnalyticsComputePolicyResource" /> object. </returns>
+        public static DataLakeAnalyticsComputePolicyResource GetDataLakeAnalyticsComputePolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ComputePolicyResource.ValidateResourceId(id);
-                return new ComputePolicyResource(client, id);
+                DataLakeAnalyticsComputePolicyResource.ValidateResourceId(id);
+                return new DataLakeAnalyticsComputePolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        #region FirewallRuleResource
+        #region DataLakeAnalyticsFirewallRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="FirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="FirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataLakeAnalyticsFirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataLakeAnalyticsFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeAnalyticsFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FirewallRuleResource" /> object. </returns>
-        public static FirewallRuleResource GetFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataLakeAnalyticsFirewallRuleResource" /> object. </returns>
+        public static DataLakeAnalyticsFirewallRuleResource GetDataLakeAnalyticsFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                FirewallRuleResource.ValidateResourceId(id);
-                return new FirewallRuleResource(client, id);
+                DataLakeAnalyticsFirewallRuleResource.ValidateResourceId(id);
+                return new DataLakeAnalyticsFirewallRuleResource(client, id);
             }
             );
         }

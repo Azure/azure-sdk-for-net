@@ -144,8 +144,8 @@ namespace Azure.AI.TextAnalytics
         /// Gets the last HTTP response received from the server associated with this long-running operation.
         /// </summary>
         /// <remarks>
-        /// An instance of <see cref="AbstractSummaryOperation"/> sends requests to a server in UpdateStatusAsync, UpdateStatus, and other methods.
-        /// Responses from these requests can be accessed using GetRawResponse.
+        /// An instance of the <see cref="AbstractSummaryOperation"/> class sends requests to the server via methods
+        /// such as <see cref="UpdateStatus"/>, <see cref="UpdateStatusAsync"/>, etc.
         /// </remarks>
         public override Response GetRawResponse() => _operationInternal.RawResponse;
 
@@ -281,21 +281,18 @@ namespace Azure.AI.TextAnalytics
 
                 return OperationState<AsyncPageable<AbstractSummaryResultCollection>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
             }
-            else if (response.Value.Status == TextAnalyticsOperationStatus.Running || response.Value.Status == TextAnalyticsOperationStatus.NotStarted || response.Value.Status == TextAnalyticsOperationStatus.Cancelling)
+
+            if (response.Value.Status == TextAnalyticsOperationStatus.Running || response.Value.Status == TextAnalyticsOperationStatus.NotStarted || response.Value.Status == TextAnalyticsOperationStatus.Cancelling)
             {
                 return OperationState<AsyncPageable<AbstractSummaryResultCollection>>.Pending(rawResponse);
             }
-            else if (response.Value.Status == TextAnalyticsOperationStatus.Cancelled)
+
+            if (response.Value.Status == TextAnalyticsOperationStatus.Cancelled)
             {
-                return OperationState<AsyncPageable<AbstractSummaryResultCollection>>.Failure(rawResponse,
-                    new RequestFailedException("The operation was canceled so no value is available."));
+                return OperationState<AsyncPageable<AbstractSummaryResultCollection>>.Failure(rawResponse, new RequestFailedException("The operation was canceled so no value is available."));
             }
 
-            RequestFailedException requestFailedException = await ClientCommon
-                .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Errors)
-                .ConfigureAwait(false);
-
-            return OperationState<AsyncPageable<AbstractSummaryResultCollection>>.Failure(rawResponse, requestFailedException);
+            return OperationState<AsyncPageable<AbstractSummaryResultCollection>>.Failure(rawResponse, new RequestFailedException(rawResponse));
         }
     }
 }

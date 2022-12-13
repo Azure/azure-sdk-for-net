@@ -56,7 +56,7 @@ namespace Azure.Communication.ShortCodes.Models
         public Azure.Communication.ShortCodes.Models.ContactInformation ContactInformation { get { throw null; } set { } }
         public Azure.Communication.ShortCodes.Models.CustomerCareInformation CustomerCareInformation { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public string Url { get { throw null; } set { } }
+        public System.Uri Url { get { throw null; } set { } }
     }
     public partial class ContactInformation
     {
@@ -274,11 +274,11 @@ namespace Azure.Communication.ShortCodes.Models
         public string Name { get { throw null; } set { } }
         public Azure.Communication.ShortCodes.Models.NumberType? NumberType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> PreferredVanityNumbers { get { throw null; } }
-        public string PrivacyPolicyUrl { get { throw null; } set { } }
+        public System.Uri PrivacyPolicyUrl { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Communication.ShortCodes.Models.ProgramSignUpType> SignUpTypes { get { throw null; } }
-        public string SignUpUrl { get { throw null; } set { } }
-        public string TermsOfServiceUrl { get { throw null; } set { } }
-        public string Url { get { throw null; } set { } }
+        public System.Uri SignUpUrl { get { throw null; } set { } }
+        public System.Uri TermsOfServiceUrl { get { throw null; } set { } }
+        public System.Uri Url { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProgramSignUpType : System.IEquatable<Azure.Communication.ShortCodes.Models.ProgramSignUpType>

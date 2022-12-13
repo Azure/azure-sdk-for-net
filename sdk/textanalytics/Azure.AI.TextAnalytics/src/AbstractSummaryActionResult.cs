@@ -31,7 +31,7 @@ namespace Azure.AI.TextAnalytics
             : base(actionName, completedOn, error) { }
 
         /// <summary>
-        /// The collection of results corresponding to each given document.
+        /// The collection of results corresponding to each input document.
         /// </summary>
         public AbstractSummaryResultCollection DocumentsResults
         {

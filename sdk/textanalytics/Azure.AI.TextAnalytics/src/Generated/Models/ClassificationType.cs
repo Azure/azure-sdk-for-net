@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.TextAnalytics.Models
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> Specifies either one or multiple categories per document. Defaults to multi classification which may return more than one class for each document. </summary>
-    internal readonly partial struct ClassificationType : IEquatable<ClassificationType>
+    public readonly partial struct ClassificationType : IEquatable<ClassificationType>
     {
         private readonly string _value;
 

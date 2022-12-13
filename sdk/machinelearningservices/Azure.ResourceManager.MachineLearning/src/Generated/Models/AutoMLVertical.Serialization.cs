@@ -20,8 +20,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("logVerbosity");
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
+            if (Optional.IsDefined(TargetColumnName))
+            {
+                if (TargetColumnName != null)
+                {
+                    writer.WritePropertyName("targetColumnName");
+                    writer.WriteStringValue(TargetColumnName);
+                }
+                else
+                {
+                    writer.WriteNull("targetColumnName");
+                }
+            }
             writer.WritePropertyName("taskType");
             writer.WriteStringValue(TaskType.ToString());
+            writer.WritePropertyName("trainingData");
+            writer.WriteObjectValue(TrainingData);
             writer.WriteEndObject();
         }
 
@@ -31,13 +45,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Classification": return Classification.DeserializeClassification(element);
+                    case "Classification": return ClassificationTask.DeserializeClassificationTask(element);
                     case "Forecasting": return Forecasting.DeserializeForecasting(element);
                     case "ImageClassification": return ImageClassification.DeserializeImageClassification(element);
                     case "ImageClassificationMultilabel": return ImageClassificationMultilabel.DeserializeImageClassificationMultilabel(element);
                     case "ImageInstanceSegmentation": return ImageInstanceSegmentation.DeserializeImageInstanceSegmentation(element);
                     case "ImageObjectDetection": return ImageObjectDetection.DeserializeImageObjectDetection(element);
-                    case "Regression": return Regression.DeserializeRegression(element);
+                    case "Regression": return AutoMLVerticalRegression.DeserializeAutoMLVerticalRegression(element);
                     case "TextClassification": return TextClassification.DeserializeTextClassification(element);
                     case "TextClassificationMultilabel": return TextClassificationMultilabel.DeserializeTextClassificationMultilabel(element);
                     case "TextNER": return TextNer.DeserializeTextNer(element);

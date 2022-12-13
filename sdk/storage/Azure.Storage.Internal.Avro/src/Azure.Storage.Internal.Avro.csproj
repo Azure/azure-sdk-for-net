@@ -1,6 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
+    <!-- Remove this line when Azure.Core is released for net6.0  -->
+    <RunApiCompat Condition="'$(TargetFramework)' == 'net6.0'">false</RunApiCompat>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Internal.Avro client library</AssemblyTitle>
