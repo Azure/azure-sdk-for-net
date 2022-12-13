@@ -204,7 +204,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
                 catch (Exception ex)
                 {
-                    AzureMonitorExporterEventSource.Log.WriteWarning("FailedToExtractActivityEvent", ex);
+                    AzureMonitorExporterEventSource.Log.WriteError("FailedToExtractActivityEvent", ex);
                 }
             }
         }
