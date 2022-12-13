@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class UriToStreamJobPart : JobPartInternal, IAsyncDisposable
+    internal class UriToStreamJobPart : JobPartInternal, IDisposable
     {
         public delegate Task CommitBlockTaskInternal(CancellationToken cancellationToken);
         public CommitBlockTaskInternal CommitBlockTask { get; internal set; }
@@ -81,9 +81,9 @@ namespace Azure.Storage.DataMovement
                   length: length)
         { }
 
-        public async ValueTask DisposeAsync()
+        public void Dispose()
         {
-            await DisposeHandlers().ConfigureAwait(false);
+            DisposeHandlers();
         }
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace Azure.Storage.DataMovement
                 await _destinationResource.CompleteTransferAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
 
                 // Dispose the handlers
-                await DisposeHandlers().ConfigureAwait(false);
+                DisposeHandlers();
 
                 // Update the transfer status
                 await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
@@ -409,7 +409,8 @@ namespace Azure.Storage.DataMovement
                 currentTranferred,
                 expectedLength,
                 ranges,
-                GetDownloadChunkHandlerBehaviors(jobPart));
+                GetDownloadChunkHandlerBehaviors(jobPart),
+                cancellationToken: jobPart._cancellationTokenSource.Token);
 
         internal static DownloadChunkHandler.Behaviors GetDownloadChunkHandlerBehaviors(UriToStreamJobPart job)
         {
@@ -437,21 +438,21 @@ namespace Azure.Storage.DataMovement
 
         public override async Task InvokeSkippedArg()
         {
-            await DisposeHandlers().ConfigureAwait(false);
+            DisposeHandlers();
             await base.InvokeSkippedArg().ConfigureAwait(false);
         }
 
         public override async Task InvokeFailedArg(Exception ex)
         {
-            await DisposeHandlers().ConfigureAwait(false);
+            DisposeHandlers();
             await base.InvokeFailedArg(ex).ConfigureAwait(false);
         }
 
-        internal async Task DisposeHandlers()
+        internal void DisposeHandlers()
         {
             if (_downloadChunkHandler != default)
             {
-                await _downloadChunkHandler.DisposeAsync().ConfigureAwait(false);
+                _downloadChunkHandler.Dispose();
             }
         }
     }
