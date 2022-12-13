@@ -2,7 +2,7 @@ param (
     [hashtable] $DeploymentOutputs
 )
 
-$webappRoot = "$PSScriptRoot/../../sdk/identity/Azure.Identity/integration" | Resolve-Path
+$webappRoot = "$PSScriptRoot/Azure.Identity/integration" | Resolve-Path
 $workingFolder = $webappRoot;
 if ($null -ne $Env:AGENT_WORKFOLDER) {
     $workingFolder = $Env:AGENT_WORKFOLDER
