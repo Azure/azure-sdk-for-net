@@ -11,10 +11,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.LoadTesting.Models
 {
     /// <summary> LoadTest resource patch request body. </summary>
-    public partial class LoadTestingPatch
+    public partial class LoadTestingResourcePatch
     {
-        /// <summary> Initializes a new instance of LoadTestingPatch. </summary>
-        public LoadTestingPatch()
+        /// <summary> Initializes a new instance of LoadTestingResourcePatch. </summary>
+        public LoadTestingResourcePatch()
         {
         }
 
