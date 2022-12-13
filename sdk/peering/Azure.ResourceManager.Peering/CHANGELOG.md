@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0 (2022-12-09)
+## 1.1.0 (2022-12-13)
 
 ### Features Added
 Added new APIs from 2022-10-01 API:
