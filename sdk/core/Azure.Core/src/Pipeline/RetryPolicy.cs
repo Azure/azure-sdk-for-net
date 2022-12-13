@@ -22,6 +22,7 @@ namespace Azure.Core.Pipeline
         private readonly int _maxRetries;
 
         private readonly Random _random = new ThreadSafeRandom();
+        private readonly DelayStrategy? _delayStrategy;
 
         private const string RetryAfterHeaderName = "Retry-After";
         private const string RetryAfterMsHeaderName = "retry-after-ms";
@@ -31,13 +32,15 @@ namespace Azure.Core.Pipeline
         /// Initializes a new instance of the <see cref="RetryPolicy"/> class.
         /// </summary>
         /// <param name="options">The set of options to use for configuring the policy.</param>
-        protected RetryPolicy(RetryOptions? options = default)
+        /// <param name="delayStrategy">The delay strategy to use</param>
+        protected RetryPolicy(RetryOptions? options = default, DelayStrategy? delayStrategy = default)
         {
             options ??= ClientOptions.Default.Retry;
             _mode = options.Mode;
             _delay = options.Delay;
             _maxDelay = options.MaxDelay;
             _maxRetries = options.MaxRetries;
+            _delayStrategy = delayStrategy;
         }
 
         /// <summary>
@@ -222,14 +225,14 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
         /// <returns>The amount of time to delay before retrying.</returns>
-        protected internal virtual TimeSpan CalculateNextDelay(HttpMessage message) => CalculateNextDelayInternal(message);
+        internal virtual TimeSpan CalculateNextDelay(HttpMessage message) => CalculateNextDelayInternal(message);
 
         /// <summary>
         /// This method can be overriden to control how long to delay before retrying. This method will only be called for async methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
         /// <returns>The amount of time to delay before retrying.</returns>
-        protected internal virtual ValueTask<TimeSpan> CalculateNextDelayAsync(HttpMessage message) => new(CalculateNextDelayInternal(message));
+        internal virtual ValueTask<TimeSpan> CalculateNextDelayAsync(HttpMessage message) => new(CalculateNextDelayInternal(message));
 
         /// <summary>
         /// This method can be overridden to introduce logic before each request attempt is sent. This will run even for the first attempt.
@@ -283,6 +286,11 @@ namespace Azure.Core.Pipeline
                 delay = serverDelay;
             }
 
+            if (_delayStrategy != null)
+            {
+                delay = _delayStrategy.GetNextDelay(message.Response, message.RetryNumber + 1, delay);
+            }
+
             return delay;
         }
 
@@ -293,7 +301,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="message">The message to inspect for the server specified delay.</param>
         /// <returns>The server specified delay.</returns>
-        protected static TimeSpan GetServerDelay(HttpMessage message)
+        internal static TimeSpan GetServerDelay(HttpMessage message)
         {
             if (!message.HasResponse)
             {

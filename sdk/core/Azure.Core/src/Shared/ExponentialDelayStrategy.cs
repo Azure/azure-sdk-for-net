@@ -28,20 +28,19 @@ namespace Azure.Core
         };
         private static readonly TimeSpan _maxDelay = _pollingSequence[_pollingSequence.Length - 1];
 
-        private int _index;
-
         /// <summary>
         /// Get the polling interval from {1, 1, 1, 2, 4, ...32}.
         /// </summary>
         /// <param name="response">Service response.</param>
+        /// <param name="attempt"></param>
         /// <param name="suggestedInterval">Suggested pollingInterval.</param>
-        public override TimeSpan GetNextDelay(Response response, TimeSpan? suggestedInterval)
+        public override TimeSpan GetNextDelay(Response response, int attempt, TimeSpan? suggestedInterval)
         {
-            if (_index >= _pollingSequence.Length)
+            if (attempt >= _pollingSequence.Length)
             {
                 return _maxDelay;
             }
-            return _pollingSequence[_index++];
+            return _pollingSequence[attempt];
         }
     }
 }

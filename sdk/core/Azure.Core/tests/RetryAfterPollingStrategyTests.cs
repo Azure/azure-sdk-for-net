@@ -34,7 +34,7 @@ namespace Azure.Core.Tests.DelayStrategies
                 expected += GetExpected(headerName, delayValues[i], null, (int)defaultDelays[Math.Min(i, defaultDelays.Length - 1)].TotalMilliseconds);
                 if (headerName is not null)
                     response.AddHeader(new HttpHeader(headerName, delayValues[i].ToString()));
-                actual += strategy.GetNextDelay(response, suggestion);
+                actual += strategy.GetNextDelay(response, i + 1, suggestion);
             }
 
             Assert.AreEqual(TimeSpan.FromMilliseconds(expected), actual);
@@ -63,7 +63,7 @@ namespace Azure.Core.Tests.DelayStrategies
                 expected += GetExpected(headerName, delayValues[i], null, (int)defaultDelays[Math.Min(i, defaultDelays.Length - 1)].TotalSeconds);
                 if (headerName is not null)
                     response.AddHeader(new HttpHeader(headerName, delayValues[i].ToString()));
-                actual += strategy.GetNextDelay(response, suggestion);
+                actual += strategy.GetNextDelay(response, i + 1, suggestion);
             }
 
             Assert.AreEqual(TimeSpan.FromSeconds(expected), actual);
@@ -88,7 +88,7 @@ namespace Azure.Core.Tests.DelayStrategies
                 expected += GetExpected(headerName, delayValues[i], suggestedWaitInMs, (int)ConstantDelayStrategy.DefaultPollingInterval.TotalMilliseconds);
                 if (headerName is not null)
                     response.AddHeader(new HttpHeader(headerName, delayValues[i].ToString()));
-                actual += strategy.GetNextDelay(response, suggestion);
+                actual += strategy.GetNextDelay(response, i + 1, suggestion);
             }
 
             Assert.AreEqual(TimeSpan.FromMilliseconds(expected), actual);
@@ -113,7 +113,7 @@ namespace Azure.Core.Tests.DelayStrategies
                 expected += GetExpected(headerName, delayValues[i], suggestedWaitInMs, (int)ConstantDelayStrategy.DefaultPollingInterval.TotalSeconds);
                 if (headerName is not null)
                     response.AddHeader(new HttpHeader(headerName, delayValues[i].ToString()));
-                actual += strategy.GetNextDelay(response, suggestion);
+                actual += strategy.GetNextDelay(response, i + 1, suggestion);
             }
 
             Assert.AreEqual(TimeSpan.FromSeconds(expected), actual);

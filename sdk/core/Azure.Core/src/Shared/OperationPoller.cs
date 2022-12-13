@@ -60,6 +60,7 @@ namespace Azure.Core
 
         private async ValueTask<Response> WaitForCompletionAsync(bool async, Operation operation, TimeSpan? suggestedInterval, CancellationToken cancellationToken)
         {
+            int attempt = 0;
             while (true)
             {
                 Response response = async ? await operation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false) : operation.UpdateStatus(cancellationToken);
@@ -68,12 +69,13 @@ namespace Azure.Core
                     return operation.GetRawResponse();
                 }
 
-                await Delay(async, _delayStrategy.GetNextDelay(response, suggestedInterval), cancellationToken).ConfigureAwait(false);
+                await Delay(async, _delayStrategy.GetNextDelay(response, ++attempt, suggestedInterval), cancellationToken).ConfigureAwait(false);
             }
         }
 
         private async ValueTask<Response> WaitForCompletionAsync(bool async, OperationInternalBase operation, TimeSpan? suggestedInterval, CancellationToken cancellationToken)
         {
+            int attempt = 0;
             while (true)
             {
                 Response response = async ? await operation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false) : operation.UpdateStatus(cancellationToken);
@@ -82,7 +84,7 @@ namespace Azure.Core
                     return operation.RawResponse;
                 }
 
-                await Delay(async, _delayStrategy.GetNextDelay(response, suggestedInterval), cancellationToken).ConfigureAwait(false);
+                await Delay(async, _delayStrategy.GetNextDelay(response, ++attempt, suggestedInterval), cancellationToken).ConfigureAwait(false);
             }
         }
 

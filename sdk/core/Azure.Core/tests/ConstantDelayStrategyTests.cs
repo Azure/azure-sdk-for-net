@@ -17,7 +17,7 @@ namespace Azure.Core.Tests.DelayStrategies
         {
             var strategy = new ConstantDelayStrategy();
             var expected = TimeSpan.FromSeconds(suggest);
-            Assert.AreEqual(expected, strategy.GetNextDelay(_mockResponse, TimeSpan.FromSeconds(suggest)));
+            Assert.AreEqual(expected, strategy.GetNextDelay(_mockResponse, 1, TimeSpan.FromSeconds(suggest)));
         }
 
         [TestCase(1)]
@@ -31,7 +31,7 @@ namespace Azure.Core.Tests.DelayStrategies
 
             for (int i=0; i < count; i++)
             {
-                total += strategy.GetNextDelay(_mockResponse, null);
+                total += strategy.GetNextDelay(_mockResponse, i + 1, null);
             }
 
             Assert.AreEqual(expected, total);

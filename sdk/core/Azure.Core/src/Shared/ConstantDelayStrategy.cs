@@ -19,9 +19,10 @@ namespace Azure.Core
         /// Get the polling interval from the max value of <see cref="DefaultPollingInterval"/> and <paramref name="suggestedInterval"/>.
         /// </summary>
         /// <param name="response">Service response.</param>
+        /// <param name="attempt"></param>
         /// <param name="suggestedInterval">Suggested pollingInterval.</param>
         /// <returns>Max value of <see cref="DefaultPollingInterval"/> and <paramref name="suggestedInterval"/>.</returns>
-        public override TimeSpan GetNextDelay(Response response, TimeSpan? suggestedInterval)
+        public override TimeSpan GetNextDelay(Response response, int attempt, TimeSpan? suggestedInterval)
             => suggestedInterval.HasValue ? Max(DefaultPollingInterval, suggestedInterval.Value) : DefaultPollingInterval;
     }
 }

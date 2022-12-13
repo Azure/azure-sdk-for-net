@@ -34,9 +34,10 @@ namespace Azure.Core
         /// If retry-after header is not found, adopt the value of last retry-after header.
         /// </summary>
         /// <param name="response">Service response which might carry retry-after header.</param>
+        /// <param name="attempt"></param>
         /// <param name="suggestedInterval">Suggested pollingInterval.</param>
         /// <returns>Max value of retry-after header and <paramref name="suggestedInterval"/>.</returns>
-        public override TimeSpan GetNextDelay(Response response, TimeSpan? suggestedInterval)
+        public override TimeSpan GetNextDelay(Response response, int attempt, TimeSpan? suggestedInterval)
         {
             TimeSpan delay = TimeSpan.Zero;
             if (response.Headers.TryGetValue(RetryAfterMsHeaderName, out string? retryAfterValue) ||
@@ -55,7 +56,7 @@ namespace Azure.Core
                 }
             }
 
-            return Max(delay, _fallbackStrategy.GetNextDelay(response, suggestedInterval));
+            return Max(delay, _fallbackStrategy.GetNextDelay(response, attempt, suggestedInterval));
         }
     }
 }
