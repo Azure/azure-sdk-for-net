@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
@@ -14,20 +15,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <summary>Gets the event identifier.</summary>
         /// <value>The event identifier.</value>
         [JsonPropertyName("tenantId")]
-        [Required]
-        public Guid? TenantId { get; set; } = null;
+        [RequireNonDefault]
+        public Guid TenantId { get; set; }
 
         /// <summary>Gets the event identifier.</summary>
         /// <value>The event identifier.</value>
         [JsonPropertyName("authenticationEventListenerId")]
-        [Required]
-        public Guid? AuthenticationEventListenerId { get; set; } = null;
+        [RequireNonDefault]
+        public Guid AuthenticationEventListenerId { get; set; }
 
         /// <summary>Gets or sets the custom authentication extension identifier.</summary>
         /// <value>The custom authentication extension identifier. </value>
         [JsonPropertyName("customAuthenticationExtensionId")]
-        [Required]
-        public Guid? CustomAuthenticationExtensionId { get; set; } = null;
+        [RequireNonDefault]
+        public Guid CustomAuthenticationExtensionId { get; set; }
 
         /// <summary>Gets the Json settings.
         /// Which is over-ridable for sub class.</summary>

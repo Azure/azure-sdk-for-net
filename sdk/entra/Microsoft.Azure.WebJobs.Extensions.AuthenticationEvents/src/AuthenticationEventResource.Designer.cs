@@ -62,15 +62,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The action &apos;{0}&apos; is invalid, please use one of the following actions: &apos;{1}&apos;.
-        /// </summary>
-        internal static string Ex_Action_Invalid {
-            get {
-                return ResourceManager.GetString("Ex_Action_Invalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Comparable &apos;{0}&apos; cannot be match..
         /// </summary>
         internal static string Ex_Comparable_Not_Found {
@@ -89,7 +80,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot determine event from payload. (Error: {0}).
+        ///   Looks up a localized string similar to Cannot determine the event from payload, please check check the incoming payload is a valid json string and contains the event type..
         /// </summary>
         internal static string Ex_Event_Missing {
             get {
@@ -310,6 +301,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         internal static string Ex_Trigger_Required_Attrs {
             get {
                 return ResourceManager.GetString("Ex_Trigger_Required_Attrs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The action &apos;{0}&apos; is invalid, please use one of the following actions: &apos;{1}&apos;.
+        /// </summary>
+        internal static string F {
+            get {
+                return ResourceManager.GetString("F", resourceCulture);
             }
         }
         

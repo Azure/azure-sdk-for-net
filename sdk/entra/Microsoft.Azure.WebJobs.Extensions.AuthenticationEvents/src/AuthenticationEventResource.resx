@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Ex_Action_Invalid" xml:space="preserve">
-    <value>The action '{0}' is invalid, please use one of the following actions: '{1}'</value>
-  </data>
   <data name="Ex_Comparable_Not_Found" xml:space="preserve">
     <value>Comparable '{0}' cannot be match.</value>
   </data>
@@ -127,7 +124,7 @@
     <value>ListenerFactoryContext is null</value>
   </data>
   <data name="Ex_Event_Missing" xml:space="preserve">
-    <value>Cannot determine event from payload. (Error: {0})</value>
+    <value>Cannot determine the event from payload, please check check the incoming payload is a valid json string and contains the event type.</value>
   </data>
   <data name="Ex_File_Exists" xml:space="preserve">
     <value>File '{0}' could not be written. Already exists.</value>
@@ -200,6 +197,9 @@
   </data>
   <data name="Ex_Trigger_Required_Attrs" xml:space="preserve">
     <value>Please supply both the TenantId and AudienceAppId in variables in your binding configuration. (Or app settings {0} and {1})</value>
+  </data>
+  <data name="F" xml:space="preserve">
+    <value>The action '{0}' is invalid, please use one of the following actions: '{1}'</value>
   </data>
   <data name="Log_EventHandler_Url" xml:space="preserve">
     <value>Listener registered at: {0}</value>
