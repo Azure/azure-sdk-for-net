@@ -244,8 +244,6 @@ namespace Azure.Storage.DataMovement
                 ReportProgressInBytes = (long bytesWritten) =>
                     jobPart.ReportBytesWritten(bytesWritten),
                 InvokeFailedHandler = async (ex) => await jobPart.InvokeFailedArg(ex).ConfigureAwait(false),
-                UpdateTransferStatus = async (status)
-                    => await jobPart.OnTransferStatusChanged(status).ConfigureAwait(false)
             };
         }
         #endregion

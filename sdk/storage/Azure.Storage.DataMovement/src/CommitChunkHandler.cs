@@ -20,7 +20,6 @@ namespace Azure.Storage.DataMovement
         #region Delegate Definitions
         public delegate Task QueuePutBlockTaskInternal(long offset, long blockSize, long expectedLength);
         public delegate Task QueueCommitBlockTaskInternal();
-        public delegate Task UpdateTransferStatusInternal(StorageTransferStatus status);
         public delegate void ReportProgressInBytes(long bytesWritten);
         public delegate Task InvokeFailedEventHandlerInternal(Exception ex);
         #endregion Delegate Definitions
@@ -28,7 +27,6 @@ namespace Azure.Storage.DataMovement
         private readonly QueuePutBlockTaskInternal _queuePutBlockTask;
         private readonly QueueCommitBlockTaskInternal _queueCommitBlockTask;
         private readonly ReportProgressInBytes _reportProgressInBytes;
-        private readonly UpdateTransferStatusInternal _updateTransferStatus;
         private readonly InvokeFailedEventHandlerInternal _invokeFailedEventHandler;
 
         public struct Behaviors
@@ -36,7 +34,6 @@ namespace Azure.Storage.DataMovement
             public QueuePutBlockTaskInternal QueuePutBlockTask { get; set; }
             public QueueCommitBlockTaskInternal QueueCommitBlockTask { get; set; }
             public ReportProgressInBytes ReportProgressInBytes { get; set; }
-            public UpdateTransferStatusInternal UpdateTransferStatus { get; set; }
             public InvokeFailedEventHandlerInternal InvokeFailedHandler { get; set; }
         }
 
@@ -77,8 +74,6 @@ namespace Azure.Storage.DataMovement
                 ?? throw Errors.ArgumentNull(nameof(behaviors.ReportProgressInBytes));
             _invokeFailedEventHandler = behaviors.InvokeFailedHandler
                 ?? throw Errors.ArgumentNull(nameof(behaviors.InvokeFailedHandler));
-            _updateTransferStatus = behaviors.UpdateTransferStatus
-                ?? throw Errors.ArgumentNull(nameof(behaviors.UpdateTransferStatus));
 
             // Set expected length to perform commit task
             _expectedLength = expectedLength;
