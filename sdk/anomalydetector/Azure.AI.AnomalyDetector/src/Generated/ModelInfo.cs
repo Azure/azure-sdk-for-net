@@ -44,7 +44,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="status"></param>
         /// <param name="errors"></param>
         /// <param name="diagnosticsInfo"></param>
-        internal ModelInfo(string dataSource, DataSchema? dataSchema, DateTimeOffset startTime, DateTimeOffset endTime, string displayName, int? slidingWindow, AlignPolicy alignPolicy, ModelStatus? status, IList<ErrorResponse> errors, DiagnosticsInfo diagnosticsInfo)
+        internal ModelInfo(string dataSource, DataSchema? dataSchema, DateTimeOffset startTime, DateTimeOffset endTime, string displayName, int? slidingWindow, AlignPolicy alignPolicy, ModelStatus? status, IReadOnlyList<ErrorResponse> errors, DiagnosticsInfo diagnosticsInfo)
         {
             DataSource = dataSource;
             DataSchema = dataSchema;
@@ -75,7 +75,7 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Gets or sets the status. </summary>
         public ModelStatus? Status { get; set; }
         /// <summary> Gets the errors. </summary>
-        public IList<ErrorResponse> Errors { get; }
+        public IReadOnlyList<ErrorResponse> Errors { get; }
         /// <summary> Gets or sets the diagnostics info. </summary>
         public DiagnosticsInfo DiagnosticsInfo { get; set; }
     }

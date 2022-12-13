@@ -9,14 +9,12 @@ using System.IO;
 using System.Threading;
 using System.Buffers;
 using Azure.Storage.Shared;
+using Azure.Core;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class StreamToUriJobPart : JobPartInternal
+    internal class StreamToUriJobPart : JobPartInternal, IDisposable
     {
-        public delegate Task CommitBlockTaskInternal(CancellationToken cancellationToken);
-        public CommitBlockTaskInternal CommitBlockTask { get; internal set; }
-
         /// <summary>
         ///  Will handle the calling the commit block list API once
         ///  all commit blocks have been uploaded.
@@ -29,20 +27,22 @@ namespace Azure.Storage.DataMovement
         /// <param name="job"></param>
         /// <param name="partNumber"></param>
         public StreamToUriJobPart(StreamToUriTransferJob job, int partNumber)
-            : base(job._dataTransfer,
-                  partNumber,
-                  job._sourceResource,
-                  job._destinationResource,
-                  job._maximumTransferChunkSize,
-                  job._initialTransferSize,
-                  job._errorHandling,
-                  job._createMode,
-                  job._checkpointer,
-                  job.UploadArrayPool,
-                  job.GetJobPartStatus(),
-                  job.TransferStatusEventHandler,
-                  job.TransferFailedEventHandler,
-                  job._cancellationTokenSource)
+            : base(dataTransfer: job._dataTransfer,
+                  partNumber: partNumber,
+                  sourceResource: job._sourceResource,
+                  destinationResource: job._destinationResource,
+                  maximumTransferChunkSize: job._maximumTransferChunkSize,
+                  initialTransferSize: job._initialTransferSize,
+                  errorHandling: job._errorHandling,
+                  createMode: job._createMode,
+                  checkpointer: job._checkpointer,
+                  arrayPool: job.UploadArrayPool,
+                  jobPartEventHandler: job.GetJobPartStatus(),
+                  statusEventHandler: job.TransferStatusEventHandler,
+                  failedEventHandler: job.TransferFailedEventHandler,
+                  skippedEventHandler: job.TransferSkippedEventHandler,
+                  singleTransferEventHandler: job.SingleTransferCompletedEventHandler,
+                  cancellationTokenSource: job._cancellationTokenSource)
         {
         }
 
@@ -54,21 +54,28 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResource sourceResource,
             StorageResource destinationResource)
-            : base(job._dataTransfer,
-                  partNumber,
-                  sourceResource,
-                  destinationResource,
-                  job._maximumTransferChunkSize,
-                  job._initialTransferSize,
-                  job._errorHandling,
-                  job._createMode,
-                  job._checkpointer,
-                  job.UploadArrayPool,
-                  job.GetJobPartStatus(),
-                  job.TransferStatusEventHandler,
-                  job.TransferFailedEventHandler,
-                  job._cancellationTokenSource)
+            : base(dataTransfer: job._dataTransfer,
+                  partNumber: partNumber,
+                  sourceResource: sourceResource,
+                  destinationResource: destinationResource,
+                  maximumTransferChunkSize: job._maximumTransferChunkSize,
+                  initialTransferSize: job._initialTransferSize,
+                  errorHandling: job._errorHandling,
+                  createMode: job._createMode,
+                  checkpointer: job._checkpointer,
+                  arrayPool: job.UploadArrayPool,
+                  jobPartEventHandler: job.GetJobPartStatus(),
+                  statusEventHandler: job.TransferStatusEventHandler,
+                  failedEventHandler: job.TransferFailedEventHandler,
+                  skippedEventHandler: job.TransferSkippedEventHandler,
+                  singleTransferEventHandler: job.SingleTransferCompletedEventHandler,
+                  cancellationTokenSource: job._cancellationTokenSource)
         {
+        }
+
+        public void Dispose()
+        {
+            DisposeHandlers();
         }
 
         /// <summary>
@@ -149,20 +156,12 @@ namespace Azure.Storage.DataMovement
             }
 
             catch (RequestFailedException exception)
-                when (_createMode == StorageResourceCreateMode.Overwrite
+                when (_createMode == StorageResourceCreateMode.Skip
                     && exception.ErrorCode == "BlobAlreadyExists")
             {
                 await InvokeSkippedArg().ConfigureAwait(false);
             }
-            catch (IOException exception)
-            when (_createMode == StorageResourceCreateMode.Overwrite
-                && exception.Message.Contains("Cannot overwite file"))
-            {
-                // Skip this file
-                await InvokeSkippedArg().ConfigureAwait(false);
-            }
             catch (Exception ex)
-            when (_createMode == StorageResourceCreateMode.Fail)
             {
                 await InvokeFailedArg(ex).ConfigureAwait(false);
             }
@@ -212,9 +211,9 @@ namespace Azure.Storage.DataMovement
                             _cancellationTokenSource.Token).ConfigureAwait(false);
                         await _destinationResource.WriteFromStreamAsync(
                             stream: slicedStream,
+                            streamLength: blockSize,
                             overwrite: _createMode == StorageResourceCreateMode.Overwrite,
                             position: 0,
-                            streamLength: blockSize,
                             completeLength: expectedlength,
                             default,
                             _cancellationTokenSource.Token).ConfigureAwait(false);
@@ -223,18 +222,9 @@ namespace Azure.Storage.DataMovement
                 ReportBytesWritten(blockSize);
             }
             catch (RequestFailedException ex)
-            when (ex.ErrorCode == "BlobAlreadyExists")
+            when (ex.ErrorCode == "BlobAlreadyExists" && _createMode == StorageResourceCreateMode.Skip)
             {
-                // For Block Blobs this is a one off case because we don't create the blob
-                // before uploading to it.
-                if (_createMode == StorageResourceCreateMode.Fail)
-                {
-                    await InvokeFailedArg(ex).ConfigureAwait(false);
-                }
-                else // (_createMode == StorageResourceCreateMode.Skip)
-                {
-                    await InvokeSkippedArg().ConfigureAwait(false);
-                }
+                await InvokeSkippedArg().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -292,9 +282,9 @@ namespace Azure.Storage.DataMovement
                         _cancellationTokenSource.Token).ConfigureAwait(false);
                     await _destinationResource.WriteFromStreamAsync(
                         stream: slicedStream,
+                        streamLength: blockLength,
                         overwrite: _createMode == StorageResourceCreateMode.Overwrite,
                         position: offset,
-                        streamLength: blockLength,
                         completeLength: completeLength,
                         default,
                         _cancellationTokenSource.Token).ConfigureAwait(false);
@@ -325,9 +315,14 @@ namespace Azure.Storage.DataMovement
 
         internal async Task CompleteTransferAsync()
         {
+            CancellationHelper.ThrowIfCancellationRequested(_cancellationTokenSource.Token);
             try
             {
+                // Apply necessary transfer completions on the destination.
                 await _destinationResource.CompleteTransferAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
+
+                // Dispose the handlers
+                DisposeHandlers();
 
                 // Set completion status to completed
                 await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
@@ -389,6 +384,26 @@ namespace Azure.Storage.DataMovement
                 maxArrayPoolRentalSize: default,
                 async: true,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        public override async Task InvokeSkippedArg()
+        {
+            DisposeHandlers();
+            await base.InvokeSkippedArg().ConfigureAwait(false);
+        }
+
+        public override async Task InvokeFailedArg(Exception ex)
+        {
+            DisposeHandlers();
+            await base.InvokeFailedArg(ex).ConfigureAwait(false);
+        }
+
+        internal void DisposeHandlers()
+        {
+            if (_commitBlockHandler != default)
+            {
+                _commitBlockHandler.Dispose();
+            }
         }
     }
 }

@@ -20,12 +20,12 @@ namespace Azure.Storage.DataMovement
         public QueueChunkDelegate QueueChunk { get; internal set; }
 
         /// <summary>
-        /// Part Number
+        /// Part number of the current job part.
         /// </summary>
         public int PartNumber;
 
         /// <summary>
-        /// DataTransfer communicate when the transfer has finished and the progress
+        /// DataTransfer object that communicates when the transfer completes and it's current progress.
         /// </summary>
         internal DataTransfer _dataTransfer { get; set; }
 
@@ -39,41 +39,41 @@ namespace Azure.Storage.DataMovement
         internal CancellationTokenSource _cancellationTokenSource { get; set; }
 
         /// <summary>
-        /// Plan file writer for hte respective job
+        /// Plan file writer for the respective job.
         /// </summary>
         internal TransferCheckpointer _checkpointer { get; set; }
 
         /// <summary>
-        /// Source resource
+        /// Specifies the source resource.
         /// </summary>
         internal StorageResource _sourceResource;
 
         /// <summary>
-        /// Destination Resource
+        /// Specifies the destination resource.
         /// </summary>
         internal StorageResource _destinationResource;
 
         /// <summary>
-        /// The error handling options
+        /// Specifies the options for error handling.
         /// </summary>
         internal ErrorHandlingOptions _errorHandling;
 
         /// <summary>
-        /// Determines how files are created or if they should be overwritten if they already exists
+        /// Determines how files are created and overwrite behavior for files that already exists.
         /// </summary>
         internal StorageResourceCreateMode _createMode;
 
         /// <summary>
         /// The maximum length of an transfer in bytes.
         ///
-        /// On uploads, if the value is not set, it will be set at 4 MB if the total size is less than 100MB
+        /// On uploads, if the value is not set, it will be set at 4 MB if the total size is less than 100MB,
         /// or will default to 8 MB if the total size is greater than or equal to 100MB.
         /// </summary>
         internal long _maximumTransferChunkSize { get; set; }
 
         /// <summary>
         /// The size of the first range request in bytes. Single Transfer sizes smaller than this
-        /// limit will be Uploaded or Downloaded in a single request.
+        /// limit will be uploaded or downloaded in a single request.
         /// Transfers larger than this limit will continue being downloaded or uploaded
         /// in chunks of size <see cref="_maximumTransferChunkSize"/>.
         ///
@@ -82,7 +82,7 @@ namespace Azure.Storage.DataMovement
         internal long _initialTransferSize { get; set; }
 
         /// <summary>
-        /// Status of each Job part
+        /// The current status of each job part.
         /// </summary>
         public StorageTransferStatus JobPartStatus { get; set; }
 
@@ -113,6 +113,12 @@ namespace Azure.Storage.DataMovement
         public SyncAsyncEventHandler<TransferFailedEventArgs> TransferFailedEventHandler { get; internal set; }
 
         /// <summary>
+        /// If a single transfer within the resource contianer gets transferred successfully the event
+        /// will get added to this handler
+        /// </summary>
+        public SyncAsyncEventHandler<SingleTransferCompletedEventArgs> SingleTransferCompletedEventHandler { get; internal set; }
+
+        /// <summary>
         /// Array pools for reading from streams to upload
         /// </summary>
         public ArrayPool<byte> UploadArrayPool => _arrayPool;
@@ -134,6 +140,8 @@ namespace Azure.Storage.DataMovement
             SyncAsyncEventHandler<TransferStatusEventArgs> jobPartEventHandler,
             SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
             SyncAsyncEventHandler<TransferFailedEventArgs> failedEventHandler,
+            SyncAsyncEventHandler<TransferSkippedEventArgs> skippedEventHandler,
+            SyncAsyncEventHandler<SingleTransferCompletedEventArgs> singleTransferEventHandler,
             CancellationTokenSource cancellationTokenSource,
             long? length = default)
         {
@@ -150,6 +158,8 @@ namespace Azure.Storage.DataMovement
             PartTransferStatusEventHandler = jobPartEventHandler;
             TransferStatusEventHandler = statusEventHandler;
             TransferFailedEventHandler = failedEventHandler;
+            TransferSkippedEventHandler = skippedEventHandler;
+            SingleTransferCompletedEventHandler = singleTransferEventHandler;
 
             _initialTransferSize = _destinationResource.MaxChunkSize;
             if (initialTransferSize.HasValue)
@@ -200,6 +210,10 @@ namespace Azure.Storage.DataMovement
                 && JobPartStatus != transferStatus)
             {
                 JobPartStatus = transferStatus;
+                if (JobPartStatus == StorageTransferStatus.Completed)
+                {
+                    await InvokeSingleCompletedArg().ConfigureAwait(false);
+                }
                 // TODO: change to RaiseAsync
                 await PartTransferStatusEventHandler.Invoke(new TransferStatusEventArgs(
                     _dataTransfer.Id,
@@ -218,10 +232,24 @@ namespace Azure.Storage.DataMovement
             _dataTransfer._state.UpdateTransferBytes(bytesTransferred);
         }
 
+        public async virtual Task InvokeSingleCompletedArg()
+        {
+            if (SingleTransferCompletedEventHandler != null)
+            {
+                await SingleTransferCompletedEventHandler.Invoke(
+                    new SingleTransferCompletedEventArgs(
+                        _dataTransfer.Id,
+                        _sourceResource,
+                        _destinationResource,
+                        false,
+                        _cancellationTokenSource.Token)).ConfigureAwait(false);
+            }
+        }
+
         /// <summary>
         /// Invokes Failed Argument
         /// </summary>
-        internal async Task InvokeSkippedArg()
+        public async virtual Task InvokeSkippedArg()
         {
             if (TransferSkippedEventHandler != null)
             {
@@ -233,12 +261,13 @@ namespace Azure.Storage.DataMovement
                     false,
                     _cancellationTokenSource.Token)).ConfigureAwait(false);
             }
+            await OnTransferStatusChanged(StorageTransferStatus.CompletedWithSkippedTransfers).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Invokes Failed Argument
         /// </summary>
-        internal async Task InvokeFailedArg(Exception ex)
+        public async virtual Task InvokeFailedArg(Exception ex)
         {
             if (TransferFailedEventHandler != null)
             {

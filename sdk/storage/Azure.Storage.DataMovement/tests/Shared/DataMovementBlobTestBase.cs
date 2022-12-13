@@ -17,6 +17,7 @@ using NUnit.Framework;
 using Azure.Core;
 using System.Threading;
 using Azure.Storage.Blobs.Tests;
+using Azure.Storage.Shared;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -38,7 +39,7 @@ namespace Azure.Storage.DataMovement.Tests
         public string GetNewBlockName() => BlobsClientBuilder.GetNewBlockName();
 
         public DataMovementBlobTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
-            : base(async, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
+            : base(async, mode /* RecordedTestMode.Record /* to re-record */)
         {
             _serviceVersion = serviceVersion;
             BlobsClientBuilder = ClientBuilderExtensions.GetNewBlobsClientBuilder(Tenants, _serviceVersion);
@@ -578,6 +579,90 @@ namespace Azure.Storage.DataMovement.Tests
                     buffer,
                     actual.AsSpan(0, count).ToArray());
             }
+        }
+
+        internal async Task<AppendBlobClient> CreateAppendBlob(
+            BlobContainerClient containerClient,
+            string localSourceFile,
+            string blobName,
+            long size)
+        {
+            AppendBlobClient blobClient = containerClient.GetAppendBlobClient(blobName);
+            await blobClient.CreateIfNotExistsAsync().ConfigureAwait(false);
+            if (size > 0)
+            {
+                long offset = 0;
+                long blockSize = Math.Min(Constants.DefaultBufferSize, size);
+                using Stream originalStream = await CreateLimitedMemoryStream(size);
+                using (FileStream fileStream = File.Create(localSourceFile))
+                {
+                    // Copy source to a file, so we can verify the source against downloaded blob later
+                    await originalStream.CopyToAsync(fileStream);
+                    originalStream.Position = 0;
+                    // Upload blob to storage account
+                    while (offset < size)
+                    {
+                        Stream partStream = WindowStream.GetWindow(originalStream, blockSize);
+                        await blobClient.AppendBlockAsync(partStream);
+                        offset += blockSize;
+                    }
+                }
+            }
+            return blobClient;
+        }
+
+        internal async Task<BlockBlobClient> CreateBlockBlob(
+            BlobContainerClient containerClient,
+            string localSourceFile,
+            string blobName,
+            long size)
+        {
+            BlockBlobClient blobClient = containerClient.GetBlockBlobClient(blobName);
+
+            // create a new file and copy contents of stream into it, and then close the FileStream
+            // so the StagedUploadAsync call is not prevented from reading using its FileStream.
+            using Stream originalStream = await CreateLimitedMemoryStream(size);
+            using (FileStream fileStream = File.Create(localSourceFile))
+            {
+                // Copy source to a file, so we can verify the source against downloaded blob later
+                await originalStream.CopyToAsync(fileStream);
+                // Upload blob to storage account
+                originalStream.Position = 0;
+                await blobClient.UploadAsync(originalStream);
+            }
+            return blobClient;
+        }
+
+        internal async Task<PageBlobClient> CreatePageBlob(
+            BlobContainerClient containerClient,
+            string localSourceFile,
+            string blobName,
+            long size)
+        {
+            Assert.IsTrue(size % (Constants.KB / 2) == 0, "Cannot create page blob that's not a multiple of 512");
+
+            PageBlobClient blobClient = containerClient.GetPageBlobClient(blobName);
+            await blobClient.CreateIfNotExistsAsync(size).ConfigureAwait(false);
+            if (size > 0)
+            {
+                long offset = 0;
+                long blockSize = Math.Min(Constants.DefaultBufferSize, size);
+                using Stream originalStream = await CreateLimitedMemoryStream(size);
+                using (FileStream fileStream = File.Create(localSourceFile))
+                {
+                    // Copy source to a file, so we can verify the source against downloaded blob later
+                    await originalStream.CopyToAsync(fileStream);
+                    originalStream.Position = 0;
+                }
+                // Upload blob to storage account
+                while (offset < size)
+                {
+                    Stream partStream = WindowStream.GetWindow(originalStream, blockSize);
+                    await blobClient.UploadPagesAsync(partStream, offset);
+                    offset += blockSize;
+                }
+            }
+            return blobClient;
         }
     }
 }

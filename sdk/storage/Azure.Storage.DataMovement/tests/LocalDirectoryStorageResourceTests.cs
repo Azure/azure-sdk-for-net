@@ -28,21 +28,7 @@ namespace Azure.Storage.DataMovement.Tests
             "user1\\Documents\file\\",
         };
 
-        private static string CreateRandomDirectory(string parentPath)
-        {
-            return Directory.CreateDirectory(Path.Combine(parentPath, Path.GetRandomFileName())).FullName;
-        }
-
-        private static string CreateRandomFile(string parentPath)
-        {
-            using (FileStream fs = File.Create(Path.Combine(parentPath, Path.GetRandomFileName())))
-            {
-                return fs.Name;
-            }
-        }
-
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public void Ctor_string()
         {
             foreach (string path in fileNames)
@@ -57,81 +43,111 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task GetStorageResourcesAsync()
         {
             // Arrange
             List<string> paths = new List<string>();
             string folderPath = CreateRandomDirectory(Path.GetTempPath());
-            for (int i = 0; i < 3; i++)
+            try
             {
-                paths.Add(CreateRandomFile(folderPath));
-            }
-            LocalDirectoryStorageResourceContainer containerResource = new LocalDirectoryStorageResourceContainer(folderPath);
+                for (int i = 0; i < 3; i++)
+                {
+                    paths.Add(await CreateRandomFileAsync(folderPath));
+                }
+                LocalDirectoryStorageResourceContainer containerResource = new LocalDirectoryStorageResourceContainer(folderPath);
 
-            // Act
-            List<string> resultPaths = new List<string>();
-            await foreach (StorageResourceBase resource in containerResource.GetStorageResourcesAsync())
+                // Act
+                List<string> resultPaths = new List<string>();
+                await foreach (StorageResourceBase resource in containerResource.GetStorageResourcesAsync())
+                {
+                    resultPaths.Add(resource.Path);
+                }
+
+                // Assert
+                Assert.IsNotEmpty(resultPaths);
+                Assert.AreEqual(paths.Count, resultPaths.Count);
+                Assert.IsTrue(paths.All(path => resultPaths.Contains(path)));
+            }
+            finally
             {
-                resultPaths.Add(resource.Path);
+                if (Directory.Exists(folderPath))
+                {
+                    Directory.Delete(folderPath, true);
+                }
             }
-
-            // Assert
-            Assert.IsNotEmpty(resultPaths);
-            Assert.AreEqual(paths.Count, resultPaths.Count);
-            Assert.IsTrue(paths.All(path => resultPaths.Contains(path)));
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task GetChildStorageResourceAsync()
         {
             List<string> paths = new List<string>();
             List<string> fileNames = new List<string>();
-            string folderPath = CreateRandomDirectory(Path.GetTempPath());
-            for (int i = 0; i < 3; i++)
+            string dirName = "foo";
+            string folderPath = CreateRandomDirectory(Path.GetTempPath(), dirName);
+            try
             {
-                string fileName = CreateRandomFile(folderPath);
-                paths.Add(fileName);
-                fileNames.Add(fileName.Substring(folderPath.Length));
-            }
+                for (int i = 0; i < 3; i++)
+                {
+                    string fileName = await CreateRandomFileAsync(folderPath);
+                    paths.Add(fileName);
+                    fileNames.Add(fileName.Substring(folderPath.Length + 1));
+                }
 
-            StorageResourceContainer containerResource = new LocalDirectoryStorageResourceContainer(folderPath);
-            foreach (string fileName in fileNames)
+                StorageResourceContainer containerResource = new LocalDirectoryStorageResourceContainer(folderPath);
+                foreach (string fileName in fileNames)
+                {
+                    StorageResource resource = containerResource.GetChildStorageResource(fileName);
+                    // Assert
+                    await resource.GetPropertiesAsync().ConfigureAwait(false);
+                }
+            }
+            finally
             {
-                StorageResource resource = containerResource.GetChildStorageResource(fileName);
-                // Assert
-                await resource.GetPropertiesAsync().ConfigureAwait(false);
+                if (Directory.Exists(folderPath))
+                {
+                    Directory.Delete(folderPath, true);
+                }
             }
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task GetChildStorageResourceAsync_SubDir()
         {
             List<string> paths = new List<string>();
             List<string> fileNames = new List<string>();
-            string folderPath = CreateRandomDirectory(Path.GetTempPath());
-            for (int i = 0; i < 3; i++)
+            string dirName = "foo";
+            string folderPath = CreateRandomDirectory(Path.GetTempPath(), dirName);
+            try
             {
-                string fileName = CreateRandomFile(folderPath);
-                paths.Add(fileName);
-                fileNames.Add(fileName.Substring(folderPath.Length + 1));
-            }
-            string subdir = CreateRandomDirectory(folderPath);
-            for (int i = 0; i < 3; i++)
-            {
-                string fileName = CreateRandomFile(subdir);
-                paths.Add(fileName);
-                fileNames.Add(fileName.Substring(folderPath.Length + 1));
-            }
+                for (int i = 0; i < 3; i++)
+                {
+                    string fileName = await CreateRandomFileAsync(folderPath);
+                    paths.Add(fileName);
+                    fileNames.Add(fileName.Substring(folderPath.Length + 1));
+                }
+                string subdirName = "bar";
+                string subdir = CreateRandomDirectory(folderPath, subdirName);
+                for (int i = 0; i < 3; i++)
+                {
+                    string fileName = await CreateRandomFileAsync(subdir);
+                    paths.Add(fileName);
+                    fileNames.Add(fileName.Substring(folderPath.Length + 1));
+                }
 
-            StorageResourceContainer containerResource = new LocalDirectoryStorageResourceContainer(folderPath);
-            foreach (string fileName in fileNames)
+                StorageResourceContainer containerResource = new LocalDirectoryStorageResourceContainer(folderPath);
+                foreach (string fileName in fileNames)
+                {
+                    StorageResource resource = containerResource.GetChildStorageResource(fileName);
+                    // Assert
+                    await resource.GetPropertiesAsync().ConfigureAwait(false);
+                }
+            }
+            finally
             {
-                StorageResource resource = containerResource.GetChildStorageResource(fileName);
-                // Assert
-                await resource.GetPropertiesAsync().ConfigureAwait(false);
+                if (Directory.Exists(folderPath))
+                {
+                    Directory.Delete(folderPath, true);
+                }
             }
         }
     }

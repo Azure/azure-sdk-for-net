@@ -15,8 +15,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class TelemetryItem
     {
-        private const string DateTimeFormat = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
-
         public TelemetryItem(Activity activity, ref TagEnumerationState monitorTags, string roleName, string roleInstance, string instrumentationKey) :
             this(activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency", FormatUtcTimestamp(activity.StartTimeUtc))
         {
@@ -108,9 +106,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion;
         }
 
-        internal static string FormatUtcTimestamp(System.DateTime utcTimestamp)
+        internal static DateTimeOffset FormatUtcTimestamp(System.DateTime utcTimestamp)
         {
-            return utcTimestamp.ToString(DateTimeFormat, CultureInfo.InvariantCulture);
+            return DateTime.SpecifyKind(utcTimestamp, DateTimeKind.Utc);
         }
     }
 }

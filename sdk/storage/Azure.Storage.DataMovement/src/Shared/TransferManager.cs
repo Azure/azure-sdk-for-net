@@ -117,7 +117,8 @@ namespace Azure.Storage.DataMovement
             _maxJobChunkTasks = options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks;
             _dataTransfers = new List<DataTransfer>();
             _arrayPool = ArrayPool<byte>.Shared;
-            _checkpointer = options?.Checkpointer != default ? options.Checkpointer : CreateDefaultCheckpointer();
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/32955
+            //_checkpointer = options?.Checkpointer != default ? options.Checkpointer : CreateDefaultCheckpointer();
         }
 
         #region Job Channel Management
@@ -218,7 +219,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public virtual Task<bool> TryPauseTransferAsync(string id)
+        internal virtual Task<bool> TryPauseTransferAsync(string id)
         {
             throw new NotImplementedException();
         }
@@ -228,7 +229,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public virtual Task<bool> TryPauseAllTransfersAsync()
+        internal virtual Task<bool> TryPauseAllTransfersAsync()
         {
             throw new NotImplementedException();
         }
@@ -239,7 +240,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public virtual Task<bool> TryRemoveTransferAsync(string id)
+        internal virtual Task<bool> TryRemoveTransferAsync(string id)
         {
             throw new NotImplementedException();
         }
@@ -444,7 +445,7 @@ namespace Azure.Storage.DataMovement
         private static LocalTransferCheckpointer CreateDefaultCheckpointer()
         {
             // Make folder path
-            string defaultPath = string.Concat(Environment.CurrentDirectory, "/", DataMovementConstants.DefaultTransferFilesPath);
+            string defaultPath = Path.Combine(Environment.CurrentDirectory, "/", DataMovementConstants.DefaultTransferFilesPath);
             // Create folder if it does not already exists. It's possible that this library could be run
             // multiple times in the same directory without defining a checkpointer.
             Directory.CreateDirectory(defaultPath);

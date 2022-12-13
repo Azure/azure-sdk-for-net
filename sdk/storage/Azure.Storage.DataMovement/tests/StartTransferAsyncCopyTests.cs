@@ -114,27 +114,6 @@ namespace Azure.Storage.DataMovement.Tests
             }
         };
 
-        internal async Task<BlockBlobClient> CreateBlockBlob(
-            BlobContainerClient container,
-            string localSourceFile,
-            string blobName,
-            long size)
-        {
-            using Stream originalStream = await CreateLimitedMemoryStream(size);
-            BlockBlobClient blob = InstrumentClient(container.GetBlockBlobClient(blobName));
-            // create a new file and copy contents of stream into it, and then close the FileStream
-            // so the StagedUploadAsync call is not prevented from reading using its FileStream.
-            using (FileStream fileStream = File.Create(localSourceFile))
-            {
-                // Copy source to a file, so we can verify the source against Copyed blob later
-                await originalStream.CopyToAsync(fileStream);
-                // Upload blob to storage account
-                originalStream.Position = 0;
-                await blob.UploadAsync(originalStream);
-            }
-            return blob;
-        }
-
         #region SyncCopy Source Block Blob
         /// <summary>
         /// Upload the blob, then copy the contents to another blob.
@@ -221,10 +200,7 @@ namespace Azure.Storage.DataMovement.Tests
                     StorageResource destinationResource = new BlockBlobStorageResource(destClient,
                         new BlockBlobStorageResourceOptions()
                         {
-                            CopyOptions = new BlockBlobStorageResourceServiceCopyOptions()
-                            {
-                                CopyMethod = TransferCopyMethod.AsyncCopy
-                            }
+                            CopyMethod = TransferCopyMethod.AsyncCopy,
                         });
                     copyBlobInfo.Add(new VerifyBlockCopyFromUriInfo(
                         localSourceFile,
@@ -501,10 +477,7 @@ namespace Azure.Storage.DataMovement.Tests
                     StorageResource destinationResource = new PageBlobStorageResource(destClient,
                         new PageBlobStorageResourceOptions()
                         {
-                            CopyOptions = new PageBlobStorageResourceServiceCopyOptions()
-                            {
-                                CopyMethod = TransferCopyMethod.AsyncCopy
-                            }
+                            CopyMethod = TransferCopyMethod.AsyncCopy
                         });
                     copyBlobInfo.Add(new VerifyPageCopyFromUriInfo(
                         localSourceFile,
@@ -795,10 +768,7 @@ namespace Azure.Storage.DataMovement.Tests
                     StorageResource destinationResource = new AppendBlobStorageResource(destClient,
                         new AppendBlobStorageResourceOptions()
                         {
-                            CopyOptions = new AppendBlobStorageResourceServiceCopyOptions()
-                            {
-                                CopyMethod = TransferCopyMethod.AsyncCopy
-                            }
+                            CopyMethod = TransferCopyMethod.AsyncCopy,
                         });
                     copyBlobInfo.Add(new VerifyAppendCopyFromUriInfo(
                         localSourceFile,

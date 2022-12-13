@@ -14,7 +14,7 @@ namespace Azure.Storage.DataMovement
     public class TransferManagerOptions
     {
         /// <summary>
-        /// Optional event handler containing all possible status event status holders
+        /// Optional event handler containing all possible status event status holders.
         /// </summary>
         internal IProgress<StorageTransferProgress> ProgressHandler { get; set; }
 
@@ -32,8 +32,10 @@ namespace Azure.Storage.DataMovement
         public int? MaximumConcurrency { get; set; }
 
         /// <summary>
-        /// Optional. Defines the checkpoint id that the transfer should continue from.
+        /// Optional. Defines the checkpoint ID that the transfer should continue from.
+        ///
+        /// TODO: https://github.com/Azure/azure-sdk-for-net/issues/32955
         /// </summary>
-        public TransferCheckpointer Checkpointer { get; set; }
+        internal TransferCheckpointer Checkpointer { get; set; }
     }
 }

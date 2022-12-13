@@ -20,7 +20,8 @@ irregular-plural-words:
   quota: quota
 
 rename-mapping:
-  LoadTestResource: LoadTesting
+  Resource: LoadTestingBaseResource
+  LoadTestResource: LoadTestingResource
   QuotaResource: LoadTestingQuota
   CheckQuotaAvailabilityResponse: LoadTestingQuotaAvailabilityResponse
   EncryptionProperties: CustomerManagedKeyEncryptionProperties

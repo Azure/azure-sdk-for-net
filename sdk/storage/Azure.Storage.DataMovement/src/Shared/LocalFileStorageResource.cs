@@ -102,8 +102,7 @@ namespace Azure.Storage.DataMovement
                 File.SetAttributes(_path, attributes | FileAttributes.Temporary);
                 return Task.CompletedTask;
             }
-            // TODO: maybe better exception type?
-            throw new IOException($"File path `{_path}` already exists. Cannot overwite file");
+            throw new IOException($"File path `{_path}` already exists. Cannot overwite file.");
         }
 
         /// <summary>
@@ -125,9 +124,9 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         public override async Task WriteFromStreamAsync(
             Stream stream,
+            long streamLength,
             bool overwrite,
             long position = 0,
-            long? streamLength = default,
             long completeLength = 0,
             StorageResourceWriteToOffsetOptions options = default,
             CancellationToken cancellationToken = default)

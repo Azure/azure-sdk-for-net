@@ -133,6 +133,11 @@ namespace Azure.Containers.ContainerRegistry.Specialized
         public virtual string RepositoryName => _repositoryName;
 
         /// <summary>
+        /// The HttpPipeline.
+        /// </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
         /// Uploads a manifest for an OCI Artifact.
         /// </summary>
         /// <param name="manifest">The manifest to upload.</param>
