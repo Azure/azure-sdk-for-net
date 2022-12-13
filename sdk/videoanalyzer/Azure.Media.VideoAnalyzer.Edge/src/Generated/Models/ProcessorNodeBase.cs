@@ -17,13 +17,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// Please note <see cref="ProcessorNodeBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CognitiveServicesVisionProcessor"/>, <see cref="ExtensionProcessorBase"/>, <see cref="GrpcExtension"/>, <see cref="HttpExtension"/>, <see cref="LineCrossingProcessor"/>, <see cref="MotionDetectionProcessor"/>, <see cref="ObjectTrackingProcessor"/> and <see cref="SignalGateProcessor"/>.
     /// </summary>
-    public partial class ProcessorNodeBase
+    public abstract partial class ProcessorNodeBase
     {
         /// <summary> Initializes a new instance of ProcessorNodeBase. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="inputs"/> is null. </exception>
-        public ProcessorNodeBase(string name, IEnumerable<NodeInput> inputs)
+        protected ProcessorNodeBase(string name, IEnumerable<NodeInput> inputs)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(inputs, nameof(inputs));

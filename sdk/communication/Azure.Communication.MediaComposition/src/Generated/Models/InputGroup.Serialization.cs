@@ -37,6 +37,11 @@ namespace Azure.Communication.MediaComposition
                 writer.WritePropertyName("layer");
                 writer.WriteStringValue(Layer);
             }
+            if (Optional.IsDefined(ScalingMode))
+            {
+                writer.WritePropertyName("scalingMode");
+                writer.WriteStringValue(ScalingMode.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 

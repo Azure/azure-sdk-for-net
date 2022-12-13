@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> A list of private link resources. </summary>
+    /// <summary>
+    /// A list of private link resources
+    /// Serialized Name: PrivateLinkResourceListResult
+    /// </summary>
     internal partial class MachineLearningPrivateLinkResourceListResult
     {
         /// <summary> Initializes a new instance of MachineLearningPrivateLinkResourceListResult. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of MachineLearningPrivateLinkResourceListResult. </summary>
-        /// <param name="value"> Array of private link resources. </param>
+        /// <param name="value">
+        /// Array of private link resources
+        /// Serialized Name: PrivateLinkResourceListResult.value
+        /// </param>
         internal MachineLearningPrivateLinkResourceListResult(IReadOnlyList<MachineLearningPrivateLinkResource> value)
         {
             Value = value;
         }
 
-        /// <summary> Array of private link resources. </summary>
+        /// <summary>
+        /// Array of private link resources
+        /// Serialized Name: PrivateLinkResourceListResult.value
+        /// </summary>
         public IReadOnlyList<MachineLearningPrivateLinkResource> Value { get; }
     }
 }

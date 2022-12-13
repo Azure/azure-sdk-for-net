@@ -3,7 +3,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Text.Json.Serialization;
 using System.Collections.Generic;
 
@@ -13,7 +12,9 @@ namespace Azure.Core.Expressions.DataFactory
     /// A class representing either a primitive value or an expression.
     /// For details on DataFactoryExpressions see https://learn.microsoft.com/en-us/azure/data-factory/control-flow-expression-language-functions#expressions.
     /// </summary>
-    /// <typeparam name="T"> Can be one of <see cref="string"/>, <see cref="bool"/>, <see cref="int"/>, <see cref="double"/>, <see cref="Array"/>, or <see cref="IList{TElement}"/>.</typeparam>
+    /// <typeparam name="T"> Can be one of <see cref="string"/>, <see cref="bool"/>, <see cref="int"/>, <see cref="double"/>, <see cref="TimeSpan"/>,
+    /// <see cref="DateTimeOffset"/>, <see cref="Uri"/>, <see cref="IList{String}"/>, <see cref="IList{TElement}"/> where TElement has a <see cref="JsonConverter"/> defined,
+    /// or <see cref="IDictionary{String,String}"/>.</typeparam>
 #pragma warning disable SA1649 // File name should match first type name
     [JsonConverter(typeof(DataFactoryExpressionJsonConverter))]
     public sealed class DataFactoryExpression<T>
@@ -59,21 +60,7 @@ namespace Azure.Core.Expressions.DataFactory
         }
 
         /// <inheritdoc/>
-        public override string? ToString()
-        {
-            if (HasLiteral)
-            {
-                if (_literal is Array literalArray)
-                {
-                    return $"[{string.Join(",", literalArray.OfType<object>().Select(item => item?.ToString()))}]";
-                }
-                else
-                {
-                    return _literal?.ToString();
-                }
-            }
-            return Expression!;
-        }
+        public override string? ToString() => HasLiteral ? _literal?.ToString() : Expression;
 
         /// <summary>
         /// Converts a primitive value into a expression representing that value.

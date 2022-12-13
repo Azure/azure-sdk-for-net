@@ -122,9 +122,10 @@
 
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true' or '$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
     <IsPackable>false</IsPackable>
-    <RequiredTargetFrameworks>net7.0;net6.0</RequiredTargetFrameworks>
+    <!-- List newest targets first so that recordings are made with latest, running tests from editor runs latest, etc. -->
+    <RequiredTargetFrameworks>net7.0;net6.0;netcoreapp3.1</RequiredTargetFrameworks>
     <!-- Also test net461 on Windows. -->
-    <!-- <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(RequiredTargetFrameworks);net461</RequiredTargetFrameworks> -->
+    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(RequiredTargetFrameworks);net461</RequiredTargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(IsMgmtSubLibrary)' == 'true' and !$(MSBuildProjectName.Equals('Azure.ResourceManager.Tests'))">

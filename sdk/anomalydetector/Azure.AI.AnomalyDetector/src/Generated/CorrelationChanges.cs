@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> The CorrelationChanges. </summary>
+    /// <summary> Correlation changes among the anomalous variables. </summary>
     public partial class CorrelationChanges
     {
         /// <summary> Initializes a new instance of CorrelationChanges. </summary>

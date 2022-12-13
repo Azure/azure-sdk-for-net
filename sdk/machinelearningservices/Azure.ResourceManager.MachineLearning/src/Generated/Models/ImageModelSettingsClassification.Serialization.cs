@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<float?> beta1 = default;
             Optional<float?> beta2 = default;
             Optional<int?> checkpointFrequency = default;
-            Optional<MLFlowModelJobInput> checkpointModel = default;
+            Optional<MachineLearningFlowModelJobInput> checkpointModel = default;
             Optional<string> checkpointRunId = default;
             Optional<bool?> distributed = default;
             Optional<bool?> earlyStopping = default;
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         checkpointModel = null;
                         continue;
                     }
-                    checkpointModel = MLFlowModelJobInput.DeserializeMLFlowModelJobInput(property.Value);
+                    checkpointModel = MachineLearningFlowModelJobInput.DeserializeMachineLearningFlowModelJobInput(property.Value);
                     continue;
                 }
                 if (property.NameEquals("checkpointRunId"))

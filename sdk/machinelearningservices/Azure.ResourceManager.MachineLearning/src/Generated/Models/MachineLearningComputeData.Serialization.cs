@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             Optional<ManagedServiceIdentity> identity = default;
             Optional<MachineLearningSku> sku = default;
-            Optional<Compute> properties = default;
+            Optional<MachineLearningComputeProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString(), serializeOptions);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("sku"))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = Compute.DeserializeCompute(property.Value);
+                    properties = MachineLearningComputeProperties.DeserializeMachineLearningComputeProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
             }
