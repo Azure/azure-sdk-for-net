@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
 {
     public class SavingsPlansTests : BillingBenefitsManagementTestBase
     {
-        private TenantResource Tenant { get; set; }
+        private TenantResource _tenant { get; set; }
 
         public SavingsPlansTests(bool isAsync) : base(isAsync)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
 
                 AsyncPageable<TenantResource> tenantResourcesResponse = Client.GetTenants().GetAllAsync();
                 List<TenantResource> tenantResources = await tenantResourcesResponse.ToEnumerableAsync();
-                Tenant = tenantResources.ToArray()[0];
+                _tenant = tenantResources.ToArray()[0];
             }
         }
 
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         [RecordedTest]
         public async Task TestListSavingsPlans()
         {
-            var response = Tenant.GetSavingsPlanModelsAsync();
+            var response = _tenant.GetSavingsPlanModelsAsync();
             List<SavingsPlanModelResource> savingsPlanModelResources = await response.ToEnumerableAsync();
 
             Assert.Greater(savingsPlanModelResources.Count, 0);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         [RecordedTest]
         public async Task TestListSavingsPlansWithSelectedState()
         {
-            var response = Tenant.GetSavingsPlanModelsAsync(selectedState: "Succeeded");
+            var response = _tenant.GetSavingsPlanModelsAsync(selectedState: "Succeeded");
             List<SavingsPlanModelResource> savingsPlanModelResources = await response.ToEnumerableAsync();
 
             Assert.Greater(savingsPlanModelResources.Count, 0);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         [RecordedTest]
         public async Task TestListSavingsPlansInSavingsPlanOrder()
         {
-            var response = await Tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
+            var response = await _tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.NotNull(response.Value);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         [RecordedTest]
         public async Task TestGetSavingsPlan()
         {
-            var response = await Tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
+            var response = await _tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.NotNull(response.Value);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         [RecordedTest]
         public async Task TestUpdateSavingsPlan()
         {
-            var response = await Tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
+            var response = await _tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.NotNull(response.Value);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         [RecordedTest]
         public async Task TestUpdateSavingsPlanWithRenewSetting()
         {
-            var response = await Tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
+            var response = await _tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.NotNull(response.Value);
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         [RecordedTest]
         public async Task TestValidateSavingsPlanUpdate()
         {
-            var response = await Tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
+            var response = await _tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.NotNull(response.Value);

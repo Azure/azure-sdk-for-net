@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
 {
     public class SavingsPlansOrdersTests : BillingBenefitsManagementTestBase
     {
-        private TenantResource Tenant { get; set; }
+        private TenantResource _tenant { get; set; }
 
         public SavingsPlansOrdersTests(bool isAsync) : base(isAsync)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
 
                 AsyncPageable<TenantResource> tenantResourcesResponse = Client.GetTenants().GetAllAsync();
                 List<TenantResource> tenantResources = await tenantResourcesResponse.ToEnumerableAsync();
-                Tenant = tenantResources.ToArray()[0];
+                _tenant = tenantResources.ToArray()[0];
             }
         }
 
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         [RecordedTest]
         public async Task TestGetSavingsPlanOrder()
         {
-            var response = await Tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
+            var response = await _tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a");
 
             ValidateResponseProperties(response);
 
             // Expand 'schedule'
-            var response2 = await Tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a", "schedule");
+            var response2 = await _tenant.GetSavingsPlanOrderModelAsync("b538c0a7-b852-4ff8-aa3a-1d91dad90d2a", "schedule");
             Assert.IsNotNull(response2.Value.Data.PlanInformation);
             Assert.IsNotNull(response2.Value.Data.PlanInformation.NextPaymentDueOn);
             Assert.IsNotNull(response2.Value.Data.PlanInformation.PricingCurrencyTotal);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         [RecordedTest]
         public async Task ListSavingsPlanOrders()
         {
-            var orderModelCollection = Tenant.GetSavingsPlanOrderModels();
+            var orderModelCollection = _tenant.GetSavingsPlanOrderModels();
             List<SavingsPlanOrderModelResource> orderResources = await orderModelCollection.GetAllAsync().ToEnumerableAsync();
 
             Assert.Greater(orderResources.Count, 0);

@@ -155,6 +155,12 @@
       ]
     },
     {
+      "filename": "**/sdk/billingbenefits/**/*.cs",
+      "words": [
+        "Hana"
+      ]
+    },
+    {
       "filename": "**/sdk/botservice/**/*.cs",
       "words": [
         "Alexa",

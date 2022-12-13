@@ -9,13 +9,14 @@ using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using Azure.ResourceManager.BillingBenefits.Models;
 using Azure.Core;
+using Azure.ResourceManager.BillingBenefits.Tests.Helper;
 
 namespace Azure.ResourceManager.BillingBenefits.Tests
 {
     public class ReservationOrderAliasTests : BillingBenefitsManagementTestBase
     {
-        private ReservationOrderAliasModelResource ModelResource { get; set; }
-        private TenantResource tenantResource { get; set; }
+        private ReservationOrderAliasModelResource _modelResource { get; set; }
+        private TenantResource _tenantResource { get; set; }
 
         public ReservationOrderAliasTests(bool isAsync) : base(isAsync)
         {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
 
                 AsyncPageable<TenantResource> tenantResourcesResponse = Client.GetTenants().GetAllAsync();
                 List<TenantResource> tenantResources = await tenantResourcesResponse.ToEnumerableAsync();
-                tenantResource = tenantResources.ToArray()[0];
+                _tenantResource = tenantResources.ToArray()[0];
             }
         }
 
@@ -39,9 +40,9 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         public async Task TestCreateAndGetSharedScopeReservationOrderAlias()
         {
             var resource = ReservationOrderAliasModelResource.CreateResourceIdentifier("testReservationOrderAliasMock");
-            ModelResource = Client.GetReservationOrderAliasModelResource(resource);
-            var request = CreatePurchaseRequestContent(AppliedScopeType.Shared);
-            var createResponse = await ModelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
+            _modelResource = Client.GetReservationOrderAliasModelResource(resource);
+            var request = TestHelpers.CreateReservationOrderAliasPurchaseRequest(AppliedScopeType.Shared);
+            var createResponse = await _modelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
 
             Assert.NotNull(createResponse);
             Assert.IsTrue(createResponse.HasCompleted);
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
 
             ValidateResponseProperties(createResponse.Value.Data, AppliedScopeType.Shared);
 
-            var getAliasResponse = await ModelResource.GetAsync();
+            var getAliasResponse = await _modelResource.GetAsync();
 
             Assert.AreEqual(200, getAliasResponse.GetRawResponse().Status);
             ValidateResponseProperties(getAliasResponse.Value.Data, AppliedScopeType.Shared);
@@ -63,9 +64,9 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         public async Task TestCreateAndGetSingleScopeSavingsPlansOrderAlias()
         {
             var resource = ReservationOrderAliasModelResource.CreateResourceIdentifier("testReservationOrderAliasMockSingle");
-            ModelResource = Client.GetReservationOrderAliasModelResource(resource);
-            var request = CreatePurchaseRequestContent(AppliedScopeType.Single);
-            var createResponse = await ModelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
+            _modelResource = Client.GetReservationOrderAliasModelResource(resource);
+            var request = TestHelpers.CreateReservationOrderAliasPurchaseRequest(AppliedScopeType.Single);
+            var createResponse = await _modelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
 
             Assert.NotNull(createResponse);
             Assert.IsTrue(createResponse.HasCompleted);
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
 
             ValidateResponseProperties(createResponse.Value.Data, AppliedScopeType.Single);
 
-            var getAliasResponse = await ModelResource.GetAsync();
+            var getAliasResponse = await _modelResource.GetAsync();
 
             Assert.AreEqual(200, getAliasResponse.GetRawResponse().Status);
             ValidateResponseProperties(getAliasResponse.Value.Data, AppliedScopeType.Single);
@@ -87,13 +88,13 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         public async Task TestCreateAndGetSingleResourceGroupScopeSavingsPlansOrderAlias()
         {
             var resource = ReservationOrderAliasModelResource.CreateResourceIdentifier("testReservationOrderAliasMockSingleRG");
-            ModelResource = Client.GetReservationOrderAliasModelResource(resource);
-            var request = CreatePurchaseRequestContent(AppliedScopeType.Single);
+            _modelResource = Client.GetReservationOrderAliasModelResource(resource);
+            var request = TestHelpers.CreateReservationOrderAliasPurchaseRequest(AppliedScopeType.Single);
             request.AppliedScopeProperties = new AppliedScopeProperties
             {
                 ResourceGroupId = "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47/resourceGroups/TestRG"
             };
-            var createResponse = await ModelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
+            var createResponse = await _modelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
 
             Assert.NotNull(createResponse);
             Assert.IsTrue(createResponse.HasCompleted);
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
 
             ValidateResponseProperties(createResponse.Value.Data, AppliedScopeType.Single, true);
 
-            var getAliasResponse = await ModelResource.GetAsync();
+            var getAliasResponse = await _modelResource.GetAsync();
 
             Assert.AreEqual(200, getAliasResponse.GetRawResponse().Status);
             ValidateResponseProperties(getAliasResponse.Value.Data, AppliedScopeType.Single, true);
@@ -115,9 +116,9 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         public async Task TestCreateAndGetManagementGroupScopeSavingsPlansOrderAlias()
         {
             var resource = ReservationOrderAliasModelResource.CreateResourceIdentifier("testReservationOrderAliasMockManagementGroup");
-            ModelResource = Client.GetReservationOrderAliasModelResource(resource);
-            var request = CreatePurchaseRequestContent(AppliedScopeType.ManagementGroup);
-            var createResponse = await ModelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
+            _modelResource = Client.GetReservationOrderAliasModelResource(resource);
+            var request = TestHelpers.CreateReservationOrderAliasPurchaseRequest(AppliedScopeType.ManagementGroup);
+            var createResponse = await _modelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
 
             Assert.NotNull(createResponse);
             Assert.IsTrue(createResponse.HasCompleted);
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
 
             ValidateResponseProperties(createResponse.Value.Data, AppliedScopeType.ManagementGroup);
 
-            var getAliasResponse = await ModelResource.GetAsync();
+            var getAliasResponse = await _modelResource.GetAsync();
 
             Assert.AreEqual(200, getAliasResponse.GetRawResponse().Status);
             ValidateResponseProperties(getAliasResponse.Value.Data, AppliedScopeType.ManagementGroup);
@@ -179,42 +180,6 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             Assert.AreEqual(ReservedResourceType.VirtualMachines, Data.ReservedResourceType);
             Assert.AreEqual(InstanceFlexibility.On, Data.ReservedResourceInstanceFlexibility);
             Assert.False(Data.Renew);
-        }
-
-        private static ReservationOrderAliasModelCreateOrUpdateContent CreatePurchaseRequestContent(AppliedScopeType scope)
-        {
-            var request = new ReservationOrderAliasModelCreateOrUpdateContent(new BillingBenefitsSku("Standard_B1s"));
-            request.BillingScopeId = "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47";
-            request.Term = new Term("P3Y");
-            request.AppliedScopeType = scope;
-            request.DisplayName = "TestROName" + scope.ToString();
-            request.BillingPlan = new BillingPlan("P1M");
-            request.ReservedResourceType = "VirtualMachines";
-            request.Renew = false;
-            request.Quantity = 1;
-            request.Location = AzureLocation.EastUS;
-            request.ReservedResourceProperties = new ReservationOrderAliasRequestReservedResourceProperties
-            {
-                InstanceFlexibility = InstanceFlexibility.On
-            };
-
-            if (scope == AppliedScopeType.Single)
-            {
-                request.AppliedScopeProperties = new AppliedScopeProperties
-                {
-                    SubscriptionId = "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47"
-                };
-            }
-            else if (scope == AppliedScopeType.ManagementGroup)
-            {
-                request.AppliedScopeProperties = new AppliedScopeProperties
-                {
-                    ManagementGroupId = "/providers/Microsoft.Management/managementGroups/ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
-                    TenantId = new Guid("ba5ed788-ddc6-429c-a6a2-0277f01dbee7")
-                };
-            }
-
-            return request;
         }
     }
 }

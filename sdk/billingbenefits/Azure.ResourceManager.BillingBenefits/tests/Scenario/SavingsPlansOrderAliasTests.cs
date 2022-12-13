@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -14,8 +13,8 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
 {
     public class SavingsPlansOrderAliasTests : BillingBenefitsManagementTestBase
     {
-        private SavingsPlanOrderAliasModelResource ModelResource { get; set; }
-        private TenantResource tenantResource { get; set; }
+        private SavingsPlanOrderAliasModelResource _modelResource { get; set; }
+        private TenantResource _tenantResource { get; set; }
 
         public SavingsPlansOrderAliasTests(bool isAsync) : base(isAsync)
         {
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
 
                 AsyncPageable<TenantResource> tenantResourcesResponse = Client.GetTenants().GetAllAsync();
                 List<TenantResource> tenantResources = await tenantResourcesResponse.ToEnumerableAsync();
-                tenantResource = tenantResources.ToArray()[0];
+                _tenantResource = tenantResources.ToArray()[0];
             }
         }
 
@@ -39,9 +38,9 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         public async Task TestCreateAndGetSharedScopeSavingsPlansOrderAlias()
         {
             var resource = SavingsPlanOrderAliasModelResource.CreateResourceIdentifier("mockSavingsPlanAliasTest");
-            ModelResource = Client.GetSavingsPlanOrderAliasModelResource(resource);
-            var request = TestHelpers.CreatePurchaseRequestContent(AppliedScopeType.Shared);
-            var createResponse = await ModelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
+            _modelResource = Client.GetSavingsPlanOrderAliasModelResource(resource);
+            var request = TestHelpers.CreateSavingsPlanOrderAliasPurchaseRequest(AppliedScopeType.Shared);
+            var createResponse = await _modelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
 
             Assert.NotNull(createResponse);
             Assert.IsTrue(createResponse.HasCompleted);
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
 
             ValidateResponseProperties(createResponse.Value.Data, AppliedScopeType.Shared);
 
-            var getAliasResponse = await ModelResource.GetAsync();
+            var getAliasResponse = await _modelResource.GetAsync();
 
             Assert.AreEqual(200, getAliasResponse.GetRawResponse().Status);
             ValidateResponseProperties(getAliasResponse.Value.Data, AppliedScopeType.Shared);
@@ -63,9 +62,9 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         public async Task TestCreateAndGetSingleScopeSavingsPlansOrderAlias()
         {
             var resource = SavingsPlanOrderAliasModelResource.CreateResourceIdentifier("mockSingleSavingsPlanAliasTestNew");
-            ModelResource = Client.GetSavingsPlanOrderAliasModelResource(resource);
-            var request = TestHelpers.CreatePurchaseRequestContent(AppliedScopeType.Single);
-            var createResponse = await ModelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
+            _modelResource = Client.GetSavingsPlanOrderAliasModelResource(resource);
+            var request = TestHelpers.CreateSavingsPlanOrderAliasPurchaseRequest(AppliedScopeType.Single);
+            var createResponse = await _modelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
 
             Assert.NotNull(createResponse);
             Assert.IsTrue(createResponse.HasCompleted);
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
 
             ValidateResponseProperties(createResponse.Value.Data, AppliedScopeType.Single);
 
-            var getAliasResponse = await ModelResource.GetAsync();
+            var getAliasResponse = await _modelResource.GetAsync();
 
             Assert.AreEqual(200, getAliasResponse.GetRawResponse().Status);
             ValidateResponseProperties(getAliasResponse.Value.Data, AppliedScopeType.Single);
@@ -87,13 +86,13 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         public async Task TestCreateAndGetSingleResourceGroupScopeSavingsPlansOrderAlias()
         {
             var resource = SavingsPlanOrderAliasModelResource.CreateResourceIdentifier("mockSingleRGSavingsPlanAliasTest");
-            ModelResource = Client.GetSavingsPlanOrderAliasModelResource(resource);
-            var request = TestHelpers.CreatePurchaseRequestContent(AppliedScopeType.Single);
+            _modelResource = Client.GetSavingsPlanOrderAliasModelResource(resource);
+            var request = TestHelpers.CreateSavingsPlanOrderAliasPurchaseRequest(AppliedScopeType.Single);
             request.AppliedScopeProperties = new AppliedScopeProperties
             {
                 ResourceGroupId = "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47/resourceGroups/TestRG"
             };
-            var createResponse = await ModelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
+            var createResponse = await _modelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
 
             Assert.NotNull(createResponse);
             Assert.IsTrue(createResponse.HasCompleted);
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
 
             ValidateResponseProperties(createResponse.Value.Data, AppliedScopeType.Single, true);
 
-            var getAliasResponse = await ModelResource.GetAsync();
+            var getAliasResponse = await _modelResource.GetAsync();
 
             Assert.AreEqual(200, getAliasResponse.GetRawResponse().Status);
             ValidateResponseProperties(getAliasResponse.Value.Data, AppliedScopeType.Single, true);
@@ -115,9 +114,9 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         public async Task TestCreateAndGetManagementGroupScopeSavingsPlansOrderAlias()
         {
             var resource = SavingsPlanOrderAliasModelResource.CreateResourceIdentifier("mockManagementGroupSavingsPlanAliasTest");
-            ModelResource = Client.GetSavingsPlanOrderAliasModelResource(resource);
-            var request = TestHelpers.CreatePurchaseRequestContent(AppliedScopeType.ManagementGroup);
-            var createResponse = await ModelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
+            _modelResource = Client.GetSavingsPlanOrderAliasModelResource(resource);
+            var request = TestHelpers.CreateSavingsPlanOrderAliasPurchaseRequest(AppliedScopeType.ManagementGroup);
+            var createResponse = await _modelResource.CreateOrUpdateAsync(WaitUntil.Completed, request);
 
             Assert.NotNull(createResponse);
             Assert.IsTrue(createResponse.HasCompleted);
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
 
             ValidateResponseProperties(createResponse.Value.Data, AppliedScopeType.ManagementGroup);
 
-            var getAliasResponse = await ModelResource.GetAsync();
+            var getAliasResponse = await _modelResource.GetAsync();
 
             Assert.AreEqual(200, getAliasResponse.GetRawResponse().Status);
             ValidateResponseProperties(getAliasResponse.Value.Data, AppliedScopeType.ManagementGroup);
@@ -139,12 +138,12 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
         public async Task TestValidateSavingsPlanOrderAliasPurchase()
         {
             var resource = SavingsPlanOrderAliasModelResource.CreateResourceIdentifier("validateTest");
-            ModelResource = Client.GetSavingsPlanOrderAliasModelResource(resource);
-            var model = TestHelpers.CreatePurchaseRequestContent(AppliedScopeType.Shared);
+            _modelResource = Client.GetSavingsPlanOrderAliasModelResource(resource);
+            var model = TestHelpers.CreateSavingsPlanOrderAliasPurchaseRequest(AppliedScopeType.Shared);
             var requestContent = new SavingsPlanPurchaseValidateContent();
             requestContent.Benefits.Add(model);
 
-            var response = await tenantResource.ValidatePurchaseAsync(requestContent);
+            var response = await _tenantResource.ValidatePurchaseAsync(requestContent);
 
             Assert.AreEqual(200, response.GetRawResponse().Status);
             Assert.NotNull(response.Value);
