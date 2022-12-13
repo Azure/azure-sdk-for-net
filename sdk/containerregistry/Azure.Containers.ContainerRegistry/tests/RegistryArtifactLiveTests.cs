@@ -126,26 +126,26 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 }));
         }
 
-        [RecordedTest, NonParallelizable]
-        public async Task CanDeleteRegistryArtifact()
-        {
-            // Arrange
-            string repository = $"library/node";
-            string tag = "test-delete-image";
-            var client = CreateClient();
-            var artifact = client.GetArtifact(repository, tag);
+        //[RecordedTest, NonParallelizable]
+        //public async Task CanDeleteRegistryArtifact()
+        //{
+        //    // Arrange
+        //    string repository = $"library/node";
+        //    string tag = "test-delete-image";
+        //    var client = CreateClient();
+        //    var artifact = client.GetArtifact(repository, tag);
 
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await ImportImageAsync(TestEnvironment.Registry, repository, tag);
-            }
+        //    if (Mode != RecordedTestMode.Playback)
+        //    {
+        //        await ImportImageAsync(TestEnvironment.Registry, repository, tag);
+        //    }
 
-            // Act
-            await artifact.DeleteAsync();
+        //    // Act
+        //    await artifact.DeleteAsync();
 
-            // Assert
-            Assert.ThrowsAsync<RequestFailedException>(async () => { await artifact.GetManifestPropertiesAsync(); });
-        }
+        //    // Assert
+        //    Assert.ThrowsAsync<RequestFailedException>(async () => { await artifact.GetManifestPropertiesAsync(); });
+        //}
 
         #endregion
 
@@ -254,32 +254,32 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.AreEqual(_repositoryName, properties.RepositoryName);
         }
 
-        [RecordedTest]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task CanGetTagsOrdered(bool anonymous)
-        {
-            // Arrange
-            var client = CreateClient(anonymous);
-            string registry = anonymous ? TestEnvironment.AnonymousAccessRegistry : TestEnvironment.Registry;
-            string tagName = "latest";
-            var artifact = client.GetArtifact(_repositoryName, tagName);
+        //[RecordedTest]
+        //[TestCase(true)]
+        //[TestCase(false)]
+        //public async Task CanGetTagsOrdered(bool anonymous)
+        //{
+        //    // Arrange
+        //    var client = CreateClient(anonymous);
+        //    string registry = anonymous ? TestEnvironment.AnonymousAccessRegistry : TestEnvironment.Registry;
+        //    string tagName = "latest";
+        //    var artifact = client.GetArtifact(_repositoryName, tagName);
 
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await ImportImageAsync(registry, _repositoryName, "newest");
-            }
+        //    if (Mode != RecordedTestMode.Playback)
+        //    {
+        //        await ImportImageAsync(registry, _repositoryName, "newest");
+        //    }
 
-            // Act
-            AsyncPageable<ArtifactTagProperties> tags = artifact.GetAllTagPropertiesAsync(ArtifactTagOrder.LastUpdatedOnDescending);
+        //    // Act
+        //    AsyncPageable<ArtifactTagProperties> tags = artifact.GetAllTagPropertiesAsync(ArtifactTagOrder.LastUpdatedOnDescending);
 
-            // Assert
-            await foreach (ArtifactTagProperties tag in tags)
-            {
-                Assert.That(tag.Name.Contains("newest"));
-                break;
-            }
-        }
+        //    // Assert
+        //    await foreach (ArtifactTagProperties tag in tags)
+        //    {
+        //        Assert.That(tag.Name.Contains("newest"));
+        //        break;
+        //    }
+        //}
 
         [RecordedTest, NonParallelizable]
         public async Task CanSetTagProperties()
@@ -340,25 +340,25 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 }));
         }
 
-        [RecordedTest, NonParallelizable]
-        public async Task CanDeleteTag()
-        {
-            // Arrange
-            var client = CreateClient();
-            string tag = "test-delete-tag";
-            var artifact = client.GetArtifact(_repositoryName, tag);
+        //[RecordedTest, NonParallelizable]
+        //public async Task CanDeleteTag()
+        //{
+        //    // Arrange
+        //    var client = CreateClient();
+        //    string tag = "test-delete-tag";
+        //    var artifact = client.GetArtifact(_repositoryName, tag);
 
-            if (Mode != RecordedTestMode.Playback)
-            {
-                await ImportImageAsync(TestEnvironment.Registry, _repositoryName, tag);
-            }
+        //    if (Mode != RecordedTestMode.Playback)
+        //    {
+        //        await ImportImageAsync(TestEnvironment.Registry, _repositoryName, tag);
+        //    }
 
-            // Act
-            await artifact.DeleteTagAsync(tag);
+        //    // Act
+        //    await artifact.DeleteTagAsync(tag);
 
-            // Assert
-            Assert.ThrowsAsync<RequestFailedException>(async () => { await artifact.GetTagPropertiesAsync(tag); });
-        }
+        //    // Assert
+        //    Assert.ThrowsAsync<RequestFailedException>(async () => { await artifact.GetTagPropertiesAsync(tag); });
+        //}
         #endregion
     }
 }

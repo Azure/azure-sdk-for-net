@@ -2,19 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
 using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
 using Azure.Identity;
-using Microsoft.Azure.Management.ContainerRegistry;
-using Microsoft.Azure.Management.ContainerRegistry.Models;
-using Microsoft.Azure.Management.ResourceManager.Fluent;
-using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 using NUnit.Framework;
-using Task = System.Threading.Tasks.Task;
 
 namespace Azure.Containers.ContainerRegistry.Tests
 {
@@ -57,47 +52,15 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 ));
         }
 
-        public async Task ImportImageAsync(string registry, string repository, string tag)
+        public async Task CreateRepository(string repository)
         {
-            await ImportImageAsync(registry, repository, new List<string>() { tag });
+            await CreateImage(repository, null);
         }
 
-        public async Task ImportImageAsync(string registry, string repository, List<string> tags)
+        public async Task CreateImage(string repository, string tag)
         {
-            AzureEnvironment environment = GetManagementCloudEnvironment();
-
-            var credential = new AzureCredentials(
-                new ServicePrincipalLoginInformation
-                {
-                    ClientId = TestEnvironment.ClientId,
-                    ClientSecret = TestEnvironment.ClientSecret,
-                },
-                TestEnvironment.TenantId,
-                environment);
-
-            var managementClient = new ContainerRegistryManagementClient(
-                new Uri(environment.ResourceManagerEndpoint),
-                credential.WithDefaultSubscription(TestEnvironment.SubscriptionId));
-            managementClient.SubscriptionId = TestEnvironment.SubscriptionId;
-
-            var importSource = new ImportSource
-            {
-                SourceImage = repository,
-                RegistryUri = "registry.hub.docker.com"
-            };
-
-            var targetTags = tags.Select(tag => $"{repository}:{tag}");
-
-            await managementClient.Registries.ImportImageAsync(
-                resourceGroupName: TestEnvironment.ResourceGroup,
-                registryName: registry,
-                parameters:
-                    new ImportImageParameters
-                    {
-                        Mode = ImportMode.Force,
-                        Source = importSource,
-                        TargetTags = targetTags.ToList()
-                    });
+            var client = GetUploadClient(repository);
+            await client.UploadTestImage(tag);
         }
 
         public static Uri GetAuthorityHost(string endpoint)
@@ -179,6 +142,21 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 ));
         }
 
+        private ContainerRegistryBlobClient GetUploadClient(string repository)
+        {
+            // We won't record the Set-up calls, so don't instrument this client.
+            string endpoint = TestEnvironment.Endpoint;
+            Uri authorityHost = GetAuthorityHost(endpoint);
+
+            return new ContainerRegistryBlobClient(new Uri(endpoint),
+                TestEnvironment.Credential,
+                repository,
+                new ContainerRegistryClientOptions()
+                {
+                    Audience = GetAudience(authorityHost)
+                });
+        }
+
         private ContainerRegistryAudience GetAudience(Uri authorityHost)
         {
             if (authorityHost == AzureAuthorityHosts.AzurePublicCloud)
@@ -213,39 +191,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// Obtain the track 1 management plane AzureEnvironment value for the
-        /// cloud correponding to the configured endpoint.
-        /// </summary>
-        /// <returns></returns>
-        private AzureEnvironment GetManagementCloudEnvironment()
-        {
-            string endpoint = TestEnvironment.Endpoint;
-            Uri authorityHost = GetAuthorityHost(endpoint);
-
-            if (authorityHost == AzureAuthorityHosts.AzurePublicCloud)
-            {
-                return AzureEnvironment.AzureGlobalCloud;
-            }
-
-            if (authorityHost == AzureAuthorityHosts.AzureChina)
-            {
-                return AzureEnvironment.AzureChinaCloud;
-            }
-
-            if (authorityHost == AzureAuthorityHosts.AzureGovernment)
-            {
-                return AzureEnvironment.AzureUSGovernment;
-            }
-
-            if (authorityHost == AzureAuthorityHosts.AzureGermany)
-            {
-                return AzureEnvironment.AzureGermanCloud;
-            }
-
-            throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");
         }
     }
 }
