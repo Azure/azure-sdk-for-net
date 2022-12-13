@@ -60,6 +60,11 @@ namespace Azure.Storage.DataMovement.Blobs
         public override TransferType TransferType => TransferType.Concurrent;
 
         /// <summary>
+        /// Store Max Initial Size that a Put Blob can get to.
+        /// </summary>
+        internal static long _maxInitialSize => Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes;
+
+        /// <summary>
         /// Defines the maximum chunk size for the storage resource.
         /// </summary>
         public override long MaxChunkSize => Constants.Blob.Block.MaxStageBytes;
@@ -164,7 +169,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 // Default to Upload
                 await _blobClient.UploadAsync(
                     stream,
-                    _options.ToBlobUploadOptions(overwrite),
+                    _options.ToBlobUploadOptions(overwrite, _maxInitialSize),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 return;
             }
