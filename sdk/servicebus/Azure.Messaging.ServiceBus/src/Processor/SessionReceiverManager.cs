@@ -130,8 +130,13 @@ namespace Azure.Messaging.ServiceBus
             bool releaseSemaphore = false;
             try
             {
-                await _concurrentAcceptSessionsSemaphore.WaitAsync(processorCancellationToken).ConfigureAwait(false);
+                // Do a quick synchronous check before we resort to async/await with the state-machine overhead.
+                if (!_concurrentAcceptSessionsSemaphore.Wait(0, CancellationToken.None))
+                {
+                    await _concurrentAcceptSessionsSemaphore.WaitAsync(processorCancellationToken).ConfigureAwait(false);
+                }
                 releaseSemaphore = true;
+
                 _receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                     entityPath: Processor.EntityPath,
                     connection: Processor.Connection,
