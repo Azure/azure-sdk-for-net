@@ -113,6 +113,12 @@ namespace Azure.Storage.DataMovement
         public SyncAsyncEventHandler<TransferFailedEventArgs> TransferFailedEventHandler { get; internal set; }
 
         /// <summary>
+        /// If a single transfer within the resource contianer gets transferred successfully the event
+        /// will get added to this handler
+        /// </summary>
+        public SyncAsyncEventHandler<SingleTransferCompletedEventArgs> SingleTransferCompletedEventHandler { get; internal set; }
+
+        /// <summary>
         /// Array pools for reading from streams to upload
         /// </summary>
         public ArrayPool<byte> UploadArrayPool => _arrayPool;
@@ -134,6 +140,8 @@ namespace Azure.Storage.DataMovement
             SyncAsyncEventHandler<TransferStatusEventArgs> jobPartEventHandler,
             SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
             SyncAsyncEventHandler<TransferFailedEventArgs> failedEventHandler,
+            SyncAsyncEventHandler<TransferSkippedEventArgs> skippedEventHandler,
+            SyncAsyncEventHandler<SingleTransferCompletedEventArgs> singleTransferEventHandler,
             CancellationTokenSource cancellationTokenSource,
             long? length = default)
         {
@@ -150,6 +158,8 @@ namespace Azure.Storage.DataMovement
             PartTransferStatusEventHandler = jobPartEventHandler;
             TransferStatusEventHandler = statusEventHandler;
             TransferFailedEventHandler = failedEventHandler;
+            TransferSkippedEventHandler = skippedEventHandler;
+            SingleTransferCompletedEventHandler = singleTransferEventHandler;
 
             _initialTransferSize = _destinationResource.MaxChunkSize;
             if (initialTransferSize.HasValue)
@@ -200,6 +210,10 @@ namespace Azure.Storage.DataMovement
                 && JobPartStatus != transferStatus)
             {
                 JobPartStatus = transferStatus;
+                if (JobPartStatus == StorageTransferStatus.Completed)
+                {
+                    await InvokeSingleCompletedArg().ConfigureAwait(false);
+                }
                 // TODO: change to RaiseAsync
                 await PartTransferStatusEventHandler.Invoke(new TransferStatusEventArgs(
                     _dataTransfer.Id,
@@ -218,6 +232,20 @@ namespace Azure.Storage.DataMovement
             _dataTransfer._state.UpdateTransferBytes(bytesTransferred);
         }
 
+        public async virtual Task InvokeSingleCompletedArg()
+        {
+            if (SingleTransferCompletedEventHandler != null)
+            {
+                await SingleTransferCompletedEventHandler.Invoke(
+                    new SingleTransferCompletedEventArgs(
+                        _dataTransfer.Id,
+                        _sourceResource,
+                        _destinationResource,
+                        false,
+                        _cancellationTokenSource.Token)).ConfigureAwait(false);
+            }
+        }
+
         /// <summary>
         /// Invokes Failed Argument
         /// </summary>
@@ -233,6 +261,7 @@ namespace Azure.Storage.DataMovement
                     false,
                     _cancellationTokenSource.Token)).ConfigureAwait(false);
             }
+            await OnTransferStatusChanged(StorageTransferStatus.CompletedWithSkippedTransfers).ConfigureAwait(false);
         }
 
         /// <summary>
