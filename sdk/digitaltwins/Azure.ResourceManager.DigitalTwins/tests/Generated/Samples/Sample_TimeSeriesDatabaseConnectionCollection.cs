@@ -143,7 +143,6 @@ namespace Azure.ResourceManager.DigitalTwins
                 Properties = new DataExplorerConnectionProperties(new ResourceIdentifier("/subscriptions/c493073e-2460-45ba-a403-f3e0df1e9feg/resourceGroups/testrg/providers/Microsoft.Kusto/clusters/mycluster"), new Uri("https://mycluster.kusto.windows.net"), "myDatabase", new Uri("sb://myeh.servicebus.windows.net/"), "myeh", new ResourceIdentifier("/subscriptions/c493073e-2460-45ba-a403-f3e0df1e9feg/resourceGroups/testrg/providers/Microsoft.EventHub/namespaces/myeh"))
                 {
                     AdxTableName = "myTable",
-                    ConnectionType = ConnectionType.AzureDataExplorer,
                     Identity = new DigitalTwinsManagedIdentityReference()
                     {
                         IdentityType = DigitalTwinsManagedIdentityType.UserAssigned,
@@ -190,7 +189,6 @@ namespace Azure.ResourceManager.DigitalTwins
                 Properties = new DataExplorerConnectionProperties(new ResourceIdentifier("/subscriptions/c493073e-2460-45ba-a403-f3e0df1e9feg/resourceGroups/testrg/providers/Microsoft.Kusto/clusters/mycluster"), new Uri("https://mycluster.kusto.windows.net"), "myDatabase", new Uri("sb://myeh.servicebus.windows.net/"), "myeh", new ResourceIdentifier("/subscriptions/c493073e-2460-45ba-a403-f3e0df1e9feg/resourceGroups/testrg/providers/Microsoft.EventHub/namespaces/myeh"))
                 {
                     AdxTableName = "myTable",
-                    ConnectionType = ConnectionType.AzureDataExplorer,
                 },
             };
             ArmOperation<TimeSeriesDatabaseConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, timeSeriesDatabaseConnectionName, data);
