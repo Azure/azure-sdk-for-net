@@ -106,7 +106,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             if (Mode != RecordedTestMode.Playback)
             {
-                await CreateRepository(repositoryId);
+                await CreateRepositoryAsync(repositoryId);
             }
 
             var repositories = client.GetRepositoryNamesAsync();

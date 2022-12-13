@@ -97,7 +97,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             if (Mode != RecordedTestMode.Playback)
             {
-                await CreateRepository(repositoryId);
+                await CreateRepositoryAsync(repositoryId);
             }
 
             var repositories = client.GetRepositoryNamesAsync();
@@ -227,9 +227,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 if (Mode != RecordedTestMode.Playback)
                 {
                     // Upload in order by tag
-                    await CreateImage(repositoryId, tags[0]);
+                    await CreateImageAsync(repositoryId, tags[0]);
                     await Delay(200);
-                    await CreateImage(repositoryId, tags[1]);
+                    await CreateImageAsync(repositoryId, tags[1]);
                 }
 
                 // Act

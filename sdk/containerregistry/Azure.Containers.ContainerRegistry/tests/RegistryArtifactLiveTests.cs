@@ -139,7 +139,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             if (Mode != RecordedTestMode.Playback)
             {
-                await CreateImage(repositoryId, tag);
+                await CreateImageAsync(repositoryId, tag);
             }
 
             var properties = await artifact.GetManifestPropertiesAsync();
@@ -279,8 +279,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await CreateImage(endpoint, repositoryId, tags[0]);
-                    await AddTag(endpoint, repositoryId, tags[0], tags[1]);
+                    await CreateImageAsync(endpoint, repositoryId, tags[0]);
+                    await AddTagAsync(endpoint, repositoryId, tags[0], tags[1]);
                 }
 
                 // Act
@@ -299,7 +299,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             finally
             {
                 // Clean up
-                await DeleteRepository(endpoint, repositoryId);
+                await DeleteRepositoryAsync(endpoint, repositoryId);
             }
         }
 
@@ -375,7 +375,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 if (Mode != RecordedTestMode.Playback)
                 {
-                    await CreateImage(repositoryId, tag);
+                    await CreateImageAsync(repositoryId, tag);
                 }
 
                 var properties = await artifact.GetManifestPropertiesAsync();

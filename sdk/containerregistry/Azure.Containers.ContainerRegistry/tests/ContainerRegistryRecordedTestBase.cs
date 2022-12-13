@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Net;
 using System.Threading.Tasks;
 using Azure.Containers.ContainerRegistry.Specialized;
 using Azure.Core;
@@ -52,29 +51,29 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 ));
         }
 
-        public async Task CreateRepository(string repository)
+        public async Task CreateRepositoryAsync(string repository)
         {
-            await CreateImage(repository, null);
+            await CreateImageAsync(repository, null);
         }
 
-        public async Task CreateImage(string repository, string tag)
+        public async Task CreateImageAsync(string repository, string tag)
         {
-            await CreateImage(new Uri(TestEnvironment.Endpoint), repository, tag);
+            await CreateImageAsync(new Uri(TestEnvironment.Endpoint), repository, tag);
         }
 
-        public async Task CreateImage(Uri endpoint, string repository, string tag)
-        {
-            var client = GetUploadClient(endpoint, repository);
-            await client.UploadTestImage(tag);
-        }
-
-        public async Task AddTag(Uri endpoint, string repository, string reference, string tag)
+        public async Task CreateImageAsync(Uri endpoint, string repository, string tag)
         {
             var client = GetUploadClient(endpoint, repository);
-            await client.AddTag(reference, tag);
+            await client.UploadTestImageAsync(tag);
         }
 
-        public async Task DeleteRepository(Uri endpoint, string repository)
+        public async Task AddTagAsync(Uri endpoint, string repository, string reference, string tag)
+        {
+            var client = GetUploadClient(endpoint, repository);
+            await client.AddTagAsync(reference, tag);
+        }
+
+        public async Task DeleteRepositoryAsync(Uri endpoint, string repository)
         {
             var client = GetSetupClient(endpoint);
             await client.GetRepository(repository).DeleteAsync();

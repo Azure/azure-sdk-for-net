@@ -13,14 +13,12 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 {
     public partial class SetPropertiesSample : ContainerRegistrySamplesBase
     {
-        [Test, NonParallelizable]
+        [Test]
         [SyncOnly]
         public void SetImageProperties()
         {
             // Set up
-            string repositoryName = "Sample03_DemoImage";
-            CreateImage(TestEnvironment.Registry, repositoryName, "v1");
-            AddTag(TestEnvironment.Registry, repositoryName, "latest");
+            ImportImage(TestEnvironment.Registry, "library/hello-world", new List<string>() { "v1", "latest" });
 
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
@@ -34,7 +32,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                 {
                     Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
                 });
-            RegistryArtifact image = client.GetArtifact("library/hello-world", "v1");
+            RegistryArtifact image = client.GetArtifact("library/hello-world", "latest");
 
             // Set permissions on the v1 image's "latest" tag
             image.UpdateTagProperties("latest", new ArtifactTagProperties()
@@ -59,9 +57,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
         public async Task SetImagePropertiesAsync()
         {
             // Set up
-            string repositoryName = "Sample03_DemoImage";
-            await CreateImageAsync(new Uri(TestEnvironment.Endpoint), repositoryName, "v1");
-            await AddTagAsync(new Uri(TestEnvironment.Endpoint), repositoryName, "v1", "latest");
+            await ImportImageAsync(TestEnvironment.Registry, "library/hello-world", new List<string>() { "v1", "latest" });
 
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
@@ -71,8 +67,7 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
 
             // Create a new ContainerRegistryClient and RegistryArtifact to access image operations
             ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
-                new ContainerRegistryClientOptions()
-                {
+                new ContainerRegistryClientOptions() {
                     Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
                 });
             RegistryArtifact image = client.GetArtifact("library/hello-world", "v1");
