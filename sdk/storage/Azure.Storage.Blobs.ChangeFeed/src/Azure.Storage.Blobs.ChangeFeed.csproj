@@ -45,8 +45,8 @@
     <Compile Include="$(AzureStorageSharedSources)SasQueryParametersInternals.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)SharedAccessSignatureCredentials.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageExceptionExtensions.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureStorageSharedSources)StorageClientDiagnostics.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageConnectionString.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageRequestFailedDetailsParser.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageSharedKeyCredentialInternals.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageVersionExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)UriExtensions.cs" LinkBase="Shared" />

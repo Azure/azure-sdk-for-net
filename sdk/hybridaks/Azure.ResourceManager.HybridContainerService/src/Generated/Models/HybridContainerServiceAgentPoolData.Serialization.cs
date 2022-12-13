@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.HybridContainerService
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))

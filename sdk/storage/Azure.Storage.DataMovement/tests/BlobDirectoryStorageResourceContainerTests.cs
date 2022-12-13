@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.Tests;
 using NUnit.Framework;
 
@@ -97,6 +98,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32952")]
         public async Task GetChildStorageResourceAsync()
         {
             DisposingBlobContainer test = await GetTestContainerAsync();
@@ -107,7 +109,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 new BlobDirectoryStorageResourceContainer(test.Container, prefix);
 
             StorageResource resource = containerResource.GetChildStorageResource("bar");
-            await resource.GetPropertiesAsync();
+
+            // Assert
+            StorageResourceProperties properties = await resource.GetPropertiesAsync();
+            Assert.IsNotNull(properties);
+            Assert.IsNotNull(properties.ETag);
         }
 
         [RecordedTest]

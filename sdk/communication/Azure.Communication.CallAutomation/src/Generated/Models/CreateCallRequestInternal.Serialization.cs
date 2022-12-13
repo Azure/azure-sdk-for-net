@@ -36,10 +36,10 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("mediaStreamingConfiguration");
                 writer.WriteObjectValue(MediaStreamingConfiguration);
             }
-            if (Optional.IsDefined(AzureCognitiveServiceDomainName))
+            if (Optional.IsDefined(AzureCognitiveServicesEndpointUrl))
             {
-                writer.WritePropertyName("azureCognitiveServiceDomainName");
-                writer.WriteStringValue(AzureCognitiveServiceDomainName);
+                writer.WritePropertyName("azureCognitiveServicesEndpointUrl");
+                writer.WriteStringValue(AzureCognitiveServicesEndpointUrl);
             }
             writer.WriteEndObject();
         }
