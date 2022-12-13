@@ -121,18 +121,18 @@ namespace Azure.Storage.DataMovement
                 await CreateDestinationResource(blockSize, length, false).ConfigureAwait(false);
 
                 // If we cannot upload in one shot, initiate the parallel block uploader
-                List<(long Offset, long Length)> commitBlockList = GetCommitBlockList(blockSize, length);
+                List<(long Offset, long Length)> rangeList = GetRangeList(blockSize, length);
                 if (_destinationResource.TransferType == TransferType.Concurrent)
                 {
-                    await QueueStageBlockRequests(commitBlockList, length).ConfigureAwait(false);
+                    await QueueStageBlockRequests(rangeList, length).ConfigureAwait(false);
                 }
                 else // Sequential
                 {
                     // Queue paritioned block task
                     await QueueChunk(async () =>
                     await StageBlockInternal(
-                        commitBlockList[0].Offset,
-                        commitBlockList[0].Length,
+                        rangeList[0].Offset,
+                        rangeList[0].Length,
                         length).ConfigureAwait(false)).ConfigureAwait(false);
                 }
             }
@@ -331,10 +331,10 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        private async Task QueueStageBlockRequests(List<(long Offset, long Size)> commitBlockList, long completeLength)
+        private async Task QueueStageBlockRequests(List<(long Offset, long Size)> rangeList, long completeLength)
         {
             // Partition the stream into individual blocks
-            foreach ((long Offset, long Length) block in commitBlockList)
+            foreach ((long Offset, long Length) block in rangeList)
             {
                 // Queue paritioned block task
                 await QueueChunk(async () =>

@@ -14,6 +14,7 @@ using System.Diagnostics;
 using Azure.Storage.Test;
 using System.IO;
 using System.Threading;
+using Azure.Core;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -22,10 +23,10 @@ namespace Azure.Storage.DataMovement.Tests
     {
         public CommitBlockHandlerTests() { }
 
-        private Mock<CommitChunkHandler.QueuePutBlockTaskInternal> GetPutBlockTask(long offset, long blockSize, long expectedLength)
+        private Mock<CommitChunkHandler.QueuePutBlockTaskInternal> GetPutBlockTask()
         {
             var mock = new Mock<CommitChunkHandler.QueuePutBlockTaskInternal>(MockBehavior.Strict);
-            mock.Setup(del => del(offset, blockSize, expectedLength))
+            mock.Setup(del => del(It.IsNotNull<long>(), It.IsNotNull<long>(), It.IsNotNull<long>()))
                 .Returns(Task.CompletedTask);
             return mock;
         }
@@ -38,59 +39,61 @@ namespace Azure.Storage.DataMovement.Tests
             return mock;
         }
 
-        private Mock<CommitChunkHandler.ReportProgressInBytes> GetReportProgressInBytesTask(long bytesWritten)
+        private Mock<CommitChunkHandler.ReportProgressInBytes> GetReportProgressInBytesTask()
         {
             var mock = new Mock<CommitChunkHandler.ReportProgressInBytes>(MockBehavior.Strict);
-            mock.Setup(del => del(bytesWritten));
+            mock.Setup(del => del(It.IsNotNull<long>()));
             return mock;
         }
 
-        private Mock<CommitChunkHandler.InvokeFailedEventHandlerInternal> GetInvokeFailedEventHandlerTask(Exception ex)
+        private Mock<CommitChunkHandler.InvokeFailedEventHandlerInternal> GetInvokeFailedEventHandlerTask()
         {
             var mock = new Mock<CommitChunkHandler.InvokeFailedEventHandlerInternal>(MockBehavior.Strict);
-            mock.Setup(del => del(ex))
+            mock.Setup(del => del(It.IsNotNull<Exception>()))
                 .Returns(Task.CompletedTask);
             return mock;
         }
 
         [Test]
-        [TestCase(0, 512, Constants.KB)]
-        [TestCase(0, Constants.KB, Constants.KB*2)]
-        [TestCase(64, 512, Constants.KB - 64)]
-        public async Task OneChunkTransfer(long bytesWritten, long blockSize, long expectedLength)
+        [TestCase(512)]
+        [TestCase(Constants.KB)]
+        public async Task OneChunkTransfer(long blockSize)
         {
-            FileNotFoundException exception = new FileNotFoundException();
             // Set up tasks
-            var putBlockTask = GetPutBlockTask(0, 0, expectedLength);
-            var commitBlockTask = GetCommitBlockTask();
-            var reportProgressInBytesTask = GetReportProgressInBytesTask(blockSize);
-            var invokeFailedEventHandlerTask = GetInvokeFailedEventHandlerTask(exception);
-            var commitBlockHandler = new CommitChunkHandler(
-                expectedLength: expectedLength,
-                blockSize: blockSize,
-                new CommitChunkHandler.Behaviors
-                {
-                    QueuePutBlockTask = putBlockTask.Object,
-                    QueueCommitBlockTask = commitBlockTask.Object,
-                    ReportProgressInBytes = reportProgressInBytesTask.Object,
-                    InvokeFailedHandler = invokeFailedEventHandlerTask.Object,
-                },
-                TransferType.Concurrent);
+            for (int i = 0; i < 100; i++)
+            {
+                var putBlockTask = GetPutBlockTask();
+                var commitBlockTask = GetCommitBlockTask();
+                var reportProgressInBytesTask = GetReportProgressInBytesTask();
+                var invokeFailedEventHandlerTask = GetInvokeFailedEventHandlerTask();
+                var commitBlockHandler = new CommitChunkHandler(
+                    expectedLength: blockSize * 2,
+                    blockSize: blockSize,
+                    new CommitChunkHandler.Behaviors
+                    {
+                        QueuePutBlockTask = putBlockTask.Object,
+                        QueueCommitBlockTask = commitBlockTask.Object,
+                        ReportProgressInBytes = reportProgressInBytesTask.Object,
+                        InvokeFailedHandler = invokeFailedEventHandlerTask.Object,
+                    },
+                    TransferType.Concurrent);
 
-            // Make one chunk that would meet the expected length
-            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
-                transferId: "fake-id",
-                success: true,
-                offset: 0,
-                bytesTransferred: Constants.KB,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                // Make one chunk that would meet the expected length
+                await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
+                    transferId: "fake-id",
+                    success: true,
+                    // Before commit block is called, one block chunk has already been added when creating the destination
+                    offset: blockSize,
+                    bytesTransferred: blockSize,
+                    isRunningSynchronously: false,
+                    cancellationToken: CancellationToken.None));
 
-            // Assert
-            Assert.AreEqual(0, putBlockTask.Invocations.Count);
-            Assert.AreEqual(1, commitBlockTask.Invocations.Count);
-            Assert.AreEqual(1, reportProgressInBytesTask.Invocations.Count);
-            Assert.AreEqual(0, invokeFailedEventHandlerTask.Invocations.Count);
+                // Assert
+                Assert.AreEqual(0, invokeFailedEventHandlerTask.Invocations.Count, "Report Event Handler calls were incorrect");
+                Assert.AreEqual(0, putBlockTask.Invocations.Count, "Put Block Task calls were incorrect");
+                Assert.AreEqual(1, commitBlockTask.Invocations.Count, "Commit Block Task calls were incorrect");
+                Assert.AreEqual(1, reportProgressInBytesTask.Invocations.Count, "Report Progress amount calls were incorrect");
+            }
         }
     }
 }

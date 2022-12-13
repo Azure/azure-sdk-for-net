@@ -140,7 +140,7 @@ namespace Azure.Storage.DataMovement
                     // If we cannot upload in one shot, initiate the parallel block uploader
                     if (await CreateDestinationResource(length, blockSize).ConfigureAwait(false))
                     {
-                        List<(long Offset, long Length)> commitBlockList = GetCommitBlockList(blockSize, length);
+                        List<(long Offset, long Length)> commitBlockList = GetRangeList(blockSize, length);
                         if (_destinationResource.TransferType == TransferType.Concurrent)
                         {
                             await QueueStageBlockRequests(commitBlockList, length).ConfigureAwait(false);
