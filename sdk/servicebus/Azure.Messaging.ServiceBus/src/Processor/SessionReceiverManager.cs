@@ -127,8 +127,11 @@ namespace Azure.Messaging.ServiceBus
 
         private async Task CreateReceiver(CancellationToken processorCancellationToken)
         {
+            bool releaseSemaphore = false;
             try
             {
+                await _concurrentAcceptSessionsSemaphore.WaitAsync(processorCancellationToken).ConfigureAwait(false);
+                releaseSemaphore = true;
                 _receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                     entityPath: Processor.EntityPath,
                     connection: Processor.Connection,
@@ -142,6 +145,13 @@ namespace Azure.Messaging.ServiceBus
             {
                 // propagate as TCE so it will be handled by the outer catch block
                 throw new TaskCanceledException();
+            }
+            finally
+            {
+                if (releaseSemaphore)
+                {
+                    _concurrentAcceptSessionsSemaphore.Release();
+                }
             }
         }
 

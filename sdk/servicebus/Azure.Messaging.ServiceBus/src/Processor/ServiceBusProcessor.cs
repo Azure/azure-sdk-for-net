@@ -836,10 +836,6 @@ namespace Azure.Messaging.ServiceBus
                         {
                             await _messageHandlerSemaphore.WaitAsync(linkedHandlerTcs.Token).ConfigureAwait(false);
                             messageHandlerLockAcquired = true;
-                            if (IsSessionProcessor)
-                            {
-                                await _maxConcurrentAcceptSessionsSemaphore.WaitAsync(linkedHandlerTcs.Token).ConfigureAwait(false);
-                            }
                         }
                         catch (OperationCanceledException)
                         {
