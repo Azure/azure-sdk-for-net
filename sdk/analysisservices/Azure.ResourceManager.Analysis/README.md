@@ -38,19 +38,19 @@ Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azu
 
 Documentation is available to help you learn how to use this package:
 
--[Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
--[API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet).
--[Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
+- [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
+- [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet).
+- [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
 
 ## Examples
 
 Code samples for using the management library for .NET can be found in the following locations
--[.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
+- [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
 
 ## Troubleshooting
 
--File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
--Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
+-   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
+-   Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
 
 ## Next steps
 

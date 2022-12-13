@@ -22,7 +22,7 @@ Polishing since last public beta release:
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Corrected the suffix of `DateTimeOffset` properties / parameters.
-- Corrected the name of interval / duration properties / parameters which end with units.
+- Corrected the name of interval / duration properties / parameters that end with units.
 - Optimized the name of some models and functions.
 
 ### Other Changes

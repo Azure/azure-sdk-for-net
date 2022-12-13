@@ -21,9 +21,9 @@ Polishing since last public beta release:
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
 - Corrected the format of all `Uri` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
-- Corrected all acronyms which not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected all acronyms that not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
 - Corrected the suffix of `DateTimeOffset` properties / parameters.
-- Corrected the name of interval / duration properties / parameters which end with units.
+- Corrected the name of interval / duration properties / parameters that end with units.
 - Optimized the name of some models and functions.
 - Optimized the class `RouteConfiguration` to abstract class and changed its constructor from public to protected.
 

@@ -20,7 +20,7 @@ Polishing since last public beta release:
 - Prepended `DesktopVirtualization` prefix to all single / simple model names.
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
 - Corrected the format of all binary type properties / parameters.
-- Corrected all acronyms which not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected all acronyms that not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
 - Corrected the suffix of `DateTimeOffset` properties / parameters.
 - Optimized the name of some models and functions.
 - Repalaced the model `ResourceModelWithAllowedPropertySetIdentity` with `Azure.ResourceManager.Models.ManagedServiceIdentit`.
