@@ -129,6 +129,7 @@ namespace Azure.Storage.DataMovement
                 if (_initialTransferSize >= length)
                 {
                     await StartSingleCallCopy(length, false).ConfigureAwait(false);
+                    return;
                 }
                 long blockSize = CalculateBlockSize(length);
 
