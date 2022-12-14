@@ -365,7 +365,6 @@ namespace Azure.Core
         protected ClientOptions() { }
         protected ClientOptions(Azure.Core.DiagnosticsOptions? diagnostics) { }
         public static Azure.Core.ClientOptions Default { get { throw null; } }
-        public Azure.Core.DelayStrategy? Delay { get { throw null; } set { } }
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         public Azure.Core.RetryOptions Retry { get { throw null; } }
         public Azure.Core.Pipeline.HttpPipelinePolicy? RetryPolicy { get { throw null; } set { } }
@@ -400,6 +399,7 @@ namespace Azure.Core
     {
         protected DelayStrategy() { }
         public abstract System.TimeSpan GetNextDelay(Azure.Response response, int attempt, System.TimeSpan? suggestedInterval);
+        protected internal static System.TimeSpan GetServerDelay(Azure.Core.HttpMessage message) { throw null; }
         protected static System.TimeSpan Max(System.TimeSpan t1, System.TimeSpan t2) { throw null; }
     }
     public static partial class DelegatedTokenCredential

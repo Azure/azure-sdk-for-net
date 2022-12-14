@@ -24,10 +24,6 @@ namespace Azure.Core.Pipeline
         private readonly Random _random = new ThreadSafeRandom();
         private readonly DelayStrategy? _delayStrategy;
 
-        private const string RetryAfterHeaderName = "Retry-After";
-        private const string RetryAfterMsHeaderName = "retry-after-ms";
-        private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
-
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryPolicy"/> class.
         /// </summary>
@@ -280,7 +276,7 @@ namespace Azure.Core.Pipeline
                     break;
             }
 
-            TimeSpan serverDelay = GetServerDelay(message);
+            TimeSpan serverDelay = DelayStrategy.GetServerDelay(message);
             if (serverDelay > delay)
             {
                 delay = serverDelay;
@@ -292,44 +288,6 @@ namespace Azure.Core.Pipeline
             }
 
             return delay;
-        }
-
-        /// <summary>
-        /// Gets the server specified delay. If the message has no response, <see cref="TimeSpan.Zero"/> is returned.
-        /// This method can be used to help calculate the next delay when overriding <see cref="CalculateNextDelay(HttpMessage)"/>, i.e.
-        /// implementors may want to add the server delay to their own custom delay.
-        /// </summary>
-        /// <param name="message">The message to inspect for the server specified delay.</param>
-        /// <returns>The server specified delay.</returns>
-        internal static TimeSpan GetServerDelay(HttpMessage message)
-        {
-            if (!message.HasResponse)
-            {
-                return TimeSpan.Zero;
-            }
-
-            if (message.Response.TryGetHeader(RetryAfterMsHeaderName, out var retryAfterValue) ||
-                message.Response.TryGetHeader(XRetryAfterMsHeaderName, out retryAfterValue))
-            {
-                if (int.TryParse(retryAfterValue, out var delaySeconds))
-                {
-                    return TimeSpan.FromMilliseconds(delaySeconds);
-                }
-            }
-
-            if (message.Response.TryGetHeader(RetryAfterHeaderName, out retryAfterValue))
-            {
-                if (int.TryParse(retryAfterValue, out var delaySeconds))
-                {
-                    return TimeSpan.FromSeconds(delaySeconds);
-                }
-                if (DateTimeOffset.TryParse(retryAfterValue, out DateTimeOffset delayTime))
-                {
-                    return delayTime - DateTimeOffset.Now;
-                }
-            }
-
-            return TimeSpan.Zero;
         }
 
         private TimeSpan CalculateExponentialDelay(int attempted)
