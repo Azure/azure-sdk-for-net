@@ -110,7 +110,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             var repositories = client.GetRepositoryNamesAsync();
-            Assert.IsTrue(await repositories.ContainsAsync(repositoryId), $"Test set-up failed: Repository {repositoryId} was not deleted.");
+            Assert.IsTrue(await repositories.ContainsAsync(repositoryId), $"Test set-up failed: Repository {repositoryId} was not created.");
 
             // Act
             await client.DeleteRepositoryAsync(repositoryId);
