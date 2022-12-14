@@ -1,4 +1,8 @@
 # Release History
+## 1.8.2 (2023-02-07)
+
+### Bugs Fixed
+- Fixed error message parsing in `AzurePowerShellCredential` which would misinterpret AAD errors with the need to install PowerShell. [#31998](https://github.com/Azure/azure-sdk-for-net/issues/31998)
 
 ## 1.8.1 (2023-01-13)
 
