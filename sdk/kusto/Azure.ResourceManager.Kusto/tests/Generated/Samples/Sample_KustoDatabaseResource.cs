@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using System.Xml;
 using Azure;
 using Azure.Core;
 using Azure.Identity;
@@ -68,9 +69,9 @@ namespace Azure.ResourceManager.Kusto
             KustoDatabaseResource kustoDatabase = client.GetKustoDatabaseResource(kustoDatabaseResourceId);
 
             // invoke the operation
-            KustoDatabaseData data = new KustoDatabaseData()
+            KustoDatabaseData data = new KustoReadWriteDatabase()
             {
-                Kind = KustoKind.ReadWrite,
+                HotCachePeriod = XmlConvert.ToTimeSpan("P1D"),
             };
             ArmOperation<KustoDatabaseResource> lro = await kustoDatabase.UpdateAsync(WaitUntil.Completed, data);
             KustoDatabaseResource result = lro.Value;
@@ -317,9 +318,19 @@ AppId = "some_guid_app_id",
             DataConnectionValidationContent content = new DataConnectionValidationContent()
             {
                 DataConnectionName = "dataConnectionTest",
-                Properties = new KustoDataConnectionData()
+                Properties = new KustoEventGridDataConnection()
                 {
-                    Kind = DataConnectionKind.EventGrid,
+                    StorageAccountResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.Storage/storageAccounts/teststorageaccount"),
+                    EventGridResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.Storage/storageAccounts/teststorageaccount/providers/Microsoft.EventGrid/eventSubscriptions/eventSubscriptionTest"),
+                    EventHubResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.EventHub/namespaces/eventhubTestns1/eventhubs/eventhubTest1"),
+                    ConsumerGroup = "$Default",
+                    TableName = "TestTable",
+                    MappingRuleName = "TestMapping",
+                    DataFormat = KustoEventGridDataFormat.Json,
+                    IsFirstRecordIgnored = false,
+                    BlobStorageEventType = BlobStorageEventType.MicrosoftStorageBlobCreated,
+                    ManagedIdentityResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/managedidentityTest1"),
+                    DatabaseRouting = KustoDatabaseRouting.Single,
                 },
             };
             ArmOperation<DataConnectionValidationResults> lro = await kustoDatabase.ValidateDataConnectionAsync(WaitUntil.Completed, content);
@@ -352,9 +363,15 @@ AppId = "some_guid_app_id",
             DataConnectionValidationContent content = new DataConnectionValidationContent()
             {
                 DataConnectionName = "dataConnectionTest",
-                Properties = new KustoDataConnectionData()
+                Properties = new KustoEventHubDataConnection()
                 {
-                    Kind = DataConnectionKind.EventHub,
+                    EventHubResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.EventHub/namespaces/eventhubTestns1/eventhubs/eventhubTest1"),
+                    ConsumerGroup = "testConsumerGroup1",
+                    TableName = "TestTable",
+                    MappingRuleName = "TestMapping",
+                    DataFormat = KustoEventHubDataFormat.Json,
+                    Compression = EventHubMessagesCompressionType.None,
+                    ManagedIdentityResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/managedidentityTest1"),
                 },
             };
             ArmOperation<DataConnectionValidationResults> lro = await kustoDatabase.ValidateDataConnectionAsync(WaitUntil.Completed, content);

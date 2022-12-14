@@ -9,6 +9,7 @@ omitted_paths:
   - samples/*
   - sdk/*/*.Management.*/*
   - sdk/*/*/perf/*
+  - sdk/*/*/integration/*
   - sdk/*/*/tests/Samples/*
   - sdk/*/*/tests/samples/*
   - sdk/*/*/samples/*
