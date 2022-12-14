@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The SkuResourceProperties. </summary>
-    public partial class SkuResourceProperties : ResourceTypeSku
+    public partial class SkuResourceProperties : ResourceTypeSkuInfo
     {
         /// <summary> Initializes a new instance of SkuResourceProperties. </summary>
         /// <param name="skuSettings"></param>

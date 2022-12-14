@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Updated dependency version of `Microsoft.AspNetCore.DataProtection` to mitigate [CVE-2021-24112](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-24112).  Note that the vulnerability only exists in a dependency referenced by the `netcoreapp3.0` target, which reach end-of-life in December, 2019.  
+
 ## 1.2.3 (2022-09-12)
 
 ### Other Changes

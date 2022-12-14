@@ -353,7 +353,7 @@ namespace Azure.Storage.Blobs.Specialized
                 new BlobClientConfiguration(
                     pipeline: pipeline,
                     sharedKeyCredential: null,
-                    clientDiagnostics: new StorageClientDiagnostics(options),
+                    clientDiagnostics: new ClientDiagnostics(options),
                     version: options.Version,
                     customerProvidedKey: options.CustomerProvidedKey,
                     transferValidation: options.TransferValidation,

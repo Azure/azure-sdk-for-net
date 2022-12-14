@@ -138,9 +138,9 @@ namespace Azure.ResourceManager.DataBoxEdge
 
             // invoke the operation
             string name = "trigger1";
-            DataBoxEdgeTriggerData data = new DataBoxEdgeTriggerData()
+            DataBoxEdgeTriggerData data = new EdgeFileEventTrigger(new EdgeFileSourceInfo(new ResourceIdentifier("/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/GroupForEdgeAutomation/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/testedgedevice/shares/share1")), new DataBoxEdgeRoleSinkInfo(new ResourceIdentifier("/subscriptions/4385cf00-2d3a-425a-832f-f4285b1c9dce/resourceGroups/GroupForEdgeAutomation/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/testedgedevice/roles/role1")))
             {
-                Kind = TriggerEventType.FileEvent,
+                CustomContextTag = "CustomContextTags-1235346475",
             };
             ArmOperation<DataBoxEdgeTriggerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             DataBoxEdgeTriggerResource result = lro.Value;

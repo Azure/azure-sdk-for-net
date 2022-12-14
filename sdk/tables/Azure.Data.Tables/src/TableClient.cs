@@ -232,7 +232,7 @@ namespace Azure.Data.Tables
             _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
-            _diagnostics = new TablesClientDiagnostics(options);
+            _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
             _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
@@ -284,7 +284,7 @@ namespace Azure.Data.Tables
             _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
-            _diagnostics = new TablesClientDiagnostics(options);
+            _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
             _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
@@ -335,7 +335,7 @@ namespace Azure.Data.Tables
             _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _version = options.VersionString;
-            _diagnostics = new TablesClientDiagnostics(options);
+            _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
             _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
@@ -1662,7 +1662,6 @@ namespace Azure.Data.Tables
             options.Diagnostics.IsTelemetryEnabled = false;
             options.Diagnostics.IsDistributedTracingEnabled = false;
             options.Retry.MaxRetries = 0;
-            options.RequestFailedDetailsParser = new TablesRequestFailedDetailsParser();
 
             // Use an empty transport so requests aren't sent
             options.Transport = new MemoryTransport();

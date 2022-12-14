@@ -239,7 +239,6 @@ namespace Azure.ResourceManager.DigitalTwins
             {
                 PrimaryConnectionString = "Endpoint=sb://mysb.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=xyzxyzoX4=;EntityPath=abcabc",
                 SecondaryConnectionString = "Endpoint=sb://mysb.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=xyzxyzoX4=;EntityPath=abcabc",
-                EndpointType = EndpointType.ServiceBus,
                 AuthenticationType = DigitalTwinsAuthenticationType.KeyBased,
             });
             ArmOperation<DigitalTwinsEndpointResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, endpointName, data);
@@ -280,7 +279,6 @@ namespace Azure.ResourceManager.DigitalTwins
             {
                 EndpointUri = new Uri("sb://mysb.servicebus.windows.net/"),
                 EntityPath = "mysbtopic",
-                EndpointType = EndpointType.ServiceBus,
                 AuthenticationType = DigitalTwinsAuthenticationType.IdentityBased,
             });
             ArmOperation<DigitalTwinsEndpointResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, endpointName, data);
@@ -321,7 +319,6 @@ namespace Azure.ResourceManager.DigitalTwins
             {
                 EndpointUri = new Uri("sb://mysb.servicebus.windows.net/"),
                 EntityPath = "mysbtopic",
-                EndpointType = EndpointType.ServiceBus,
                 AuthenticationType = DigitalTwinsAuthenticationType.IdentityBased,
                 Identity = new DigitalTwinsManagedIdentityReference()
                 {
