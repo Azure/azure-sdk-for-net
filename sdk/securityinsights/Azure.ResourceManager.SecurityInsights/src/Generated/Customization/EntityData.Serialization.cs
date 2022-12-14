@@ -8,8 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights.Models;
 
-namespace Azure.ResourceManager.SecurityInsights.Models
+namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class EntityData : IUtf8JsonSerializable
     {
