@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.DataShare
 
             // invoke the operation
             string triggerName = "Trigger1";
-            DataShareTriggerData data = new DataShareTriggerData()
+            DataShareTriggerData data = new ScheduledTrigger(DataShareSynchronizationRecurrenceInterval.Day, DateTimeOffset.Parse("2018-11-14T04:47:52.9614956Z"))
             {
-                Kind = TriggerKind.ScheduleBased,
+                SynchronizationMode = SynchronizationMode.Incremental,
             };
             ArmOperation<DataShareTriggerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, triggerName, data);
             DataShareTriggerResource result = lro.Value;
