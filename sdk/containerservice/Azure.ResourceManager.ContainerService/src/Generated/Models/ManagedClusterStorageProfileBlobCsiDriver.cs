@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of ManagedClusterStorageProfileBlobCsiDriver. </summary>
-        /// <param name="enabled"> Whether to enable AzureBlob CSI Driver. The default value is false. </param>
-        internal ManagedClusterStorageProfileBlobCsiDriver(bool? enabled)
+        /// <param name="isEnabled"> Whether to enable AzureBlob CSI Driver. The default value is false. </param>
+        internal ManagedClusterStorageProfileBlobCsiDriver(bool? isEnabled)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
         }
 
         /// <summary> Whether to enable AzureBlob CSI Driver. The default value is false. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
     }
 }

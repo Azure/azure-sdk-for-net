@@ -46,6 +46,7 @@ rename-mapping:
   ManagedClusterStorageProfileDiskCSIDriver.enabled: IsEnabled
   ManagedClusterStorageProfileFileCSIDriver.enabled: IsEnabled
   ManagedClusterStorageProfileSnapshotController.enabled: IsEnabled
+  ManagedClusterStorageProfileBlobCSIDriver.enabled: IsEnabled
   KubeletConfig.cpuCfsQuota: IsCpuCfsQuotaEnabled
   OutboundEnvironmentEndpointCollection: OutboundEnvironmentEndpointListResult
   RunCommandRequest: ManagedClusterRunCommandContent
@@ -57,6 +58,11 @@ rename-mapping:
   ManagedClusterAADProfile.clientAppID: -|uuid
 #   ManagedClusterAADProfile.adminGroupObjectIDs.items: -|uuid
   ManagedClusterSecurityProfileDefenderSecurityMonitoring.enabled: IsSecurityMonitoringEnabled
+  AzureKeyVaultKms: ManagedClusterSecurityProfileKeyVaultKms
+  AzureKeyVaultKms.enabled: IsEnabled
+  KeyVaultNetworkAccessTypes: ManagedClusterKeyVaultNetworkAccessType
+  ManagedClusterOIDCIssuerProfile.enabled: IsEnabled
+  ManagedClusterOIDCIssuerProfile.issuerURL: IssuerUriInfo
 
 format-by-name-rules:
   'tenantId': 'uuid'

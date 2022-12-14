@@ -39,16 +39,5 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> AzureBlob CSI Driver settings for the storage profile. </summary>
         internal ManagedClusterStorageProfileBlobCsiDriver BlobCsiDriver { get; set; }
-        /// <summary> Whether to enable AzureBlob CSI Driver. The default value is false. </summary>
-        public bool? BlobCsiDriverEnabled
-        {
-            get => BlobCsiDriver is null ? default : BlobCsiDriver.Enabled;
-            set
-            {
-                if (BlobCsiDriver is null)
-                    BlobCsiDriver = new ManagedClusterStorageProfileBlobCsiDriver();
-                BlobCsiDriver.Enabled = value;
-            }
-        }
     }
 }

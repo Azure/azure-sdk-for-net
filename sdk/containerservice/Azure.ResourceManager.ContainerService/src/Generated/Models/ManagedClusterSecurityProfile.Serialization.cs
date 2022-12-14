@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         internal static ManagedClusterSecurityProfile DeserializeManagedClusterSecurityProfile(JsonElement element)
         {
             Optional<ManagedClusterSecurityProfileDefender> defender = default;
-            Optional<AzureKeyVaultKms> azureKeyVaultKms = default;
+            Optional<ManagedClusterSecurityProfileKeyVaultKms> azureKeyVaultKms = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defender"))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    azureKeyVaultKms = AzureKeyVaultKms.DeserializeAzureKeyVaultKms(property.Value);
+                    azureKeyVaultKms = ManagedClusterSecurityProfileKeyVaultKms.DeserializeManagedClusterSecurityProfileKeyVaultKms(property.Value);
                     continue;
                 }
             }

@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class AzureKeyVaultKms : IUtf8JsonSerializable
+    public partial class ManagedClusterSecurityProfileKeyVaultKms : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(KeyId))
             {
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureKeyVaultKms DeserializeAzureKeyVaultKms(JsonElement element)
+        internal static ManagedClusterSecurityProfileKeyVaultKms DeserializeManagedClusterSecurityProfileKeyVaultKms(JsonElement element)
         {
             Optional<bool> enabled = default;
             Optional<string> keyId = default;
-            Optional<KeyVaultNetworkAccessType> keyVaultNetworkAccess = default;
+            Optional<ManagedClusterKeyVaultNetworkAccessType> keyVaultNetworkAccess = default;
             Optional<ResourceIdentifier> keyVaultResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    keyVaultNetworkAccess = new KeyVaultNetworkAccessType(property.Value.GetString());
+                    keyVaultNetworkAccess = new ManagedClusterKeyVaultNetworkAccessType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("keyVaultResourceId"))
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     continue;
                 }
             }
-            return new AzureKeyVaultKms(Optional.ToNullable(enabled), keyId.Value, Optional.ToNullable(keyVaultNetworkAccess), keyVaultResourceId.Value);
+            return new ManagedClusterSecurityProfileKeyVaultKms(Optional.ToNullable(enabled), keyId.Value, Optional.ToNullable(keyVaultNetworkAccess), keyVaultResourceId.Value);
         }
     }
 }

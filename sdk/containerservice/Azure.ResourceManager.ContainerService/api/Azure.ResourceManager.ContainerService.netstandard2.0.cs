@@ -469,14 +469,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static bool operator !=(Azure.ResourceManager.ContainerService.Models.AutoScaleExpander left, Azure.ResourceManager.ContainerService.Models.AutoScaleExpander right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AzureKeyVaultKms
-    {
-        public AzureKeyVaultKms() { }
-        public bool? Enabled { get { throw null; } set { } }
-        public string KeyId { get { throw null; } set { } }
-        public Azure.ResourceManager.ContainerService.Models.KeyVaultNetworkAccessType? KeyVaultNetworkAccess { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier KeyVaultResourceId { get { throw null; } set { } }
-    }
     public partial class ContainerServiceEndpointDependency
     {
         internal ContainerServiceEndpointDependency() { }
@@ -865,24 +857,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct KeyVaultNetworkAccessType : System.IEquatable<Azure.ResourceManager.ContainerService.Models.KeyVaultNetworkAccessType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public KeyVaultNetworkAccessType(string value) { throw null; }
-        public static Azure.ResourceManager.ContainerService.Models.KeyVaultNetworkAccessType Private { get { throw null; } }
-        public static Azure.ResourceManager.ContainerService.Models.KeyVaultNetworkAccessType Public { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ContainerService.Models.KeyVaultNetworkAccessType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ContainerService.Models.KeyVaultNetworkAccessType left, Azure.ResourceManager.ContainerService.Models.KeyVaultNetworkAccessType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerService.Models.KeyVaultNetworkAccessType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ContainerService.Models.KeyVaultNetworkAccessType left, Azure.ResourceManager.ContainerService.Models.KeyVaultNetworkAccessType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct KubeConfigFormat : System.IEquatable<Azure.ResourceManager.ContainerService.Models.KubeConfigFormat>
     {
         private readonly object _dummy;
@@ -1067,6 +1041,24 @@ namespace Azure.ResourceManager.ContainerService.Models
         public System.Collections.Generic.IList<string> NoProxy { get { throw null; } }
         public string TrustedCA { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ManagedClusterKeyVaultNetworkAccessType : System.IEquatable<Azure.ResourceManager.ContainerService.Models.ManagedClusterKeyVaultNetworkAccessType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ManagedClusterKeyVaultNetworkAccessType(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterKeyVaultNetworkAccessType Private { get { throw null; } }
+        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterKeyVaultNetworkAccessType Public { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerService.Models.ManagedClusterKeyVaultNetworkAccessType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerService.Models.ManagedClusterKeyVaultNetworkAccessType left, Azure.ResourceManager.ContainerService.Models.ManagedClusterKeyVaultNetworkAccessType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerService.Models.ManagedClusterKeyVaultNetworkAccessType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerService.Models.ManagedClusterKeyVaultNetworkAccessType left, Azure.ResourceManager.ContainerService.Models.ManagedClusterKeyVaultNetworkAccessType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ManagedClusterLoadBalancerProfile
     {
         public ManagedClusterLoadBalancerProfile() { }
@@ -1177,7 +1169,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class ManagedClusterSecurityProfile
     {
         public ManagedClusterSecurityProfile() { }
-        public Azure.ResourceManager.ContainerService.Models.AzureKeyVaultKms AzureKeyVaultKms { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfileKeyVaultKms AzureKeyVaultKms { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ManagedClusterSecurityProfileDefender Defender { get { throw null; } set { } }
     }
     public partial class ManagedClusterSecurityProfileAzureDefender
@@ -1191,6 +1183,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         public ManagedClusterSecurityProfileDefender() { }
         public bool? IsSecurityMonitoringEnabled { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LogAnalyticsWorkspaceResourceId { get { throw null; } set { } }
+    }
+    public partial class ManagedClusterSecurityProfileKeyVaultKms
+    {
+        public ManagedClusterSecurityProfileKeyVaultKms() { }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public string KeyId { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerService.Models.ManagedClusterKeyVaultNetworkAccessType? KeyVaultNetworkAccess { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier KeyVaultResourceId { get { throw null; } set { } }
     }
     public partial class ManagedClusterServicePrincipalProfile
     {
@@ -1242,7 +1242,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class ManagedClusterStorageProfile
     {
         public ManagedClusterStorageProfile() { }
-        public bool? BlobCsiDriverEnabled { get { throw null; } set { } }
+        public bool? IsBlobCsiDriverEnabled { get { throw null; } set { } }
         public bool? IsDiskCsiDriverEnabled { get { throw null; } set { } }
         public bool? IsFileCsiDriverEnabled { get { throw null; } set { } }
         public bool? IsSnapshotControllerEnabled { get { throw null; } set { } }
