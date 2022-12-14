@@ -147,11 +147,6 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResourceWriteToOffsetOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            AppendBlobRequestConditions conditions = new AppendBlobRequestConditions
-            {
-                // TODO: copy over the other conditions from the uploadOptions
-                IfNoneMatch = overwrite ? null : new ETag(Constants.Wildcard),
-            };
             if (position == 0)
             {
                 await _blobClient.CreateAsync(
@@ -191,12 +186,6 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            // Create Append blob beforehand
-
-            await _blobClient.CreateAsync(
-                options: _options.ToCreateOptions(overwrite),
-                cancellationToken: cancellationToken).ConfigureAwait(false);
-
             if (ServiceCopyMethod == TransferCopyMethod.AsyncCopy)
             {
                 await _blobClient.StartCopyFromUriAsync(
@@ -206,8 +195,11 @@ namespace Azure.Storage.DataMovement.Blobs
             }
             else //(ServiceCopyMethod == TransferCopyMethod.SyncCopy)
             {
-                // We use SyncUploadFromUri over SyncCopyUploadFromUri in this case because it accepts any blob type as the source.
-                // TODO: subject to change as we scale to suppport resource types outside of blobs.
+                // Create Append blob beforehand
+                await _blobClient.CreateAsync(
+                    options: _options.ToCreateOptions(overwrite),
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
                 await _blobClient.SyncCopyFromUriAsync(
                     sourceResource.Uri,
                     _options.ToBlobCopyFromUriOptions(overwrite, options?.SourceAuthentication),

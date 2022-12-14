@@ -190,10 +190,6 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            await _blobClient.CreateAsync(
-                size: completeLength,
-                options: _options.ToCreateOptions(overwrite),
-                cancellationToken: cancellationToken).ConfigureAwait(false);
             if (ServiceCopyMethod == TransferCopyMethod.AsyncCopy)
             {
                 await _blobClient.StartCopyFromUriAsync(
@@ -203,6 +199,11 @@ namespace Azure.Storage.DataMovement.Blobs
             }
             else //(ServiceCopyMethod == TransferCopyMethod.SyncCopy)
             {
+                await _blobClient.CreateAsync(
+                    size: completeLength,
+                    options: _options.ToCreateOptions(overwrite),
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
                 // TODO: subject to change as we scale to suppport resource types outside of blobs.
                 await _blobClient.SyncCopyFromUriAsync(
                     sourceResource.Uri,
