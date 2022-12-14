@@ -11,27 +11,42 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> A paginated list of BatchDeployment entities. </summary>
+    /// <summary>
+    /// A paginated list of BatchDeployment entities.
+    /// Serialized Name: BatchDeploymentTrackedResourceArmPaginatedResult
+    /// </summary>
     internal partial class BatchDeploymentTrackedResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of BatchDeploymentTrackedResourceArmPaginatedResult. </summary>
         internal BatchDeploymentTrackedResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<BatchDeploymentData>();
+            Value = new ChangeTrackingList<MachineLearningBatchDeploymentData>();
         }
 
         /// <summary> Initializes a new instance of BatchDeploymentTrackedResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"> The link to the next page of BatchDeployment objects. If null, there are no additional pages. </param>
-        /// <param name="value"> An array of objects of type BatchDeployment. </param>
-        internal BatchDeploymentTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<BatchDeploymentData> value)
+        /// <param name="nextLink">
+        /// The link to the next page of BatchDeployment objects. If null, there are no additional pages.
+        /// Serialized Name: BatchDeploymentTrackedResourceArmPaginatedResult.nextLink
+        /// </param>
+        /// <param name="value">
+        /// An array of objects of type BatchDeployment.
+        /// Serialized Name: BatchDeploymentTrackedResourceArmPaginatedResult.value
+        /// </param>
+        internal BatchDeploymentTrackedResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningBatchDeploymentData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> The link to the next page of BatchDeployment objects. If null, there are no additional pages. </summary>
+        /// <summary>
+        /// The link to the next page of BatchDeployment objects. If null, there are no additional pages.
+        /// Serialized Name: BatchDeploymentTrackedResourceArmPaginatedResult.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> An array of objects of type BatchDeployment. </summary>
-        public IReadOnlyList<BatchDeploymentData> Value { get; }
+        /// <summary>
+        /// An array of objects of type BatchDeployment.
+        /// Serialized Name: BatchDeploymentTrackedResourceArmPaginatedResult.value
+        /// </summary>
+        public IReadOnlyList<MachineLearningBatchDeploymentData> Value { get; }
     }
 }

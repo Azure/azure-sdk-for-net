@@ -38,6 +38,11 @@ namespace Azure.Communication.MediaComposition
                 writer.WritePropertyName("layer");
                 writer.WriteStringValue(Layer);
             }
+            if (Optional.IsDefined(ScalingMode))
+            {
+                writer.WritePropertyName("scalingMode");
+                writer.WriteStringValue(ScalingMode.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -48,6 +53,7 @@ namespace Azure.Communication.MediaComposition
             Optional<string> width = default;
             Optional<string> height = default;
             Optional<string> layer = default;
+            Optional<ScalingMode> scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -80,8 +86,18 @@ namespace Azure.Communication.MediaComposition
                     layer = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("scalingMode"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    scalingMode = new ScalingMode(property.Value.GetString());
+                    continue;
+                }
             }
-            return new UnknownInputGroup(kind, position.Value, width.Value, height.Value, layer.Value);
+            return new UnknownInputGroup(kind, position.Value, width.Value, height.Value, layer.Value, Optional.ToNullable(scalingMode));
         }
     }
 }

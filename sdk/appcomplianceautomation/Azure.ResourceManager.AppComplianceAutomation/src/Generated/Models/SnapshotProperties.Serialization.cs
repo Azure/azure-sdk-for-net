@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reportSystemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    reportSystemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("complianceResults"))

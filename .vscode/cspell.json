@@ -2,7 +2,11 @@
   "version": "0.1",
   "language": "en_US",
   "languageId": "csharp",
-  "dictionaries": ["powershell", "softwareTerms", "csharp"],
+  "dictionaries": [
+    "powershell",
+    "softwareTerms",
+    "csharp"
+  ],
   "ignorePaths": [
     "**/SessionRecords/**",
     "**/packages/**",
@@ -74,6 +78,8 @@
     "overridden",
     "parallelization",
     "personalizer",
+    "petabit",
+    "picometer",
     "pkcs",
     "pstn",
     "pwsh",
@@ -84,6 +90,7 @@
     "skus",
     "structs",
     "uints",
+    "unbilled",
     "unencrypted",
     "unformattable",
     "unhold",
@@ -96,7 +103,15 @@
   "overrides": [
     {
       "filename": "**/eng/pipelines/templates/jobs/ci.yml",
-      "words": ["warnaserror"]
+      "words": [
+        "warnaserror"
+      ]
+    },
+    {
+      "filename": "**/sdk/analysisservices/**/*.cs",
+      "words": [
+        "Dmts"
+      ]
     },
     {
       "filename": "**/sdk/alertsmanagement/**/*.cs",
@@ -107,7 +122,7 @@
         "zabbix"
       ]
     },
-	{
+    {
       "filename": "**/sdk/apimanagement/**/*.cs",
       "words": [
         "signin",
@@ -120,6 +135,12 @@
       "words": [
         "dynatrace",
         "fqdns"
+      ]
+    },
+    {
+      "filename": "**/sdk/automanage/**/*.cs",
+      "words": [
+        "HCRP"
       ]
     },
     {
@@ -357,7 +378,9 @@
     },
     {
       "filename": "**/sdk/deviceupdate/**/*.cs",
-      "words": ["Fqdns"]
+      "words": [
+        "Fqdns"
+      ]
     },
     {
       "filename": "**/sdk/dynatrace/**/*.cs",
@@ -389,15 +412,21 @@
     },
     {
       "filename": "**/sdk/formrecognizer/**/*.cs",
-      "words": ["ZhHant"]
+      "words": [
+        "ZhHant"
+      ]
     },
     {
       "filename": "**/sdk/frontdoor/**/*.cs",
-      "words": ["cname"]
+      "words": [
+        "cname"
+      ]
     },
     {
       "filename": "**/sdk/guestconfiguration/**/*.cs",
-      "words": ["Hcrp"]
+      "words": [
+        "Hcrp"
+      ]
     },
     {
       "filename": "**/sdk/hdinsight/**/*.cs",
@@ -557,7 +586,7 @@
         "scms"
       ]
     },
-	{
+    {
       "filename": "**/sdk/mysql/**/*.cs",
       "words": [
         "byok"
@@ -609,7 +638,7 @@
       "filename": "**/sdk/postgresql/**/*.cs",
       "words": [
         "byok",
-		"vcore",
+        "vcore",
         "vcores"
       ]
     },
@@ -617,7 +646,7 @@
       "filename": "**/sdk/powerbidedicated/**/*.cs",
       "words": [
         "vcore",
-		"pbie"
+        "pbie"
       ]
     },
     {
@@ -631,7 +660,7 @@
       "filename": "**/sdk/providerhub/**/*.cs",
       "words": [
         "checkin",
-		"regionality"
+        "regionality"
       ]
     },
     {
@@ -683,7 +712,9 @@
     },
     {
       "filename": "**/sdk/resources/Azure.ResourceManager.Resources/api/*.cs",
-      "words": ["Puid"]
+      "words": [
+        "Puid"
+      ]
     },
     {
       "filename": "**/sdk/servicefabricmanagedclusters/**/*.cs",
@@ -798,6 +829,12 @@
       ]
     },
     {
+      "filename": "**/sdk/storagemover/**/*.cs",
+      "words": [
+        "Unregistering"
+      ]
+    },
+    {
       "filename": "**/sdk/storagepool/**/*.cs",
       "words": [
         "iscsi"
@@ -889,12 +926,12 @@
         "ssdlrs"
       ]
     },
-   {
+    {
       "filename": "**/sdk/containerinstance/**/*.cs",
       "words": [
         "Noreuse",
         "Unsecure"
-        ]
+      ]
     },
     {
       "filename": "**/sdk/machinelearningservices/**/*.cs",
@@ -909,27 +946,35 @@
         "Cran",
         "Rscript",
         "VCPUs"
-        ]
+      ]
     },
     {
       "filename": "**/sdk/machinelearningcompute/**/*.cs",
       "words": [
         "cname",
         "kube"
-        ]
+      ]
     },
     {
       "filename": "**/sdk/reservations/**/*.cs",
       "words": [
         "Msrp",
         "Hana"
-        ]
+      ]
     },
     {
       "filename": "**/sdk/securitydevops/**/*.cs",
       "words": [
         "Orgs"
       ]
+    },
+    {
+      "filename": "**/sdk/webpubsub/**/*.cs",
+      "words": [
+        "protobuf",
+        "Ackable",
+        "awps"
+        ]
     }
   ],
   "allowCompoundWords": true

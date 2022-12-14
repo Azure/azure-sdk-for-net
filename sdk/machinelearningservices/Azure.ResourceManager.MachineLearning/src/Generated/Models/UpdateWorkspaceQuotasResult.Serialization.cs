@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static UpdateWorkspaceQuotasResult DeserializeUpdateWorkspaceQuotasResult(JsonElement element)
         {
-            Optional<IReadOnlyList<UpdateWorkspaceQuotas>> value = default;
+            Optional<IReadOnlyList<MachineLearningWorkspaceQuotaUpdate>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<UpdateWorkspaceQuotas> array = new List<UpdateWorkspaceQuotas>();
+                    List<MachineLearningWorkspaceQuotaUpdate> array = new List<MachineLearningWorkspaceQuotaUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpdateWorkspaceQuotas.DeserializeUpdateWorkspaceQuotas(item));
+                        array.Add(MachineLearningWorkspaceQuotaUpdate.DeserializeMachineLearningWorkspaceQuotaUpdate(item));
                     }
                     value = array;
                     continue;

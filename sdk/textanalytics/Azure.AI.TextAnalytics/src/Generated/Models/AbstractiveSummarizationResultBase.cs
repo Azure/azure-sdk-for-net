@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> Initializes a new instance of AbstractiveSummarizationResultBase. </summary>
         /// <param name="documents"> Response by document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="documents"/> is null. </exception>
-        public AbstractiveSummarizationResultBase(IEnumerable<AbstractiveSummarizationResultBaseDocumentsItem> documents)
+        public AbstractiveSummarizationResultBase(IEnumerable<AbstractiveSummaryDocumentResultWithDetectedLanguage> documents)
         {
             Argument.AssertNotNull(documents, nameof(documents));
 
@@ -27,12 +27,12 @@ namespace Azure.AI.TextAnalytics.Models
 
         /// <summary> Initializes a new instance of AbstractiveSummarizationResultBase. </summary>
         /// <param name="documents"> Response by document. </param>
-        internal AbstractiveSummarizationResultBase(IList<AbstractiveSummarizationResultBaseDocumentsItem> documents)
+        internal AbstractiveSummarizationResultBase(IList<AbstractiveSummaryDocumentResultWithDetectedLanguage> documents)
         {
             Documents = documents;
         }
 
         /// <summary> Response by document. </summary>
-        public IList<AbstractiveSummarizationResultBaseDocumentsItem> Documents { get; }
+        public IList<AbstractiveSummaryDocumentResultWithDetectedLanguage> Documents { get; }
     }
 }

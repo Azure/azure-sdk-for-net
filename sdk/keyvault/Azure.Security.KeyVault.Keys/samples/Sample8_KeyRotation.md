@@ -60,12 +60,5 @@ KeyVaultKey newRsaKey = keyClient.RotateKey(rsaKeyName);
 Debug.WriteLine($"Rotated key {newRsaKey.Name} with version {newRsaKey.Properties.Version}");
 ```
 
-## Source
-
-To see the full example source, see:
-
-* [Synchronous Sample8_KeyRotation.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample8_KeyRotation.cs)
-* [Asynchronous Sample8_KeyRotationAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/tests/samples/Sample8_KeyRotationAsync.cs)
-
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md

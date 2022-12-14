@@ -5,35 +5,12 @@
 
 #nullable disable
 
-namespace Azure.AI.TextAnalytics.Models
+using Azure.AI.TextAnalytics.Models;
+
+namespace Azure.AI.TextAnalytics
 {
     /// <summary> Represents the temperature entity resolution model. </summary>
-    internal partial class TemperatureResolution : BaseResolution
+    public partial class TemperatureResolution : BaseResolution
     {
-        /// <summary> Initializes a new instance of TemperatureResolution. </summary>
-        /// <param name="unit"> The temperature Unit of measurement. </param>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        public TemperatureResolution(TemperatureUnit unit, double value)
-        {
-            Unit = unit;
-            Value = value;
-            ResolutionKind = ResolutionKind.TemperatureResolution;
-        }
-
-        /// <summary> Initializes a new instance of TemperatureResolution. </summary>
-        /// <param name="resolutionKind"> The entity resolution object kind. </param>
-        /// <param name="unit"> The temperature Unit of measurement. </param>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        internal TemperatureResolution(ResolutionKind resolutionKind, TemperatureUnit unit, double value) : base(resolutionKind)
-        {
-            Unit = unit;
-            Value = value;
-            ResolutionKind = resolutionKind;
-        }
-
-        /// <summary> The temperature Unit of measurement. </summary>
-        public TemperatureUnit Unit { get; set; }
-        /// <summary> The numeric value that the extracted text denotes. </summary>
-        public double Value { get; set; }
     }
 }

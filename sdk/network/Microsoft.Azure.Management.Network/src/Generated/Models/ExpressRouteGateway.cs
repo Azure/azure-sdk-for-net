@@ -48,15 +48,18 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">The provisioning state of the
         /// express route gateway resource. Possible values include:
         /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
+        /// <param name="allowNonVirtualWanTraffic">Configures this gateway to
+        /// accept traffic from non Virtual WAN networks.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public ExpressRouteGateway(VirtualHubId virtualHub, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration = default(ExpressRouteGatewayPropertiesAutoScaleConfiguration), IList<ExpressRouteConnection> expressRouteConnections = default(IList<ExpressRouteConnection>), string provisioningState = default(string), string etag = default(string))
+        public ExpressRouteGateway(VirtualHubId virtualHub, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExpressRouteGatewayPropertiesAutoScaleConfiguration autoScaleConfiguration = default(ExpressRouteGatewayPropertiesAutoScaleConfiguration), IList<ExpressRouteConnection> expressRouteConnections = default(IList<ExpressRouteConnection>), string provisioningState = default(string), bool? allowNonVirtualWanTraffic = default(bool?), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             AutoScaleConfiguration = autoScaleConfiguration;
             ExpressRouteConnections = expressRouteConnections;
             ProvisioningState = provisioningState;
             VirtualHub = virtualHub;
+            AllowNonVirtualWanTraffic = allowNonVirtualWanTraffic;
             Etag = etag;
             CustomInit();
         }
@@ -93,6 +96,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualHub")]
         public VirtualHubId VirtualHub { get; set; }
+
+        /// <summary>
+        /// Gets or sets configures this gateway to accept traffic from non
+        /// Virtual WAN networks.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowNonVirtualWanTraffic")]
+        public bool? AllowNonVirtualWanTraffic { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
