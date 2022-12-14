@@ -28,6 +28,8 @@ namespace Azure.Core.Dynamic
         private Memory<byte> _utf8;
         private JsonElement _element;
 
+        // Element holds a reference to the parent JsonDocument, so we don't need to, but we do need to not dispose it.
+
         private static readonly JsonSerializerOptions DefaultJsonSerializerOptions = new JsonSerializerOptions();
 
         /// <summary>
@@ -37,7 +39,7 @@ namespace Azure.Core.Dynamic
         /// <returns>A <see cref="JsonData"/> representation of the value.</returns>
         internal static JsonData Parse(BinaryData utf8Json)
         {
-            using var doc = JsonDocument.Parse(utf8Json);
+            var doc = JsonDocument.Parse(utf8Json);
             return new JsonData(doc);
         }
 
@@ -48,7 +50,7 @@ namespace Azure.Core.Dynamic
         /// <returns>A <see cref="JsonData"/> representation of the value.</returns>
         internal static JsonData Parse(string json)
         {
-            using var doc = JsonDocument.Parse(json);
+            var doc = JsonDocument.Parse(json);
             return new JsonData(doc);
         }
 
@@ -57,7 +59,7 @@ namespace Azure.Core.Dynamic
         /// </summary>
         /// <param name="jsonDocument">The JsonDocument to convert.</param>
         /// <remarks>A JsonDocument can be constructed from a JSON string using <see cref="JsonDocument.Parse(string, JsonDocumentOptions)"/>.</remarks>
-        internal JsonData(JsonDocument jsonDocument) : this((object?)jsonDocument)
+        internal JsonData(JsonDocument jsonDocument) : this(jsonDocument.RootElement)
         {
         }
 
@@ -77,6 +79,9 @@ namespace Azure.Core.Dynamic
         /// <param name="type">The type of the value to convert. </param>
         internal JsonData(object? value, JsonSerializerOptions options, Type? type = null)
         {
+            if (value is JsonDocument)
+                throw new InvalidOperationException("Calling wrong constructor.");
+
             Type inputType = type ?? (value == null ? typeof(object) : value.GetType());
             _utf8 = JsonSerializer.SerializeToUtf8Bytes(value, inputType, options);
             _element = JsonDocument.Parse(_utf8).RootElement;
@@ -84,7 +89,8 @@ namespace Azure.Core.Dynamic
 
         private JsonData(JsonElement element)
         {
-            _utf8 = element.GetBytesFromBase64();
+            // Note: you can't call the line below unless element is of type string.
+            //_utf8 = element.GetBytesFromBase64();
             _element = element;
         }
 
@@ -176,10 +182,10 @@ namespace Azure.Core.Dynamic
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
-            if (obj is string)
-            {
-                return this == ((string?)obj);
-            }
+            //if (obj is string)
+            //{
+            //    return this ==((string?)obj);
+            //}
 
             if (obj is JsonData)
             {
@@ -190,7 +196,7 @@ namespace Azure.Core.Dynamic
         }
 
         /// <inheritdoc />
-        public bool Equals(JsonData other)
+        public bool Equals(JsonData? other)
         {
             if (other is null)
             {
@@ -408,13 +414,13 @@ namespace Azure.Core.Dynamic
 
         private class MetaObject : DynamicMetaObject
         {
-            private static readonly MethodInfo GetDynamicValueMethod = typeof(JsonData).GetMethod(nameof(GetDynamicPropertyValue), BindingFlags.NonPublic | BindingFlags.Instance);
+            private static readonly MethodInfo GetDynamicValueMethod = typeof(JsonData).GetMethod(nameof(GetDynamicPropertyValue), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
             //private static readonly MethodInfo GetDynamicEnumerableMethod = typeof(JsonData).GetMethod(nameof(GetDynamicEnumerable), BindingFlags.NonPublic | BindingFlags.Instance);
 
             //private static readonly MethodInfo SetValueMethod = typeof(JsonData).GetMethod(nameof(SetValue), BindingFlags.NonPublic | BindingFlags.Instance);
 
-            private static readonly MethodInfo GetViaIndexerMethod = typeof(JsonData).GetMethod(nameof(GetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance);
+            private static readonly MethodInfo GetViaIndexerMethod = typeof(JsonData).GetMethod(nameof(GetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
             //private static readonly MethodInfo SetViaIndexerMethod = typeof(JsonData).GetMethod(nameof(SetViaIndexer), BindingFlags.NonPublic | BindingFlags.Instance);
 
