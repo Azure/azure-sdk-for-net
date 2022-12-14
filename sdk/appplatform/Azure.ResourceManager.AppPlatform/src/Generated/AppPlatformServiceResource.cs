@@ -375,11 +375,11 @@ namespace Azure.ResourceManager.AppPlatform
             return GetAppPlatformGateways().Get(gatewayName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApiPortalResources in the AppPlatformService. </summary>
-        /// <returns> An object representing collection of ApiPortalResources and their operations over a ApiPortalResource. </returns>
-        public virtual ApiPortalCollection GetApiPortals()
+        /// <summary> Gets a collection of AppPlatformApiPortalResources in the AppPlatformService. </summary>
+        /// <returns> An object representing collection of AppPlatformApiPortalResources and their operations over a AppPlatformApiPortalResource. </returns>
+        public virtual AppPlatformApiPortalCollection GetAppPlatformApiPortals()
         {
-            return GetCachedClient(Client => new ApiPortalCollection(Client, Id));
+            return GetCachedClient(Client => new AppPlatformApiPortalCollection(Client, Id));
         }
 
         /// <summary>
@@ -392,9 +392,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentException"> <paramref name="apiPortalName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiPortalName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiPortalResource>> GetApiPortalAsync(string apiPortalName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppPlatformApiPortalResource>> GetAppPlatformApiPortalAsync(string apiPortalName, CancellationToken cancellationToken = default)
         {
-            return await GetApiPortals().GetAsync(apiPortalName, cancellationToken).ConfigureAwait(false);
+            return await GetAppPlatformApiPortals().GetAsync(apiPortalName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -407,9 +407,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentException"> <paramref name="apiPortalName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiPortalName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiPortalResource> GetApiPortal(string apiPortalName, CancellationToken cancellationToken = default)
+        public virtual Response<AppPlatformApiPortalResource> GetAppPlatformApiPortal(string apiPortalName, CancellationToken cancellationToken = default)
         {
-            return GetApiPortals().Get(apiPortalName, cancellationToken);
+            return GetAppPlatformApiPortals().Get(apiPortalName, cancellationToken);
         }
 
         /// <summary>

@@ -11,21 +11,21 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the ApiPortalCustomDomain data model. </summary>
-    public partial class ApiPortalCustomDomainData : ResourceData
+    /// <summary> A class representing the AppPlatformApiPortalCustomDomain data model. </summary>
+    public partial class AppPlatformApiPortalCustomDomainData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiPortalCustomDomainData. </summary>
-        public ApiPortalCustomDomainData()
+        /// <summary> Initializes a new instance of AppPlatformApiPortalCustomDomainData. </summary>
+        public AppPlatformApiPortalCustomDomainData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiPortalCustomDomainData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformApiPortalCustomDomainData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The properties of custom domain for API portal. </param>
-        internal ApiPortalCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiPortalCustomDomainProperties properties) : base(id, name, resourceType, systemData)
+        internal AppPlatformApiPortalCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiPortalCustomDomainProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

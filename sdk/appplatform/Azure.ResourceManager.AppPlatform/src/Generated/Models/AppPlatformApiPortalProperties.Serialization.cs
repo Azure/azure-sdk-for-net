@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class ApiPortalProperties : IUtf8JsonSerializable
+    public partial class AppPlatformApiPortalProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteEndObject();
         }
 
-        internal static ApiPortalProperties DeserializeApiPortalProperties(JsonElement element)
+        internal static AppPlatformApiPortalProperties DeserializeAppPlatformApiPortalProperties(JsonElement element)
         {
-            Optional<ApiPortalProvisioningState> provisioningState = default;
+            Optional<AppPlatformApiPortalProvisioningState> provisioningState = default;
             Optional<bool> @public = default;
             Optional<Uri> uri = default;
             Optional<bool> httpsOnly = default;
             Optional<IList<ResourceIdentifier>> gatewayIds = default;
             Optional<IList<Uri>> sourceUris = default;
             Optional<AppPlatformSsoProperties> ssoProperties = default;
-            Optional<ApiPortalResourceRequirements> resourceRequests = default;
-            Optional<IReadOnlyList<ApiPortalInstance>> instances = default;
+            Optional<AppPlatformApiPortalResourceRequirements> resourceRequests = default;
+            Optional<IReadOnlyList<AppPlatformApiPortalInstance>> instances = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ApiPortalProvisioningState(property.Value.GetString());
+                    provisioningState = new AppPlatformApiPortalProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("public"))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resourceRequests = ApiPortalResourceRequirements.DeserializeApiPortalResourceRequirements(property.Value);
+                    resourceRequests = AppPlatformApiPortalResourceRequirements.DeserializeAppPlatformApiPortalResourceRequirements(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instances"))
@@ -165,16 +165,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ApiPortalInstance> array = new List<ApiPortalInstance>();
+                    List<AppPlatformApiPortalInstance> array = new List<AppPlatformApiPortalInstance>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiPortalInstance.DeserializeApiPortalInstance(item));
+                        array.Add(AppPlatformApiPortalInstance.DeserializeAppPlatformApiPortalInstance(item));
                     }
                     instances = array;
                     continue;
                 }
             }
-            return new ApiPortalProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(@public), uri.Value, Optional.ToNullable(httpsOnly), Optional.ToList(gatewayIds), Optional.ToList(sourceUris), ssoProperties.Value, resourceRequests.Value, Optional.ToList(instances));
+            return new AppPlatformApiPortalProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(@public), uri.Value, Optional.ToNullable(httpsOnly), Optional.ToList(gatewayIds), Optional.ToList(sourceUris), ssoProperties.Value, resourceRequests.Value, Optional.ToList(instances));
         }
     }
 }

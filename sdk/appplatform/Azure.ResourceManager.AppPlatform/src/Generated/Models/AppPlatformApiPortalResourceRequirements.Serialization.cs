@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class ApiPortalResourceRequirements
+    public partial class AppPlatformApiPortalResourceRequirements
     {
-        internal static ApiPortalResourceRequirements DeserializeApiPortalResourceRequirements(JsonElement element)
+        internal static AppPlatformApiPortalResourceRequirements DeserializeAppPlatformApiPortalResourceRequirements(JsonElement element)
         {
             Optional<string> cpu = default;
             Optional<string> memory = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new ApiPortalResourceRequirements(cpu.Value, memory.Value);
+            return new AppPlatformApiPortalResourceRequirements(cpu.Value, memory.Value);
         }
     }
 }

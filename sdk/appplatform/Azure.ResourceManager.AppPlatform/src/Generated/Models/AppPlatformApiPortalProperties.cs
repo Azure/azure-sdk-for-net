@@ -12,17 +12,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> API portal properties payload. </summary>
-    public partial class ApiPortalProperties
+    public partial class AppPlatformApiPortalProperties
     {
-        /// <summary> Initializes a new instance of ApiPortalProperties. </summary>
-        public ApiPortalProperties()
+        /// <summary> Initializes a new instance of AppPlatformApiPortalProperties. </summary>
+        public AppPlatformApiPortalProperties()
         {
             GatewayIds = new ChangeTrackingList<ResourceIdentifier>();
             SourceUris = new ChangeTrackingList<Uri>();
-            Instances = new ChangeTrackingList<ApiPortalInstance>();
+            Instances = new ChangeTrackingList<AppPlatformApiPortalInstance>();
         }
 
-        /// <summary> Initializes a new instance of ApiPortalProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformApiPortalProperties. </summary>
         /// <param name="provisioningState"> State of the API portal. </param>
         /// <param name="isPublic"> Indicates whether the API portal exposes endpoint. </param>
         /// <param name="uri"> URL of the API portal, exposed when &apos;public&apos; is true. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="ssoProperties"> Single sign-on related configuration. </param>
         /// <param name="resourceRequests"> The requested resource quantity for required CPU and Memory. </param>
         /// <param name="instances"> Collection of instances belong to API portal. </param>
-        internal ApiPortalProperties(ApiPortalProvisioningState? provisioningState, bool? isPublic, Uri uri, bool? isHttpsOnly, IList<ResourceIdentifier> gatewayIds, IList<Uri> sourceUris, AppPlatformSsoProperties ssoProperties, ApiPortalResourceRequirements resourceRequests, IReadOnlyList<ApiPortalInstance> instances)
+        internal AppPlatformApiPortalProperties(AppPlatformApiPortalProvisioningState? provisioningState, bool? isPublic, Uri uri, bool? isHttpsOnly, IList<ResourceIdentifier> gatewayIds, IList<Uri> sourceUris, AppPlatformSsoProperties ssoProperties, AppPlatformApiPortalResourceRequirements resourceRequests, IReadOnlyList<AppPlatformApiPortalInstance> instances)
         {
             ProvisioningState = provisioningState;
             IsPublic = isPublic;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         }
 
         /// <summary> State of the API portal. </summary>
-        public ApiPortalProvisioningState? ProvisioningState { get; }
+        public AppPlatformApiPortalProvisioningState? ProvisioningState { get; }
         /// <summary> Indicates whether the API portal exposes endpoint. </summary>
         public bool? IsPublic { get; set; }
         /// <summary> URL of the API portal, exposed when &apos;public&apos; is true. </summary>
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Single sign-on related configuration. </summary>
         public AppPlatformSsoProperties SsoProperties { get; set; }
         /// <summary> The requested resource quantity for required CPU and Memory. </summary>
-        public ApiPortalResourceRequirements ResourceRequests { get; }
+        public AppPlatformApiPortalResourceRequirements ResourceRequests { get; }
         /// <summary> Collection of instances belong to API portal. </summary>
-        public IReadOnlyList<ApiPortalInstance> Instances { get; }
+        public IReadOnlyList<AppPlatformApiPortalInstance> Instances { get; }
     }
 }

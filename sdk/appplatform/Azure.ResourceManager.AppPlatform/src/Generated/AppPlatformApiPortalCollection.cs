@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApiPortalResource" /> and their operations.
-    /// Each <see cref="ApiPortalResource" /> in the collection will belong to the same instance of <see cref="AppPlatformServiceResource" />.
-    /// To get an <see cref="ApiPortalCollection" /> instance call the GetApiPortals method from an instance of <see cref="AppPlatformServiceResource" />.
+    /// A class representing a collection of <see cref="AppPlatformApiPortalResource" /> and their operations.
+    /// Each <see cref="AppPlatformApiPortalResource" /> in the collection will belong to the same instance of <see cref="AppPlatformServiceResource" />.
+    /// To get an <see cref="AppPlatformApiPortalCollection" /> instance call the GetAppPlatformApiPortals method from an instance of <see cref="AppPlatformServiceResource" />.
     /// </summary>
-    public partial class ApiPortalCollection : ArmCollection, IEnumerable<ApiPortalResource>, IAsyncEnumerable<ApiPortalResource>
+    public partial class AppPlatformApiPortalCollection : ArmCollection, IEnumerable<AppPlatformApiPortalResource>, IAsyncEnumerable<AppPlatformApiPortalResource>
     {
-        private readonly ClientDiagnostics _apiPortalClientDiagnostics;
-        private readonly ApiPortalsRestOperations _apiPortalRestClient;
+        private readonly ClientDiagnostics _appPlatformApiPortalApiPortalsClientDiagnostics;
+        private readonly ApiPortalsRestOperations _appPlatformApiPortalApiPortalsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ApiPortalCollection"/> class for mocking. </summary>
-        protected ApiPortalCollection()
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformApiPortalCollection"/> class for mocking. </summary>
+        protected AppPlatformApiPortalCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApiPortalCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformApiPortalCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ApiPortalCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AppPlatformApiPortalCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _apiPortalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppPlatform", ApiPortalResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ApiPortalResource.ResourceType, out string apiPortalApiVersion);
-            _apiPortalRestClient = new ApiPortalsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiPortalApiVersion);
+            _appPlatformApiPortalApiPortalsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppPlatform", AppPlatformApiPortalResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AppPlatformApiPortalResource.ResourceType, out string appPlatformApiPortalApiPortalsApiVersion);
+            _appPlatformApiPortalApiPortalsRestClient = new ApiPortalsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appPlatformApiPortalApiPortalsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="apiPortalName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiPortalName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiPortalResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string apiPortalName, ApiPortalData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AppPlatformApiPortalResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string apiPortalName, AppPlatformApiPortalData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiPortalName, nameof(apiPortalName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiPortalClientDiagnostics.CreateScope("ApiPortalCollection.CreateOrUpdate");
+            using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _apiPortalRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiPortalName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<ApiPortalResource>(new ApiPortalOperationSource(Client), _apiPortalClientDiagnostics, Pipeline, _apiPortalRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiPortalName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _appPlatformApiPortalApiPortalsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiPortalName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation<AppPlatformApiPortalResource>(new AppPlatformApiPortalOperationSource(Client), _appPlatformApiPortalApiPortalsClientDiagnostics, Pipeline, _appPlatformApiPortalApiPortalsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiPortalName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -97,17 +97,17 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="apiPortalName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiPortalName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ApiPortalResource> CreateOrUpdate(WaitUntil waitUntil, string apiPortalName, ApiPortalData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AppPlatformApiPortalResource> CreateOrUpdate(WaitUntil waitUntil, string apiPortalName, AppPlatformApiPortalData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiPortalName, nameof(apiPortalName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiPortalClientDiagnostics.CreateScope("ApiPortalCollection.CreateOrUpdate");
+            using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _apiPortalRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiPortalName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<ApiPortalResource>(new ApiPortalOperationSource(Client), _apiPortalClientDiagnostics, Pipeline, _apiPortalRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiPortalName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _appPlatformApiPortalApiPortalsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiPortalName, data, cancellationToken);
+                var operation = new AppPlatformArmOperation<AppPlatformApiPortalResource>(new AppPlatformApiPortalOperationSource(Client), _appPlatformApiPortalApiPortalsClientDiagnostics, Pipeline, _appPlatformApiPortalApiPortalsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiPortalName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -128,18 +128,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="apiPortalName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiPortalName"/> is null. </exception>
-        public virtual async Task<Response<ApiPortalResource>> GetAsync(string apiPortalName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppPlatformApiPortalResource>> GetAsync(string apiPortalName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiPortalName, nameof(apiPortalName));
 
-            using var scope = _apiPortalClientDiagnostics.CreateScope("ApiPortalCollection.Get");
+            using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalCollection.Get");
             scope.Start();
             try
             {
-                var response = await _apiPortalRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiPortalName, cancellationToken).ConfigureAwait(false);
+                var response = await _appPlatformApiPortalApiPortalsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiPortalName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiPortalResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppPlatformApiPortalResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,18 +157,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="apiPortalName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="apiPortalName"/> is null. </exception>
-        public virtual Response<ApiPortalResource> Get(string apiPortalName, CancellationToken cancellationToken = default)
+        public virtual Response<AppPlatformApiPortalResource> Get(string apiPortalName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiPortalName, nameof(apiPortalName));
 
-            using var scope = _apiPortalClientDiagnostics.CreateScope("ApiPortalCollection.Get");
+            using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalCollection.Get");
             scope.Start();
             try
             {
-                var response = _apiPortalRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiPortalName, cancellationToken);
+                var response = _appPlatformApiPortalApiPortalsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiPortalName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiPortalResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppPlatformApiPortalResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -183,17 +183,17 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: ApiPortals_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiPortalResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiPortalResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppPlatformApiPortalResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppPlatformApiPortalResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApiPortalResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppPlatformApiPortalResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _apiPortalClientDiagnostics.CreateScope("ApiPortalCollection.GetAll");
+                using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _apiPortalRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiPortalResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _appPlatformApiPortalApiPortalsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformApiPortalResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -201,14 +201,14 @@ namespace Azure.ResourceManager.AppPlatform
                     throw;
                 }
             }
-            async Task<Page<ApiPortalResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppPlatformApiPortalResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _apiPortalClientDiagnostics.CreateScope("ApiPortalCollection.GetAll");
+                using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _apiPortalRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiPortalResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _appPlatformApiPortalApiPortalsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformApiPortalResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -225,17 +225,17 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: ApiPortals_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiPortalResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiPortalResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppPlatformApiPortalResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppPlatformApiPortalResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ApiPortalResource> FirstPageFunc(int? pageSizeHint)
+            Page<AppPlatformApiPortalResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _apiPortalClientDiagnostics.CreateScope("ApiPortalCollection.GetAll");
+                using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _apiPortalRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiPortalResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _appPlatformApiPortalApiPortalsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformApiPortalResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -243,14 +243,14 @@ namespace Azure.ResourceManager.AppPlatform
                     throw;
                 }
             }
-            Page<ApiPortalResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppPlatformApiPortalResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _apiPortalClientDiagnostics.CreateScope("ApiPortalCollection.GetAll");
+                using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _apiPortalRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiPortalResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _appPlatformApiPortalApiPortalsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformApiPortalResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -274,11 +274,11 @@ namespace Azure.ResourceManager.AppPlatform
         {
             Argument.AssertNotNullOrEmpty(apiPortalName, nameof(apiPortalName));
 
-            using var scope = _apiPortalClientDiagnostics.CreateScope("ApiPortalCollection.Exists");
+            using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _apiPortalRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiPortalName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _appPlatformApiPortalApiPortalsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiPortalName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -301,11 +301,11 @@ namespace Azure.ResourceManager.AppPlatform
         {
             Argument.AssertNotNullOrEmpty(apiPortalName, nameof(apiPortalName));
 
-            using var scope = _apiPortalClientDiagnostics.CreateScope("ApiPortalCollection.Exists");
+            using var scope = _appPlatformApiPortalApiPortalsClientDiagnostics.CreateScope("AppPlatformApiPortalCollection.Exists");
             scope.Start();
             try
             {
-                var response = _apiPortalRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiPortalName, cancellationToken: cancellationToken);
+                var response = _appPlatformApiPortalApiPortalsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiPortalName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
-        IEnumerator<ApiPortalResource> IEnumerable<ApiPortalResource>.GetEnumerator()
+        IEnumerator<AppPlatformApiPortalResource> IEnumerable<AppPlatformApiPortalResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.AppPlatform
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ApiPortalResource> IAsyncEnumerable<ApiPortalResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AppPlatformApiPortalResource> IAsyncEnumerable<AppPlatformApiPortalResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

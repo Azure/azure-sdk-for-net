@@ -151,12 +151,15 @@ rename-mapping:
   CustomPersistentDiskProperties.readOnly: IsReadOnly
   PersistentDisk: AppPersistentDisk
   Error: AppPlatformErrorInfo
-  ApiPortalCustomDomainResource: ApiPortalCustomDomain
-  ApiPortalResource: ApiPortal
+  ApiPortalCustomDomainResource: AppPlatformApiPortalCustomDomain
+  ApiPortalResource: AppPlatformApiPortal
+  ApiPortalProperties: AppPlatformApiPortalProperties
   ApiPortalProperties.gatewayIds: -|arm-id
   ApiPortalProperties.public: IsPublic
   ApiPortalProperties.httpsOnly: IsHttpsOnly
-  ApiPortalResourceRequests: ApiPortalResourceRequirements
+  ApiPortalInstance: AppPlatformApiPortalInstance
+  ApiPortalProvisioningState: AppPlatformApiPortalProvisioningState
+  ApiPortalResourceRequests: AppPlatformApiPortalResourceRequirements
   CustomDomainValidatePayload: AppPlatformCustomDomainValidateContent
   CustomDomainValidateResult: AppPlatformCustomDomainValidateResult
   DeploymentList.deployments: -|arm-id

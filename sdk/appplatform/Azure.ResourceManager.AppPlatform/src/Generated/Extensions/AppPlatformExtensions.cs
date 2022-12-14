@@ -616,39 +616,39 @@ namespace Azure.ResourceManager.AppPlatform
         }
         #endregion
 
-        #region ApiPortalResource
+        #region AppPlatformApiPortalResource
         /// <summary>
-        /// Gets an object representing an <see cref="ApiPortalResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiPortalResource.CreateResourceIdentifier" /> to create an <see cref="ApiPortalResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppPlatformApiPortalResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppPlatformApiPortalResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformApiPortalResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiPortalResource" /> object. </returns>
-        public static ApiPortalResource GetApiPortalResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppPlatformApiPortalResource" /> object. </returns>
+        public static AppPlatformApiPortalResource GetAppPlatformApiPortalResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ApiPortalResource.ValidateResourceId(id);
-                return new ApiPortalResource(client, id);
+                AppPlatformApiPortalResource.ValidateResourceId(id);
+                return new AppPlatformApiPortalResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ApiPortalCustomDomainResource
+        #region AppPlatformApiPortalCustomDomainResource
         /// <summary>
-        /// Gets an object representing an <see cref="ApiPortalCustomDomainResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiPortalCustomDomainResource.CreateResourceIdentifier" /> to create an <see cref="ApiPortalCustomDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AppPlatformApiPortalCustomDomainResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppPlatformApiPortalCustomDomainResource.CreateResourceIdentifier" /> to create an <see cref="AppPlatformApiPortalCustomDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApiPortalCustomDomainResource" /> object. </returns>
-        public static ApiPortalCustomDomainResource GetApiPortalCustomDomainResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppPlatformApiPortalCustomDomainResource" /> object. </returns>
+        public static AppPlatformApiPortalCustomDomainResource GetAppPlatformApiPortalCustomDomainResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ApiPortalCustomDomainResource.ValidateResourceId(id);
-                return new ApiPortalCustomDomainResource(client, id);
+                AppPlatformApiPortalCustomDomainResource.ValidateResourceId(id);
+                return new AppPlatformApiPortalCustomDomainResource(client, id);
             }
             );
         }

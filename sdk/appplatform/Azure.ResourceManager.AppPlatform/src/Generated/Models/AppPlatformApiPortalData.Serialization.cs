@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    public partial class ApiPortalCustomDomainData : IUtf8JsonSerializable
+    public partial class AppPlatformApiPortalData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,12 +22,18 @@ namespace Azure.ResourceManager.AppPlatform
                 writer.WritePropertyName("properties");
                 writer.WriteObjectValue(Properties);
             }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku");
+                writer.WriteObjectValue(Sku);
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApiPortalCustomDomainData DeserializeApiPortalCustomDomainData(JsonElement element)
+        internal static AppPlatformApiPortalData DeserializeAppPlatformApiPortalData(JsonElement element)
         {
-            Optional<ApiPortalCustomDomainProperties> properties = default;
+            Optional<AppPlatformApiPortalProperties> properties = default;
+            Optional<AppPlatformSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -41,7 +47,17 @@ namespace Azure.ResourceManager.AppPlatform
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = ApiPortalCustomDomainProperties.DeserializeApiPortalCustomDomainProperties(property.Value);
+                    properties = AppPlatformApiPortalProperties.DeserializeAppPlatformApiPortalProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("sku"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sku = AppPlatformSku.DeserializeAppPlatformSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -70,7 +86,7 @@ namespace Azure.ResourceManager.AppPlatform
                     continue;
                 }
             }
-            return new ApiPortalCustomDomainData(id, name, type, systemData.Value, properties.Value);
+            return new AppPlatformApiPortalData(id, name, type, systemData.Value, properties.Value, sku.Value);
         }
     }
 }

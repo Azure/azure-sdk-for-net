@@ -11,29 +11,29 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the ApiPortal data model. </summary>
-    public partial class ApiPortalData : ResourceData
+    /// <summary> A class representing the AppPlatformApiPortal data model. </summary>
+    public partial class AppPlatformApiPortalData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiPortalData. </summary>
-        public ApiPortalData()
+        /// <summary> Initializes a new instance of AppPlatformApiPortalData. </summary>
+        public AppPlatformApiPortalData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiPortalData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformApiPortalData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> API portal properties payload. </param>
         /// <param name="sku"> Sku of the API portal resource. </param>
-        internal ApiPortalData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiPortalProperties properties, AppPlatformSku sku) : base(id, name, resourceType, systemData)
+        internal AppPlatformApiPortalData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppPlatformApiPortalProperties properties, AppPlatformSku sku) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Sku = sku;
         }
 
         /// <summary> API portal properties payload. </summary>
-        public ApiPortalProperties Properties { get; set; }
+        public AppPlatformApiPortalProperties Properties { get; set; }
         /// <summary> Sku of the API portal resource. </summary>
         public AppPlatformSku Sku { get; set; }
     }

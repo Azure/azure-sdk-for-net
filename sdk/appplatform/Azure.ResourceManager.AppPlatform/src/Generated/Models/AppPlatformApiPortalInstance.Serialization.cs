@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class ApiPortalInstance
+    public partial class AppPlatformApiPortalInstance
     {
-        internal static ApiPortalInstance DeserializeApiPortalInstance(JsonElement element)
+        internal static AppPlatformApiPortalInstance DeserializeAppPlatformApiPortalInstance(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> status = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new ApiPortalInstance(name.Value, status.Value);
+            return new AppPlatformApiPortalInstance(name.Value, status.Value);
         }
     }
 }

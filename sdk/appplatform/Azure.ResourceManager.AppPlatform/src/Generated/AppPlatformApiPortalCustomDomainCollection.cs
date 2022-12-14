@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApiPortalCustomDomainResource" /> and their operations.
-    /// Each <see cref="ApiPortalCustomDomainResource" /> in the collection will belong to the same instance of <see cref="ApiPortalResource" />.
-    /// To get an <see cref="ApiPortalCustomDomainCollection" /> instance call the GetApiPortalCustomDomains method from an instance of <see cref="ApiPortalResource" />.
+    /// A class representing a collection of <see cref="AppPlatformApiPortalCustomDomainResource" /> and their operations.
+    /// Each <see cref="AppPlatformApiPortalCustomDomainResource" /> in the collection will belong to the same instance of <see cref="AppPlatformApiPortalResource" />.
+    /// To get an <see cref="AppPlatformApiPortalCustomDomainCollection" /> instance call the GetAppPlatformApiPortalCustomDomains method from an instance of <see cref="AppPlatformApiPortalResource" />.
     /// </summary>
-    public partial class ApiPortalCustomDomainCollection : ArmCollection, IEnumerable<ApiPortalCustomDomainResource>, IAsyncEnumerable<ApiPortalCustomDomainResource>
+    public partial class AppPlatformApiPortalCustomDomainCollection : ArmCollection, IEnumerable<AppPlatformApiPortalCustomDomainResource>, IAsyncEnumerable<AppPlatformApiPortalCustomDomainResource>
     {
-        private readonly ClientDiagnostics _apiPortalCustomDomainClientDiagnostics;
-        private readonly ApiPortalCustomDomainsRestOperations _apiPortalCustomDomainRestClient;
+        private readonly ClientDiagnostics _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics;
+        private readonly ApiPortalCustomDomainsRestOperations _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ApiPortalCustomDomainCollection"/> class for mocking. </summary>
-        protected ApiPortalCustomDomainCollection()
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformApiPortalCustomDomainCollection"/> class for mocking. </summary>
+        protected AppPlatformApiPortalCustomDomainCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApiPortalCustomDomainCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformApiPortalCustomDomainCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ApiPortalCustomDomainCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AppPlatformApiPortalCustomDomainCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _apiPortalCustomDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppPlatform", ApiPortalCustomDomainResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ApiPortalCustomDomainResource.ResourceType, out string apiPortalCustomDomainApiVersion);
-            _apiPortalCustomDomainRestClient = new ApiPortalCustomDomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiPortalCustomDomainApiVersion);
+            _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppPlatform", AppPlatformApiPortalCustomDomainResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AppPlatformApiPortalCustomDomainResource.ResourceType, out string appPlatformApiPortalCustomDomainApiPortalCustomDomainsApiVersion);
+            _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient = new ApiPortalCustomDomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appPlatformApiPortalCustomDomainApiPortalCustomDomainsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ApiPortalResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApiPortalResource.ResourceType), nameof(id));
+            if (id.ResourceType != AppPlatformApiPortalResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AppPlatformApiPortalResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiPortalCustomDomainResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string domainName, ApiPortalCustomDomainData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AppPlatformApiPortalCustomDomainResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string domainName, AppPlatformApiPortalCustomDomainData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiPortalCustomDomainClientDiagnostics.CreateScope("ApiPortalCustomDomainCollection.CreateOrUpdate");
+            using var scope = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics.CreateScope("AppPlatformApiPortalCustomDomainCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _apiPortalCustomDomainRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<ApiPortalCustomDomainResource>(new ApiPortalCustomDomainOperationSource(Client), _apiPortalCustomDomainClientDiagnostics, Pipeline, _apiPortalCustomDomainRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppPlatformArmOperation<AppPlatformApiPortalCustomDomainResource>(new AppPlatformApiPortalCustomDomainOperationSource(Client), _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics, Pipeline, _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -97,17 +97,17 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ApiPortalCustomDomainResource> CreateOrUpdate(WaitUntil waitUntil, string domainName, ApiPortalCustomDomainData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AppPlatformApiPortalCustomDomainResource> CreateOrUpdate(WaitUntil waitUntil, string domainName, AppPlatformApiPortalCustomDomainData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiPortalCustomDomainClientDiagnostics.CreateScope("ApiPortalCustomDomainCollection.CreateOrUpdate");
+            using var scope = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics.CreateScope("AppPlatformApiPortalCustomDomainCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _apiPortalCustomDomainRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<ApiPortalCustomDomainResource>(new ApiPortalCustomDomainOperationSource(Client), _apiPortalCustomDomainClientDiagnostics, Pipeline, _apiPortalCustomDomainRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data, cancellationToken);
+                var operation = new AppPlatformArmOperation<AppPlatformApiPortalCustomDomainResource>(new AppPlatformApiPortalCustomDomainOperationSource(Client), _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics, Pipeline, _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -128,18 +128,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        public virtual async Task<Response<ApiPortalCustomDomainResource>> GetAsync(string domainName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppPlatformApiPortalCustomDomainResource>> GetAsync(string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
-            using var scope = _apiPortalCustomDomainClientDiagnostics.CreateScope("ApiPortalCustomDomainCollection.Get");
+            using var scope = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics.CreateScope("AppPlatformApiPortalCustomDomainCollection.Get");
             scope.Start();
             try
             {
-                var response = await _apiPortalCustomDomainRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, cancellationToken).ConfigureAwait(false);
+                var response = await _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiPortalCustomDomainResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppPlatformApiPortalCustomDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,18 +157,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
-        public virtual Response<ApiPortalCustomDomainResource> Get(string domainName, CancellationToken cancellationToken = default)
+        public virtual Response<AppPlatformApiPortalCustomDomainResource> Get(string domainName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
-            using var scope = _apiPortalCustomDomainClientDiagnostics.CreateScope("ApiPortalCustomDomainCollection.Get");
+            using var scope = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics.CreateScope("AppPlatformApiPortalCustomDomainCollection.Get");
             scope.Start();
             try
             {
-                var response = _apiPortalCustomDomainRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, cancellationToken);
+                var response = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiPortalCustomDomainResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppPlatformApiPortalCustomDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -183,17 +183,17 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: ApiPortalCustomDomains_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiPortalCustomDomainResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiPortalCustomDomainResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppPlatformApiPortalCustomDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppPlatformApiPortalCustomDomainResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApiPortalCustomDomainResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppPlatformApiPortalCustomDomainResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _apiPortalCustomDomainClientDiagnostics.CreateScope("ApiPortalCustomDomainCollection.GetAll");
+                using var scope = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics.CreateScope("AppPlatformApiPortalCustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _apiPortalCustomDomainRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiPortalCustomDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformApiPortalCustomDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -201,14 +201,14 @@ namespace Azure.ResourceManager.AppPlatform
                     throw;
                 }
             }
-            async Task<Page<ApiPortalCustomDomainResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppPlatformApiPortalCustomDomainResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _apiPortalCustomDomainClientDiagnostics.CreateScope("ApiPortalCustomDomainCollection.GetAll");
+                using var scope = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics.CreateScope("AppPlatformApiPortalCustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _apiPortalCustomDomainRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiPortalCustomDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformApiPortalCustomDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -225,17 +225,17 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: ApiPortalCustomDomains_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiPortalCustomDomainResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiPortalCustomDomainResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppPlatformApiPortalCustomDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppPlatformApiPortalCustomDomainResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ApiPortalCustomDomainResource> FirstPageFunc(int? pageSizeHint)
+            Page<AppPlatformApiPortalCustomDomainResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _apiPortalCustomDomainClientDiagnostics.CreateScope("ApiPortalCustomDomainCollection.GetAll");
+                using var scope = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics.CreateScope("AppPlatformApiPortalCustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _apiPortalCustomDomainRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiPortalCustomDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformApiPortalCustomDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -243,14 +243,14 @@ namespace Azure.ResourceManager.AppPlatform
                     throw;
                 }
             }
-            Page<ApiPortalCustomDomainResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppPlatformApiPortalCustomDomainResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _apiPortalCustomDomainClientDiagnostics.CreateScope("ApiPortalCustomDomainCollection.GetAll");
+                using var scope = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics.CreateScope("AppPlatformApiPortalCustomDomainCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _apiPortalCustomDomainRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiPortalCustomDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AppPlatformApiPortalCustomDomainResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -274,11 +274,11 @@ namespace Azure.ResourceManager.AppPlatform
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
-            using var scope = _apiPortalCustomDomainClientDiagnostics.CreateScope("ApiPortalCustomDomainCollection.Exists");
+            using var scope = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics.CreateScope("AppPlatformApiPortalCustomDomainCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _apiPortalCustomDomainRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -301,11 +301,11 @@ namespace Azure.ResourceManager.AppPlatform
         {
             Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
 
-            using var scope = _apiPortalCustomDomainClientDiagnostics.CreateScope("ApiPortalCustomDomainCollection.Exists");
+            using var scope = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsClientDiagnostics.CreateScope("AppPlatformApiPortalCustomDomainCollection.Exists");
             scope.Start();
             try
             {
-                var response = _apiPortalCustomDomainRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, cancellationToken: cancellationToken);
+                var response = _appPlatformApiPortalCustomDomainApiPortalCustomDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, domainName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
-        IEnumerator<ApiPortalCustomDomainResource> IEnumerable<ApiPortalCustomDomainResource>.GetEnumerator()
+        IEnumerator<AppPlatformApiPortalCustomDomainResource> IEnumerable<AppPlatformApiPortalCustomDomainResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.AppPlatform
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ApiPortalCustomDomainResource> IAsyncEnumerable<ApiPortalCustomDomainResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AppPlatformApiPortalCustomDomainResource> IAsyncEnumerable<AppPlatformApiPortalCustomDomainResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
