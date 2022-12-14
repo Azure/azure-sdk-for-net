@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1711,6 +1712,62 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await processor.StopProcessingAsync();
 
                 Assert.AreEqual(totalMessages, messageCt);
+            }
+        }
+
+        [Test]
+        public async Task AdditionalCallsPerSessionDoesNotWaitForOtherSessionsToBeAccepted()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: true))
+            {
+                await using var client = CreateClient();
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                int totalMessages = 128;
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(totalMessages, "sessionId"));
+
+                TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                int messageCt = 0;
+
+                var options = new ServiceBusSessionProcessorOptions
+                {
+                    // configuring so that MaxConcurrentCallsPerSession * MaxConcurrentSessions = total messages
+                    // this ensures that we are testing the concurrentAcceptSession logic
+                    MaxConcurrentSessions = 16,
+                    MaxConcurrentCallsPerSession = 8
+                };
+
+                await using var processor = client.CreateSessionProcessor(
+                    scope.QueueName,
+                    options);
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += SessionErrorHandler;
+
+                var stopWatch = new Stopwatch();
+                stopWatch.Start();
+                await processor.StartProcessingAsync();
+
+                async Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    var ct = Interlocked.Increment(ref messageCt);
+                    if (ct == totalMessages)
+                    {
+                        tcs.SetResult(true);
+                    }
+
+                    // add a delay to simulate processing
+                    await Task.Delay(100);
+                }
+
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+                stopWatch.Stop();
+
+                Assert.AreEqual(totalMessages, messageCt);
+                Assert.Less(stopWatch.Elapsed, TimeSpan.FromSeconds(10));
             }
         }
 

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Version>1.0.0-beta.2</Version>
     <PackageId>Azure.ResourceManager.Blueprint</PackageId>
-    <Description>Azure Resource Manager client SDK for Azure resource provider Blueprint</Description>
+    <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Blueprint.</Description>
     <PackageTags>azure;management;arm;resource manager;blueprint</PackageTags>
   </PropertyGroup>
 </Project>
