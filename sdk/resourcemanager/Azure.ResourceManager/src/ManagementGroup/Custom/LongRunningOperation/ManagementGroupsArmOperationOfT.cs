@@ -13,7 +13,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-[assembly: CodeGenSuppressType("ManagementGroupsArmOperation<T>")]
+[assembly: CodeGenSuppressType("ManagementGroupsArmOperationOfT")]
 namespace Azure.ResourceManager.ManagementGroups
 {
 #pragma warning disable SA1649 // File name should match first type name

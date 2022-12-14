@@ -37,14 +37,11 @@ namespace Azure.ResourceManager.CustomerInsights
             _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "CustomerInsightsArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
-        internal CustomerInsightsArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id)
-        {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, id, out string finalResponse);
-            _operation = OperationInternal.Create(clientDiagnostics, nextLinkOperation, finalResponse, "CustomerInsightsArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
-        }
-
         /// <inheritdoc />
-        public override string Id => _operation.GetOperationId();
+#pragma warning disable CA1822
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string Id => throw new NotImplementedException();
+#pragma warning restore CA1822
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;

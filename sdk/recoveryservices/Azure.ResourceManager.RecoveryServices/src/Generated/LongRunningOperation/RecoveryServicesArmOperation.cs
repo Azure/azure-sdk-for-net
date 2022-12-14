@@ -37,14 +37,11 @@ namespace Azure.ResourceManager.RecoveryServices
             _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, "RecoveryServicesArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
-        internal RecoveryServicesArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id)
-        {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, id, out string finalResponse);
-            _operation = OperationInternal.Create(clientDiagnostics, nextLinkOperation, finalResponse, "RecoveryServicesArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
-        }
-
         /// <inheritdoc />
-        public override string Id => _operation.GetOperationId();
+#pragma warning disable CA1822
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string Id => throw new NotImplementedException();
+#pragma warning restore CA1822
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;

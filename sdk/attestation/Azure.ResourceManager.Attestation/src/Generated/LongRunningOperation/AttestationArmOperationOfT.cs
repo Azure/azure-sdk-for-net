@@ -37,14 +37,11 @@ namespace Azure.ResourceManager.Attestation
             _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "AttestationArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 
-        internal AttestationArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string id)
-        {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, id, out string finalResponse);
-            _operation = OperationInternal<T>.Create(source, clientDiagnostics, nextLinkOperation, finalResponse, "AttestationArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
-        }
-
         /// <inheritdoc />
-        public override string Id => _operation.GetOperationId();
+#pragma warning disable CA1822
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string Id => throw new NotImplementedException();
+#pragma warning restore CA1822
 
         /// <inheritdoc />
         public override T Value => _operation.Value;
