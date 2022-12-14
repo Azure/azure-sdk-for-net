@@ -186,6 +186,15 @@ namespace Azure.Storage.DataMovement
                 while (await _downloadRangeChannel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
                 {
                     // Read one event argument at a time.
+                    try
+                    {
+                        await _currentBytesSemaphore.WaitAsync(_cancellationToken).ConfigureAwait(false);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        // We should not continue if waiting on the semaphore has cancelled out.
+                        return;
+                    }
                     DownloadRangeEventArgs args = await _downloadRangeChannel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
                     long currentRangeOffset = _ranges[_currentRangeIndex].Offset;
                     if (currentRangeOffset < args.Offset)
@@ -211,15 +220,6 @@ namespace Azure.Storage.DataMovement
                     }
                     else if (currentRangeOffset == args.Offset)
                     {
-                        try
-                        {
-                            await _currentBytesSemaphore.WaitAsync(_cancellationToken).ConfigureAwait(false);
-                        }
-                        catch (OperationCanceledException)
-                        {
-                            // We should not continue if waiting on the semaphore has cancelled out.
-                            return;
-                        }
                         // Start Copying the response to the file stream and any other chunks after
                         // Most of the time we will always get the next chunk first so the loop
                         // on averages runs once.
@@ -240,7 +240,6 @@ namespace Azure.Storage.DataMovement
                         {
                             await _queueCompleteFileDownload().ConfigureAwait(false);
                         }
-                        _currentBytesSemaphore.Release();
                     }
                     else
                     {
@@ -252,6 +251,7 @@ namespace Azure.Storage.DataMovement
                                 $"was not in the expected Ranges: \"{args.Offset}\""))
                         .ConfigureAwait(false);
                     }
+                    _currentBytesSemaphore.Release();
                 }
             }
             catch (OperationCanceledException)
