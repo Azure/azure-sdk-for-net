@@ -8,7 +8,11 @@
 
 ### Bugs Fixed
 
+- Corrected log message issue causing formatting to fail when developer code for processing events leaks an exception.  This obscured the warning that was intended to be emitted to the error handler.
+
 ### Other Changes
+
+- Calling `ToString` on an `EventHubsException` now includes details of any inner exception.
 
 ## 5.7.5 (2022-11-22)
 

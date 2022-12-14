@@ -28,9 +28,9 @@ namespace Azure.AI.AnomalyDetector
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response DeleteMultivariateModel(string modelId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteMultivariateModelAsync(string modelId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.AI.AnomalyDetector.MultivariateDetectionResult> DetectMultivariateBatchAnomaly(string modelId, Azure.AI.AnomalyDetector.MultivariateDetectionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.AnomalyDetector.MultivariateDetectionResult> DetectMultivariateBatchAnomaly(string modelId, Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DetectMultivariateBatchAnomaly(string modelId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.AnomalyDetector.MultivariateDetectionResult>> DetectMultivariateBatchAnomalyAsync(string modelId, Azure.AI.AnomalyDetector.MultivariateDetectionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.AnomalyDetector.MultivariateDetectionResult>> DetectMultivariateBatchAnomalyAsync(string modelId, Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DetectMultivariateBatchAnomalyAsync(string modelId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.AI.AnomalyDetector.MultivariateLastDetectionResult> DetectMultivariateLastAnomaly(string modelId, Azure.AI.AnomalyDetector.MultivariateLastDetectionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DetectMultivariateLastAnomaly(string modelId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -40,9 +40,9 @@ namespace Azure.AI.AnomalyDetector
         public virtual Azure.Response DetectUnivariateChangePoint(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.AnomalyDetector.UnivariateChangePointDetectionResult>> DetectUnivariateChangePointAsync(Azure.AI.AnomalyDetector.UnivariateChangePointDetectionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DetectUnivariateChangePointAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.AI.AnomalyDetector.UnivariateDetectionResult> DetectUnivariateEntireSeries(Azure.AI.AnomalyDetector.UnivariateDetectionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.AnomalyDetector.UnivariateEntireDetectionResult> DetectUnivariateEntireSeries(Azure.AI.AnomalyDetector.UnivariateDetectionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DetectUnivariateEntireSeries(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.AnomalyDetector.UnivariateDetectionResult>> DetectUnivariateEntireSeriesAsync(Azure.AI.AnomalyDetector.UnivariateDetectionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.AnomalyDetector.UnivariateEntireDetectionResult>> DetectUnivariateEntireSeriesAsync(Azure.AI.AnomalyDetector.UnivariateDetectionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DetectUnivariateEntireSeriesAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.AI.AnomalyDetector.UnivariateLastDetectionResult> DetectUnivariateLastPoint(Azure.AI.AnomalyDetector.UnivariateDetectionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DetectUnivariateLastPoint(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -100,10 +100,23 @@ namespace Azure.AI.AnomalyDetector
         internal CorrelationChanges() { }
         public System.Collections.Generic.IReadOnlyList<string> ChangedVariables { get { throw null; } }
     }
-    public enum DataSchema
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataSchema : System.IEquatable<Azure.AI.AnomalyDetector.DataSchema>
     {
-        OneTable = 0,
-        MultiTable = 1,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataSchema(string value) { throw null; }
+        public static Azure.AI.AnomalyDetector.DataSchema MultiTable { get { throw null; } }
+        public static Azure.AI.AnomalyDetector.DataSchema OneTable { get { throw null; } }
+        public bool Equals(Azure.AI.AnomalyDetector.DataSchema other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.AnomalyDetector.DataSchema left, Azure.AI.AnomalyDetector.DataSchema right) { throw null; }
+        public static implicit operator Azure.AI.AnomalyDetector.DataSchema (string value) { throw null; }
+        public static bool operator !=(Azure.AI.AnomalyDetector.DataSchema left, Azure.AI.AnomalyDetector.DataSchema right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class DiagnosticsInfo
     {
@@ -169,7 +182,7 @@ namespace Azure.AI.AnomalyDetector
         public Azure.AI.AnomalyDetector.DiagnosticsInfo DiagnosticsInfo { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public System.DateTimeOffset EndTime { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.AI.AnomalyDetector.ErrorResponse> Errors { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.AnomalyDetector.ErrorResponse> Errors { get { throw null; } }
         public int? SlidingWindow { get { throw null; } set { } }
         public System.DateTimeOffset StartTime { get { throw null; } set { } }
         public Azure.AI.AnomalyDetector.ModelStatus? Status { get { throw null; } set { } }
@@ -189,35 +202,35 @@ namespace Azure.AI.AnomalyDetector
         Ready = 2,
         Failed = 3,
     }
-    public partial class MultivariateDetectionOptions
+    public partial class MultivariateBatchDetectionOptions
     {
-        public MultivariateDetectionOptions(string dataSource, int topContributorCount, System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
+        public MultivariateBatchDetectionOptions(string dataSource, int topContributorCount, System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
         public string DataSource { get { throw null; } set { } }
         public System.DateTimeOffset EndTime { get { throw null; } set { } }
         public System.DateTimeOffset StartTime { get { throw null; } set { } }
         public int TopContributorCount { get { throw null; } set { } }
+    }
+    public partial class MultivariateBatchDetectionResultSummary
+    {
+        internal MultivariateBatchDetectionResultSummary() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.AnomalyDetector.ErrorResponse> Errors { get { throw null; } }
+        public Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions SetupInfo { get { throw null; } }
+        public Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus Status { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.AnomalyDetector.VariableState> VariableStates { get { throw null; } }
+    }
+    public enum MultivariateBatchDetectionStatus
+    {
+        Created = 0,
+        Running = 1,
+        Ready = 2,
+        Failed = 3,
     }
     public partial class MultivariateDetectionResult
     {
         internal MultivariateDetectionResult() { }
         public string ResultId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.AnomalyDetector.AnomalyState> Results { get { throw null; } }
-        public Azure.AI.AnomalyDetector.MultivariateDetectionResultSummary Summary { get { throw null; } }
-    }
-    public partial class MultivariateDetectionResultSummary
-    {
-        internal MultivariateDetectionResultSummary() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.AnomalyDetector.ErrorResponse> Errors { get { throw null; } }
-        public Azure.AI.AnomalyDetector.MultivariateDetectionOptions SetupInfo { get { throw null; } }
-        public Azure.AI.AnomalyDetector.MultivariateDetectionStatus Status { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.AnomalyDetector.VariableState> VariableStates { get { throw null; } }
-    }
-    public enum MultivariateDetectionStatus
-    {
-        Created = 0,
-        Running = 1,
-        Ready = 2,
-        Failed = 3,
+        public Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary Summary { get { throw null; } }
     }
     public partial class MultivariateLastDetectionOptions
     {
@@ -278,9 +291,9 @@ namespace Azure.AI.AnomalyDetector
         public int? Sensitivity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.AnomalyDetector.TimeSeriesPoint> Series { get { throw null; } }
     }
-    public partial class UnivariateDetectionResult
+    public partial class UnivariateEntireDetectionResult
     {
-        internal UnivariateDetectionResult() { }
+        internal UnivariateEntireDetectionResult() { }
         public System.Collections.Generic.IReadOnlyList<float> ExpectedValues { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<bool> IsAnomaly { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<bool> IsNegativeAnomaly { get { throw null; } }

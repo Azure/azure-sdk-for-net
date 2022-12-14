@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> The ModelState. </summary>
+    /// <summary> Model status. </summary>
     public partial class ModelState
     {
         /// <summary> Initializes a new instance of ModelState. </summary>
