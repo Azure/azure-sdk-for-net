@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         }
 
         /// <summary> Initializes a new instance of ContainerProbeSettings. </summary>
-        /// <param name="disableProbe"> Indicates whether disable the liveness and readiness probe. </param>
-        internal ContainerProbeSettings(bool? disableProbe)
+        /// <param name="isProbeDisabled"> Indicates whether disable the liveness and readiness probe. </param>
+        internal ContainerProbeSettings(bool? isProbeDisabled)
         {
-            DisableProbe = disableProbe;
+            IsProbeDisabled = isProbeDisabled;
         }
 
         /// <summary> Indicates whether disable the liveness and readiness probe. </summary>
-        public bool? DisableProbe { get; set; }
+        public bool? IsProbeDisabled { get; set; }
     }
 }
