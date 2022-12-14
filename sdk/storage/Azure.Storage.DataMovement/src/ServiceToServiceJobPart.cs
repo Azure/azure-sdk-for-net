@@ -11,7 +11,7 @@ using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class ServiceToServiceJobPart : JobPartInternal, IDisposable
+    internal class ServiceToServiceJobPart : JobPartInternal, IAsyncDisposable
     {
         public delegate Task CommitBlockTaskInternal(CancellationToken cancellationToken);
         public CommitBlockTaskInternal CommitBlockTask { get; internal set; }
@@ -53,9 +53,9 @@ namespace Azure.Storage.DataMovement
         {
         }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
-            DisposeHandlers();
+            await DisposeHandlers().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Azure.Storage.DataMovement
                     // If we cannot upload in one shot, initiate the parallel block uploader
                     if (await CreateDestinationResource(length, blockSize).ConfigureAwait(false))
                     {
-                        List<(long Offset, long Length)> commitBlockList = GetCommitBlockList(blockSize, length);
+                        List<(long Offset, long Length)> commitBlockList = GetRangeList(blockSize, length);
                         if (_destinationResource.TransferType == TransferType.Concurrent)
                         {
                             await QueueStageBlockRequests(commitBlockList, length).ConfigureAwait(false);
@@ -244,8 +244,6 @@ namespace Azure.Storage.DataMovement
                 ReportProgressInBytes = (long bytesWritten) =>
                     jobPart.ReportBytesWritten(bytesWritten),
                 InvokeFailedHandler = async (ex) => await jobPart.InvokeFailedArg(ex).ConfigureAwait(false),
-                UpdateTransferStatus = async (status)
-                    => await jobPart.OnTransferStatusChanged(status).ConfigureAwait(false)
             };
         }
         #endregion
@@ -276,7 +274,7 @@ namespace Azure.Storage.DataMovement
                 await _destinationResource.CompleteTransferAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
 
                 // Dispose the handlers
-                DisposeHandlers();
+                await DisposeHandlers().ConfigureAwait(false);
 
                 // Set completion status to completed
                 await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
@@ -421,7 +419,7 @@ namespace Azure.Storage.DataMovement
                 await _destinationResource.CompleteTransferAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
 
                 // Dispose the handlers
-                DisposeHandlers();
+                await DisposeHandlers().ConfigureAwait(false);
 
                 // Update the transfer status
                 await OnTransferStatusChanged(StorageTransferStatus.Completed).ConfigureAwait(false);
@@ -435,17 +433,17 @@ namespace Azure.Storage.DataMovement
 
         public override async Task InvokeSkippedArg()
         {
-            DisposeHandlers();
+            await DisposeHandlers().ConfigureAwait(false);
             await base.InvokeSkippedArg().ConfigureAwait(false);
         }
 
         public override async Task InvokeFailedArg(Exception ex)
         {
-            DisposeHandlers();
+            await DisposeHandlers().ConfigureAwait(false);
             await base.InvokeFailedArg(ex).ConfigureAwait(false);
         }
 
-        internal void DisposeHandlers()
+        internal async Task DisposeHandlers()
         {
             if (_copyStatusHandler != default)
             {
@@ -453,7 +451,7 @@ namespace Azure.Storage.DataMovement
             }
             if (_commitBlockHandler != default)
             {
-                _commitBlockHandler.Dispose();
+                await _commitBlockHandler.DisposeAsync().ConfigureAwait(false);
             }
         }
     }
