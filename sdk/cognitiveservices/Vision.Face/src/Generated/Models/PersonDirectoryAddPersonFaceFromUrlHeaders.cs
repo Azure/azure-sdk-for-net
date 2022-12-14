@@ -14,26 +14,26 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines headers for AddPersonFace operation.
+    /// Defines headers for AddPersonFaceFromUrl operation.
     /// </summary>
-    public partial class PersonDirectoryAddPersonFaceHeaders
+    public partial class PersonDirectoryAddPersonFaceFromUrlHeaders
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// PersonDirectoryAddPersonFaceHeaders class.
+        /// PersonDirectoryAddPersonFaceFromUrlHeaders class.
         /// </summary>
-        public PersonDirectoryAddPersonFaceHeaders()
+        public PersonDirectoryAddPersonFaceFromUrlHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// PersonDirectoryAddPersonFaceHeaders class.
+        /// PersonDirectoryAddPersonFaceFromUrlHeaders class.
         /// </summary>
         /// <param name="operationLocation">Operation location with an
         /// operation id used to track the progress of person creation.</param>
-        public PersonDirectoryAddPersonFaceHeaders(string operationLocation = default(string))
+        public PersonDirectoryAddPersonFaceFromUrlHeaders(string operationLocation = default(string))
         {
             OperationLocation = operationLocation;
             CustomInit();

@@ -26,7 +26,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// Initializes a new instance of the EnrollmentPrintResponse class.
         /// </summary>
-        public EnrollmentPrintResponse(System.Guid? persistedFaceId = default(System.Guid?), string recognitionModel = default(string), string userData = default(string))
+        public EnrollmentPrintResponse(System.Guid persistedFaceId = default(System.Guid), string recognitionModel = default(string), string userData = default(string))
         {
             PersistedFaceId = persistedFaceId;
             RecognitionModel = recognitionModel;
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "persistedFaceId")]
-        public System.Guid? PersistedFaceId { get; set; }
+        public System.Guid PersistedFaceId { get; set; }
 
         /// <summary>
         /// </summary>

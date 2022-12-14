@@ -30,7 +30,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// Initializes a new instance of the DynamicPersonGroupCreateRequest
         /// class.
         /// </summary>
-        public DynamicPersonGroupCreateRequest(string name = default(string), string userData = default(string), IList<string> addPersonIds = default(IList<string>))
+        /// <param name="name">User defined name, maximum length is
+        /// 128.</param>
+        /// <param name="userData">User specified data. Length should not
+        /// exceed 16KB.</param>
+        /// <param name="addPersonIds">Person ids to add to the dynamic person
+        /// group.</param>
+        public DynamicPersonGroupCreateRequest(string name = default(string), string userData = default(string), IList<System.Guid> addPersonIds = default(IList<System.Guid>))
         {
             Name = name;
             UserData = userData;
@@ -44,19 +50,22 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets user defined name, maximum length is 128.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets user specified data. Length should not exceed 16KB.
         /// </summary>
         [JsonProperty(PropertyName = "userData")]
         public string UserData { get; set; }
 
         /// <summary>
+        /// Gets or sets person ids to add to the dynamic person group.
         /// </summary>
         [JsonProperty(PropertyName = "addPersonIds")]
-        public IList<string> AddPersonIds { get; set; }
+        public IList<System.Guid> AddPersonIds { get; set; }
 
     }
 }

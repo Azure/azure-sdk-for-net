@@ -26,6 +26,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// Initializes a new instance of the EnrollmentRequest class.
         /// </summary>
+        /// <param name="name">User defined name, maximum length is
+        /// 128.</param>
+        /// <param name="userData">User specified data. Length should not
+        /// exceed 16KB.</param>
         public EnrollmentRequest(string name = default(string), string userData = default(string))
         {
             Name = name;
@@ -39,11 +43,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets user defined name, maximum length is 128.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets user specified data. Length should not exceed 16KB.
         /// </summary>
         [JsonProperty(PropertyName = "userData")]
         public string UserData { get; set; }

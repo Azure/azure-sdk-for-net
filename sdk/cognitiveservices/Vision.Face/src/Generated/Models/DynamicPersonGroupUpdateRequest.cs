@@ -30,12 +30,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// Initializes a new instance of the DynamicPersonGroupUpdateRequest
         /// class.
         /// </summary>
-        public DynamicPersonGroupUpdateRequest(IList<string> removePersonIds = default(IList<string>), string name = default(string), string userData = default(string), IList<string> addPersonIds = default(IList<string>))
+        /// <param name="name">User defined name, maximum length is
+        /// 128.</param>
+        /// <param name="userData">User specified data. Length should not
+        /// exceed 16KB.</param>
+        /// <param name="addPersonIds">Person ids to add to the dynamic person
+        /// group.</param>
+        /// <param name="removePersonIds">Person ids to remove from the dynamic
+        /// person group.</param>
+        public DynamicPersonGroupUpdateRequest(string name = default(string), string userData = default(string), IList<System.Guid> addPersonIds = default(IList<System.Guid>), IList<string> removePersonIds = default(IList<string>))
         {
-            RemovePersonIds = removePersonIds;
             Name = name;
             UserData = userData;
             AddPersonIds = addPersonIds;
+            RemovePersonIds = removePersonIds;
             CustomInit();
         }
 
@@ -45,24 +53,28 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         partial void CustomInit();
 
         /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "removePersonIds")]
-        public IList<string> RemovePersonIds { get; set; }
-
-        /// <summary>
+        /// Gets or sets user defined name, maximum length is 128.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets user specified data. Length should not exceed 16KB.
         /// </summary>
         [JsonProperty(PropertyName = "userData")]
         public string UserData { get; set; }
 
         /// <summary>
+        /// Gets or sets person ids to add to the dynamic person group.
         /// </summary>
         [JsonProperty(PropertyName = "addPersonIds")]
-        public IList<string> AddPersonIds { get; set; }
+        public IList<System.Guid> AddPersonIds { get; set; }
+
+        /// <summary>
+        /// Gets or sets person ids to remove from the dynamic person group.
+        /// </summary>
+        [JsonProperty(PropertyName = "removePersonIds")]
+        public IList<string> RemovePersonIds { get; set; }
 
     }
 }

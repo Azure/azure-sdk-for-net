@@ -26,7 +26,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// Initializes a new instance of the PersonCreationResponse class.
         /// </summary>
-        public PersonCreationResponse(System.Guid? personId = default(System.Guid?))
+        public PersonCreationResponse(System.Guid personId = default(System.Guid))
         {
             PersonId = personId;
             CustomInit();
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "personId")]
-        public System.Guid? PersonId { get; set; }
+        public System.Guid PersonId { get; set; }
 
     }
 }

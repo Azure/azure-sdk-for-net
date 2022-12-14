@@ -30,7 +30,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// Initializes a new instance of the
         /// PersonDynamicPersonGroupReferenceResponse class.
         /// </summary>
-        public PersonDynamicPersonGroupReferenceResponse(System.Guid? personId = default(System.Guid?), IList<string> dynamicPersonGroupIds = default(IList<string>))
+        public PersonDynamicPersonGroupReferenceResponse(System.Guid personId = default(System.Guid), IList<string> dynamicPersonGroupIds = default(IList<string>))
         {
             PersonId = personId;
             DynamicPersonGroupIds = dynamicPersonGroupIds;
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "personId")]
-        public System.Guid? PersonId { get; set; }
+        public System.Guid PersonId { get; set; }
 
         /// <summary>
         /// </summary>

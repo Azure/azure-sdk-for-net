@@ -28,7 +28,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// Initializes a new instance of the PersonResponse class.
         /// </summary>
-        public PersonResponse(System.Guid? personId = default(System.Guid?), IList<System.Guid?> persistedFaceIds = default(IList<System.Guid?>), string name = default(string), string userData = default(string))
+        public PersonResponse(System.Guid personId = default(System.Guid), IList<System.Guid> persistedFaceIds = default(IList<System.Guid>), string name = default(string), string userData = default(string))
         {
             PersonId = personId;
             PersistedFaceIds = persistedFaceIds;
@@ -45,12 +45,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "personId")]
-        public System.Guid? PersonId { get; set; }
+        public System.Guid PersonId { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "persistedFaceIds")]
-        public IList<System.Guid?> PersistedFaceIds { get; set; }
+        public IList<System.Guid> PersistedFaceIds { get; set; }
 
         /// <summary>
         /// </summary>

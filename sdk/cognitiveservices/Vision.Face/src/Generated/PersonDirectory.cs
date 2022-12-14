@@ -54,8 +54,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// Retrieve list of person information in person directory.
         /// </summary>
         /// <param name='start'>
+        /// List persons from the least personId greater than the "start". It contains
+        /// no more than 64 characters. Default is empty.
         /// </param>
         /// <param name='top'>
+        /// The number of persons to list, ranging in [1, 1000]. Default is 1000.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -78,7 +81,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<EnrollmentResponse>>> GetPersonsWithHttpMessagesAsync(string start = default(string), string top = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<EnrollmentResponse>>> GetPersonsWithHttpMessagesAsync(System.Guid? start = default(System.Guid?), string top = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -103,7 +106,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             List<string> _queryParameters = new List<string>();
             if (start != null)
             {
-                _queryParameters.Add(string.Format("start={0}", System.Uri.EscapeDataString(start)));
+                _queryParameters.Add(string.Format("start={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(start, Client.SerializationSettings).Trim('"'))));
             }
             if (top != null)
             {
@@ -216,7 +219,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <summary>
         /// Creates a new person in person directory.
         /// </summary>
-        /// <param name='body'>
+        /// <param name='name'>
+        /// User defined name, maximum length is 128.
+        /// </param>
+        /// <param name='userData'>
+        /// User specified data. Length should not exceed 16KB.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -239,15 +246,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<PersonCreationResponse,PersonDirectoryCreatePersonHeaders>> CreatePersonWithHttpMessagesAsync(EnrolledPerson body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<PersonCreationResponse,PersonDirectoryCreatePersonHeaders>> CreatePersonWithHttpMessagesAsync(string name = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if (body == null)
+            EnrollmentRequest body = new EnrollmentRequest();
+            if (name != null || userData != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "body");
+                body.Name = name;
+                body.UserData = userData;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -387,8 +396,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// Update name or userData of a person.
         /// </summary>
         /// <param name='personId'>
+        /// Person id to update.
         /// </param>
-        /// <param name='body'>
+        /// <param name='name'>
+        /// User defined name, maximum length is 128.
+        /// </param>
+        /// <param name='userData'>
+        /// User specified data. Length should not exceed 16KB.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -408,19 +422,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> UpdatePersonWithHttpMessagesAsync(string personId, EnrollmentRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> UpdatePersonWithHttpMessagesAsync(System.Guid personId, string name = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if (personId == null)
+            EnrollmentRequest body = new EnrollmentRequest();
+            if (name != null || userData != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "personId");
-            }
-            if (body == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "body");
+                body.Name = name;
+                body.UserData = userData;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -438,7 +450,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persons/{personId}";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(personId));
+            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -533,6 +545,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// person entry will all be deleted.
         /// </summary>
         /// <param name='personId'>
+        /// Person id to delete.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -552,15 +565,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationHeaderResponse<PersonDirectoryDeletePersonHeaders>> DeletePersonWithHttpMessagesAsync(string personId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationHeaderResponse<PersonDirectoryDeletePersonHeaders>> DeletePersonWithHttpMessagesAsync(System.Guid personId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
-            }
-            if (personId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "personId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -577,7 +586,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persons/{personId}";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(personId));
+            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -701,15 +710,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<EnrolledPerson>> GetPersonWithHttpMessagesAsync(string personId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<EnrolledPerson>> GetPersonWithHttpMessagesAsync(System.Guid personId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
-            }
-            if (personId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "personId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -726,7 +731,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persons/{personId}";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(personId));
+            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -836,6 +841,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='recognitionModel'>
         /// Recognition model string.
         /// </param>
+        /// <param name='url'>
+        /// Publicly reachable URL of an image
+        /// </param>
         /// <param name='detectionModel'>
         /// Detection model string.
         /// </param>
@@ -866,19 +874,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<EnrollmentPrintResponse,PersonDirectoryAddPersonFaceHeaders>> AddPersonFaceWithHttpMessagesAsync(string personId, string recognitionModel, string detectionModel = default(string), string userData = default(string), string targetFace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<EnrollmentPrintResponse,PersonDirectoryAddPersonFaceFromUrlHeaders>> AddPersonFaceFromUrlWithHttpMessagesAsync(System.Guid personId, string recognitionModel, string url, string detectionModel = default(string), string userData = default(string), string targetFace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if (personId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "personId");
-            }
             if (recognitionModel == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "recognitionModel");
+            }
+            if (url == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "url");
+            }
+            ImageUrl imageUrl = new ImageUrl();
+            if (url != null)
+            {
+                imageUrl.Url = url;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -892,14 +905,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 tracingParameters.Add("detectionModel", detectionModel);
                 tracingParameters.Add("userData", userData);
                 tracingParameters.Add("targetFace", targetFace);
+                tracingParameters.Add("imageUrl", imageUrl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "AddPersonFace", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "AddPersonFaceFromUrl", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persons/{personId}/recognitionModels/{recognitionModel}/persistedFaces";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(personId));
+            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{recognitionModel}", System.Uri.EscapeDataString(recognitionModel));
             List<string> _queryParameters = new List<string>();
             if (detectionModel != null)
@@ -940,6 +954,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
 
             // Serialize Request
             string _requestContent = null;
+            if(imageUrl != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(imageUrl, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -990,7 +1010,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<EnrollmentPrintResponse,PersonDirectoryAddPersonFaceHeaders>();
+            var _result = new HttpOperationResponse<EnrollmentPrintResponse,PersonDirectoryAddPersonFaceFromUrlHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -1013,7 +1033,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<PersonDirectoryAddPersonFaceHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<PersonDirectoryAddPersonFaceFromUrlHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
             }
             catch (JsonException ex)
             {
@@ -1062,15 +1082,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<PersonResponse>> GetPersonFacesWithHttpMessagesAsync(string personId, string recognitionModel, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<PersonResponse>> GetPersonFacesWithHttpMessagesAsync(System.Guid personId, string recognitionModel, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
-            }
-            if (personId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "personId");
             }
             if (recognitionModel == null)
             {
@@ -1092,7 +1108,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persons/{personId}/recognitionModels/{recognitionModel}/persistedFaces";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(personId));
+            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{recognitionModel}", System.Uri.EscapeDataString(recognitionModel));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -1226,23 +1242,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationHeaderResponse<PersonDirectoryDeletePersonFaceHeaders>> DeletePersonFaceWithHttpMessagesAsync(string personId, string recognitionModel, string persistedFaceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationHeaderResponse<PersonDirectoryDeletePersonFaceHeaders>> DeletePersonFaceWithHttpMessagesAsync(System.Guid personId, string recognitionModel, System.Guid persistedFaceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if (personId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "personId");
-            }
             if (recognitionModel == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "recognitionModel");
-            }
-            if (persistedFaceId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "persistedFaceId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1261,9 +1269,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persons/{personId}/recognitionModels/{recognitionModel}/persistedFaces/{persistedFaceId}";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(personId));
+            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{recognitionModel}", System.Uri.EscapeDataString(recognitionModel));
-            _url = _url.Replace("{persistedFaceId}", System.Uri.EscapeDataString(persistedFaceId));
+            _url = _url.Replace("{persistedFaceId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(persistedFaceId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -1393,23 +1401,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<PersistedFaceResponse>> GetPersonFaceWithHttpMessagesAsync(string personId, string recognitionModel, string persistedFaceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<PersistedFaceResponse>> GetPersonFaceWithHttpMessagesAsync(System.Guid personId, string recognitionModel, System.Guid persistedFaceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if (personId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "personId");
-            }
             if (recognitionModel == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "recognitionModel");
-            }
-            if (persistedFaceId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "persistedFaceId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1428,9 +1428,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persons/{personId}/recognitionModels/{recognitionModel}/persistedFaces/{persistedFaceId}";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(personId));
+            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{recognitionModel}", System.Uri.EscapeDataString(recognitionModel));
-            _url = _url.Replace("{persistedFaceId}", System.Uri.EscapeDataString(persistedFaceId));
+            _url = _url.Replace("{persistedFaceId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(persistedFaceId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -1543,8 +1543,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='persistedFaceId'>
         /// PersistedFaceId created from Person Face Create
         /// </param>
-        /// <param name='body'>
-        /// Target person face id to update.
+        /// <param name='detectionModel'>
+        /// Possible values include: 'detection_01', 'detection_02', 'detection_03',
+        /// 'detection_preview_1904', 'ir_detection_01', 'expression_01'
+        /// </param>
+        /// <param name='userData'>
+        /// User data of person face.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1564,27 +1568,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> UpdatePersonFaceWithHttpMessagesAsync(string personId, string recognitionModel, string persistedFaceId, PersistedFaceWithType body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> UpdatePersonFaceWithHttpMessagesAsync(System.Guid personId, string recognitionModel, System.Guid persistedFaceId, string detectionModel = default(string), string userData = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
-            if (personId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "personId");
-            }
             if (recognitionModel == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "recognitionModel");
             }
-            if (persistedFaceId == null)
+            PersistedFaceWithType body = new PersistedFaceWithType();
+            if (detectionModel != null || userData != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "persistedFaceId");
-            }
-            if (body == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "body");
+                body.DetectionModel = detectionModel;
+                body.FaceFeature = default(byte[]);
+                body.PersistedFaceId = persistedFaceId;
+                body.UserData = userData;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1604,9 +1604,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persons/{personId}/recognitionModels/{recognitionModel}/persistedFaces/{persistedFaceId}";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(personId));
+            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{recognitionModel}", System.Uri.EscapeDataString(recognitionModel));
-            _url = _url.Replace("{persistedFaceId}", System.Uri.EscapeDataString(persistedFaceId));
+            _url = _url.Replace("{persistedFaceId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(persistedFaceId, Client.SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -1709,7 +1709,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// composed by numbers, English letters in lower case, '-', '_', and no longer
         /// than 64 characters.
         /// </param>
-        /// <param name='body'>
+        /// <param name='name'>
+        /// User defined name, maximum length is 128.
+        /// </param>
+        /// <param name='userData'>
+        /// User specified data. Length should not exceed 16KB.
+        /// </param>
+        /// <param name='addPersonIds'>
+        /// Person ids to add to the dynamic person group.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1729,7 +1736,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationHeaderResponse<PersonDirectoryCreateDynamicPersonGroupHeaders>> CreateDynamicPersonGroupWithHttpMessagesAsync(string dynamicPersonGroupId, DynamicPersonGroupCreateRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationHeaderResponse<PersonDirectoryCreateDynamicPersonGroupHeaders>> CreateDynamicPersonGroupWithHttpMessagesAsync(string dynamicPersonGroupId, string name = default(string), string userData = default(string), IList<System.Guid> addPersonIds = default(IList<System.Guid>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -1739,9 +1746,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "dynamicPersonGroupId");
             }
-            if (body == null)
+            DynamicPersonGroupCreateRequest body = new DynamicPersonGroupCreateRequest();
+            if (name != null || userData != null || addPersonIds != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "body");
+                body.Name = name;
+                body.UserData = userData;
+                body.AddPersonIds = addPersonIds;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1868,7 +1878,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='dynamicPersonGroupId'>
         /// User provided dynamic person group Id.
         /// </param>
-        /// <param name='body'>
+        /// <param name='name'>
+        /// User defined name, maximum length is 128.
+        /// </param>
+        /// <param name='userData'>
+        /// User specified data. Length should not exceed 16KB.
+        /// </param>
+        /// <param name='addPersonIds'>
+        /// Person ids to add to the dynamic person group.
+        /// </param>
+        /// <param name='removePersonIds'>
+        /// Person ids to remove from the dynamic person group.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1888,7 +1908,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationHeaderResponse<PersonDirectoryUpdateDynamicPersonGroupHeaders>> UpdateDynamicPersonGroupWithHttpMessagesAsync(string dynamicPersonGroupId, DynamicPersonGroupUpdateRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationHeaderResponse<PersonDirectoryUpdateDynamicPersonGroupHeaders>> UpdateDynamicPersonGroupWithHttpMessagesAsync(string dynamicPersonGroupId, string name = default(string), string userData = default(string), IList<System.Guid> addPersonIds = default(IList<System.Guid>), IList<string> removePersonIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -1898,9 +1918,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "dynamicPersonGroupId");
             }
-            if (body == null)
+            DynamicPersonGroupUpdateRequest body = new DynamicPersonGroupUpdateRequest();
+            if (name != null || userData != null || addPersonIds != null || removePersonIds != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "body");
+                body.Name = name;
+                body.UserData = userData;
+                body.AddPersonIds = addPersonIds;
+                body.RemovePersonIds = removePersonIds;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2355,7 +2379,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<DynamicPersonGroupListPersonsResponse>> ListDynamicPersonGroupPersonsWithHttpMessagesAsync(string dynamicPersonGroupId, string start = default(string), string top = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<DynamicPersonGroupListPersonsResponse>> ListDynamicPersonGroupPersonsWithHttpMessagesAsync(string dynamicPersonGroupId, System.Guid? start = default(System.Guid?), string top = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -2386,7 +2410,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             List<string> _queryParameters = new List<string>();
             if (start != null)
             {
-                _queryParameters.Add(string.Format("start={0}", System.Uri.EscapeDataString(start)));
+                _queryParameters.Add(string.Format("start={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(start, Client.SerializationSettings).Trim('"'))));
             }
             if (top != null)
             {
@@ -2698,15 +2722,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<PersonDynamicPersonGroupReferenceResponse>> ListDynamicPersonGroupPersonReferencesWithHttpMessagesAsync(string personId, string start = default(string), string top = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<PersonDynamicPersonGroupReferenceResponse>> ListDynamicPersonGroupPersonReferencesWithHttpMessagesAsync(System.Guid personId, string start = default(string), string top = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
-            }
-            if (personId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "personId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2725,7 +2745,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persons/{personId}/dynamicPersonGroupReferences";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(personId));
+            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (start != null)
             {
@@ -2881,15 +2901,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<EnrollmentPrintResponse,PersonDirectoryAddPersonFaceFromStreamHeaders>> AddPersonFaceFromStreamWithHttpMessagesAsync(string personId, string recognitionModel, Stream image, string detectionModel = default(string), string userData = default(string), string targetFace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<EnrollmentPrintResponse,PersonDirectoryAddPersonFaceFromStreamHeaders>> AddPersonFaceFromStreamWithHttpMessagesAsync(System.Guid personId, string recognitionModel, Stream image, string detectionModel = default(string), string userData = default(string), string targetFace = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
-            }
-            if (personId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "personId");
             }
             if (recognitionModel == null)
             {
@@ -2919,7 +2935,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "persons/{personId}/recognitionModels/{recognitionModel}/persistedFaces";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(personId));
+            _url = _url.Replace("{personId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(personId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{recognitionModel}", System.Uri.EscapeDataString(recognitionModel));
             List<string> _queryParameters = new List<string>();
             if (detectionModel != null)
