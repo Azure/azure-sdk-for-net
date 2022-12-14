@@ -180,6 +180,7 @@ namespace Azure.Storage.DataMovement.Tests
                     CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
                     await copyBlobInfo[i].DataTransfer.AwaitCompletion(tokenSource.Token);
                     Assert.IsTrue(copyBlobInfo[i].DataTransfer.HasCompleted);
+                    Assert.AreEqual(StorageTransferStatus.Completed, copyBlobInfo[i].DataTransfer.TransferStatus);
 
                     // Verify Copy - using original source File and Copying the destination
                     using (FileStream fileStream = File.OpenRead(copyBlobInfo[i].SourceLocalPath))
@@ -206,22 +207,16 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task BlockBlobToBlockBlob()
         {
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
 
             // No Option Copy bag or manager options bag, plain Copy
-            await CopyBlockBlobsAndVerify(
-                testContainer.Container,
-                waitTimeInSec: 10,
-                size: 0,
-                blobCount: 1).ConfigureAwait(false);
+            await CopyBlockBlobsAndVerify(testContainer.Container).ConfigureAwait(false);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task BlockBlobToBlockBlob_SmallChunk()
         {
             long size = Constants.KB;
@@ -245,7 +240,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task BlockBlobToBlockBlob_EventHandler()
         {
             // Arrange
@@ -292,12 +286,8 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(0, 10)]
         [TestCase(100, 10)]
         [TestCase(Constants.KB, 10)]
-        [TestCase(4 * Constants.MB, 20)]
-        [TestCase(5 * Constants.MB, 20)]
-        [TestCase(257 * Constants.MB, 400)]
-        [TestCase(Constants.GB, 1000)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
-        public async Task BlockBlobToBlockBlob_BlobSize(long size, int waitTimeInSec)
+        [TestCase(2 * Constants.KB, 10)]
+        public async Task BlockBlobToBlockBlob_SmallSize(long size, int waitTimeInSec)
         {
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
@@ -312,15 +302,58 @@ namespace Azure.Storage.DataMovement.Tests
                 options: optionsList).ConfigureAwait(false);
         }
 
-        [RecordedTest]
+        [Ignore("These tests currently take 40+ mins for little additional coverage")]
+        [Test]
+        [LiveOnly]
+        [TestCase(4 * Constants.MB, 20)]
+        [TestCase(5 * Constants.MB, 20)]
+        [TestCase(257 * Constants.MB, 400)]
+        [TestCase(Constants.GB, 1000)]
+        public async Task BlockBlobToBlockBlob_LargeSize(long size, int waitTimeInSec)
+        {
+            // Arrange
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+
+            SingleTransferOptions options = new SingleTransferOptions();
+
+            List<SingleTransferOptions> optionsList = new List<SingleTransferOptions>() { options };
+            await CopyBlockBlobsAndVerify(
+                testContainer.Container,
+                size: size,
+                waitTimeInSec: waitTimeInSec,
+                options: optionsList).ConfigureAwait(false);
+        }
+
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33003")]
+        [Test]
+        [LiveOnly]
         [TestCase(2, 0, 30)]
+        [TestCase(6, 0, 30)]
+        [TestCase(2, 100, 30)]
+        [TestCase(6, 100, 30)]
+        [TestCase(2, Constants.KB, 300)]
+        [TestCase(6, Constants.KB, 300)]
+        public async Task BlockBlobToBlockBlob_SmallMultiple(int blobCount, long size, int waitTimeInSec)
+        {
+            // Arrange
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+
+            await CopyBlockBlobsAndVerify(
+                testContainer.Container,
+                blobCount: blobCount,
+                size: size,
+                waitTimeInSec: waitTimeInSec).ConfigureAwait(false);
+        }
+
+        [Ignore("These tests currently take 40+ mins for little additional coverage")]
+        [Test]
+        [LiveOnly]
         [TestCase(2, 4 * Constants.MB, 300)]
         [TestCase(6, 4 * Constants.MB, 300)]
         [TestCase(2, 257 * Constants.MB, 400)]
         [TestCase(6, 257 * Constants.MB, 600)]
         [TestCase(2, Constants.GB, 2000)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
-        public async Task BlockBlobToBlockBlob_Multiple(int blobCount, long size, int waitTimeInSec)
+        public async Task BlockBlobToBlockBlob_LargeMultiple(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
@@ -480,6 +513,7 @@ namespace Azure.Storage.DataMovement.Tests
                     CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
                     await copyBlobInfo[i].DataTransfer.AwaitCompletion(tokenSource.Token);
                     Assert.IsTrue(copyBlobInfo[i].DataTransfer.HasCompleted);
+                    Assert.AreEqual(StorageTransferStatus.Completed, copyBlobInfo[i].DataTransfer.TransferStatus);
 
                     // Verify Copy - using original source File and Copying the destination
                     using (FileStream fileStream = File.OpenRead(copyBlobInfo[i].SourceLocalPath))
@@ -506,22 +540,16 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task AppendBlobToAppendBlob()
         {
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
 
             // No Option Copy bag or manager options bag, plain Copy
-            await CopyAppendBlobsAndVerify(
-                testContainer.Container,
-                waitTimeInSec: 10,
-                size: 0,
-                blobCount: 1).ConfigureAwait(false);
+            await CopyAppendBlobsAndVerify(testContainer.Container).ConfigureAwait(false);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task AppendBlobToAppendBlob_SmallChunk()
         {
             long size = Constants.KB;
@@ -545,7 +573,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task AppendBlobToAppendBlob_EventHandler()
         {
             // Arrange
@@ -592,63 +619,65 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(0, 10)]
         [TestCase(100, 10)]
         [TestCase(Constants.KB, 10)]
-        [TestCase(4 * Constants.MB, 20)]
-        [TestCase(5 * Constants.MB, 20)]
-        [TestCase(257 * Constants.MB, 400)]
-        [TestCase(Constants.GB, 1000)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
-        public async Task AppendBlobToAppendBlob_BlobSize(long size, int waitTimeInSec)
+        [TestCase(2 * Constants.KB, 10)]
+        public async Task AppendBlobToAppendBlob_SmallSize(long size, int waitTimeInSec)
         {
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
 
-            string exceptionMessage = default;
-            AutoResetEvent InProgressWait = new AutoResetEvent(false);
-            SingleTransferOptions options = new SingleTransferOptions();
-
-            options.TransferStatus += (TransferStatusEventArgs args) =>
-            {
-                // Assert
-                if (args.StorageTransferStatus == StorageTransferStatus.InProgress)
-                {
-                    InProgressWait.Set();
-                }
-                return Task.CompletedTask;
-            };
-            options.TransferFailed += (TransferFailedEventArgs args) =>
-            {
-                if (args.Exception != null)
-                {
-                    exceptionMessage = args.Exception.Message;
-                    InProgressWait.Set();
-                }
-                return Task.CompletedTask;
-            };
-
-            List<SingleTransferOptions> optionsList = new List<SingleTransferOptions>() { options };
             await CopyAppendBlobsAndVerify(
                 testContainer.Container,
                 size: size,
-                waitTimeInSec: waitTimeInSec,
-                options: optionsList).ConfigureAwait(false);
-
-            // Assert
-            if (!string.IsNullOrEmpty(exceptionMessage))
-            {
-                Assert.Fail(exceptionMessage);
-            }
-            Assert.IsTrue(InProgressWait.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
+                waitTimeInSec: waitTimeInSec).ConfigureAwait(false);
         }
 
-        [RecordedTest]
+        [Ignore("These tests currently take 40+ mins for little additional coverage")]
+        [Test]
+        [LiveOnly]
+        [TestCase(4 * Constants.MB, 20)]
+        [TestCase(5 * Constants.MB, 20)]
+        [TestCase(257 * Constants.MB, 400)]
+        [TestCase(Constants.GB, 1000)]
+        public async Task AppendBlobToAppendBlob_LargeSize(long size, int waitTimeInSec)
+        {
+            // Arrange
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+
+            await CopyAppendBlobsAndVerify(
+                testContainer.Container,
+                size: size,
+                waitTimeInSec: waitTimeInSec).ConfigureAwait(false);
+        }
+
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33003")]
+        [Test]
+        [LiveOnly]
         [TestCase(2, 0, 30)]
+        [TestCase(2, Constants.KB, 30)]
+        [TestCase(6, Constants.KB, 30)]
+        [TestCase(2, 4 * Constants.KB, 30)]
+        [TestCase(6, 4 * Constants.KB, 30)]
+        public async Task AppendBlobToAppendBlob_SmallMultiple(int blobCount, long size, int waitTimeInSec)
+        {
+            // Arrange
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+
+            await CopyAppendBlobsAndVerify(
+                testContainer.Container,
+                blobCount: blobCount,
+                size: size,
+                waitTimeInSec: waitTimeInSec).ConfigureAwait(false);
+        }
+
+        [Ignore("These tests currently take 40+ mins for little additional coverage")]
+        [Test]
+        [LiveOnly]
         [TestCase(2, 4 * Constants.MB, 300)]
         [TestCase(6, 4 * Constants.MB, 300)]
         [TestCase(2, 257 * Constants.MB, 400)]
         [TestCase(6, 257 * Constants.MB, 600)]
         [TestCase(2, Constants.GB, 2000)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
-        public async Task AppendBlobToAppendBlob_Multiple(int blobCount, long size, int waitTimeInSec)
+        public async Task AppendBlobToAppendBlob_LargeMultiple(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
@@ -834,22 +863,16 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task PageBlobToPageBlob()
         {
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
 
             // No Option Copy bag or manager options bag, plain Copy
-            await CopyPageBlobsAndVerify(
-                testContainer.Container,
-                waitTimeInSec: 10,
-                size: 0,
-                blobCount: 1).ConfigureAwait(false);
+            await CopyPageBlobsAndVerify(testContainer.Container).ConfigureAwait(false);
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task PageBlobToPageBlob_SmallChunk()
         {
             long size = 12 * Constants.KB;
@@ -873,7 +896,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task PageBlobToPageBlob_EventHandler()
         {
             // Arrange
@@ -918,63 +940,67 @@ namespace Azure.Storage.DataMovement.Tests
 
         [RecordedTest]
         [TestCase(0, 10)]
+        [TestCase(512, 10)]
         [TestCase(Constants.KB, 10)]
-        [TestCase(4 * Constants.MB, 20)]
-        [TestCase(257 * Constants.MB, 200)]
-        [TestCase(Constants.GB, 500)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
-        public async Task PageBlobToPageBlob_BlobSize(long size, int waitTimeInSec)
+        [TestCase(2 * Constants.KB, 10)]
+        public async Task PageBlobToPageBlob_SmallSize(long size, int waitTimeInSec)
         {
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
 
-            string exceptionMessage = default;
-            AutoResetEvent InProgressWait = new AutoResetEvent(false);
-            SingleTransferOptions options = new SingleTransferOptions();
-
-            options.TransferStatus += (TransferStatusEventArgs args) =>
-            {
-                // Assert
-                if (args.StorageTransferStatus == StorageTransferStatus.InProgress)
-                {
-                    InProgressWait.Set();
-                }
-                return Task.CompletedTask;
-            };
-            options.TransferFailed += (TransferFailedEventArgs args) =>
-            {
-                if (args.Exception != null)
-                {
-                    exceptionMessage = args.Exception.Message;
-                    InProgressWait.Set();
-                }
-                return Task.CompletedTask;
-            };
-
-            List<SingleTransferOptions> optionsList = new List<SingleTransferOptions>() { options };
             await CopyPageBlobsAndVerify(
                 testContainer.Container,
                 size: size,
-                waitTimeInSec: waitTimeInSec,
-                options: optionsList).ConfigureAwait(false);
-
-            // Assert
-            if (!string.IsNullOrEmpty(exceptionMessage))
-            {
-                Assert.Fail(exceptionMessage);
-            }
-            Assert.IsTrue(InProgressWait.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
+                waitTimeInSec: waitTimeInSec).ConfigureAwait(false);
         }
 
-        [RecordedTest]
+        [Ignore("These tests currently take 40+ mins for little additional coverage")]
+        [Test]
+        [LiveOnly]
+        [TestCase(4 * Constants.MB, 20)]
+        [TestCase(257 * Constants.MB, 200)]
+        [TestCase(Constants.GB, 500)]
+        public async Task PageBlobToPageBlob_LargeSize(long size, int waitTimeInSec)
+        {
+            // Arrange
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+
+            await CopyPageBlobsAndVerify(
+                testContainer.Container,
+                size: size,
+                waitTimeInSec: waitTimeInSec).ConfigureAwait(false);
+        }
+
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33003")]
+        [Test]
+        [LiveOnly]
         [TestCase(2, 0, 30)]
+        [TestCase(6, 0, 30)]
+        [TestCase(2, 512, 30)]
+        [TestCase(6, 512, 30)]
+        [TestCase(2, Constants.KB, 30)]
+        [TestCase(6, Constants.KB, 30)]
+        public async Task PageBlobToPageBlob_SmallMultiple(int blobCount, long size, int waitTimeInSec)
+        {
+            // Arrange
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+
+            await CopyPageBlobsAndVerify(
+                testContainer.Container,
+                blobCount: blobCount,
+                size: size,
+                waitTimeInSec: waitTimeInSec).ConfigureAwait(false);
+        }
+
+        [Ignore("These tests currently take 40+ mins for little additional coverage")]
+        [Test]
+        [LiveOnly]
         [TestCase(2, 4 * Constants.MB, 300)]
         [TestCase(6, 4 * Constants.MB, 300)]
         [TestCase(2, 257 * Constants.MB, 400)]
         [TestCase(6, 257 * Constants.MB, 600)]
         [TestCase(2, Constants.GB, 2000)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
-        public async Task PageBlobToPageBlob_Multiple(int blobCount, long size, int waitTimeInSec)
+        public async Task PageBlobToPageBlob_LargeMultiple(int blobCount, long size, int waitTimeInSec)
         {
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);

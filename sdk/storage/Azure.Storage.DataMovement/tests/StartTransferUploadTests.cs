@@ -1280,7 +1280,6 @@ namespace Azure.Storage.DataMovement.Tests
             };
             List<SingleTransferOptions> optionsList = new List<SingleTransferOptions>() { options };
             List<string> blobNames = new List<string>() { blobName };
-            TransferManager transferManager = new TransferManager();
 
             // Start transfer and await for completion.
             await UploadAppendBlobsAndVerify(

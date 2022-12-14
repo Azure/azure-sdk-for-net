@@ -175,6 +175,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if it currently exists.
         /// </param>
+        /// <param name="completeLength">
+        /// The expected complete length of the blob.
+        /// </param>
         /// <param name="options">Options for the storage resource. See <see cref="StorageResourceCopyFromUriOptions"/>.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -184,9 +187,16 @@ namespace Azure.Storage.DataMovement.Blobs
         public override async Task CopyFromUriAsync(
             StorageResource sourceResource,
             bool overwrite,
+            long completeLength,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
+            // Create Append blob beforehand
+
+            await _blobClient.CreateAsync(
+                options: _options.ToCreateOptions(overwrite),
+                cancellationToken: cancellationToken).ConfigureAwait(false);
+
             if (ServiceCopyMethod == TransferCopyMethod.AsyncCopy)
             {
                 await _blobClient.StartCopyFromUriAsync(
