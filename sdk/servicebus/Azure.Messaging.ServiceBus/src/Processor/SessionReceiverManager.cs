@@ -127,8 +127,16 @@ namespace Azure.Messaging.ServiceBus
 
         private async Task CreateReceiver(CancellationToken processorCancellationToken)
         {
+            bool releaseSemaphore = false;
             try
             {
+                // Do a quick synchronous check before we resort to async/await with the state-machine overhead.
+                if (!_concurrentAcceptSessionsSemaphore.Wait(0, CancellationToken.None))
+                {
+                    await _concurrentAcceptSessionsSemaphore.WaitAsync(processorCancellationToken).ConfigureAwait(false);
+                }
+                releaseSemaphore = true;
+
                 _receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
                     entityPath: Processor.EntityPath,
                     connection: Processor.Connection,
@@ -142,6 +150,13 @@ namespace Azure.Messaging.ServiceBus
             {
                 // propagate as TCE so it will be handled by the outer catch block
                 throw new TaskCanceledException();
+            }
+            finally
+            {
+                if (releaseSemaphore)
+                {
+                    _concurrentAcceptSessionsSemaphore.Release();
+                }
             }
         }
 
@@ -272,12 +287,6 @@ namespace Azure.Messaging.ServiceBus
                     // these exceptions are expected when no messages are available
                     // so simply return and allow this to be tried again on next task
                     return;
-                }
-                finally
-                {
-                    // The lock is acquired in ServiceBusProcessor as part of the RunReceiveTaskAsync loop, but we release it here
-                    // once we've either accepted a new session or determined we don't need to accept one.
-                    _concurrentAcceptSessionsSemaphore.Release();
                 }
 
                 using var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(processorCancellationToken, _sessionCancellationSource.Token);
