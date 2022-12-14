@@ -6,8 +6,10 @@ using System.Text.Json;
 namespace Azure.Core.Dynamic
 {
     /// <summary>
-    /// A dynamic abstraction over content data that may have an underlying
-    /// format of JSON or other format.
+    /// A dynamic abstraction over content data.  Deriving types are implemented
+    /// for a specific format, such as JSON or XML.
+    ///
+    /// This and related types are not intended to be mocked.
     /// </summary>
     public abstract class DynamicData
     {
