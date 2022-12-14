@@ -10,40 +10,30 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterSecurityProfileAzureDefender : IUtf8JsonSerializable
+    public partial class ManagedClusterSecurityProfileDefender : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
-            {
-                writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(IsEnabled.Value);
-            }
             if (Optional.IsDefined(LogAnalyticsWorkspaceResourceId))
             {
                 writer.WritePropertyName("logAnalyticsWorkspaceResourceId");
                 writer.WriteStringValue(LogAnalyticsWorkspaceResourceId);
             }
+            if (Optional.IsDefined(SecurityMonitoring))
+            {
+                writer.WritePropertyName("securityMonitoring");
+                writer.WriteObjectValue(SecurityMonitoring);
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterSecurityProfileAzureDefender DeserializeManagedClusterSecurityProfileAzureDefender(JsonElement element)
+        internal static ManagedClusterSecurityProfileDefender DeserializeManagedClusterSecurityProfileDefender(JsonElement element)
         {
-            Optional<bool> enabled = default;
             Optional<ResourceIdentifier> logAnalyticsWorkspaceResourceId = default;
+            Optional<ManagedClusterSecurityProfileDefenderSecurityMonitoring> securityMonitoring = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    enabled = property.Value.GetBoolean();
-                    continue;
-                }
                 if (property.NameEquals("logAnalyticsWorkspaceResourceId"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -54,8 +44,18 @@ namespace Azure.ResourceManager.ContainerService.Models
                     logAnalyticsWorkspaceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("securityMonitoring"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    securityMonitoring = ManagedClusterSecurityProfileDefenderSecurityMonitoring.DeserializeManagedClusterSecurityProfileDefenderSecurityMonitoring(property.Value);
+                    continue;
+                }
             }
-            return new ManagedClusterSecurityProfileAzureDefender(Optional.ToNullable(enabled), logAnalyticsWorkspaceResourceId.Value);
+            return new ManagedClusterSecurityProfileDefender(logAnalyticsWorkspaceResourceId.Value, securityMonitoring.Value);
         }
     }
 }
