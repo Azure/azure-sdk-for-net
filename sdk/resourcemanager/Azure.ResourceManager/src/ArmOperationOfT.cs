@@ -40,9 +40,9 @@ namespace Azure.ResourceManager
         public ArmOperation(ArmClient client, string id)
         {
 #if NET7_0_OR_GREATER
-            var method = typeof(T).GetMethods(BindingFlags.NonPublic | BindingFlags.Static).FirstOrDefault(m => m.Name.EndsWith("GetOperationSource"));
+            var method = typeof(T).GetMethod($"Azure.Core.IOperationSourceProvider<{typeof(T).FullName}>.GetOperationSource", BindingFlags.NonPublic | BindingFlags.Static);
             if (method == null)
-                throw new InvalidOperationException($"The type {nameof(T)} does not implement the GetOperationSource method.");
+                throw new InvalidOperationException($"The type {typeof(T).FullName} does not implement the GetOperationSource method of IOperationSourceProvider.");
             var source = method.Invoke(null, new object[] { client }) as IOperationSource<T>;
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id, out string finalResponse);
             // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?

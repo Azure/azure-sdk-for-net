@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.Tests
             var rgOp = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2, tags).CreateOrUpdateAsync(rgName);
             var rgOpId = rgOp.Id;
             var rg = rgOp.Value;
+#if NET7_0_OR_GREATER
             var rehydratedLro = new ArmOperation<ResourceGroupResource>(Client, rgOpId);
             await rehydratedLro.WaitForCompletionResponseAsync();
             // Assert.AreEqual(rehydratedLro.Id, rgOpId);
@@ -42,6 +44,15 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(rg.Data.Location, rehydratedRg.Data.Location);
             Assert.AreEqual(rg.Data.ResourceGroupProvisioningState, rehydratedRg.Data.ResourceGroupProvisioningState);
             Assert.AreEqual(rg.Data.ManagedBy, rehydratedRg.Data.ManagedBy);
+            var response = rgOp.GetRawResponse();
+            var rehydratedResponse = rehydratedLro.GetRawResponse();
+            Assert.AreEqual(response.Status, rehydratedResponse.Status);
+            Assert.AreEqual(response.ReasonPhrase, rehydratedResponse.ReasonPhrase);
+            //Assert.AreEqual(response.ContentStream, rehydratedResponse.ContentStream);
+            Assert.AreEqual(response.ClientRequestId, rehydratedResponse.ClientRequestId);
+            Assert.AreEqual(response.IsError, rehydratedResponse.IsError);
+            CheckResponseHeaders(response.Headers, rehydratedResponse.Headers);
+
             // Template exportation is a real LRO with generic type
             var parameters = new ExportTemplate();
             parameters.Resources.Add("*");
@@ -50,8 +61,20 @@ namespace Azure.ResourceManager.Tests
             var expRehydratedLro = new ArmOperation<ResourceGroupExportResult>(Client, expOpId);
             await expRehydratedLro.WaitForCompletionResponseAsync();
             Assert.AreEqual(expRehydratedLro.HasValue, true);
-            var result = expRehydratedLro.Value;
-            Assert.NotNull(result);
+            var rehydratedResult = expRehydratedLro.Value;
+            await expOp.UpdateStatusAsync();
+            var result = expOp.Value;
+            //Assert.AreEqual(result.Template, rehydratedResult.Template);
+            Assert.AreEqual(result.Error, rehydratedResult.Error);
+            var expResponse = expOp.GetRawResponse();
+            var rehydratedExpResponse = expRehydratedLro.GetRawResponse();
+            Assert.AreEqual(expResponse.Status, rehydratedExpResponse.Status);
+            Assert.AreEqual(expResponse.ReasonPhrase, rehydratedExpResponse.ReasonPhrase);
+            //Assert.AreEqual(expResponse.ContentStream, rehydratedResponse.ContentStream);
+            Assert.AreEqual(expResponse.ClientRequestId, rehydratedExpResponse.ClientRequestId);
+            Assert.AreEqual(expResponse.IsError, rehydratedExpResponse.IsError);
+            Assert.AreEqual(expResponse.Headers.Count(), rehydratedExpResponse.Headers.Count());
+            CheckResponseHeaders(expResponse.Headers, rehydratedExpResponse.Headers);
             // The deletion of a resource group is a real LRO
             var deleteOp = await rg.DeleteAsync(WaitUntil.Started);
             var deleteOpId = deleteOp.Id;
@@ -63,6 +86,10 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(deleteRehydratedLro2.HasCompleted, true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await rg.GetAsync());
             Assert.AreEqual(404, ex.Status);
+#else
+            var ex = Assert.Throws<InvalidOperationException>(() => new ArmOperation<ResourceGroupResource>(Client, rgOpId));
+            Assert.AreEqual("LRO rehydration is not supported in this version of .NET. Please upgrade to .NET 7.0 or later.", ex.Message);
+#endif
         }
 
         [TestCase]
@@ -73,20 +100,45 @@ namespace Azure.ResourceManager.Tests
             string mgmtLockObjectName = Recording.GenerateAssetName("mgmtLock-");
             ManagementLockData input = new ManagementLockData(new ManagementLockLevel("CanNotDelete"));
             // The creation of a management lock is a fake LRO with generic type
-            ArmOperation<ManagementLockResource> lro = await subscription.GetManagementLocks().CreateOrUpdateAsync(WaitUntil.Started, mgmtLockObjectName, input);
+            ArmOperation<ManagementLockResource> lro = await subscription.GetManagementLocks().CreateOrUpdateAsync(WaitUntil.Completed, mgmtLockObjectName, input);
             var lroId = lro.Id;
+            var mgmtLock = lro.Value;
+#if NET7_0_OR_GREATER
             var rehydratedLro = new ArmOperation<ManagementLockResource>(Client, lroId);
             await rehydratedLro.WaitForCompletionResponseAsync();
-            ManagementLockResource mgmtLock = rehydratedLro.Value;
-            Assert.AreEqual(mgmtLockObjectName, mgmtLock.Data.Name);
+            ManagementLockResource rehydratedLock = rehydratedLro.Value;
+            Assert.AreEqual(mgmtLock.Data.Id, rehydratedLock.Data.Id);
+            Assert.AreEqual(mgmtLock.Data.Name, rehydratedLock.Data.Name);
+            Assert.AreEqual(mgmtLock.Data.ResourceType, rehydratedLock.Data.ResourceType);
+            Assert.AreEqual(mgmtLock.Data.Level, rehydratedLock.Data.Level);
+            Assert.AreEqual(mgmtLock.Data.Notes, rehydratedLock.Data.Notes);
+            Assert.AreEqual(mgmtLock.Data.Owners.Count, rehydratedLock.Data.Owners.Count);
+            Assert.AreEqual(mgmtLock.Data.SystemData, rehydratedLock.Data.SystemData);
             // The deletion of a management lock is a fake LRO
-            var deleteOp = await mgmtLock.DeleteAsync(WaitUntil.Started);
+            var deleteOp = await rehydratedLock.DeleteAsync(WaitUntil.Started);
             Assert.AreEqual(deleteOp.HasCompleted, true);
             var deleteOpId = deleteOp.Id;
             var deleteRehydratedLro = new ArmOperation(Client, deleteOpId);
             await deleteRehydratedLro.WaitForCompletionResponseAsync();
             // Assert.AreEqual(deleteRehydratedLro.Id, deleteOpId);
             Assert.AreEqual(deleteRehydratedLro.HasCompleted, true);
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await rehydratedLock.GetAsync());
+            Assert.AreEqual(404, ex.Status);
+#else
+            var ex = Assert.Throws<InvalidOperationException>(() => new ArmOperation<ManagementLockResource>(Client, lroId));
+            Assert.AreEqual("LRO rehydration is not supported in this version of .NET. Please upgrade to .NET 7.0 or later.", ex.Message);
+#endif
+        }
+
+        private void CheckResponseHeaders(ResponseHeaders left, ResponseHeaders right)
+        {
+            Assert.AreEqual(left.Count(), right.Count());
+            foreach (var header in left)
+            {
+                var value = header.Value;
+                right.TryGetValue(header.Name, out var rightValue);
+                Assert.AreEqual(value, rightValue);
+            }
         }
     }
 }
