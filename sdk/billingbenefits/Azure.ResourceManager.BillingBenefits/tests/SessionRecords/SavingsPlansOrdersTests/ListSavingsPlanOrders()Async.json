@@ -1,0 +1,410 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-dbd6adf455831e4eace06eb4a57dfcff-63d8df7f9bd27d4b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "1a93bc6bfd742641447d5e37d8c2550f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "429",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 17 Nov 2022 01:02:01 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5e4170f4-e365-41e4-adf1-281278340bfc",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "5e4170f4-e365-41e4-adf1-281278340bfc",
+        "x-ms-routing-request-id": "WESTUS:20221117T010201Z:5e4170f4-e365-41e4-adf1-281278340bfc"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "costcenter": "1000"
+        },
+        "subscriptionId": "eef82110-c91b-4395-9420-fcfcbefc5a47",
+        "tenantId": "ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
+        "displayName": "Azure subscription 1",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Public_2014-09-01",
+          "quotaId": "PayAsYouGo_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-825abf252af98748a1c4b5ab65467e03-cf69179e2bf21745-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "bbbda96ce0d3ff5e2f325c71880d0677",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "429",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 17 Nov 2022 01:02:01 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "97db529d-5991-4749-b29d-5b5afe2a6f28",
+        "x-ms-ratelimit-remaining-subscription-reads": "11996",
+        "x-ms-request-id": "97db529d-5991-4749-b29d-5b5afe2a6f28",
+        "x-ms-routing-request-id": "WESTUS:20221117T010201Z:97db529d-5991-4749-b29d-5b5afe2a6f28"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "costcenter": "1000"
+        },
+        "subscriptionId": "eef82110-c91b-4395-9420-fcfcbefc5a47",
+        "tenantId": "ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
+        "displayName": "Azure subscription 1",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Public_2014-09-01",
+          "quotaId": "PayAsYouGo_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/tenants?api-version=2021-01-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7658620aecf1934b811a400191eb9e3d-8aff9a08ae4d594c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "bb8d228bd3eaa2dd04f41489925fc613",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "140",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 17 Nov 2022 01:02:01 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "41481d85-d966-41c3-9dde-b0ad81ceb248",
+        "x-ms-ratelimit-remaining-tenant-reads": "11997",
+        "x-ms-request-id": "41481d85-d966-41c3-9dde-b0ad81ceb248",
+        "x-ms-routing-request-id": "WESTUS:20221117T010201Z:41481d85-d966-41c3-9dde-b0ad81ceb248"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/tenants/ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
+            "tenantId": "ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
+            "tenantCategory": "Home"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/providers/Microsoft.BillingBenefits/savingsPlanOrders?api-version=2022-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-6f221171f7f4bb4da95458da409d4dd5-e01258c0b9c0d847-00",
+        "User-Agent": "azsdk-net-ResourceManager.BillingBenefits/1.0.0-alpha.20221116.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19045 )",
+        "x-ms-client-request-id": "9633604749618b6c5e93eb42a0d09d37",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "11032",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 17 Nov 2022 01:02:01 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f48f4ad4-9aa0-42d7-9419-11035dc99806",
+        "x-ms-request-id": "f48f4ad4-9aa0-42d7-9419-11035dc99806",
+        "x-ms-routing-request-id": "WESTUS:20221117T010201Z:f48f4ad4-9aa0-42d7-9419-11035dc99806"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/providers/microsoft.billingbenefits/savingsPlanOrders/849623f7-c032-4868-a6a1-c8891fa3af17",
+            "name": "849623f7-c032-4868-a6a1-c8891fa3af17",
+            "type": "microsoft.billingbenefits/savingsPlanOrders",
+            "properties": {
+              "billingScopeId": "eef82110-c91b-4395-9420-fcfcbefc5a47",
+              "savingsPlans": [
+                "/providers/Microsoft.BillingBenefits/savingsPlanOrders/849623f7-c032-4868-a6a1-c8891fa3af17/savingsPlans/b7d7afeb-0382-4cd6-88f0-a212f7ddcb53"
+              ],
+              "billingPlan": "P1M",
+              "term": "P3Y",
+              "displayName": "TestSPNameManagementGroup",
+              "benefitStartTime": "2022-11-16T02:25:11.7183866Z",
+              "provisioningState": "Succeeded",
+              "billingProfileId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31/billingProfiles/KPSV-DWNE-BG7-TGB",
+              "billingAccountId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31",
+              "expiryDateTime": "2025-11-16T02:25:11.7183866Z"
+            },
+            "sku": {
+              "name": "Compute_Savings_Plan"
+            }
+          },
+          {
+            "id": "/providers/microsoft.billingbenefits/savingsPlanOrders/b538c0a7-b852-4ff8-aa3a-1d91dad90d2a",
+            "name": "b538c0a7-b852-4ff8-aa3a-1d91dad90d2a",
+            "type": "microsoft.billingbenefits/savingsPlanOrders",
+            "properties": {
+              "billingScopeId": "eef82110-c91b-4395-9420-fcfcbefc5a47",
+              "savingsPlans": [
+                "/providers/Microsoft.BillingBenefits/savingsPlanOrders/b538c0a7-b852-4ff8-aa3a-1d91dad90d2a/savingsPlans/2035abf9-4697-4220-b158-dbff2a0dc073"
+              ],
+              "billingPlan": "P1M",
+              "term": "P3Y",
+              "displayName": "TestSPNameSingle",
+              "benefitStartTime": "2022-11-16T02:14:36.5807954Z",
+              "provisioningState": "Succeeded",
+              "billingProfileId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31/billingProfiles/KPSV-DWNE-BG7-TGB",
+              "billingAccountId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31",
+              "expiryDateTime": "2025-11-16T02:14:36.5807954Z"
+            },
+            "sku": {
+              "name": "Compute_Savings_Plan"
+            }
+          },
+          {
+            "id": "/providers/microsoft.billingbenefits/savingsPlanOrders/8e67f57d-d55d-481c-ab40-2f5396b9edf2",
+            "name": "8e67f57d-d55d-481c-ab40-2f5396b9edf2",
+            "type": "microsoft.billingbenefits/savingsPlanOrders",
+            "properties": {
+              "billingScopeId": "eef82110-c91b-4395-9420-fcfcbefc5a47",
+              "savingsPlans": [
+                "/providers/Microsoft.BillingBenefits/savingsPlanOrders/8e67f57d-d55d-481c-ab40-2f5396b9edf2/savingsPlans/449a7d3b-9d86-4e3f-86be-cebd10658669"
+              ],
+              "billingPlan": "P1M",
+              "term": "P3Y",
+              "displayName": "TestSPNameSingle",
+              "benefitStartTime": "2022-11-16T02:03:33.4327656Z",
+              "provisioningState": "Succeeded",
+              "billingProfileId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31/billingProfiles/KPSV-DWNE-BG7-TGB",
+              "billingAccountId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31",
+              "expiryDateTime": "2025-11-16T02:03:33.4327656Z"
+            },
+            "sku": {
+              "name": "Compute_Savings_Plan"
+            }
+          },
+          {
+            "id": "/providers/microsoft.billingbenefits/savingsPlanOrders/f74f8d5b-af0c-43a5-84f1-e581d4efe71a",
+            "name": "f74f8d5b-af0c-43a5-84f1-e581d4efe71a",
+            "type": "microsoft.billingbenefits/savingsPlanOrders",
+            "properties": {
+              "billingScopeId": "eef82110-c91b-4395-9420-fcfcbefc5a47",
+              "savingsPlans": [
+                "/providers/Microsoft.BillingBenefits/savingsPlanOrders/f74f8d5b-af0c-43a5-84f1-e581d4efe71a/savingsPlans/de446334-1edd-4946-8a49-3acd422997d1"
+              ],
+              "billingPlan": "P1M",
+              "term": "P3Y",
+              "displayName": "TestSPNameSingle",
+              "benefitStartTime": "2022-11-16T01:59:06.5948444Z",
+              "provisioningState": "Succeeded",
+              "billingProfileId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31/billingProfiles/KPSV-DWNE-BG7-TGB",
+              "billingAccountId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31",
+              "expiryDateTime": "2025-11-16T01:59:06.5948444Z"
+            },
+            "sku": {
+              "name": "Compute_Savings_Plan"
+            }
+          },
+          {
+            "id": "/providers/microsoft.billingbenefits/savingsPlanOrders/23792c39-712d-449e-9c45-795a0363a9bd",
+            "name": "23792c39-712d-449e-9c45-795a0363a9bd",
+            "type": "microsoft.billingbenefits/savingsPlanOrders",
+            "properties": {
+              "billingScopeId": "eef82110-c91b-4395-9420-fcfcbefc5a47",
+              "savingsPlans": [
+                "/providers/Microsoft.BillingBenefits/savingsPlanOrders/23792c39-712d-449e-9c45-795a0363a9bd/savingsPlans/2e0bd158-bdac-40e7-869c-575736f5f29d"
+              ],
+              "billingPlan": "P1M",
+              "term": "P3Y",
+              "displayName": "TestSPName",
+              "benefitStartTime": "2022-11-15T03:04:19.6939035Z",
+              "provisioningState": "Succeeded",
+              "billingProfileId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31/billingProfiles/KPSV-DWNE-BG7-TGB",
+              "billingAccountId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31",
+              "expiryDateTime": "2025-11-15T03:04:19.6939035Z"
+            },
+            "sku": {
+              "name": "Compute_Savings_Plan"
+            }
+          },
+          {
+            "id": "/providers/microsoft.billingbenefits/savingsPlanOrders/8aa78cac-d183-43f5-a01d-915525de7b55",
+            "name": "8aa78cac-d183-43f5-a01d-915525de7b55",
+            "type": "microsoft.billingbenefits/savingsPlanOrders",
+            "properties": {
+              "billingScopeId": "eef82110-c91b-4395-9420-fcfcbefc5a47",
+              "savingsPlans": [
+                "/providers/Microsoft.BillingBenefits/savingsPlanOrders/8aa78cac-d183-43f5-a01d-915525de7b55/savingsPlans/19242e30-12d8-4d8d-8d98-a07ef2095e46"
+              ],
+              "billingPlan": "P1M",
+              "term": "P3Y",
+              "displayName": "TestSPName",
+              "benefitStartTime": "2022-11-15T03:00:34.4880225Z",
+              "provisioningState": "Succeeded",
+              "billingProfileId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31/billingProfiles/KPSV-DWNE-BG7-TGB",
+              "billingAccountId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31",
+              "expiryDateTime": "2025-11-15T03:00:34.4880225Z"
+            },
+            "sku": {
+              "name": "Compute_Savings_Plan"
+            }
+          },
+          {
+            "id": "/providers/microsoft.billingbenefits/savingsPlanOrders/a9facd23-09f7-475e-9ad1-35841868dd5a",
+            "name": "a9facd23-09f7-475e-9ad1-35841868dd5a",
+            "type": "microsoft.billingbenefits/savingsPlanOrders",
+            "properties": {
+              "billingScopeId": "eef82110-c91b-4395-9420-fcfcbefc5a47",
+              "savingsPlans": [
+                "/providers/Microsoft.BillingBenefits/savingsPlanOrders/a9facd23-09f7-475e-9ad1-35841868dd5a/savingsPlans/07f96c4c-d58a-4296-93c5-176e5472e60f"
+              ],
+              "billingPlan": "P1M",
+              "term": "P3Y",
+              "displayName": "TestSPName",
+              "benefitStartTime": "2022-11-15T02:57:31.6101255Z",
+              "provisioningState": "Succeeded",
+              "billingProfileId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31/billingProfiles/KPSV-DWNE-BG7-TGB",
+              "billingAccountId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31",
+              "expiryDateTime": "2025-11-15T02:57:31.6101255Z"
+            },
+            "sku": {
+              "name": "Compute_Savings_Plan"
+            }
+          },
+          {
+            "id": "/providers/microsoft.billingbenefits/savingsPlanOrders/121756d9-4616-411c-80b3-c5b66486daca",
+            "name": "121756d9-4616-411c-80b3-c5b66486daca",
+            "type": "microsoft.billingbenefits/savingsPlanOrders",
+            "properties": {
+              "billingScopeId": "eef82110-c91b-4395-9420-fcfcbefc5a47",
+              "savingsPlans": [
+                "/providers/Microsoft.BillingBenefits/savingsPlanOrders/121756d9-4616-411c-80b3-c5b66486daca/savingsPlans/12a2d51a-4331-4029-8cdf-0368de3ce061"
+              ],
+              "billingPlan": "P1M",
+              "term": "P3Y",
+              "displayName": "TestingName2",
+              "benefitStartTime": "2022-11-15T02:46:22.7570595Z",
+              "provisioningState": "Succeeded",
+              "billingProfileId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31/billingProfiles/KPSV-DWNE-BG7-TGB",
+              "billingAccountId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31",
+              "expiryDateTime": "2025-11-15T02:46:22.7570595Z"
+            },
+            "sku": {
+              "name": "Compute_Savings_Plan"
+            }
+          },
+          {
+            "id": "/providers/microsoft.billingbenefits/savingsPlanOrders/9be86dec-fa3e-49c7-b6cd-6d2e21a6d2f0",
+            "name": "9be86dec-fa3e-49c7-b6cd-6d2e21a6d2f0",
+            "type": "microsoft.billingbenefits/savingsPlanOrders",
+            "properties": {
+              "billingScopeId": "eef82110-c91b-4395-9420-fcfcbefc5a47",
+              "savingsPlans": [
+                "/providers/Microsoft.BillingBenefits/savingsPlanOrders/9be86dec-fa3e-49c7-b6cd-6d2e21a6d2f0/savingsPlans/0ff19e05-0f97-4f8b-bc8a-369dcac5085e"
+              ],
+              "billingPlan": "P1M",
+              "term": "P3Y",
+              "displayName": "TestingName2",
+              "benefitStartTime": "2022-11-15T02:33:04.2855651Z",
+              "provisioningState": "Succeeded",
+              "billingProfileId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31/billingProfiles/KPSV-DWNE-BG7-TGB",
+              "billingAccountId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31",
+              "expiryDateTime": "2025-11-15T02:33:04.2855651Z"
+            },
+            "sku": {
+              "name": "Compute_Savings_Plan"
+            }
+          },
+          {
+            "id": "/providers/microsoft.billingbenefits/savingsPlanOrders/990bd199-c49b-4026-a1f8-30f14e13fc87",
+            "name": "990bd199-c49b-4026-a1f8-30f14e13fc87",
+            "type": "microsoft.billingbenefits/savingsPlanOrders",
+            "properties": {
+              "billingScopeId": "eef82110-c91b-4395-9420-fcfcbefc5a47",
+              "savingsPlans": [
+                "/providers/Microsoft.BillingBenefits/savingsPlanOrders/990bd199-c49b-4026-a1f8-30f14e13fc87/savingsPlans/3d41ee5c-ad64-4bae-bc29-ea0b3989f28c"
+              ],
+              "billingPlan": "P1M",
+              "term": "P3Y",
+              "displayName": "TestingName2",
+              "benefitStartTime": "2022-11-15T02:29:43.4506596Z",
+              "provisioningState": "Succeeded",
+              "billingProfileId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31/billingProfiles/KPSV-DWNE-BG7-TGB",
+              "billingAccountId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31",
+              "expiryDateTime": "2025-11-15T02:29:43.4506596Z"
+            },
+            "sku": {
+              "name": "Compute_Savings_Plan"
+            }
+          },
+          {
+            "id": "/providers/microsoft.billingbenefits/savingsPlanOrders/36c74101-dda7-4bb9-8403-3baf1661b065",
+            "name": "36c74101-dda7-4bb9-8403-3baf1661b065",
+            "type": "microsoft.billingbenefits/savingsPlanOrders",
+            "properties": {
+              "billingScopeId": "eef82110-c91b-4395-9420-fcfcbefc5a47",
+              "savingsPlans": [
+                "/providers/Microsoft.BillingBenefits/savingsPlanOrders/36c74101-dda7-4bb9-8403-3baf1661b065/savingsPlans/f850dca4-a0a1-49e7-b8c6-5ed15392fd36"
+              ],
+              "billingPlan": "P1M",
+              "term": "P3Y",
+              "displayName": "Compute_SavingsPlan_10-14-2022_14-16",
+              "benefitStartTime": "2022-10-14T21:18:55.2960613Z",
+              "provisioningState": "Succeeded",
+              "billingProfileId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31/billingProfiles/KPSV-DWNE-BG7-TGB",
+              "billingAccountId": "/providers/Microsoft.Billing/billingAccounts/4973e1de-a829-5c64-4fef-0a692e2b3108:1970c5da-0aa4-46fd-a917-4772f9a17978_2019-05-31",
+              "expiryDateTime": "2025-10-14T21:18:55.2960613Z"
+            },
+            "sku": {
+              "name": "Compute_Savings_Plan"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "2059972114",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "eef82110-c91b-4395-9420-fcfcbefc5a47"
+  }
+}
