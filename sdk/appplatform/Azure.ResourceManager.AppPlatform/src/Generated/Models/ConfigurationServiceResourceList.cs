@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of ConfigurationServiceResourceList. </summary>
         internal ConfigurationServiceResourceList()
         {
-            Value = new ChangeTrackingList<ConfigurationServiceResourceData>();
+            Value = new ChangeTrackingList<AppPlatformConfigurationServiceData>();
         }
 
         /// <summary> Initializes a new instance of ConfigurationServiceResourceList. </summary>
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
         /// </param>
-        internal ConfigurationServiceResourceList(IReadOnlyList<ConfigurationServiceResourceData> value, string nextLink)
+        internal ConfigurationServiceResourceList(IReadOnlyList<AppPlatformConfigurationServiceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of configuration service resources. </summary>
-        public IReadOnlyList<ConfigurationServiceResourceData> Value { get; }
+        public IReadOnlyList<AppPlatformConfigurationServiceData> Value { get; }
         /// <summary>
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
