@@ -1,5 +1,15 @@
 # Release History
 
+## 2.7.0-preview.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 2.7.0-preview.3 (2022-11-25)
 
 ### Other Changes
