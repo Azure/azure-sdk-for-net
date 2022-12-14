@@ -165,12 +165,16 @@ namespace Azure.Storage.DataMovement
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
         /// </param>
+        /// <param name="completeLength">
+        /// The expected complete length of the blob.
+        /// </param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override Task CopyFromUriAsync(
             StorageResource sourceResource,
             bool overwrite,
+            long completeLength,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
