@@ -2,7 +2,6 @@
 
 This sample demonstrates the approaches available for customizing model serialization.
 
-
 ## Ignoring and renaming model properties for serialization
 
 Decorating a model property with the `[IgnoreDataMember]` attribute will ignore it on serialization and the `[DataMember(Name = "some_new_name")]` will rename the property.

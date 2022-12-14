@@ -118,7 +118,10 @@ namespace Azure.Data.Tables.Samples
                 Page<TableEntity> page = tableClient
                     .Query<TableEntity>()
                     .AsPages(continuationToken, pageSizeHint: 10)
-                    .First(); // Note: Since the pageSizeHint only limits the number of results in a single page, we explicitly only enumerate the first page.
+                    .FirstOrDefault(); // Note: Since the pageSizeHint only limits the number of results in a single page, we explicitly only enumerate the first page.
+
+                if (page == null)
+                    break;
 
                 // Get the continuation token from the page.
                 // Note: This value can be stored so that the next page query can be executed later.
