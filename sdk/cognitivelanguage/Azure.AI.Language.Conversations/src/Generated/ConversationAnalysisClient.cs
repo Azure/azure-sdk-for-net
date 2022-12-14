@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.Conversations
 {
-    // Data plane generated client. The ConversationAnalysis service client.
+    // Data plane generated client.
     /// <summary> The ConversationAnalysis service client. </summary>
     public partial class ConversationAnalysisClient
     {
