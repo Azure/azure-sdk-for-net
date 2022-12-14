@@ -398,7 +398,7 @@ namespace Azure.Core
     public abstract partial class DelayStrategy
     {
         protected DelayStrategy() { }
-        public abstract System.TimeSpan GetNextDelay(Azure.Response response, int attempt, System.TimeSpan? suggestedInterval);
+        public abstract System.TimeSpan GetNextDelay(Azure.Response response, int attempt, System.TimeSpan? suggestedDelay);
         protected internal static System.TimeSpan GetServerDelay(Azure.Core.HttpMessage message) { throw null; }
         protected static System.TimeSpan Max(System.TimeSpan t1, System.TimeSpan t2) { throw null; }
     }
