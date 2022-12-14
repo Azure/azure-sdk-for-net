@@ -90,7 +90,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Since the events get added to the channel and return immediately, it's
             // possible the chunks haven't been processed. Let's wait a respectable amount of time.
-            Thread.Sleep(5); // 5 seconds
+            Thread.Sleep(TimeSpan.FromSeconds(2)); // 2 seconds
 
             // Assert
             Assert.AreEqual(0, invokeFailedEventHandlerTask.Invocations.Count, "Amount of Report Event Handler calls were incorrect");
@@ -98,7 +98,6 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(1, commitBlockTask.Invocations.Count, "Amount of Commit Block Task calls were incorrect");
             Assert.AreEqual(1, reportProgressInBytesTask.Invocations.Count, "Amount of Progress amount calls were incorrect");
         }
-
         [Test]
         [TestCase(512)]
         [TestCase(Constants.KB)]
@@ -153,7 +152,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Since the events get added to the channel and return immediately, it's
             // possible the chunks haven't been processed. Let's wait a respectable amount of time.
-            Thread.Sleep(5); // 5 seconds
+            Thread.Sleep(TimeSpan.FromSeconds(2)); // 2 seconds
 
             // Assert
             Assert.AreEqual(0, invokeFailedEventHandlerTask.Invocations.Count, "Amount of Failed Event Handler calls were incorrect");
@@ -196,7 +195,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Since the events get added to the channel and return immediately, it's
             // possible the chunks haven't been processed. Let's wait a respectable amount of time.
-            Thread.Sleep(5); // 5 seconds
+            Thread.Sleep(TimeSpan.FromSeconds(2)); // 2 seconds
 
             // Assert
             Assert.AreEqual(1, invokeFailedEventHandlerTask.Invocations.Count, "Amount of Failed Event Handler calls were incorrect");
@@ -293,7 +292,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Since the events get added to the channel and return immediately, it's
             // possible the chunks haven't been processed. Let's wait a respectable amount of time.
-            Thread.Sleep(5); // 5 seconds
+            Thread.Sleep(TimeSpan.FromSeconds(2)); // 5 seconds
 
             // Assert
             Assert.AreEqual(0, invokeFailedEventHandlerTask.Invocations.Count, "Amount of Failed Event Handler calls were incorrect");
@@ -356,7 +355,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Since the events get added to the channel and return immediately, it's
             // possible the chunks haven't been processed. Let's wait a respectable amount of time.
-            Thread.Sleep(5); // 5 seconds
+            Thread.Sleep(TimeSpan.FromSeconds(2)); // 5 seconds
 
             // Assert
             Assert.AreEqual(1, invokeFailedEventHandlerTask.Invocations.Count, "Amount of Failed Event Handler calls were incorrect");
