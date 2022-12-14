@@ -61,8 +61,8 @@ rename-mapping:
   AzureKeyVaultKms: ManagedClusterSecurityProfileKeyVaultKms
   AzureKeyVaultKms.enabled: IsEnabled
   KeyVaultNetworkAccessTypes: ManagedClusterKeyVaultNetworkAccessType
-  ManagedClusterOIDCIssuerProfile.enabled: IsEnabled
-  ManagedClusterOIDCIssuerProfile.issuerURL: IssuerUriInfo
+  ManagedClusterOidcIssuerProfile.enabled: IsEnabled
+  ManagedClusterOidcIssuerProfile.issuerURL: IssuerUriInfo
 
 format-by-name-rules:
   'tenantId': 'uuid'

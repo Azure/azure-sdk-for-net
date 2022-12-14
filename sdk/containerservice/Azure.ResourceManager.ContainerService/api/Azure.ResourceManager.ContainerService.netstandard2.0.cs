@@ -1086,8 +1086,8 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class ManagedClusterOidcIssuerProfile
     {
         public ManagedClusterOidcIssuerProfile() { }
-        public bool? Enabled { get { throw null; } set { } }
-        public string IssuerURL { get { throw null; } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public string IssuerUriInfo { get { throw null; } }
     }
     public partial class ManagedClusterPodIdentity
     {
