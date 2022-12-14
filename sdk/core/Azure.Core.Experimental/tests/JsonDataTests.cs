@@ -270,27 +270,27 @@ namespace Azure.Core.Tests
             Assert.IsTrue("foo" != new JsonData("bar"));
         }
 
-        [Test]
-        public void JsonDataInPOCOsWorks()
-        {
-            JsonData orig = new JsonData(new
-            {
-                property = new JsonData("hello")
-            });
+        //[Test]
+        //public void JsonDataInPOCOsWorks()
+        //{
+        //    JsonData orig = new JsonData(new
+        //    {
+        //        property = new JsonData("hello")
+        //    });
 
-            void validate(JsonData d)
-            {
-                Assert.AreEqual(JsonValueKind.Object, d.Kind);
-                Assert.AreEqual(d.Properties.Count(), 1);
-                Assert.AreEqual(d.Get("property"), "hello");
-            }
+        //    void validate(JsonData d)
+        //    {
+        //        Assert.AreEqual(JsonValueKind.Object, d.Kind);
+        //        Assert.AreEqual(d.Properties.Count(), 1);
+        //        Assert.AreEqual(d.Get("property"), "hello");
+        //    }
 
-            validate(orig);
+        //    validate(orig);
 
-            JsonData roundTrip = JsonSerializer.Deserialize<JsonData>(JsonSerializer.Serialize(orig, orig.GetType()));
+        //    JsonData roundTrip = JsonSerializer.Deserialize<JsonData>(JsonSerializer.Serialize(orig, orig.GetType()));
 
-            validate(roundTrip);
-        }
+        //    validate(roundTrip);
+        //}
 
         private T JsonAsType<T>(string json)
         {

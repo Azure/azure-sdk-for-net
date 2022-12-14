@@ -255,7 +255,7 @@ namespace Azure.Core.Dynamic
                 return false;
             }
 
-            return left.Kind == JsonValueKind.String && ((string?)left._value) == right;
+            return left.Kind == JsonValueKind.String && ((string?)left) == right;
         }
 
         /// <summary>
@@ -286,7 +286,7 @@ namespace Azure.Core.Dynamic
                 return false;
             }
 
-            return right.Kind == JsonValueKind.String && ((string?)right._value) == left;
+            return right.Kind == JsonValueKind.String && ((string?)right) == left;
         }
 
         /// <summary>

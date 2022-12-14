@@ -17,7 +17,9 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanCreateFromJson()
         {
-            dynamic jsonData = new BinaryData("\"string\"").ToDynamic();
+            var bd = new BinaryData("\"string\"");
+
+            dynamic jsonData = bd.ToDynamic();
 
             Assert.AreEqual("string", (string)jsonData);
         }
