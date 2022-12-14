@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: RuntimeVersions_ListRuntimeVersions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SupportedRuntimeVersion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SupportedRuntimeVersion> GetRuntimeVersionsRuntimeVersionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppPlatformSupportedRuntimeVersion" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppPlatformSupportedRuntimeVersion> GetRuntimeVersionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SupportedRuntimeVersion>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppPlatformSupportedRuntimeVersion>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = RuntimeVersionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetRuntimeVersionsRuntimeVersions");
+                using var scope = RuntimeVersionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetRuntimeVersions");
                 scope.Start();
                 try
                 {
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.AppPlatform
         /// Operation Id: RuntimeVersions_ListRuntimeVersions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SupportedRuntimeVersion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SupportedRuntimeVersion> GetRuntimeVersionsRuntimeVersions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppPlatformSupportedRuntimeVersion" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppPlatformSupportedRuntimeVersion> GetRuntimeVersions(CancellationToken cancellationToken = default)
         {
-            Page<SupportedRuntimeVersion> FirstPageFunc(int? pageSizeHint)
+            Page<AppPlatformSupportedRuntimeVersion> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = RuntimeVersionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetRuntimeVersionsRuntimeVersions");
+                using var scope = RuntimeVersionsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetRuntimeVersions");
                 scope.Start();
                 try
                 {

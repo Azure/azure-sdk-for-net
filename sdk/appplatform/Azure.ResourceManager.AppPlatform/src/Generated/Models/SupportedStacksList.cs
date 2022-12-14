@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of SupportedStacksList. </summary>
         internal SupportedStacksList()
         {
-            Value = new ChangeTrackingList<SupportedStackResourceData>();
+            Value = new ChangeTrackingList<AppPlatformSupportedStackData>();
         }
 
         /// <summary> Initializes a new instance of SupportedStacksList. </summary>
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
         /// </param>
-        internal SupportedStacksList(IReadOnlyList<SupportedStackResourceData> value, string nextLink)
+        internal SupportedStacksList(IReadOnlyList<AppPlatformSupportedStackData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of supported stacks resources. </summary>
-        public IReadOnlyList<SupportedStackResourceData> Value { get; }
+        public IReadOnlyList<AppPlatformSupportedStackData> Value { get; }
         /// <summary>
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
