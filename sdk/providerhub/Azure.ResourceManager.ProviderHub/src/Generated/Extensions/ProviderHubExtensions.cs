@@ -162,77 +162,77 @@ namespace Azure.ResourceManager.ProviderHub
         }
         #endregion
 
-        #region ProviderRegistrationResourcetypeRegistrationSkuResource
+        #region ResourceTypeSkuResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProviderRegistrationResourcetypeRegistrationSkuResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProviderRegistrationResourcetypeRegistrationSkuResource.CreateResourceIdentifier" /> to create a <see cref="ProviderRegistrationResourcetypeRegistrationSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ResourceTypeSkuResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ResourceTypeSkuResource.CreateResourceIdentifier" /> to create a <see cref="ResourceTypeSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProviderRegistrationResourcetypeRegistrationSkuResource" /> object. </returns>
-        public static ProviderRegistrationResourcetypeRegistrationSkuResource GetProviderRegistrationResourcetypeRegistrationSkuResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceTypeSkuResource" /> object. </returns>
+        public static ResourceTypeSkuResource GetResourceTypeSkuResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ProviderRegistrationResourcetypeRegistrationSkuResource.ValidateResourceId(id);
-                return new ProviderRegistrationResourcetypeRegistrationSkuResource(client, id);
+                ResourceTypeSkuResource.ValidateResourceId(id);
+                return new ResourceTypeSkuResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource
+        #region NestedResourceTypeFirstSkuResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource.CreateResourceIdentifier" /> to create a <see cref="ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NestedResourceTypeFirstSkuResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NestedResourceTypeFirstSkuResource.CreateResourceIdentifier" /> to create a <see cref="NestedResourceTypeFirstSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource" /> object. </returns>
-        public static ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource GetProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NestedResourceTypeFirstSkuResource" /> object. </returns>
+        public static NestedResourceTypeFirstSkuResource GetNestedResourceTypeFirstSkuResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource.ValidateResourceId(id);
-                return new ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource(client, id);
+                NestedResourceTypeFirstSkuResource.ValidateResourceId(id);
+                return new NestedResourceTypeFirstSkuResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource
+        #region NestedResourceTypeSecondSkuResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource.CreateResourceIdentifier" /> to create a <see cref="ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NestedResourceTypeSecondSkuResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NestedResourceTypeSecondSkuResource.CreateResourceIdentifier" /> to create a <see cref="NestedResourceTypeSecondSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource" /> object. </returns>
-        public static ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource GetProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NestedResourceTypeSecondSkuResource" /> object. </returns>
+        public static NestedResourceTypeSecondSkuResource GetNestedResourceTypeSecondSkuResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource.ValidateResourceId(id);
-                return new ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource(client, id);
+                NestedResourceTypeSecondSkuResource.ValidateResourceId(id);
+                return new NestedResourceTypeSecondSkuResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource
+        #region NestedResourceTypeThirdSkuResource
         /// <summary>
-        /// Gets an object representing a <see cref="ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource.CreateResourceIdentifier" /> to create a <see cref="ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NestedResourceTypeThirdSkuResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NestedResourceTypeThirdSkuResource.CreateResourceIdentifier" /> to create a <see cref="NestedResourceTypeThirdSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource" /> object. </returns>
-        public static ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource GetProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NestedResourceTypeThirdSkuResource" /> object. </returns>
+        public static NestedResourceTypeThirdSkuResource GetNestedResourceTypeThirdSkuResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource.ValidateResourceId(id);
-                return new ProviderRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationResourcetypeRegistrationSkuResource(client, id);
+                NestedResourceTypeThirdSkuResource.ValidateResourceId(id);
+                return new NestedResourceTypeThirdSkuResource(client, id);
             }
             );
         }

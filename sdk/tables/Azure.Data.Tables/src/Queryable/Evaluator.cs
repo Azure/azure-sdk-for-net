@@ -29,7 +29,7 @@ namespace Azure.Data.Tables.Queryable
                 && expression.NodeType != (ExpressionType)ResourceExpressionType.RootResourceSet;
         }
 
-        internal class SubtreeEvaluator : LinqExpressionVisitor
+        internal class SubtreeEvaluator : ExpressionVisitor
         {
             private HashSet<Expression> candidates;
 
@@ -43,7 +43,7 @@ namespace Azure.Data.Tables.Queryable
                 return Visit(exp);
             }
 
-            internal override Expression Visit(Expression exp)
+            public override Expression Visit(Expression exp)
             {
                 if (exp == null)
                 {
@@ -80,7 +80,7 @@ namespace Azure.Data.Tables.Queryable
             }
         }
 
-        internal class Nominator : LinqExpressionVisitor
+        internal class Nominator : ExpressionVisitor
         {
             private Func<Expression, bool> functionCanBeEvaluated;
 
@@ -100,7 +100,7 @@ namespace Azure.Data.Tables.Queryable
                 return candidates;
             }
 
-            internal override Expression Visit(Expression expression)
+            public override Expression Visit(Expression expression)
             {
                 if (expression != null)
                 {

@@ -21,8 +21,11 @@ namespace Azure.Storage.Files.DataLake
             ClientDiagnostics clientDiagnostics,
             DataLakeClientOptions clientOptions,
             DataLakeCustomerProvidedKey? customerProvidedKey)
-            : this(pipeline, sharedKeyCredential, default, clientDiagnostics, clientOptions, customerProvidedKey)
+            : base(pipeline, sharedKeyCredential, clientDiagnostics)
         {
+            ClientOptions = clientOptions;
+            CustomerProvidedKey = customerProvidedKey;
+            TransferValidation = clientOptions.TransferValidation;
         }
 
         public DataLakeClientConfiguration(
@@ -31,8 +34,11 @@ namespace Azure.Storage.Files.DataLake
             ClientDiagnostics clientDiagnostics,
             DataLakeClientOptions clientOptions,
             DataLakeCustomerProvidedKey? customerProvidedKey)
-            : this(pipeline, default, sasCredential, clientDiagnostics, clientOptions, customerProvidedKey)
+            : base(pipeline, sasCredential, clientDiagnostics)
         {
+            ClientOptions = clientOptions;
+            CustomerProvidedKey = customerProvidedKey;
+            TransferValidation = clientOptions.TransferValidation;
         }
 
         internal DataLakeClientConfiguration(
@@ -42,7 +48,7 @@ namespace Azure.Storage.Files.DataLake
             ClientDiagnostics clientDiagnostics,
             DataLakeClientOptions clientOptions,
             DataLakeCustomerProvidedKey? customerProvidedKey)
-            : base(pipeline, sharedKeyCredential, sasCredential, clientDiagnostics)
+            : base(pipeline, sharedKeyCredential, sasCredential, default, clientDiagnostics)
         {
             ClientOptions = clientOptions;
             CustomerProvidedKey = customerProvidedKey;

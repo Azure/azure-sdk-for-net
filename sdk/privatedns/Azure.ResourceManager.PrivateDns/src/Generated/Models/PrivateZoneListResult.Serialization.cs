@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
     {
         internal static PrivateZoneListResult DeserializePrivateZoneListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PrivateZoneData>> value = default;
+            Optional<IReadOnlyList<PrivateDnsZoneData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.PrivateDns.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateZoneData> array = new List<PrivateZoneData>();
+                    List<PrivateDnsZoneData> array = new List<PrivateDnsZoneData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateZoneData.DeserializePrivateZoneData(item));
+                        array.Add(PrivateDnsZoneData.DeserializePrivateDnsZoneData(item));
                     }
                     value = array;
                     continue;
