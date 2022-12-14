@@ -1,5 +1,15 @@
 # Release History
 
+## 1.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.1.0 (2022-12-13)
 
 ### Features Added
@@ -8,7 +18,7 @@ Added new APIs from 2022-10-01 API:
 
 ## 1.0.0 (2022-09-26)
 
-This is the first stable release of the Peering Management library.
+This release is the first stable release of the Peering Management library.
 
 ### Breaking Changes
 

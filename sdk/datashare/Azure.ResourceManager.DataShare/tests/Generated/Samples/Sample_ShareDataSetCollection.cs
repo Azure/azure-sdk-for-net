@@ -106,10 +106,7 @@ namespace Azure.ResourceManager.DataShare
 
             // invoke the operation
             string dataSetName = "Dataset1";
-            ShareDataSetData data = new ShareDataSetData()
-            {
-                Kind = DataSetKind.Blob,
-            };
+            ShareDataSetData data = new BlobDataSet("C1", "file21", "SampleResourceGroup", "storage2", "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a");
             ArmOperation<ShareDataSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataSetName, data);
             ShareDataSetResource result = lro.Value;
 
@@ -145,10 +142,7 @@ namespace Azure.ResourceManager.DataShare
 
             // invoke the operation
             string dataSetName = "Dataset1";
-            ShareDataSetData data = new ShareDataSetData()
-            {
-                Kind = DataSetKind.KustoCluster,
-            };
+            ShareDataSetData data = new KustoClusterDataSet(new ResourceIdentifier("/subscriptions/433a8dfd-e5d5-4e77-ad86-90acdc75eb1a/resourceGroups/SampleResourceGroup/providers/Microsoft.Kusto/clusters/Cluster1"));
             ArmOperation<ShareDataSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataSetName, data);
             ShareDataSetResource result = lro.Value;
 
@@ -184,10 +178,7 @@ namespace Azure.ResourceManager.DataShare
 
             // invoke the operation
             string dataSetName = "Dataset1";
-            ShareDataSetData data = new ShareDataSetData()
-            {
-                Kind = DataSetKind.KustoDatabase,
-            };
+            ShareDataSetData data = new KustoDatabaseDataSet(new ResourceIdentifier("/subscriptions/433a8dfd-e5d5-4e77-ad86-90acdc75eb1a/resourceGroups/SampleResourceGroup/providers/Microsoft.Kusto/clusters/Cluster1/databases/Database1"));
             ArmOperation<ShareDataSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataSetName, data);
             ShareDataSetResource result = lro.Value;
 
@@ -223,10 +214,33 @@ namespace Azure.ResourceManager.DataShare
 
             // invoke the operation
             string dataSetName = "Dataset1";
-            ShareDataSetData data = new ShareDataSetData()
+            ShareDataSetData data = new KustoTableDataSet(new ResourceIdentifier("/subscriptions/433a8dfd-e5d5-4e77-ad86-90acdc75eb1a/resourceGroups/SampleResourceGroup/providers/Microsoft.Kusto/clusters/Cluster1/databases/Database1"), new TableLevelSharingProperties()
             {
-                Kind = DataSetKind.KustoTable,
-            };
+                ExternalTablesToExclude =
+{
+"test11","test12"
+},
+                ExternalTablesToInclude =
+{
+"test9","test10"
+},
+                MaterializedViewsToExclude =
+{
+"test7","test8"
+},
+                MaterializedViewsToInclude =
+{
+"test5","test6"
+},
+                TablesToExclude =
+{
+"test3","test4"
+},
+                TablesToInclude =
+{
+"test1","test2"
+},
+            });
             ArmOperation<ShareDataSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataSetName, data);
             ShareDataSetResource result = lro.Value;
 
@@ -262,9 +276,12 @@ namespace Azure.ResourceManager.DataShare
 
             // invoke the operation
             string dataSetName = "Dataset1";
-            ShareDataSetData data = new ShareDataSetData()
+            ShareDataSetData data = new SqlDBTableDataSet()
             {
-                Kind = DataSetKind.SqlDBTable,
+                DatabaseName = "SqlDB1",
+                SchemaName = "dbo",
+                SqlServerResourceId = new ResourceIdentifier("/subscriptions/433a8dfd-e5d5-4e77-ad86-90acdc75eb1a/resourceGroups/SampleResourceGroup/providers/Microsoft.Sql/servers/Server1"),
+                TableName = "Table1",
             };
             ArmOperation<ShareDataSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataSetName, data);
             ShareDataSetResource result = lro.Value;
@@ -301,9 +318,12 @@ namespace Azure.ResourceManager.DataShare
 
             // invoke the operation
             string dataSetName = "Dataset1";
-            ShareDataSetData data = new ShareDataSetData()
+            ShareDataSetData data = new SqlDWTableDataSet()
             {
-                Kind = DataSetKind.SqlDWTable,
+                DataWarehouseName = "DataWarehouse1",
+                SchemaName = "dbo",
+                SqlServerResourceId = new ResourceIdentifier("/subscriptions/433a8dfd-e5d5-4e77-ad86-90acdc75eb1a/resourceGroups/SampleResourceGroup/providers/Microsoft.Sql/servers/Server1"),
+                TableName = "Table1",
             };
             ArmOperation<ShareDataSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataSetName, data);
             ShareDataSetResource result = lro.Value;
@@ -340,10 +360,7 @@ namespace Azure.ResourceManager.DataShare
 
             // invoke the operation
             string dataSetName = "dataset1";
-            ShareDataSetData data = new ShareDataSetData()
-            {
-                Kind = DataSetKind.SynapseWorkspaceSqlPoolTable,
-            };
+            ShareDataSetData data = new SynapseWorkspaceSqlPoolTableDataSet(new ResourceIdentifier("/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/SampleResourceGroup/providers/Microsoft.Synapse/workspaces/ExampleWorkspace/sqlPools/ExampleSqlPool/schemas/dbo/tables/table1"));
             ArmOperation<ShareDataSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataSetName, data);
             ShareDataSetResource result = lro.Value;
 

@@ -206,10 +206,12 @@ namespace Azure.ResourceManager.Kusto
 
             // invoke the operation
             string dataConnectionName = "dataConnectionTest";
-            KustoDataConnectionData data = new KustoDataConnectionData()
+            KustoDataConnectionData data = new KustoEventHubDataConnection()
             {
+                EventHubResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.EventHub/namespaces/eventhubTestns1/eventhubs/eventhubTest1"),
+                ConsumerGroup = "testConsumerGroup1",
+                ManagedIdentityResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/managedidentityTest1"),
                 Location = new AzureLocation("westus"),
-                Kind = DataConnectionKind.EventHub,
             };
             ArmOperation<KustoDataConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataConnectionName, data);
             KustoDataConnectionResource result = lro.Value;
@@ -246,10 +248,20 @@ namespace Azure.ResourceManager.Kusto
 
             // invoke the operation
             string dataConnectionName = "dataConnectionTest";
-            KustoDataConnectionData data = new KustoDataConnectionData()
+            KustoDataConnectionData data = new KustoEventGridDataConnection()
             {
+                StorageAccountResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.Storage/storageAccounts/teststorageaccount"),
+                EventGridResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.Storage/storageAccounts/teststorageaccount/providers/Microsoft.EventGrid/eventSubscriptions/eventSubscriptionTest"),
+                EventHubResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.EventHub/namespaces/eventhubTestns1/eventhubs/eventhubTest2"),
+                ConsumerGroup = "$Default",
+                TableName = "TestTable",
+                MappingRuleName = "TestMapping",
+                DataFormat = KustoEventGridDataFormat.Json,
+                IsFirstRecordIgnored = false,
+                BlobStorageEventType = BlobStorageEventType.MicrosoftStorageBlobCreated,
+                ManagedIdentityResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/managedidentityTest1"),
+                DatabaseRouting = KustoDatabaseRouting.Single,
                 Location = new AzureLocation("westus"),
-                Kind = DataConnectionKind.EventGrid,
             };
             ArmOperation<KustoDataConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataConnectionName, data);
             KustoDataConnectionResource result = lro.Value;

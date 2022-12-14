@@ -4,10 +4,7 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.3.1</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.Resources</PackageId>
-    <Description>
-      Azure management client SDK for Azure resource provider Resources.
-      This version uses the Track 2 code generator that introduces important breaking changes, but also new features (such as intuitive authentication, custom HTTP pipeline, distributed tracing and much more).
-    </Description>
+    <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Resources.</Description>
     <PackageTags>azure;management;resources</PackageTags>
   </PropertyGroup>
 </Project>
