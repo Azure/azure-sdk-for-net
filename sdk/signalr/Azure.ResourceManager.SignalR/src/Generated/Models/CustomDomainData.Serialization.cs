@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SignalR
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SignalR
                         }
                         if (property0.NameEquals("customCertificate"))
                         {
-                            customCertificate = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            customCertificate = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                     }

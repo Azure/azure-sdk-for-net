@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The ScaleType. </summary>
+    /// <summary>
+    /// The ScaleType.
+    /// Serialized Name: ScaleType
+    /// </summary>
     internal readonly partial struct ScaleType : IEquatable<ScaleType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string DefaultValue = "Default";
         private const string TargetUtilizationValue = "TargetUtilization";
 
-        /// <summary> Default. </summary>
+        /// <summary>
+        /// Default
+        /// Serialized Name: ScaleType.Default
+        /// </summary>
         public static ScaleType Default { get; } = new ScaleType(DefaultValue);
-        /// <summary> TargetUtilization. </summary>
+        /// <summary>
+        /// TargetUtilization
+        /// Serialized Name: ScaleType.TargetUtilization
+        /// </summary>
         public static ScaleType TargetUtilization { get; } = new ScaleType(TargetUtilizationValue);
         /// <summary> Determines if two <see cref="ScaleType"/> values are the same. </summary>
         public static bool operator ==(ScaleType left, ScaleType right) => left.Equals(right);

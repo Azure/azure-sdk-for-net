@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ImageSweepSettings DeserializeImageSweepSettings(JsonElement element)
         {
-            Optional<EarlyTerminationPolicy> earlyTermination = default;
+            Optional<MachineLearningEarlyTerminationPolicy> earlyTermination = default;
             SamplingAlgorithmType samplingAlgorithm = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         earlyTermination = null;
                         continue;
                     }
-                    earlyTermination = EarlyTerminationPolicy.DeserializeEarlyTerminationPolicy(property.Value);
+                    earlyTermination = MachineLearningEarlyTerminationPolicy.DeserializeMachineLearningEarlyTerminationPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("samplingAlgorithm"))

@@ -62,17 +62,18 @@ namespace Azure.AI.TextAnalytics.Samples
             {
                 Console.WriteLine($"On document with Text: \"{documents[i++]}\"");
                 Console.WriteLine();
+
                 if (documentLanguage.HasError)
                 {
                     Console.WriteLine("  Error!");
                     Console.WriteLine($"  Document error code: {documentLanguage.Error.ErrorCode}.");
                     Console.WriteLine($"  Message: {documentLanguage.Error.Message}");
+                    Console.WriteLine();
+                    continue;
                 }
-                else
-                {
-                    Console.WriteLine($"  Detected language: {documentLanguage.PrimaryLanguage.Name}");
-                    Console.WriteLine($"  Confidence score: {documentLanguage.PrimaryLanguage.ConfidenceScore}");
-                }
+
+                Console.WriteLine($"  Detected language: {documentLanguage.PrimaryLanguage.Name}");
+                Console.WriteLine($"  Confidence score: {documentLanguage.PrimaryLanguage.ConfidenceScore}");
                 Console.WriteLine();
             }
         }

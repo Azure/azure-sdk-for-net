@@ -15,12 +15,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// Please note <see cref="NamedLineBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="NamedLineString"/>.
     /// </summary>
-    public partial class NamedLineBase
+    public abstract partial class NamedLineBase
     {
         /// <summary> Initializes a new instance of NamedLineBase. </summary>
         /// <param name="name"> Line name. Must be unique within the node. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public NamedLineBase(string name)
+        protected NamedLineBase(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.NetworkFunction
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.NetworkFunction
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.ToString()));
+                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
                             }
                             collectorPolicies = array;
                             continue;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.NetworkFunction
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualHub = JsonSerializer.Deserialize<SubResource>(property0.Value.ToString());
+                            virtualHub = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
