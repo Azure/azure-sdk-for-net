@@ -198,6 +198,7 @@ namespace Azure.ResourceManager.EventHubs
         public virtual async Task<ArmOperation<ApplicationGroupResource>> UpdateAsync(WaitUntil waitUntil, ApplicationGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
+
             using var scope = _applicationGroupClientDiagnostics.CreateScope("ApplicationGroupResource.Update");
             scope.Start();
             try
