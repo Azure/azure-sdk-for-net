@@ -1,12 +1,13 @@
 namespace Azure.Storage.DataMovement
 {
-    public partial class DataTransfer
+    public partial class DataTransfer : System.IAsyncDisposable
     {
         internal DataTransfer() { }
         public bool HasCompleted { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.Storage.DataMovement.StorageTransferStatus TransferStatus { get { throw null; } }
         public System.Threading.Tasks.Task AwaitCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
         public void EnsureCompleted(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
     }
     [System.FlagsAttribute]
