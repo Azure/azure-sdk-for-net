@@ -97,6 +97,7 @@ namespace Azure.Storage.DataMovement
         {
             if (overwrite || !File.Exists(_path))
             {
+                Directory.CreateDirectory(System.IO.Path.GetDirectoryName(_path));
                 File.Create(_path).Close();
                 FileAttributes attributes = File.GetAttributes(_path);
                 File.SetAttributes(_path, attributes | FileAttributes.Temporary);

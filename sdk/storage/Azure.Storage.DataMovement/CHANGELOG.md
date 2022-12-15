@@ -1,7 +1,7 @@
 # Release History
 
 ## 12.0.0-preview.1 (Unreleased)
--This preview is the first release of a ground-up rewrite of our client
+- This preview is the first release of a ground-up rewrite of our client data movement
 libraries to ensure consistency, idiomatic design, productivity, and an
 excellent developer experience.  It was created following the Azure SDK Design
 Guidelines for .NET at https://azuresdkspecs.z5.web.core.windows.net/DotNetSpec.html.
