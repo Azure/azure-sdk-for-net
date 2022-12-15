@@ -683,7 +683,7 @@ namespace Azure.Storage.DataMovement.Tests
             BlobClient originalBlob = InstrumentClient(containerClient.GetBlobClient(fullBlobPathName));
             // create a new file and copy contents of stream into it, and then close the FileStream
             // so the StagedUploadAsync call is not prevented from reading using its FileStream.
-            using (FileStream fileStream = File.Create($"{sourceBlobDirectoryPath}\\{fullBlobPathName}"))
+            using (FileStream fileStream = File.Create(Path.Combine(sourceBlobDirectoryPath, fullBlobPathName)))
             {
                 // Copy source to a file, so we can verify the source against downloaded blob later
                 await originalStream.CopyToAsync(fileStream);
