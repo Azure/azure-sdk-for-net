@@ -137,20 +137,30 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var tag = "v1";
             var artifact = client.GetArtifact(repositoryId, tag);
 
-            if (Mode != RecordedTestMode.Playback)
+            try
             {
-                await CreateImageAsync(repositoryId, tag);
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await CreateImageAsync(repositoryId, tag);
+                }
+
+                var properties = await artifact.GetManifestPropertiesAsync();
+                Assert.AreEqual(1, properties.Value.Tags.Count);
+                Assert.AreEqual(tag, properties.Value.Tags[0]);
+
+                // Act
+                await artifact.DeleteAsync();
+
+                // Assert
+                Assert.ThrowsAsync<RequestFailedException>(async () => { await artifact.GetManifestPropertiesAsync(); });
             }
-
-            var properties = await artifact.GetManifestPropertiesAsync();
-            Assert.AreEqual(1, properties.Value.Tags.Count);
-            Assert.AreEqual(tag, properties.Value.Tags[0]);
-
-            // Act
-            await artifact.DeleteAsync();
-
-            // Assert
-            Assert.ThrowsAsync<RequestFailedException>(async () => { await artifact.GetManifestPropertiesAsync(); });
+            finally
+            {
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await DeleteRepositoryAsync(repositoryId);
+                }
+            }
         }
 
         #endregion
@@ -299,7 +309,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
             finally
             {
                 // Clean up
-                await DeleteRepositoryAsync(endpoint, repositoryId);
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await DeleteRepositoryAsync(endpoint, repositoryId);
+                }
             }
         }
 
@@ -390,7 +403,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
             finally
             {
-                await client.GetRepository(repositoryId).DeleteAsync();
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await DeleteRepositoryAsync(repositoryId);
+                }
             }
         }
         #endregion

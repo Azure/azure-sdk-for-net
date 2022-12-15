@@ -104,20 +104,30 @@ namespace Azure.Containers.ContainerRegistry.Tests
             var client = CreateClient();
             var repositoryId = Recording.Random.NewGuid().ToString();
 
-            if (Mode != RecordedTestMode.Playback)
+            try
             {
-                await CreateRepositoryAsync(repositoryId);
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await CreateRepositoryAsync(repositoryId);
+                }
+
+                var repositories = client.GetRepositoryNamesAsync();
+                Assert.IsTrue(await repositories.ContainsAsync(repositoryId), $"Test set-up failed: Repository {repositoryId} was not created.");
+
+                // Act
+                await client.DeleteRepositoryAsync(repositoryId);
+
+                // Assert
+                repositories = client.GetRepositoryNamesAsync();
+                Assert.IsFalse(await repositories.ContainsAsync(repositoryId), $"Repository {repositoryId} was not deleted.");
             }
-
-            var repositories = client.GetRepositoryNamesAsync();
-            Assert.IsTrue(await repositories.ContainsAsync(repositoryId), $"Test set-up failed: Repository {repositoryId} was not created.");
-
-            // Act
-            await client.DeleteRepositoryAsync(repositoryId);
-
-            // Assert
-            repositories = client.GetRepositoryNamesAsync();
-            Assert.IsFalse(await repositories.ContainsAsync(repositoryId), $"Repository {repositoryId} was not deleted.");
+            finally
+            {
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await DeleteRepositoryAsync(repositoryId);
+                }
+            }
         }
 
         [RecordedTest, NonParallelizable]

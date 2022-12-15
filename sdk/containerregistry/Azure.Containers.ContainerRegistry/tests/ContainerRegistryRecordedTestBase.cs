@@ -73,6 +73,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await client.AddTagAsync(reference, tag);
         }
 
+        public async Task DeleteRepositoryAsync(string repository)
+        {
+            await DeleteRepositoryAsync(new Uri(TestEnvironment.Endpoint), repository);
+        }
+
         public async Task DeleteRepositoryAsync(Uri endpoint, string repository)
         {
             var client = GetSetupClient(endpoint);
