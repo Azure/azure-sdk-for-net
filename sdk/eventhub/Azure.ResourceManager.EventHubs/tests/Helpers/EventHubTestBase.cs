@@ -22,10 +22,9 @@ namespace Azure.ResourceManager.EventHubs.Tests.Helpers
         protected SubscriptionResource DefaultSubscription;
         protected ArmClient Client { get; private set; }
 
-        protected const string VaultName = "KeyVault-rg01";
-        protected const string Key1 = "key4";
-        protected const string Key2 = "key5";
-        protected const string Key3 = "key6";
+        protected const string VaultName = "PS-Test-kv1";
+        protected const string Key1 = "key1";
+        protected const string Key2 = "key2";
 
         public EventHubTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {

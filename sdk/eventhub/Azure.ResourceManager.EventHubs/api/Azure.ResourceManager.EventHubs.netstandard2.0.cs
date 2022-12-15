@@ -1,5 +1,42 @@
 namespace Azure.ResourceManager.EventHubs
 {
+    public partial class ApplicationGroupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventHubs.ApplicationGroupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.ApplicationGroupResource>, System.Collections.IEnumerable
+    {
+        protected ApplicationGroupCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventHubs.ApplicationGroupResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string applicationGroupName, Azure.ResourceManager.EventHubs.ApplicationGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventHubs.ApplicationGroupResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string applicationGroupName, Azure.ResourceManager.EventHubs.ApplicationGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string applicationGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string applicationGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventHubs.ApplicationGroupResource> Get(string applicationGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventHubs.ApplicationGroupResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventHubs.ApplicationGroupResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.ApplicationGroupResource>> GetAsync(string applicationGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.EventHubs.ApplicationGroupResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventHubs.ApplicationGroupResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventHubs.ApplicationGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.ApplicationGroupResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ApplicationGroupData : Azure.ResourceManager.Models.ResourceData
+    {
+        public ApplicationGroupData() { }
+        public string ClientAppGroupIdentifier { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.ApplicationGroupPolicy> Policies { get { throw null; } }
+    }
+    public partial class ApplicationGroupResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ApplicationGroupResource() { }
+        public virtual Azure.ResourceManager.EventHubs.ApplicationGroupData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string applicationGroupName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventHubs.ApplicationGroupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.ApplicationGroupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventHubs.ApplicationGroupResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventHubs.ApplicationGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventHubs.ApplicationGroupResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventHubs.ApplicationGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class EventHubAuthorizationRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventHubs.EventHubAuthorizationRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubAuthorizationRuleResource>, System.Collections.IEnumerable
     {
         protected EventHubAuthorizationRuleCollection() { }
@@ -108,6 +145,7 @@ namespace Azure.ResourceManager.EventHubs
         public string MetricId { get { throw null; } }
         public Azure.ResourceManager.EventHubs.Models.EventHubsClusterSku Sku { get { throw null; } set { } }
         public string Status { get { throw null; } }
+        public bool? SupportsScaling { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
     }
     public partial class EventHubsClusterResource : Azure.ResourceManager.ArmResource
@@ -248,6 +286,7 @@ namespace Azure.ResourceManager.EventHubs
     {
         public static Azure.Response<Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityResult> CheckEventHubsNamespaceNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityResult>> CheckEventHubsNamespaceNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.EventHubs.ApplicationGroupResource GetApplicationGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.EventHubs.Models.AvailableCluster> GetAvailableClusterRegionClusters(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.EventHubs.Models.AvailableCluster> GetAvailableClusterRegionClustersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.EventHubs.EventHubAuthorizationRuleResource GetEventHubAuthorizationRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -333,8 +372,10 @@ namespace Azure.ResourceManager.EventHubs
         public bool? KafkaEnabled { get { throw null; } set { } }
         public int? MaximumThroughputUnits { get { throw null; } set { } }
         public string MetricId { get { throw null; } }
+        public Azure.ResourceManager.EventHubs.Models.TlsVersion? MinimumTlsVersion { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.EventHubs.Models.PublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public string ServiceBusEndpoint { get { throw null; } }
         public Azure.ResourceManager.EventHubs.Models.EventHubsSku Sku { get { throw null; } set { } }
         public string Status { get { throw null; } }
@@ -351,10 +392,15 @@ namespace Azure.ResourceManager.EventHubs
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.EventHubsNamespaceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityResult> CheckEventHubsDisasterRecoveryNameAvailability(Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityResult>> CheckEventHubsDisasterRecoveryNameAvailabilityAsync(Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation CreateOrUpdateNetworkSecurityPerimeterConfiguration(Azure.WaitUntil waitUntil, string resourceAssociationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CreateOrUpdateNetworkSecurityPerimeterConfigurationAsync(Azure.WaitUntil waitUntil, string resourceAssociationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventHubs.EventHubsNamespaceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.EventHubs.ApplicationGroupResource> GetApplicationGroup(string applicationGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.ApplicationGroupResource>> GetApplicationGroupAsync(string applicationGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.EventHubs.ApplicationGroupCollection GetApplicationGroups() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.EventHubsNamespaceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventHubs.EventHubResource> GetEventHub(string eventHubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.EventHubResource>> GetEventHubAsync(string eventHubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -372,6 +418,8 @@ namespace Azure.ResourceManager.EventHubs
         public virtual Azure.Response<Azure.ResourceManager.EventHubs.EventHubsSchemaGroupResource> GetEventHubsSchemaGroup(string schemaGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.EventHubsSchemaGroupResource>> GetEventHubsSchemaGroupAsync(string schemaGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.EventHubs.EventHubsSchemaGroupCollection GetEventHubsSchemaGroups() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkResourceData> GetPrivateLinkResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkResourceData> GetPrivateLinkResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EventHubs.EventHubsNamespaceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -483,6 +531,11 @@ namespace Azure.ResourceManager.EventHubs
 }
 namespace Azure.ResourceManager.EventHubs.Models
 {
+    public abstract partial class ApplicationGroupPolicy
+    {
+        protected ApplicationGroupPolicy(string name) { }
+        public string Name { get { throw null; } set { } }
+    }
     public partial class AvailableCluster
     {
         internal AvailableCluster() { }
@@ -777,6 +830,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         public EventHubsPublicNetworkAccessFlag(string value) { throw null; }
         public static Azure.ResourceManager.EventHubs.Models.EventHubsPublicNetworkAccessFlag Disabled { get { throw null; } }
         public static Azure.ResourceManager.EventHubs.Models.EventHubsPublicNetworkAccessFlag Enabled { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.EventHubsPublicNetworkAccessFlag SecuredByPerimeter { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventHubs.Models.EventHubsPublicNetworkAccessFlag other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -873,6 +927,191 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator ==(Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier left, Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier left, Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MetricId : System.IEquatable<Azure.ResourceManager.EventHubs.Models.MetricId>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MetricId(string value) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.MetricId IncomingBytes { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.MetricId IncomingMessages { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.MetricId OutgoingBytes { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.MetricId OutgoingMessages { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EventHubs.Models.MetricId other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.MetricId left, Azure.ResourceManager.EventHubs.Models.MetricId right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EventHubs.Models.MetricId (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.MetricId left, Azure.ResourceManager.EventHubs.Models.MetricId right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class NetworkSecurityPerimeter
+    {
+        internal NetworkSecurityPerimeter() { }
+        public string Id { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public string PerimeterGuid { get { throw null; } }
+    }
+    public partial class NetworkSecurityPerimeterConfiguration : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public NetworkSecurityPerimeterConfiguration(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeter NetworkSecurityPerimeter { get { throw null; } }
+        public Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfigurationPropertiesProfile Profile { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.ProvisioningIssue> ProvisioningIssues { get { throw null; } }
+        public Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get { throw null; } set { } }
+        public Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation ResourceAssociation { get { throw null; } }
+    }
+    public partial class NetworkSecurityPerimeterConfigurationPropertiesProfile
+    {
+        internal NetworkSecurityPerimeterConfigurationPropertiesProfile() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventHubs.Models.NspAccessRule> AccessRules { get { throw null; } }
+        public string AccessRulesVersion { get { throw null; } }
+        public string Name { get { throw null; } }
+    }
+    public partial class NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation
+    {
+        internal NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation() { }
+        public Azure.ResourceManager.EventHubs.Models.ResourceAssociationAccessMode? AccessMode { get { throw null; } }
+        public string Name { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetworkSecurityPerimeterConfigurationProvisioningState : System.IEquatable<Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfigurationProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetworkSecurityPerimeterConfigurationProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfigurationProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfigurationProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfigurationProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfigurationProvisioningState Deleted { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfigurationProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfigurationProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfigurationProvisioningState InvalidResponse { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfigurationProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfigurationProvisioningState SucceededWithIssues { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfigurationProvisioningState Unknown { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfigurationProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfigurationProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfigurationProvisioningState left, Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfigurationProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfigurationProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfigurationProvisioningState left, Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeterConfigurationProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class NspAccessRule : Azure.ResourceManager.Models.ResourceData
+    {
+        internal NspAccessRule() { }
+        public Azure.ResourceManager.EventHubs.Models.NspAccessRuleProperties Properties { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NspAccessRuleDirection : System.IEquatable<Azure.ResourceManager.EventHubs.Models.NspAccessRuleDirection>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NspAccessRuleDirection(string value) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.NspAccessRuleDirection Inbound { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.NspAccessRuleDirection Outbound { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EventHubs.Models.NspAccessRuleDirection other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.NspAccessRuleDirection left, Azure.ResourceManager.EventHubs.Models.NspAccessRuleDirection right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EventHubs.Models.NspAccessRuleDirection (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.NspAccessRuleDirection left, Azure.ResourceManager.EventHubs.Models.NspAccessRuleDirection right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class NspAccessRuleProperties
+    {
+        internal NspAccessRuleProperties() { }
+        public System.Collections.Generic.IReadOnlyList<string> AddressPrefixes { get { throw null; } }
+        public Azure.ResourceManager.EventHubs.Models.NspAccessRuleDirection? Direction { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> FullyQualifiedDomainNames { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventHubs.Models.NetworkSecurityPerimeter> NetworkSecurityPerimeters { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> Subscriptions { get { throw null; } }
+    }
+    public partial class ProvisioningIssue
+    {
+        public ProvisioningIssue() { }
+        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.EventHubs.Models.ProvisioningIssueProperties Properties { get { throw null; } }
+    }
+    public partial class ProvisioningIssueProperties
+    {
+        internal ProvisioningIssueProperties() { }
+        public string Description { get { throw null; } }
+        public string IssueType { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PublicNetworkAccess : System.IEquatable<Azure.ResourceManager.EventHubs.Models.PublicNetworkAccess>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PublicNetworkAccess(string value) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.PublicNetworkAccess Disabled { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.PublicNetworkAccess Enabled { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.PublicNetworkAccess SecuredByPerimeter { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EventHubs.Models.PublicNetworkAccess other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.PublicNetworkAccess left, Azure.ResourceManager.EventHubs.Models.PublicNetworkAccess right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EventHubs.Models.PublicNetworkAccess (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.PublicNetworkAccess left, Azure.ResourceManager.EventHubs.Models.PublicNetworkAccess right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceAssociationAccessMode : System.IEquatable<Azure.ResourceManager.EventHubs.Models.ResourceAssociationAccessMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceAssociationAccessMode(string value) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.ResourceAssociationAccessMode AuditMode { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.ResourceAssociationAccessMode EnforcedMode { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.ResourceAssociationAccessMode LearningMode { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.ResourceAssociationAccessMode NoAssociationMode { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.ResourceAssociationAccessMode UnspecifiedMode { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EventHubs.Models.ResourceAssociationAccessMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.ResourceAssociationAccessMode left, Azure.ResourceManager.EventHubs.Models.ResourceAssociationAccessMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EventHubs.Models.ResourceAssociationAccessMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.ResourceAssociationAccessMode left, Azure.ResourceManager.EventHubs.Models.ResourceAssociationAccessMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ThrottlingPolicy : Azure.ResourceManager.EventHubs.Models.ApplicationGroupPolicy
+    {
+        public ThrottlingPolicy(string name, long rateLimitThreshold, Azure.ResourceManager.EventHubs.Models.MetricId metricId) : base (default(string)) { }
+        public Azure.ResourceManager.EventHubs.Models.MetricId MetricId { get { throw null; } set { } }
+        public long RateLimitThreshold { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TlsVersion : System.IEquatable<Azure.ResourceManager.EventHubs.Models.TlsVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TlsVersion(string value) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.TlsVersion One0 { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.TlsVersion One1 { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.TlsVersion One2 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EventHubs.Models.TlsVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.TlsVersion left, Azure.ResourceManager.EventHubs.Models.TlsVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EventHubs.Models.TlsVersion (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.TlsVersion left, Azure.ResourceManager.EventHubs.Models.TlsVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
 }
