@@ -186,6 +186,10 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.DataConnectorResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.DataConnectorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.DataConnectorResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.DataConnectorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class EntityData : Azure.ResourceManager.Models.ResourceData
+    {
+        public EntityData() { }
+    }
     public partial class IncidentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SecurityInsights.IncidentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.IncidentResource>, System.Collections.IEnumerable
     {
         protected IncidentCollection() { }
@@ -626,7 +630,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public Azure.ResourceManager.SecurityInsights.Models.DataTypeState? AlertsState { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
     }
-    public partial class AccountEntity : Azure.ResourceManager.SecurityInsights.Models.EntityData
+    public partial class AccountEntity : Azure.ResourceManager.SecurityInsights.EntityData
     {
         public AccountEntity() { }
         public string AadTenantId { get { throw null; } }
@@ -923,7 +927,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string AwsRoleArn { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityInsights.Models.DataTypeState? LogsState { get { throw null; } set { } }
     }
-    public partial class AzureResourceEntity : Azure.ResourceManager.SecurityInsights.Models.EntityData
+    public partial class AzureResourceEntity : Azure.ResourceManager.SecurityInsights.EntityData
     {
         public AzureResourceEntity() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalData { get { throw null; } }
@@ -939,7 +943,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public System.Guid? ObjectId { get { throw null; } }
         public string UserPrincipalName { get { throw null; } }
     }
-    public partial class CloudApplicationEntity : Azure.ResourceManager.SecurityInsights.Models.EntityData
+    public partial class CloudApplicationEntity : Azure.ResourceManager.SecurityInsights.EntityData
     {
         public CloudApplicationEntity() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalData { get { throw null; } }
@@ -1025,7 +1029,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         Dropped = 7,
         Forwarded = 8,
     }
-    public partial class DnsEntity : Azure.ResourceManager.SecurityInsights.Models.EntityData
+    public partial class DnsEntity : Azure.ResourceManager.SecurityInsights.EntityData
     {
         public DnsEntity() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalData { get { throw null; } }
@@ -1040,10 +1044,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         Default = 0,
         Full = 1,
         Limited = 2,
-    }
-    public partial class EntityData : Azure.ResourceManager.Models.ResourceData
-    {
-        public EntityData() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EntityKind : System.IEquatable<Azure.ResourceManager.SecurityInsights.Models.EntityKind>
@@ -1146,7 +1146,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string ColumnName { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
     }
-    public partial class FileEntity : Azure.ResourceManager.SecurityInsights.Models.EntityData
+    public partial class FileEntity : Azure.ResourceManager.SecurityInsights.EntityData
     {
         public FileEntity() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalData { get { throw null; } }
@@ -1177,7 +1177,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.FileHashAlgorithm left, Azure.ResourceManager.SecurityInsights.Models.FileHashAlgorithm right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class FileHashEntity : Azure.ResourceManager.SecurityInsights.Models.EntityData
+    public partial class FileHashEntity : Azure.ResourceManager.SecurityInsights.EntityData
     {
         public FileHashEntity() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalData { get { throw null; } }
@@ -1233,7 +1233,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public Azure.ResourceManager.SecurityInsights.Models.MatchingMethod MatchingMethod { get { throw null; } set { } }
         public bool ReopenClosedIncident { get { throw null; } set { } }
     }
-    public partial class HostEntity : Azure.ResourceManager.SecurityInsights.Models.EntityData
+    public partial class HostEntity : Azure.ResourceManager.SecurityInsights.EntityData
     {
         public HostEntity() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalData { get { throw null; } }
@@ -1248,7 +1248,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public Azure.ResourceManager.SecurityInsights.Models.OSFamily? OSFamily { get { throw null; } set { } }
         public string OSVersion { get { throw null; } }
     }
-    public partial class HuntingBookmark : Azure.ResourceManager.SecurityInsights.Models.EntityData
+    public partial class HuntingBookmark : Azure.ResourceManager.SecurityInsights.EntityData
     {
         public HuntingBookmark() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalData { get { throw null; } }
@@ -1323,7 +1323,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class IncidentEntitiesResponse
     {
         internal IncidentEntitiesResponse() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityInsights.Models.EntityData> Entities { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityInsights.EntityData> Entities { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityInsights.Models.IncidentEntitiesResultsMetadata> MetaData { get { throw null; } }
     }
     public partial class IncidentEntitiesResultsMetadata
@@ -1423,7 +1423,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.IncidentStatus left, Azure.ResourceManager.SecurityInsights.Models.IncidentStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class IoTDeviceEntity : Azure.ResourceManager.SecurityInsights.Models.EntityData
+    public partial class IoTDeviceEntity : Azure.ResourceManager.SecurityInsights.EntityData
     {
         public IoTDeviceEntity() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalData { get { throw null; } }
@@ -1446,7 +1446,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligence> ThreatIntelligence { get { throw null; } }
         public string Vendor { get { throw null; } }
     }
-    public partial class IPEntity : Azure.ResourceManager.SecurityInsights.Models.EntityData
+    public partial class IPEntity : Azure.ResourceManager.SecurityInsights.EntityData
     {
         public IPEntity() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalData { get { throw null; } }
@@ -1485,7 +1485,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.KillChainIntent left, Azure.ResourceManager.SecurityInsights.Models.KillChainIntent right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MailboxEntity : Azure.ResourceManager.SecurityInsights.Models.EntityData
+    public partial class MailboxEntity : Azure.ResourceManager.SecurityInsights.EntityData
     {
         public MailboxEntity() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalData { get { throw null; } }
@@ -1495,7 +1495,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string MailboxPrimaryAddress { get { throw null; } }
         public string Upn { get { throw null; } }
     }
-    public partial class MailClusterEntity : Azure.ResourceManager.SecurityInsights.Models.EntityData
+    public partial class MailClusterEntity : Azure.ResourceManager.SecurityInsights.EntityData
     {
         public MailClusterEntity() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalData { get { throw null; } }
@@ -1516,7 +1516,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string Source { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Threats { get { throw null; } }
     }
-    public partial class MailMessageEntity : Azure.ResourceManager.SecurityInsights.Models.EntityData
+    public partial class MailMessageEntity : Azure.ResourceManager.SecurityInsights.EntityData
     {
         public MailMessageEntity() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalData { get { throw null; } }
@@ -1547,7 +1547,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public System.Collections.Generic.IReadOnlyList<string> Threats { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Urls { get { throw null; } }
     }
-    public partial class MalwareEntity : Azure.ResourceManager.SecurityInsights.Models.EntityData
+    public partial class MalwareEntity : Azure.ResourceManager.SecurityInsights.EntityData
     {
         public MalwareEntity() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalData { get { throw null; } }
@@ -1688,7 +1688,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string LogicAppResourceId { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
     }
-    public partial class ProcessEntity : Azure.ResourceManager.SecurityInsights.Models.EntityData
+    public partial class ProcessEntity : Azure.ResourceManager.SecurityInsights.EntityData
     {
         public ProcessEntity() { }
         public string AccountEntityId { get { throw null; } }
@@ -1734,7 +1734,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.RegistryHive left, Azure.ResourceManager.SecurityInsights.Models.RegistryHive right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RegistryKeyEntity : Azure.ResourceManager.SecurityInsights.Models.EntityData
+    public partial class RegistryKeyEntity : Azure.ResourceManager.SecurityInsights.EntityData
     {
         public RegistryKeyEntity() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalData { get { throw null; } }
@@ -1742,7 +1742,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public Azure.ResourceManager.SecurityInsights.Models.RegistryHive? Hive { get { throw null; } }
         public string Key { get { throw null; } }
     }
-    public partial class RegistryValueEntity : Azure.ResourceManager.SecurityInsights.Models.EntityData
+    public partial class RegistryValueEntity : Azure.ResourceManager.SecurityInsights.EntityData
     {
         public RegistryValueEntity() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalData { get { throw null; } }
@@ -1825,7 +1825,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public int? TriggerThreshold { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
     }
-    public partial class SecurityAlert : Azure.ResourceManager.SecurityInsights.Models.EntityData
+    public partial class SecurityAlert : Azure.ResourceManager.SecurityInsights.EntityData
     {
         public SecurityAlert() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalData { get { throw null; } }
@@ -1862,7 +1862,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string Reason { get { throw null; } }
         public string ReasonType { get { throw null; } }
     }
-    public partial class SecurityGroupEntity : Azure.ResourceManager.SecurityInsights.Models.EntityData
+    public partial class SecurityGroupEntity : Azure.ResourceManager.SecurityInsights.EntityData
     {
         public SecurityGroupEntity() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalData { get { throw null; } }
@@ -1889,7 +1889,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.Source left, Azure.ResourceManager.SecurityInsights.Models.Source right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SubmissionMailEntity : Azure.ResourceManager.SecurityInsights.Models.EntityData
+    public partial class SubmissionMailEntity : Azure.ResourceManager.SecurityInsights.EntityData
     {
         public SubmissionMailEntity() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalData { get { throw null; } }
@@ -2087,7 +2087,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static bool operator !=(Azure.ResourceManager.SecurityInsights.Models.TriggersWhen left, Azure.ResourceManager.SecurityInsights.Models.TriggersWhen right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class UrlEntity : Azure.ResourceManager.SecurityInsights.Models.EntityData
+    public partial class UrlEntity : Azure.ResourceManager.SecurityInsights.EntityData
     {
         public UrlEntity() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalData { get { throw null; } }
