@@ -399,7 +399,7 @@ namespace Azure.Core
     {
         protected DelayStrategy() { }
         public abstract System.TimeSpan GetNextDelay(Azure.Response? response, int attempt, System.TimeSpan? delayHint);
-        protected internal static System.TimeSpan GetServerDelay(Azure.Response? response) { throw null; }
+        protected static System.TimeSpan GetServerDelay(Azure.Response? response) { throw null; }
         protected static System.TimeSpan Max(System.TimeSpan t1, System.TimeSpan t2) { throw null; }
     }
     public static partial class DelegatedTokenCredential

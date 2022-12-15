@@ -33,7 +33,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="response">The response to inspect for the server specified delay.</param>
         /// <returns>The server specified delay.</returns>
-        protected internal static TimeSpan GetServerDelay(Response? response)
+        protected static TimeSpan GetServerDelay(Response? response)
         {
             if (response == null)
             {
