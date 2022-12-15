@@ -133,7 +133,9 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
+        [Test]
+        [LiveOnly]
         [TestCase(0, 10)]
         [TestCase(100, 10)]
         [TestCase(Constants.KB, 10)]
@@ -246,7 +248,9 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
+        [Test]
+        [LiveOnly]
         public async Task BlockBlobDirectoryToDirectory_EmptyFolder()
         {
             // Arrange
@@ -297,7 +301,9 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
+        [Test]
+        [LiveOnly]
         public async Task BlockBlobDirectoryToDirectory_SingleFile()
         {
             // Arrange
@@ -331,7 +337,9 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
+        [Test]
+        [LiveOnly]
         public async Task BlockBlobDirectoryToDirectory_ManySubDirectories()
         {
             // Arrange
@@ -377,7 +385,9 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
+        [Test]
+        [LiveOnly]
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(3)]
@@ -421,7 +431,9 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
+        [Test]
+        [LiveOnly]
         public async Task BlockBlobDirectoryToDirectory_OverwriteTrue()
         {
             // Arrange
@@ -479,7 +491,9 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
+        [Test]
+        [LiveOnly]
         public async Task BlockBlobDirectoryToDirectory_OverwriteFalse()
         {
             // Arrange

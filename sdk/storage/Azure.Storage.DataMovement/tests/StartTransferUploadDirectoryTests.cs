@@ -123,7 +123,9 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
+        [Test]
+        [LiveOnly]
         [TestCase(0, 10)]
         [TestCase(100, 10)]
         [TestCase(Constants.KB, 10)]
@@ -204,7 +206,9 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
+        [Test]
+        [LiveOnly]
         public async Task LocalToBlockBlobDirectory_SmallChunks()
         {
             long blobSize = Constants.KB;
@@ -246,7 +250,9 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
+        [Test]
+        [LiveOnly]
         public async Task DirectoryUpload_EmptyFolder()
         {
             // Arrange
@@ -289,7 +295,9 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
+        [Test]
+        [LiveOnly]
         public async Task DirectoryUpload_SingleFile()
         {
             // Arrange
@@ -323,7 +331,9 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
+        [Test]
+        [LiveOnly]
         public async Task DirectoryUpload_ManySubDirectories()
         {
             // Arrange
@@ -380,7 +390,9 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
+        [Test]
+        [LiveOnly]
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(3)]
@@ -421,7 +433,9 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
+        [Test]
+        [LiveOnly]
         public async Task DirectoryUpload_EmptySubDirectories()
         {
             // Arrange
@@ -464,7 +478,9 @@ namespace Azure.Storage.DataMovement.Tests
 
         #region DirectoryUploadTests
 
-        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
+        [Test]
+        [LiveOnly]
         public async Task DirectoryUpload_OverwriteTrue()
         {
             // Arrange
@@ -513,7 +529,9 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33082")]
+        [Test]
+        [LiveOnly]
         public async Task DirectoryUpload_OverwriteFalse()
         {
             // Arrange
