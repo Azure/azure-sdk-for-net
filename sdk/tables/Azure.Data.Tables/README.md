@@ -212,7 +212,7 @@ public class OfficeSupplyEntity : ITableEntity
 }
 ```
 
-Given this model class definition, here is how you'd write a query.
+Given this model class definition, here is how you'd write a query:
 
 ```C# Snippet:TablesSample4QueryEntitiesExpression
 double priceCutOff = 6.00;
@@ -230,7 +230,7 @@ tableClient.DeleteEntity(partitionKey, rowKey);
 
 ## Troubleshooting
 
-When you interact with the Azure table library using the .NET SDK, errors returned by the service correspond to the same HTTP
+When using the Azure tables library, errors returned by the service are reported using the same HTTP
 status codes returned for [REST API][tables_rest] requests.
 
 For example, if you try to create a table that already exists, a `409` error is returned, indicating "Conflict".
