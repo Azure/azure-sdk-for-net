@@ -1,6 +1,6 @@
 # Release History
 
-## 12.0.0-beta.1 (Unreleased)
+## 12.0.0-beta.1 (2022-12-15)
 - This preview is the first release of a ground-up rewrite of our client data movement
 >>>>>>> main
 libraries to ensure consistency, idiomatic design, productivity, and an
