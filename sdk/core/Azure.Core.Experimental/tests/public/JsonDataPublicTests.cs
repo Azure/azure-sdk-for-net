@@ -232,8 +232,8 @@ namespace Azure.Core.Tests.Public
         {
             var json = new BinaryData("3402823466385288598").ToDynamic();
             dynamic jsonData = json;
-            Assert.Throws<OverflowException>(() => _ = (int)json);
-            Assert.Throws<OverflowException>(() => _ = (int)jsonData);
+            Assert.Throws<FormatException>(() => _ = (int)json);
+            Assert.Throws<FormatException>(() => _ = (int)jsonData);
             Assert.AreEqual(3402823466385288598L, (long)jsonData);
             Assert.AreEqual(3402823466385288598L, (long)json);
             Assert.AreEqual(3402823466385288598D, (double)jsonData);
@@ -247,8 +247,8 @@ namespace Azure.Core.Tests.Public
         {
             var json = new BinaryData("-3402823466385288598").ToDynamic();
             dynamic jsonData = json;
-            Assert.Throws<OverflowException>(() => _ = (int)json);
-            Assert.Throws<OverflowException>(() => _ = (int)jsonData);
+            Assert.Throws<FormatException>(() => _ = (int)json);
+            Assert.Throws<FormatException>(() => _ = (int)jsonData);
             Assert.AreEqual(-3402823466385288598L, (long)jsonData);
             Assert.AreEqual(-3402823466385288598L, (long)json);
             Assert.AreEqual(-3402823466385288598D, (double)jsonData);
@@ -298,24 +298,6 @@ namespace Azure.Core.Tests.Public
 
             int i = 0;
             foreach (var item in enumerable)
-            {
-                Assert.AreEqual(++i, item);
-            }
-        }
-
-        [Test]
-        public void CanGetDynamicFromBinaryData()
-        {
-            var data = new BinaryData(new
-            {
-                array = new[] { 1, 2, 3 }
-            });
-
-            dynamic json = data.ToDynamic();
-            dynamic array = json.array;
-
-            int i = 0;
-            foreach (int item in array)
             {
                 Assert.AreEqual(++i, item);
             }
