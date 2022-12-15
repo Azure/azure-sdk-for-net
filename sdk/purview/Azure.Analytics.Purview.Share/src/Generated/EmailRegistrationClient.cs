@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Share
 {
-    // Data plane generated client. The EmailRegistration service client.
+    // Data plane generated client.
     /// <summary> The EmailRegistration service client. </summary>
     public partial class EmailRegistrationClient
     {

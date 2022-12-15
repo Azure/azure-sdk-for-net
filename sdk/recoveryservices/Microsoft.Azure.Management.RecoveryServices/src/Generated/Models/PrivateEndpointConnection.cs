@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,11 +34,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// <param name="provisioningState">Gets or sets provisioning state of
         /// the private endpoint connection. Possible values include:
         /// 'Succeeded', 'Deleting', 'Failed', 'Pending'</param>
-        public PrivateEndpointConnection(string provisioningState = default(string), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionState))
+        /// <param name="groupIds">Group Ids for the Private Endpoint</param>
+        public PrivateEndpointConnection(string provisioningState = default(string), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionState), IList<string> groupIds = default(IList<string>))
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            GroupIds = groupIds;
             CustomInit();
         }
 
@@ -62,6 +66,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "privateLinkServiceConnectionState")]
         public PrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+
+        /// <summary>
+        /// Gets or sets group Ids for the Private Endpoint
+        /// </summary>
+        [JsonProperty(PropertyName = "groupIds")]
+        public IList<string> GroupIds { get; set; }
 
     }
 }

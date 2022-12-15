@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Text.Json;
+using Azure.Core.Dynamic;
 using Azure.Core.GeoJson;
 using NUnit.Framework;
 
@@ -13,7 +13,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ArrayItemsCanBeAssigned()
         {
-            var json = JsonData.FromString("[0, 1, 2, 3]");
+            var json = JsonData.Parse("[0, 1, 2, 3]");
             dynamic jsonData = json;
             jsonData[1] = 2;
             jsonData[2] = null;
@@ -25,7 +25,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ExistingObjectPropertiesCanBeAssigned()
         {
-            var json = JsonData.FromString("{\"a\":1}");
+            var json = JsonData.Parse("{\"a\":1}");
             dynamic jsonData = json;
             jsonData.a = "2";
 
@@ -35,7 +35,7 @@ namespace Azure.Core.Tests
         [TestCaseSource(nameof(PrimitiveValues))]
         public void NewObjectPropertiesCanBeAssignedWithPrimitive<T>(T value, string expected)
         {
-            var json = JsonData.FromString("{}");
+            var json = JsonData.Parse("{}");
             dynamic jsonData = json;
             jsonData.a = value;
 
@@ -45,7 +45,7 @@ namespace Azure.Core.Tests
         [TestCaseSource(nameof(PrimitiveValues))]
         public void PrimitiveValuesCanBeParsedDirectly<T>(T value, string expected)
         {
-            dynamic json = JsonData.FromString(expected);
+            dynamic json = JsonData.Parse(expected);
 
             Assert.AreEqual(value, (T)json);
         }
@@ -53,7 +53,7 @@ namespace Azure.Core.Tests
         [Test]
         public void NewObjectPropertiesCanBeAssignedWithArrays()
         {
-            var json = JsonData.FromString("{}");
+            var json = JsonData.Parse("{}");
             dynamic jsonData = json;
             jsonData.a = new JsonData(new object[] { 1, 2, null, "string" });
 
@@ -63,9 +63,9 @@ namespace Azure.Core.Tests
         [Test]
         public void NewObjectPropertiesCanBeAssignedWithObject()
         {
-            var json = JsonData.FromString("{}");
+            var json = JsonData.Parse("{}");
             dynamic jsonData = json;
-            jsonData.a = JsonData.EmptyObject();
+            jsonData.a = JsonData.Parse("{}");
             jsonData.a.b = 2;
 
             Assert.AreEqual(json.ToString(), "{\"a\":{\"b\":2}}");
@@ -74,9 +74,9 @@ namespace Azure.Core.Tests
         [Test]
         public void NewObjectPropertiesCanBeAssignedWithObjectIndirectly()
         {
-            var json = JsonData.FromString("{}");
+            var json = JsonData.Parse("{}");
             dynamic jsonData = json;
-            dynamic anotherJson = JsonData.EmptyObject();
+            dynamic anotherJson = JsonData.Parse("{}");
             jsonData.a = anotherJson;
             anotherJson.b = 2;
 
@@ -86,7 +86,7 @@ namespace Azure.Core.Tests
         [Test]
         public void NewObjectPropertiesCanBeAssignedWithSerializedObject()
         {
-            var json = JsonData.FromString("{}");
+            var json = JsonData.Parse("{}");
             dynamic jsonData = json;
             jsonData.a = new JsonData(new GeoPoint(1, 2));
 
@@ -96,14 +96,14 @@ namespace Azure.Core.Tests
         [TestCaseSource(nameof(PrimitiveValues))]
         public void CanModifyNestedProperties<T>(T value, string expected)
         {
-            var json = JsonData.FromString("{\"a\":{\"b\":2}}");
+            var json = JsonData.Parse("{\"a\":{\"b\":2}}");
             dynamic jsonData = json;
             jsonData.a.b = value;
 
             Assert.AreEqual(json.ToString(), "{\"a\":{\"b\":" + expected + "}}");
             Assert.AreEqual(value, (T)jsonData.a.b);
 
-            dynamic reparsedJson = JsonData.FromString(json.ToString());
+            dynamic reparsedJson = JsonData.Parse(json.ToString());
 
             Assert.AreEqual(value, (T)reparsedJson.a.b);
         }

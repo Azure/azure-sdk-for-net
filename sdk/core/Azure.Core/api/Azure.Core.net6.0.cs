@@ -40,7 +40,11 @@ namespace Azure
     {
         public AzureSasCredential(string signature) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public string PreviousSignature { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Signature { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public long SignatureUpdated { get { throw null; } }
         public void Update(string signature) { }
     }
     [System.FlagsAttribute]
@@ -1012,6 +1016,13 @@ namespace Azure.Core.Pipeline
         public HttpPipelineTransportOptions() { }
         public System.Collections.Generic.IList<System.Security.Cryptography.X509Certificates.X509Certificate2> ClientCertificates { get { throw null; } }
         public System.Func<Azure.Core.Pipeline.ServerCertificateCustomValidationArgs, bool>? ServerCertificateCustomValidationCallback { get { throw null; } set { } }
+    }
+    public sealed partial class RedirectPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
+    {
+        internal RedirectPolicy() { }
+        public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
+        public static void SetAllowAutoRedirect(Azure.Core.HttpMessage message, bool allowAutoRedirect) { }
     }
     public abstract partial class RetryPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {

@@ -50,7 +50,7 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         public override StorageResource GetChildStorageResource(string childPath)
         {
-            string concatPath = string.Concat(Path, "\\", childPath);
+            string concatPath = System.IO.Path.Combine(Path, childPath);
             return new LocalFileStorageResource(concatPath);
         }
 

@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sku"))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    plan = JsonSerializer.Deserialize<ArmPlan>(property.Value.ToString());
+                    plan = JsonSerializer.Deserialize<ArmPlan>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))

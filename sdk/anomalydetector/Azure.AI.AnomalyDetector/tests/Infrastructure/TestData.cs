@@ -65,7 +65,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Infrastructure
             Granularity = TimeGranularity.Monthly
         };
 
-        public static UnivariateDetectionResult ExpectedEntireDetectResult = new UnivariateDetectionResult(
+        public static UnivariateEntireDetectionResult ExpectedEntireDetectResult = new UnivariateEntireDetectionResult(
             12,
             new List<float>
             {

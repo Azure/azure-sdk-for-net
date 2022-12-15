@@ -20,7 +20,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="summary"></param>
         /// <param name="results"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="resultId"/>, <paramref name="summary"/> or <paramref name="results"/> is null. </exception>
-        internal MultivariateDetectionResult(string resultId, MultivariateDetectionResultSummary summary, IEnumerable<AnomalyState> results)
+        internal MultivariateDetectionResult(string resultId, MultivariateBatchDetectionResultSummary summary, IEnumerable<AnomalyState> results)
         {
             Argument.AssertNotNull(resultId, nameof(resultId));
             Argument.AssertNotNull(summary, nameof(summary));
@@ -35,7 +35,7 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="resultId"></param>
         /// <param name="summary"></param>
         /// <param name="results"></param>
-        internal MultivariateDetectionResult(string resultId, MultivariateDetectionResultSummary summary, IReadOnlyList<AnomalyState> results)
+        internal MultivariateDetectionResult(string resultId, MultivariateBatchDetectionResultSummary summary, IReadOnlyList<AnomalyState> results)
         {
             ResultId = resultId;
             Summary = summary;
@@ -45,7 +45,7 @@ namespace Azure.AI.AnomalyDetector
         /// <summary> Gets the result id. </summary>
         public string ResultId { get; }
         /// <summary> Gets the summary. </summary>
-        public MultivariateDetectionResultSummary Summary { get; }
+        public MultivariateBatchDetectionResultSummary Summary { get; }
         /// <summary> Gets the results. </summary>
         public IReadOnlyList<AnomalyState> Results { get; }
     }

@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             managementGroups = array;
                             continue;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             subscriptions = array;
                             continue;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             virtualNetworks = array;
                             continue;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             subnets = array;
                             continue;

@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Network
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            gatewayLoadBalancer = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            gatewayLoadBalancer = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("virtualNetworkTaps"))

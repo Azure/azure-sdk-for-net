@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> Initializes a new instance of WebPubSubNetworkAcls. </summary>
-        /// <param name="defaultAction"> Default action when no other rule matches. </param>
-        /// <param name="publicNetwork"> ACL for requests from public network. </param>
+        /// <param name="defaultAction"> Azure Networking ACL Action. </param>
+        /// <param name="publicNetwork"> Network ACL. </param>
         /// <param name="privateEndpoints"> ACLs for requests from private endpoints. </param>
         internal WebPubSubNetworkAcls(AclAction? defaultAction, PublicNetworkAcls publicNetwork, IList<PrivateEndpointAcl> privateEndpoints)
         {
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
             PrivateEndpoints = privateEndpoints;
         }
 
-        /// <summary> Default action when no other rule matches. </summary>
+        /// <summary> Azure Networking ACL Action. </summary>
         public AclAction? DefaultAction { get; set; }
-        /// <summary> ACL for requests from public network. </summary>
+        /// <summary> Network ACL. </summary>
         public PublicNetworkAcls PublicNetwork { get; set; }
         /// <summary> ACLs for requests from private endpoints. </summary>
         public IList<PrivateEndpointAcl> PrivateEndpoints { get; }
