@@ -273,7 +273,11 @@ jobs:
           JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
           MatrixConfigs: ${{ parameters.MatrixConfigs }}
           MatrixFilters: ${{ parameters.MatrixFilters }}
-          MatrixReplace: ${{ parameters.MatrixReplace }}
+          MatrixReplace:
+            # Force UseProjectReferenceToAzureClients option to always be true because we only want to test with ProjectReference for dependency tests
+            - AdditionalTestArguments=\/p:UseProjectReferenceToAzureClients\=false/\/p:UseProjectReferenceToAzureClients\=true
+            - ${{ each matrixReplace in parameters.MatrixReplace }}:
+              - ${{ matrixReplace }}
           CloudConfig:
             Cloud: public
           SparseCheckoutPaths:

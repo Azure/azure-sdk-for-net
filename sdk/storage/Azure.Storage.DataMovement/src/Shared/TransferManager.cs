@@ -9,6 +9,7 @@ using System.Threading.Channels;
 using System.Buffers;
 using Azure.Storage.DataMovement.Models;
 using System.IO;
+using System.Threading;
 
 namespace Azure.Storage.DataMovement
 {
@@ -76,6 +77,12 @@ namespace Azure.Storage.DataMovement
         internal TransferCheckpointer _checkpointer;
 
         /// <summary>
+        /// Cancels the channels operations when disposing.
+        /// </summary>
+        private CancellationTokenSource _channelCancellationTokenSource;
+        private CancellationToken _cancellationToken => _channelCancellationTokenSource.Token;
+
+        /// <summary>
         /// Array pools for reading from streams to upload
         /// </summary>
         internal ArrayPool<byte> UploadArrayPool => _arrayPool;
@@ -93,6 +100,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="options"></param>
         public TransferManager(TransferManagerOptions options = default)
         {
+            _channelCancellationTokenSource = new CancellationTokenSource();
             _jobsToProcessChannel = Channel.CreateUnbounded<TransferJobInternal>(
                 new UnboundedChannelOptions()
                 {
@@ -124,16 +132,18 @@ namespace Azure.Storage.DataMovement
         #region Job Channel Management
         internal async Task QueueJobAsync(TransferJobInternal job)
         {
-            await _jobsToProcessChannel.Writer.WriteAsync(job).ConfigureAwait(false);
+            await _jobsToProcessChannel.Writer.WriteAsync(
+                job,
+                cancellationToken: _cancellationToken).ConfigureAwait(false);
         }
 
         // Inform the Reader that there's work to be executed for this Channel.
         private async Task NotifyOfPendingJobProcessing()
         {
             // Process all available items in the queue.
-            while (await _jobsToProcessChannel.Reader.WaitToReadAsync().ConfigureAwait(false))
+            while (await _jobsToProcessChannel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
             {
-                TransferJobInternal item = await _jobsToProcessChannel.Reader.ReadAsync().ConfigureAwait(false);
+                TransferJobInternal item = await _jobsToProcessChannel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
                 // Execute the task we pulled out of the queue
                 await foreach (JobPartInternal partItem in item.ProcessJobToJobPartAsync().ConfigureAwait(false))
                 {
@@ -153,9 +163,9 @@ namespace Azure.Storage.DataMovement
         private async Task NotifyOfPendingJobPartProcessing()
         {
             List<Task> chunkRunners = new List<Task>(DataMovementConstants.MaxJobPartReaders);
-            while (await _partsToProcessChannel.Reader.WaitToReadAsync().ConfigureAwait(false))
+            while (await _partsToProcessChannel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
             {
-                JobPartInternal item = await _partsToProcessChannel.Reader.ReadAsync().ConfigureAwait(false);
+                JobPartInternal item = await _partsToProcessChannel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
                 if (chunkRunners.Count >= DataMovementConstants.MaxJobPartReaders)
                 {
                     // Clear any completed blocks from the task list
@@ -187,9 +197,9 @@ namespace Azure.Storage.DataMovement
         private async Task NotifyOfPendingJobChunkProcessing()
         {
             List<Task> _currentChunkTasks = new List<Task>(DataMovementConstants.MaxJobChunkTasks);
-            while (await _chunksToProcessChannel.Reader.WaitToReadAsync().ConfigureAwait(false))
+            while (await _chunksToProcessChannel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
             {
-                Func<Task> item = await _chunksToProcessChannel.Reader.ReadAsync().ConfigureAwait(false);
+                Func<Task> item = await _chunksToProcessChannel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
                 // If we run out of workers
                 if (_currentChunkTasks.Count >= _maxJobChunkTasks)
                 {
@@ -459,10 +469,14 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        async ValueTask IAsyncDisposable.DisposeAsync()
+        ValueTask IAsyncDisposable.DisposeAsync()
         {
-            await TryPauseAllTransfersAsync().ConfigureAwait(false);
+            if (!_channelCancellationTokenSource.IsCancellationRequested)
+            {
+                _channelCancellationTokenSource.Cancel();
+            }
             GC.SuppressFinalize(this);
+            return default;
         }
     }
 }
