@@ -55,7 +55,7 @@ Console.WriteLine("Detecting anomalies in the entire time series.");
 
 try
 {
-    UnivariateDetectionResult result = client.DetectUnivariateEntireSeries(request);
+    UnivariateEntireDetectionResult result = client.DetectUnivariateEntireSeries(request);
 
     bool hasAnomaly = false;
     for (int i = 0; i < request.Series.Count; ++i)

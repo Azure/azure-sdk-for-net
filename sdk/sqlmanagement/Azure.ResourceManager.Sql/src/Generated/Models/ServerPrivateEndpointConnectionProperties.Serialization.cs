@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("privateLinkServiceConnectionState"))

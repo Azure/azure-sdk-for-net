@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using OpenTelemetry;
 using OpenTelemetry.Trace;
 
@@ -17,8 +18,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// </summary>
         /// <param name="builder"><see cref="TracerProviderBuilder"/> builder to use.</param>
         /// <param name="configure">Exporter configuration options.</param>
+        /// <param name="credential"><see cref="TokenCredential" /></param>
         /// <returns>The instance of <see cref="TracerProviderBuilder"/> to chain the calls.</returns>
-        public static TracerProviderBuilder AddAzureMonitorTraceExporter(this TracerProviderBuilder builder, Action<AzureMonitorExporterOptions> configure = null)
+        public static TracerProviderBuilder AddAzureMonitorTraceExporter(this TracerProviderBuilder builder, Action<AzureMonitorExporterOptions> configure = null, TokenCredential credential = null)
         {
             if (builder == null)
             {
@@ -32,7 +34,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             // Statsbeat.InitializeAttachStatsbeat(options.ConnectionString);
 
             // TODO: Pick Simple vs Batching based on AzureMonitorExporterOptions
-            return builder.AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(options)));
+            return builder.AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(options, credential)));
         }
     }
 }

@@ -28,6 +28,11 @@ namespace Azure.Communication.MediaComposition.Models
                 writer.WritePropertyName("placeholderImageUri");
                 writer.WriteStringValue(PlaceholderImageUri);
             }
+            if (Optional.IsDefined(ScalingMode))
+            {
+                writer.WritePropertyName("scalingMode");
+                writer.WriteStringValue(ScalingMode.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 

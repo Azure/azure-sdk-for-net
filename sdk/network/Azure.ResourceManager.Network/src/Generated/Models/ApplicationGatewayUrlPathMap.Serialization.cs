@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultBackendAddressPool = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            defaultBackendAddressPool = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("defaultBackendHttpSettings"))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultBackendHttpSettings = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            defaultBackendHttpSettings = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("defaultRewriteRuleSet"))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultRewriteRuleSet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            defaultRewriteRuleSet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("defaultRedirectConfiguration"))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Network.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultRedirectConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            defaultRedirectConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("pathRules"))

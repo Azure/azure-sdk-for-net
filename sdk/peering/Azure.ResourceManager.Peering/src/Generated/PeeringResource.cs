@@ -424,10 +424,10 @@ namespace Azure.ResourceManager.Peering
         /// </summary>
         /// <param name="consolidate"> Flag to enable consolidation prefixes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RpUnbilledPrefix" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RpUnbilledPrefix> GetRpUnbilledPrefixesAsync(bool? consolidate = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RoutingPreferenceUnbilledPrefix" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RoutingPreferenceUnbilledPrefix> GetRpUnbilledPrefixesAsync(bool? consolidate = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<RpUnbilledPrefix>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<RoutingPreferenceUnbilledPrefix>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _rpUnbilledPrefixesClientDiagnostics.CreateScope("PeeringResource.GetRpUnbilledPrefixes");
                 scope.Start();
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Peering
                     throw;
                 }
             }
-            async Task<Page<RpUnbilledPrefix>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<RoutingPreferenceUnbilledPrefix>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _rpUnbilledPrefixesClientDiagnostics.CreateScope("PeeringResource.GetRpUnbilledPrefixes");
                 scope.Start();
@@ -467,10 +467,10 @@ namespace Azure.ResourceManager.Peering
         /// </summary>
         /// <param name="consolidate"> Flag to enable consolidation prefixes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RpUnbilledPrefix" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RpUnbilledPrefix> GetRpUnbilledPrefixes(bool? consolidate = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RoutingPreferenceUnbilledPrefix" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RoutingPreferenceUnbilledPrefix> GetRpUnbilledPrefixes(bool? consolidate = null, CancellationToken cancellationToken = default)
         {
-            Page<RpUnbilledPrefix> FirstPageFunc(int? pageSizeHint)
+            Page<RoutingPreferenceUnbilledPrefix> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _rpUnbilledPrefixesClientDiagnostics.CreateScope("PeeringResource.GetRpUnbilledPrefixes");
                 scope.Start();
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Peering
                     throw;
                 }
             }
-            Page<RpUnbilledPrefix> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<RoutingPreferenceUnbilledPrefix> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _rpUnbilledPrefixesClientDiagnostics.CreateScope("PeeringResource.GetRpUnbilledPrefixes");
                 scope.Start();

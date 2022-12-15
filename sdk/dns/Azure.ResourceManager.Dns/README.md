@@ -1,8 +1,8 @@
-# Microsoft Azure DNS management client library for .NET
+# Microsoft Azure Dns management client library for .NET
 
-Microsoft Azure DNS is a hosting service for DNS domains that provides name resolution by using Microsoft Azure infrastructure. By hosting your domains in Microsoft Azure, you can manage your DNS records by using the same credentials, APIs, tools, and billing as your other Azure services.
+Microsoft Azure Dns is a hosting service for Dns domains that provides name resolution by using Microsoft Azure infrastructure. By hosting your domains in Microsoft Azure, you can manage your Dns records by using the same credentials, APIs, tools, and billing as your other Azure services.
 
-This library supports managing Microsoft Azure DNS resources.
+This library supports managing Microsoft Azure Dns resources.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -32,7 +32,7 @@ To create an authenticated client and start interacting with Microsoft Azure res
 
 ## Key concepts
 
-Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html)
+Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
 ## Documentation
 

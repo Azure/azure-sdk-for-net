@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> Initializes a new instance of RpUnbilledPrefixListResult. </summary>
         internal RpUnbilledPrefixListResult()
         {
-            Value = new ChangeTrackingList<RpUnbilledPrefix>();
+            Value = new ChangeTrackingList<RoutingPreferenceUnbilledPrefix>();
         }
 
         /// <summary> Initializes a new instance of RpUnbilledPrefixListResult. </summary>
         /// <param name="value"> The list of RP unbilled prefixes. </param>
         /// <param name="nextLink"> The link to fetch the next page of RP unbilled prefixes. </param>
-        internal RpUnbilledPrefixListResult(IReadOnlyList<RpUnbilledPrefix> value, string nextLink)
+        internal RpUnbilledPrefixListResult(IReadOnlyList<RoutingPreferenceUnbilledPrefix> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of RP unbilled prefixes. </summary>
-        public IReadOnlyList<RpUnbilledPrefix> Value { get; }
+        public IReadOnlyList<RoutingPreferenceUnbilledPrefix> Value { get; }
         /// <summary> The link to fetch the next page of RP unbilled prefixes. </summary>
         public string NextLink { get; }
     }

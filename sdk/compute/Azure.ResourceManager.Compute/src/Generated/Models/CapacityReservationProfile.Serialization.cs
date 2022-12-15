@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    capacityReservationGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    capacityReservationGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
             }

@@ -70,10 +70,7 @@ namespace Azure.ResourceManager.DataShare
             DataShareSynchronizationSettingResource dataShareSynchronizationSetting = client.GetDataShareSynchronizationSettingResource(dataShareSynchronizationSettingResourceId);
 
             // invoke the operation
-            DataShareSynchronizationSettingData data = new DataShareSynchronizationSettingData()
-            {
-                Kind = SynchronizationSettingKind.ScheduleBased,
-            };
+            DataShareSynchronizationSettingData data = new ScheduledSynchronizationSetting(DataShareSynchronizationRecurrenceInterval.Day, DateTimeOffset.Parse("2018-11-14T04:47:52.9614956Z"));
             ArmOperation<DataShareSynchronizationSettingResource> lro = await dataShareSynchronizationSetting.UpdateAsync(WaitUntil.Completed, data);
             DataShareSynchronizationSettingResource result = lro.Value;
 

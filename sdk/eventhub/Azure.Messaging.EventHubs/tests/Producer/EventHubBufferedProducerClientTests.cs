@@ -1475,6 +1475,59 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubBufferedProducerClient.FlushAsync" /> method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task FlushAsyncAllowsEventsToBeEnqueuedAfterCompletion()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var partitionId = "7";
+            var partitions = new[] { partitionId };
+            var events = new[] { new EventData("One"), new EventData("Two") };
+            var mockPartitionResolver = new Mock<PartitionResolver>();
+            var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
+            var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
+
+            mockPartitionResolver
+                .Setup(resolver => resolver.AssignRoundRobin(It.IsAny<string[]>()))
+                .Returns(partitionId);
+
+            mockProducer
+                .Setup(producer => producer.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(partitions);
+
+            mockBufferedProducer
+                .Setup(producer => producer.PublishBatchToPartition(
+                    It.IsAny<EventHubBufferedProducerClient.PartitionPublishingState>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+            mockBufferedProducer.Object.PartitionResolver = mockPartitionResolver.Object;
+            mockBufferedProducer.Object.SendEventBatchFailedAsync += args => Task.CompletedTask;
+
+            try
+            {
+                var enqueuedCount = await mockBufferedProducer.Object.EnqueueEventsAsync(events, cancellationSource.Token);
+                Assert.That(mockBufferedProducer.Object.ActivePartitionStateMap.TryGetValue(partitionId, out var partitionPublisher), Is.True, "A publisher should have been registered for the partition.");
+
+                Assert.That(enqueuedCount, Is.EqualTo(events.Length), "The return value should indicate that the correct number of events were enqueued.");
+                Assert.That(mockBufferedProducer.Object.TotalBufferedEventCount, Is.EqualTo(events.Length), "The total event count should indicate that the correct number of events were enqueued.");
+                Assert.That(mockBufferedProducer.Object.GetBufferedEventCount(partitionId), Is.EqualTo(events.Length), "The partition event count should indicate that the correct number of events were enqueued.");
+
+                await mockBufferedProducer.Object.FlushAsync(cancellationSource.Token);
+                Assert.That(async () => await mockBufferedProducer.Object.EnqueueEventsAsync(new[] { new EventData("Three"), new EventData("Four") }, cancellationSource.Token), Throws.Nothing, "It should be possible to enqueue events after flushing.");
+            }
+            finally
+            {
+                await mockBufferedProducer.Object.CloseAsync(false).IgnoreExceptions();
+            }
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventHubBufferedProducerClient.ClearInternal" /> method.
         /// </summary>
         ///

@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> The AnomalyState. </summary>
+    /// <summary> Anomaly status and information. </summary>
     public partial class AnomalyState
     {
         /// <summary> Initializes a new instance of AnomalyState. </summary>

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -66,7 +67,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public void Ctor_string()
         {
             // Arrange
@@ -82,60 +82,71 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task ReadStreamAsync()
         {
             // Arrange
             var size = Constants.KB;
             string path = await CreateRandomFileAsync(Path.GetTempPath(), size:0);
-            var data = GetRandomBuffer(size);
-            using (var stream = new MemoryStream(data))
+            try
             {
-                using FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate);
-                await stream.CopyToAsync(fileStream);
+                var data = GetRandomBuffer(size);
+                File.WriteAllBytes(path, data);
+
+                // Act
+                LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
+                ReadStreamStorageResourceResult result = await storageResource.ReadStreamAsync();
+                using Stream content = result.Content;
+
+                // Assert
+                Assert.NotNull(content);
+                TestHelper.AssertSequenceEqual(data, content.AsBytes().ToArray());
             }
-
-            // Act
-            LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
-            ReadStreamStorageResourceResult result = await storageResource.ReadStreamAsync();
-
-            // Assert
-            Assert.NotNull(result);
-            TestHelper.AssertSequenceEqual(data, result.Content.AsBytes().ToArray());
+            finally
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task ReadStreamAsync_Position()
         {
             // Arrange
             string path = await CreateRandomFileAsync(Path.GetTempPath(), size: 0);
-            var length = Constants.KB;
-            var data = GetRandomBuffer(length);
-            using (var stream = new MemoryStream(data))
+            try
             {
-                using FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate);
-                await stream.CopyToAsync(fileStream);
+                var length = Constants.KB;
+                var data = GetRandomBuffer(length);
+                File.WriteAllBytes(path, data);
+
+                // Act
+                var readPosition = 5;
+                LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
+                ReadStreamStorageResourceResult result = await storageResource.ReadStreamAsync(position: readPosition);
+                using Stream content = result.Content;
+
+                // Assert
+                Assert.NotNull(content);
+                byte[] copiedData = new byte[data.Length - readPosition];
+                Array.Copy(data, readPosition, copiedData, 0, data.Length - readPosition);
+                TestHelper.AssertSequenceEqual(copiedData, content.AsBytes().ToArray());
             }
-
-            // Act
-            var readPosition = 5;
-            LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
-            ReadStreamStorageResourceResult result = await storageResource.ReadStreamAsync(position: readPosition);
-
-            // Assert
-            Assert.NotNull(result);
-            byte[] copiedData = new byte[data.Length - readPosition];
-            Array.Copy(data, readPosition, copiedData, 0, data.Length - readPosition);
-            TestHelper.AssertSequenceEqual(copiedData, result.Content.AsBytes().ToArray());
+            finally
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task ReadStreamAsync_Error()
         {
             // Arrange
-            string path = "C:\\FakeFileName";
+            string path = Path.Combine(Path.GetTempPath(), Recording.Random.NewGuid().ToString());
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
 
             // Act without creating the blob
@@ -150,31 +161,30 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task WriteStreamAsync()
         {
             // Arrange
             string tempPath = Path.GetTempPath();
-            string tempFile = string.Concat(tempPath, Path.GetRandomFileName());
+            string path = Path.Combine(tempPath, Path.GetRandomFileName());
             try
             {
                 var length = Constants.KB;
                 var data = GetRandomBuffer(length);
 
                 // Act
-                LocalFileStorageResource storageResource = new LocalFileStorageResource(tempFile);
+                LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
                 using (var stream = new MemoryStream(data))
                 {
                     // Act
                     await storageResource.WriteFromStreamAsync(
                         stream,
-                        false,
                         streamLength: length,
+                        false,
                         completeLength: length);
                 }
 
                 // Assert
-                using FileStream pathStream = new FileStream(tempFile, FileMode.Open);
+                using FileStream pathStream = new FileStream(path, FileMode.Open);
                 Assert.NotNull(pathStream);
                 TestHelper.AssertSequenceEqual(data, pathStream.AsBytes().ToArray());
             }
@@ -184,12 +194,14 @@ namespace Azure.Storage.DataMovement.Tests
             }
             finally
             {
-                File.Delete(tempFile);
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
             }
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task WriteStreamAsync_Position()
         {
             // Arrange
@@ -207,9 +219,9 @@ namespace Azure.Storage.DataMovement.Tests
                     // Act
                     await storageResource.WriteFromStreamAsync(
                         stream,
-                        false,
-                        position: writePosition,
                         streamLength: length,
+                        overwrite: false,
+                        position: writePosition,
                         completeLength: length);
                 }
 
@@ -225,12 +237,14 @@ namespace Azure.Storage.DataMovement.Tests
             }
             finally
             {
-                File.Delete(path);
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
             }
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task WriteStreamAsync_Error()
         {
             // Arrange
@@ -242,35 +256,50 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 using (var stream = new MemoryStream(data))
                 {
-                    await storageResource.WriteFromStreamAsync(stream, false);
+                    await storageResource.WriteFromStreamAsync(stream, length, false);
                 }
             }
             catch (IOException ex)
             {
-                Assert.AreEqual(ex.Message, $"File path {path} already exists. Cannot overwite file");
+                Assert.AreEqual(ex.Message, $"File path `{path}` already exists. Cannot overwite file.");
+            }
+            finally
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
             }
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task GetPropertiesAsync()
         {
             // Arrange
             int size = Constants.KB;
             string path = await CreateRandomFileAsync(Path.GetTempPath(), size: size);
-            LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
+            try
+            {
+                LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
 
-            // Act
-            StorageResourceProperties result = await storageResource.GetPropertiesAsync();
+                // Act
+                StorageResourceProperties result = await storageResource.GetPropertiesAsync();
 
-            // Assert
-            Assert.NotNull(result);
-            Assert.AreEqual(result.ContentLength, size);
-            Assert.NotNull(result.ETag);
+                // Assert
+                Assert.NotNull(result);
+                Assert.AreEqual(result.ContentLength, size);
+                Assert.NotNull(result.ETag);
+            }
+            finally
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task GetPropertiesAsync_Error()
         {
             // Arrange
@@ -289,7 +318,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task CompleteTransferAsync()
         {
             // Arrange
