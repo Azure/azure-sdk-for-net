@@ -94,6 +94,12 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
             await transfer.AwaitCompletion(tokenSource.Token);
+
+            if (exception != default)
+            {
+                Assert.Fail(exception.Message);
+            }
+
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
 
@@ -104,10 +110,6 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert - Check destination blobs
             Assert.AreEqual(files.Count, blobs.Count());
 
-            if (exception != default)
-            {
-                Assert.Fail(exception.Message);
-            }
             for (int i = 0; i < files.Count; i++)
             {
                 // Verify Upload

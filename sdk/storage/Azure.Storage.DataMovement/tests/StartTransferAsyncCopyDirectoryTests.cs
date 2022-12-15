@@ -85,13 +85,15 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
             await transfer.AwaitCompletion(tokenSource.Token);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
 
             if (exception != default)
             {
                 Assert.Fail(exception.StackTrace);
             }
+
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
+
             // List all files in source blob folder path
             List<string> sourceblobNames = new List<string>();
             await foreach (Page<BlobItem> page in container.GetBlobsAsync(prefix: sourceBlobPrefix).AsPages())
