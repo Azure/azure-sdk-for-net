@@ -109,8 +109,9 @@ namespace Azure.Storage.DataMovement
                     // When we have to deal with files we have to manually go and create each subdirectory
                 }
             }
-            if (_jobParts.All((JobPartInternal x) => x.JobPartStatus == StorageTransferStatus.Completed)
-                && TransferStatusEventHandler != default)
+            _enumerationComplete = true;
+            if ((_jobParts.All((JobPartInternal x) => x.JobPartStatus == StorageTransferStatus.Completed))
+                || _jobParts.Count == 0)
             {
                 await OnJobStatusChangedAsync(StorageTransferStatus.Completed).ConfigureAwait(false);
             }

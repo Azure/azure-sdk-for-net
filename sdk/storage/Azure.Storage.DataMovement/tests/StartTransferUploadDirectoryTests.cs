@@ -38,35 +38,6 @@ namespace Azure.Storage.DataMovement.Tests
                     "baz/bar/foo"
             };
 
-        internal class VerifyUploadBlobContentInfo
-        {
-            public readonly string LocalPath;
-            public BlobBaseClient DestinationClient;
-            public SingleTransferOptions UploadOptions;
-            public DataTransfer Transfer;
-
-            public VerifyUploadBlobContentInfo(
-                string sourceFile,
-                BlobBaseClient destinationClient,
-                SingleTransferOptions uploadOptions)
-            {
-                LocalPath = sourceFile;
-                DestinationClient = destinationClient;
-                UploadOptions = uploadOptions;
-                Transfer = default;
-            }
-        };
-
-        internal SingleTransferOptions CopySingleUploadOptions(SingleTransferOptions options)
-        {
-            SingleTransferOptions newOptions = new SingleTransferOptions()
-            {
-                MaximumTransferChunkSize = options.MaximumTransferChunkSize,
-                InitialTransferSize = options.InitialTransferSize,
-            };
-            return newOptions;
-        }
-
         #region Directory Block Blob
         /// <summary>
         /// Upload and verify the contents of the blob
@@ -95,7 +66,7 @@ namespace Azure.Storage.DataMovement.Tests
                 ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
             };
 
-            destinationPrefix ??= GetNewBlobDirectoryName();
+            destinationPrefix ??= "foo";
 
             // Initialize transferManager
             TransferManager transferManager = new TransferManager(transferManagerOptions);
@@ -124,6 +95,15 @@ namespace Azure.Storage.DataMovement.Tests
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
             await transfer.AwaitCompletion(tokenSource.Token);
             Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
+
+            // Assert - Check Response
+            List<string> blobs = ((List<BlobItem>)await destinationContainer.GetBlobsAsync(prefix: destinationPrefix).ToListAsync())
+                .Select((BlobItem blob) => blob.Name).ToList();
+
+            // Assert - Check destination blobs
+            Assert.AreEqual(files.Count, blobs.Count());
+
             if (exception != default)
             {
                 Assert.Fail(exception.Message);
@@ -143,13 +123,51 @@ namespace Azure.Storage.DataMovement.Tests
 
         [RecordedTest]
         [TestCase(0, 10)]
+        [TestCase(100, 10)]
         [TestCase(Constants.KB, 10)]
+        public async Task LocalToBlockBlobDirectory_SmallSize(long blobSize, int waitTimeInSec)
+        {
+            ContainerTransferOptions options = new ContainerTransferOptions();
+            List<string> files = new List<string>();
+            string localDirectory = CreateRandomDirectory(Path.GetTempPath());
+            await using DisposingBlobContainer test = await GetTestContainerAsync();
+
+            try
+            {
+                files.Add(await CreateRandomFileAsync(localDirectory, size: blobSize));
+                files.Add(await CreateRandomFileAsync(localDirectory, size: blobSize));
+
+                string openSubfolder = CreateRandomDirectory(localDirectory);
+                files.Add(await CreateRandomFileAsync(openSubfolder, size: blobSize));
+                string lockedSubfolder = CreateRandomDirectory(localDirectory);
+                files.Add(await CreateRandomFileAsync(lockedSubfolder, size: blobSize));
+
+                // Arrange
+                await UploadBlobDirectoryAndVerify(
+                    test.Container,
+                    localDirectory,
+                    files,
+                    waitTimeInSec: waitTimeInSec,
+                    options: options);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.StackTrace);
+            }
+            finally
+            {
+                Directory.Delete(localDirectory, true);
+            }
+        }
+
+        [Ignore("These tests currently take 40+ mins for little additional coverage")]
+        [Test]
+        [LiveOnly]
         [TestCase(4 * Constants.MB, 20)]
         [TestCase(4 * Constants.MB, 200)]
         [TestCase(257 * Constants.MB, 500)]
         [TestCase(Constants.GB, 500)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
-        public async Task LocalToBlockBlobDirectory_Size(long blobSize, int waitTimeInSec)
+        public async Task LocalToBlockBlobDirectory_LargeSize(long blobSize, int waitTimeInSec)
         {
             ContainerTransferOptions options = new ContainerTransferOptions();
             List<string> files = new List<string>();
@@ -185,7 +203,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task LocalToBlockBlobDirectory_SmallChunks()
         {
             long blobSize = Constants.KB;
@@ -228,7 +245,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task DirectoryUpload_EmptyFolder()
         {
             // Arrange
@@ -272,7 +288,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task DirectoryUpload_SingleFile()
         {
             // Arrange
@@ -295,14 +310,6 @@ namespace Azure.Storage.DataMovement.Tests
                     folder,
                     files,
                     waitTimeInSec: 10);
-
-                // Assert - Check Response
-                List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
-                    .Select((BlobItem blob) => blob.Name).ToList();
-
-                // Assert - Check destination blobs
-                Assert.AreEqual(1, blobs.Count());
-                Assert.AreEqual(blobs.First(), dirName + "/" + openChild.Substring(folder.Length + 1).Replace('\\', '/'));
             }
             catch (Exception ex)
             {
@@ -315,54 +322,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
-        public async Task DirectoryUpload_SingleSubdirectory()
-        {
-            // Arrange
-            await using DisposingBlobContainer test = await GetTestContainerAsync();
-
-            string folder = CreateRandomDirectory(Path.GetTempPath());
-            List<string> files = new List<string>();
-            try
-            {
-                string dirName = GetNewBlobName();
-
-                string openSubfolder = CreateRandomDirectory(folder);
-                string openSubchild = await CreateRandomFileAsync(openSubfolder);
-                string openSubchild2 = await CreateRandomFileAsync(openSubfolder);
-                string openSubchild3 = await CreateRandomFileAsync(openSubfolder);
-
-                await UploadBlobDirectoryAndVerify(
-                    test.Container,
-                    folder,
-                    files,
-                    destinationPrefix: dirName,
-                    waitTimeInSec: 10);
-
-                List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
-                    .Select((BlobItem blob) => blob.Name).ToList();
-
-                // Assert - Check destination blobs
-                Assert.AreEqual(3, blobs.Count());
-                Assert.Multiple(() =>
-                {
-                    CollectionAssert.Contains(blobs, dirName + "/" + openSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
-                    CollectionAssert.Contains(blobs, dirName + "/" + openSubchild2.Substring(folder.Length + 1).Replace('\\', '/'));
-                    CollectionAssert.Contains(blobs, dirName + "/" + openSubchild3.Substring(folder.Length + 1).Replace('\\', '/'));
-                });
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.StackTrace);
-            }
-            finally
-            {
-                Directory.Delete(folder, true);
-            }
-        }
-
-        [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task DirectoryUpload_ManySubDirectories()
         {
             // Arrange
@@ -408,25 +367,6 @@ namespace Azure.Storage.DataMovement.Tests
                     files,
                     destinationPrefix: dirName,
                     waitTimeInSec: 10);
-
-                List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
-                    .Select((BlobItem blob) => blob.Name).ToList();
-
-                // Assert - Check destination blobs
-                Assert.AreEqual(10, blobs.Count());
-                Assert.Multiple(() =>
-                {
-                    CollectionAssert.Contains(blobs, dirName + "/" + openSubchild.Substring(folder.Length + 1).Replace('\\', '/'));
-                    CollectionAssert.Contains(blobs, dirName + "/" + openSubChild2_1.Substring(folder.Length + 1).Replace('\\', '/'));
-                    CollectionAssert.Contains(blobs, dirName + "/" + openSubChild2_2.Substring(folder.Length + 1).Replace('\\', '/'));
-                    CollectionAssert.Contains(blobs, dirName + "/" + openSubChild2_3.Substring(folder.Length + 1).Replace('\\', '/'));
-                    CollectionAssert.Contains(blobs, dirName + "/" + openSubChild3_1.Substring(folder.Length + 1).Replace('\\', '/'));
-                    CollectionAssert.Contains(blobs, dirName + "/" + openSubChild3_2.Substring(folder.Length + 1).Replace('\\', '/'));
-                    CollectionAssert.Contains(blobs, dirName + "/" + openSubChild3_3.Substring(folder.Length + 1).Replace('\\', '/'));
-                    CollectionAssert.Contains(blobs, dirName + "/" + openSubChild4_1.Substring(folder.Length + 1).Replace('\\', '/'));
-                    CollectionAssert.Contains(blobs, dirName + "/" + openSubChild4_2.Substring(folder.Length + 1).Replace('\\', '/'));
-                    CollectionAssert.Contains(blobs, dirName + "/" + openSubChild4_3.Substring(folder.Length + 1).Replace('\\', '/'));
-                });
             }
             catch (Exception ex)
             {
@@ -442,7 +382,6 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(3)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task DirectoryUpload_SubDirectoriesLevels(int level)
         {
             // Arrange
@@ -469,12 +408,6 @@ namespace Azure.Storage.DataMovement.Tests
                          files,
                          destinationPrefix: dirName,
                          waitTimeInSec: 10);
-
-                List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
-                    .Select((BlobItem blob) => blob.Name).ToList();
-
-                // Assert - Check destination blobs
-                Assert.AreEqual(level, blobs.Count());
             }
             catch (Exception ex)
             {
@@ -487,7 +420,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task DirectoryUpload_EmptySubDirectories()
         {
             // Arrange
@@ -516,19 +448,6 @@ namespace Azure.Storage.DataMovement.Tests
                     files,
                     destinationPrefix: dirName,
                     waitTimeInSec: 10);
-
-                // Assert - Check Response
-
-                List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
-                    .Select((BlobItem blob) => blob.Name).ToList();
-
-                // Assert - Check destination blobs
-                Assert.AreEqual(6, blobs.Count());
-
-                foreach (string fileName in files)
-                {
-                    CollectionAssert.Contains(blobs, dirName + "/" + fileName.Substring(folder.Length + 1).Replace('\\', '/'));
-                }
             }
             catch (Exception ex)
             {
@@ -544,7 +463,6 @@ namespace Azure.Storage.DataMovement.Tests
         #region DirectoryUploadTests
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task DirectoryUpload_OverwriteTrue()
         {
             // Arrange
@@ -582,11 +500,6 @@ namespace Azure.Storage.DataMovement.Tests
                     files,
                     destinationPrefix: dirName,
                     waitTimeInSec: 10);
-
-                // Assert - Check Response
-                List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
-                        .Select((BlobItem blob) => blob.Name).ToList();
-                Assert.AreEqual(4, blobs.Count());
             }
             catch (Exception ex)
             {
@@ -599,7 +512,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32858")]
         public async Task DirectoryUpload_OverwriteFalse()
         {
             // Arrange
@@ -637,11 +549,6 @@ namespace Azure.Storage.DataMovement.Tests
                     files,
                     destinationPrefix: dirName,
                     waitTimeInSec: 10);
-
-                // Assert - Check Response
-                List<string> blobs = ((List<BlobItem>)await test.Container.GetBlobsAsync().ToListAsync())
-                        .Select((BlobItem blob) => blob.Name).ToList();
-                Assert.AreEqual(4, blobs.Count());
             }
             catch (Exception ex)
             {

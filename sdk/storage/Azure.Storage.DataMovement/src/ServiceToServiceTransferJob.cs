@@ -107,8 +107,9 @@ namespace Azure.Storage.DataMovement
                     partNum++;
                 }
             }
-            if (_jobParts.All((JobPartInternal x) => x.JobPartStatus == StorageTransferStatus.Completed)
-                && TransferStatusEventHandler != default)
+            _enumerationComplete = true;
+            if ((_jobParts.All((JobPartInternal x) => x.JobPartStatus == StorageTransferStatus.Completed))
+                || _jobParts.Count == 0)
             {
                 await OnJobStatusChangedAsync(StorageTransferStatus.Completed).ConfigureAwait(false);
             }
