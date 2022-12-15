@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.SecurityInsights.Tests
             return rgOp.Value;
         }
         #region workspace
-        public static WorkspaceData GetWorkspaceData()
+        public static OperationalInsightsWorkspaceData GetWorkspaceData()
         {
-            var data = new WorkspaceData(AzureLocation.EastUS)
+            var data = new OperationalInsightsWorkspaceData(AzureLocation.EastUS)
             {
                 RetentionInDays = 30,
-                Sku = new OperationalInsights.Models.WorkspaceSku(WorkspaceSkuNameEnum.PerNode),
-                PublicNetworkAccessForIngestion = PublicNetworkAccessType.Enabled,
-                PublicNetworkAccessForQuery = PublicNetworkAccessType.Enabled,
+                Sku = new OperationalInsights.Models.OperationalInsightsWorkspaceSku(OperationalInsightsWorkspaceSkuName.PerNode),
+                PublicNetworkAccessForIngestion = OperationalInsightsPublicNetworkAccessType.Enabled,
+                PublicNetworkAccessForQuery = OperationalInsightsPublicNetworkAccessType.Enabled,
             };
             return data;
         }

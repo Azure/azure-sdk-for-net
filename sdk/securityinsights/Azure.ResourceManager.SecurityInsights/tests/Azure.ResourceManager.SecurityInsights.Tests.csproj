@@ -4,6 +4,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\operationalinsights\Azure.ResourceManager.OperationalInsights\src\Azure.ResourceManager.OperationalInsights.csproj" />
+    <PackageReference Include="Azure.ResourceManager.OperationalInsights" />
   </ItemGroup>
 </Project>

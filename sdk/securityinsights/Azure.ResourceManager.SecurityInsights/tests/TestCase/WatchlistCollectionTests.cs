@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             return resourceGroup;
         }
         #region Workspace
-        private WorkspaceCollection GetWorkspaceCollectionAsync(ResourceGroupResource resourceGroup)
+        private OperationalInsightsWorkspaceCollection GetWorkspaceCollectionAsync(ResourceGroupResource resourceGroup)
         {
-            return resourceGroup.GetWorkspaces();
+            return resourceGroup.GetOperationalInsightsWorkspaces();
         }
-        private async Task<WorkspaceResource> GetWorkspaceResourceAsync(ResourceGroupResource resourceGroup)
+        private async Task<OperationalInsightsWorkspaceResource> GetWorkspaceResourceAsync(ResourceGroupResource resourceGroup)
         {
             var workspaceCollection = GetWorkspaceCollectionAsync(resourceGroup);
             var workspaceName1 = groupName + "-ws";
             var workspaceInput = GetWorkspaceData();
             var lrow = await workspaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName1, workspaceInput);
-            WorkspaceResource workspace = lrow.Value;
+            OperationalInsightsWorkspaceResource workspace = lrow.Value;
             return workspace;
         }
         #endregion

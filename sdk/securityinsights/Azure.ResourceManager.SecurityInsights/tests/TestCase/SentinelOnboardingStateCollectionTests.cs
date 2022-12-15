@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             return resourceGroup;
         }
         #region workspace
-        private WorkspaceCollection GetWorkspaceCollectionAsync(ResourceGroupResource resourceGroup)
+        private OperationalInsightsWorkspaceCollection GetWorkspaceCollectionAsync(ResourceGroupResource resourceGroup)
         {
-            return resourceGroup.GetWorkspaces();
+            return resourceGroup.GetOperationalInsightsWorkspaces();
         }
         #endregion
         private SentinelOnboardingStateCollection GetSentinelOnboardingStateCollectionAsync(ResourceGroupResource resourceGroup, string workspaceName)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var workspaceName1 = groupName + "-ws";
             var workspaceInput = GetWorkspaceData();
             var lrow = await workspaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName1, workspaceInput);
-            WorkspaceResource workspace = lrow.Value;
+            OperationalInsightsWorkspaceResource workspace = lrow.Value;
             var collection = GetSentinelOnboardingStateCollectionAsync(resourceGroup, workspaceName1);
             var name = "default";
             var input = ResourceDataHelpers.GetSentinelOnboardingStateData();
