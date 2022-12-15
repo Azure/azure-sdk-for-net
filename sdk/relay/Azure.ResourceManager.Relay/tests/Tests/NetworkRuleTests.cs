@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Relay.Tests
             RelayNetworkRuleSetResource _relayNetworkRuleSetResource = _relayNamespace.GetRelayNetworkRuleSet();
 
             _relayNetworkRuleSetResource = (await _relayNetworkRuleSetResource.GetAsync()).Value;
-            Assert.AreEqual("Allow", _relayNetworkRuleSetResource.Data.DefaultAction);
-            Assert.AreEqual("Enabled", _relayNetworkRuleSetResource.Data.PublicNetworkAccess);
+            Assert.AreEqual(Models.RelayNetworkRuleSetDefaultAction.Allow, _relayNetworkRuleSetResource.Data.DefaultAction);
+            Assert.AreEqual(Models.RelayPublicNetworkAccess.Enabled, _relayNetworkRuleSetResource.Data.PublicNetworkAccess);
             Assert.AreEqual(0, _relayNetworkRuleSetResource.Data.IPRules.Count);
 
             _relayNetworkRuleSetResource = (await _relayNetworkRuleSetResource.CreateOrUpdateAsync(WaitUntil.Completed, new RelayNetworkRuleSetData()
@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.Relay.Tests
                     DefaultAction = "Deny"
                 })).Value;
 
-            Assert.AreEqual("Deny", _relayNetworkRuleSetResource.Data.DefaultAction);
-            Assert.AreEqual("Disabled", _relayNetworkRuleSetResource.Data.PublicNetworkAccess);
+            Assert.AreEqual(Models.RelayNetworkRuleSetDefaultAction.Deny, _relayNetworkRuleSetResource.Data.DefaultAction);
+            Assert.AreEqual(Models.RelayPublicNetworkAccess.Disabled, _relayNetworkRuleSetResource.Data.PublicNetworkAccess);
             Assert.AreEqual(2, _relayNetworkRuleSetResource.Data.IPRules.Count);
 
             _relayNetworkRuleSetResource = (await _relayNetworkRuleSetResource.GetAsync()).Value;
-            Assert.AreEqual("Deny", _relayNetworkRuleSetResource.Data.DefaultAction);
-            Assert.AreEqual("Disabled", _relayNetworkRuleSetResource.Data.PublicNetworkAccess);
+            Assert.AreEqual(Models.RelayNetworkRuleSetDefaultAction.Deny, _relayNetworkRuleSetResource.Data.DefaultAction);
+            Assert.AreEqual(Models.RelayPublicNetworkAccess.Disabled, _relayNetworkRuleSetResource.Data.PublicNetworkAccess);
             Assert.AreEqual(2, _relayNetworkRuleSetResource.Data.IPRules.Count);
         }
     }

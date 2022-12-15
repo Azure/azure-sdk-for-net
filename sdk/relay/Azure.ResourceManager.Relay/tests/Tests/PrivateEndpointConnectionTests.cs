@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.Relay.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Service returns empty type which causes a bug during deserialization")]
         public async Task CreatePrivateEndpointConnection()
         {
             PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
@@ -60,6 +61,7 @@ namespace Azure.ResourceManager.Relay.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Service returns empty type which causes a bug during deserialization")]
         public async Task GetAllPrivateEndpointConnection()
         {
             PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();

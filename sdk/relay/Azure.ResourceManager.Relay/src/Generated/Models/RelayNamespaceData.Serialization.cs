@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.Relay
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess");
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -69,6 +74,7 @@ namespace Azure.ResourceManager.Relay
             Optional<string> serviceBusEndpoint = default;
             Optional<string> metricId = default;
             Optional<IList<RelayPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<RelayPublicNetworkAccess> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -190,11 +196,21 @@ namespace Azure.ResourceManager.Relay
                             privateEndpointConnections = array;
                             continue;
                         }
+                        if (property0.NameEquals("publicNetworkAccess"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            publicNetworkAccess = new RelayPublicNetworkAccess(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new RelayNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, Optional.ToList(privateEndpointConnections));
+            return new RelayNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess));
         }
     }
 }

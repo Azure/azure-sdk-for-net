@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Relay.Tests.Tests
 
             _relayNamespace = (await _relayNamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, relayNamespaceData)).Value;
             Assert.AreEqual(RelaySkuName.Standard, _relayNamespace.Data.Sku.Name);
+
+            await _relayNamespace.DeleteAsync(WaitUntil.Completed);
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _relayNamespace.GetAsync(); });
+            Assert.AreEqual(404, exception.Status);
         }
     }
 }

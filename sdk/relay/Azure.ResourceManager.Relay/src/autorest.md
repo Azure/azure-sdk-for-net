@@ -82,9 +82,4 @@ directive:
     where: $.definitions
     transform: >
       $.NWRuleSetIpRules['x-ms-client-name'] = 'RelayNetworkRuleSetIPRule';
-
-  - from: Namespaces.json
-    where: $.definitions
-    transform: >
-      delete $.RelayNamespaceProperties.properties.publicNetworkAccess;
 ```
