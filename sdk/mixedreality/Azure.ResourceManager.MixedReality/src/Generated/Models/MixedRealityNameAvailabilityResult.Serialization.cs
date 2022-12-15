@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MixedReality.Models
 {
-    public partial class CheckNameAvailabilityResponse
+    public partial class MixedRealityNameAvailabilityResult
     {
-        internal static CheckNameAvailabilityResponse DeserializeCheckNameAvailabilityResponse(JsonElement element)
+        internal static MixedRealityNameAvailabilityResult DeserializeMixedRealityNameAvailabilityResult(JsonElement element)
         {
             bool nameAvailable = default;
-            Optional<NameUnavailableReason> reason = default;
+            Optional<MixedRealityNameUnavailableReason> reason = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reason = new NameUnavailableReason(property.Value.GetString());
+                    reason = new MixedRealityNameUnavailableReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"))
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                     continue;
                 }
             }
-            return new CheckNameAvailabilityResponse(nameAvailable, Optional.ToNullable(reason), message.Value);
+            return new MixedRealityNameAvailabilityResult(nameAvailable, Optional.ToNullable(reason), message.Value);
         }
     }
 }

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MixedReality.Models
 {
-    public partial class AccountKeys
+    public partial class MixedRealityAccountKeys
     {
-        internal static AccountKeys DeserializeAccountKeys(JsonElement element)
+        internal static MixedRealityAccountKeys DeserializeMixedRealityAccountKeys(JsonElement element)
         {
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                     continue;
                 }
             }
-            return new AccountKeys(primaryKey.Value, secondaryKey.Value);
+            return new MixedRealityAccountKeys(primaryKey.Value, secondaryKey.Value);
         }
     }
 }

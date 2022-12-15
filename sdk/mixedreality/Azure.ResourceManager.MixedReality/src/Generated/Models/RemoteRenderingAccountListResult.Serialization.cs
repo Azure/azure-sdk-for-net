@@ -12,11 +12,11 @@ using Azure.ResourceManager.MixedReality;
 
 namespace Azure.ResourceManager.MixedReality.Models
 {
-    internal partial class SpatialAnchorsAccountPage
+    internal partial class RemoteRenderingAccountListResult
     {
-        internal static SpatialAnchorsAccountPage DeserializeSpatialAnchorsAccountPage(JsonElement element)
+        internal static RemoteRenderingAccountListResult DeserializeRemoteRenderingAccountListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SpatialAnchorsAccountData>> value = default;
+            Optional<IReadOnlyList<RemoteRenderingAccountData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.MixedReality.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SpatialAnchorsAccountData> array = new List<SpatialAnchorsAccountData>();
+                    List<RemoteRenderingAccountData> array = new List<RemoteRenderingAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(item));
+                        array.Add(RemoteRenderingAccountData.DeserializeRemoteRenderingAccountData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                     continue;
                 }
             }
-            return new SpatialAnchorsAccountPage(Optional.ToList(value), nextLink.Value);
+            return new RemoteRenderingAccountListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }
