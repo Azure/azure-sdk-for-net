@@ -136,15 +136,16 @@ namespace Azure.Data.Tables
         {
             if (typeof(IDictionary<string, object>).IsAssignableFrom(typeof(T)))
             {
-                var tableEntity = new TableEntity();
+                var result = Activator.CreateInstance<T>();
+                var dictionary = (IDictionary<string, object>)result;
                 entity.CastAndRemoveAnnotations();
 
                 foreach (var entProperty in entity.Keys)
                 {
-                    tableEntity[entProperty] = entity[entProperty];
+                    dictionary[entProperty] = entity[entProperty];
                 }
 
-                return (T)(object)tableEntity;
+                return result;
             }
 
             typeInfo ??= TablesTypeBinder.Shared.GetBinderInfo(typeof(T), typeof(ITableEntity));
