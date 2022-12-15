@@ -227,7 +227,7 @@ namespace Azure.Data.Tables.Tests
 
             public bool Remove(string key) => _dict.Remove(key);
 
-            public bool TryGetValue(string key, [MaybeNullWhen(false)] out object value){
+            public bool TryGetValue(string key, out object value){
                  var result = _dict.TryGetValue(key, out object val);
                  value = val;
                  return result;
