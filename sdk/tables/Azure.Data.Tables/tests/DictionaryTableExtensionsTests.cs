@@ -44,6 +44,18 @@ namespace Azure.Data.Tables.Tests
         }
 
         [Test]
+        public void ToTableEntityConvertsTableEntity()
+        {
+            var model = sourceDictionary.ToTableEntity<TableEntity>();
+
+            Assert.AreEqual("cat", model["Category"]);
+            Assert.AreEqual("name", model["Name"]);
+            Assert.AreEqual(1234, model["Priority"]);
+            Assert.AreEqual("cat", model.PartitionKey);
+            Assert.AreEqual("name", model.RowKey);
+        }
+
+        [Test]
         public void ToTableEntityListRecognizesExplicitlyImplementedInterfaceProperties()
         {
             var models = new List<IDictionary<string, object>>() { sourceDictionary, sourceDictionary }.ToTableEntityList<ExplicitInterfaceModel>();
