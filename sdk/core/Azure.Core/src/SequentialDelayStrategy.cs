@@ -46,7 +46,7 @@ namespace Azure.Core
         /// <param name="response">Service response.</param>
         /// <param name="attempt"></param>
         /// <param name="suggestedDelay">Suggested delay.</param>
-        public override TimeSpan GetNextDelay(Response response, int attempt, TimeSpan? suggestedDelay)
+        public override TimeSpan GetNextDelay(Response? response, int attempt, TimeSpan? suggestedDelay)
         {
             if (attempt >= s_defaultPollingSequence.Length)
             {

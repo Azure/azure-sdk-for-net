@@ -35,7 +35,7 @@ namespace Azure.Core
         /// <param name="delayHint"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override TimeSpan GetNextDelay(Response response, int attempt, TimeSpan? delayHint)
+        public override TimeSpan GetNextDelay(Response? response, int attempt, TimeSpan? delayHint)
         {
             return
                 Max(

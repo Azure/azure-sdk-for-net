@@ -17,11 +17,7 @@ namespace Azure.Core.Pipeline
     public abstract class RetryPolicy : HttpPipelinePolicy
     {
         private readonly RetryMode _mode;
-        private readonly TimeSpan _delay;
-        private readonly TimeSpan _maxDelay;
         private readonly int _maxRetries;
-
-        private readonly Random _random = new ThreadSafeRandom();
         private readonly DelayStrategy _delayStrategy;
 
         /// <summary>
@@ -33,8 +29,6 @@ namespace Azure.Core.Pipeline
         {
             options ??= ClientOptions.Default.Retry;
             _mode = options.Mode;
-            _delay = options.Delay;
-            _maxDelay = options.MaxDelay;
             _maxRetries = options.MaxRetries;
             delayStrategy ??= _mode switch
             {
@@ -268,35 +262,6 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The message containing the request and response.</param>
         protected internal virtual ValueTask OnRequestSentAsync(HttpMessage message) => default;
 
-        private TimeSpan CalculateNextDelayInternal(HttpMessage message)
-        {
-            TimeSpan delay = TimeSpan.Zero;
-
-            switch (_mode)
-            {
-                case RetryMode.Fixed:
-                    delay = _delay;
-                    break;
-                case RetryMode.Exponential:
-                    delay = CalculateExponentialDelay(message.RetryNumber + 1);
-                    break;
-            }
-
-            TimeSpan serverDelay = message.HasResponse ? DelayStrategy.GetServerDelay(message.Response) : TimeSpan.Zero;
-            if (serverDelay > delay)
-            {
-                delay = serverDelay;
-            }
-
-            return _delayStrategy.GetNextDelay(message.Response, message.RetryNumber + 1, delay);
-        }
-
-        private TimeSpan CalculateExponentialDelay(int attempted)
-        {
-            return TimeSpan.FromMilliseconds(
-                Math.Min(
-                    (1 << (attempted - 1)) * _random.Next((int)(_delay.TotalMilliseconds * 0.8), (int)(_delay.TotalMilliseconds * 1.2)),
-                    _maxDelay.TotalMilliseconds));
-        }
+        private TimeSpan CalculateNextDelayInternal(HttpMessage message) => _delayStrategy.GetNextDelay(message.Response, message.RetryNumber + 1, null);
     }
 }

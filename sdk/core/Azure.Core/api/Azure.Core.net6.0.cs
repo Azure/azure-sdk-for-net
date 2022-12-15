@@ -398,7 +398,7 @@ namespace Azure.Core
     public abstract partial class DelayStrategy
     {
         protected DelayStrategy() { }
-        public abstract System.TimeSpan GetNextDelay(Azure.Response response, int attempt, System.TimeSpan? delayHint);
+        public abstract System.TimeSpan GetNextDelay(Azure.Response? response, int attempt, System.TimeSpan? delayHint);
         protected internal static System.TimeSpan GetServerDelay(Azure.Response? response) { throw null; }
         protected static System.TimeSpan Max(System.TimeSpan t1, System.TimeSpan t2) { throw null; }
     }
@@ -423,12 +423,12 @@ namespace Azure.Core
     public partial class ExponentialDelayStrategy : Azure.Core.DelayStrategy
     {
         public ExponentialDelayStrategy(System.TimeSpan? delay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?)) { }
-        public override System.TimeSpan GetNextDelay(Azure.Response response, int attempt, System.TimeSpan? delayHint) { throw null; }
+        public override System.TimeSpan GetNextDelay(Azure.Response? response, int attempt, System.TimeSpan? delayHint) { throw null; }
     }
     public partial class FixedDelayStrategy : Azure.Core.DelayStrategy
     {
         public FixedDelayStrategy(System.TimeSpan? delay = default(System.TimeSpan?)) { }
-        public override System.TimeSpan GetNextDelay(Azure.Response response, int attempt, System.TimeSpan? delayHint) { throw null; }
+        public override System.TimeSpan GetNextDelay(Azure.Response? response, int attempt, System.TimeSpan? delayHint) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HttpHeader : System.IEquatable<Azure.Core.HttpHeader>
@@ -708,7 +708,7 @@ namespace Azure.Core
     public partial class SequentialDelayStrategy : Azure.Core.DelayStrategy
     {
         public SequentialDelayStrategy(System.Collections.Generic.IEnumerable<System.TimeSpan>? sequence = null) { }
-        public override System.TimeSpan GetNextDelay(Azure.Response response, int attempt, System.TimeSpan? suggestedDelay) { throw null; }
+        public override System.TimeSpan GetNextDelay(Azure.Response? response, int attempt, System.TimeSpan? suggestedDelay) { throw null; }
     }
     public partial class StatusCodeClassifier : Azure.Core.ResponseClassifier
     {

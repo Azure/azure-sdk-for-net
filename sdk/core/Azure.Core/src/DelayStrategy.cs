@@ -24,7 +24,7 @@ namespace Azure.Core
         /// <param name="attempt"></param>
         /// <param name="delayHint"></param>
         /// <returns> Delay interval of next iteration. </returns>
-        public abstract TimeSpan GetNextDelay(Response response, int attempt, TimeSpan? delayHint);
+        public abstract TimeSpan GetNextDelay(Response? response, int attempt, TimeSpan? delayHint);
 
         /// <summary>
         /// Gets the server specified delay. If there is no response, <see cref="TimeSpan.Zero"/> is returned.
