@@ -78,11 +78,5 @@ If you no longer need a phone number you can release it.
 
 ```C# Snippet:ReleasePhoneNumbers
 var purchasedPhoneNumber = "<purchased_phone_number>";
-var releaseOperation = client.StartReleasePhoneNumber(purchasedPhoneNumber);
-
-while (!releaseOperation.HasCompleted)
-{
-    Thread.Sleep(2000);
-    releaseOperation.UpdateStatus();
-}
+var releaseOperation = client.StartReleasePhoneNumber(purchasedPhoneNumber).WaitForCompletionResponseAsync();
 ```

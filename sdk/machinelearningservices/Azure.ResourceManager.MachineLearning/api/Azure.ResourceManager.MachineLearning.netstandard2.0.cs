@@ -4700,4 +4700,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearning.Models.ValidationMetricType left, Azure.ResourceManager.MachineLearning.Models.ValidationMetricType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WeekDay : System.IEquatable<Azure.ResourceManager.MachineLearning.Models.WeekDay>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WeekDay(string value) { throw null; }
+        public static Azure.ResourceManager.MachineLearning.Models.WeekDay Friday { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearning.Models.WeekDay Monday { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearning.Models.WeekDay Saturday { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearning.Models.WeekDay Sunday { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearning.Models.WeekDay Thursday { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearning.Models.WeekDay Tuesday { get { throw null; } }
+        public static Azure.ResourceManager.MachineLearning.Models.WeekDay Wednesday { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MachineLearning.Models.WeekDay other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MachineLearning.Models.WeekDay left, Azure.ResourceManager.MachineLearning.Models.WeekDay right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MachineLearning.Models.WeekDay (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MachineLearning.Models.WeekDay left, Azure.ResourceManager.MachineLearning.Models.WeekDay right) { throw null; }
+        public override string ToString() { throw null; }
+    }
 }
