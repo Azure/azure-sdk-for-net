@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static RenewProperties DeserializeRenewProperties(JsonElement element)
         {
-            Optional<PurchaseRequest> purchaseProperties = default;
+            Optional<BillingBenefitsPurchaseContent> purchaseProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("purchaseProperties"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    purchaseProperties = PurchaseRequest.DeserializePurchaseRequest(property.Value);
+                    purchaseProperties = BillingBenefitsPurchaseContent.DeserializeBillingBenefitsPurchaseContent(property.Value);
                     continue;
                 }
             }

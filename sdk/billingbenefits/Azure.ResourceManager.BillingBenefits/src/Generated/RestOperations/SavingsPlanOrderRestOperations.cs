@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SavingsPlanOrderModelData>> GetAsync(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingBenefitsSavingsPlanOrderData>> GetAsync(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
@@ -73,13 +73,13 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 case 200:
                     {
-                        SavingsPlanOrderModelData value = default;
+                        BillingBenefitsSavingsPlanOrderData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SavingsPlanOrderModelData.DeserializeSavingsPlanOrderModelData(document.RootElement);
+                        value = BillingBenefitsSavingsPlanOrderData.DeserializeBillingBenefitsSavingsPlanOrderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SavingsPlanOrderModelData)null, message.Response);
+                    return Response.FromValue((BillingBenefitsSavingsPlanOrderData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SavingsPlanOrderModelData> Get(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
+        public Response<BillingBenefitsSavingsPlanOrderData> Get(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
@@ -101,13 +101,13 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 case 200:
                     {
-                        SavingsPlanOrderModelData value = default;
+                        BillingBenefitsSavingsPlanOrderData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SavingsPlanOrderModelData.DeserializeSavingsPlanOrderModelData(document.RootElement);
+                        value = BillingBenefitsSavingsPlanOrderData.DeserializeBillingBenefitsSavingsPlanOrderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SavingsPlanOrderModelData)null, message.Response);
+                    return Response.FromValue((BillingBenefitsSavingsPlanOrderData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RoleAssignmentEntity>> ElevateAsync(string savingsPlanOrderId, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingBenefitsRoleAssignmentEntity>> ElevateAsync(string savingsPlanOrderId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
@@ -145,9 +145,9 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 case 200:
                     {
-                        RoleAssignmentEntity value = default;
+                        BillingBenefitsRoleAssignmentEntity value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoleAssignmentEntity.DeserializeRoleAssignmentEntity(document.RootElement);
+                        value = BillingBenefitsRoleAssignmentEntity.DeserializeBillingBenefitsRoleAssignmentEntity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RoleAssignmentEntity> Elevate(string savingsPlanOrderId, CancellationToken cancellationToken = default)
+        public Response<BillingBenefitsRoleAssignmentEntity> Elevate(string savingsPlanOrderId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 case 200:
                     {
-                        RoleAssignmentEntity value = default;
+                        BillingBenefitsRoleAssignmentEntity value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoleAssignmentEntity.DeserializeRoleAssignmentEntity(document.RootElement);
+                        value = BillingBenefitsRoleAssignmentEntity.DeserializeBillingBenefitsRoleAssignmentEntity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.BillingBenefits
             }
         }
 
-        internal HttpMessage CreateListAllRequest(string filter, string orderby, string refreshSummary, float? skiptoken, string selectedState, float? take)
+        internal HttpMessage CreateListAllRequest(string filter, string orderBy, string refreshSummary, float? skipToken, string selectedState, float? take)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -117,17 +117,17 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (orderby != null)
+            if (orderBy != null)
             {
-                uri.AppendQuery("$orderby", orderby, true);
+                uri.AppendQuery("$orderby", orderBy, true);
             }
             if (refreshSummary != null)
             {
                 uri.AppendQuery("refreshSummary", refreshSummary, true);
             }
-            if (skiptoken != null)
+            if (skipToken != null)
             {
-                uri.AppendQuery("$skiptoken", skiptoken.Value, true);
+                uri.AppendQuery("$skiptoken", skipToken.Value, true);
             }
             if (selectedState != null)
             {
@@ -145,15 +145,15 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary> List savings plans. </summary>
         /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
-        /// <param name="orderby"> May be used to sort order by reservation properties. </param>
+        /// <param name="orderBy"> May be used to sort order by reservation properties. </param>
         /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </param>
-        /// <param name="skiptoken"> The number of savings plans to skip from the list before returning results. </param>
+        /// <param name="skipToken"> The number of savings plans to skip from the list before returning results. </param>
         /// <param name="selectedState"> The selected provisioning state. </param>
         /// <param name="take"> To number of savings plans to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<SavingsPlanModelListResult>> ListAllAsync(string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SavingsPlanModelListResult>> ListAllAsync(string filter = null, string orderBy = null, string refreshSummary = null, float? skipToken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListAllRequest(filter, orderby, refreshSummary, skiptoken, selectedState, take);
+            using var message = CreateListAllRequest(filter, orderBy, refreshSummary, skipToken, selectedState, take);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -171,15 +171,15 @@ namespace Azure.ResourceManager.BillingBenefits
 
         /// <summary> List savings plans. </summary>
         /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
-        /// <param name="orderby"> May be used to sort order by reservation properties. </param>
+        /// <param name="orderBy"> May be used to sort order by reservation properties. </param>
         /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </param>
-        /// <param name="skiptoken"> The number of savings plans to skip from the list before returning results. </param>
+        /// <param name="skipToken"> The number of savings plans to skip from the list before returning results. </param>
         /// <param name="selectedState"> The selected provisioning state. </param>
         /// <param name="take"> To number of savings plans to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<SavingsPlanModelListResult> ListAll(string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
+        public Response<SavingsPlanModelListResult> ListAll(string filter = null, string orderBy = null, string refreshSummary = null, float? skipToken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListAllRequest(filter, orderby, refreshSummary, skiptoken, selectedState, take);
+            using var message = CreateListAllRequest(filter, orderBy, refreshSummary, skipToken, selectedState, take);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SavingsPlanModelData>> GetAsync(string savingsPlanOrderId, string savingsPlanId, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingBenefitsSavingsPlanData>> GetAsync(string savingsPlanOrderId, string savingsPlanId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
@@ -235,13 +235,13 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 case 200:
                     {
-                        SavingsPlanModelData value = default;
+                        BillingBenefitsSavingsPlanData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SavingsPlanModelData.DeserializeSavingsPlanModelData(document.RootElement);
+                        value = BillingBenefitsSavingsPlanData.DeserializeBillingBenefitsSavingsPlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SavingsPlanModelData)null, message.Response);
+                    return Response.FromValue((BillingBenefitsSavingsPlanData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SavingsPlanModelData> Get(string savingsPlanOrderId, string savingsPlanId, string expand = null, CancellationToken cancellationToken = default)
+        public Response<BillingBenefitsSavingsPlanData> Get(string savingsPlanOrderId, string savingsPlanId, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
@@ -265,19 +265,19 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 case 200:
                     {
-                        SavingsPlanModelData value = default;
+                        BillingBenefitsSavingsPlanData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SavingsPlanModelData.DeserializeSavingsPlanModelData(document.RootElement);
+                        value = BillingBenefitsSavingsPlanData.DeserializeBillingBenefitsSavingsPlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SavingsPlanModelData)null, message.Response);
+                    return Response.FromValue((BillingBenefitsSavingsPlanData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string savingsPlanOrderId, string savingsPlanId, SavingsPlanModelPatch patch)
+        internal HttpMessage CreateUpdateRequest(string savingsPlanOrderId, string savingsPlanId, BillingBenefitsSavingsPlanPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SavingsPlanModelData>> UpdateAsync(string savingsPlanOrderId, string savingsPlanId, SavingsPlanModelPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingBenefitsSavingsPlanData>> UpdateAsync(string savingsPlanOrderId, string savingsPlanId, BillingBenefitsSavingsPlanPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
@@ -318,13 +318,13 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 case 200:
                     {
-                        SavingsPlanModelData value = default;
+                        BillingBenefitsSavingsPlanData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SavingsPlanModelData.DeserializeSavingsPlanModelData(document.RootElement);
+                        value = BillingBenefitsSavingsPlanData.DeserializeBillingBenefitsSavingsPlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
-                    return Response.FromValue((SavingsPlanModelData)null, message.Response);
+                    return Response.FromValue((BillingBenefitsSavingsPlanData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SavingsPlanModelData> Update(string savingsPlanOrderId, string savingsPlanId, SavingsPlanModelPatch patch, CancellationToken cancellationToken = default)
+        public Response<BillingBenefitsSavingsPlanData> Update(string savingsPlanOrderId, string savingsPlanId, BillingBenefitsSavingsPlanPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
             Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
@@ -349,13 +349,13 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 case 200:
                     {
-                        SavingsPlanModelData value = default;
+                        BillingBenefitsSavingsPlanData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SavingsPlanModelData.DeserializeSavingsPlanModelData(document.RootElement);
+                        value = BillingBenefitsSavingsPlanData.DeserializeBillingBenefitsSavingsPlanData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 202:
-                    return Response.FromValue((SavingsPlanModelData)null, message.Response);
+                    return Response.FromValue((BillingBenefitsSavingsPlanData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.BillingBenefits
             }
         }
 
-        internal HttpMessage CreateListAllNextPageRequest(string nextLink, string filter, string orderby, string refreshSummary, float? skiptoken, string selectedState, float? take)
+        internal HttpMessage CreateListAllNextPageRequest(string nextLink, string filter, string orderBy, string refreshSummary, float? skipToken, string selectedState, float? take)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -527,18 +527,18 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <summary> List savings plans. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
-        /// <param name="orderby"> May be used to sort order by reservation properties. </param>
+        /// <param name="orderBy"> May be used to sort order by reservation properties. </param>
         /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </param>
-        /// <param name="skiptoken"> The number of savings plans to skip from the list before returning results. </param>
+        /// <param name="skipToken"> The number of savings plans to skip from the list before returning results. </param>
         /// <param name="selectedState"> The selected provisioning state. </param>
         /// <param name="take"> To number of savings plans to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<SavingsPlanModelListResult>> ListAllNextPageAsync(string nextLink, string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SavingsPlanModelListResult>> ListAllNextPageAsync(string nextLink, string filter = null, string orderBy = null, string refreshSummary = null, float? skipToken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
-            using var message = CreateListAllNextPageRequest(nextLink, filter, orderby, refreshSummary, skiptoken, selectedState, take);
+            using var message = CreateListAllNextPageRequest(nextLink, filter, orderBy, refreshSummary, skipToken, selectedState, take);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -557,18 +557,18 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <summary> List savings plans. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
-        /// <param name="orderby"> May be used to sort order by reservation properties. </param>
+        /// <param name="orderBy"> May be used to sort order by reservation properties. </param>
         /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </param>
-        /// <param name="skiptoken"> The number of savings plans to skip from the list before returning results. </param>
+        /// <param name="skipToken"> The number of savings plans to skip from the list before returning results. </param>
         /// <param name="selectedState"> The selected provisioning state. </param>
         /// <param name="take"> To number of savings plans to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<SavingsPlanModelListResult> ListAllNextPage(string nextLink, string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
+        public Response<SavingsPlanModelListResult> ListAllNextPage(string nextLink, string filter = null, string orderBy = null, string refreshSummary = null, float? skipToken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
-            using var message = CreateListAllNextPageRequest(nextLink, filter, orderby, refreshSummary, skiptoken, selectedState, take);
+            using var message = CreateListAllNextPageRequest(nextLink, filter, orderBy, refreshSummary, skipToken, selectedState, take);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -577,6 +577,82 @@ namespace Azure.ResourceManager.BillingBenefits
                         SavingsPlanModelListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = SavingsPlanModelListResult.DeserializeSavingsPlanModelListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateValidateUpdateNextPageRequest(string nextLink, string savingsPlanOrderId, string savingsPlanId, SavingsPlanUpdateValidateContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Validate savings plan patch. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
+        /// <param name="savingsPlanId"> ID of the savings plan. </param>
+        /// <param name="content"> Request body for validating a savings plan patch request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SavingsPlanValidateResponse>> ValidateUpdateNextPageAsync(string nextLink, string savingsPlanOrderId, string savingsPlanId, SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateValidateUpdateNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SavingsPlanValidateResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = SavingsPlanValidateResponse.DeserializeSavingsPlanValidateResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Validate savings plan patch. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
+        /// <param name="savingsPlanId"> ID of the savings plan. </param>
+        /// <param name="content"> Request body for validating a savings plan patch request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> or <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SavingsPlanValidateResponse> ValidateUpdateNextPage(string nextLink, string savingsPlanOrderId, string savingsPlanId, SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
+            Argument.AssertNotNullOrEmpty(savingsPlanId, nameof(savingsPlanId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateValidateUpdateNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        SavingsPlanValidateResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = SavingsPlanValidateResponse.DeserializeSavingsPlanValidateResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

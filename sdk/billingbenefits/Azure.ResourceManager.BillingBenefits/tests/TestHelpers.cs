@@ -9,16 +9,16 @@ namespace Azure.ResourceManager.BillingBenefits.Tests.Helper
 {
     public static class TestHelpers
     {
-        public static SavingsPlanOrderAliasModelData CreateSavingsPlanOrderAliasPurchaseRequest(AppliedScopeType scope)
+        public static BillingBenefitsSavingsPlanOrderAliasData CreateSavingsPlanOrderAliasPurchaseRequest(BillingBenefitsAppliedScopeType scope)
         {
-            var request = new SavingsPlanOrderAliasModelData(new BillingBenefitsSku("Compute_Savings_Plan"))
+            var request = new BillingBenefitsSavingsPlanOrderAliasData(new BillingBenefitsSku("Compute_Savings_Plan"))
             {
-                BillingScopeId = "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47",
-                Term = new Term("P3Y"),
+                BillingScopeId = new ResourceIdentifier("/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47"),
+                Term = new BillingBenefitsTerm("P3Y"),
                 AppliedScopeType = scope,
                 DisplayName = "TestSPName" + scope.ToString(),
-                BillingPlan = new BillingPlan("P1M"),
-                Commitment = new Commitment
+                BillingPlan = new BillingBenefitsBillingPlan("P1M"),
+                Commitment = new BillingBenefitsCommitment
                 {
                     Grain = "Hourly",
                     CurrencyCode = "USD",
@@ -26,18 +26,18 @@ namespace Azure.ResourceManager.BillingBenefits.Tests.Helper
                 },
             };
 
-            if (scope == AppliedScopeType.Single)
+            if (scope == BillingBenefitsAppliedScopeType.Single)
             {
-                request.AppliedScopeProperties = new AppliedScopeProperties
+                request.AppliedScopeProperties = new BillingBenefitsAppliedScopeProperties
                 {
-                    SubscriptionId = "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47"
+                    SubscriptionId = new ResourceIdentifier("/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47")
                 };
             }
-            else if (scope == AppliedScopeType.ManagementGroup)
+            else if (scope == BillingBenefitsAppliedScopeType.ManagementGroup)
             {
-                request.AppliedScopeProperties = new AppliedScopeProperties
+                request.AppliedScopeProperties = new BillingBenefitsAppliedScopeProperties
                 {
-                    ManagementGroupId = "/providers/Microsoft.Management/managementGroups/ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
+                    ManagementGroupId = new ResourceIdentifier("/providers/Microsoft.Management/managementGroups/ba5ed788-ddc6-429c-a6a2-0277f01dbee7"),
                     TenantId = new Guid("ba5ed788-ddc6-429c-a6a2-0277f01dbee7")
                 };
             }
@@ -45,37 +45,34 @@ namespace Azure.ResourceManager.BillingBenefits.Tests.Helper
             return request;
         }
 
-        public static ReservationOrderAliasModelCreateOrUpdateContent CreateReservationOrderAliasPurchaseRequest(AppliedScopeType scope)
+        public static BillingBenefitsReservationOrderAliasCreateOrUpdateContent CreateReservationOrderAliasPurchaseRequest(BillingBenefitsAppliedScopeType scope)
         {
-            var request = new ReservationOrderAliasModelCreateOrUpdateContent(new BillingBenefitsSku("Standard_B1s"))
+            var request = new BillingBenefitsReservationOrderAliasCreateOrUpdateContent(new BillingBenefitsSku("Standard_B1s"))
             {
-                BillingScopeId = "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47",
-                Term = new Term("P3Y"),
+                BillingScopeId = new ResourceIdentifier("/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47"),
+                Term = new BillingBenefitsTerm("P3Y"),
                 AppliedScopeType = scope,
                 DisplayName = "TestROName" + scope.ToString(),
-                BillingPlan = new BillingPlan("P1M"),
+                BillingPlan = new BillingBenefitsBillingPlan("P1M"),
                 ReservedResourceType = "VirtualMachines",
-                Renew = false,
+                IsRenewed = false,
                 Quantity = 1,
                 Location = AzureLocation.EastUS,
-                ReservedResourceProperties = new ReservationOrderAliasRequestReservedResourceProperties
-                {
-                    InstanceFlexibility = InstanceFlexibility.On
-                }
+                ReservedResourceInstanceFlexibility = BillingBenefitsInstanceFlexibility.On
             };
 
-            if (scope == AppliedScopeType.Single)
+            if (scope == BillingBenefitsAppliedScopeType.Single)
             {
-                request.AppliedScopeProperties = new AppliedScopeProperties
+                request.AppliedScopeProperties = new BillingBenefitsAppliedScopeProperties
                 {
-                    SubscriptionId = "/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47"
+                    SubscriptionId = new ResourceIdentifier("/subscriptions/eef82110-c91b-4395-9420-fcfcbefc5a47")
                 };
             }
-            else if (scope == AppliedScopeType.ManagementGroup)
+            else if (scope == BillingBenefitsAppliedScopeType.ManagementGroup)
             {
-                request.AppliedScopeProperties = new AppliedScopeProperties
+                request.AppliedScopeProperties = new BillingBenefitsAppliedScopeProperties
                 {
-                    ManagementGroupId = "/providers/Microsoft.Management/managementGroups/ba5ed788-ddc6-429c-a6a2-0277f01dbee7",
+                    ManagementGroupId = new ResourceIdentifier("/providers/Microsoft.Management/managementGroups/ba5ed788-ddc6-429c-a6a2-0277f01dbee7"),
                     TenantId = new Guid("ba5ed788-ddc6-429c-a6a2-0277f01dbee7")
                 };
             }
