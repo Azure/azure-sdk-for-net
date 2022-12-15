@@ -13,7 +13,7 @@ namespace Azure.Core
     /// the sequence {1, 1, 1, 2, 4, ...32}.
     /// </summary>
     /// <remarks>Polling interval always follows the given sequence.</remarks>
-    internal class SequentialDelayStrategy : DelayStrategy
+    internal class SequentialExponentialDelayStrategy : DelayStrategy
     {
         private static readonly TimeSpan[] _pollingSequence = new TimeSpan[]
         {

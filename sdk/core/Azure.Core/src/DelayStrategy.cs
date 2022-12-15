@@ -15,33 +15,32 @@ namespace Azure.Core
         private const string RetryAfterHeaderName = "Retry-After";
         private const string RetryAfterMsHeaderName = "retry-after-ms";
         private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
+
         /// <summary>
         /// Get the interval of next delay iteration.
         /// </summary>
         /// <remarks> Note that the value could change per call. </remarks>
         /// <param name="response"> Server response. </param>
         /// <param name="attempt"></param>
-        /// <param name="suggestedDelay"> Suggested pollingInterval. It is up to strategy
-        /// implementation to decide how to deal with this parameter. </param>
+        /// <param name="delayHint"></param>
         /// <returns> Delay interval of next iteration. </returns>
-        public abstract TimeSpan GetNextDelay(Response response, int attempt, TimeSpan? suggestedDelay);
+        public abstract TimeSpan GetNextDelay(Response response, int attempt, TimeSpan? delayHint);
 
         /// <summary>
-        /// Gets the server specified delay. If the message has no response, <see cref="TimeSpan.Zero"/> is returned.
+        /// Gets the server specified delay. If there is no response, <see cref="TimeSpan.Zero"/> is returned.
         /// This method can be used to help calculate the next delay when overriding <see cref="GetNextDelay"/>, i.e.
         /// implementors may want to add the server delay to their own custom delay.
         /// </summary>
-        /// <param name="message">The message to inspect for the server specified delay.</param>
+        /// <param name="response">The response to inspect for the server specified delay.</param>
         /// <returns>The server specified delay.</returns>
-        protected internal static TimeSpan GetServerDelay(HttpMessage message)
+        protected internal static TimeSpan GetServerDelay(Response? response)
         {
-            if (!message.HasResponse)
+            if (response == null)
             {
                 return TimeSpan.Zero;
             }
-
-            if (message.Response.TryGetHeader(RetryAfterMsHeaderName, out var retryAfterValue) ||
-                message.Response.TryGetHeader(XRetryAfterMsHeaderName, out retryAfterValue))
+            if (response.TryGetHeader(RetryAfterMsHeaderName, out var retryAfterValue) ||
+                response.TryGetHeader(XRetryAfterMsHeaderName, out retryAfterValue))
             {
                 if (int.TryParse(retryAfterValue, out var delaySeconds))
                 {
@@ -49,7 +48,7 @@ namespace Azure.Core
                 }
             }
 
-            if (message.Response.TryGetHeader(RetryAfterHeaderName, out retryAfterValue))
+            if (response.TryGetHeader(RetryAfterHeaderName, out retryAfterValue))
             {
                 if (int.TryParse(retryAfterValue, out var delaySeconds))
                 {

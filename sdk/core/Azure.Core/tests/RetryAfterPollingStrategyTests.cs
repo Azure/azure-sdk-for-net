@@ -21,7 +21,7 @@ namespace Azure.Core.Tests.DelayStrategies
                 new int[] { 500, 5000, 1250, 2000, 10000, 7500, 20000, 20000, 20000, 20000, 20000, 20000, 20000 })] int[] delayValues,
             [Values(500, 1000, 2000, 5000, null)] int? suggestedWaitInMs)
         {
-            var fallbackStrategy = new ExponentialDelayStrategy();
+            var fallbackStrategy = new SequentialExponentialDelayStrategy();
             TimeSpan[] defaultDelays = fallbackStrategy.GetType().GetField("_pollingSequence", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as TimeSpan[];
             var strategy = new RetryAfterDelayStrategy(fallbackStrategy);
             TimeSpan actual = TimeSpan.Zero;
@@ -50,7 +50,7 @@ namespace Azure.Core.Tests.DelayStrategies
                 new int[] { 1, 5, 1, 2, 10, 8, 20, 20, 20, 20, 20, 20, 20 })] int[] delayValues,
             [Values(1, 2, 5, null)] int? suggestedWaitInMs)
         {
-            var fallbackStrategy = new ExponentialDelayStrategy();
+            var fallbackStrategy = new SequentialExponentialDelayStrategy();
             TimeSpan[] defaultDelays = fallbackStrategy.GetType().GetField("_pollingSequence", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as TimeSpan[];
             var strategy = new RetryAfterDelayStrategy(fallbackStrategy);
             TimeSpan actual = TimeSpan.Zero;

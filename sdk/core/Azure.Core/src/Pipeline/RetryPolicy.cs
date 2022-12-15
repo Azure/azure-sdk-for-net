@@ -22,7 +22,7 @@ namespace Azure.Core.Pipeline
         private readonly int _maxRetries;
 
         private readonly Random _random = new ThreadSafeRandom();
-        private readonly DelayStrategy? _delayStrategy;
+        private readonly DelayStrategy _delayStrategy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryPolicy"/> class.
@@ -36,6 +36,12 @@ namespace Azure.Core.Pipeline
             _delay = options.Delay;
             _maxDelay = options.MaxDelay;
             _maxRetries = options.MaxRetries;
+            delayStrategy ??= _mode switch
+            {
+                RetryMode.Exponential => new ExponentialDelayStrategy(),
+                RetryMode.Fixed => new FixedDelayStrategy(),
+                _ => throw new ArgumentOutOfRangeException(nameof(options.Mode), options.Mode, "Unknown retry mode.")
+            };
             _delayStrategy = delayStrategy;
         }
 
@@ -276,18 +282,13 @@ namespace Azure.Core.Pipeline
                     break;
             }
 
-            TimeSpan serverDelay = DelayStrategy.GetServerDelay(message);
+            TimeSpan serverDelay = message.HasResponse ? DelayStrategy.GetServerDelay(message.Response) : TimeSpan.Zero;
             if (serverDelay > delay)
             {
                 delay = serverDelay;
             }
 
-            if (_delayStrategy != null)
-            {
-                delay = _delayStrategy.GetNextDelay(message.Response, message.RetryNumber + 1, delay);
-            }
-
-            return delay;
+            return _delayStrategy.GetNextDelay(message.Response, message.RetryNumber + 1, delay);
         }
 
         private TimeSpan CalculateExponentialDelay(int attempted)

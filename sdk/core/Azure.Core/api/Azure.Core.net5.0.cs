@@ -398,8 +398,8 @@ namespace Azure.Core
     public abstract partial class DelayStrategy
     {
         protected DelayStrategy() { }
-        public abstract System.TimeSpan GetNextDelay(Azure.Response response, int attempt, System.TimeSpan? suggestedDelay);
-        protected internal static System.TimeSpan GetServerDelay(Azure.Core.HttpMessage message) { throw null; }
+        public abstract System.TimeSpan GetNextDelay(Azure.Response response, int attempt, System.TimeSpan? delayHint);
+        protected internal static System.TimeSpan GetServerDelay(Azure.Response? response) { throw null; }
         protected static System.TimeSpan Max(System.TimeSpan t1, System.TimeSpan t2) { throw null; }
     }
     public static partial class DelegatedTokenCredential
@@ -419,6 +419,16 @@ namespace Azure.Core
         public int LoggedContentSizeLimit { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> LoggedHeaderNames { get { throw null; } }
         public System.Collections.Generic.IList<string> LoggedQueryParameters { get { throw null; } }
+    }
+    public partial class ExponentialDelayStrategy : Azure.Core.DelayStrategy
+    {
+        public ExponentialDelayStrategy(System.TimeSpan? delay = default(System.TimeSpan?), System.TimeSpan? maxDelay = default(System.TimeSpan?)) { }
+        public override System.TimeSpan GetNextDelay(Azure.Response response, int attempt, System.TimeSpan? delayHint) { throw null; }
+    }
+    public partial class FixedDelayStrategy : Azure.Core.DelayStrategy
+    {
+        public FixedDelayStrategy(System.TimeSpan? delay = default(System.TimeSpan?)) { }
+        public override System.TimeSpan GetNextDelay(Azure.Response response, int attempt, System.TimeSpan? delayHint) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HttpHeader : System.IEquatable<Azure.Core.HttpHeader>

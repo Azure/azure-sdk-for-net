@@ -31,8 +31,8 @@ namespace Azure.Core.Tests.DelayStrategies
         [Test]
         public void CanOverrideFallbackStrategy()
         {
-            ExponentialDelayStrategy exponentialDelayStrategy = new ExponentialDelayStrategy();
-            OperationPoller poller = new OperationPoller(exponentialDelayStrategy);
+            SequentialExponentialDelayStrategy sequentialDelayStrategy = new SequentialExponentialDelayStrategy();
+            OperationPoller poller = new OperationPoller(sequentialDelayStrategy);
             var delayStrategy = poller.GetType().GetField("_delayStrategy", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(poller);
 
             Assert.IsNotNull(delayStrategy);
@@ -41,7 +41,7 @@ namespace Azure.Core.Tests.DelayStrategies
             var fallbackStrategy = delayStrategy.GetType().GetField("_fallbackStrategy", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(delayStrategy);
 
             Assert.IsNotNull(delayStrategy);
-            Assert.AreEqual(exponentialDelayStrategy, fallbackStrategy);
+            Assert.AreEqual(sequentialDelayStrategy, fallbackStrategy);
         }
 
         [Test]
