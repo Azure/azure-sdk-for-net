@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager
             var nextLinkOperation = NextLinkOperationImplementation.Create(client.Pipeline, id, out string finalResponse);
             // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
             var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
-            var operation = OperationInternal.Create(clientDiagnostics, nextLinkOperation, finalResponse, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
+            var operation = finalResponse == null ? new OperationInternal(clientDiagnostics, nextLinkOperation, null, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy()) : OperationInternal.Succeeded(JsonSerializer.Deserialize<DecodedResponse>(finalResponse)!);
             return new ArmOperation(operation);
         }
 

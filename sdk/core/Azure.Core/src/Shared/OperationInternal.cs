@@ -108,22 +108,6 @@ namespace Azure.Core
                 : OperationInternal<VoidValue>.Failed(finalState.RawResponse, finalState.OperationFailedException!);
         }
 
-        public static OperationInternal Create(
-            ClientDiagnostics clientDiagnostics,
-            IOperation? operation,
-            string? finalResponse,
-            string? operationTypeName = null,
-            IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategy? fallbackStrategy = null)
-        {
-            if (finalResponse != null)
-            {
-                Response response = JsonSerializer.Deserialize<DecodedResponse>(finalResponse)!;
-                return OperationInternal.Succeeded(response);
-            }
-            return new OperationInternal(clientDiagnostics, operation!, null, operationTypeName, scopeAttributes, fallbackStrategy);
-        }
-
         public override Response RawResponse => _internalOperation.RawResponse;
 
         public override bool HasCompleted => _internalOperation.HasCompleted;

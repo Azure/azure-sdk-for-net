@@ -8,6 +8,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -52,9 +53,9 @@ namespace Azure.ResourceManager
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id, out string finalResponse);
             // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
             var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
-            var operation = OperationInternal<T>.Create(source, clientDiagnostics, nextLinkOperation, finalResponse, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
-            var armOperation = new ArmOperation<T>(operation);
-            return armOperation;
+            DecodedResponse response;
+            var operation = finalResponse == null ? new OperationInternal<T>(clientDiagnostics, nextLinkOperation, null, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy()) : OperationInternal<T>.Succeeded(response = JsonSerializer.Deserialize<DecodedResponse>(finalResponse)!, source.CreateResult(response, CancellationToken.None));
+            return new ArmOperation<T>(operation);
 #else
             throw new InvalidOperationException("LRO rehydration is not supported in this version of .NET. Please upgrade to .NET 7.0 or later.");
 #endif
