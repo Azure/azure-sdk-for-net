@@ -97,6 +97,7 @@ function DeployStressTests(
         return $true
     })]
     [System.IO.FileInfo]$LocalAddonsPath,
+    [Parameter(Mandatory=$False)][switch]$Template,
     [Parameter(Mandatory=$False)][string]$MatrixFileName,
     [Parameter(Mandatory=$False)][string]$MatrixSelection = "sparse",
     [Parameter(Mandatory=$False)][string]$MatrixDisplayNameFilter,
@@ -298,11 +299,13 @@ function DeployStressPackage(
     }
 
     Write-Host "Installing or upgrading stress test $($pkg.ReleaseName) from $($pkg.Directory)"
-    $result = (Run helm upgrade $pkg.ReleaseName $pkg.Directory `
-                -n $pkg.Namespace `
-                --install `
-                --set stress-test-addons.env=$environment `
-                --values (Join-Path $pkg.Directory generatedValues.yaml)) 2>&1
+
+    $generatedConfigPath = Join-Path $pkg.Directory generatedValues.yaml
+    $subCommand = $Template ? "template" : "upgrade"
+    $installFlag = $Template ? "" : "--install"
+    $helmCommandArg = "helm", $subCommand, $pkg.ReleaseName, $pkg.Directory, "-n", $pkg.Namespace, $installFlag, "--set", "stress-test-addons.env=$environment", "--values", $generatedConfigPath
+
+    $result = (Run @helmCommandArg) 2>&1 | Write-Host
 
     if ($LASTEXITCODE) {
         # Error: UPGRADE FAILED: create: failed to create: Secret "sh.helm.release.v1.stress-test.v3" is invalid: data: Too long: must have at most 1048576 bytes
@@ -324,12 +327,13 @@ function DeployStressPackage(
     # Helm 3 stores release information in kubernetes secrets. The only way to add extra labels around
     # specific releases (thereby enabling filtering on `helm list`) is to label the underlying secret resources.
     # There is not currently support for setting these labels via the helm cli.
-    $helmReleaseConfig = RunOrExitOnFailure kubectl get secrets `
+    if(!$Template) {
+        $helmReleaseConfig = RunOrExitOnFailure kubectl get secrets `
                                                 -n $pkg.Namespace `
                                                 -l "status=deployed,name=$($pkg.ReleaseName)" `
                                                 -o jsonpath='{.items[0].metadata.name}'
-
-    Run kubectl label secret -n $pkg.Namespace --overwrite $helmReleaseConfig deployId=$deployId
+        Run kubectl label secret -n $pkg.Namespace --overwrite $helmReleaseConfig deployId=$deployId
+    }
 }
 
 function CheckDependencies()

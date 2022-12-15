@@ -281,11 +281,7 @@ namespace Azure.Storage.DataMovement
                     _cancellationTokenSource.Token)).ConfigureAwait(false);
             }
             // Trigger job cancellation if the failed handler is enabled
-            if (_errorHandling == ErrorHandlingOptions.StopOnAllFailures ||
-                _createMode == StorageResourceCreateMode.Fail)
-            {
-                await TriggerCancellation(StorageTransferStatus.CompletedWithFailedTransfers).ConfigureAwait(false);
-            }
+            await TriggerCancellation(StorageTransferStatus.CompletedWithFailedTransfers).ConfigureAwait(false);
         }
 
         internal long CalculateBlockSize(long length)
@@ -320,7 +316,7 @@ namespace Azure.Storage.DataMovement
             return long.Parse(range.Substring(lengthSeparator + 1), CultureInfo.InvariantCulture);
         }
 
-        internal static List<(long Offset, long Size)> GetCommitBlockList(long blockSize, long fileLength)
+        internal static List<(long Offset, long Size)> GetRangeList(long blockSize, long fileLength)
         {
             // The list tracking blocks IDs we're going to commit
             List<(long Offset, long Size)> partitions = new List<(long, long)>();
