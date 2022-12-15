@@ -34,7 +34,7 @@ namespace Azure.Core.Tests.Public
         [TestCaseSource(nameof(PrimitiveValues))]
         public void NewObjectPropertiesCanBeAssignedWithPrimitive<T>(T value, string expected)
         {
-            dynamic json = new BinaryData("{}").ToDynamic();
+            dynamic json = JsonDataTestHelpers.CreateEmpty();
             json.a = value;
 
             Assert.AreEqual(json.ToString(), "{\"a\":" + expected + "}");
@@ -51,7 +51,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void NewObjectPropertiesCanBeAssignedWithArrays()
         {
-            dynamic json = new BinaryData("{}").ToDynamic();
+            dynamic json = JsonDataTestHelpers.CreateEmpty();
             json.a = new object[] { 1, 2, null, "string" };
 
             Assert.AreEqual(json.ToString(), "{\"a\":[1,2,null,\"string\"]}");
@@ -60,7 +60,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void NewObjectPropertiesCanBeAssignedWithObject()
         {
-            var json = new BinaryData("{}").ToDynamic();
+            var json = JsonDataTestHelpers.CreateEmpty();
             json.a = new { b = 2 };
 
             Assert.AreEqual(json.ToString(), "{\"a\":{\"b\":2}}");
@@ -69,8 +69,8 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void NewObjectPropertiesCanBeAssignedWithObjectIndirectly()
         {
-            dynamic json = new BinaryData("{}").ToDynamic();
-            dynamic anotherJson = new BinaryData("{}").ToDynamic();
+            dynamic json = JsonDataTestHelpers.CreateEmpty();
+            dynamic anotherJson = JsonDataTestHelpers.CreateEmpty();
             json.a = anotherJson;
             anotherJson.b = 2;
 
@@ -80,7 +80,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void NewObjectPropertiesCanBeAssignedWithSerializedObject()
         {
-            var json = new BinaryData("{}").ToDynamic();
+            var json = JsonDataTestHelpers.CreateEmpty();
             json.a = new GeoPoint(1, 2);
 
             Assert.AreEqual("{\"a\":{\"type\":\"Point\",\"coordinates\":[1,2]}}", json.ToString());

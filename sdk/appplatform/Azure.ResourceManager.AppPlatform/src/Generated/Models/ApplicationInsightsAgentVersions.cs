@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
         }
 
         /// <summary> Initializes a new instance of ApplicationInsightsAgentVersions. </summary>
-        /// <param name="java"> Indicates the version of application insight java agent. </param>
-        internal ApplicationInsightsAgentVersions(string java)
+        /// <param name="appInsightsJavaAgentVersion"> Indicates the version of application insight java agent. </param>
+        internal ApplicationInsightsAgentVersions(string appInsightsJavaAgentVersion)
         {
-            Java = java;
+            AppInsightsJavaAgentVersion = appInsightsJavaAgentVersion;
         }
 
         /// <summary> Indicates the version of application insight java agent. </summary>
-        public string Java { get; }
+        public string AppInsightsJavaAgentVersion { get; }
     }
 }

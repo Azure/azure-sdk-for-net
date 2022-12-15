@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    /// <summary> The keyType to regenerate. Must be either &apos;primary&apos; or &apos;secondary&apos;(case-insensitive). </summary>
+    /// <summary> The type of access key. </summary>
     public readonly partial struct WebPubSubKeyType : IEquatable<WebPubSubKeyType>
     {
         private readonly string _value;
