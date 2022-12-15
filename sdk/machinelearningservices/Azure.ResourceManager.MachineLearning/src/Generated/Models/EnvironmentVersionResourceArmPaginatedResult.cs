@@ -11,27 +11,42 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> A paginated list of EnvironmentVersion entities. </summary>
+    /// <summary>
+    /// A paginated list of EnvironmentVersion entities.
+    /// Serialized Name: EnvironmentVersionResourceArmPaginatedResult
+    /// </summary>
     internal partial class EnvironmentVersionResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of EnvironmentVersionResourceArmPaginatedResult. </summary>
         internal EnvironmentVersionResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<EnvironmentVersionData>();
+            Value = new ChangeTrackingList<MachineLearningEnvironmentVersionData>();
         }
 
         /// <summary> Initializes a new instance of EnvironmentVersionResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"> The link to the next page of EnvironmentVersion objects. If null, there are no additional pages. </param>
-        /// <param name="value"> An array of objects of type EnvironmentVersion. </param>
-        internal EnvironmentVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<EnvironmentVersionData> value)
+        /// <param name="nextLink">
+        /// The link to the next page of EnvironmentVersion objects. If null, there are no additional pages.
+        /// Serialized Name: EnvironmentVersionResourceArmPaginatedResult.nextLink
+        /// </param>
+        /// <param name="value">
+        /// An array of objects of type EnvironmentVersion.
+        /// Serialized Name: EnvironmentVersionResourceArmPaginatedResult.value
+        /// </param>
+        internal EnvironmentVersionResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningEnvironmentVersionData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> The link to the next page of EnvironmentVersion objects. If null, there are no additional pages. </summary>
+        /// <summary>
+        /// The link to the next page of EnvironmentVersion objects. If null, there are no additional pages.
+        /// Serialized Name: EnvironmentVersionResourceArmPaginatedResult.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> An array of objects of type EnvironmentVersion. </summary>
-        public IReadOnlyList<EnvironmentVersionData> Value { get; }
+        /// <summary>
+        /// An array of objects of type EnvironmentVersion.
+        /// Serialized Name: EnvironmentVersionResourceArmPaginatedResult.value
+        /// </summary>
+        public IReadOnlyList<MachineLearningEnvironmentVersionData> Value { get; }
     }
 }

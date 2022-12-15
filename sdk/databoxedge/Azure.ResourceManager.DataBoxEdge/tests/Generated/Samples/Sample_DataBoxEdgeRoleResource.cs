@@ -68,9 +68,27 @@ namespace Azure.ResourceManager.DataBoxEdge
             DataBoxEdgeRoleResource dataBoxEdgeRole = client.GetDataBoxEdgeRoleResource(dataBoxEdgeRoleResourceId);
 
             // invoke the operation
-            DataBoxEdgeRoleData data = new DataBoxEdgeRoleData()
+            DataBoxEdgeRoleData data = new EdgeIotRole()
             {
-                Kind = DataBoxEdgeRoleType.IoT,
+                HostPlatform = DataBoxEdgeOSPlatformType.Linux,
+                IotDeviceDetails = new EdgeIotDeviceInfo("iotdevice", "iothub.azure-devices.net")
+                {
+                    SymmetricKeyConnectionString = new AsymmetricEncryptedSecret("Encrypted<<HostName=iothub.azure-devices.net;DeviceId=iotDevice;SharedAccessKey=2C750FscEas3JmQ8Bnui5yQWZPyml0/UiRt1bQwd8=>>", DataBoxEdgeEncryptionAlgorithm.Aes256)
+                    {
+                        EncryptionCertThumbprint = "348586569999244",
+                    },
+                },
+                IotEdgeDeviceDetails = new EdgeIotDeviceInfo("iotEdge", "iothub.azure-devices.net")
+                {
+                    SymmetricKeyConnectionString = new AsymmetricEncryptedSecret("Encrypted<<HostName=iothub.azure-devices.net;DeviceId=iotEdge;SharedAccessKey=2C750FscEas3JmQ8Bnui5yQWZPyml0/UiRt1bQwd8=>>", DataBoxEdgeEncryptionAlgorithm.Aes256)
+                    {
+                        EncryptionCertThumbprint = "1245475856069999244",
+                    },
+                },
+                ShareMappings =
+{
+},
+                RoleStatus = DataBoxEdgeRoleStatus.Enabled,
             };
             ArmOperation<DataBoxEdgeRoleResource> lro = await dataBoxEdgeRole.UpdateAsync(WaitUntil.Completed, data);
             DataBoxEdgeRoleResource result = lro.Value;

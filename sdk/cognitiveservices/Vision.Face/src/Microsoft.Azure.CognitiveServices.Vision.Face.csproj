@@ -2,7 +2,7 @@
   <PropertyGroup>
     <AssemblyTitle>Microsoft Cognitive Services Face SDK</AssemblyTitle>
     <Description>This client library provides access to the Microsoft Cognitive Services Face APIs.</Description>
-    <Version>2.7.0-preview.3</Version>
+    <Version>2.7.0-preview.4</Version>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Face;Face API;Face SDK;Vision;netcore451511</PackageTags>
     <PackageReleaseNotes>
     <![CDATA[

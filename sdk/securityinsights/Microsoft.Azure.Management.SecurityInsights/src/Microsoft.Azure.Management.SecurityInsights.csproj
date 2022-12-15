@@ -6,7 +6,7 @@
   <PropertyGroup>
     <Version>2.0.0</Version>
     <PackageId>Microsoft.Azure.Management.SecurityInsights</PackageId>
-    <Description>Azure Resource Manager client SDK for Azure resource provider SecurityInsights</Description>
+    <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider SecurityInsights</Description>
     <PackageTags>azure;management;arm;resource manager;securityinsights</PackageTags>
     <PackageReleaseNotes>New API version 2022-01-01-preview</PackageReleaseNotes>
   </PropertyGroup>

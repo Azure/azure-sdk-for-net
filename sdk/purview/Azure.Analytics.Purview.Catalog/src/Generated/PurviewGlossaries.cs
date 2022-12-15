@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Catalog
 {
-    // Data plane generated sub-client. The PurviewGlossaries sub-client.
+    // Data plane generated sub-client.
     /// <summary> The PurviewGlossaries sub-client. </summary>
     public partial class PurviewGlossaries
     {

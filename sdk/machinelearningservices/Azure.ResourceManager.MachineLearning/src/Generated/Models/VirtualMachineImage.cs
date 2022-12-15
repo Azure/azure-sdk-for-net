@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Virtual Machine image for Windows AML Compute. </summary>
+    /// <summary>
+    /// Virtual Machine image for Windows AML Compute
+    /// Serialized Name: VirtualMachineImage
+    /// </summary>
     internal partial class VirtualMachineImage
     {
         /// <summary> Initializes a new instance of VirtualMachineImage. </summary>
-        /// <param name="id"> Virtual Machine image path. </param>
+        /// <param name="id">
+        /// Virtual Machine image path
+        /// Serialized Name: VirtualMachineImage.id
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public VirtualMachineImage(string id)
         {
@@ -23,7 +29,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Id = id;
         }
 
-        /// <summary> Virtual Machine image path. </summary>
+        /// <summary>
+        /// Virtual Machine image path
+        /// Serialized Name: VirtualMachineImage.id
+        /// </summary>
         public string Id { get; set; }
     }
 }

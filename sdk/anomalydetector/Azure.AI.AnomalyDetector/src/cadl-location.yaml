@@ -1,4 +1,3 @@
-directory: specification/cognitiveservices/data-plane/AnomalyDetector/stable/v1.1/cadl
-commit: 481d9600f8101552a6af1a55d3c6aee831e25d08
+directory: specification/cognitiveservices/AnomalyDetector
+commit: ac8e06a2ed0fc1c54663c98f12c8a073f8026b90
 repo: Azure/azure-rest-api-specs
-cleanup: false
