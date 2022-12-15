@@ -20,7 +20,6 @@
     <Compile Include="$(AzureCoreSharedSources)TypeReferenceTypeAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)DecodedResponse.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)StreamConverter.cs" LinkBase="Shared\Core" />
-    <Compile Include="$(AzureCoreSharedSources)IOperationSourceOfT.cs" LinkBase="Shared\Core" />
   </ItemGroup>
 
 </Project>

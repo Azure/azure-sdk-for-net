@@ -30,7 +30,6 @@
     <Compile Include="$(AzureCoreSharedSources)ApiVersionString.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)DecodedResponse.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)StreamConverter.cs" LinkBase="Shared\Core" />
-    <Compile Include="$(AzureCoreSharedSources)IOperationSourceOfT.cs" LinkBase="Shared\Core" />
   </ItemGroup>
     
   <ItemGroup>
