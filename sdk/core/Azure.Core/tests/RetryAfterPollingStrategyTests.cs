@@ -21,9 +21,8 @@ namespace Azure.Core.Tests.DelayStrategies
                 new int[] { 500, 5000, 1250, 2000, 10000, 7500, 20000, 20000, 20000, 20000, 20000, 20000, 20000 })] int[] delayValues,
             [Values(500, 1000, 2000, 5000, null)] int? suggestedWaitInMs)
         {
-            var fallbackStrategy = new SequentialExponentialDelayStrategy();
-            TimeSpan[] defaultDelays = fallbackStrategy.GetType().GetField("_pollingSequence", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as TimeSpan[];
-            var strategy = new RetryAfterDelayStrategy(fallbackStrategy);
+            var strategy = new SequentialDelayStrategy();
+            TimeSpan[] defaultDelays = strategy.GetType().GetField("_pollingSequence", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as TimeSpan[];
             TimeSpan actual = TimeSpan.Zero;
             TimeSpan? suggestion = suggestedWaitInMs.HasValue ? TimeSpan.FromMilliseconds(suggestedWaitInMs.Value) : null;
             int expected = 0;
@@ -50,9 +49,8 @@ namespace Azure.Core.Tests.DelayStrategies
                 new int[] { 1, 5, 1, 2, 10, 8, 20, 20, 20, 20, 20, 20, 20 })] int[] delayValues,
             [Values(1, 2, 5, null)] int? suggestedWaitInMs)
         {
-            var fallbackStrategy = new SequentialExponentialDelayStrategy();
-            TimeSpan[] defaultDelays = fallbackStrategy.GetType().GetField("_pollingSequence", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as TimeSpan[];
-            var strategy = new RetryAfterDelayStrategy(fallbackStrategy);
+            var strategy = new SequentialDelayStrategy();
+            TimeSpan[] defaultDelays = strategy.GetType().GetField("_pollingSequence", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null) as TimeSpan[];
             TimeSpan actual = TimeSpan.Zero;
             TimeSpan? suggestion = suggestedWaitInMs.HasValue ? TimeSpan.FromSeconds(suggestedWaitInMs.Value) : null;
             int expected = 0;
@@ -78,14 +76,15 @@ namespace Azure.Core.Tests.DelayStrategies
                 new int[] { 500, 5000, 1250, 2000, 10000, 7500 })] int[] delayValues,
             [Values(500, 1000, 2000, 5000, null)] int? suggestedWaitInMs)
         {
-            var strategy = new RetryAfterDelayStrategy();
+            var delay = TimeSpan.FromSeconds(1);
+            var strategy = new FixedDelayStrategy(delay);
             TimeSpan actual = TimeSpan.Zero;
             TimeSpan? suggestion = suggestedWaitInMs.HasValue ? TimeSpan.FromMilliseconds(suggestedWaitInMs.Value) : null;
             int expected = 0;
             for (int i = 0; i < delayValues.Length; i++)
             {
                 var response = new MockResponse(200);
-                expected += GetExpected(headerName, delayValues[i], suggestedWaitInMs, (int)ConstantDelayStrategy.DefaultPollingInterval.TotalMilliseconds);
+                expected += GetExpected(headerName, delayValues[i], suggestedWaitInMs, (int)delay.TotalMilliseconds);
                 if (headerName is not null)
                     response.AddHeader(new HttpHeader(headerName, delayValues[i].ToString()));
                 actual += strategy.GetNextDelay(response, i + 1, suggestion);
@@ -101,16 +100,17 @@ namespace Azure.Core.Tests.DelayStrategies
                 new int[] { 1, 5, 2, 2 },
                 new int[] { 1, 1, 2 },
                 new int[] { 1, 5, 2, 2, 10, 8 })] int[] delayValues,
-            [Values(1, 2, 5, null)] int? suggestedWaitInMs)
+            [Values(1, 2, 5, null)] int? suggestedWaitInSeconds)
         {
-            var strategy = new RetryAfterDelayStrategy();
+            var delay = TimeSpan.FromSeconds(1);
+            var strategy = new FixedDelayStrategy(delay);
             TimeSpan actual = TimeSpan.Zero;
-            TimeSpan? suggestion = suggestedWaitInMs.HasValue ? TimeSpan.FromSeconds(suggestedWaitInMs.Value) : null;
+            TimeSpan? suggestion = suggestedWaitInSeconds.HasValue ? TimeSpan.FromSeconds(suggestedWaitInSeconds.Value) : null;
             int expected = 0;
             for (int i = 0; i < delayValues.Length; i++)
             {
                 var response = new MockResponse(200);
-                expected += GetExpected(headerName, delayValues[i], suggestedWaitInMs, (int)ConstantDelayStrategy.DefaultPollingInterval.TotalSeconds);
+                expected += GetExpected(headerName, delayValues[i], suggestedWaitInSeconds, (int)delay.TotalSeconds);
                 if (headerName is not null)
                     response.AddHeader(new HttpHeader(headerName, delayValues[i].ToString()));
                 actual += strategy.GetNextDelay(response, i + 1, suggestion);

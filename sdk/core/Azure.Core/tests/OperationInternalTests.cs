@@ -239,7 +239,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task WaitForCompletionCallsUntilOperationCompletes([Values(true, false)] bool useDefaultPollingInterval)
         {
-            var operationInternal = new OperationInternal(ClientDiagnostics, TestOperation.SucceededAfter(5), InitialResponse, fallbackStrategy: new ZeroPollingStrategy());
+            var operationInternal = new OperationInternal(ClientDiagnostics, TestOperation.SucceededAfter(5), InitialResponse, delayStrategy: new ZeroPollingStrategy());
 
             var operationResponse = useDefaultPollingInterval
                 ? await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None)
@@ -252,7 +252,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task WaitForCompletionUsesZeroPollingInterval([Values(true, false)] bool hasSuggest, [Values(1, 2, 3)] int retries)
         {
-            var operationInternal = new OperationInternal(ClientDiagnostics, TestOperation.SucceededAfter(retries), InitialResponse, fallbackStrategy: new ZeroPollingStrategy());
+            var operationInternal = new OperationInternal(ClientDiagnostics, TestOperation.SucceededAfter(retries), InitialResponse, delayStrategy: new ZeroPollingStrategy());
 
             var stopwatch = Stopwatch.StartNew();
             if (hasSuggest)
@@ -280,7 +280,7 @@ namespace Azure.Core.Tests
                 return new ValueTask<OperationState>(OperationState.Success(new MockResponse(200)));
             });
 
-            var operationInternal = new OperationInternal(ClientDiagnostics, operation, InitialResponse, fallbackStrategy: new ZeroPollingStrategy());
+            var operationInternal = new OperationInternal(ClientDiagnostics, operation, InitialResponse, delayStrategy: new ZeroPollingStrategy());
 
             _ = useDefaultPollingInterval
                 ? await operationInternal.WaitForCompletionResponseAsync(originalToken)
@@ -297,7 +297,7 @@ namespace Azure.Core.Tests
 
             tokenSource.Cancel();
 
-            var operationInternal = new OperationInternal(ClientDiagnostics, TestOperation.SucceededAfter(1), InitialResponse, fallbackStrategy: new ZeroPollingStrategy());
+            var operationInternal = new OperationInternal(ClientDiagnostics, TestOperation.SucceededAfter(1), InitialResponse, delayStrategy: new ZeroPollingStrategy());
 
             _ = useDefaultPollingInterval
                 ? Assert.ThrowsAsync<TaskCanceledException>(async () => await operationInternal.WaitForCompletionResponseAsync(cancellationToken))
@@ -309,7 +309,7 @@ namespace Azure.Core.Tests
         {
             var fallbackStrategy = new MockDelayStrategy();
 
-            var operationInternal = new OperationInternal(ClientDiagnostics, TestOperation.SucceededAfter(retries), InitialResponse, fallbackStrategy: fallbackStrategy);
+            var operationInternal = new OperationInternal(ClientDiagnostics, TestOperation.SucceededAfter(retries), InitialResponse, delayStrategy: fallbackStrategy);
             _ = await operationInternal.WaitForCompletionResponseAsync(CancellationToken.None);
 
             Assert.AreEqual(retries, fallbackStrategy.CallCount);
@@ -320,7 +320,7 @@ namespace Azure.Core.Tests
         {
             var fallbackStrategy = new MockDelayStrategy();
 
-            var operationInternal = new OperationInternal(ClientDiagnostics, TestOperation.SucceededAfter(retries), InitialResponse, fallbackStrategy: fallbackStrategy);
+            var operationInternal = new OperationInternal(ClientDiagnostics, TestOperation.SucceededAfter(retries), InitialResponse, delayStrategy: fallbackStrategy);
             _ = operationInternal.WaitForCompletionResponse(CancellationToken.None);
 
             Assert.AreEqual(retries, fallbackStrategy.CallCount);
@@ -356,7 +356,7 @@ namespace Azure.Core.Tests
                 return OperationState.Success(new MockResponse(200));
             });
 
-            var operationInternal = new OperationInternal(ClientDiagnostics, operation, InitialResponse, fallbackStrategy: fallbackStrategy);
+            var operationInternal = new OperationInternal(ClientDiagnostics, operation, InitialResponse, delayStrategy: fallbackStrategy);
 
             var tasks = new List<Task<Response>>();
             for (var i = 0; i < 50; i++)

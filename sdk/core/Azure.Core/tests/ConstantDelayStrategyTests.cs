@@ -15,7 +15,7 @@ namespace Azure.Core.Tests.DelayStrategies
         public void WillHonorSuggest(
            [Values(90, 100, 120)] int suggest)
         {
-            var strategy = new ConstantDelayStrategy();
+            var strategy = new FixedDelayStrategy();
             var expected = TimeSpan.FromSeconds(suggest);
             Assert.AreEqual(expected, strategy.GetNextDelay(_mockResponse, 1, TimeSpan.FromSeconds(suggest)));
         }
@@ -25,7 +25,7 @@ namespace Azure.Core.Tests.DelayStrategies
         [TestCase(3)]
         public void DefaultShouldUseOneSecond(int count)
         {
-            var strategy = new ConstantDelayStrategy();
+            var strategy = new FixedDelayStrategy();
             TimeSpan total = TimeSpan.Zero;
             TimeSpan expected = TimeSpan.FromSeconds(count);
 

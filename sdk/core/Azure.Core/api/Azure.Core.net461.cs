@@ -705,6 +705,11 @@ namespace Azure.Core
         public Azure.Core.RetryMode Mode { get { throw null; } set { } }
         public System.TimeSpan NetworkTimeout { get { throw null; } set { } }
     }
+    public partial class SequentialDelayStrategy : Azure.Core.DelayStrategy
+    {
+        public SequentialDelayStrategy(System.Collections.Generic.IEnumerable<System.TimeSpan>? sequence = null) { }
+        public override System.TimeSpan GetNextDelay(Azure.Response response, int attempt, System.TimeSpan? suggestedDelay) { throw null; }
+    }
     public partial class StatusCodeClassifier : Azure.Core.ResponseClassifier
     {
         public StatusCodeClassifier(System.ReadOnlySpan<ushort> successStatusCodes) { }

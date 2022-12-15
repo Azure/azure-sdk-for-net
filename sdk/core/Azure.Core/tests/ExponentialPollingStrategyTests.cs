@@ -15,7 +15,7 @@ namespace Azure.Core.Tests.DelayStrategies
         public void WillIgnoreSuggest(
            [Values(90, 100, 120)] int suggest)
         {
-            var strategy = new SequentialExponentialDelayStrategy();
+            var strategy = new SequentialDelayStrategy();
             var expected = TimeSpan.FromSeconds(1);
             Assert.AreEqual(expected, strategy.GetNextDelay(_mockResponse, 1, TimeSpan.FromSeconds(suggest)));
         }
@@ -39,7 +39,7 @@ namespace Azure.Core.Tests.DelayStrategies
             [Values(1, 10, 100)] int suggestionInS,
             [Values(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)] int retries)
         {
-            var strategy = new SequentialExponentialDelayStrategy();
+            var strategy = new SequentialDelayStrategy();
             var suggestion = TimeSpan.FromSeconds(suggestionInS);
             var expected = TimeSpan.FromSeconds(_expectedValues[retries - 1]);
             TimeSpan actual = TimeSpan.Zero;

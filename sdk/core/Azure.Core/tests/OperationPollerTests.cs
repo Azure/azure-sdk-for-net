@@ -20,28 +20,18 @@ namespace Azure.Core.Tests.DelayStrategies
             var delayStrategy = poller.GetType().GetField("_delayStrategy", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(poller);
 
             Assert.IsNotNull(delayStrategy);
-            Assert.AreEqual(typeof(RetryAfterDelayStrategy), delayStrategy.GetType());
-
-            var fallbackStrategy = delayStrategy.GetType().GetField("_fallbackStrategy", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(delayStrategy);
-
-            Assert.IsNotNull(delayStrategy);
-            Assert.AreEqual(typeof(ConstantDelayStrategy), fallbackStrategy.GetType());
+            Assert.AreEqual(typeof(FixedDelayStrategy), delayStrategy.GetType());
         }
 
         [Test]
         public void CanOverrideFallbackStrategy()
         {
-            SequentialExponentialDelayStrategy sequentialDelayStrategy = new SequentialExponentialDelayStrategy();
+            SequentialDelayStrategy sequentialDelayStrategy = new SequentialDelayStrategy();
             OperationPoller poller = new OperationPoller(sequentialDelayStrategy);
             var delayStrategy = poller.GetType().GetField("_delayStrategy", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(poller);
 
             Assert.IsNotNull(delayStrategy);
-            Assert.AreEqual(typeof(RetryAfterDelayStrategy), delayStrategy.GetType());
-
-            var fallbackStrategy = delayStrategy.GetType().GetField("_fallbackStrategy", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(delayStrategy);
-
-            Assert.IsNotNull(delayStrategy);
-            Assert.AreEqual(sequentialDelayStrategy, fallbackStrategy);
+            Assert.AreEqual(typeof(SequentialDelayStrategy), delayStrategy.GetType());
         }
 
         [Test]
