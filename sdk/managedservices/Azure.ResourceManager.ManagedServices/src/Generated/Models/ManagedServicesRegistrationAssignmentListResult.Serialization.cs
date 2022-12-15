@@ -12,11 +12,11 @@ using Azure.ResourceManager.ManagedServices;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
-    internal partial class MarketplaceRegistrationDefinitionList
+    internal partial class ManagedServicesRegistrationAssignmentListResult
     {
-        internal static MarketplaceRegistrationDefinitionList DeserializeMarketplaceRegistrationDefinitionList(JsonElement element)
+        internal static ManagedServicesRegistrationAssignmentListResult DeserializeManagedServicesRegistrationAssignmentListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ManagedServicesMarketplaceRegistrationData>> value = default;
+            Optional<IReadOnlyList<ManagedServicesRegistrationAssignmentData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ManagedServicesMarketplaceRegistrationData> array = new List<ManagedServicesMarketplaceRegistrationData>();
+                    List<ManagedServicesRegistrationAssignmentData> array = new List<ManagedServicesRegistrationAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServicesMarketplaceRegistrationData.DeserializeManagedServicesMarketplaceRegistrationData(item));
+                        array.Add(ManagedServicesRegistrationAssignmentData.DeserializeManagedServicesRegistrationAssignmentData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     continue;
                 }
             }
-            return new MarketplaceRegistrationDefinitionList(Optional.ToList(value), nextLink.Value);
+            return new ManagedServicesRegistrationAssignmentListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }
