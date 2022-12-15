@@ -281,11 +281,7 @@ namespace Azure.Storage.DataMovement
                     _cancellationTokenSource.Token)).ConfigureAwait(false);
             }
             // Trigger job cancellation if the failed handler is enabled
-            if (_errorHandling == ErrorHandlingOptions.StopOnAllFailures ||
-                _createMode == StorageResourceCreateMode.Fail)
-            {
-                await TriggerCancellation(StorageTransferStatus.CompletedWithFailedTransfers).ConfigureAwait(false);
-            }
+            await TriggerCancellation(StorageTransferStatus.CompletedWithFailedTransfers).ConfigureAwait(false);
         }
 
         internal long CalculateBlockSize(long length)

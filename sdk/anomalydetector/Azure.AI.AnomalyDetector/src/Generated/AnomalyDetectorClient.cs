@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.AnomalyDetector
 {
-    // Data plane generated client. The AnomalyDetector service client.
+    // Data plane generated client.
     /// <summary> The AnomalyDetector service client. </summary>
     public partial class AnomalyDetectorClient
     {
