@@ -64,15 +64,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(Resources))
             {
-                if (Resources != null)
-                {
-                    writer.WritePropertyName("resources");
-                    writer.WriteObjectValue(Resources);
-                }
-                else
-                {
-                    writer.WriteNull("resources");
-                }
+                writer.WritePropertyName("resources");
+                writer.WriteObjectValue(Resources);
             }
             writer.WriteEndObject();
         }
@@ -81,10 +74,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Optional<string> codeId = default;
             string command = default;
-            Optional<DistributionConfiguration> distribution = default;
+            Optional<MachineLearningDistributionConfiguration> distribution = default;
             string environmentId = default;
             Optional<IDictionary<string, string>> environmentVariables = default;
-            Optional<ResourceConfiguration> resources = default;
+            Optional<MachineLearningJobResourceConfiguration> resources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("codeId"))
@@ -109,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         distribution = null;
                         continue;
                     }
-                    distribution = DistributionConfiguration.DeserializeDistributionConfiguration(property.Value);
+                    distribution = MachineLearningDistributionConfiguration.DeserializeMachineLearningDistributionConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("environmentId"))
@@ -143,10 +136,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        resources = null;
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resources = ResourceConfiguration.DeserializeResourceConfiguration(property.Value);
+                    resources = MachineLearningJobResourceConfiguration.DeserializeMachineLearningJobResourceConfiguration(property.Value);
                     continue;
                 }
             }

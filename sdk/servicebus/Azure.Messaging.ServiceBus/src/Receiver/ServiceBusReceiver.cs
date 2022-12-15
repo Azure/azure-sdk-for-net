@@ -731,6 +731,15 @@ namespace Azure.Messaging.ServiceBus
         ///     </item>
         ///   </list>
         /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <list type="bullet">
+        ///     <item>
+        ///       <description>
+        ///         The dead letter reason or dead letter error description exceeded the maximum length of 4096.
+        ///       </description>
+        ///     </item>
+        ///   </list>
+        /// </exception>
         public virtual async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify,
@@ -795,6 +804,15 @@ namespace Azure.Messaging.ServiceBus
         ///       <description>
         ///         The lock for the session has expired or the message has already been completed. This only applies for session-enabled entities.
         ///         The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///   </list>
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   <list type="bullet">
+        ///     <item>
+        ///       <description>
+        ///         The dead letter reason or dead letter error description exceeded the maximum length of 4096.
         ///       </description>
         ///     </item>
         ///   </list>

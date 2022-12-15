@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         }
 
         /// <summary>
-        /// Get the AppComplianceAutomation report list.
+        /// Get the AppComplianceAutomation report list for the tenant.
         /// Request Path: /providers/Microsoft.AppComplianceAutomation/reports
         /// Operation Id: Reports_List
         /// </summary>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         }
 
         /// <summary>
-        /// Get the AppComplianceAutomation report list.
+        /// Get the AppComplianceAutomation report list for the tenant.
         /// Request Path: /providers/Microsoft.AppComplianceAutomation/reports
         /// Operation Id: Reports_List
         /// </summary>

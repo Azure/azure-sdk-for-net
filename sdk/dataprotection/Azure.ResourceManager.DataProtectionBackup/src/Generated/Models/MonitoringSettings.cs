@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Settings for Azure Monitor based alerts. </summary>
         internal AzureMonitorAlertSettings AzureMonitorAlertSettings { get; set; }
-        /// <summary> Gets or sets the azure monitor alert alerts for all job failures. </summary>
-        public AlertsState? AzureMonitorAlertAlertsForAllJobFailures
+        /// <summary> Gets or sets the alert settings for all job failures. </summary>
+        public AzureMonitorAlertsState? AlertSettingsForAllJobFailures
         {
-            get => AzureMonitorAlertSettings is null ? default : AzureMonitorAlertSettings.AlertsForAllJobFailures;
+            get => AzureMonitorAlertSettings is null ? default : AzureMonitorAlertSettings.AlertSettingsForAllJobFailures;
             set
             {
                 if (AzureMonitorAlertSettings is null)
                     AzureMonitorAlertSettings = new AzureMonitorAlertSettings();
-                AzureMonitorAlertSettings.AlertsForAllJobFailures = value;
+                AzureMonitorAlertSettings.AlertSettingsForAllJobFailures = value;
             }
         }
     }

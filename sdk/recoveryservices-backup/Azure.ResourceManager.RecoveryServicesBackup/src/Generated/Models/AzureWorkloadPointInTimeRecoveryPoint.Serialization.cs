@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<RestorePointType> type = default;
             Optional<IList<RecoveryPointTierInformationV2>> recoveryPointTierDetails = default;
             Optional<IDictionary<string, RecoveryPointMoveReadinessInfo>> recoveryPointMoveReadinessInfo = default;
-            string objectType = default;
+            string objectType = "AzureWorkloadPointInTimeRecoveryPoint";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeRanges"))

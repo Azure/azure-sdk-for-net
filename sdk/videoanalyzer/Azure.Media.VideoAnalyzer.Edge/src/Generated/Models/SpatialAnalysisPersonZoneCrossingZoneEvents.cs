@@ -15,21 +15,26 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     public partial class SpatialAnalysisPersonZoneCrossingZoneEvents
     {
         /// <summary> Initializes a new instance of SpatialAnalysisPersonZoneCrossingZoneEvents. </summary>
-        /// <param name="zone"> The named zone. </param>
+        /// <param name="zone">
+        /// The named zone.
+        /// Please note <see cref="NamedPolygonBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NamedPolygonString"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="zone"/> is null. </exception>
         public SpatialAnalysisPersonZoneCrossingZoneEvents(NamedPolygonBase zone)
         {
-            if (zone == null)
-            {
-                throw new ArgumentNullException(nameof(zone));
-            }
+            Argument.AssertNotNull(zone, nameof(zone));
 
             Zone = zone;
             Events = new ChangeTrackingList<SpatialAnalysisPersonZoneCrossingEvent>();
         }
 
         /// <summary> Initializes a new instance of SpatialAnalysisPersonZoneCrossingZoneEvents. </summary>
-        /// <param name="zone"> The named zone. </param>
+        /// <param name="zone">
+        /// The named zone.
+        /// Please note <see cref="NamedPolygonBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NamedPolygonString"/>.
+        /// </param>
         /// <param name="events"> The event configuration. </param>
         internal SpatialAnalysisPersonZoneCrossingZoneEvents(NamedPolygonBase zone, IList<SpatialAnalysisPersonZoneCrossingEvent> events)
         {
@@ -37,7 +42,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Events = events;
         }
 
-        /// <summary> The named zone. </summary>
+        /// <summary>
+        /// The named zone.
+        /// Please note <see cref="NamedPolygonBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="NamedPolygonString"/>.
+        /// </summary>
         public NamedPolygonBase Zone { get; set; }
         /// <summary> The event configuration. </summary>
         public IList<SpatialAnalysisPersonZoneCrossingEvent> Events { get; }

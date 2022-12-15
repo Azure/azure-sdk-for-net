@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="principalId"/> is null. </exception>
         public EligibleApprover(string principalId)
         {
-            if (principalId == null)
-            {
-                throw new ArgumentNullException(nameof(principalId));
-            }
+            Argument.AssertNotNull(principalId, nameof(principalId));
 
             PrincipalId = principalId;
         }

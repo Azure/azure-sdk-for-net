@@ -10,7 +10,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> A recoverable managed database resource. </summary>
+    /// <summary> A refresh DNS servers operation. </summary>
     public partial class ManagedInstanceUpdateDnsServersOperationData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedInstanceUpdateDnsServersOperationData. </summary>

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of IotSecurityAggregatedAlertData. </summary>
         public IotSecurityAggregatedAlertData()
         {
-            TopDevicesList = new ChangeTrackingList<IotSecurityAggregatedAlertPropertiesTopDevicesListItem>();
+            TopDevicesList = new ChangeTrackingList<IotSecurityAggregatedAlertTopDevice>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> The systemData. </param>
         /// <param name="alertType"> Name of the alert type. </param>
         /// <param name="alertDisplayName"> Display name of the alert type. </param>
-        /// <param name="aggregatedDateUtc"> Date of detection. </param>
+        /// <param name="aggregatedOn"> Date of detection. </param>
         /// <param name="vendorName"> Name of the organization that raised the alert. </param>
         /// <param name="reportedSeverity"> Assessed alert severity. </param>
         /// <param name="remediationSteps"> Recommended steps for remediation. </param>
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="logAnalyticsQuery"> Log analytics query for getting the list of affected devices/alerts. </param>
         /// <param name="topDevicesList"> 10 devices with the highest number of occurrences of this alert type, on this day. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal IotSecurityAggregatedAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string alertType, string alertDisplayName, DateTimeOffset? aggregatedDateUtc, string vendorName, ReportedSeverity? reportedSeverity, string remediationSteps, string description, long? count, string effectedResourceType, string systemSource, string actionTaken, string logAnalyticsQuery, IReadOnlyList<IotSecurityAggregatedAlertPropertiesTopDevicesListItem> topDevicesList, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal IotSecurityAggregatedAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string alertType, string alertDisplayName, DateTimeOffset? aggregatedOn, string vendorName, ReportedSeverity? reportedSeverity, string remediationSteps, string description, long? count, string effectedResourceType, string systemSource, string actionTaken, string logAnalyticsQuery, IReadOnlyList<IotSecurityAggregatedAlertTopDevice> topDevicesList, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             AlertType = alertType;
             AlertDisplayName = alertDisplayName;
-            AggregatedDateUtc = aggregatedDateUtc;
+            AggregatedOn = aggregatedOn;
             VendorName = vendorName;
             ReportedSeverity = reportedSeverity;
             RemediationSteps = remediationSteps;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Display name of the alert type. </summary>
         public string AlertDisplayName { get; }
         /// <summary> Date of detection. </summary>
-        public DateTimeOffset? AggregatedDateUtc { get; }
+        public DateTimeOffset? AggregatedOn { get; }
         /// <summary> Name of the organization that raised the alert. </summary>
         public string VendorName { get; }
         /// <summary> Assessed alert severity. </summary>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Log analytics query for getting the list of affected devices/alerts. </summary>
         public string LogAnalyticsQuery { get; }
         /// <summary> 10 devices with the highest number of occurrences of this alert type, on this day. </summary>
-        public IReadOnlyList<IotSecurityAggregatedAlertPropertiesTopDevicesListItem> TopDevicesList { get; }
+        public IReadOnlyList<IotSecurityAggregatedAlertTopDevice> TopDevicesList { get; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

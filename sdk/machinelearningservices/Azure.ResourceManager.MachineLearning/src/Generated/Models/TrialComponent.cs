@@ -11,23 +11,26 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Trial component definition. </summary>
+    /// <summary>
+    /// Trial component definition.
+    /// Serialized Name: TrialComponent
+    /// </summary>
     public partial class TrialComponent
     {
         /// <summary> Initializes a new instance of TrialComponent. </summary>
-        /// <param name="command"> [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
-        /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
+        /// <param name="command">
+        /// [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;
+        /// Serialized Name: TrialComponent.command
+        /// </param>
+        /// <param name="environmentId">
+        /// [Required] The ARM resource ID of the Environment specification for the job.
+        /// Serialized Name: TrialComponent.environmentId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="command"/> or <paramref name="environmentId"/> is null. </exception>
         public TrialComponent(string command, string environmentId)
         {
-            if (command == null)
-            {
-                throw new ArgumentNullException(nameof(command));
-            }
-            if (environmentId == null)
-            {
-                throw new ArgumentNullException(nameof(environmentId));
-            }
+            Argument.AssertNotNull(command, nameof(command));
+            Argument.AssertNotNull(environmentId, nameof(environmentId));
 
             Command = command;
             EnvironmentId = environmentId;
@@ -35,17 +38,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of TrialComponent. </summary>
-        /// <param name="codeId"> ARM resource ID of the code asset. </param>
-        /// <param name="command"> [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
+        /// <param name="codeId">
+        /// ARM resource ID of the code asset.
+        /// Serialized Name: TrialComponent.codeId
+        /// </param>
+        /// <param name="command">
+        /// [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;
+        /// Serialized Name: TrialComponent.command
+        /// </param>
         /// <param name="distribution">
         /// Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null.
-        /// Please note <see cref="DistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Mpi"/>, <see cref="PyTorch"/> and <see cref="TensorFlow"/>.
+        /// Serialized Name: TrialComponent.distribution
+        /// Please note <see cref="MachineLearningDistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/> and <see cref="TensorFlowDistributionConfiguration"/>.
         /// </param>
-        /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
-        /// <param name="environmentVariables"> Environment variables included in the job. </param>
-        /// <param name="resources"> Compute Resource configuration for the job. </param>
-        internal TrialComponent(string codeId, string command, DistributionConfiguration distribution, string environmentId, IDictionary<string, string> environmentVariables, ResourceConfiguration resources)
+        /// <param name="environmentId">
+        /// [Required] The ARM resource ID of the Environment specification for the job.
+        /// Serialized Name: TrialComponent.environmentId
+        /// </param>
+        /// <param name="environmentVariables">
+        /// Environment variables included in the job.
+        /// Serialized Name: TrialComponent.environmentVariables
+        /// </param>
+        /// <param name="resources">
+        /// Compute Resource configuration for the job.
+        /// Serialized Name: TrialComponent.resources
+        /// </param>
+        internal TrialComponent(string codeId, string command, MachineLearningDistributionConfiguration distribution, string environmentId, IDictionary<string, string> environmentVariables, MachineLearningJobResourceConfiguration resources)
         {
             CodeId = codeId;
             Command = command;
@@ -55,21 +74,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Resources = resources;
         }
 
-        /// <summary> ARM resource ID of the code asset. </summary>
+        /// <summary>
+        /// ARM resource ID of the code asset.
+        /// Serialized Name: TrialComponent.codeId
+        /// </summary>
         public string CodeId { get; set; }
-        /// <summary> [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;. </summary>
+        /// <summary>
+        /// [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;
+        /// Serialized Name: TrialComponent.command
+        /// </summary>
         public string Command { get; set; }
         /// <summary>
         /// Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null.
-        /// Please note <see cref="DistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Mpi"/>, <see cref="PyTorch"/> and <see cref="TensorFlow"/>.
+        /// Serialized Name: TrialComponent.distribution
+        /// Please note <see cref="MachineLearningDistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/> and <see cref="TensorFlowDistributionConfiguration"/>.
         /// </summary>
-        public DistributionConfiguration Distribution { get; set; }
-        /// <summary> [Required] The ARM resource ID of the Environment specification for the job. </summary>
+        public MachineLearningDistributionConfiguration Distribution { get; set; }
+        /// <summary>
+        /// [Required] The ARM resource ID of the Environment specification for the job.
+        /// Serialized Name: TrialComponent.environmentId
+        /// </summary>
         public string EnvironmentId { get; set; }
-        /// <summary> Environment variables included in the job. </summary>
+        /// <summary>
+        /// Environment variables included in the job.
+        /// Serialized Name: TrialComponent.environmentVariables
+        /// </summary>
         public IDictionary<string, string> EnvironmentVariables { get; set; }
-        /// <summary> Compute Resource configuration for the job. </summary>
-        public ResourceConfiguration Resources { get; set; }
+        /// <summary>
+        /// Compute Resource configuration for the job.
+        /// Serialized Name: TrialComponent.resources
+        /// </summary>
+        public MachineLearningJobResourceConfiguration Resources { get; set; }
     }
 }

@@ -11,7 +11,10 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The result of a request to list machine learning workspaces. </summary>
+    /// <summary>
+    /// The result of a request to list machine learning workspaces.
+    /// Serialized Name: WorkspaceListResult
+    /// </summary>
     internal partial class WorkspaceListResult
     {
         /// <summary> Initializes a new instance of WorkspaceListResult. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of WorkspaceListResult. </summary>
-        /// <param name="value"> The list of machine learning workspaces. Since this list may be incomplete, the nextLink field should be used to request the next list of machine learning workspaces. </param>
-        /// <param name="nextLink"> The URI that can be used to request the next list of machine learning workspaces. </param>
+        /// <param name="value">
+        /// The list of machine learning workspaces. Since this list may be incomplete, the nextLink field should be used to request the next list of machine learning workspaces.
+        /// Serialized Name: WorkspaceListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URI that can be used to request the next list of machine learning workspaces.
+        /// Serialized Name: WorkspaceListResult.nextLink
+        /// </param>
         internal WorkspaceListResult(IReadOnlyList<MachineLearningWorkspaceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of machine learning workspaces. Since this list may be incomplete, the nextLink field should be used to request the next list of machine learning workspaces. </summary>
+        /// <summary>
+        /// The list of machine learning workspaces. Since this list may be incomplete, the nextLink field should be used to request the next list of machine learning workspaces.
+        /// Serialized Name: WorkspaceListResult.value
+        /// </summary>
         public IReadOnlyList<MachineLearningWorkspaceData> Value { get; }
-        /// <summary> The URI that can be used to request the next list of machine learning workspaces. </summary>
+        /// <summary>
+        /// The URI that can be used to request the next list of machine learning workspaces.
+        /// Serialized Name: WorkspaceListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -103,7 +103,7 @@
 
 # ServiceLabel: %Batch %Service Attention
 # PRLabel: %Batch
-/sdk/batch/                                     @paterasMSFT @dpwatrous @wiboris @mksuni @bgklein
+/sdk/batch/                                     @paterasMSFT @dpwatrous @wiboris @NickKouds @bgklein
 
 # ServiceLabel: %BatchAI %Service Attention
 /sdk/batchai/Microsoft.Azure.Management.BatchAI/            @matthchr
@@ -192,6 +192,9 @@
 # ServiceLabel: %Commerce %Service Attention
 #/<NotInRepo>/            @ms-premp @qiaozha
 
+# PRLabel: %Communication
+/sdk/communication/                                     @acsdevx-msft
+
 # PRLabel: %Communication - Calling Server
 /sdk/communication/Azure.Communication.CallingServer/   @minwoolee-msft
 
@@ -199,16 +202,16 @@
 /sdk/communication/Azure.Communication.Chat/   @LuChen-Microsoft
 
 # PRLabel: %Communication - Common
-/sdk/communication/Azure.Communication.Common/          @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @martinbarnas-ms
+/sdk/communication/Azure.Communication.Common/          @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @ostoliarova-msft @mjafferi-msft
 
 # PRLabel: %Communication - Identity
-/sdk/communication/Azure.Communication.Identity/        @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @martinbarnas-ms
+/sdk/communication/Azure.Communication.Identity/        @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @ostoliarova-msft @mjafferi-msft
 
 # PRLabel: %Communication - Network Traversal
 /sdk/communication/Azure.Communication.NetworkTraversal/ @ajpeacock0 @nathpete-msft
 
 # PRLabel: %Communication - Phone Numbers
-/sdk/communication/Azure.Communication.PhoneNumbers/    @miguhern @whisper6284 @lucasrsant @RoyHerrod @danielav7
+/sdk/communication/Azure.Communication.PhoneNumbers/    @miguhern @whisper6284 @RoyHerrod @danielav7
 
 # PRLabel: %Communication - Short Codes
 /sdk/communication/Azure.Communication.ShortCodes/      @guilhermeluizsp @danielav7
@@ -218,9 +221,6 @@
 
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/
-
-# PRLabel: %Communication
-/sdk/communication/                                     @acsdevx-msft
 
 # ServiceLabel: %Compute %Service Attention
 # PRLabel: %Compute
@@ -303,6 +303,13 @@
 
 # ServiceLabel: %Data Migration %Service Attention
 /sdk/datamigration/Microsoft.Azure.Management.DataMigration/            @rgreenMSFT
+
+
+# ServiceLabel: %DevCenter %Service Attention
+#/<NotInRepo>/                                  @sebrenna @mharlan @chrissmiller
+
+# PRLabel: %DevCenter
+/sdk/devcenter/                                 @sebrenna @mharlan @chrissmiller @shivangireja 
 
 # ServiceLabel: %Devtestlab %Service Attention
 /sdk/devtestlabs/Microsoft.Azure.Management.DevTestLabs/            @Tanmayeekamath
@@ -393,6 +400,13 @@
 # ServiceLabel: %Lab Services %Service Attention
 sdk/labservices/Microsoft.Azure.Management.LabServices/           @Tanmayeekamath
 
+# ServiceLabel: %Load Test Service %Service Attention
+sdk/loadtestservice/            @abranj1219 @ninallam @NiveditJain
+
+# PRLabel: %Load Test Service
+sdk/loadtestservice/            @abranj1219 @ninallam @NiveditJain @christothes
+
+
 # ServiceLabel: %Logic App %Service Attention
 /sdk/logic/Microsoft.Azure.Management.Logic/           @Azure/azure-logicapps-team
 
@@ -468,6 +482,12 @@ sdk/monitor/ci.yml                         @nisha-bhatia @ShivangiReja
 # ServiceLabel: %MySQL %Service Attention
 /sdk/mysql/Microsoft.Azure.Management.MySQL/            @ajlam @ambhatna @kummanish
 
+# ServiceLabel: %Mixed Reality %Service Attention
+/sdk/mixedreality/                                 @crtreasu @rgarcia
+
+# PRLabel: %Mixed Reality
+/sdk/mixedreality/                                 @crtreasu @rgarcia @JoshLove-msft
+
 # ServiceLabel: %Network %Service Attention
 sdk/network/           @aznetsuppgithub
 
@@ -524,6 +544,11 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 
 # ServiceLabel: %Notification Hub %Service Attention
 /sdk/notificationhubs/Microsoft.Azure.Management.NotificationHubs/            @tjsomasundaram
+
+/sdk/objectanchors/                                 @crtreasu @rgarcia
+
+# PRLabel: %Mixed Reality
+/sdk/objectanchors/                                 @crtreasu @rgarcia @JoshLove-msft
 
 # PRLabel: %Operational Insights
 # ServiceLabel: %Operational Insights %Service Attention
@@ -673,7 +698,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 #/<NotInRepo>/            @AzureAppServiceCLI @antcp
 
 # PRLabel: %WebPubSub
-/sdk/webpubsub/  @KrzysztofCwalina
+/sdk/webpubsub/  @vicancy @JialinXin @pallavit @KrzysztofCwalina
 
 # PRLabel: %WebPubSub %Functions
 /sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/  @vicancy

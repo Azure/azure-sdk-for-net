@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    diskRestorePoint = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    diskRestorePoint = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
             }

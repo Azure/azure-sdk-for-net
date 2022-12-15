@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
+using Azure.Core;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 
@@ -17,11 +18,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Metrics
 
         private readonly MeterProvider meterProvider;
 
-        public MetricDemo(string connectionString)
+        public MetricDemo(string connectionString, TokenCredential credential = null)
         {
             this.meterProvider = Sdk.CreateMeterProviderBuilder()
                                 .AddMeter(meterName)
-                                .AddAzureMonitorMetricExporter(o => o.ConnectionString = connectionString)
+                                .AddAzureMonitorMetricExporter(o => o.ConnectionString = connectionString, credential)
                                 .Build();
         }
 
@@ -41,13 +42,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Metrics
             myFruitCounter.Add(4, new("name", "lemon"), new("color", "yellow"));
 
             // Histogram Example
-            Histogram<long> myHistogram = meter.CreateHistogram<long>("MyHistogram");
+            Histogram<long> myFruitSalePrice = meter.CreateHistogram<long>("MyFruitSalePrice");
 
             var random = new Random();
-            for (int i = 0; i < 1000; i++)
-            {
-                myHistogram.Record(random.Next(1, 1000), new("tag1", "value1"), new("tag2", "value2"));
-            }
+            myFruitSalePrice.Record(random.Next(1, 1000), new("name", "apple"), new("color", "red"));
+            myFruitSalePrice.Record(random.Next(1, 1000), new("name", "lemon"), new("color", "yellow"));
+            myFruitSalePrice.Record(random.Next(1, 1000), new("name", "lemon"), new("color", "yellow"));
+            myFruitSalePrice.Record(random.Next(1, 1000), new("name", "apple"), new("color", "green"));
+            myFruitSalePrice.Record(random.Next(1, 1000), new("name", "apple"), new("color", "red"));
+            myFruitSalePrice.Record(random.Next(1, 1000), new("name", "lemon"), new("color", "yellow"));
 
             // Guage Example
             var process = Process.GetCurrentProcess();

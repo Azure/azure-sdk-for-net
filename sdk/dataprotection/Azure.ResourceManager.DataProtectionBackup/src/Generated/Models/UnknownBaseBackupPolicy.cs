@@ -10,12 +10,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> The UnknownBaseBackupPolicy. </summary>
-    internal partial class UnknownBaseBackupPolicy : BaseBackupPolicy
+    internal partial class UnknownBaseBackupPolicy : DataProtectionBackupPolicyPropertiesBase
     {
         /// <summary> Initializes a new instance of UnknownBaseBackupPolicy. </summary>
-        /// <param name="datasourceTypes"> Type of datasource for the backup management. </param>
+        /// <param name="dataSourceTypes"> Type of datasource for the backup management. </param>
         /// <param name="objectType"></param>
-        internal UnknownBaseBackupPolicy(IList<string> datasourceTypes, string objectType) : base(datasourceTypes, objectType)
+        internal UnknownBaseBackupPolicy(IList<string> dataSourceTypes, string objectType) : base(dataSourceTypes, objectType)
         {
             ObjectType = objectType ?? "Unknown";
         }

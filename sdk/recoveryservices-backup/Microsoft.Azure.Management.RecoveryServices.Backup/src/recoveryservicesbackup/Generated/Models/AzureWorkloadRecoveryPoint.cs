@@ -35,7 +35,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="recoveryPointTimeInUTC">UTC time at which recovery
         /// point was created</param>
         /// <param name="type">Type of restore point. Possible values include:
-        /// 'Invalid', 'Full', 'Log', 'Differential', 'Incremental'</param>
+        /// 'Invalid', 'Full', 'Log', 'Differential', 'Incremental',
+        /// 'SnapshotFull', 'SnapshotCopyOnlyFull'</param>
         /// <param name="recoveryPointTierDetails">Recovery point tier
         /// information.</param>
         /// <param name="recoveryPointMoveReadinessInfo">Eligibility of RP to
@@ -62,7 +63,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 
         /// <summary>
         /// Gets or sets type of restore point. Possible values include:
-        /// 'Invalid', 'Full', 'Log', 'Differential', 'Incremental'
+        /// 'Invalid', 'Full', 'Log', 'Differential', 'Incremental',
+        /// 'SnapshotFull', 'SnapshotCopyOnlyFull'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

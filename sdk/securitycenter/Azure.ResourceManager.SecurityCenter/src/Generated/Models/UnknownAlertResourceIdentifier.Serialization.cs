@@ -10,19 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class UnknownAlertResourceIdentifier : IUtf8JsonSerializable
+    internal partial class UnknownAlertResourceIdentifier
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(ResourceIdentifierType.ToString());
-            writer.WriteEndObject();
-        }
-
         internal static UnknownAlertResourceIdentifier DeserializeUnknownAlertResourceIdentifier(JsonElement element)
         {
-            ResourceIdentifierType type = default;
+            ResourceIdentifierType type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))

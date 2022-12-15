@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2019-11-01-preview";
+            _apiVersion = apiVersion ?? "2016-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StorageAccountInformationListResult>> ListByAccountAsync(string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeAnalyticsStorageAccountInformationListResult>> ListByAccountAsync(string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        StorageAccountInformationListResult value = default;
+                        DataLakeAnalyticsStorageAccountInformationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StorageAccountInformationListResult.DeserializeStorageAccountInformationListResult(document.RootElement);
+                        value = DataLakeAnalyticsStorageAccountInformationListResult.DeserializeDataLakeAnalyticsStorageAccountInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StorageAccountInformationListResult> ListByAccount(string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
+        public Response<DataLakeAnalyticsStorageAccountInformationListResult> ListByAccount(string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -142,9 +142,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        StorageAccountInformationListResult value = default;
+                        DataLakeAnalyticsStorageAccountInformationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StorageAccountInformationListResult.DeserializeStorageAccountInformationListResult(document.RootElement);
+                        value = DataLakeAnalyticsStorageAccountInformationListResult.DeserializeDataLakeAnalyticsStorageAccountInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             }
         }
 
-        internal HttpMessage CreateAddRequest(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, StorageAccountInformationCreateOrUpdateContent content)
+        internal HttpMessage CreateAddRequest(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="storageAccountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> AddAsync(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, StorageAccountInformationCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> AddAsync(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="storageAccountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Add(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, StorageAccountInformationCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public Response Add(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, DataLakeAnalyticsStorageAccountInformationCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StorageAccountInformationData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeAnalyticsStorageAccountInformationData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -277,13 +277,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        StorageAccountInformationData value = default;
+                        DataLakeAnalyticsStorageAccountInformationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StorageAccountInformationData.DeserializeStorageAccountInformationData(document.RootElement);
+                        value = DataLakeAnalyticsStorageAccountInformationData.DeserializeDataLakeAnalyticsStorageAccountInformationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StorageAccountInformationData)null, message.Response);
+                    return Response.FromValue((DataLakeAnalyticsStorageAccountInformationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StorageAccountInformationData> Get(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default)
+        public Response<DataLakeAnalyticsStorageAccountInformationData> Get(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -310,19 +310,19 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        StorageAccountInformationData value = default;
+                        DataLakeAnalyticsStorageAccountInformationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StorageAccountInformationData.DeserializeStorageAccountInformationData(document.RootElement);
+                        value = DataLakeAnalyticsStorageAccountInformationData.DeserializeDataLakeAnalyticsStorageAccountInformationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StorageAccountInformationData)null, message.Response);
+                    return Response.FromValue((DataLakeAnalyticsStorageAccountInformationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, StorageAccountInformationPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, DataLakeAnalyticsStorageAccountInformationPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="storageAccountName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, StorageAccountInformationPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, DataLakeAnalyticsStorageAccountInformationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="storageAccountName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, StorageAccountInformationPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, DataLakeAnalyticsStorageAccountInformationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StorageContainerListResult>> ListStorageContainersAsync(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeAnalyticsStorageContainerListResult>> ListStorageContainersAsync(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -522,9 +522,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        StorageContainerListResult value = default;
+                        DataLakeAnalyticsStorageContainerListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StorageContainerListResult.DeserializeStorageContainerListResult(document.RootElement);
+                        value = DataLakeAnalyticsStorageContainerListResult.DeserializeDataLakeAnalyticsStorageContainerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StorageContainerListResult> ListStorageContainers(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default)
+        public Response<DataLakeAnalyticsStorageContainerListResult> ListStorageContainers(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -553,9 +553,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        StorageContainerListResult value = default;
+                        DataLakeAnalyticsStorageContainerListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StorageContainerListResult.DeserializeStorageContainerListResult(document.RootElement);
+                        value = DataLakeAnalyticsStorageContainerListResult.DeserializeDataLakeAnalyticsStorageContainerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StorageContainerData>> GetStorageContainerAsync(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeAnalyticsStorageContainerData>> GetStorageContainerAsync(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -610,13 +610,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        StorageContainerData value = default;
+                        DataLakeAnalyticsStorageContainerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StorageContainerData.DeserializeStorageContainerData(document.RootElement);
+                        value = DataLakeAnalyticsStorageContainerData.DeserializeDataLakeAnalyticsStorageContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StorageContainerData)null, message.Response);
+                    return Response.FromValue((DataLakeAnalyticsStorageContainerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StorageContainerData> GetStorageContainer(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
+        public Response<DataLakeAnalyticsStorageContainerData> GetStorageContainer(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -645,13 +645,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        StorageContainerData value = default;
+                        DataLakeAnalyticsStorageContainerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StorageContainerData.DeserializeStorageContainerData(document.RootElement);
+                        value = DataLakeAnalyticsStorageContainerData.DeserializeDataLakeAnalyticsStorageContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((StorageContainerData)null, message.Response);
+                    return Response.FromValue((DataLakeAnalyticsStorageContainerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SasTokenInformationListResult>> ListSasTokensAsync(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeAnalyticsSasTokenInformationListResult>> ListSasTokensAsync(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -705,9 +705,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        SasTokenInformationListResult value = default;
+                        DataLakeAnalyticsSasTokenInformationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SasTokenInformationListResult.DeserializeSasTokenInformationListResult(document.RootElement);
+                        value = DataLakeAnalyticsSasTokenInformationListResult.DeserializeDataLakeAnalyticsSasTokenInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SasTokenInformationListResult> ListSasTokens(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
+        public Response<DataLakeAnalyticsSasTokenInformationListResult> ListSasTokens(string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -738,9 +738,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        SasTokenInformationListResult value = default;
+                        DataLakeAnalyticsSasTokenInformationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SasTokenInformationListResult.DeserializeSasTokenInformationListResult(document.RootElement);
+                        value = DataLakeAnalyticsSasTokenInformationListResult.DeserializeDataLakeAnalyticsSasTokenInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StorageAccountInformationListResult>> ListByAccountNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeAnalyticsStorageAccountInformationListResult>> ListByAccountNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -789,9 +789,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        StorageAccountInformationListResult value = default;
+                        DataLakeAnalyticsStorageAccountInformationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StorageAccountInformationListResult.DeserializeStorageAccountInformationListResult(document.RootElement);
+                        value = DataLakeAnalyticsStorageAccountInformationListResult.DeserializeDataLakeAnalyticsStorageAccountInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -813,7 +813,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StorageAccountInformationListResult> ListByAccountNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
+        public Response<DataLakeAnalyticsStorageAccountInformationListResult> ListByAccountNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -826,9 +826,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        StorageAccountInformationListResult value = default;
+                        DataLakeAnalyticsStorageAccountInformationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StorageAccountInformationListResult.DeserializeStorageAccountInformationListResult(document.RootElement);
+                        value = DataLakeAnalyticsStorageAccountInformationListResult.DeserializeDataLakeAnalyticsStorageAccountInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -859,7 +859,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StorageContainerListResult>> ListStorageContainersNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeAnalyticsStorageContainerListResult>> ListStorageContainersNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -873,9 +873,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        StorageContainerListResult value = default;
+                        DataLakeAnalyticsStorageContainerListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = StorageContainerListResult.DeserializeStorageContainerListResult(document.RootElement);
+                        value = DataLakeAnalyticsStorageContainerListResult.DeserializeDataLakeAnalyticsStorageContainerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -892,7 +892,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="storageAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StorageContainerListResult> ListStorageContainersNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default)
+        public Response<DataLakeAnalyticsStorageContainerListResult> ListStorageContainersNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -906,9 +906,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        StorageContainerListResult value = default;
+                        DataLakeAnalyticsStorageContainerListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = StorageContainerListResult.DeserializeStorageContainerListResult(document.RootElement);
+                        value = DataLakeAnalyticsStorageContainerListResult.DeserializeDataLakeAnalyticsStorageContainerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -940,7 +940,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SasTokenInformationListResult>> ListSasTokensNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataLakeAnalyticsSasTokenInformationListResult>> ListSasTokensNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -955,9 +955,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        SasTokenInformationListResult value = default;
+                        DataLakeAnalyticsSasTokenInformationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SasTokenInformationListResult.DeserializeSasTokenInformationListResult(document.RootElement);
+                        value = DataLakeAnalyticsSasTokenInformationListResult.DeserializeDataLakeAnalyticsSasTokenInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -975,7 +975,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="storageAccountName"/> or <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SasTokenInformationListResult> ListSasTokensNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
+        public Response<DataLakeAnalyticsSasTokenInformationListResult> ListSasTokensNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string storageAccountName, string containerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -990,9 +990,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case 200:
                     {
-                        SasTokenInformationListResult value = default;
+                        DataLakeAnalyticsSasTokenInformationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SasTokenInformationListResult.DeserializeSasTokenInformationListResult(document.RootElement);
+                        value = DataLakeAnalyticsSasTokenInformationListResult.DeserializeDataLakeAnalyticsSasTokenInformationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

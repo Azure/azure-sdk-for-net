@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The CallConnected. </summary>
+    /// <summary> The call connected event. </summary>
     public partial class CallConnected
     {
         /// <summary> Initializes a new instance of CallConnected. </summary>

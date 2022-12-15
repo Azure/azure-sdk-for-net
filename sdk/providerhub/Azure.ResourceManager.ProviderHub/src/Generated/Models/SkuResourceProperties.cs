@@ -7,21 +7,19 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The SkuResourceProperties. </summary>
-    public partial class SkuResourceProperties : ResourceTypeSku
+    public partial class SkuResourceProperties : ResourceTypeSkuInfo
     {
         /// <summary> Initializes a new instance of SkuResourceProperties. </summary>
         /// <param name="skuSettings"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="skuSettings"/> is null. </exception>
         public SkuResourceProperties(IEnumerable<SkuSetting> skuSettings) : base(skuSettings)
         {
-            if (skuSettings == null)
-            {
-                throw new ArgumentNullException(nameof(skuSettings));
-            }
+            Argument.AssertNotNull(skuSettings, nameof(skuSettings));
         }
 
         /// <summary> Initializes a new instance of SkuResourceProperties. </summary>

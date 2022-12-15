@@ -111,8 +111,10 @@ namespace Azure.ResourceManager.Redis
     public partial class RedisLinkedServerWithPropertyData : Azure.ResourceManager.Models.ResourceData
     {
         public RedisLinkedServerWithPropertyData() { }
+        public string GeoReplicatedPrimaryHostName { get { throw null; } }
         public Azure.Core.ResourceIdentifier LinkedRedisCacheId { get { throw null; } set { } }
         public Azure.Core.AzureLocation? LinkedRedisCacheLocation { get { throw null; } set { } }
+        public string PrimaryHostName { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Redis.Models.RedisLinkedServerRole? ServerRole { get { throw null; } set { } }
     }
@@ -244,8 +246,14 @@ namespace Azure.ResourceManager.Redis
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Redis.RedisResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Redis.RedisResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Redis.RedisResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Please use another long-running operation with same method name instead.", false)]
         public virtual Azure.Response<Azure.ResourceManager.Redis.RedisResource> Update(Azure.ResourceManager.Redis.Models.RedisPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Redis.RedisResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Redis.Models.RedisPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Please use another long-running operation with same method name instead.", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Redis.RedisResource>> UpdateAsync(Azure.ResourceManager.Redis.Models.RedisPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Redis.RedisResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Redis.Models.RedisPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Redis.Models
@@ -255,6 +263,7 @@ namespace Azure.ResourceManager.Redis.Models
         public ExportRdbContent(string prefix, string container) { }
         public string Container { get { throw null; } }
         public string Format { get { throw null; } set { } }
+        public string PreferredDataArchiveAuthMethod { get { throw null; } set { } }
         public string Prefix { get { throw null; } }
     }
     public partial class ImportRdbContent
@@ -262,6 +271,7 @@ namespace Azure.ResourceManager.Redis.Models
         public ImportRdbContent(System.Collections.Generic.IEnumerable<string> files) { }
         public System.Collections.Generic.IList<string> Files { get { throw null; } }
         public string Format { get { throw null; } set { } }
+        public string PreferredDataArchiveAuthMethod { get { throw null; } set { } }
     }
     public partial class RedisAccessKeys
     {
@@ -345,8 +355,10 @@ namespace Azure.ResourceManager.Redis.Models
     public partial class RedisLinkedServerWithPropertyCreateOrUpdateContent
     {
         public RedisLinkedServerWithPropertyCreateOrUpdateContent(Azure.Core.ResourceIdentifier linkedRedisCacheId, Azure.Core.AzureLocation linkedRedisCacheLocation, Azure.ResourceManager.Redis.Models.RedisLinkedServerRole serverRole) { }
+        public string GeoReplicatedPrimaryHostName { get { throw null; } }
         public Azure.Core.ResourceIdentifier LinkedRedisCacheId { get { throw null; } }
         public Azure.Core.AzureLocation LinkedRedisCacheLocation { get { throw null; } }
+        public string PrimaryHostName { get { throw null; } }
         public Azure.ResourceManager.Redis.Models.RedisLinkedServerRole ServerRole { get { throw null; } }
     }
     public partial class RedisNameAvailabilityContent

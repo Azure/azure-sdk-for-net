@@ -40,8 +40,3 @@ List<EventGridEvent> eventsList = new List<EventGridEvent>
 // Send the events
 await client.SendEventsAsync(eventsList);
 ```
-
-## Source
-
-To view the full example source, see:
-- [Sample1_SendEventsToTopicAndDomain.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Azure.Messaging.EventGrid/tests/Samples/Sample1_SendEventsToTopicAndDomain.cs)

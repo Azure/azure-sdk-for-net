@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -21,16 +20,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     case "MonitorServiceList": return MonitorServiceList.DeserializeMonitorServiceList(element);
                 }
             }
-            ServiceAlertMetadataIdentifier metadataIdentifier = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("metadataIdentifier"))
-                {
-                    metadataIdentifier = new ServiceAlertMetadataIdentifier(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownServiceAlertMetadataProperties(metadataIdentifier);
+            return UnknownAlertsMetaDataProperties.DeserializeUnknownAlertsMetaDataProperties(element);
         }
     }
 }

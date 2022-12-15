@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -18,14 +19,8 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="callbackUri"/> is null. </exception>
         public AnswerCallRequestInternal(string incomingCallContext, string callbackUri)
         {
-            if (incomingCallContext == null)
-            {
-                throw new ArgumentNullException(nameof(incomingCallContext));
-            }
-            if (callbackUri == null)
-            {
-                throw new ArgumentNullException(nameof(callbackUri));
-            }
+            Argument.AssertNotNull(incomingCallContext, nameof(incomingCallContext));
+            Argument.AssertNotNull(callbackUri, nameof(callbackUri));
 
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
@@ -37,5 +32,7 @@ namespace Azure.Communication.CallAutomation
         public string CallbackUri { get; }
         /// <summary> Media Streaming Configuration. </summary>
         public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
+        /// <summary> The endpoint URL of the Azure Cognitive Services resource attached. </summary>
+        public string AzureCognitiveServicesEndpointUrl { get; set; }
     }
 }

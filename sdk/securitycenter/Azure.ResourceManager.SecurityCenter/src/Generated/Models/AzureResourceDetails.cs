@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Details of the Azure resource that was assessed. </summary>
-    public partial class AzureResourceDetails : ResourceDetails
+    public partial class AzureResourceDetails : SecurityCenterResourceDetails
     {
         /// <summary> Initializes a new instance of AzureResourceDetails. </summary>
         public AzureResourceDetails()

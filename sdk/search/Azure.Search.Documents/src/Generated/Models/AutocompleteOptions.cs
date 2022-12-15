@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents

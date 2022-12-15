@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static WorkspaceSettingList DeserializeWorkspaceSettingList(JsonElement element)
         {
-            IReadOnlyList<WorkspaceSettingData> value = default;
+            IReadOnlyList<SecurityWorkspaceSettingData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<WorkspaceSettingData> array = new List<WorkspaceSettingData>();
+                    List<SecurityWorkspaceSettingData> array = new List<SecurityWorkspaceSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkspaceSettingData.DeserializeWorkspaceSettingData(item));
+                        array.Add(SecurityWorkspaceSettingData.DeserializeSecurityWorkspaceSettingData(item));
                     }
                     value = array;
                     continue;

@@ -3,7 +3,6 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
-
 azure-arm: true
 csharp: true
 library-name: KubernetesConfiguration
@@ -44,6 +43,51 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+prepend-rp-prefix:
+  - ProvisioningState
+  - ProvisioningStateType
+
+rename-mapping:
+  Extension: KubernetesClusterExtension
+  Scope: KubernetesClusterExtensionScope
+  ScopeType: KubernetesConfigurationScope
+  SourceKindType: KubernetesConfigurationSourceKind
+  ExtensionStatus: KubernetesClusterExtensionStatus
+  LevelType: KubernetesClusterExtensionStatusLevel
+  SourceControlConfiguration: KubernetesSourceControlConfiguration
+  FluxConfiguration: KubernetesFluxConfiguration
+  FluxConfiguration.properties.suspend: IsReconciliationSuspended
+  FluxComplianceState: KubernetesFluxComplianceState
+  SourceControlConfiguration.properties.enableHelmOperator: IsHelmOperatorEnabled
+  AzureBlobDefinition: KubernetesAzureBlob
+  GitRepositoryDefinition: KubernetesGitRepository
+  BucketDefinition: KubernetesBucket
+  ManagedIdentityDefinition.clientId: -|uuid
+  BucketDefinition.insecure: UseInsecureCommunication
+  BucketPatchDefinition: KubernetesBucketUpdateContent
+  BucketPatchDefinition.insecure: UseInsecureCommunication
+  GitRepositoryPatchDefinition: KubernetesGitRepositoryUpdateContent
+  AzureBlobPatchDefinition: KubernetesAzureBlobUpdateContent
+  KustomizationPatchDefinition: KustomizationUpdateContent
+  ComplianceStatus: KubernetesConfigurationComplianceStatus
+  ComplianceStatus.lastConfigApplied: LastConfigAppliedOn
+  ComplianceStateType: KubernetesConfigurationComplianceStateType
+  ServicePrincipalDefinition.clientId: -|uuid
+  ServicePrincipalPatchDefinition.clientId: -|uuid
+  ServicePrincipalDefinition: KubernetesServicePrincipal
+  ServicePrincipalPatchDefinition: KubernetesServicePrincipalUpdateContent
+  ManagedIdentityDefinition: KubernetesAzureBlobManagedIdentity
+  ManagedIdentityPatchDefinition: KubernetesAzureBlobManagedIdentityUpdateContent
+  MessageLevelType: KubernetesConfigurationMesageLevel
+  ObjectReferenceDefinition: KubernetesObjectReference
+  ObjectStatusConditionDefinition: KubernetesObjectStatusCondition
+  ObjectStatusDefinition: KubernetesObjectStatus
+  OperatorScopeType: KubernetesOperatorScope
+  OperatorType: KubernetesOperator
+  RepositoryRefDefinition: KubernetesGitRepositoryRef
+  HelmReleasePropertiesDefinition: HelmReleaseProperties
+  KustomizationDefinition: Kustomization
 
 directive:
   - remove-operation: OperationStatus_Get

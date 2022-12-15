@@ -141,18 +141,19 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Operation Id: Snapshot_Download
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="downloadType"> Indicates the download type. </param>
-        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
-        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <param name="content"> Parameters for the query operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<DownloadResponse>> DownloadAsync(WaitUntil waitUntil, DownloadType downloadType, string reportCreatorTenantId = null, string offerGuid = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<DownloadResponse>> DownloadAsync(WaitUntil waitUntil, SnapshotDownloadContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _snapshotResourceSnapshotClientDiagnostics.CreateScope("SnapshotResource.Download");
             scope.Start();
             try
             {
-                var response = await _snapshotResourceSnapshotRestClient.DownloadAsync(Id.Parent.Name, Id.Name, downloadType, reportCreatorTenantId, offerGuid, cancellationToken).ConfigureAwait(false);
-                var operation = new AppComplianceAutomationArmOperation<DownloadResponse>(new DownloadResponseOperationSource(), _snapshotResourceSnapshotClientDiagnostics, Pipeline, _snapshotResourceSnapshotRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, downloadType, reportCreatorTenantId, offerGuid).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _snapshotResourceSnapshotRestClient.DownloadAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new AppComplianceAutomationArmOperation<DownloadResponse>(new DownloadResponseOperationSource(), _snapshotResourceSnapshotClientDiagnostics, Pipeline, _snapshotResourceSnapshotRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -170,18 +171,19 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Operation Id: Snapshot_Download
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="downloadType"> Indicates the download type. </param>
-        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
-        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <param name="content"> Parameters for the query operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<DownloadResponse> Download(WaitUntil waitUntil, DownloadType downloadType, string reportCreatorTenantId = null, string offerGuid = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<DownloadResponse> Download(WaitUntil waitUntil, SnapshotDownloadContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             using var scope = _snapshotResourceSnapshotClientDiagnostics.CreateScope("SnapshotResource.Download");
             scope.Start();
             try
             {
-                var response = _snapshotResourceSnapshotRestClient.Download(Id.Parent.Name, Id.Name, downloadType, reportCreatorTenantId, offerGuid, cancellationToken);
-                var operation = new AppComplianceAutomationArmOperation<DownloadResponse>(new DownloadResponseOperationSource(), _snapshotResourceSnapshotClientDiagnostics, Pipeline, _snapshotResourceSnapshotRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, downloadType, reportCreatorTenantId, offerGuid).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _snapshotResourceSnapshotRestClient.Download(Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new AppComplianceAutomationArmOperation<DownloadResponse>(new DownloadResponseOperationSource(), _snapshotResourceSnapshotClientDiagnostics, Pipeline, _snapshotResourceSnapshotRestClient.CreateDownloadRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

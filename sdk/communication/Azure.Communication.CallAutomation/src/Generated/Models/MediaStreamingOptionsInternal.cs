@@ -6,10 +6,11 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The MediaStreamingConfiguration. </summary>
+    /// <summary> Configuration of Media streaming. </summary>
     internal partial class MediaStreamingOptionsInternal
     {
         /// <summary> Initializes a new instance of MediaStreamingOptionsInternal. </summary>
@@ -20,10 +21,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="transportUrl"/> is null. </exception>
         public MediaStreamingOptionsInternal(string transportUrl, MediaStreamingTransport transportType, MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType)
         {
-            if (transportUrl == null)
-            {
-                throw new ArgumentNullException(nameof(transportUrl));
-            }
+            Argument.AssertNotNull(transportUrl, nameof(transportUrl));
 
             TransportUrl = transportUrl;
             TransportType = transportType;

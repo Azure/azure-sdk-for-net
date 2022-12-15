@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string ascLocation)
+        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation ascLocation)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -126,12 +126,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AscLocationData>> GetAsync(string subscriptionId, string ascLocation, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SecurityCenterLocationData>> GetAsync(string subscriptionId, AzureLocation ascLocation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
 
             using var message = CreateGetRequest(subscriptionId, ascLocation);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -139,13 +138,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        AscLocationData value = default;
+                        SecurityCenterLocationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AscLocationData.DeserializeAscLocationData(document.RootElement);
+                        value = SecurityCenterLocationData.DeserializeSecurityCenterLocationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AscLocationData)null, message.Response);
+                    return Response.FromValue((SecurityCenterLocationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -155,12 +154,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="ascLocation"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="ascLocation"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AscLocationData> Get(string subscriptionId, string ascLocation, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SecurityCenterLocationData> Get(string subscriptionId, AzureLocation ascLocation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
 
             using var message = CreateGetRequest(subscriptionId, ascLocation);
             _pipeline.Send(message, cancellationToken);
@@ -168,13 +166,13 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case 200:
                     {
-                        AscLocationData value = default;
+                        SecurityCenterLocationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AscLocationData.DeserializeAscLocationData(document.RootElement);
+                        value = SecurityCenterLocationData.DeserializeSecurityCenterLocationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AscLocationData)null, message.Response);
+                    return Response.FromValue((SecurityCenterLocationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

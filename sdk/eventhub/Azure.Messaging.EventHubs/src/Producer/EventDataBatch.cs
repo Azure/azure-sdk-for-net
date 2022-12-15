@@ -146,9 +146,13 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <returns><c>true</c> if the event was added; otherwise, <c>false</c>.</returns>
         ///
         /// <remarks>
-        ///   When an event is accepted into the batch, its content and state are frozen; any
-        ///   changes made to the event will not be reflected in the batch nor will any state
-        ///   transitions be reflected to the original instance.
+        ///   When an event is accepted into the batch, changes made to its properties
+        ///   will not be reflected in the batch nor will any state transitions be reflected
+        ///   to the original instance.
+        ///
+        ///   Note: Any <see cref="ReadOnlyMemory{T}" />, byte array, or <see cref="BinaryData" />
+        ///   instance associated with the event is referenced by the batch and must remain valid and
+        ///   unchanged until the batch is disposed.
         /// </remarks>
         ///
         /// <exception cref="InvalidOperationException">

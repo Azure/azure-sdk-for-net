@@ -1,5 +1,19 @@
 # Release History
 
+## 1.9.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+- Fixed error message parsing in `AzureCliCredential` which would misinterpret AAD errors with the need to login with `az login`.
+- Fixed error message parsing in `AzurePowerShellCredential` which would misinterpret AAD errors with the need to install PowerShell.
+- `ManagedIdentityCredential` will no longer fail when a response received from the endpoint is invalid JSON. It now treats this scenario as if the credential is unavailable.
+- Fixed an issue when using `ManagedIdentityCredential` in combination with authorities other than Azure public cloud that resulted in a bogus instance metadata validation error. [#32498](https://github.com/Azure/azure-sdk-for-net/issues/32498)
+
+### Other Changes
+
 ## 1.9.0-beta.1 (2022-10-13)
 
 ### Features Added
@@ -8,7 +22,7 @@
   - `AzurePowerShellCredential` and `AzurePowerShellCredentialOptions.PowerShellProcessTimeout`
   - `VisualStudioCredential` and `VisualStudioCredentialOptions.VisualStudioProcessTimeout`
   - `DefaultAzureCredential` and `DefaultAzureCredentialOptions.DeveloperCredentialTimeout`  Note: this option applies to all developer credentials above when using `DefaultAzureCredential`.
-  
+
 ### Acknowledgments
 Thank you to our developer community members who helped to make Azure Identity better with their contributions to this release:
 
@@ -108,7 +122,7 @@ Thank you to our developer community members who helped to make Azure Identity b
 ### Breaking Changes from 1.5.0-beta.4
 - The `AllowMultiTenantAuthentication` option has been removed and the default behavior is now as if it were true. The multi-tenant discovery feature can be totally disabled by either setting an `AppContext` switch named "Azure.Identity.DisableTenantDiscovery" to `true` or by setting the environment variable "AZURE_IDENTITY_DISABLE_MULTITENANTAUTH" to "true".
 - Removed the `IsPIILoggingEnabled` property from `TokenCredentialOptions`, similar functionality is planned to be added to `TokenCredentialOptions.Diagnostics` in a later release.
-- Removed `RegionalAuthority` from `ClientCertificateCredentialOptions` and `ClientSecretCredentialOptions`, along with the `RegionalAuthority` type. This feature will stay in preview, and these APIs will be added back in `1.6.0-beta.1`.
+- Removed `RegionalAuthority` from `ClientCertificateCredentialOptions` and `ClientSecretCredentialOptions`, along with the `RegionalAuthority` type.
 - Renamed struct `TokenCacheDetails` to `TokenCacheData`.
 - Renamed class `TokenCacheNotificationDetails` to `TokenCacheRefreshArgs`.
 - Updated `CacheBytes` property on `TokenCacheData` to be readonly and a required constructor parameter.

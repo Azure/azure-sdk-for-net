@@ -37,15 +37,20 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("recordingFormatType");
                 writer.WriteStringValue(RecordingFormatType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ChannelAffinity))
+            if (Optional.IsCollectionDefined(AudioChannelParticipantOrdering))
             {
-                writer.WritePropertyName("channelAffinity");
+                writer.WritePropertyName("audioChannelParticipantOrdering");
                 writer.WriteStartArray();
-                foreach (var item in ChannelAffinity)
+                foreach (var item in AudioChannelParticipantOrdering)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(RecordingStorageType))
+            {
+                writer.WritePropertyName("recordingStorageType");
+                writer.WriteStringValue(RecordingStorageType.Value.ToString());
             }
             writer.WriteEndObject();
         }

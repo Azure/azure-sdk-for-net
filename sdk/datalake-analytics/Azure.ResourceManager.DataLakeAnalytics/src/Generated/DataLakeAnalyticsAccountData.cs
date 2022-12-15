@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         {
             DataLakeStoreAccounts = new ChangeTrackingList<DataLakeStoreAccountInformationData>();
             PublicDataLakeStoreAccounts = new ChangeTrackingList<DataLakeStoreAccountInformationData>();
-            StorageAccounts = new ChangeTrackingList<StorageAccountInformationData>();
-            ComputePolicies = new ChangeTrackingList<ComputePolicyData>();
-            HiveMetastores = new ChangeTrackingList<HiveMetastore>();
-            VirtualNetworkRules = new ChangeTrackingList<VirtualNetworkRule>();
-            FirewallRules = new ChangeTrackingList<FirewallRuleData>();
+            StorageAccounts = new ChangeTrackingList<DataLakeAnalyticsStorageAccountInformationData>();
+            ComputePolicies = new ChangeTrackingList<DataLakeAnalyticsComputePolicyData>();
+            HiveMetastores = new ChangeTrackingList<DataLakeAnalyticsHiveMetastore>();
+            VirtualNetworkRules = new ChangeTrackingList<DataLakeAnalyticsVirtualNetworkRule>();
+            FirewallRules = new ChangeTrackingList<DataLakeAnalyticsFirewallRuleData>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -34,39 +34,131 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="accountId"> The unique identifier associated with this Data Lake Analytics account. </param>
-        /// <param name="provisioningState"> The provisioning status of the Data Lake Analytics account. </param>
-        /// <param name="state"> The state of the Data Lake Analytics account. </param>
-        /// <param name="createdOn"> The account creation time. </param>
-        /// <param name="lastModifiedOn"> The account last modified time. </param>
-        /// <param name="endpoint"> The full CName endpoint for this account. </param>
-        /// <param name="defaultDataLakeStoreAccountType"> The type of the default Data Lake Store account associated with this account. </param>
-        /// <param name="defaultDataLakeStoreAccount"> The default Data Lake Store account associated with this account. </param>
-        /// <param name="dataLakeStoreAccounts"> The list of Data Lake Store accounts associated with this account. </param>
-        /// <param name="publicDataLakeStoreAccounts"> The list of Data Lake Store accounts associated with this account. </param>
-        /// <param name="storageAccounts"> The list of Azure Blob Storage accounts associated with this account. </param>
-        /// <param name="computePolicies"> The list of compute policies associated with this account. </param>
-        /// <param name="hiveMetastores"> The list of hiveMetastores associated with this account. </param>
-        /// <param name="virtualNetworkRules"> The list of virtualNetwork rules associated with this account. </param>
-        /// <param name="firewallRules"> The list of firewall rules associated with this account. </param>
-        /// <param name="firewallState"> The current state of the IP address firewall for this account. </param>
-        /// <param name="firewallAllowAzureIPs"> The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced. </param>
-        /// <param name="newTier"> The commitment tier for the next month. </param>
-        /// <param name="currentTier"> The commitment tier in use for the current month. </param>
-        /// <param name="maxJobCount"> The maximum supported jobs running under the account at the same time. </param>
-        /// <param name="maxActiveJobCountPerUser"> The maximum supported active jobs under the account at the same time. </param>
-        /// <param name="maxQueuedJobCountPerUser"> The maximum supported jobs queued under the account at the same time. </param>
-        /// <param name="maxJobRunningTimeInMin"> The maximum supported active jobs under the account at the same time. </param>
-        /// <param name="systemMaxJobCount"> The system defined maximum supported jobs running under the account at the same time, which restricts the maximum number of running jobs the user can set for the account. </param>
-        /// <param name="maxDegreeOfParallelism"> The maximum supported degree of parallelism for this account. </param>
-        /// <param name="systemMaxDegreeOfParallelism"> The system defined maximum supported degree of parallelism for this account, which restricts the maximum value of parallelism the user can set for the account. </param>
-        /// <param name="maxDegreeOfParallelismPerJob"> The maximum supported degree of parallelism per job for this account. </param>
-        /// <param name="minPriorityPerJob"> The minimum supported priority per job for this account. </param>
-        /// <param name="queryStoreRetention"> The number of days that job metadata is retained. </param>
-        /// <param name="debugDataAccessLevel"> The current state of the DebugDataAccessLevel for this account. </param>
-        /// <param name="location"> The resource location. </param>
-        /// <param name="tags"> The resource tags. </param>
-        internal DataLakeAnalyticsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? accountId, DataLakeAnalyticsAccountStatus? provisioningState, DataLakeAnalyticsAccountState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string endpoint, string defaultDataLakeStoreAccountType, string defaultDataLakeStoreAccount, IReadOnlyList<DataLakeStoreAccountInformationData> dataLakeStoreAccounts, IReadOnlyList<DataLakeStoreAccountInformationData> publicDataLakeStoreAccounts, IReadOnlyList<StorageAccountInformationData> storageAccounts, IReadOnlyList<ComputePolicyData> computePolicies, IReadOnlyList<HiveMetastore> hiveMetastores, IReadOnlyList<VirtualNetworkRule> virtualNetworkRules, IReadOnlyList<FirewallRuleData> firewallRules, FirewallState? firewallState, FirewallAllowAzureIPsState? firewallAllowAzureIPs, TierType? newTier, TierType? currentTier, int? maxJobCount, int? maxActiveJobCountPerUser, int? maxQueuedJobCountPerUser, int? maxJobRunningTimeInMin, int? systemMaxJobCount, int? maxDegreeOfParallelism, int? systemMaxDegreeOfParallelism, int? maxDegreeOfParallelismPerJob, int? minPriorityPerJob, int? queryStoreRetention, DebugDataAccessLevel? debugDataAccessLevel, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="accountId">
+        /// The unique identifier associated with this Data Lake Analytics account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.accountId
+        /// </param>
+        /// <param name="provisioningState">
+        /// The provisioning status of the Data Lake Analytics account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.provisioningState
+        /// </param>
+        /// <param name="state">
+        /// The state of the Data Lake Analytics account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.state
+        /// </param>
+        /// <param name="createdOn">
+        /// The account creation time.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.creationTime
+        /// </param>
+        /// <param name="lastModifiedOn">
+        /// The account last modified time.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.lastModifiedTime
+        /// </param>
+        /// <param name="endpoint">
+        /// The full CName endpoint for this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.endpoint
+        /// </param>
+        /// <param name="defaultDataLakeStoreAccount">
+        /// The default Data Lake Store account associated with this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.defaultDataLakeStoreAccount
+        /// </param>
+        /// <param name="dataLakeStoreAccounts">
+        /// The list of Data Lake Store accounts associated with this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.dataLakeStoreAccounts
+        /// </param>
+        /// <param name="publicDataLakeStoreAccounts">
+        /// The list of Data Lake Store accounts associated with this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.publicDataLakeStoreAccounts
+        /// </param>
+        /// <param name="storageAccounts">
+        /// The list of Azure Blob Storage accounts associated with this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.storageAccounts
+        /// </param>
+        /// <param name="computePolicies">
+        /// The list of compute policies associated with this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.computePolicies
+        /// </param>
+        /// <param name="hiveMetastores">
+        /// The list of hiveMetastores associated with this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.hiveMetastores
+        /// </param>
+        /// <param name="virtualNetworkRules">
+        /// The list of virtualNetwork rules associated with this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.virtualNetworkRules
+        /// </param>
+        /// <param name="firewallRules">
+        /// The list of firewall rules associated with this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.firewallRules
+        /// </param>
+        /// <param name="firewallState">
+        /// The current state of the IP address firewall for this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.firewallState
+        /// </param>
+        /// <param name="firewallAllowAzureIPs">
+        /// The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.firewallAllowAzureIps
+        /// </param>
+        /// <param name="newTier">
+        /// The commitment tier for the next month.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.newTier
+        /// </param>
+        /// <param name="currentTier">
+        /// The commitment tier in use for the current month.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.currentTier
+        /// </param>
+        /// <param name="maxJobCount">
+        /// The maximum supported jobs running under the account at the same time.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.maxJobCount
+        /// </param>
+        /// <param name="maxActiveJobCountPerUser">
+        /// The maximum supported active jobs under the account at the same time.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.maxActiveJobCountPerUser
+        /// </param>
+        /// <param name="maxQueuedJobCountPerUser">
+        /// The maximum supported jobs queued under the account at the same time.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.maxQueuedJobCountPerUser
+        /// </param>
+        /// <param name="maxJobRunningTimeInMin">
+        /// The maximum supported active jobs under the account at the same time.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.maxJobRunningTimeInMin
+        /// </param>
+        /// <param name="systemMaxJobCount">
+        /// The system defined maximum supported jobs running under the account at the same time, which restricts the maximum number of running jobs the user can set for the account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.systemMaxJobCount
+        /// </param>
+        /// <param name="maxDegreeOfParallelism">
+        /// The maximum supported degree of parallelism for this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.maxDegreeOfParallelism
+        /// </param>
+        /// <param name="systemMaxDegreeOfParallelism">
+        /// The system defined maximum supported degree of parallelism for this account, which restricts the maximum value of parallelism the user can set for the account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.systemMaxDegreeOfParallelism
+        /// </param>
+        /// <param name="maxDegreeOfParallelismPerJob">
+        /// The maximum supported degree of parallelism per job for this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.maxDegreeOfParallelismPerJob
+        /// </param>
+        /// <param name="minPriorityPerJob">
+        /// The minimum supported priority per job for this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.minPriorityPerJob
+        /// </param>
+        /// <param name="queryStoreRetention">
+        /// The number of days that job metadata is retained.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.queryStoreRetention
+        /// </param>
+        /// <param name="debugDataAccessLevel">
+        /// The current state of the DebugDataAccessLevel for this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.debugDataAccessLevel
+        /// </param>
+        /// <param name="location">
+        /// The resource location.
+        /// Serialized Name: Resource.location
+        /// </param>
+        /// <param name="tags">
+        /// The resource tags.
+        /// Serialized Name: Resource.tags
+        /// </param>
+        internal DataLakeAnalyticsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? accountId, DataLakeAnalyticsAccountStatus? provisioningState, DataLakeAnalyticsAccountState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string endpoint, string defaultDataLakeStoreAccount, IReadOnlyList<DataLakeStoreAccountInformationData> dataLakeStoreAccounts, IReadOnlyList<DataLakeStoreAccountInformationData> publicDataLakeStoreAccounts, IReadOnlyList<DataLakeAnalyticsStorageAccountInformationData> storageAccounts, IReadOnlyList<DataLakeAnalyticsComputePolicyData> computePolicies, IReadOnlyList<DataLakeAnalyticsHiveMetastore> hiveMetastores, IReadOnlyList<DataLakeAnalyticsVirtualNetworkRule> virtualNetworkRules, IReadOnlyList<DataLakeAnalyticsFirewallRuleData> firewallRules, DataLakeAnalyticsFirewallState? firewallState, DataLakeAnalyticsFirewallAllowAzureIPsState? firewallAllowAzureIPs, DataLakeAnalyticsCommitmentTierType? newTier, DataLakeAnalyticsCommitmentTierType? currentTier, int? maxJobCount, int? maxActiveJobCountPerUser, int? maxQueuedJobCountPerUser, int? maxJobRunningTimeInMin, int? systemMaxJobCount, int? maxDegreeOfParallelism, int? systemMaxDegreeOfParallelism, int? maxDegreeOfParallelismPerJob, int? minPriorityPerJob, int? queryStoreRetention, DebugDataAccessLevel? debugDataAccessLevel, AzureLocation? location, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             AccountId = accountId;
             ProvisioningState = provisioningState;
@@ -74,7 +166,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             Endpoint = endpoint;
-            DefaultDataLakeStoreAccountType = defaultDataLakeStoreAccountType;
             DefaultDataLakeStoreAccount = defaultDataLakeStoreAccount;
             DataLakeStoreAccounts = dataLakeStoreAccounts;
             PublicDataLakeStoreAccounts = publicDataLakeStoreAccounts;
@@ -102,69 +193,160 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             Tags = tags;
         }
 
-        /// <summary> The unique identifier associated with this Data Lake Analytics account. </summary>
+        /// <summary>
+        /// The unique identifier associated with this Data Lake Analytics account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.accountId
+        /// </summary>
         public Guid? AccountId { get; }
-        /// <summary> The provisioning status of the Data Lake Analytics account. </summary>
+        /// <summary>
+        /// The provisioning status of the Data Lake Analytics account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.provisioningState
+        /// </summary>
         public DataLakeAnalyticsAccountStatus? ProvisioningState { get; }
-        /// <summary> The state of the Data Lake Analytics account. </summary>
+        /// <summary>
+        /// The state of the Data Lake Analytics account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.state
+        /// </summary>
         public DataLakeAnalyticsAccountState? State { get; }
-        /// <summary> The account creation time. </summary>
+        /// <summary>
+        /// The account creation time.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.creationTime
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> The account last modified time. </summary>
+        /// <summary>
+        /// The account last modified time.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.lastModifiedTime
+        /// </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> The full CName endpoint for this account. </summary>
+        /// <summary>
+        /// The full CName endpoint for this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.endpoint
+        /// </summary>
         public string Endpoint { get; }
-        /// <summary> The type of the default Data Lake Store account associated with this account. </summary>
-        public string DefaultDataLakeStoreAccountType { get; }
-        /// <summary> The default Data Lake Store account associated with this account. </summary>
+        /// <summary>
+        /// The default Data Lake Store account associated with this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.defaultDataLakeStoreAccount
+        /// </summary>
         public string DefaultDataLakeStoreAccount { get; }
-        /// <summary> The list of Data Lake Store accounts associated with this account. </summary>
+        /// <summary>
+        /// The list of Data Lake Store accounts associated with this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.dataLakeStoreAccounts
+        /// </summary>
         public IReadOnlyList<DataLakeStoreAccountInformationData> DataLakeStoreAccounts { get; }
-        /// <summary> The list of Data Lake Store accounts associated with this account. </summary>
+        /// <summary>
+        /// The list of Data Lake Store accounts associated with this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.publicDataLakeStoreAccounts
+        /// </summary>
         public IReadOnlyList<DataLakeStoreAccountInformationData> PublicDataLakeStoreAccounts { get; }
-        /// <summary> The list of Azure Blob Storage accounts associated with this account. </summary>
-        public IReadOnlyList<StorageAccountInformationData> StorageAccounts { get; }
-        /// <summary> The list of compute policies associated with this account. </summary>
-        public IReadOnlyList<ComputePolicyData> ComputePolicies { get; }
-        /// <summary> The list of hiveMetastores associated with this account. </summary>
-        public IReadOnlyList<HiveMetastore> HiveMetastores { get; }
-        /// <summary> The list of virtualNetwork rules associated with this account. </summary>
-        public IReadOnlyList<VirtualNetworkRule> VirtualNetworkRules { get; }
-        /// <summary> The list of firewall rules associated with this account. </summary>
-        public IReadOnlyList<FirewallRuleData> FirewallRules { get; }
-        /// <summary> The current state of the IP address firewall for this account. </summary>
-        public FirewallState? FirewallState { get; }
-        /// <summary> The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced. </summary>
-        public FirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; }
-        /// <summary> The commitment tier for the next month. </summary>
-        public TierType? NewTier { get; }
-        /// <summary> The commitment tier in use for the current month. </summary>
-        public TierType? CurrentTier { get; }
-        /// <summary> The maximum supported jobs running under the account at the same time. </summary>
+        /// <summary>
+        /// The list of Azure Blob Storage accounts associated with this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.storageAccounts
+        /// </summary>
+        public IReadOnlyList<DataLakeAnalyticsStorageAccountInformationData> StorageAccounts { get; }
+        /// <summary>
+        /// The list of compute policies associated with this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.computePolicies
+        /// </summary>
+        public IReadOnlyList<DataLakeAnalyticsComputePolicyData> ComputePolicies { get; }
+        /// <summary>
+        /// The list of hiveMetastores associated with this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.hiveMetastores
+        /// </summary>
+        public IReadOnlyList<DataLakeAnalyticsHiveMetastore> HiveMetastores { get; }
+        /// <summary>
+        /// The list of virtualNetwork rules associated with this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.virtualNetworkRules
+        /// </summary>
+        public IReadOnlyList<DataLakeAnalyticsVirtualNetworkRule> VirtualNetworkRules { get; }
+        /// <summary>
+        /// The list of firewall rules associated with this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.firewallRules
+        /// </summary>
+        public IReadOnlyList<DataLakeAnalyticsFirewallRuleData> FirewallRules { get; }
+        /// <summary>
+        /// The current state of the IP address firewall for this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.firewallState
+        /// </summary>
+        public DataLakeAnalyticsFirewallState? FirewallState { get; }
+        /// <summary>
+        /// The current state of allowing or disallowing IPs originating within Azure through the firewall. If the firewall is disabled, this is not enforced.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.firewallAllowAzureIps
+        /// </summary>
+        public DataLakeAnalyticsFirewallAllowAzureIPsState? FirewallAllowAzureIPs { get; }
+        /// <summary>
+        /// The commitment tier for the next month.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.newTier
+        /// </summary>
+        public DataLakeAnalyticsCommitmentTierType? NewTier { get; }
+        /// <summary>
+        /// The commitment tier in use for the current month.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.currentTier
+        /// </summary>
+        public DataLakeAnalyticsCommitmentTierType? CurrentTier { get; }
+        /// <summary>
+        /// The maximum supported jobs running under the account at the same time.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.maxJobCount
+        /// </summary>
         public int? MaxJobCount { get; }
-        /// <summary> The maximum supported active jobs under the account at the same time. </summary>
+        /// <summary>
+        /// The maximum supported active jobs under the account at the same time.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.maxActiveJobCountPerUser
+        /// </summary>
         public int? MaxActiveJobCountPerUser { get; }
-        /// <summary> The maximum supported jobs queued under the account at the same time. </summary>
+        /// <summary>
+        /// The maximum supported jobs queued under the account at the same time.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.maxQueuedJobCountPerUser
+        /// </summary>
         public int? MaxQueuedJobCountPerUser { get; }
-        /// <summary> The maximum supported active jobs under the account at the same time. </summary>
+        /// <summary>
+        /// The maximum supported active jobs under the account at the same time.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.maxJobRunningTimeInMin
+        /// </summary>
         public int? MaxJobRunningTimeInMin { get; }
-        /// <summary> The system defined maximum supported jobs running under the account at the same time, which restricts the maximum number of running jobs the user can set for the account. </summary>
+        /// <summary>
+        /// The system defined maximum supported jobs running under the account at the same time, which restricts the maximum number of running jobs the user can set for the account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.systemMaxJobCount
+        /// </summary>
         public int? SystemMaxJobCount { get; }
-        /// <summary> The maximum supported degree of parallelism for this account. </summary>
+        /// <summary>
+        /// The maximum supported degree of parallelism for this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.maxDegreeOfParallelism
+        /// </summary>
         public int? MaxDegreeOfParallelism { get; }
-        /// <summary> The system defined maximum supported degree of parallelism for this account, which restricts the maximum value of parallelism the user can set for the account. </summary>
+        /// <summary>
+        /// The system defined maximum supported degree of parallelism for this account, which restricts the maximum value of parallelism the user can set for the account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.systemMaxDegreeOfParallelism
+        /// </summary>
         public int? SystemMaxDegreeOfParallelism { get; }
-        /// <summary> The maximum supported degree of parallelism per job for this account. </summary>
+        /// <summary>
+        /// The maximum supported degree of parallelism per job for this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.maxDegreeOfParallelismPerJob
+        /// </summary>
         public int? MaxDegreeOfParallelismPerJob { get; }
-        /// <summary> The minimum supported priority per job for this account. </summary>
+        /// <summary>
+        /// The minimum supported priority per job for this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.minPriorityPerJob
+        /// </summary>
         public int? MinPriorityPerJob { get; }
-        /// <summary> The number of days that job metadata is retained. </summary>
+        /// <summary>
+        /// The number of days that job metadata is retained.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.queryStoreRetention
+        /// </summary>
         public int? QueryStoreRetention { get; }
-        /// <summary> The current state of the DebugDataAccessLevel for this account. </summary>
+        /// <summary>
+        /// The current state of the DebugDataAccessLevel for this account.
+        /// Serialized Name: DataLakeAnalyticsAccount.properties.debugDataAccessLevel
+        /// </summary>
         public DebugDataAccessLevel? DebugDataAccessLevel { get; }
-        /// <summary> The resource location. </summary>
+        /// <summary>
+        /// The resource location.
+        /// Serialized Name: Resource.location
+        /// </summary>
         public AzureLocation? Location { get; }
-        /// <summary> The resource tags. </summary>
+        /// <summary>
+        /// The resource tags.
+        /// Serialized Name: Resource.tags
+        /// </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

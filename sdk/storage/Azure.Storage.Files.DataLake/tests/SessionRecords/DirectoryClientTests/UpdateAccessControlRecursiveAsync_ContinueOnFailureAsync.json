@@ -634,7 +634,7 @@
       "ResponseBody": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><UserDelegationKey><SignedOid>c4f48289-bb84-4086-b250-6f94a8f64cee</SignedOid><SignedTid>72f988bf-86f1-41af-91ab-2d7cd011db47</SignedTid><SignedStart>2021-02-19T19:07:22Z</SignedStart><SignedExpiry>2021-02-19T20:07:23Z</SignedExpiry><SignedService>b</SignedService><SignedVersion>2020-06-12</SignedVersion><Value>3Wj+J0Wjg07ysO09+t6WoYYwtY85yds0KaEfDcvazEw=</Value></UserDelegationKey>"
     },
     {
-      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-a267f71e-4b7d-0195-d4b5-e06086677d0d/test-directory-2eae59a4-fab1-59e7-b1f7-e465c0dc5d44?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2021-02-19T19%3A07%3A22Z&ske=2021-02-19T20%3A07%3A23Z&sks=b&skv=2020-06-12&sv=2021-10-04&st=2021-02-19T18%3A07%3A23Z&se=2021-02-19T20%3A07%3A23Z&sr=c&sp=racwdlmeop&suoid=60e0fbde-b75a-d7e6-ada8-1f640e324fd5&sig=Sanitized&action=setAccessControlRecursive&mode=modify&forceFlag=true",
+      "RequestUri": "https://seannse.dfs.core.windows.net/test-filesystem-a267f71e-4b7d-0195-d4b5-e06086677d0d/test-directory-2eae59a4-fab1-59e7-b1f7-e465c0dc5d44?skoid=c4f48289-bb84-4086-b250-6f94a8f64cee&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2021-02-19T19%3A07%3A22Z&ske=2021-02-19T20%3A07%3A23Z&sks=b&skv=2020-06-12&sv=2021-12-02&st=2021-02-19T18%3A07%3A23Z&se=2021-02-19T20%3A07%3A23Z&sr=c&sp=racwdlmeop&suoid=60e0fbde-b75a-d7e6-ada8-1f640e324fd5&sig=Sanitized&action=setAccessControlRecursive&mode=modify&forceFlag=true",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",

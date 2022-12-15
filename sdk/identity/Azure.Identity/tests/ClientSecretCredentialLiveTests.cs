@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Microsoft.Identity.Client;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests

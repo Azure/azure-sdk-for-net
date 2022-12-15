@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -26,16 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     case "VMwareV2": return VMwareV2FabricSpecificDetails.DeserializeVMwareV2FabricSpecificDetails(element);
                 }
             }
-            string instanceType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("instanceType"))
-                {
-                    instanceType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new UnknownFabricSpecificDetails(instanceType);
+            return UnknownFabricSpecificDetails.DeserializeUnknownFabricSpecificDetails(element);
         }
     }
 }

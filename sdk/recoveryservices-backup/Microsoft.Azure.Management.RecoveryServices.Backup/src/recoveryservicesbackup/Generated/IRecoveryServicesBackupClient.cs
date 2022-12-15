@@ -294,6 +294,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         IBackupProtectionContainersOperations BackupProtectionContainers { get; }
 
         /// <summary>
+        /// Gets the IDeletedProtectionContainersOperations.
+        /// </summary>
+        IDeletedProtectionContainersOperations DeletedProtectionContainers { get; }
+
+        /// <summary>
         /// Gets the ISecurityPINsOperations.
         /// </summary>
         ISecurityPINsOperations SecurityPINs { get; }

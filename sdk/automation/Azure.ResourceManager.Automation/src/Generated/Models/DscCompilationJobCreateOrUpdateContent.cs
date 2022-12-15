@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <exception cref="ArgumentNullException"> <paramref name="configuration"/> is null. </exception>
         public DscCompilationJobCreateOrUpdateContent(DscConfigurationAssociationProperty configuration)
         {
-            if (configuration == null)
-            {
-                throw new ArgumentNullException(nameof(configuration));
-            }
+            Argument.AssertNotNull(configuration, nameof(configuration));
 
             Tags = new ChangeTrackingDictionary<string, string>();
             Configuration = configuration;
@@ -46,6 +43,6 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Gets or sets the parameters of the job. </summary>
         public IDictionary<string, string> Parameters { get; }
         /// <summary> If a new build version of NodeConfiguration is required. </summary>
-        public bool? IncrementNodeConfigurationBuild { get; set; }
+        public bool? IsIncrementNodeConfigurationBuildRequired { get; set; }
     }
 }

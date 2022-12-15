@@ -872,6 +872,7 @@
             Models.CertificateReference[] certRefs,
             Models.ApplicationPackageReference[] applicationPackageReferences,
             Models.MetadataItem[] metaData,
+            Models.NodeCommunicationMode? targetNodeCommunicationMode,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
@@ -881,7 +882,7 @@
             metaData = metaData ?? new Models.MetadataItem[0];
             applicationPackageReferences = applicationPackageReferences ?? new Models.ApplicationPackageReference[0];
 
-            var parameters = new Models.PoolUpdatePropertiesParameter(certRefs, applicationPackageReferences, metaData, startTask);
+            var parameters = new Models.PoolUpdatePropertiesParameter(certRefs, applicationPackageReferences, metaData, startTask, targetNodeCommunicationMode);
             var request = new PoolUpdatePropertiesBatchRequest(this._client, parameters, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Pool.UpdatePropertiesWithHttpMessagesAsync(
@@ -902,10 +903,11 @@
             Models.CertificateReference[] certificateReferences,
             Models.ApplicationPackageReference[] applicationPackageReferences,
             Models.MetadataItem[] metadata,
+            Models.NodeCommunicationMode? targetNodeCommunicationMode,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
-            var parameters = new Models.PoolPatchParameter(startTask, certificateReferences, applicationPackageReferences, metadata);
+            var parameters = new Models.PoolPatchParameter(startTask, certificateReferences, applicationPackageReferences, metadata, targetNodeCommunicationMode);
             var request = new PoolPatchBatchRequest(this._client, parameters, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Pool.PatchWithHttpMessagesAsync(

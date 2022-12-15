@@ -9,10 +9,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Communication;
+using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The CreateCallRequest. </summary>
+    /// <summary> The request payload for creating the call. </summary>
     internal partial class CreateCallRequestInternal
     {
         /// <summary> Initializes a new instance of CreateCallRequestInternal. </summary>
@@ -22,18 +23,9 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="targets"/>, <paramref name="source"/> or <paramref name="callbackUri"/> is null. </exception>
         public CreateCallRequestInternal(IEnumerable<CommunicationIdentifierModel> targets, CallSourceInternal source, string callbackUri)
         {
-            if (targets == null)
-            {
-                throw new ArgumentNullException(nameof(targets));
-            }
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-            if (callbackUri == null)
-            {
-                throw new ArgumentNullException(nameof(callbackUri));
-            }
+            Argument.AssertNotNull(targets, nameof(targets));
+            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(callbackUri, nameof(callbackUri));
 
             Targets = targets.ToList();
             Source = source;
@@ -50,5 +42,7 @@ namespace Azure.Communication.CallAutomation
         public string CallbackUri { get; }
         /// <summary> Media Streaming Configuration. </summary>
         public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
+        /// <summary> The identifier of the Cognitive Service resource assigned to this call. </summary>
+        public string AzureCognitiveServicesEndpointUrl { get; set; }
     }
 }
