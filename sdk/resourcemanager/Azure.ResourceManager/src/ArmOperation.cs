@@ -23,6 +23,11 @@ namespace Azure.ResourceManager
         {
         }
 
+        private ArmOperation(OperationInternal operation)
+        {
+            _operation = operation;
+        }
+
         internal ArmOperation(Response response)
         {
             _operation = OperationInternal.Succeeded(response);
@@ -34,10 +39,10 @@ namespace Azure.ResourceManager
             _operation = new OperationInternal(clientDiagnostics, nextLinkOperation, response, operationTypeName, fallbackStrategy: new ExponentialDelayStrategy());
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ArmOperation"/> class. </summary>
+        /// <summary> Rehydrate an instance of the <see cref="ArmOperation"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The id of the ArmOperation. </param>
-        public ArmOperation(ArmClient client, string id)
+        public static ArmOperation Rehydrate(ArmClient client, string id)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(client, nameof(client));
@@ -45,7 +50,8 @@ namespace Azure.ResourceManager
             var nextLinkOperation = NextLinkOperationImplementation.Create(client.Pipeline, id, out string finalResponse);
             // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
             var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
-            _operation = OperationInternal.Create(clientDiagnostics, nextLinkOperation, finalResponse, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
+            var operation = OperationInternal.Create(clientDiagnostics, nextLinkOperation, finalResponse, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
+            return new ArmOperation(operation);
         }
 
         /// <inheritdoc />

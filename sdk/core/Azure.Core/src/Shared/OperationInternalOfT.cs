@@ -130,7 +130,7 @@ namespace Azure.Core
         {
             if (finalResponse != null)
             {
-                Response response = JsonSerializer.Deserialize<OperationInternal.DecodedResponse>(finalResponse)!;
+                Response response = JsonSerializer.Deserialize<DecodedResponse>(finalResponse)!;
                 return OperationInternal<T>.Succeeded(response, source.CreateResult(response, CancellationToken.None));
             }
             return new OperationInternal<T>(clientDiagnostics, operation!, null, operationTypeName, scopeAttributes, fallbackStrategy);
@@ -304,7 +304,7 @@ namespace Azure.Core
             var id = _operation.GetOperationId();
             if (string.IsNullOrEmpty(id))
             {
-                var serializeOptions = new JsonSerializerOptions { Converters = { new OperationInternal.StreamConverter() } };
+                var serializeOptions = new JsonSerializerOptions { Converters = { new StreamConverter() } };
                 var lroDetails = new Dictionary<string, string>()
                 {
                     ["FinalResponse"] = BinaryData.FromObjectAsJson<Response>(_rawResponse!, serializeOptions).ToString()
@@ -376,12 +376,6 @@ namespace Azure.Core
         /// To get the Id of the operation for rehydration purpose.
         /// </summary>
         string GetOperationId();
-    }
-
-    internal interface IOperationSource<T>
-    {
-        T CreateResult(Response response, CancellationToken cancellationToken);
-        ValueTask<T> CreateResultAsync(Response response, CancellationToken cancellationToken);
     }
 
     /// <summary>

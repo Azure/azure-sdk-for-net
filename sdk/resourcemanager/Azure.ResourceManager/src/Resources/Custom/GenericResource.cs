@@ -16,7 +16,10 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary> A Class representing a GenericResource along with the instance operations that can be performed on it. </summary>
-    public partial class GenericResource : ArmResource, IOperationSourceProvider<GenericResource>
+    public partial class GenericResource : ArmResource
+#if NET7_0_OR_GREATER
+    , IOperationSourceProvider<GenericResource>
+#endif
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ResourcesRestOperations _resourcesRestClient;

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Version>1.4.0-beta.1</Version>
@@ -8,6 +8,7 @@
     <Description>Microsoft Azure Resource Manager client SDK for Azure resources.</Description>
     <PackageTags>azure;management;resource</PackageTags>
     <UseDefaultNamespaceAndOutputFolder>false</UseDefaultNamespaceAndOutputFolder>
+    <LangVersion>11</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +18,9 @@
     <Compile Include="$(AzureCoreSharedSources)ReferenceTypeAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)SerializationConstructorAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)TypeReferenceTypeAttribute.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)DecodedResponse.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)StreamConverter.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)IOperationSourceOfT.cs" LinkBase="Shared\Core" />
   </ItemGroup>
 
 </Project>

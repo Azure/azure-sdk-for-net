@@ -22,7 +22,10 @@ namespace Azure.ResourceManager.Resources
     /// from an instance of <see cref="ArmClient" /> using the GetManagementLockResource method.
     /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetManagementLock method.
     /// </summary>
-    public partial class ManagementLockResource : ArmResource, IOperationSourceProvider<ManagementLockResource>
+    public partial class ManagementLockResource : ArmResource
+#if NET7_0_OR_GREATER
+    , IOperationSourceProvider<ManagementLockResource>
+#endif
     {
 #if NET7_0_OR_GREATER
         static IOperationSource<ManagementLockResource> IOperationSourceProvider<ManagementLockResource>.GetOperationSource(ArmClient client) => new ManagementLockOperationSource(client);

@@ -8,7 +8,9 @@
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE;HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net461;netcoreapp2.1;net5.0;net6.0</TargetFrameworks>
+    <!-- TODO: revert after fixing .NET 7 error-->
+    <!-- <TargetFrameworks>$(RequiredTargetFrameworks);net461;netcoreapp2.1;net5.0;net6.0</TargetFrameworks> -->
+    <TargetFrameworks>netstandard2.0;net461;netcoreapp2.1;net5.0;net6.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
@@ -73,6 +75,9 @@
     <Compile Include="Shared\DelayStrategy.cs" />
     <Compile Include="Shared\TypeReferenceTypeAttribute.cs" />
     <Compile Include="Shared\GeoRedundantFallbackPolicy.cs" />
+    <Compile Include="Shared\DecodedResponse.cs" />
+    <Compile Include="Shared\StreamConverter.cs" />
+    <Compile Include="Shared\IOperationSourceOfT.cs" />
   </ItemGroup>
 
 </Project>

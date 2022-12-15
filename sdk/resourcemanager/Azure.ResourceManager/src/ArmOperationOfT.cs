@@ -25,6 +25,11 @@ namespace Azure.ResourceManager
         {
         }
 
+        private ArmOperation(OperationInternal<T> operation)
+        {
+            _operation = operation;
+        }
+
         internal ArmOperation(Response<T> response)
         {
             _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
@@ -37,7 +42,7 @@ namespace Azure.ResourceManager
         }
 
         /// <summary> Initializes a new instance of ArmOperation. </summary>
-        public ArmOperation(ArmClient client, string id)
+        public static ArmOperation<T> Rehydrate(ArmClient client, string id)
         {
 #if NET7_0_OR_GREATER
             var method = typeof(T).GetMethod($"Azure.Core.IOperationSourceProvider<{typeof(T).FullName}>.GetOperationSource", BindingFlags.NonPublic | BindingFlags.Static);
@@ -47,7 +52,9 @@ namespace Azure.ResourceManager
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id, out string finalResponse);
             // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
             var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
-            _operation = OperationInternal<T>.Create(source, clientDiagnostics, nextLinkOperation, finalResponse, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
+            var operation = OperationInternal<T>.Create(source, clientDiagnostics, nextLinkOperation, finalResponse, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy());
+            var armOperation = new ArmOperation<T>(operation);
+            return armOperation;
 #else
             throw new InvalidOperationException("LRO rehydration is not supported in this version of .NET. Please upgrade to .NET 7.0 or later.");
 #endif

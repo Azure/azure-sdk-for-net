@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Tests
             var rgOpId = rgOp.Id;
             var rg = rgOp.Value;
 #if NET7_0_OR_GREATER
-            var rehydratedLro = new ArmOperation<ResourceGroupResource>(Client, rgOpId);
+            var rehydratedLro = ArmOperation<ResourceGroupResource>.Rehydrate(Client, rgOpId);
             await rehydratedLro.WaitForCompletionResponseAsync();
             // Assert.AreEqual(rehydratedLro.Id, rgOpId);
             ResourceGroupResource rehydratedRg = rehydratedLro.Value;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Tests
             parameters.Resources.Add("*");
             var expOp = await rg.ExportTemplateAsync(WaitUntil.Started, parameters);
             var expOpId = expOp.Id;
-            var expRehydratedLro = new ArmOperation<ResourceGroupExportResult>(Client, expOpId);
+            var expRehydratedLro = ArmOperation<ResourceGroupExportResult>.Rehydrate(Client, expOpId);
             await expRehydratedLro.WaitForCompletionResponseAsync();
             Assert.AreEqual(expRehydratedLro.HasValue, true);
             var rehydratedResult = expRehydratedLro.Value;
@@ -78,16 +78,16 @@ namespace Azure.ResourceManager.Tests
             // The deletion of a resource group is a real LRO
             var deleteOp = await rg.DeleteAsync(WaitUntil.Started);
             var deleteOpId = deleteOp.Id;
-            var deleteRehydratedLro = new ArmOperation(Client, deleteOpId);
+            var deleteRehydratedLro = ArmOperation.Rehydrate(Client, deleteOpId);
             await deleteRehydratedLro.UpdateStatusAsync();
             var deleteOpId2 = deleteRehydratedLro.Id;
-            var deleteRehydratedLro2 = new ArmOperation(Client, deleteOpId2);
+            var deleteRehydratedLro2 = ArmOperation.Rehydrate(Client, deleteOpId2);
             await deleteRehydratedLro2.WaitForCompletionResponseAsync();
             Assert.AreEqual(deleteRehydratedLro2.HasCompleted, true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await rg.GetAsync());
             Assert.AreEqual(404, ex.Status);
 #else
-            var ex = Assert.Throws<InvalidOperationException>(() => new ArmOperation<ResourceGroupResource>(Client, rgOpId));
+            var ex = Assert.Throws<InvalidOperationException>(() => ArmOperation<ResourceGroupResource>.Rehydrate(Client, rgOpId));
             Assert.AreEqual("LRO rehydration is not supported in this version of .NET. Please upgrade to .NET 7.0 or later.", ex.Message);
 #endif
         }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Tests
             var lroId = lro.Id;
             var mgmtLock = lro.Value;
 #if NET7_0_OR_GREATER
-            var rehydratedLro = new ArmOperation<ManagementLockResource>(Client, lroId);
+            var rehydratedLro = ArmOperation<ManagementLockResource>.Rehydrate(Client, lroId);
             await rehydratedLro.WaitForCompletionResponseAsync();
             ManagementLockResource rehydratedLock = rehydratedLro.Value;
             Assert.AreEqual(mgmtLock.Data.Id, rehydratedLock.Data.Id);
@@ -118,14 +118,14 @@ namespace Azure.ResourceManager.Tests
             var deleteOp = await rehydratedLock.DeleteAsync(WaitUntil.Started);
             Assert.AreEqual(deleteOp.HasCompleted, true);
             var deleteOpId = deleteOp.Id;
-            var deleteRehydratedLro = new ArmOperation(Client, deleteOpId);
+            var deleteRehydratedLro = ArmOperation.Rehydrate(Client, deleteOpId);
             await deleteRehydratedLro.WaitForCompletionResponseAsync();
             // Assert.AreEqual(deleteRehydratedLro.Id, deleteOpId);
             Assert.AreEqual(deleteRehydratedLro.HasCompleted, true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await rehydratedLock.GetAsync());
             Assert.AreEqual(404, ex.Status);
 #else
-            var ex = Assert.Throws<InvalidOperationException>(() => new ArmOperation<ManagementLockResource>(Client, lroId));
+            var ex = Assert.Throws<InvalidOperationException>(() => ArmOperation<ManagementLockResource>.Rehydrate(Client, lroId));
             Assert.AreEqual("LRO rehydration is not supported in this version of .NET. Please upgrade to .NET 7.0 or later.", ex.Message);
 #endif
         }

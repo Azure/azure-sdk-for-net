@@ -12,7 +12,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ResourceGroupExportResult : IOperationSourceProvider<ResourceGroupExportResult>
+    public partial class ResourceGroupExportResult
+#if NET7_0_OR_GREATER
+     : IOperationSourceProvider<ResourceGroupExportResult>
+#endif
     {
 #if NET7_0_OR_GREATER
         static IOperationSource<ResourceGroupExportResult> IOperationSourceProvider<ResourceGroupExportResult>.GetOperationSource(ArmClient client) => new ResourceGroupExportResultOperationSource();
