@@ -421,7 +421,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Creates the table specified by the tableName parameter used to construct this client instance.
+        /// Creates a table with the name used to construct this client instance.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -447,7 +447,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Creates the table specified by the tableName parameter used to construct this client instance.
+        /// Creates a table with the name used to construct this client instance.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -474,7 +474,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Creates the table specified by the tableName parameter used to construct this client instance if it does not already exist.
+        /// Creates a table with the name used to construct this client instance if it does not already exist.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -513,7 +513,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Creates the table specified by the tableName parameter used to construct this client instance if it does not already exist.
+        /// Creates a table with the name used to construct this client instance if it does not already exist.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -552,7 +552,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Deletes the table specified by the tableName parameter used to construct this client instance.
+        /// Deletes the table with the name used to construct this client instance.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
@@ -572,7 +572,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// Deletes the table specified by the tableName parameter used to construct this client instance.
+        /// Deletes the table with the name used to construct this client instance.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
@@ -1277,6 +1277,7 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Deletes the specified table entity.
         /// </summary>
+        /// <remarks>Note: This method should not fail because the entity does not exist, however if delete operations are submitted in a <see cref="TableTransactionAction"/>, the transaction will fail if the entity does not exist.</remarks>
         /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
         /// <param name="rowKey">The rowKey that identifies the table entity.</param>
         /// <param name="ifMatch">
@@ -1299,6 +1300,7 @@ namespace Azure.Data.Tables
         /// <summary>
         /// Deletes the specified table entity.
         /// </summary>
+        /// <remarks>Note: This method should not fail because the entity does not exist, however if delete operations are submitted in a <see cref="TableTransactionAction"/>, the transaction will fail if the entity does not exist.</remarks>
         /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
         /// <param name="rowKey">The rowKey that identifies the table entity.</param>
         /// <param name="ifMatch">
@@ -1310,7 +1312,7 @@ namespace Azure.Data.Tables
         /// </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>If the entity exists, the <see cref="Response"/> indicating the result of the operation. If the entity does not exist, <c>null</c></returns>
+        /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
         public virtual Response DeleteEntity(string partitionKey, string rowKey, ETag ifMatch = default, CancellationToken cancellationToken = default)
             => DeleteEntityInternal(false, partitionKey, rowKey, ifMatch, cancellationToken).EnsureCompleted();
 
@@ -1461,7 +1463,9 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="transactionActions">The <see cref="IEnumerable{T}"/> containing the <see cref="TableTransactionAction"/>s to submit to the service.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns><see cref="Response{T}"/> containing a <see cref="TableTransactionResult"/>.</returns>
+        /// <returns><see cref="Response{T}"/> containing a <see cref="IReadOnlyList{T}"/> of <see cref="Response"/>.
+        /// Each sub-response in the collection corresponds to the <see cref="TableTransactionAction"/> provided to the <paramref name="transactionActions"/> parameter at the same index position.
+        /// Each response can be inspected for details for its corresponding table operation, such as the <see cref="Response.Headers"/> property containing the <see cref="ResponseHeaders.ETag"/></returns>
         /// <exception cref="RequestFailedException"/> if the batch transaction fails./>
         /// <exception cref="InvalidOperationException"/> if the batch has been previously submitted.
         public virtual async Task<Response<IReadOnlyList<Response>>> SubmitTransactionAsync(
@@ -1476,7 +1480,9 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="transactionActions">The <see cref="IEnumerable{T}"/> containing the <see cref="TableTransactionAction"/>s to submit to the service.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns><see cref="Response{T}"/> containing a <see cref="TableTransactionResult"/>.</returns>
+        /// <returns><see cref="Response{T}"/> containing a <see cref="IReadOnlyList{T}"/> of <see cref="Response"/>.
+        /// Each sub-response in the collection corresponds to the <see cref="TableTransactionAction"/> provided to the <paramref name="transactionActions"/> parameter at the same index position.
+        /// Each response can be inspected for details for its corresponding table operation, such as the <see cref="Response.Headers"/> property containing the <see cref="ResponseHeaders.ETag"/></returns>
         /// <exception cref="RequestFailedException"/> if the batch transaction fails./>
         /// <exception cref="InvalidOperationException"/> if the batch has been previously submitted.
         public virtual Response<IReadOnlyList<Response>> SubmitTransaction(
