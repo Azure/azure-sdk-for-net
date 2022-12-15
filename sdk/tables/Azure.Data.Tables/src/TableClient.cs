@@ -671,7 +671,7 @@ namespace Azure.Data.Tables
         /// <exception cref="RequestFailedException">Exception thrown if the entity doesn't exist.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
         public virtual Response<T> GetEntity<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
-            where T : class, ITableEntity, new()
+            where T : class, ITableEntity
         {
             NullableResponse<T> response = GetEntityInternalAsync<T>(false, partitionKey, rowKey, false, select, cancellationToken).EnsureCompleted();
             return Response.FromValue(response.Value, response.GetRawResponse());
@@ -689,7 +689,7 @@ namespace Azure.Data.Tables
         /// <exception cref="RequestFailedException">Exception thrown if the entity doesn't exist.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="partitionKey"/> or <paramref name="rowKey"/> is null.</exception>
         public virtual async Task<Response<T>> GetEntityAsync<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
-                where T : class, ITableEntity, new()
+                where T : class, ITableEntity
         {
             NullableResponse<T> response = await GetEntityInternalAsync<T>(true, partitionKey, rowKey, false, select, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(response.Value, response.GetRawResponse());
@@ -709,7 +709,7 @@ namespace Azure.Data.Tables
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual NullableResponse<T> GetEntityIfExists<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
-            where T : class, ITableEntity, new()
+            where T : class, ITableEntity
             => GetEntityInternalAsync<T>(false, partitionKey, rowKey, true, select, cancellationToken).EnsureCompleted();
 
         /// <summary>
@@ -726,7 +726,7 @@ namespace Azure.Data.Tables
 #pragma warning disable AZC0015 // Unexpected client method return type.
         public virtual async Task<NullableResponse<T>> GetEntityIfExistsAsync<T>(string partitionKey, string rowKey, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
-            where T : class, ITableEntity, new()
+            where T : class, ITableEntity
             => await GetEntityInternalAsync<T>(true, partitionKey, rowKey, true, select, cancellationToken).ConfigureAwait(false);
 
         internal virtual async Task<NullableResponse<T>> GetEntityInternalAsync<T>(
@@ -735,7 +735,7 @@ namespace Azure.Data.Tables
             string rowKey,
             bool noThrow,
             IEnumerable<string> select = null,
-            CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+            CancellationToken cancellationToken = default) where T : class, ITableEntity
         {
             Argument.AssertNotNull("message", nameof(partitionKey));
             Argument.AssertNotNull("message", nameof(rowKey));
@@ -1057,7 +1057,7 @@ namespace Azure.Data.Tables
             Expression<Func<T, bool>> filter,
             int? maxPerPage = null,
             IEnumerable<string> select = null,
-            CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+            CancellationToken cancellationToken = default) where T : class, ITableEntity
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
             scope.Start();
@@ -1095,7 +1095,7 @@ namespace Azure.Data.Tables
             Expression<Func<T, bool>> filter,
             int? maxPerPage = null,
             IEnumerable<string> select = null,
-            CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+            CancellationToken cancellationToken = default) where T : class, ITableEntity
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(Query)}");
             scope.Start();
@@ -1133,7 +1133,7 @@ namespace Azure.Data.Tables
             string filter = null,
             int? maxPerPage = null,
             IEnumerable<string> select = null,
-            CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+            CancellationToken cancellationToken = default) where T : class, ITableEntity
         {
             string selectArg = select == null ? null : string.Join(",", select);
 
@@ -1214,7 +1214,7 @@ namespace Azure.Data.Tables
             string filter = null,
             int? maxPerPage = null,
             IEnumerable<string> select = null,
-            CancellationToken cancellationToken = default) where T : class, ITableEntity, new()
+            CancellationToken cancellationToken = default) where T : class, ITableEntity
         {
             string selectArg = select == null ? null : string.Join(",", select);
 
