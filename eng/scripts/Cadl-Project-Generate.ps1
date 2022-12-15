@@ -44,8 +44,6 @@ $resolvedProjectDirectory = Resolve-Path "$ProjectDirectory/src"
 
 if (Test-Path "$npmWorkingDir/cadl-project.yaml") {
     $cadlProjectYaml = Get-Content -Path "$npmWorkingDir/cadl-project.yaml" -Raw
-
-    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
     $yml = ConvertFrom-YAML $cadlProjectYaml
     if ( $yml["emitters"]["@azure-tools/cadl-csharp"]["sdk-folder"]) {
         $yml["emitters"]["@azure-tools/cadl-csharp"]["sdk-folder"] = ""
