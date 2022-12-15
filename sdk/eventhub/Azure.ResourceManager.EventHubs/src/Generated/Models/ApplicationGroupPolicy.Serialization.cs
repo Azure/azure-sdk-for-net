@@ -31,22 +31,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     case "ThrottlingPolicy": return ThrottlingPolicy.DeserializeThrottlingPolicy(element);
                 }
             }
-            string name = default;
-            ApplicationGroupPolicyType type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    type = new ApplicationGroupPolicyType(property.Value.GetString());
-                    continue;
-                }
-            }
-            return new UnknownApplicationGroupPolicy(name, type);
+            return UnknownApplicationGroupPolicy.DeserializeUnknownApplicationGroupPolicy(element);
         }
     }
 }

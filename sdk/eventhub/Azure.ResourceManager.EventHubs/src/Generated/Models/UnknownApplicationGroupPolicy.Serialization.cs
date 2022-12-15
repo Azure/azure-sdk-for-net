@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         internal static UnknownApplicationGroupPolicy DeserializeUnknownApplicationGroupPolicy(JsonElement element)
         {
             string name = default;
-            ApplicationGroupPolicyType type = default;
+            ApplicationGroupPolicyType type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))

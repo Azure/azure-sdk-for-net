@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ThrottlingPolicy(string name, long rateLimitThreshold, MetricId metricId) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             RateLimitThreshold = rateLimitThreshold;
             MetricId = metricId;
