@@ -102,7 +102,7 @@ namespace Azure.Core.Dynamic
         /// </summary>
         /// <param name="left">The <see cref="JsonData"/> to compare.</param>
         /// <param name="right">The <see cref="bool"/> to compare.</param>
-        /// <returns>False if the given JsonData represents the given string, and false otherwise</returns>
+        /// <returns>False if the given JsonData represents the given bool, and false otherwise</returns>
         public static bool operator !=(JsonData? left, bool right) => !(left == right);
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.Core.Dynamic
         /// </summary>
         /// <param name="left">The <see cref="JsonData"/> to compare.</param>
         /// <param name="right">The <see cref="int"/> to compare.</param>
-        /// <returns>False if the given JsonData represents the given string, and false otherwise</returns>
+        /// <returns>False if the given JsonData represents the given int, and false otherwise</returns>
         public static bool operator !=(JsonData? left, int right) => !(left == right);
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.Core.Dynamic
         /// </summary>
         /// <param name="left">The <see cref="JsonData"/> to compare.</param>
         /// <param name="right">The <see cref="long"/> to compare.</param>
-        /// <returns>False if the given JsonData represents the given string, and false otherwise</returns>
+        /// <returns>False if the given JsonData represents the given long, and false otherwise</returns>
         public static bool operator !=(JsonData? left, long right) => !(left == right);
 
         /// <summary>

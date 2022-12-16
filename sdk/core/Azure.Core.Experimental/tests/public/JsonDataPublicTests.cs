@@ -320,8 +320,8 @@ namespace Azure.Core.Tests.Public
             dynamic arr2 = new BinaryData(new[] { "bar" }).ToDynamic();
 
             // For objects and arrays, Equals provides reference equality.
-            Assert.AreEqual(obj1, obj1);
-            Assert.AreEqual(arr1, arr1);
+            Assert.AreEqual(obj1, obj2);
+            Assert.AreEqual(arr1, arr2);
 
             Assert.AreNotEqual(obj1, obj2);
             Assert.AreNotEqual(arr1, arr2);

@@ -182,10 +182,10 @@ namespace Azure.Core.Dynamic
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
-            //if (obj is string)
-            //{
-            //    return this ==((string?)obj);
-            //}
+            if (obj is string)
+            {
+                return this == ((string?)obj);
+            }
 
             if (obj is JsonData)
             {
@@ -208,6 +208,10 @@ namespace Azure.Core.Dynamic
                 return false;
             }
 
+            // TODO: JsonElement doesn't implement equality, per
+            // https://github.com/dotnet/runtime/issues/62585
+            // We could implement this by comparing _utf8 values;
+            // depends on getting those from JsonElement.
             return _element.Equals(other._element);
         }
 
