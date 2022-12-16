@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.BillingBenefits
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateRequest(string savingsPlanOrderAliasName, SavingsPlanOrderAliasModelData data)
+        internal HttpMessage CreateCreateRequest(string savingsPlanOrderAliasName, BillingBenefitsSavingsPlanOrderAliasData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderAliasName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string savingsPlanOrderAliasName, SavingsPlanOrderAliasModelData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string savingsPlanOrderAliasName, BillingBenefitsSavingsPlanOrderAliasData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderAliasName, nameof(savingsPlanOrderAliasName));
             Argument.AssertNotNull(data, nameof(data));
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderAliasName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string savingsPlanOrderAliasName, SavingsPlanOrderAliasModelData data, CancellationToken cancellationToken = default)
+        public Response Create(string savingsPlanOrderAliasName, BillingBenefitsSavingsPlanOrderAliasData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderAliasName, nameof(savingsPlanOrderAliasName));
             Argument.AssertNotNull(data, nameof(data));
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderAliasName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SavingsPlanOrderAliasModelData>> GetAsync(string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
+        public async Task<Response<BillingBenefitsSavingsPlanOrderAliasData>> GetAsync(string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderAliasName, nameof(savingsPlanOrderAliasName));
 
@@ -133,13 +133,13 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 case 200:
                     {
-                        SavingsPlanOrderAliasModelData value = default;
+                        BillingBenefitsSavingsPlanOrderAliasData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SavingsPlanOrderAliasModelData.DeserializeSavingsPlanOrderAliasModelData(document.RootElement);
+                        value = BillingBenefitsSavingsPlanOrderAliasData.DeserializeBillingBenefitsSavingsPlanOrderAliasData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SavingsPlanOrderAliasModelData)null, message.Response);
+                    return Response.FromValue((BillingBenefitsSavingsPlanOrderAliasData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderAliasName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SavingsPlanOrderAliasModelData> Get(string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
+        public Response<BillingBenefitsSavingsPlanOrderAliasData> Get(string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderAliasName, nameof(savingsPlanOrderAliasName));
 
@@ -160,13 +160,13 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 case 200:
                     {
-                        SavingsPlanOrderAliasModelData value = default;
+                        BillingBenefitsSavingsPlanOrderAliasData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SavingsPlanOrderAliasModelData.DeserializeSavingsPlanOrderAliasModelData(document.RootElement);
+                        value = BillingBenefitsSavingsPlanOrderAliasData.DeserializeBillingBenefitsSavingsPlanOrderAliasData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SavingsPlanOrderAliasModelData)null, message.Response);
+                    return Response.FromValue((BillingBenefitsSavingsPlanOrderAliasData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

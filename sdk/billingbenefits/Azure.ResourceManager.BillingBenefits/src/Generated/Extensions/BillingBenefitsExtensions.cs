@@ -28,20 +28,52 @@ namespace Azure.ResourceManager.BillingBenefits
             );
         }
 
-        /// <summary> Gets an object representing a SavingsPlanOrderAliasModelResource along with the instance operations that can be performed on it in the TenantResource. </summary>
+        /// <summary> Gets a collection of BillingBenefitsSavingsPlanOrderAliasResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="SavingsPlanOrderAliasModelResource" /> object. </returns>
-        public static SavingsPlanOrderAliasModelResource GetSavingsPlanOrderAliasModel(this TenantResource tenantResource)
+        /// <returns> An object representing collection of BillingBenefitsSavingsPlanOrderAliasResources and their operations over a BillingBenefitsSavingsPlanOrderAliasResource. </returns>
+        public static BillingBenefitsSavingsPlanOrderAliasCollection GetBillingBenefitsSavingsPlanOrderAliases(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetSavingsPlanOrderAliasModel();
+            return GetExtensionClient(tenantResource).GetBillingBenefitsSavingsPlanOrderAliases();
         }
 
-        /// <summary> Gets a collection of SavingsPlanOrderModelResources in the TenantResource. </summary>
+        /// <summary>
+        /// Get a savings plan.
+        /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}
+        /// Operation Id: SavingsPlanOrderAlias_Get
+        /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SavingsPlanOrderModelResources and their operations over a SavingsPlanOrderModelResource. </returns>
-        public static SavingsPlanOrderModelCollection GetSavingsPlanOrderModels(this TenantResource tenantResource)
+        /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderAliasName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<BillingBenefitsSavingsPlanOrderAliasResource>> GetBillingBenefitsSavingsPlanOrderAliasAsync(this TenantResource tenantResource, string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(tenantResource).GetSavingsPlanOrderModels();
+            return await tenantResource.GetBillingBenefitsSavingsPlanOrderAliases().GetAsync(savingsPlanOrderAliasName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a savings plan.
+        /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}
+        /// Operation Id: SavingsPlanOrderAlias_Get
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderAliasName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<BillingBenefitsSavingsPlanOrderAliasResource> GetBillingBenefitsSavingsPlanOrderAlias(this TenantResource tenantResource, string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
+        {
+            return tenantResource.GetBillingBenefitsSavingsPlanOrderAliases().Get(savingsPlanOrderAliasName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of BillingBenefitsSavingsPlanOrderResources in the TenantResource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of BillingBenefitsSavingsPlanOrderResources and their operations over a BillingBenefitsSavingsPlanOrderResource. </returns>
+        public static BillingBenefitsSavingsPlanOrderCollection GetBillingBenefitsSavingsPlanOrders(this TenantResource tenantResource)
+        {
+            return GetExtensionClient(tenantResource).GetBillingBenefitsSavingsPlanOrders();
         }
 
         /// <summary>
@@ -56,9 +88,9 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SavingsPlanOrderModelResource>> GetSavingsPlanOrderModelAsync(this TenantResource tenantResource, string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<BillingBenefitsSavingsPlanOrderResource>> GetBillingBenefitsSavingsPlanOrderAsync(this TenantResource tenantResource, string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetSavingsPlanOrderModels().GetAsync(savingsPlanOrderId, expand, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetBillingBenefitsSavingsPlanOrders().GetAsync(savingsPlanOrderId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -73,17 +105,49 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SavingsPlanOrderModelResource> GetSavingsPlanOrderModel(this TenantResource tenantResource, string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<BillingBenefitsSavingsPlanOrderResource> GetBillingBenefitsSavingsPlanOrder(this TenantResource tenantResource, string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetSavingsPlanOrderModels().Get(savingsPlanOrderId, expand, cancellationToken);
+            return tenantResource.GetBillingBenefitsSavingsPlanOrders().Get(savingsPlanOrderId, expand, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a ReservationOrderAliasModelResource along with the instance operations that can be performed on it in the TenantResource. </summary>
+        /// <summary> Gets a collection of BillingBenefitsReservationOrderAliasResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="ReservationOrderAliasModelResource" /> object. </returns>
-        public static ReservationOrderAliasModelResource GetReservationOrderAliasModel(this TenantResource tenantResource)
+        /// <returns> An object representing collection of BillingBenefitsReservationOrderAliasResources and their operations over a BillingBenefitsReservationOrderAliasResource. </returns>
+        public static BillingBenefitsReservationOrderAliasCollection GetBillingBenefitsReservationOrderAliases(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetReservationOrderAliasModel();
+            return GetExtensionClient(tenantResource).GetBillingBenefitsReservationOrderAliases();
+        }
+
+        /// <summary>
+        /// Get a reservation order alias.
+        /// Request Path: /providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}
+        /// Operation Id: ReservationOrderAlias_Get
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<BillingBenefitsReservationOrderAliasResource>> GetBillingBenefitsReservationOrderAliasAsync(this TenantResource tenantResource, string reservationOrderAliasName, CancellationToken cancellationToken = default)
+        {
+            return await tenantResource.GetBillingBenefitsReservationOrderAliases().GetAsync(reservationOrderAliasName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a reservation order alias.
+        /// Request Path: /providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}
+        /// Operation Id: ReservationOrderAlias_Get
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderAliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderAliasName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<BillingBenefitsReservationOrderAliasResource> GetBillingBenefitsReservationOrderAlias(this TenantResource tenantResource, string reservationOrderAliasName, CancellationToken cancellationToken = default)
+        {
+            return tenantResource.GetBillingBenefitsReservationOrderAliases().Get(reservationOrderAliasName, cancellationToken);
         }
 
         /// <summary>
@@ -93,16 +157,16 @@ namespace Azure.ResourceManager.BillingBenefits
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
-        /// <param name="orderby"> May be used to sort order by reservation properties. </param>
+        /// <param name="orderBy"> May be used to sort order by reservation properties. </param>
         /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </param>
-        /// <param name="skiptoken"> The number of savings plans to skip from the list before returning results. </param>
+        /// <param name="skipToken"> The number of savings plans to skip from the list before returning results. </param>
         /// <param name="selectedState"> The selected provisioning state. </param>
         /// <param name="take"> To number of savings plans to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SavingsPlanModelResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SavingsPlanModelResource> GetSavingsPlanModelsAsync(this TenantResource tenantResource, string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlansAsync(this TenantResource tenantResource, string filter = null, string orderBy = null, string refreshSummary = null, float? skipToken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(tenantResource).GetSavingsPlanModelsAsync(filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken);
+            return GetExtensionClient(tenantResource).GetBillingBenefitsSavingsPlansAsync(filter, orderBy, refreshSummary, skipToken, selectedState, take, cancellationToken);
         }
 
         /// <summary>
@@ -112,16 +176,16 @@ namespace Azure.ResourceManager.BillingBenefits
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
-        /// <param name="orderby"> May be used to sort order by reservation properties. </param>
+        /// <param name="orderBy"> May be used to sort order by reservation properties. </param>
         /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </param>
-        /// <param name="skiptoken"> The number of savings plans to skip from the list before returning results. </param>
+        /// <param name="skipToken"> The number of savings plans to skip from the list before returning results. </param>
         /// <param name="selectedState"> The selected provisioning state. </param>
         /// <param name="take"> To number of savings plans to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SavingsPlanModelResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SavingsPlanModelResource> GetSavingsPlanModels(this TenantResource tenantResource, string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlans(this TenantResource tenantResource, string filter = null, string orderBy = null, string refreshSummary = null, float? skipToken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(tenantResource).GetSavingsPlanModels(filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken);
+            return GetExtensionClient(tenantResource).GetBillingBenefitsSavingsPlans(filter, orderBy, refreshSummary, skipToken, selectedState, take, cancellationToken);
         }
 
         /// <summary>
@@ -133,11 +197,12 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<SavingsPlanValidateResponse>> ValidatePurchaseAsync(this TenantResource tenantResource, SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SavingsPlanValidateResult" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SavingsPlanValidateResult> ValidatePurchaseAsync(this TenantResource tenantResource, SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(tenantResource).ValidatePurchaseAsync(content, cancellationToken).ConfigureAwait(false);
+            return GetExtensionClient(tenantResource).ValidatePurchaseAsync(content, cancellationToken);
         }
 
         /// <summary>
@@ -149,84 +214,85 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<SavingsPlanValidateResponse> ValidatePurchase(this TenantResource tenantResource, SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SavingsPlanValidateResult" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SavingsPlanValidateResult> ValidatePurchase(this TenantResource tenantResource, SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             return GetExtensionClient(tenantResource).ValidatePurchase(content, cancellationToken);
         }
 
-        #region SavingsPlanOrderAliasModelResource
+        #region BillingBenefitsSavingsPlanOrderAliasResource
         /// <summary>
-        /// Gets an object representing a <see cref="SavingsPlanOrderAliasModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SavingsPlanOrderAliasModelResource.CreateResourceIdentifier" /> to create a <see cref="SavingsPlanOrderAliasModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BillingBenefitsSavingsPlanOrderAliasResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingBenefitsSavingsPlanOrderAliasResource.CreateResourceIdentifier" /> to create a <see cref="BillingBenefitsSavingsPlanOrderAliasResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SavingsPlanOrderAliasModelResource" /> object. </returns>
-        public static SavingsPlanOrderAliasModelResource GetSavingsPlanOrderAliasModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingBenefitsSavingsPlanOrderAliasResource" /> object. </returns>
+        public static BillingBenefitsSavingsPlanOrderAliasResource GetBillingBenefitsSavingsPlanOrderAliasResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SavingsPlanOrderAliasModelResource.ValidateResourceId(id);
-                return new SavingsPlanOrderAliasModelResource(client, id);
+                BillingBenefitsSavingsPlanOrderAliasResource.ValidateResourceId(id);
+                return new BillingBenefitsSavingsPlanOrderAliasResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SavingsPlanOrderModelResource
+        #region BillingBenefitsSavingsPlanOrderResource
         /// <summary>
-        /// Gets an object representing a <see cref="SavingsPlanOrderModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SavingsPlanOrderModelResource.CreateResourceIdentifier" /> to create a <see cref="SavingsPlanOrderModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BillingBenefitsSavingsPlanOrderResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingBenefitsSavingsPlanOrderResource.CreateResourceIdentifier" /> to create a <see cref="BillingBenefitsSavingsPlanOrderResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SavingsPlanOrderModelResource" /> object. </returns>
-        public static SavingsPlanOrderModelResource GetSavingsPlanOrderModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingBenefitsSavingsPlanOrderResource" /> object. </returns>
+        public static BillingBenefitsSavingsPlanOrderResource GetBillingBenefitsSavingsPlanOrderResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SavingsPlanOrderModelResource.ValidateResourceId(id);
-                return new SavingsPlanOrderModelResource(client, id);
+                BillingBenefitsSavingsPlanOrderResource.ValidateResourceId(id);
+                return new BillingBenefitsSavingsPlanOrderResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SavingsPlanModelResource
+        #region BillingBenefitsSavingsPlanResource
         /// <summary>
-        /// Gets an object representing a <see cref="SavingsPlanModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SavingsPlanModelResource.CreateResourceIdentifier" /> to create a <see cref="SavingsPlanModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BillingBenefitsSavingsPlanResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingBenefitsSavingsPlanResource.CreateResourceIdentifier" /> to create a <see cref="BillingBenefitsSavingsPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SavingsPlanModelResource" /> object. </returns>
-        public static SavingsPlanModelResource GetSavingsPlanModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingBenefitsSavingsPlanResource" /> object. </returns>
+        public static BillingBenefitsSavingsPlanResource GetBillingBenefitsSavingsPlanResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SavingsPlanModelResource.ValidateResourceId(id);
-                return new SavingsPlanModelResource(client, id);
+                BillingBenefitsSavingsPlanResource.ValidateResourceId(id);
+                return new BillingBenefitsSavingsPlanResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ReservationOrderAliasModelResource
+        #region BillingBenefitsReservationOrderAliasResource
         /// <summary>
-        /// Gets an object representing a <see cref="ReservationOrderAliasModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReservationOrderAliasModelResource.CreateResourceIdentifier" /> to create a <see cref="ReservationOrderAliasModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BillingBenefitsReservationOrderAliasResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingBenefitsReservationOrderAliasResource.CreateResourceIdentifier" /> to create a <see cref="BillingBenefitsReservationOrderAliasResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReservationOrderAliasModelResource" /> object. </returns>
-        public static ReservationOrderAliasModelResource GetReservationOrderAliasModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingBenefitsReservationOrderAliasResource" /> object. </returns>
+        public static BillingBenefitsReservationOrderAliasResource GetBillingBenefitsReservationOrderAliasResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ReservationOrderAliasModelResource.ValidateResourceId(id);
-                return new ReservationOrderAliasModelResource(client, id);
+                BillingBenefitsReservationOrderAliasResource.ValidateResourceId(id);
+                return new BillingBenefitsReservationOrderAliasResource(client, id);
             }
             );
         }

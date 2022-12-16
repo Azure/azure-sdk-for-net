@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <summary> Initializes a new instance of SavingsPlanOrderModelList. </summary>
         internal SavingsPlanOrderModelList()
         {
-            Value = new ChangeTrackingList<SavingsPlanOrderModelData>();
+            Value = new ChangeTrackingList<BillingBenefitsSavingsPlanOrderData>();
         }
 
         /// <summary> Initializes a new instance of SavingsPlanOrderModelList. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> Url to get the next page. </param>
-        internal SavingsPlanOrderModelList(IReadOnlyList<SavingsPlanOrderModelData> value, string nextLink)
+        internal SavingsPlanOrderModelList(IReadOnlyList<BillingBenefitsSavingsPlanOrderData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<SavingsPlanOrderModelData> Value { get; }
+        public IReadOnlyList<BillingBenefitsSavingsPlanOrderData> Value { get; }
         /// <summary> Url to get the next page. </summary>
         public string NextLink { get; }
     }
