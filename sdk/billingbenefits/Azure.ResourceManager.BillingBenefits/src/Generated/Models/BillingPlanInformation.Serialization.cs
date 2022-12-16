@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static BillingPlanInformation DeserializeBillingPlanInformation(JsonElement element)
         {
-            Optional<Price> pricingCurrencyTotal = default;
+            Optional<BillingBenefitsPrice> pricingCurrencyTotal = default;
             Optional<DateTimeOffset> startDate = default;
             Optional<DateTimeOffset> nextPaymentDueDate = default;
-            Optional<IList<PaymentDetail>> transactions = default;
+            Optional<IList<SavingsPlanOrderPaymentDetail>> transactions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pricingCurrencyTotal"))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    pricingCurrencyTotal = Price.DeserializePrice(property.Value);
+                    pricingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value);
                     continue;
                 }
                 if (property.NameEquals("startDate"))
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PaymentDetail> array = new List<PaymentDetail>();
+                    List<SavingsPlanOrderPaymentDetail> array = new List<SavingsPlanOrderPaymentDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PaymentDetail.DeserializePaymentDetail(item));
+                        array.Add(SavingsPlanOrderPaymentDetail.DeserializeSavingsPlanOrderPaymentDetail(item));
                     }
                     transactions = array;
                     continue;

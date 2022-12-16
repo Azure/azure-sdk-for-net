@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    public partial class SavingsPlanValidateResponse
+    internal partial class SavingsPlanValidateResponse
     {
         internal static SavingsPlanValidateResponse DeserializeSavingsPlanValidateResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<SavingsPlanValidResponseProperty>> benefits = default;
+            Optional<IReadOnlyList<SavingsPlanValidateResult>> benefits = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SavingsPlanValidResponseProperty> array = new List<SavingsPlanValidResponseProperty>();
+                    List<SavingsPlanValidateResult> array = new List<SavingsPlanValidateResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SavingsPlanValidResponseProperty.DeserializeSavingsPlanValidResponseProperty(item));
+                        array.Add(SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult(item));
                     }
                     benefits = array;
                     continue;

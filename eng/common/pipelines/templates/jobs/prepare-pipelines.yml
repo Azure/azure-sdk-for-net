@@ -23,7 +23,7 @@ jobs:
     name: azsdk-pool-mms-ubuntu-2004-general
     vmImage: MMSUbuntu20.04
   steps:
-    - template: install-pipeline-generation.yml
+    - template: /eng/common/pipelines/templates/steps/install-pipeline-generation.yml
     - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
     # This covers our public repos.
     - ${{ if not(endsWith(parameters.Repository, '-pr'))}}:

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <summary> Initializes a new instance of BillingPlanInformation. </summary>
         public BillingPlanInformation()
         {
-            Transactions = new ChangeTrackingList<PaymentDetail>();
+            Transactions = new ChangeTrackingList<SavingsPlanOrderPaymentDetail>();
         }
 
         /// <summary> Initializes a new instance of BillingPlanInformation. </summary>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="startOn"> Date when the billing plan has started. </param>
         /// <param name="nextPaymentDueOn"> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </param>
         /// <param name="transactions"></param>
-        internal BillingPlanInformation(Price pricingCurrencyTotal, DateTimeOffset? startOn, DateTimeOffset? nextPaymentDueOn, IList<PaymentDetail> transactions)
+        internal BillingPlanInformation(BillingBenefitsPrice pricingCurrencyTotal, DateTimeOffset? startOn, DateTimeOffset? nextPaymentDueOn, IList<SavingsPlanOrderPaymentDetail> transactions)
         {
             PricingCurrencyTotal = pricingCurrencyTotal;
             StartOn = startOn;
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         }
 
         /// <summary> Amount of money to be paid for the Order. Tax is not included. </summary>
-        public Price PricingCurrencyTotal { get; set; }
+        public BillingBenefitsPrice PricingCurrencyTotal { get; set; }
         /// <summary> Date when the billing plan has started. </summary>
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </summary>
         public DateTimeOffset? NextPaymentDueOn { get; set; }
         /// <summary> Gets the transactions. </summary>
-        public IList<PaymentDetail> Transactions { get; }
+        public IList<SavingsPlanOrderPaymentDetail> Transactions { get; }
     }
 }
