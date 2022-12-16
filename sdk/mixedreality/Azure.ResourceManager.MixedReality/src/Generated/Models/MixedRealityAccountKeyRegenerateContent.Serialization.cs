@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MixedReality.Models
 {
-    public partial class AccountKeyRegenerateRequest : IUtf8JsonSerializable
+    public partial class MixedRealityAccountKeyRegenerateContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
