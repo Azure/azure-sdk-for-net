@@ -21,7 +21,5 @@ namespace Azure.Communication.Email
         public string RepeatabilityResult => _response.Headers.TryGetValue("Repeatability-Result", out string value) ? value : null;
         /// <summary> Location url of where to poll the status of this message from. </summary>
         public string OperationLocation => _response.Headers.TryGetValue("Operation-Location", out string value) ? value : null;
-        /// <summary> Amount of time client should wait before retrying the request, specified in seconds. </summary>
-        public int? RetryAfter => _response.Headers.TryGetValue("Retry-After", out int? value) ? value : null;
     }
 }

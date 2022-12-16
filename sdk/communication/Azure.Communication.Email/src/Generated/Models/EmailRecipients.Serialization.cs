@@ -24,7 +24,7 @@ namespace Azure.Communication.Email.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(CC))
             {
-                writer.WritePropertyName("CC");
+                writer.WritePropertyName("cc");
                 writer.WriteStartArray();
                 foreach (var item in CC)
                 {
@@ -34,7 +34,7 @@ namespace Azure.Communication.Email.Models
             }
             if (Optional.IsCollectionDefined(BCC))
             {
-                writer.WritePropertyName("bCC");
+                writer.WritePropertyName("bcc");
                 writer.WriteStartArray();
                 foreach (var item in BCC)
                 {

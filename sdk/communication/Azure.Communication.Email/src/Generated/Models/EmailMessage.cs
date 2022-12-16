@@ -12,14 +12,14 @@ using Azure.Core;
 namespace Azure.Communication.Email.Models
 {
     /// <summary> Message payload for sending an email. </summary>
-    public partial class Message
+    public partial class EmailMessage
     {
-        /// <summary> Initializes a new instance of Message. </summary>
+        /// <summary> Initializes a new instance of EmailMessage. </summary>
         /// <param name="senderEmail"> Sender email address from a verified domain. </param>
         /// <param name="content"> Email content to be sent. </param>
         /// <param name="recipients"> Recipients for the email. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="senderEmail"/>, <paramref name="content"/> or <paramref name="recipients"/> is null. </exception>
-        public Message(string senderEmail, EmailContent content, EmailRecipients recipients)
+        public EmailMessage(string senderEmail, EmailContent content, EmailRecipients recipients)
         {
             Argument.AssertNotNull(senderEmail, nameof(senderEmail));
             Argument.AssertNotNull(content, nameof(content));
@@ -39,11 +39,9 @@ namespace Azure.Communication.Email.Models
         public string SenderEmail { get; }
         /// <summary> Email content to be sent. </summary>
         public EmailContent Content { get; }
-        /// <summary> The importance type for the email. </summary>
-        public EmailImportance? Importance { get; set; }
         /// <summary> Recipients for the email. </summary>
         public EmailRecipients Recipients { get; }
-        /// <summary> list of attachments. </summary>
+        /// <summary> List of attachments. Please note that we limit the total size of an email request (which includes attachments) to 10MB. </summary>
         public IList<EmailAttachment> Attachments { get; }
         /// <summary> Email addresses where recipients&apos; replies will be sent to. </summary>
         public IList<EmailAddress> ReplyTo { get; }

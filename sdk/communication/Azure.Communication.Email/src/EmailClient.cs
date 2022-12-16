@@ -139,21 +139,21 @@ namespace Azure.Communication.Email
         }
 
         /// <summary> Queues an email message to be sent to one or more recipients. </summary>
-        /// <param name="emailMessage"> Message payload for sending an email. </param>
+        /// <param name="message"> Message payload for sending an email. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SendEmailResult>> SendAsync(
-            EmailMessage emailMessage,
+            EmailMessage message,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.Send");
             scope.Start();
             try
             {
-                ValidateEmailMessage(emailMessage);
+                ValidateEmailMessage(message);
                 ResponseWithHeaders<EmailSendHeaders> response = (await RestClient.SendAsync(
                     Guid.NewGuid().ToString(),
                     DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture),
-                    emailMessage,
+                    message,
                     cancellationToken).ConfigureAwait(false));
 
                 Response rawResponse = response.GetRawResponse();
@@ -172,21 +172,21 @@ namespace Azure.Communication.Email
         }
 
         /// <summary> Queues an email message to be sent to one or more recipients. </summary>
-        /// <param name="emailMessage"> Message payload for sending an email. </param>
+        /// <param name="message"> Message payload for sending an email. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SendEmailResult> Send(
-            EmailMessage emailMessage,
+            EmailMessage message,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.Send");
             scope.Start();
             try
             {
-                ValidateEmailMessage(emailMessage);
+                ValidateEmailMessage(message);
                 ResponseWithHeaders<EmailSendHeaders> response = RestClient.Send(
                     Guid.NewGuid().ToString(),
                     DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture),
-                    emailMessage,
+                    message,
                     cancellationToken);
 
                 Response rawResponse = response.GetRawResponse();
@@ -211,7 +211,7 @@ namespace Azure.Communication.Email
                 throw new ArgumentNullException(nameof(emailMessage));
             }
 
-            ValidateEmailCustomHeaders(emailMessage);
+            ValidateEmailHeaders(emailMessage);
             ValidateEmailContent(emailMessage);
             ValidateSenderEmailAddress(emailMessage);
             ValidateRecipients(emailMessage);
@@ -219,20 +219,16 @@ namespace Azure.Communication.Email
             ValidateAttachmentContent(emailMessage);
         }
 
-        private static void ValidateEmailCustomHeaders(EmailMessage emailMessage)
+        private static void ValidateEmailHeaders(EmailMessage emailMessage)
         {
             // Do not allow empty/null header names and values (for custom headers only)
-            emailMessage.CustomHeaders?.ToList().ForEach(header => header.Validate());
-
-            // Validate header names are all unique
-            var messageHeaders = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
-            foreach (EmailCustomHeader header in emailMessage.CustomHeaders ?? Enumerable.Empty<EmailCustomHeader>())
+            emailMessage.Headers?.ToList().ForEach(header =>
             {
-                if (!messageHeaders.Add(header.Name))
+                if (string.IsNullOrWhiteSpace(header.Value))
                 {
-                    throw new ArgumentException($"{header.Name}" + ErrorMessages.DuplicateHeaderName);
+                    throw new ArgumentException(ErrorMessages.EmptyHeaderNameOrValue);
                 }
-            }
+            });
         }
 
         private static void ValidateEmailContent(EmailMessage emailMessage)
@@ -252,7 +248,7 @@ namespace Azure.Communication.Email
 
         private static void ValidateSenderEmailAddress(EmailMessage emailMessage)
         {
-            if (string.IsNullOrEmpty(emailMessage.Sender) || !ValidEmailAddress(emailMessage.Sender))
+            if (string.IsNullOrEmpty(emailMessage.SenderEmail) || !ValidEmailAddress(emailMessage.SenderEmail))
             {
                 throw new ArgumentException(ErrorMessages.InvalidSenderEmail);
             }

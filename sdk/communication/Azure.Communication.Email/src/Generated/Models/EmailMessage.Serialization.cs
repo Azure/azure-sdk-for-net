@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Email.Models
 {
-    public partial class Message : IUtf8JsonSerializable
+    public partial class EmailMessage : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,11 +30,6 @@ namespace Azure.Communication.Email.Models
             writer.WriteStringValue(SenderEmail);
             writer.WritePropertyName("content");
             writer.WriteObjectValue(Content);
-            if (Optional.IsDefined(Importance))
-            {
-                writer.WritePropertyName("importance");
-                writer.WriteStringValue(Importance.Value.ToString());
-            }
             writer.WritePropertyName("recipients");
             writer.WriteObjectValue(Recipients);
             if (Optional.IsCollectionDefined(Attachments))

@@ -110,7 +110,7 @@ namespace Azure.Communication.Email
             }
         }
 
-        internal HttpMessage CreateSendRequest(string repeatabilityRequestId, string repeatabilityFirstSent, Message message)
+        internal HttpMessage CreateSendRequest(string repeatabilityRequestId, string repeatabilityFirstSent, EmailMessage message)
         {
             var message0 = _pipeline.CreateMessage();
             var request = message0.Request;
@@ -136,7 +136,7 @@ namespace Azure.Communication.Email
         /// <param name="message"> Message payload for sending an email. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="repeatabilityRequestId"/>, <paramref name="repeatabilityFirstSent"/> or <paramref name="message"/> is null. </exception>
-        public async Task<ResponseWithHeaders<EmailSendHeaders>> SendAsync(string repeatabilityRequestId, string repeatabilityFirstSent, Message message, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<EmailSendHeaders>> SendAsync(string repeatabilityRequestId, string repeatabilityFirstSent, EmailMessage message, CancellationToken cancellationToken = default)
         {
             if (repeatabilityRequestId == null)
             {
@@ -169,7 +169,7 @@ namespace Azure.Communication.Email
         /// <param name="message"> Message payload for sending an email. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="repeatabilityRequestId"/>, <paramref name="repeatabilityFirstSent"/> or <paramref name="message"/> is null. </exception>
-        public ResponseWithHeaders<EmailSendHeaders> Send(string repeatabilityRequestId, string repeatabilityFirstSent, Message message, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<EmailSendHeaders> Send(string repeatabilityRequestId, string repeatabilityFirstSent, EmailMessage message, CancellationToken cancellationToken = default)
         {
             if (repeatabilityRequestId == null)
             {
