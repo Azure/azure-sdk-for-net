@@ -44,7 +44,7 @@
     <Compile Include="$(AzureCoreSharedSources)SyncAsyncEventHandlerExtensions.cs" LinkBase="Shared\Core" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.Core" Version="1.26.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\*.cs" LinkBase="Shared\Storage" />
