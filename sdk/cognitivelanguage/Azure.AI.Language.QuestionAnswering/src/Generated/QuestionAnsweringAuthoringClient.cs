@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
-    // Data plane generated client. The QuestionAnsweringAuthoring service client.
+    // Data plane generated client.
     /// <summary> The QuestionAnsweringAuthoring service client. </summary>
     public partial class QuestionAnsweringAuthoringClient
     {
