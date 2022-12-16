@@ -24,7 +24,7 @@ namespace Azure.Storage.DataMovement.Tests
     /// <summary>
     /// Base class for Common tests
     /// </summary>
-    [BlobsClientTestFixture]
+    [DataMovementBlobClientTestFixtureAttribute]
     public abstract class DataMovementBlobTestBase : DataMovementTestBase
     {
         protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
