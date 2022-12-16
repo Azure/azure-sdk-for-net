@@ -42,7 +42,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Id.</param>
         /// <param name="seedManagedDiskId">The ARM Id of the seed managed
         /// disk.</param>
-        /// <param name="seedBlobUri">The uri of the seed blob.</param>
         /// <param name="targetManagedDiskId">The ARM Id of the target managed
         /// disk.</param>
         /// <param name="diskType">The disk type. Possible values include:
@@ -55,7 +54,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// whether initial replication is complete or not.</param>
         /// <param name="irDetails">The initial replication details.</param>
         /// <param name="resyncDetails">The resync details.</param>
-        public InMageRcmProtectedDiskDetails(string diskId = default(string), string diskName = default(string), string isOSDisk = default(string), long? capacityInBytes = default(long?), string logStorageAccountId = default(string), string diskEncryptionSetId = default(string), string seedManagedDiskId = default(string), string seedBlobUri = default(string), string targetManagedDiskId = default(string), string diskType = default(string), double? dataPendingInLogDataStoreInMB = default(double?), double? dataPendingAtSourceAgentInMB = default(double?), string isInitialReplicationComplete = default(string), InMageRcmSyncDetails irDetails = default(InMageRcmSyncDetails), InMageRcmSyncDetails resyncDetails = default(InMageRcmSyncDetails))
+        public InMageRcmProtectedDiskDetails(string diskId = default(string), string diskName = default(string), string isOSDisk = default(string), long? capacityInBytes = default(long?), string logStorageAccountId = default(string), string diskEncryptionSetId = default(string), string seedManagedDiskId = default(string), string targetManagedDiskId = default(string), string diskType = default(string), double? dataPendingInLogDataStoreInMB = default(double?), double? dataPendingAtSourceAgentInMB = default(double?), string isInitialReplicationComplete = default(string), InMageRcmSyncDetails irDetails = default(InMageRcmSyncDetails), InMageRcmSyncDetails resyncDetails = default(InMageRcmSyncDetails))
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -64,7 +63,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             LogStorageAccountId = logStorageAccountId;
             DiskEncryptionSetId = diskEncryptionSetId;
             SeedManagedDiskId = seedManagedDiskId;
-            SeedBlobUri = seedBlobUri;
             TargetManagedDiskId = targetManagedDiskId;
             DiskType = diskType;
             DataPendingInLogDataStoreInMB = dataPendingInLogDataStoreInMB;
@@ -121,12 +119,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "seedManagedDiskId")]
         public string SeedManagedDiskId { get; private set; }
-
-        /// <summary>
-        /// Gets the uri of the seed blob.
-        /// </summary>
-        [JsonProperty(PropertyName = "seedBlobUri")]
-        public string SeedBlobUri { get; private set; }
 
         /// <summary>
         /// Gets the ARM Id of the target managed disk.

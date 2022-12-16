@@ -21,7 +21,5 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public const string TestMigrateCleanup = "TestMigrateCleanup";
         public const string Migrate = "Migrate";
         public const string StartResync = "StartResync";
-        public const string PauseReplication = "PauseReplication";
-        public const string ResumeReplication = "ResumeReplication";
     }
 }

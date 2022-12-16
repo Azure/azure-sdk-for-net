@@ -12,8 +12,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -35,12 +33,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         /// <param name="recoveryPointId">The recovery point Id.</param>
         /// <param name="networkId">The test network Id.</param>
-        /// <param name="vmNics">The list of NIC details.</param>
-        public VMwareCbtTestMigrateInput(string recoveryPointId, string networkId, IList<VMwareCbtNicInput> vmNics = default(IList<VMwareCbtNicInput>))
+        public VMwareCbtTestMigrateInput(string recoveryPointId, string networkId)
         {
             RecoveryPointId = recoveryPointId;
             NetworkId = networkId;
-            VmNics = vmNics;
             CustomInit();
         }
 
@@ -62,12 +58,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string NetworkId { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of NIC details.
-        /// </summary>
-        [JsonProperty(PropertyName = "vmNics")]
-        public IList<VMwareCbtNicInput> VmNics { get; set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -82,16 +72,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             if (NetworkId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "NetworkId");
-            }
-            if (VmNics != null)
-            {
-                foreach (var element in VmNics)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
             }
         }
     }
