@@ -63,6 +63,7 @@ namespace Azure.Core.Dynamic
             }
 
             // TODO: re-enable optimizations
+            // (System.Text.Unicode.Utf8 isn't available to us here)
             var pathStr = Encoding.UTF8.GetString(path.ToArray());
 
             //Span<char> utf16 = stackalloc char[path.Length];

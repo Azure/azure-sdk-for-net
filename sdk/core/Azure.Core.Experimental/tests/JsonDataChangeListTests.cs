@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using Azure.Core.Dynamic;
 using NUnit.Framework;
 
@@ -71,27 +72,28 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(3.0, jd.RootElement.GetProperty("Foo").GetDouble());
         }
 
-        //[Test]
-        //public void CanAssignObject()
-        //{
-        //    string json = @"
-        //        {
-        //          ""Baz"" : {
-        //             ""A"" : 3.0
-        //          },
-        //          ""Foo"" : 1.2,
-        //          ""Bar"" : ""Hi!""
-        //        }";
+        [Test]
+        public void CanAssignObject()
+        {
+            string json = @"
+                {
+                  ""Baz"" : {
+                     ""A"" : 3.0
+                  },
+                  ""Foo"" : 1.2,
+                  ""Bar"" : ""Hi!""
+                }";
 
-        //    var jd = JsonData.Parse(json);
+            var jd = JsonData.Parse(json);
 
-        //    jd.RootElement.GetProperty("Baz").Set(new { B = 5.0 });
+            jd.RootElement.GetProperty("Baz").Set(new { B = 5.0 });
 
-        //    // Last write wins
-        //    Assert.AreEqual(5.0, jd.RootElement.GetProperty("Baz").GetProperty("B").GetDouble());
+            // Last write wins
+            Assert.AreEqual(5.0, jd.RootElement.GetProperty("Baz").GetProperty("B").GetDouble());
 
-        //    // This should fail
-        //    Assert.AreEqual(5.1, jd.RootElement.GetProperty("Baz").GetProperty("A").GetDouble());
-        //}
+            // This should fail
+            // TODO: Is this the exception type we'd like?
+            Assert.Throws<KeyNotFoundException>(()=> jd.RootElement.GetProperty("Baz").GetProperty("A"));
+        }
     }
 }
