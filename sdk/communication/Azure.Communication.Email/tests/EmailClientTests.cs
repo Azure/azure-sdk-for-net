@@ -145,18 +145,8 @@ namespace Azure.Communication.Email.Tests
                 },
                 new object[]
                 {
-                    EmailMessageDuplicateCustomHeader(),
-                    ErrorMessages.DuplicateHeaderName
-                },
-                new object[]
-                {
-                    EmailMessageEmptyCustomHeaderName(),
-                    ErrorMessages.EmptyHeaderNameOrValue
-                },
-                new object[]
-                {
                     EmailMessageEmptyCustomHeaderValue(),
-                    ErrorMessages.EmptyHeaderNameOrValue
+                    ErrorMessages.EmptyHeaderValue
                 },
                 new object[]
                 {
@@ -239,29 +229,12 @@ namespace Azure.Communication.Email.Tests
                 new EmailRecipients(DefaultRecipients()));
         }
 
-        private static EmailMessage EmailMessageDuplicateCustomHeader()
-        {
-            var emailMessage = DefaultEmailMessage();
-
-            emailMessage.CustomHeaders.Add(new EmailCustomHeader("Key1", "Value1"));
-            emailMessage.CustomHeaders.Add(new EmailCustomHeader("Key2", "Value2"));
-            emailMessage.CustomHeaders.Add(new EmailCustomHeader("Key1", "Value3"));
-
-            return emailMessage;
-        }
-
-        private static EmailMessage EmailMessageEmptyCustomHeaderName()
-        {
-            EmailMessage emailMessage = EmailMessageDuplicateCustomHeader();
-            emailMessage.CustomHeaders.Add(new EmailCustomHeader(string.Empty, "Value"));
-
-            return emailMessage;
-        }
-
         private static EmailMessage EmailMessageEmptyCustomHeaderValue()
         {
-            EmailMessage emailMessage = EmailMessageDuplicateCustomHeader();
-            emailMessage.CustomHeaders.Add(new EmailCustomHeader("Key", string.Empty));
+            EmailMessage emailMessage = DefaultEmailMessage();
+
+            emailMessage.Headers.Add("Key1", "Value1");
+            emailMessage.Headers.Add("Key", string.Empty);
 
             return emailMessage;
         }
@@ -303,7 +276,7 @@ namespace Azure.Communication.Email.Tests
         {
             var emailMessage = DefaultEmailMessage();
 
-            emailMessage.Attachments.Add(new EmailAttachment(Guid.NewGuid().ToString(), EmailAttachmentType.Txt, string.Empty));
+            emailMessage.Attachments.Add(new EmailAttachment(Guid.NewGuid().ToString(), "text/plain", string.Empty));
 
             return emailMessage;
         }
@@ -311,7 +284,7 @@ namespace Azure.Communication.Email.Tests
         private static EmailMessage EmailMessageInvalidAttachment()
         {
             var emailMessage = DefaultEmailMessage();
-            emailMessage.Attachments.Add(new EmailAttachment(Guid.NewGuid().ToString(), EmailAttachmentType.Txt, "This is invalid attachment content")); //"gobbledygook"));
+            emailMessage.Attachments.Add(new EmailAttachment(Guid.NewGuid().ToString(), "text/plain", "This is invalid attachment content")); //"gobbledygook"));
 
             return emailMessage;
         }

@@ -43,8 +43,8 @@ namespace Azure.Communication.Email.Tests.Samples
 
             // Create the EmailMessage
             var emailMessage = new EmailMessage(
-                //@@ sender: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                /*@@*/ sender: TestEnvironment.SenderAddress,
+                //@@ senderEmail: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                /*@@*/ senderEmail: TestEnvironment.SenderAddress,
                 emailContent,
                 emailRecipients);
 
@@ -116,8 +116,8 @@ namespace Azure.Communication.Email.Tests.Samples
 
             // Create the EmailMessage
             var emailMessage = new EmailMessage(
-                //@@ sender: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                /*@@*/ sender: TestEnvironment.SenderAddress,
+                //@@ senderEmail: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                /*@@*/ senderEmail: TestEnvironment.SenderAddress,
                 emailContent,
                 emailRecipients);
 
@@ -152,8 +152,8 @@ namespace Azure.Communication.Email.Tests.Samples
             #region Snippet:Azure_Communication_Email_Send_With_Attachments
             // Create the EmailMessage
             var emailMessage = new EmailMessage(
-                //@@ sender: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                /*@@*/ sender: TestEnvironment.SenderAddress,
+                //@@ senderEmail: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                /*@@*/ senderEmail: TestEnvironment.SenderAddress,
                 emailContent,
                 emailRecipients);
 
@@ -169,7 +169,7 @@ namespace Azure.Communication.Email.Tests.Samples
             string attachmentFileInBytes = Convert.ToBase64String(bytes);
 #else
             string attachmentName = "Attachment.txt";
-            EmailAttachmentType attachmentType = EmailAttachmentType.Txt;
+            string attachmentType = "text/plain";
             var attachmentFileInBytes = "VGhpcyBpcyBhIHRlc3Q=";
 #endif
             var emailAttachment = new EmailAttachment(attachmentName, attachmentType, attachmentFileInBytes);
@@ -203,8 +203,8 @@ namespace Azure.Communication.Email.Tests.Samples
 
             // Create the EmailMessage
             var emailMessage = new EmailMessage(
-                //@@ sender: "<Send email address>" // The email address of the domain registered with the Communication Services resource
-                /*@@*/ sender: TestEnvironment.SenderAddress,
+                //@@ senderEmail: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                /*@@*/ senderEmail: TestEnvironment.SenderAddress,
                 emailContent,
                 emailRecipients);
 

@@ -314,7 +314,7 @@ namespace Azure.Communication.Email
             {
                 if (string.IsNullOrWhiteSpace(header.Value))
                 {
-                    throw new ArgumentException(ErrorMessages.EmptyHeaderNameOrValue);
+                    throw new ArgumentException(ErrorMessages.EmptyHeaderValue);
                 }
             });
         }
