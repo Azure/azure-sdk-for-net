@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             return containerGroup;
         }
 
-        protected static ContainerGroupData CreateContainerGroupData(string containerGroupName, bool doNotEncrypt = false)
+        protected static ContainerGroupData CreateContainerGroupData(string containerGroupName, ContainerGroupPriority priority, bool doNotEncrypt = false)
         {
             var containers = new ContainerInstanceContainer[]
             {
@@ -133,7 +133,8 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                         },
                     }
                 },
-                EncryptionProperties = encryptionProps
+                EncryptionProperties = encryptionProps,
+                Priority = priority
             };
             return containerGroup;
         }
@@ -165,6 +166,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             Assert.AreEqual(expected.Containers[0].Resources.Requests.MemoryInGB, actual.Containers[0].Resources.Requests.MemoryInGB);
             Assert.AreEqual(expected.InitContainers[0].Name, actual.InitContainers[0].Name);
             Assert.AreEqual(expected.InitContainers[0].Image, actual.InitContainers[0].Image);
+            Assert.AreEqual(expected.Priority, actual.Priority);
         }
     }
 }

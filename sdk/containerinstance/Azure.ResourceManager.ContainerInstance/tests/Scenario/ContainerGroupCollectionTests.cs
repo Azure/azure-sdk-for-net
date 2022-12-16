@@ -4,6 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.ContainerInstance.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -18,12 +19,12 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task CreateOrUpdate()
+        public async Task CreateOrUpdate_RegularPriority()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroupAsync(subscription, "testRg", AzureLocation.WestUS);
             string containerGroupName = Recording.GenerateAssetName("containergrp");
-            var containerGroupData = CreateContainerGroupData(containerGroupName);
+            var containerGroupData = CreateContainerGroupData(containerGroupName, ContainerGroupPriority.Regular);
             var containerGroups = rg.GetContainerGroups();
             ContainerGroupResource containerGroup = CreateContainerGroupAsync(containerGroupName, containerGroupData, rg).Result;
             Assert.AreEqual(containerGroupName, containerGroup.Data.Name);
@@ -32,12 +33,41 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task Get()
+        public async Task CreateOrUpdate_SpotPriority()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroupAsync(subscription, "testRg", AzureLocation.WestUS);
             string containerGroupName = Recording.GenerateAssetName("containergrp");
-            var containerGroupData = CreateContainerGroupData(containerGroupName);
+            var containerGroupData = CreateContainerGroupData(containerGroupName, priority: ContainerGroupPriority.Spot);
+            var containerGroups = rg.GetContainerGroups();
+            ContainerGroupResource containerGroup = CreateContainerGroupAsync(containerGroupName, containerGroupData, rg).Result;
+            Assert.AreEqual(containerGroupName, containerGroup.Data.Name);
+            VerifyContainerGroupProperties(containerGroupData, containerGroup.Data);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task Get_RegularPriority()
+        {
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroupAsync(subscription, "testRg", AzureLocation.WestUS);
+            string containerGroupName = Recording.GenerateAssetName("containergrp");
+            var containerGroupData = CreateContainerGroupData(containerGroupName, ContainerGroupPriority.Regular);
+            var containerGroups = rg.GetContainerGroups();
+            ContainerGroupResource containerGroup = (await containerGroups.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName, containerGroupData)).Value;
+
+            ContainerGroupResource retrievedContainerGroup = await containerGroups.GetAsync(containerGroupName);
+            VerifyContainerGroupProperties(containerGroup.Data, retrievedContainerGroup.Data);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task Get_SpotPriority()
+        {
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroupAsync(subscription, "testRg", AzureLocation.WestUS);
+            string containerGroupName = Recording.GenerateAssetName("containergrp");
+            var containerGroupData = CreateContainerGroupData(containerGroupName, ContainerGroupPriority.Spot);
             var containerGroups = rg.GetContainerGroups();
             ContainerGroupResource containerGroup = (await containerGroups.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName, containerGroupData)).Value;
 
@@ -54,10 +84,10 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             var containerGroups = rg.GetContainerGroups();
 
             string containerGroupName1 = Recording.GenerateAssetName("containergrp");
-            var containerGroupData1 = CreateContainerGroupData(containerGroupName1);
+            var containerGroupData1 = CreateContainerGroupData(containerGroupName1, ContainerGroupPriority.Regular);
             ContainerGroupResource containerGroup1 = (await containerGroups.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName1, containerGroupData1)).Value;
             string containerGroupName2 = Recording.GenerateAssetName("containergrp");
-            var containerGroupData2 = CreateContainerGroupData(containerGroupName2);
+            var containerGroupData2 = CreateContainerGroupData(containerGroupName2, ContainerGroupPriority.Regular);
             ContainerGroupResource containerGroup2 = (await containerGroups.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName2, containerGroupData2)).Value;
 
             AsyncPageable<ContainerGroupResource> result = containerGroups.GetAllAsync();
@@ -75,13 +105,13 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             ResourceGroupResource rg1 = await CreateResourceGroupAsync(subscription, "testRg", AzureLocation.WestUS);
             var containerGroups1 = rg1.GetContainerGroups();
             string containerGroupName1 = Recording.GenerateAssetName("containergrp");
-            var containerGroupData1 = CreateContainerGroupData(containerGroupName1);
+            var containerGroupData1 = CreateContainerGroupData(containerGroupName1, ContainerGroupPriority.Regular);
             ContainerGroupResource containerGroup1 = (await containerGroups1.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName1, containerGroupData1)).Value;
 
             ResourceGroupResource rg2 = await CreateResourceGroupAsync(subscription, "testRg", AzureLocation.WestUS);
             var containerGroups2 = rg2.GetContainerGroups();
             string containerGroupName2 = Recording.GenerateAssetName("containergrp");
-            var containerGroupData2 = CreateContainerGroupData(containerGroupName2);
+            var containerGroupData2 = CreateContainerGroupData(containerGroupName2, ContainerGroupPriority.Regular);
             ContainerGroupResource containerGroup2 = (await containerGroups2.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName2, containerGroupData2)).Value;
 
             AsyncPageable<ContainerGroupResource> result = subscription.GetContainerGroupsAsync();
