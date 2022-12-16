@@ -41,6 +41,7 @@ rename-mapping:
   ListConfigurationAssignmentsResult: MaintenanceConfigurationAssignmentListResult
   UpdateStatus: MaintenanceUpdateStatus
   Visibility: MaintenanceConfigurationVisibility
+  ApplyUpdate.properties.lastUpdateTime: LastUpdatedOn
 
 override-operation-name:
   ApplyUpdates_GetParent: GetApplyUpdatesByParent

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="systemData"> The systemData. </param>
         /// <param name="status"> The status. </param>
         /// <param name="resourceId"> The resourceId. </param>
-        /// <param name="lastUpdateOn"> Last Update time. </param>
-        internal MaintenanceApplyUpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MaintenanceUpdateStatus? status, ResourceIdentifier resourceId, DateTimeOffset? lastUpdateOn) : base(id, name, resourceType, systemData)
+        /// <param name="lastUpdatedOn"> Last Update time. </param>
+        internal MaintenanceApplyUpdateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MaintenanceUpdateStatus? status, ResourceIdentifier resourceId, DateTimeOffset? lastUpdatedOn) : base(id, name, resourceType, systemData)
         {
             Status = status;
             ResourceId = resourceId;
-            LastUpdateOn = lastUpdateOn;
+            LastUpdatedOn = lastUpdatedOn;
         }
 
         /// <summary> The status. </summary>
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.Maintenance
         /// <summary> The resourceId. </summary>
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> Last Update time. </summary>
-        public DateTimeOffset? LastUpdateOn { get; set; }
+        public DateTimeOffset? LastUpdatedOn { get; set; }
     }
 }

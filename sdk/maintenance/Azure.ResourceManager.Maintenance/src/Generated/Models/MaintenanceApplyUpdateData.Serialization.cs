@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Maintenance
                 writer.WritePropertyName("resourceId");
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(LastUpdateOn))
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdateTime");
-                writer.WriteStringValue(LastUpdateOn.Value, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

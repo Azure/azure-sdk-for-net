@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Maintenance
     public partial class MaintenanceApplyUpdateData : Azure.ResourceManager.Models.ResourceData
     {
         public MaintenanceApplyUpdateData() { }
-        public System.DateTimeOffset? LastUpdateOn { get { throw null; } set { } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus? Status { get { throw null; } set { } }
     }
