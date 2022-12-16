@@ -149,20 +149,46 @@ namespace Azure.Communication.Email
             scope.Start();
             try
             {
-                ValidateEmailMessage(message);
-                ResponseWithHeaders<EmailSendHeaders> response = (await RestClient.SendAsync(
-                    Guid.NewGuid().ToString(),
-                    DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture),
-                    message,
-                    cancellationToken).ConfigureAwait(false));
+                return await SendEmailInternalAsync(message, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-                Response rawResponse = response.GetRawResponse();
-                if (!rawResponse.Headers.TryGetValue("x-ms-request-id", out var messageId))
-                {
-                    messageId = null;
-                }
-
-                return Response.FromValue(new SendEmailResult(messageId), response);
+        /// <summary> Queues an email message to be sent to a single recipient. </summary>
+        /// <param name="senderEmail"> From address of the email. </param>
+        /// <param name="toRecipient"> Email address of the TO recipient. </param>
+        /// <param name="subject"> Subject for the email. </param>
+        /// <param name="html"> Email body in HTML format. </param>
+        /// <param name="plainText"> Email body in plain text format. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SendEmailResult>> SendAsync(
+            string senderEmail,
+            string toRecipient,
+            string subject,
+            string html,
+            string plainText = "",
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.Send");
+            scope.Start();
+            try
+            {
+                EmailMessage message = new EmailMessage(
+                    senderEmail,
+                    new EmailContent(subject)
+                    {
+                        PlainText = plainText,
+                        Html = html
+                    },
+                    new EmailRecipients(new List<EmailAddress>()
+                    {
+                        new EmailAddress(toRecipient)
+                    }));
+                return await SendEmailInternalAsync(message, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -182,26 +208,88 @@ namespace Azure.Communication.Email
             scope.Start();
             try
             {
-                ValidateEmailMessage(message);
-                ResponseWithHeaders<EmailSendHeaders> response = RestClient.Send(
-                    Guid.NewGuid().ToString(),
-                    DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture),
-                    message,
-                    cancellationToken);
-
-                Response rawResponse = response.GetRawResponse();
-                if (!rawResponse.Headers.TryGetValue("x-ms-request-id", out var messageId))
-                {
-                    messageId = null;
-                }
-
-                return Response.FromValue(new SendEmailResult(messageId), response);
+                return SendEmailInternal(message, cancellationToken);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Queues an email message to be sent to a single recipient. </summary>
+        /// <param name="senderEmail"> From address of the email. </param>
+        /// <param name="toRecipient"> Email address of the TO recipient. </param>
+        /// <param name="subject"> Subject for the email. </param>
+        /// <param name="html"> Email body in HTML format. </param>
+        /// <param name="plainText"> Email body in plain text format. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SendEmailResult> Send(
+            string senderEmail,
+            string toRecipient,
+            string subject,
+            string html,
+            string plainText = "",
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.Send");
+            scope.Start();
+            try
+            {
+                EmailMessage message = new EmailMessage(
+                    senderEmail,
+                    new EmailContent(subject)
+                    {
+                        PlainText = plainText,
+                        Html = html
+                    },
+                    new EmailRecipients(new List<EmailAddress>()
+                    {
+                        new EmailAddress(toRecipient)
+                    }));
+                return SendEmailInternal(message, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private async Task<Response<SendEmailResult>> SendEmailInternalAsync(EmailMessage message, CancellationToken cancellationToken)
+        {
+            ValidateEmailMessage(message);
+            ResponseWithHeaders<EmailSendHeaders> response = (await RestClient.SendAsync(
+                Guid.NewGuid().ToString(),
+                DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture),
+                message,
+                cancellationToken).ConfigureAwait(false));
+
+            Response rawResponse = response.GetRawResponse();
+            if (!rawResponse.Headers.TryGetValue("x-ms-request-id", out var messageId))
+            {
+                messageId = null;
+            }
+
+            return Response.FromValue(new SendEmailResult(messageId), response);
+        }
+
+        private Response<SendEmailResult> SendEmailInternal(EmailMessage message, CancellationToken cancellationToken)
+        {
+            ValidateEmailMessage(message);
+            ResponseWithHeaders<EmailSendHeaders> response = RestClient.Send(
+                Guid.NewGuid().ToString(),
+                DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture),
+                message,
+                cancellationToken);
+
+            Response rawResponse = response.GetRawResponse();
+            if (!rawResponse.Headers.TryGetValue("x-ms-request-id", out var messageId))
+            {
+                messageId = null;
+            }
+
+            return Response.FromValue(new SendEmailResult(messageId), response);
         }
 
         private static void ValidateEmailMessage(EmailMessage emailMessage)
