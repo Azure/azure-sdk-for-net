@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.Maintenance
             string resourceType = "virtualMachines";
             string resourceName = "smdvm1";
             string configurationAssignmentName = "workervmPolicy";
-            MaintenanceConfigurationAssignment configurationAssignment = new MaintenanceConfigurationAssignment()
+            MaintenanceConfigurationAssignmentData data = new MaintenanceConfigurationAssignmentData()
             {
                 MaintenanceConfigurationId = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/examplerg/providers/Microsoft.Maintenance/maintenanceConfigurations/policy1"),
             };
-            MaintenanceConfigurationAssignment result = await resourceGroupResource.CreateOrUpdateConfigurationAssignmentByParentAsync(providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, configurationAssignment);
+            MaintenanceConfigurationAssignmentData result = await resourceGroupResource.CreateOrUpdateConfigurationAssignmentByParentAsync(providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, data);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Maintenance
             string resourceType = "virtualMachines";
             string resourceName = "smdvm1";
             string configurationAssignmentName = "workervmConfiguration";
-            MaintenanceConfigurationAssignment result = await resourceGroupResource.DeleteConfigurationAssignmentByParentAsync(providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName);
+            MaintenanceConfigurationAssignmentData result = await resourceGroupResource.DeleteConfigurationAssignmentByParentAsync(providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.Maintenance
             string resourceType = "virtualMachineScaleSets";
             string resourceName = "smdtest1";
             string configurationAssignmentName = "workervmConfiguration";
-            MaintenanceConfigurationAssignment configurationAssignment = new MaintenanceConfigurationAssignment()
+            MaintenanceConfigurationAssignmentData data = new MaintenanceConfigurationAssignmentData()
             {
                 MaintenanceConfigurationId = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/examplerg/providers/Microsoft.Maintenance/maintenanceConfigurations/configuration1"),
             };
-            MaintenanceConfigurationAssignment result = await resourceGroupResource.CreateOrUpdateConfigurationAssignmentAsync(providerName, resourceType, resourceName, configurationAssignmentName, configurationAssignment);
+            MaintenanceConfigurationAssignmentData result = await resourceGroupResource.CreateOrUpdateConfigurationAssignmentAsync(providerName, resourceType, resourceName, configurationAssignmentName, data);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Maintenance
             string resourceType = "virtualMachineScaleSets";
             string resourceName = "smdtest1";
             string configurationAssignmentName = "workervmConfiguration";
-            MaintenanceConfigurationAssignment result = await resourceGroupResource.DeleteConfigurationAssignmentAsync(providerName, resourceType, resourceName, configurationAssignmentName);
+            MaintenanceConfigurationAssignmentData result = await resourceGroupResource.DeleteConfigurationAssignmentAsync(providerName, resourceType, resourceName, configurationAssignmentName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Maintenance
             string resourceParentName = "smdtest1";
             string resourceType = "virtualMachines";
             string resourceName = "smdtestvm1";
-            await foreach (MaintenanceConfigurationAssignment item in resourceGroupResource.GetConfigurationAssignmentsByParentAsync(providerName, resourceParentType, resourceParentName, resourceType, resourceName))
+            await foreach (MaintenanceConfigurationAssignmentData item in resourceGroupResource.GetConfigurationAssignmentsByParentAsync(providerName, resourceParentType, resourceParentName, resourceType, resourceName))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Maintenance
             string providerName = "Microsoft.Compute";
             string resourceType = "virtualMachineScaleSets";
             string resourceName = "smdtest1";
-            await foreach (MaintenanceConfigurationAssignment item in resourceGroupResource.GetConfigurationAssignmentsAsync(providerName, resourceType, resourceName))
+            await foreach (MaintenanceConfigurationAssignmentData item in resourceGroupResource.GetConfigurationAssignmentsAsync(providerName, resourceType, resourceName))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

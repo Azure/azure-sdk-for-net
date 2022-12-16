@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Maintenance.Models
     {
         internal static MaintenanceConfigurationAssignmentListResult DeserializeMaintenanceConfigurationAssignmentListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<MaintenanceConfigurationAssignment>> value = default;
+            Optional<IReadOnlyList<MaintenanceConfigurationAssignmentData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Maintenance.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MaintenanceConfigurationAssignment> array = new List<MaintenanceConfigurationAssignment>();
+                    List<MaintenanceConfigurationAssignmentData> array = new List<MaintenanceConfigurationAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceConfigurationAssignment.DeserializeMaintenanceConfigurationAssignment(item));
+                        array.Add(MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(item));
                     }
                     value = array;
                     continue;

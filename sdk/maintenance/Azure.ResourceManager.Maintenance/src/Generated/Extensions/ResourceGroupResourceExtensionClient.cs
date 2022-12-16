@@ -241,15 +241,15 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="configurationAssignment"> The configurationAssignment. </param>
+        /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceConfigurationAssignment>> CreateOrUpdateConfigurationAssignmentByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignment configurationAssignment, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateConfigurationAssignmentByParent");
             scope.Start();
             try
             {
-                var response = await ConfigurationAssignmentsRestClient.CreateOrUpdateParentAsync(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, configurationAssignment, cancellationToken).ConfigureAwait(false);
+                var response = await ConfigurationAssignmentsRestClient.CreateOrUpdateParentAsync(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -270,15 +270,15 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="configurationAssignment"> The configurationAssignment. </param>
+        /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceConfigurationAssignment> CreateOrUpdateConfigurationAssignmentByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignment configurationAssignment, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateConfigurationAssignmentByParent");
             scope.Start();
             try
             {
-                var response = ConfigurationAssignmentsRestClient.CreateOrUpdateParent(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, configurationAssignment, cancellationToken);
+                var response = ConfigurationAssignmentsRestClient.CreateOrUpdateParent(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, data, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceConfigurationAssignment>> DeleteConfigurationAssignmentByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteConfigurationAssignmentByParent");
             scope.Start();
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceConfigurationAssignment> DeleteConfigurationAssignmentByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteConfigurationAssignmentByParent");
             scope.Start();
@@ -353,15 +353,15 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="configurationAssignment"> The configurationAssignment. </param>
+        /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceConfigurationAssignment>> CreateOrUpdateConfigurationAssignmentAsync(string providerName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignment configurationAssignment, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentAsync(string providerName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateConfigurationAssignment");
             scope.Start();
             try
             {
-                var response = await ConfigurationAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName, configurationAssignmentName, configurationAssignment, cancellationToken).ConfigureAwait(false);
+                var response = await ConfigurationAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName, configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -380,15 +380,15 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="configurationAssignment"> The configurationAssignment. </param>
+        /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceConfigurationAssignment> CreateOrUpdateConfigurationAssignment(string providerName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignment configurationAssignment, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignment(string providerName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.CreateOrUpdateConfigurationAssignment");
             scope.Start();
             try
             {
-                var response = ConfigurationAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName, configurationAssignmentName, configurationAssignment, cancellationToken);
+                var response = ConfigurationAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName, configurationAssignmentName, data, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceConfigurationAssignment>> DeleteConfigurationAssignmentAsync(string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentAsync(string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteConfigurationAssignment");
             scope.Start();
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceConfigurationAssignment> DeleteConfigurationAssignment(string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignment(string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.DeleteConfigurationAssignment");
             scope.Start();
@@ -461,10 +461,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MaintenanceConfigurationAssignment" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceConfigurationAssignment> GetConfigurationAssignmentsByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MaintenanceConfigurationAssignment>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MaintenanceConfigurationAssignmentData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetConfigurationAssignmentsByParent");
                 scope.Start();
@@ -493,10 +493,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignment" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceConfigurationAssignment> GetConfigurationAssignmentsByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            Page<MaintenanceConfigurationAssignment> FirstPageFunc(int? pageSizeHint)
+            Page<MaintenanceConfigurationAssignmentData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetConfigurationAssignmentsByParent");
                 scope.Start();
@@ -523,10 +523,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MaintenanceConfigurationAssignment" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceConfigurationAssignment> GetConfigurationAssignmentsAsync(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsAsync(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MaintenanceConfigurationAssignment>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MaintenanceConfigurationAssignmentData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetConfigurationAssignments");
                 scope.Start();
@@ -553,10 +553,10 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignment" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceConfigurationAssignment> GetConfigurationAssignments(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignments(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
-            Page<MaintenanceConfigurationAssignment> FirstPageFunc(int? pageSizeHint)
+            Page<MaintenanceConfigurationAssignmentData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetConfigurationAssignments");
                 scope.Start();

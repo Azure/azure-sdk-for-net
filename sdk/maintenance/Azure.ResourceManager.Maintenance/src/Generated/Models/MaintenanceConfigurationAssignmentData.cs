@@ -11,14 +11,14 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Maintenance.Models
 {
     /// <summary> Configuration Assignment. </summary>
-    public partial class MaintenanceConfigurationAssignment : ResourceData
+    public partial class MaintenanceConfigurationAssignmentData : ResourceData
     {
-        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignment. </summary>
-        public MaintenanceConfigurationAssignment()
+        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentData. </summary>
+        public MaintenanceConfigurationAssignmentData()
         {
         }
 
-        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignment. </summary>
+        /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="location"> Location of the resource. </param>
         /// <param name="maintenanceConfigurationId"> The maintenance configuration Id. </param>
         /// <param name="resourceId"> The unique resourceId. </param>
-        internal MaintenanceConfigurationAssignment(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier maintenanceConfigurationId, ResourceIdentifier resourceId) : base(id, name, resourceType, systemData)
+        internal MaintenanceConfigurationAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier maintenanceConfigurationId, ResourceIdentifier resourceId) : base(id, name, resourceType, systemData)
         {
             Location = location;
             MaintenanceConfigurationId = maintenanceConfigurationId;

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Maintenance
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrUpdateParentRequest(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignment configurationAssignment)
+        internal HttpMessage CreateCreateOrUpdateParentRequest(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Maintenance
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(configurationAssignment);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="configurationAssignment"> The configurationAssignment. </param>
+        /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="configurationAssignmentName"/> or <paramref name="configurationAssignment"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MaintenanceConfigurationAssignment>> CreateOrUpdateParentAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignment configurationAssignment, CancellationToken cancellationToken = default)
+        public async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateParentAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -94,17 +94,17 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(configurationAssignment, nameof(configurationAssignment));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateParentRequest(subscriptionId, resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, configurationAssignment);
+            using var message = CreateCreateOrUpdateParentRequest(subscriptionId, resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        MaintenanceConfigurationAssignment value = default;
+                        MaintenanceConfigurationAssignmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MaintenanceConfigurationAssignment.DeserializeMaintenanceConfigurationAssignment(document.RootElement);
+                        value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="configurationAssignment"> The configurationAssignment. </param>
+        /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="configurationAssignmentName"/> or <paramref name="configurationAssignment"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MaintenanceConfigurationAssignment> CreateOrUpdateParent(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignment configurationAssignment, CancellationToken cancellationToken = default)
+        public Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateParent(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -135,17 +135,17 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(configurationAssignment, nameof(configurationAssignment));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateParentRequest(subscriptionId, resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, configurationAssignment);
+            using var message = CreateCreateOrUpdateParentRequest(subscriptionId, resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        MaintenanceConfigurationAssignment value = default;
+                        MaintenanceConfigurationAssignmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MaintenanceConfigurationAssignment.DeserializeMaintenanceConfigurationAssignment(document.RootElement);
+                        value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MaintenanceConfigurationAssignment>> DeleteParentAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteParentAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -212,13 +212,13 @@ namespace Azure.ResourceManager.Maintenance
             {
                 case 200:
                     {
-                        MaintenanceConfigurationAssignment value = default;
+                        MaintenanceConfigurationAssignmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MaintenanceConfigurationAssignment.DeserializeMaintenanceConfigurationAssignment(document.RootElement);
+                        value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
-                    return Response.FromValue((MaintenanceConfigurationAssignment)null, message.Response);
+                    return Response.FromValue((MaintenanceConfigurationAssignmentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MaintenanceConfigurationAssignment> DeleteParent(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public Response<MaintenanceConfigurationAssignmentData> DeleteParent(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -253,19 +253,19 @@ namespace Azure.ResourceManager.Maintenance
             {
                 case 200:
                     {
-                        MaintenanceConfigurationAssignment value = default;
+                        MaintenanceConfigurationAssignmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MaintenanceConfigurationAssignment.DeserializeMaintenanceConfigurationAssignment(document.RootElement);
+                        value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
-                    return Response.FromValue((MaintenanceConfigurationAssignment)null, message.Response);
+                    return Response.FromValue((MaintenanceConfigurationAssignmentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignment configurationAssignment)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Maintenance
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(configurationAssignment);
+            content.JsonWriter.WriteObjectValue(data);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -302,11 +302,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="configurationAssignment"> The configurationAssignment. </param>
+        /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="configurationAssignmentName"/> or <paramref name="configurationAssignment"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MaintenanceConfigurationAssignment>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignment configurationAssignment, CancellationToken cancellationToken = default)
+        public async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -314,17 +314,17 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(configurationAssignment, nameof(configurationAssignment));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, providerName, resourceType, resourceName, configurationAssignmentName, configurationAssignment);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, providerName, resourceType, resourceName, configurationAssignmentName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        MaintenanceConfigurationAssignment value = default;
+                        MaintenanceConfigurationAssignmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MaintenanceConfigurationAssignment.DeserializeMaintenanceConfigurationAssignment(document.RootElement);
+                        value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -339,11 +339,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="configurationAssignment"> The configurationAssignment. </param>
+        /// <param name="data"> The configurationAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="configurationAssignmentName"/> or <paramref name="configurationAssignment"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MaintenanceConfigurationAssignment> CreateOrUpdate(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignment configurationAssignment, CancellationToken cancellationToken = default)
+        public Response<MaintenanceConfigurationAssignmentData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -351,17 +351,17 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(configurationAssignment, nameof(configurationAssignment));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, providerName, resourceType, resourceName, configurationAssignmentName, configurationAssignment);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, providerName, resourceType, resourceName, configurationAssignmentName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        MaintenanceConfigurationAssignment value = default;
+                        MaintenanceConfigurationAssignmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MaintenanceConfigurationAssignment.DeserializeMaintenanceConfigurationAssignment(document.RootElement);
+                        value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MaintenanceConfigurationAssignment>> DeleteAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -420,13 +420,13 @@ namespace Azure.ResourceManager.Maintenance
             {
                 case 200:
                     {
-                        MaintenanceConfigurationAssignment value = default;
+                        MaintenanceConfigurationAssignmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MaintenanceConfigurationAssignment.DeserializeMaintenanceConfigurationAssignment(document.RootElement);
+                        value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
-                    return Response.FromValue((MaintenanceConfigurationAssignment)null, message.Response);
+                    return Response.FromValue((MaintenanceConfigurationAssignmentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MaintenanceConfigurationAssignment> Delete(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        public Response<MaintenanceConfigurationAssignmentData> Delete(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -457,13 +457,13 @@ namespace Azure.ResourceManager.Maintenance
             {
                 case 200:
                     {
-                        MaintenanceConfigurationAssignment value = default;
+                        MaintenanceConfigurationAssignmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MaintenanceConfigurationAssignment.DeserializeMaintenanceConfigurationAssignment(document.RootElement);
+                        value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 204:
-                    return Response.FromValue((MaintenanceConfigurationAssignment)null, message.Response);
+                    return Response.FromValue((MaintenanceConfigurationAssignmentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

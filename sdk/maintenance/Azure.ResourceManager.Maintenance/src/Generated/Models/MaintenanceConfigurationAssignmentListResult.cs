@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentListResult. </summary>
         internal MaintenanceConfigurationAssignmentListResult()
         {
-            Value = new ChangeTrackingList<MaintenanceConfigurationAssignment>();
+            Value = new ChangeTrackingList<MaintenanceConfigurationAssignmentData>();
         }
 
         /// <summary> Initializes a new instance of MaintenanceConfigurationAssignmentListResult. </summary>
         /// <param name="value"> The list of configuration Assignments. </param>
-        internal MaintenanceConfigurationAssignmentListResult(IReadOnlyList<MaintenanceConfigurationAssignment> value)
+        internal MaintenanceConfigurationAssignmentListResult(IReadOnlyList<MaintenanceConfigurationAssignmentData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of configuration Assignments. </summary>
-        public IReadOnlyList<MaintenanceConfigurationAssignment> Value { get; }
+        public IReadOnlyList<MaintenanceConfigurationAssignmentData> Value { get; }
     }
 }
