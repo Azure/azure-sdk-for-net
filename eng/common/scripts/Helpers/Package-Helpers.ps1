@@ -35,3 +35,12 @@ function GetPackageKey($pkg) {
     }
     return $packageLookup
   }
+
+  fucntion GetDocsTocDisplayName($pkg) {
+    $displayName = $pkg.DisplayName
+    if ('deprecated' -eq $pkg.Support) {
+      LogWarning "The pkg $($pkg.Package) is deprecated. Add 'deprecated' besides of display name."
+      $diaplayName += " (deprecated)"
+    }
+    return $displayName
+  }
