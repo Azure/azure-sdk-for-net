@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
         {
             Guid principalId = default;
             Optional<string> principalIdDisplayName = default;
-            Guid roleDefinitionId = default;
+            string roleDefinitionId = default;
             Optional<IList<Guid>> delegatedRoleDefinitionIds = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
                 if (property.NameEquals("roleDefinitionId"))
                 {
-                    roleDefinitionId = property.Value.GetGuid();
+                    roleDefinitionId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("delegatedRoleDefinitionIds"))

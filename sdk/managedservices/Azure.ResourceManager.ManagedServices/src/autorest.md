@@ -45,7 +45,6 @@ format-by-name-rules:
   'ETag': 'etag'
   'location': 'azure-location'
   'principalId': 'uuid'
-  'roleDefinitionId': 'uuid'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 

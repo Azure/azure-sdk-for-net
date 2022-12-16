@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
@@ -15,8 +16,11 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <summary> Initializes a new instance of ManagedServicesEligibleAuthorization. </summary>
         /// <param name="principalId"> The identifier of the Azure Active Directory principal. </param>
         /// <param name="roleDefinitionId"> The identifier of the Azure built-in role that defines the permissions that the Azure Active Directory principal will have on the projected scope. </param>
-        public ManagedServicesEligibleAuthorization(Guid principalId, Guid roleDefinitionId)
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
+        public ManagedServicesEligibleAuthorization(Guid principalId, string roleDefinitionId)
         {
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
+
             PrincipalId = principalId;
             RoleDefinitionId = roleDefinitionId;
         }
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <param name="principalIdDisplayName"> The display name of the Azure Active Directory principal. </param>
         /// <param name="roleDefinitionId"> The identifier of the Azure built-in role that defines the permissions that the Azure Active Directory principal will have on the projected scope. </param>
         /// <param name="justInTimeAccessPolicy"> The just-in-time access policy setting. </param>
-        internal ManagedServicesEligibleAuthorization(Guid principalId, string principalIdDisplayName, Guid roleDefinitionId, ManagedServicesJustInTimeAccessPolicy justInTimeAccessPolicy)
+        internal ManagedServicesEligibleAuthorization(Guid principalId, string principalIdDisplayName, string roleDefinitionId, ManagedServicesJustInTimeAccessPolicy justInTimeAccessPolicy)
         {
             PrincipalId = principalId;
             PrincipalIdDisplayName = principalIdDisplayName;
@@ -39,7 +43,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <summary> The display name of the Azure Active Directory principal. </summary>
         public string PrincipalIdDisplayName { get; set; }
         /// <summary> The identifier of the Azure built-in role that defines the permissions that the Azure Active Directory principal will have on the projected scope. </summary>
-        public Guid RoleDefinitionId { get; set; }
+        public string RoleDefinitionId { get; set; }
         /// <summary> The just-in-time access policy setting. </summary>
         public ManagedServicesJustInTimeAccessPolicy JustInTimeAccessPolicy { get; set; }
     }

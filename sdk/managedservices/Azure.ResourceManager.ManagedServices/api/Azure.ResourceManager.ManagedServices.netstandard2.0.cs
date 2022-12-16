@@ -118,11 +118,11 @@ namespace Azure.ResourceManager.ManagedServices.Models
 {
     public partial class ManagedServicesAuthorization
     {
-        public ManagedServicesAuthorization(System.Guid principalId, System.Guid roleDefinitionId) { }
+        public ManagedServicesAuthorization(System.Guid principalId, string roleDefinitionId) { }
         public System.Collections.Generic.IList<System.Guid> DelegatedRoleDefinitionIds { get { throw null; } }
         public System.Guid PrincipalId { get { throw null; } set { } }
         public string PrincipalIdDisplayName { get { throw null; } set { } }
-        public System.Guid RoleDefinitionId { get { throw null; } set { } }
+        public string RoleDefinitionId { get { throw null; } set { } }
     }
     public partial class ManagedServicesEligibleApprover
     {
@@ -132,11 +132,11 @@ namespace Azure.ResourceManager.ManagedServices.Models
     }
     public partial class ManagedServicesEligibleAuthorization
     {
-        public ManagedServicesEligibleAuthorization(System.Guid principalId, System.Guid roleDefinitionId) { }
+        public ManagedServicesEligibleAuthorization(System.Guid principalId, string roleDefinitionId) { }
         public Azure.ResourceManager.ManagedServices.Models.ManagedServicesJustInTimeAccessPolicy JustInTimeAccessPolicy { get { throw null; } set { } }
         public System.Guid PrincipalId { get { throw null; } set { } }
         public string PrincipalIdDisplayName { get { throw null; } set { } }
-        public System.Guid RoleDefinitionId { get { throw null; } set { } }
+        public string RoleDefinitionId { get { throw null; } set { } }
     }
     public partial class ManagedServicesJustInTimeAccessPolicy
     {

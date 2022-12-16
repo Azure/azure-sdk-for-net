@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.ManagedServices
             {
                 Properties = new ManagedServicesRegistrationProperties(new ManagedServicesAuthorization[]
             {
-new ManagedServicesAuthorization(Guid.Parse("f98d86a2-4cc4-4e9d-ad47-b3e80a1bcdfc"),Guid.Parse("acdd72a7-3385-48ef-bd42-f606fba81ae7"))
+new ManagedServicesAuthorization(Guid.Parse("f98d86a2-4cc4-4e9d-ad47-b3e80a1bcdfc"),"acdd72a7-3385-48ef-bd42-f606fba81ae7")
 {
 PrincipalIdDisplayName = "Support User",
-},new ManagedServicesAuthorization(Guid.Parse("f98d86a2-4cc4-4e9d-ad47-b3e80a1bcdfc"),Guid.Parse("18d7d88d-d35e-4fb5-a5c3-7773c20a72d9"))
+},new ManagedServicesAuthorization(Guid.Parse("f98d86a2-4cc4-4e9d-ad47-b3e80a1bcdfc"),"18d7d88d-d35e-4fb5-a5c3-7773c20a72d9")
 {
 PrincipalIdDisplayName = "User Access Administrator",
 DelegatedRoleDefinitionIds =
@@ -109,7 +109,7 @@ Guid.Parse("b24988ac-6180-42a0-ab88-20f7382dd24c")
                     Description = "Tes1t",
                     EligibleAuthorizations =
 {
-new ManagedServicesEligibleAuthorization(Guid.Parse("3e0ed8c6-e902-4fc5-863c-e3ddbb2ae2a2"),Guid.Parse("ae349356-3a1b-4a5e-921d-050484c6347e"))
+new ManagedServicesEligibleAuthorization(Guid.Parse("3e0ed8c6-e902-4fc5-863c-e3ddbb2ae2a2"),"ae349356-3a1b-4a5e-921d-050484c6347e")
 {
 PrincipalIdDisplayName = "Support User",
 JustInTimeAccessPolicy = new ManagedServicesJustInTimeAccessPolicy(MultiFactorAuthProvider.Azure)
