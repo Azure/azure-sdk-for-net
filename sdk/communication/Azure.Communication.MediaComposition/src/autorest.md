@@ -11,8 +11,8 @@ tag: package-2022-07-16-preview
 model-namespace: false
 generation1-convenience-client: true
 payload-flattening-threshold: 10
-require:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/140b5b64350c17e0900034d66cee2d6623af3ea8/specification/communication/data-plane/MediaComposition/readme.md
+require: #Need to update the readme.md URL for an updated API specification
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d8a5fbdb879da9801598da76511fc91075c87928/specification/communication/data-plane/MediaComposition/readme.md
 ```
 
 ``` yaml

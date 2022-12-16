@@ -40,9 +40,9 @@ rename-mapping:
   UpdateStorageAccountWithAccountParameters: StorageAccountForDataLakeAnalyticsAccountUpdateContent
   UpdateComputePolicyWithAccountParameters: ComputePolicyForDataLakeAnalyticsAccountUpdateContent
   UpdateFirewallRuleWithAccountParameters: FirewallRuleForDataLakeAnalyticsAccountUpdateContent
-  TierType: CommitmentTierType
+  TierType: DataLakeAnalyticsCommitmentTierType
   CheckNameAvailabilityParameters: DataLakeAnalyticsAccountNameAvailabilityContent
-  NameAvailabilityInformation: DataLakeAnalyticsNameAccountAvailabilityResult
+  NameAvailabilityInformation: DataLakeAnalyticsAccountNameAvailabilityResult
   CheckNameAvailabilityParametersType: DataLakeAnalyticsResourceType
   FirewallRule.properties.startIpAddress: -|ip-address
   FirewallRule.properties.endIpAddress: -|ip-address

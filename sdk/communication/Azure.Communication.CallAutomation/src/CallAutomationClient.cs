@@ -215,6 +215,15 @@ namespace Azure.Communication.CallAutomation
             }
 
             AnswerCallRequestInternal request = new AnswerCallRequestInternal(options.IncomingCallContext, options.CallbackUri.AbsoluteUri);
+            // Add custom cognitive service domain name
+            if (options.AzureCognitiveServicesEndpointUrl != null)
+            {
+                if (!IsValidHttpsUri(options.AzureCognitiveServicesEndpointUrl))
+                {
+                    throw new ArgumentException(CallAutomationErrorMessages.InvalidCognitiveServiceHttpsUriMessage);
+                }
+                request.AzureCognitiveServicesEndpointUrl = options.AzureCognitiveServicesEndpointUrl.AbsoluteUri;
+            }
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
 
             return request;
@@ -504,6 +513,15 @@ namespace Azure.Communication.CallAutomation
                 options.Targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
                 sourceDto,
                 options.CallbackUri.AbsoluteUri);
+            // Add custom cognitive service domain name
+            if (options.AzureCognitiveServicesEndpointUrl != null)
+            {
+                if (!IsValidHttpsUri(options.AzureCognitiveServicesEndpointUrl))
+                {
+                    throw new ArgumentException(CallAutomationErrorMessages.InvalidCognitiveServiceHttpsUriMessage);
+                }
+                request.AzureCognitiveServicesEndpointUrl = options.AzureCognitiveServicesEndpointUrl.AbsoluteUri;
+            }
             request.OperationContext = options.OperationContext;
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
 
