@@ -10,7 +10,7 @@ BeforeAll {
     },
     "matrix": {
         "operatingSystem": [
-          "windows-2019",
+          "windows-2022",
           "ubuntu-18.04",
           "macos-11"
         ],
@@ -25,14 +25,14 @@ BeforeAll {
     },
     "include": [
         {
-            "operatingSystem": "windows-2019",
+            "operatingSystem": "windows-2022",
             "framework": ["net461", "netcoreapp2.1", "net50"],
             "additionalArguments": "--enableWindowsFoo"
         }
     ],
     "exclude": [
         {
-            "operatingSystem": "windows-2019",
+            "operatingSystem": "windows-2022",
             "framework": "net461"
         },
         {
@@ -273,7 +273,7 @@ Describe "Platform Matrix Generation" -Tag "generate" {
     },
     "matrix": {
         "operatingSystem": [
-          "windows-2019",
+          "windows-2022",
           "ubuntu-18.04",
           "macos-11"
         ],
@@ -288,7 +288,7 @@ Describe "Platform Matrix Generation" -Tag "generate" {
     },
     "include": [
       {
-        "operatingSystem": "windows-2019",
+        "operatingSystem": "windows-2022",
         "framework": "net461",
         "additionalTestArguments": "/p:UseProjectReferenceToAzureClients=true"
       }
@@ -315,7 +315,7 @@ Describe "Platform Matrix Generation" -Tag "generate" {
         $matrix = GenerateFullMatrix $generateConfig.matrixParameters $generateconfig.displayNamesLookup
 
         $element = GetNdMatrixElement @(0, 0, 0) $matrix $dimensions
-        $element.name | Should -Be "windows2019_net461"
+        $element.name | Should -Be "windows2022_net461"
 
         $element = GetNdMatrixElement @(1, 1, 1) $matrix $dimensions
         $element.name | Should -Be "ubuntu1804_netcoreapp21_withFoo"
@@ -330,7 +330,7 @@ Describe "Platform Matrix Generation" -Tag "generate" {
         $matrix.Count | Should -Be 12
 
         $element = $matrix[0].parameters
-        $element.operatingSystem | Should -Be "windows-2019"
+        $element.operatingSystem | Should -Be "windows-2022"
         $element.framework | Should -Be "net461"
         $element.additionalArguments | Should -Be ""
 
@@ -346,7 +346,7 @@ Describe "Platform Matrix Generation" -Tag "generate" {
     }
 
     It "Should initialize a sparse matrix from an N-dimensional matrix" -TestCases @(
-        @{ i = 0; name = "windows2019_net461"; operatingSystem = "windows-2019"; framework = "net461"; additionalArguments = ""; }
+        @{ i = 0; name = "windows2022_net461"; operatingSystem = "windows-2022"; framework = "net461"; additionalArguments = ""; }
         @{ i = 1; name = "ubuntu1804_netcoreapp21_withfoo"; operatingSystem = "ubuntu-18.04"; framework = "netcoreapp2.1"; additionalArguments = "--enableFoo"; }
         @{ i = 2; name = "macOS11_net461"; operatingSystem = "macos-11"; framework = "net461"; additionalArguments = ""; }
     ) {
@@ -380,7 +380,7 @@ Describe "Config File Object Conversion" -Tag "convert" {
 
     It "Should convert a matrix config" {
         $config.matrixParameters[0].Name | Should -Be "operatingSystem"
-        $config.matrixParameters[0].Flatten()[0].Value | Should -Be "windows-2019"
+        $config.matrixParameters[0].Flatten()[0].Value | Should -Be "windows-2022"
 
         $config.displayNamesLookup | Should -BeOfType [Hashtable]
         $config.displayNamesLookup["--enableFoo"] | Should -Be "withFoo"
@@ -425,13 +425,13 @@ Describe "Platform Matrix Post Transformation" -Tag "transform" {
         [Array]$matrix = GenerateMatrix $config "all"
         $matrix.Length | Should -Be 8
 
-        $matrix[0].name | Should -Be "windows2019_netcoreapp21"
-        $matrix[0].parameters.operatingSystem | Should -Be "windows-2019"
+        $matrix[0].name | Should -Be "windows2022_netcoreapp21"
+        $matrix[0].parameters.operatingSystem | Should -Be "windows-2022"
         $matrix[0].parameters.framework | Should -Be "netcoreapp2.1"
         $matrix[0].parameters.additionalArguments | Should -Be ""
 
-        $matrix[1].name | Should -Be "windows2019_netcoreapp21_withfoo"
-        $matrix[1].parameters.operatingSystem | Should -Be "windows-2019"
+        $matrix[1].name | Should -Be "windows2022_netcoreapp21_withfoo"
+        $matrix[1].parameters.operatingSystem | Should -Be "windows-2022"
         $matrix[1].parameters.framework | Should -Be "netcoreapp2.1"
         $matrix[1].parameters.additionalArguments | Should -Be "--enableFoo"
 
@@ -445,9 +445,9 @@ Describe "Platform Matrix Post Transformation" -Tag "transform" {
         $matrix[4].parameters.operatingSystem | Should -Be "macos-11"
         $matrix[4].parameters.additionalArguments | Should -Be ""
 
-        $matrix[7].name | Should -Be "windows2019_net50_enableWindowsFoo"
+        $matrix[7].name | Should -Be "windows2022_net50_enableWindowsFoo"
         $matrix[7].parameters.framework | Should -Be "net50"
-        $matrix[7].parameters.operatingSystem | Should -Be "windows-2019"
+        $matrix[7].parameters.operatingSystem | Should -Be "windows-2022"
         $matrix[7].parameters.additionalArguments | Should -Be "--enableWindowsFoo"
     }
 
@@ -456,7 +456,7 @@ Describe "Platform Matrix Post Transformation" -Tag "transform" {
 {
     "include": [
         {
-            "operatingSystem": "windows-2019",
+            "operatingSystem": "windows-2022",
             "framework": "net461"
         }
     ]
@@ -466,14 +466,14 @@ Describe "Platform Matrix Post Transformation" -Tag "transform" {
         $config = GetMatrixConfigFromJson $matrixConfigForIncludeOnly
         [Array]$matrix = GenerateMatrix $config "all"
         $matrix.Length | Should -Be 1
-        $matrix[0].name | Should -Be "windows2019_net461"
+        $matrix[0].name | Should -Be "windows2022_net461"
     }
 
     It "Should parse a config with an empty include" {
         $matrixConfigForIncludeOnly = @"
 {
     "matrix": {
-        "operatingSystem": "windows-2019",
+        "operatingSystem": "windows-2022",
         "framework": "net461"
     }
 }
@@ -482,7 +482,7 @@ Describe "Platform Matrix Post Transformation" -Tag "transform" {
         $config = GetMatrixConfigFromJson $matrixConfigForIncludeOnly
         [Array]$matrix = GenerateMatrix $config "all"
         $matrix.Length | Should -Be 1
-        $matrix[0].name | Should -Be "windows2019_net461"
+        $matrix[0].name | Should -Be "windows2022_net461"
     }
 }
 
