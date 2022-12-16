@@ -3,9 +3,7 @@
 
 using System;
 using System.Buffers;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
@@ -25,8 +23,196 @@ namespace Azure.Core.Dynamic
     [JsonConverter(typeof(JsonConverter))]
     public partial class JsonData : DynamicData, IDynamicMetaObjectProvider, IEquatable<JsonData>
     {
-        private Memory<byte> _utf8;
+        private Memory<byte> _original;
+        private List<IJsonDataChange>? _changes;
         private JsonElement _element;
+
+        internal JsonDataElement RootElement => new JsonDataElement(this, _element, "");
+
+        internal bool HasChanges => _changes != null && _changes.Count > 0;
+
+        internal bool TryGetChange<T>(string path, out T? value)
+        {
+            if (_changes == null)
+            {
+                value = default(T);
+                return false;
+            }
+
+            for (int i = _changes.Count - 1; i >= 0; i--)
+            {
+                var change = _changes[i];
+                if (change.Property == path)
+                {
+                    // TODO: does this do boxing?
+                    value = ((JsonDataChange<T>)change).Value;
+                    return true;
+                }
+            }
+
+            value = default;
+            return false;
+        }
+
+        internal bool TryGetChange<T>(ReadOnlySpan<byte> path, out T? value)
+        {
+            if (_changes == null)
+            {
+                value = default(T);
+                return false;
+            }
+
+            // TODO: re-enable optimizations
+            var pathStr = Encoding.UTF8.GetString(path.ToArray());
+
+            //Span<char> utf16 = stackalloc char[path.Length];
+            //OperationStatus status = System.Text.Unicode.Utf8.ToUtf16(path, utf16, out _, out int written, false, true);
+            //if (status != OperationStatus.Done)
+            //{ throw new NotImplementedException(); } // TODO: needs to allocate from the pool
+            //utf16 = utf16.Slice(0, written);
+
+            for (int i = _changes.Count - 1; i >= 0; i--)
+            {
+                var change = _changes[i];
+                if (change.Property == pathStr)
+                //if (change.Property.AsSpan().SequenceEqual(utf16))
+                {
+                    // TODO: does this do boxing?
+                    value = ((JsonDataChange<T>)change).Value;
+                    return true;
+                }
+            }
+
+            value = default;
+            return false;
+        }
+
+        internal void Set<T>(string path, T value)
+        {
+            // TODO: why was this here?
+            //if (path.Contains(".")) throw new ArgumentOutOfRangeException(nameof(path));
+            if (_changes == null)
+            {
+                _changes = new List<IJsonDataChange>();
+            }
+            _changes.Add(new JsonDataChange<T>() { Property = path, Value = value });
+        }
+
+        internal void WriteTo(Stream stream, StandardFormat format = default)
+        {
+            // this is so we can add JSON Patch in the future
+            if (format != default)
+                throw new ArgumentOutOfRangeException(nameof(format));
+
+            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            if (_changes == null || _changes.Count == 0)
+            {
+                Write(stream, _original.Span);
+                stream.Flush();
+                return;
+            }
+            WriteTheHardWay(writer);
+        }
+
+        // TODO: if we keep this, make it an extension on stream.
+        private static void Write(Stream stream, ReadOnlySpan<byte> buffer)
+        {
+            byte[] sharedBuffer = ArrayPool<byte>.Shared.Rent(buffer.Length);
+            try
+            {
+                buffer.CopyTo(sharedBuffer);
+                stream.Write(sharedBuffer, 0, buffer.Length);
+            }
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(sharedBuffer);
+            }
+        }
+
+        private void WriteTheHardWay(Utf8JsonWriter writer)
+        {
+            var original = _original.Span;
+            Utf8JsonReader reader = new Utf8JsonReader(original);
+
+            Span<byte> path = stackalloc byte[128];
+            int pathLength = 0;
+            ReadOnlySpan<byte> currentPropertyName = Span<byte>.Empty;
+
+            Value change = default;
+            bool changed = false;
+            while (reader.Read())
+            {
+                switch (reader.TokenType)
+                {
+                    case JsonTokenType.PropertyName:
+                        currentPropertyName = reader.ValueSpan;
+
+                        //push
+                        {
+                            if (pathLength != 0)
+                            {
+                                path[pathLength] = (byte)'.';
+                                pathLength++;
+                            }
+                            if (!currentPropertyName.TryCopyTo(path.Slice(pathLength)))
+                            {
+                                throw new NotImplementedException(); // need to use switch to pooled buffer
+                            }
+                            pathLength += currentPropertyName.Length;
+                        }
+                        changed = TryGetChange(path.Slice(0, pathLength), out change);
+
+                        writer.WritePropertyName(currentPropertyName);
+                        break;
+                    case JsonTokenType.String:
+                        if (changed)
+                            writer.WriteStringValue(change.As<string>());
+                        else
+                            writer.WriteStringValue(reader.ValueSpan);
+
+                        // pop
+                        {
+                            int lastDelimiter = path.LastIndexOf((byte)'.');
+                            if (lastDelimiter != -1)
+                            { pathLength = 0; }
+                            else
+                                pathLength = lastDelimiter;
+                        }
+                        break;
+                    case JsonTokenType.Number:
+                        if (changed)
+                            writer.WriteNumberValue(change.As<double>());
+                        else
+                            writer.WriteStringValue(reader.ValueSpan);
+
+                        // pop
+                        {
+                            int lastDelimiter = path.LastIndexOf((byte)'.');
+                            if (lastDelimiter != -1)
+                            { pathLength = 0; }
+                            else
+                                pathLength = lastDelimiter;
+                        }
+
+                        break;
+                    case JsonTokenType.StartObject:
+                        writer.WriteStartObject();
+                        break;
+                    case JsonTokenType.EndObject:
+                        // pop
+                        {
+                            int lastDelimiter = path.LastIndexOf((byte)'.');
+                            if (lastDelimiter != -1)
+                            { pathLength = 0; }
+                            else
+                                pathLength = lastDelimiter;
+                            writer.WriteEndObject();
+                        }
+                        break;
+                }
+            }
+            writer.Flush();
+        }
 
         // Element holds a reference to the parent JsonDocument, so we don't need to, but we do need to not dispose it.
 
@@ -83,8 +269,8 @@ namespace Azure.Core.Dynamic
                 throw new InvalidOperationException("Calling wrong constructor.");
 
             Type inputType = type ?? (value == null ? typeof(object) : value.GetType());
-            _utf8 = JsonSerializer.SerializeToUtf8Bytes(value, inputType, options);
-            _element = JsonDocument.Parse(_utf8).RootElement;
+            _original = JsonSerializer.SerializeToUtf8Bytes(value, inputType, options);
+            _element = JsonDocument.Parse(_original).RootElement;
         }
 
         private JsonData(JsonElement element)
