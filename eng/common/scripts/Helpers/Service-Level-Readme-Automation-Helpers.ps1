@@ -54,10 +54,10 @@ function generate-markdown-table($readmeFolder, $readmeName, $packageInfos, $mon
     if (Test-Path "Function:$GetPackageLevelReadmeFn") {
       $packageLevelReadme = &$GetPackageLevelReadmeFn -packageMetadata $pkg
     }
-    
-    $referenceLink = "[$($pkg.DisplayName)]($packageLevelReadme-readme.md)"
+    $displayName = GetDocsTocDisplayName $pkg
+    $referenceLink = "[$displayName]($packageLevelReadme-readme.md)"
     if (!(Test-Path (Join-Path $readmeFolder -ChildPath "$packageLevelReadme-readme.md"))) {
-      $referenceLink = $pkg.DisplayName
+      $referenceLink = $displayName
     }
     $githubLink = $GithubUri
     if ($pkg.PSObject.Members.Name -contains "DirectoryPath") {

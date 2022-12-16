@@ -41,7 +41,7 @@ function GetDocsTocDisplayName($pkg) {
   $displayName = $pkg.DisplayName
   if ('deprecated' -eq $pkg.Support) {
     LogWarning "The pkg $($pkg.Package) is deprecated. Add 'deprecated' besides of display name."
-    $diaplayName += " (deprecated)"
+    $displayName += " (deprecated)"
   }
   return $displayName
 }
