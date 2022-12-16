@@ -37,7 +37,7 @@ function GetPackageLookup($packageList) {
 }
 
 # For deprecated packages, add "(deprecated)" besides of display name.
-fucntion GetDocsTocDisplayName($pkg) {
+function GetDocsTocDisplayName($pkg) {
   $displayName = $pkg.DisplayName
   if ('deprecated' -eq $pkg.Support) {
     LogWarning "The pkg $($pkg.Package) is deprecated. Add 'deprecated' besides of display name."
