@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.SecurityInsights.Tests
         #region workspace
         public static OperationalInsightsWorkspaceData GetWorkspaceData()
         {
-            var data = new OperationalInsightsWorkspaceData(AzureLocation.EastUS)
+            var data = new OperationalInsightsWorkspaceData(AzureLocation.WestUS)
             {
                 RetentionInDays = 30,
-                Sku = new OperationalInsights.Models.OperationalInsightsWorkspaceSku(OperationalInsightsWorkspaceSkuName.PerNode),
+                Sku = new OperationalInsightsWorkspaceSku(OperationalInsightsWorkspaceSkuName.PerNode),
                 PublicNetworkAccessForIngestion = OperationalInsightsPublicNetworkAccessType.Enabled,
                 PublicNetworkAccessForQuery = OperationalInsightsPublicNetworkAccessType.Enabled,
             };
