@@ -11,18 +11,33 @@ namespace Azure.Communication.Email.Models
     [CodeGenModel("EmailAttachment")]
     public partial class EmailAttachment
     {
-        internal void ValidateAttachmentContent()
+        /// <summary> Initializes a new instance of EmailAttachment. </summary>
+        /// <param name="name"> Name of the attachment. </param>
+        /// <param name="type"> MIME type of the content being attached. </param>
+        /// <param name="content"> BinaryData representing the contents of the attachment. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="type"/> or <paramref name="content"/> is null. </exception>
+        public EmailAttachment(string name, string type, BinaryData content)
         {
-            if (string.IsNullOrWhiteSpace(ContentBytesBase64))
-            {
-                throw new ArgumentException(ErrorMessages.InvalidAttachmentContent);
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(type, nameof(type));
+            Argument.AssertNotNull(content, nameof(content));
+
+            Name = name;
+            Type = type;
 
             try
             {
-                Convert.FromBase64String(ContentBytesBase64);
+                ContentBytesBase64 = Convert.ToBase64String(content.ToArray());
             }
-            catch (FormatException)
+            catch (Exception)
+            {
+                throw new ArgumentException(ErrorMessages.InvalidAttachmentContent);
+            }
+        }
+
+        internal void ValidateAttachmentContent()
+        {
+            if (string.IsNullOrWhiteSpace(ContentBytesBase64))
             {
                 throw new ArgumentException(ErrorMessages.InvalidAttachmentContent);
             }
