@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Azure.Communication.Email.Models;
 using Azure.Core.TestFramework;
@@ -41,6 +42,125 @@ namespace Azure.Communication.Email.Tests
             else
             {
                 Assert.Throws<ArgumentNullException>(() => emailClient.Send(null));
+            }
+        }
+
+        [Test]
+        [TestCaseSource(nameof(InvalidStringValues))]
+        public void SendEmailOverload_InvalidSenderEmail_Throws(string invalidStringValue)
+        {
+            EmailClient emailClient = CreateEmailClient();
+            EmailMessage emailMessage = DefaultEmailMessage();
+            AsyncTestDelegate asyncCode = async () => await emailClient.SendAsync(
+                    invalidStringValue,
+                    emailMessage.Recipients.To.First().Email,
+                    emailMessage.Content.Subject,
+                    emailMessage.Content.Html,
+                    emailMessage.Content.PlainText);
+            TestDelegate code = () => emailClient.Send(
+                    invalidStringValue,
+                    emailMessage.Recipients.To.First().Email,
+                    emailMessage.Content.Subject,
+                    emailMessage.Content.Html,
+                    emailMessage.Content.PlainText);
+
+            SendEmailOverload_ExecuteTest(invalidStringValue, asyncCode, code);
+        }
+
+        private void SendEmailOverload_ExecuteTest(string invalidStringValue, AsyncTestDelegate asyncCode, TestDelegate code)
+        {
+            if (IsAsync)
+            {
+                if (invalidStringValue == null)
+                {
+                    Assert.ThrowsAsync<ArgumentNullException>(asyncCode);
+                }
+                else
+                {
+                    Assert.ThrowsAsync<ArgumentException>(asyncCode);
+                }
+            }
+            else
+            {
+                if (invalidStringValue == null)
+                {
+                    Assert.Throws<ArgumentNullException>(code);
+                }
+                else
+                {
+                    Assert.Throws<ArgumentException>(code);
+                }
+            }
+        }
+
+        [Test]
+        [TestCaseSource(nameof(InvalidStringValues))]
+        public void SendEmailOverload_InvalidToRecipient_Throws(string invalidStringValue)
+        {
+            EmailClient emailClient = CreateEmailClient();
+            EmailMessage emailMessage = DefaultEmailMessage();
+            AsyncTestDelegate asyncCode = async () => await emailClient.SendAsync(
+                        emailMessage.SenderEmail,
+                        invalidStringValue,
+                        emailMessage.Content.Subject,
+                        emailMessage.Content.Html,
+                        emailMessage.Content.PlainText);
+            TestDelegate code = () => emailClient.Send(
+                        emailMessage.SenderEmail,
+                        invalidStringValue,
+                        emailMessage.Content.Subject,
+                        emailMessage.Content.Html,
+                        emailMessage.Content.PlainText);
+
+            SendEmailOverload_ExecuteTest(invalidStringValue, asyncCode, code);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(InvalidStringValues))]
+        public void SendEmailOverload_InvalidSubject_Throws(string invalidStringValue)
+        {
+            EmailClient emailClient = CreateEmailClient();
+            EmailMessage emailMessage = DefaultEmailMessage();
+            AsyncTestDelegate asyncCode = async () => await emailClient.SendAsync(
+                    emailMessage.SenderEmail,
+                    emailMessage.Recipients.To.First().Email,
+                    invalidStringValue,
+                    emailMessage.Content.Html,
+                    emailMessage.Content.PlainText);
+            TestDelegate code = () => emailClient.Send(
+                    emailMessage.SenderEmail,
+                    emailMessage.Recipients.To.First().Email,
+                    invalidStringValue,
+                    emailMessage.Content.Html,
+                    emailMessage.Content.PlainText);
+
+            SendEmailOverload_ExecuteTest(invalidStringValue, asyncCode, code);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(InvalidStringValues))]
+        public void SendEmailOverload_InvalidContent_Throws(string invalidStringValue)
+        {
+            EmailClient emailClient = CreateEmailClient();
+            EmailMessage emailMessage = DefaultEmailMessage();
+
+            if (IsAsync)
+            {
+                Assert.ThrowsAsync<ArgumentException>(async () => await emailClient.SendAsync(
+                    emailMessage.SenderEmail,
+                    emailMessage.Recipients.To.First().Email,
+                    emailMessage.Content.Subject,
+                    invalidStringValue,
+                    invalidStringValue));
+            }
+            else
+            {
+                Assert.Throws<ArgumentException>(() => emailClient.Send(
+                    emailMessage.SenderEmail,
+                    emailMessage.Recipients.To.First().Email,
+                    emailMessage.Content.Subject,
+                    invalidStringValue,
+                    invalidStringValue));
             }
         }
 
@@ -109,6 +229,51 @@ namespace Azure.Communication.Email.Tests
             return new EmailClient(ConnectionString, emailClientOptions);
         }
 
+        private static IEnumerable<object[]> InvalidParamsForSendEmailOverload()
+        {
+            EmailMessage emailMessage = DefaultEmailMessage();
+
+            yield return new object[]
+            {
+                new object?[] {
+                    null,
+                    emailMessage.Recipients.To.First(),
+                    emailMessage.Content.Subject,
+                    emailMessage.Content.Html,
+                }
+            };
+
+            yield return new object[]
+            {
+                new object?[] {
+                    string.Empty,
+                    emailMessage.Recipients.To.First(),
+                    emailMessage.Content.Subject,
+                    emailMessage.Content.Html,
+                }
+            };
+
+            yield return new object[]
+            {
+                new object?[] {
+                    null,
+                    emailMessage.Recipients.To.First(),
+                    emailMessage.Content.Subject,
+                    emailMessage.Content.Html,
+                }
+            };
+
+            yield return new object[]
+            {
+                new object?[] {
+                    null,
+                    emailMessage.Recipients.To.First(),
+                    emailMessage.Content.Subject,
+                    emailMessage.Content.Html,
+                }
+            };
+        }
+
         private static IEnumerable<object?[]> InvalidEmailMessages()
         {
             return new[]
@@ -170,15 +335,17 @@ namespace Azure.Communication.Email.Tests
                 },
                 new object[]
                 {
-                    EmailMessageEmptyAttachment(),
-                    ErrorMessages.InvalidAttachmentContent
-                },
-                new object[]
-                {
                     EmailMessageInvalidAttachment(),
                     ErrorMessages.InvalidAttachmentContent
                 }
             };
+        }
+
+        private static IEnumerable<string?> InvalidStringValues()
+        {
+            yield return null;
+            yield return string.Empty;
+            yield return "   ";
         }
 
         private static EmailMessage EmailMessageEmptySender()
@@ -272,19 +439,11 @@ namespace Azure.Communication.Email.Tests
             return emailMessage;
         }
 
-        private static EmailMessage EmailMessageEmptyAttachment()
-        {
-            var emailMessage = DefaultEmailMessage();
-
-            emailMessage.Attachments.Add(new EmailAttachment(Guid.NewGuid().ToString(), "text/plain", string.Empty));
-
-            return emailMessage;
-        }
-
         private static EmailMessage EmailMessageInvalidAttachment()
         {
             var emailMessage = DefaultEmailMessage();
-            emailMessage.Attachments.Add(new EmailAttachment(Guid.NewGuid().ToString(), "text/plain", "This is invalid attachment content")); //"gobbledygook"));
+
+            emailMessage.Attachments.Add(new EmailAttachment(Guid.NewGuid().ToString(), "text/plain", new BinaryData("")));
 
             return emailMessage;
         }

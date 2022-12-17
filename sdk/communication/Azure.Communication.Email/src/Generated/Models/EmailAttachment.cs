@@ -13,21 +13,6 @@ namespace Azure.Communication.Email.Models
     /// <summary> Attachment to the email. </summary>
     public partial class EmailAttachment
     {
-        /// <summary> Initializes a new instance of EmailAttachment. </summary>
-        /// <param name="name"> Name of the attachment. </param>
-        /// <param name="type"> MIME type of the content being attached. </param>
-        /// <param name="contentBytesBase64"> Base64 encoded contents of the attachment. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="type"/> or <paramref name="contentBytesBase64"/> is null. </exception>
-        public EmailAttachment(string name, string type, string contentBytesBase64)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(type, nameof(type));
-            Argument.AssertNotNull(contentBytesBase64, nameof(contentBytesBase64));
-
-            Name = name;
-            Type = type;
-            ContentBytesBase64 = contentBytesBase64;
-        }
 
         /// <summary> Name of the attachment. </summary>
         public string Name { get; }

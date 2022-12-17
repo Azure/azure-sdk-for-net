@@ -9,6 +9,7 @@ using Azure.Core;
 namespace Azure.Communication.Email.Models
 {
     [CodeGenModel("EmailAttachment")]
+    [CodeGenSuppress("EmailAttachment", typeof(string), typeof(string), typeof(string))]
     public partial class EmailAttachment
     {
         /// <summary> Initializes a new instance of EmailAttachment. </summary>

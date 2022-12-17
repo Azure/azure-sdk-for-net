@@ -170,9 +170,9 @@ namespace Azure.Communication.Email.Tests.Samples
 #else
             string attachmentName = "Attachment.txt";
             string attachmentType = "text/plain";
-            var attachmentFileInBytes = "VGhpcyBpcyBhIHRlc3Q=";
+            var fileContent = new BinaryData("This is attachment file content.");
 #endif
-            var emailAttachment = new EmailAttachment(attachmentName, attachmentType, attachmentFileInBytes);
+            var emailAttachment = new EmailAttachment(attachmentName, attachmentType, fileContent);
 
             emailMessage.Attachments.Add(emailAttachment);
 
