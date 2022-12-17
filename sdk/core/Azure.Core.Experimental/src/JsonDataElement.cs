@@ -47,8 +47,9 @@ namespace Azure.Core.Dynamic
                 // TODO: using this constructor for convenience - rewrite for clarity
                 var jd = new JsonData(value);
                 return new JsonDataElement(_root, jd.RootElement._element, path);
-                // TODO: if we keep this approach, we'd want to cache this so we don't
-                // re-serialize it each time.  Would we store it back on the change record?
+
+                // TODO: if we keep this approach, we'd want to cache the serialized JsonElement
+                // so we don't re-serialize it each time.  Would we store it back on the change record?
                 // Or would it be better to start building a shadow JSON tree if we have
                 // to store these things anyway?
             }
@@ -56,11 +57,31 @@ namespace Azure.Core.Dynamic
             return new JsonDataElement(_root, _element.GetProperty(name), path);
         }
 
+        internal JsonDataElement GetIndexElement(int index)
+        {
+            if (_element.ValueKind != JsonValueKind.Array)
+            {
+                throw new InvalidOperationException($"Expected an 'Array' type but was {_element.ValueKind}.");
+            }
+
+            var pathIndex = $"[{index}]";
+            var path = _path.Length == 0 ? pathIndex : _path + pathIndex;
+
+            return new JsonDataElement(_root, _element[index], path);
+        }
+
         internal double GetDouble()
         {
             if (_root.TryGetChange(_path, out double value))
                 return value;
             return _element.GetDouble();
+        }
+
+        internal int GetInt32()
+        {
+            if (_root.TryGetChange(_path, out int value))
+                return value;
+            return _element.GetInt32();
         }
 
         internal string? GetString()
@@ -71,6 +92,8 @@ namespace Azure.Core.Dynamic
         }
 
         internal void Set(double value) => _root.Set(_path, value);
+
+        internal void Set(int value) => _root.Set(_path, value);
 
         internal void Set(string value) => _root.Set(_path, value);
 

@@ -95,5 +95,78 @@ namespace Azure.Core.Experimental.Tests
             // TODO: Is this the exception type we'd like?
             Assert.Throws<KeyNotFoundException>(()=> jd.RootElement.GetProperty("Baz").GetProperty("A"));
         }
+
+        [Test]
+        public void CanGetArrayElement()
+        {
+            string json = @"
+                {
+                  ""Foo"" : [ 1, 2, 3 ]
+                }";
+
+            var jd = JsonData.Parse(json);
+
+            Assert.AreEqual(1, jd.RootElement.GetProperty("Foo").GetIndexElement(0).GetInt32());
+            Assert.AreEqual(2, jd.RootElement.GetProperty("Foo").GetIndexElement(1).GetInt32());
+            Assert.AreEqual(3, jd.RootElement.GetProperty("Foo").GetIndexElement(2).GetInt32());
+        }
+
+        [Test]
+        public void CanSetArrayElement()
+        {
+            string json = @"
+                {
+                  ""Foo"" : [ 1, 2, 3 ]
+                }";
+
+            var jd = JsonData.Parse(json);
+
+            jd.RootElement.GetProperty("Foo").GetIndexElement(0).Set(5);
+            jd.RootElement.GetProperty("Foo").GetIndexElement(1).Set(6);
+            jd.RootElement.GetProperty("Foo").GetIndexElement(2).Set(7);
+
+            Assert.AreEqual(5, jd.RootElement.GetProperty("Foo").GetIndexElement(0).GetInt32());
+            Assert.AreEqual(6, jd.RootElement.GetProperty("Foo").GetIndexElement(1).GetInt32());
+            Assert.AreEqual(7, jd.RootElement.GetProperty("Foo").GetIndexElement(2).GetInt32());
+        }
+
+        [Test]
+        public void CanAssignArrayElementMultipleTimes()
+        {
+            string json = @"
+                {
+                  ""Foo"" : [ 1, 2, 3 ]
+                }";
+
+            var jd = JsonData.Parse(json);
+
+            jd.RootElement.GetProperty("Foo").GetIndexElement(0).Set(5);
+            jd.RootElement.GetProperty("Foo").GetIndexElement(0).Set(6);
+
+            Assert.AreEqual(6, jd.RootElement.GetProperty("Foo").GetIndexElement(0).GetInt32());
+        }
+
+        //[Test]
+        //public void CanSwapArrayElements()
+        //{
+        //    string json = @"[ { ""Foo"" : 4 } ]";
+
+        //    var jd = JsonData.Parse(json);
+
+        //    var a = jd.RootElement.GetIndexElement(0);
+        //    jd.RootElement.GetIndexElement(0).Set(5);
+
+        //    // This is wicked because 'a' keeps a reference to the root
+        //    // with the changelist.  Would we detach that?  How would we know to?
+        //    a.GetProperty("Foo").Set(6);
+
+        //    Assert.AreEqual(5, jd.RootElement.GetIndexElement(0).GetInt32());
+        //    Assert.AreEqual(6, a.GetProperty("Foo").GetIndexElement(0).GetInt32());
+
+        //    jd.RootElement.GetIndexElement(0).Set(a);
+
+        //    Assert.AreEqual(6, jd.RootElement.GetProperty("Foo").GetIndexElement(0).GetInt32());
+        //    Assert.AreEqual(6, a.GetProperty("Foo").GetIndexElement(0).GetInt32());
+        //}
     }
 }
