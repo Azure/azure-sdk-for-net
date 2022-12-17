@@ -11,6 +11,7 @@ namespace Azure.Core.Dynamic
     public static class BinaryDataExtensions
     {
         /// <summary>
+        /// Return the content of the BinaryData as a dynamic type.
         /// </summary>
         public static dynamic ToDynamic(this BinaryData data)
         {

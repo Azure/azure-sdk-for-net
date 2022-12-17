@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using System.Xml;
 using Azure;
 using Azure.Core;
 using Azure.Identity;
@@ -41,8 +42,16 @@ namespace Azure.ResourceManager.Resources
 
             // invoke the operation
             string scriptName = "MyDeploymentScript";
-            ArmDeploymentScriptData data = new ArmDeploymentScriptData(new AzureLocation("westus"))
+            ArmDeploymentScriptData data = new AzurePowerShellScript(new AzureLocation("westus"), XmlConvert.ToTimeSpan("PT7D"), "1.7.0")
             {
+                CleanupPreference = ScriptCleanupOptions.Always,
+                SupportingScriptUris =
+{
+new Uri("https://uri1.to.supporting.script"),new Uri("https://uri2.to.supporting.script")
+},
+                ScriptContent = "Param([string]$Location,[string]$Name) $deploymentScriptOutputs['test'] = 'value' Get-AzResourceGroup -Location $Location -Name $Name",
+                Arguments = "-Location 'westus' -Name \"*rg2\"",
+                Timeout = XmlConvert.ToTimeSpan("PT1H"),
                 Identity = new ArmDeploymentScriptManagedIdentity()
                 {
                     IdentityType = ArmDeploymentScriptManagedIdentityType.UserAssigned,
@@ -51,7 +60,6 @@ namespace Azure.ResourceManager.Resources
 ["/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/scriptRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uai"] = new UserAssignedIdentity(),
 },
                 },
-                Kind = ScriptType.AzurePowerShell,
             };
             ArmOperation<ArmDeploymentScriptResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, scriptName, data);
             ArmDeploymentScriptResource result = lro.Value;
@@ -86,9 +94,16 @@ namespace Azure.ResourceManager.Resources
 
             // invoke the operation
             string scriptName = "MyDeploymentScript";
-            ArmDeploymentScriptData data = new ArmDeploymentScriptData(new AzureLocation("westus"))
+            ArmDeploymentScriptData data = new AzurePowerShellScript(new AzureLocation("westus"), XmlConvert.ToTimeSpan("PT7D"), "1.7.0")
             {
-                Kind = ScriptType.AzurePowerShell,
+                CleanupPreference = ScriptCleanupOptions.Always,
+                SupportingScriptUris =
+{
+new Uri("https://uri1.to.supporting.script"),new Uri("https://uri2.to.supporting.script")
+},
+                ScriptContent = "Param([string]$Location,[string]$Name) $deploymentScriptOutputs['test'] = 'value' Get-AzResourceGroup -Location $Location -Name $Name",
+                Arguments = "-Location 'westus' -Name \"*rg2\"",
+                Timeout = XmlConvert.ToTimeSpan("PT1H"),
             };
             ArmOperation<ArmDeploymentScriptResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, scriptName, data);
             ArmDeploymentScriptResource result = lro.Value;
@@ -123,8 +138,10 @@ namespace Azure.ResourceManager.Resources
 
             // invoke the operation
             string scriptName = "MyDeploymentScript";
-            ArmDeploymentScriptData data = new ArmDeploymentScriptData(new AzureLocation("westus"))
+            ArmDeploymentScriptData data = new AzurePowerShellScript(new AzureLocation("westus"), XmlConvert.ToTimeSpan("P7D"), "1.7.0")
             {
+                ScriptContent = "Param([string]$Location,[string]$Name) $deploymentScriptOutputs['test'] = 'value' Get-AzResourceGroup -Location $Location -Name $Name",
+                Arguments = "-Location 'westus' -Name \"*rg2\"",
                 Identity = new ArmDeploymentScriptManagedIdentity()
                 {
                     IdentityType = ArmDeploymentScriptManagedIdentityType.UserAssigned,
@@ -133,7 +150,6 @@ namespace Azure.ResourceManager.Resources
 ["/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/scriptRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uai"] = new UserAssignedIdentity(),
 },
                 },
-                Kind = ScriptType.AzurePowerShell,
             };
             ArmOperation<ArmDeploymentScriptResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, scriptName, data);
             ArmDeploymentScriptResource result = lro.Value;
@@ -168,8 +184,17 @@ namespace Azure.ResourceManager.Resources
 
             // invoke the operation
             string scriptName = "MyDeploymentScript";
-            ArmDeploymentScriptData data = new ArmDeploymentScriptData(new AzureLocation("westus"))
+            ArmDeploymentScriptData data = new AzurePowerShellScript(new AzureLocation("westus"), XmlConvert.ToTimeSpan("PT7D"), "1.7.0")
             {
+                ContainerGroupName = "contoso-aci",
+                CleanupPreference = ScriptCleanupOptions.Always,
+                SupportingScriptUris =
+{
+new Uri("https://uri1.to.supporting.script"),new Uri("https://uri2.to.supporting.script")
+},
+                ScriptContent = "Param([string]$Location,[string]$Name) $deploymentScriptOutputs['test'] = 'value' Get-AzResourceGroup -Location $Location -Name $Name",
+                Arguments = "-Location 'westus' -Name \"*rg2\"",
+                Timeout = XmlConvert.ToTimeSpan("PT1H"),
                 Identity = new ArmDeploymentScriptManagedIdentity()
                 {
                     IdentityType = ArmDeploymentScriptManagedIdentityType.UserAssigned,
@@ -178,7 +203,6 @@ namespace Azure.ResourceManager.Resources
 ["/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/scriptRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uai"] = new UserAssignedIdentity(),
 },
                 },
-                Kind = ScriptType.AzurePowerShell,
             };
             ArmOperation<ArmDeploymentScriptResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, scriptName, data);
             ArmDeploymentScriptResource result = lro.Value;
@@ -213,8 +237,21 @@ namespace Azure.ResourceManager.Resources
 
             // invoke the operation
             string scriptName = "MyDeploymentScript";
-            ArmDeploymentScriptData data = new ArmDeploymentScriptData(new AzureLocation("westus"))
+            ArmDeploymentScriptData data = new AzurePowerShellScript(new AzureLocation("westus"), XmlConvert.ToTimeSpan("PT7D"), "1.7.0")
             {
+                StorageAccountSettings = new ScriptStorageConfiguration()
+                {
+                    StorageAccountName = "contosostorage",
+                    StorageAccountKey = "contosostoragekey",
+                },
+                CleanupPreference = ScriptCleanupOptions.Always,
+                SupportingScriptUris =
+{
+new Uri("https://uri1.to.supporting.script"),new Uri("https://uri2.to.supporting.script")
+},
+                ScriptContent = "Param([string]$Location,[string]$Name) $deploymentScriptOutputs['test'] = 'value' Get-AzResourceGroup -Location $Location -Name $Name",
+                Arguments = "-Location 'westus' -Name \"*rg2\"",
+                Timeout = XmlConvert.ToTimeSpan("PT1H"),
                 Identity = new ArmDeploymentScriptManagedIdentity()
                 {
                     IdentityType = ArmDeploymentScriptManagedIdentityType.UserAssigned,
@@ -223,7 +260,6 @@ namespace Azure.ResourceManager.Resources
 ["/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/scriptRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uai"] = new UserAssignedIdentity(),
 },
                 },
-                Kind = ScriptType.AzurePowerShell,
             };
             ArmOperation<ArmDeploymentScriptResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, scriptName, data);
             ArmDeploymentScriptResource result = lro.Value;

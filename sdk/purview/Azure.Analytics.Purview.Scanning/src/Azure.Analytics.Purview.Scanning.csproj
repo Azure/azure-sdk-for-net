@@ -16,7 +16,6 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Core.Experimental" />
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
