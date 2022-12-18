@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.LoadTesting.Tests
         [PlaybackOnly("Ignoring on live tests, due to possibility of huge service calls.")]
         public async Task LoadTestResourceOperationExtensionTests()
         {
-            AsyncPageable<LoadTestingResource> loadtestResources = Subscription.GetLoadTestingsAsync();
+            AsyncPageable<LoadTestingResource> loadtestResources = Subscription.GetLoadTestingResourcesAsync();
             List<LoadTestingResource> resourceList = await loadtestResources.ToEnumerableAsync();
             Assert.IsNotNull(resourceList);
         }
