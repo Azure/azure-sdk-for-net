@@ -42,16 +42,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownWorkspaceConnectionPropertiesV2 DeserializeUnknownWorkspaceConnectionPropertiesV2(JsonElement element)
         {
-            ConnectionAuthType authType = "Unknown";
-            Optional<ConnectionCategory> category = default;
+            MachineLearningConnectionAuthType authType = "Unknown";
+            Optional<MachineLearningConnectionCategory> category = default;
             Optional<string> target = default;
             Optional<string> value = default;
-            Optional<ValueFormat> valueFormat = default;
+            Optional<MachineLearningValueFormat> valueFormat = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authType"))
                 {
-                    authType = new ConnectionAuthType(property.Value.GetString());
+                    authType = new MachineLearningConnectionAuthType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("category"))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    category = new ConnectionCategory(property.Value.GetString());
+                    category = new MachineLearningConnectionCategory(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("target"))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    valueFormat = new ValueFormat(property.Value.GetString());
+                    valueFormat = new MachineLearningValueFormat(property.Value.GetString());
                     continue;
                 }
             }

@@ -152,7 +152,7 @@ namespace Azure.Storage.Blobs
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(_authenticationPolicy),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
+                clientDiagnostics: new ClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
                 transferValidation: options.TransferValidation,
@@ -280,7 +280,7 @@ namespace Azure.Storage.Blobs
                   new BlobClientConfiguration(
                       pipeline: options.Build(authentication),
                       sharedKeyCredential: storageSharedKeyCredential,
-                      clientDiagnostics: new StorageClientDiagnostics(options),
+                      clientDiagnostics: new ClientDiagnostics(options),
                       version: options?.Version ?? BlobClientOptions.LatestVersion,
                       customerProvidedKey: options?.CustomerProvidedKey,
                       transferValidation: options.TransferValidation,
@@ -360,7 +360,7 @@ namespace Azure.Storage.Blobs
                 new BlobClientConfiguration(
                     pipeline: pipeline,
                     sharedKeyCredential: null,
-                    clientDiagnostics: new StorageClientDiagnostics(options),
+                    clientDiagnostics: new ClientDiagnostics(options),
                     version: options.Version,
                     customerProvidedKey: null,
                     transferValidation: options.TransferValidation,

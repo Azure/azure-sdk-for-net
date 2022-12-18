@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.LoadTesting.Tests
 {
     public class LoadTestingResourceOperations : LoadTestingManagementTestBase
     {
-        private LoadTestingCollection _loadTestResourceCollection { get; set; }
+        private LoadTestingResourceCollection _loadTestResourceCollection { get; set; }
         private LoadTestingResource _loadTestResource { get; set; }
-        private LoadTestingData _loadTestResourceData { get; set; }
+        private LoadTestingResourceData _loadTestResourceData { get; set; }
 
         public LoadTestingResourceOperations(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
         {
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.LoadTesting.Tests
             var resourceGroupName = Recording.GenerateAssetName("SdkRg");
             await TryRegisterResourceGroupAsync(ResourceGroupsOperations, LoadTestResourceHelper.LOADTESTS_RESOURCE_LOCATION, resourceGroupName);
 
-            _loadTestResourceCollection = (await GetResourceGroupAsync(resourceGroupName)).GetLoadTestings();
-            _loadTestResourceData = new LoadTestingData(LoadTestResourceHelper.LOADTESTS_RESOURCE_LOCATION);
+            _loadTestResourceCollection = (await GetResourceGroupAsync(resourceGroupName)).GetLoadTestingResources();
+            _loadTestResourceData = new LoadTestingResourceData(LoadTestResourceHelper.LOADTESTS_RESOURCE_LOCATION);
         }
 
         [OneTimeTearDown]
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.LoadTesting.Tests
             Assert.IsNotNull(outboundNetworkDependencyResponse);
 
             //// Patch
-            LoadTestingPatch resourcePatchPayload = new LoadTestingPatch
+            LoadTestingResourcePatch resourcePatchPayload = new LoadTestingResourcePatch
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
                 Description = LoadTestResourceHelper.LOAD_TEST_DESCRIPTION

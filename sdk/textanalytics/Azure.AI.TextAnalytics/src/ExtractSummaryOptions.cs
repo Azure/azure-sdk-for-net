@@ -22,6 +22,12 @@ namespace Azure.AI.TextAnalytics
         public string DisplayName { get; set; }
 
         /// <summary>
+        /// The two-letter ISO 639-1 representation of the default language to consider for automatic language
+        /// detection (for example, "en" for English or "fr" for French).
+        /// </summary>
+        public string AutoDetectionDefaultLanguage { get; set; }
+
+        /// <summary>
         /// The maximum number of sentences to be returned in the result. If not set, the service default is used.
         /// </summary>
         public int? MaxSentenceCount { get; set; }

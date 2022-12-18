@@ -11,27 +11,42 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> A paginated list of EnvironmentContainer entities. </summary>
+    /// <summary>
+    /// A paginated list of EnvironmentContainer entities.
+    /// Serialized Name: EnvironmentContainerResourceArmPaginatedResult
+    /// </summary>
     internal partial class EnvironmentContainerResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of EnvironmentContainerResourceArmPaginatedResult. </summary>
         internal EnvironmentContainerResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<EnvironmentContainerData>();
+            Value = new ChangeTrackingList<MachineLearningEnvironmentContainerData>();
         }
 
         /// <summary> Initializes a new instance of EnvironmentContainerResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"> The link to the next page of EnvironmentContainer objects. If null, there are no additional pages. </param>
-        /// <param name="value"> An array of objects of type EnvironmentContainer. </param>
-        internal EnvironmentContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<EnvironmentContainerData> value)
+        /// <param name="nextLink">
+        /// The link to the next page of EnvironmentContainer objects. If null, there are no additional pages.
+        /// Serialized Name: EnvironmentContainerResourceArmPaginatedResult.nextLink
+        /// </param>
+        /// <param name="value">
+        /// An array of objects of type EnvironmentContainer.
+        /// Serialized Name: EnvironmentContainerResourceArmPaginatedResult.value
+        /// </param>
+        internal EnvironmentContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningEnvironmentContainerData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> The link to the next page of EnvironmentContainer objects. If null, there are no additional pages. </summary>
+        /// <summary>
+        /// The link to the next page of EnvironmentContainer objects. If null, there are no additional pages.
+        /// Serialized Name: EnvironmentContainerResourceArmPaginatedResult.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> An array of objects of type EnvironmentContainer. </summary>
-        public IReadOnlyList<EnvironmentContainerData> Value { get; }
+        /// <summary>
+        /// An array of objects of type EnvironmentContainer.
+        /// Serialized Name: EnvironmentContainerResourceArmPaginatedResult.value
+        /// </summary>
+        public IReadOnlyList<MachineLearningEnvironmentContainerData> Value { get; }
     }
 }

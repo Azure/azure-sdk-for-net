@@ -9,12 +9,21 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownJobLimits. </summary>
-    internal partial class UnknownJobLimits : JobLimits
+    /// <summary>
+    /// The UnknownJobLimits.
+    /// Serialized Name: UnknownJobLimits
+    /// </summary>
+    internal partial class UnknownJobLimits : MachineLearningJobLimits
     {
         /// <summary> Initializes a new instance of UnknownJobLimits. </summary>
-        /// <param name="jobLimitsType"> [Required] JobLimit type. </param>
-        /// <param name="timeout"> The max run duration in ISO 8601 format, after which the job will be cancelled. Only supports duration with precision as low as Seconds. </param>
+        /// <param name="jobLimitsType">
+        /// [Required] JobLimit type.
+        /// Serialized Name: JobLimits.jobLimitsType
+        /// </param>
+        /// <param name="timeout">
+        /// The max run duration in ISO 8601 format, after which the job will be cancelled. Only supports duration with precision as low as Seconds.
+        /// Serialized Name: JobLimits.timeout
+        /// </param>
         internal UnknownJobLimits(JobLimitsType jobLimitsType, TimeSpan? timeout) : base(jobLimitsType, timeout)
         {
             JobLimitsType = jobLimitsType;

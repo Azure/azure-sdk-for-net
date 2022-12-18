@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="content"> Parameters supplied to check the Data Lake Analytics account name availability. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataLakeAnalyticsNameAccountAvailabilityResult>> CheckDataLakeAnalyticsAccountNameAvailabilityAsync(AzureLocation location, DataLakeAnalyticsAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataLakeAnalyticsAccountNameAvailabilityResult>> CheckDataLakeAnalyticsAccountNameAvailabilityAsync(AzureLocation location, DataLakeAnalyticsAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DataLakeAnalyticsAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDataLakeAnalyticsAccountNameAvailability");
             scope.Start();
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="location"> The resource location without whitespace. </param>
         /// <param name="content"> Parameters supplied to check the Data Lake Analytics account name availability. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataLakeAnalyticsNameAccountAvailabilityResult> CheckDataLakeAnalyticsAccountNameAvailability(AzureLocation location, DataLakeAnalyticsAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DataLakeAnalyticsAccountNameAvailabilityResult> CheckDataLakeAnalyticsAccountNameAvailability(AzureLocation location, DataLakeAnalyticsAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             using var scope = DataLakeAnalyticsAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckDataLakeAnalyticsAccountNameAvailability");
             scope.Start();

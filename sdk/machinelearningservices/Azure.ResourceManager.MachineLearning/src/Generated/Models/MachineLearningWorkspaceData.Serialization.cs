@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WritePropertyName("primaryUserAssignedIdentity");
                 writer.WriteStringValue(PrimaryUserAssignedIdentity);
             }
-            if (Optional.IsDefined(V1LegacyMode))
+            if (Optional.IsDefined(IsV1LegacyMode))
             {
                 writer.WritePropertyName("v1LegacyMode");
-                writer.WriteBooleanValue(V1LegacyMode.Value);
+                writer.WriteBooleanValue(IsV1LegacyMode.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -159,17 +159,17 @@ namespace Azure.ResourceManager.MachineLearning
             Optional<string> containerRegistry = default;
             Optional<string> storageAccount = default;
             Optional<Uri> discoveryUrl = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<EncryptionProperty> encryption = default;
+            Optional<MachineLearningProvisioningState> provisioningState = default;
+            Optional<MachineLearningEncryptionSetting> encryption = default;
             Optional<bool> hbiWorkspace = default;
             Optional<string> serviceProvisionedResourceGroup = default;
             Optional<int> privateLinkCount = default;
             Optional<string> imageBuildCompute = default;
             Optional<bool> allowPublicAccessWhenBehindVnet = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<MachineLearningPublicNetworkAccess> publicNetworkAccess = default;
             Optional<IReadOnlyList<MachineLearningPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<IList<SharedPrivateLinkResource>> sharedPrivateLinkResources = default;
-            Optional<NotebookResourceInfo> notebookInfo = default;
+            Optional<IList<MachineLearningSharedPrivateLinkResource>> sharedPrivateLinkResources = default;
+            Optional<MachineLearningNotebookResourceInfo> notebookInfo = default;
             Optional<ServiceManagedResourcesSettings> serviceManagedResourcesSettings = default;
             Optional<string> primaryUserAssignedIdentity = default;
             Optional<Guid> tenantId = default;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.MachineLearning
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString(), serializeOptions);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("sku"))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.MachineLearning
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.MachineLearning
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new MachineLearningProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("encryption"))
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.MachineLearning
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = EncryptionProperty.DeserializeEncryptionProperty(property0.Value);
+                            encryption = MachineLearningEncryptionSetting.DeserializeMachineLearningEncryptionSetting(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hbiWorkspace"))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.MachineLearning
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new MachineLearningPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"))
@@ -395,10 +395,10 @@ namespace Azure.ResourceManager.MachineLearning
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SharedPrivateLinkResource> array = new List<SharedPrivateLinkResource>();
+                            List<MachineLearningSharedPrivateLinkResource> array = new List<MachineLearningSharedPrivateLinkResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SharedPrivateLinkResource.DeserializeSharedPrivateLinkResource(item));
+                                array.Add(MachineLearningSharedPrivateLinkResource.DeserializeMachineLearningSharedPrivateLinkResource(item));
                             }
                             sharedPrivateLinkResources = array;
                             continue;
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.MachineLearning
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            notebookInfo = NotebookResourceInfo.DeserializeNotebookResourceInfo(property0.Value);
+                            notebookInfo = MachineLearningNotebookResourceInfo.DeserializeMachineLearningNotebookResourceInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("serviceManagedResourcesSettings"))

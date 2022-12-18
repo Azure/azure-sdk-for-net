@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.OperationalInsights
             }
         }
 
-        internal HttpMessage CreateSearchRequest(string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQueryPackQuerySearchProperties querySearchProperties, long? top, bool? includeBody, string skipToken)
+        internal HttpMessage CreateSearchRequest(string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQuerySearchProperties querySearchProperties, long? top, bool? includeBody, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/> or <paramref name="querySearchProperties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="queryPackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LogAnalyticsQueryPackQueryListResult>> SearchAsync(string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQueryPackQuerySearchProperties querySearchProperties, long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LogAnalyticsQueryPackQueryListResult>> SearchAsync(string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQuerySearchProperties querySearchProperties, long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/> or <paramref name="querySearchProperties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="queryPackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LogAnalyticsQueryPackQueryListResult> Search(string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQueryPackQuerySearchProperties querySearchProperties, long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<LogAnalyticsQueryPackQueryListResult> Search(string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQuerySearchProperties querySearchProperties, long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LogAnalyticsQueryPackQueryData>> GetAsync(string subscriptionId, string resourceGroupName, string queryPackName, string id, CancellationToken cancellationToken = default)
+        public async Task<Response<LogAnalyticsQueryData>> GetAsync(string subscriptionId, string resourceGroupName, string queryPackName, string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -282,13 +282,13 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case 200:
                     {
-                        LogAnalyticsQueryPackQueryData value = default;
+                        LogAnalyticsQueryData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LogAnalyticsQueryPackQueryData.DeserializeLogAnalyticsQueryPackQueryData(document.RootElement);
+                        value = LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((LogAnalyticsQueryPackQueryData)null, message.Response);
+                    return Response.FromValue((LogAnalyticsQueryData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LogAnalyticsQueryPackQueryData> Get(string subscriptionId, string resourceGroupName, string queryPackName, string id, CancellationToken cancellationToken = default)
+        public Response<LogAnalyticsQueryData> Get(string subscriptionId, string resourceGroupName, string queryPackName, string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -315,19 +315,19 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case 200:
                     {
-                        LogAnalyticsQueryPackQueryData value = default;
+                        LogAnalyticsQueryData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LogAnalyticsQueryPackQueryData.DeserializeLogAnalyticsQueryPackQueryData(document.RootElement);
+                        value = LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((LogAnalyticsQueryPackQueryData)null, message.Response);
+                    return Response.FromValue((LogAnalyticsQueryData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreatePutRequest(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryPackQueryData data)
+        internal HttpMessage CreatePutRequest(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/>, <paramref name="id"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LogAnalyticsQueryPackQueryData>> PutAsync(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryPackQueryData data, CancellationToken cancellationToken = default)
+        public async Task<Response<LogAnalyticsQueryData>> PutAsync(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -376,9 +376,9 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case 200:
                     {
-                        LogAnalyticsQueryPackQueryData value = default;
+                        LogAnalyticsQueryData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LogAnalyticsQueryPackQueryData.DeserializeLogAnalyticsQueryPackQueryData(document.RootElement);
+                        value = LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/>, <paramref name="id"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LogAnalyticsQueryPackQueryData> Put(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryPackQueryData data, CancellationToken cancellationToken = default)
+        public Response<LogAnalyticsQueryData> Put(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -409,9 +409,9 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case 200:
                     {
-                        LogAnalyticsQueryPackQueryData value = default;
+                        LogAnalyticsQueryData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LogAnalyticsQueryPackQueryData.DeserializeLogAnalyticsQueryPackQueryData(document.RootElement);
+                        value = LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.OperationalInsights
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryPackQueryData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/>, <paramref name="id"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LogAnalyticsQueryPackQueryData>> UpdateAsync(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryPackQueryData data, CancellationToken cancellationToken = default)
+        public async Task<Response<LogAnalyticsQueryData>> UpdateAsync(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -468,9 +468,9 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case 200:
                     {
-                        LogAnalyticsQueryPackQueryData value = default;
+                        LogAnalyticsQueryData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LogAnalyticsQueryPackQueryData.DeserializeLogAnalyticsQueryPackQueryData(document.RootElement);
+                        value = LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/>, <paramref name="id"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LogAnalyticsQueryPackQueryData> Update(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryPackQueryData data, CancellationToken cancellationToken = default)
+        public Response<LogAnalyticsQueryData> Update(string subscriptionId, string resourceGroupName, string queryPackName, string id, LogAnalyticsQueryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -501,9 +501,9 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 case 200:
                     {
-                        LogAnalyticsQueryPackQueryData value = default;
+                        LogAnalyticsQueryData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LogAnalyticsQueryPackQueryData.DeserializeLogAnalyticsQueryPackQueryData(document.RootElement);
+                        value = LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.OperationalInsights
             }
         }
 
-        internal HttpMessage CreateSearchNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQueryPackQuerySearchProperties querySearchProperties, long? top, bool? includeBody, string skipToken)
+        internal HttpMessage CreateSearchNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQuerySearchProperties querySearchProperties, long? top, bool? includeBody, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/> or <paramref name="querySearchProperties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="queryPackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LogAnalyticsQueryPackQueryListResult>> SearchNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQueryPackQuerySearchProperties querySearchProperties, long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LogAnalyticsQueryPackQueryListResult>> SearchNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQuerySearchProperties querySearchProperties, long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="queryPackName"/> or <paramref name="querySearchProperties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="queryPackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LogAnalyticsQueryPackQueryListResult> SearchNextPage(string nextLink, string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQueryPackQuerySearchProperties querySearchProperties, long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<LogAnalyticsQueryPackQueryListResult> SearchNextPage(string nextLink, string subscriptionId, string resourceGroupName, string queryPackName, LogAnalyticsQuerySearchProperties querySearchProperties, long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

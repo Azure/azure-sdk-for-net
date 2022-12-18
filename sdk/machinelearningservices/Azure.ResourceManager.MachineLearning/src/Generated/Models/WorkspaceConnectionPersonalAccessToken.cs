@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The WorkspaceConnectionPersonalAccessToken. </summary>
+    /// <summary>
+    /// The WorkspaceConnectionPersonalAccessToken.
+    /// Serialized Name: WorkspaceConnectionPersonalAccessToken
+    /// </summary>
     internal partial class WorkspaceConnectionPersonalAccessToken
     {
         /// <summary> Initializes a new instance of WorkspaceConnectionPersonalAccessToken. </summary>
@@ -16,13 +19,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of WorkspaceConnectionPersonalAccessToken. </summary>
-        /// <param name="pat"></param>
+        /// <param name="pat"> Serialized Name: WorkspaceConnectionPersonalAccessToken.pat. </param>
         internal WorkspaceConnectionPersonalAccessToken(string pat)
         {
             Pat = pat;
         }
 
-        /// <summary> Gets or sets the pat. </summary>
+        /// <summary> Serialized Name: WorkspaceConnectionPersonalAccessToken.pat. </summary>
         public string Pat { get; set; }
     }
 }

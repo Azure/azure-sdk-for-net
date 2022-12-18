@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> The UnknownUserSourceInfo. </summary>
-    internal partial class UnknownUserSourceInfo : UserSourceInfo
+    internal partial class UnknownUserSourceInfo : AppPlatformUserSourceInfo
     {
         /// <summary> Initializes a new instance of UnknownUserSourceInfo. </summary>
         /// <param name="userSourceInfoType"> Type of the source uploaded. </param>
