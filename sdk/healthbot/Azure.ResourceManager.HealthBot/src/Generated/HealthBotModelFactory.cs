@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.HealthBot.Models
         /// <param name="identity"> The identity of the Azure Health Bot. </param>
         /// <param name="properties"> The set of properties specific to Azure Health Bot resource. </param>
         /// <returns> A new <see cref="HealthBot.HealthBotData"/> instance for mocking. </returns>
-        public static HealthBotData HealthBotData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HealthBotSkuName skuName = default, ManagedServiceIdentity identity = null, HealthBotProperties properties = null)
+        public static HealthBotData HealthBotData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HealthBotSkuName? skuName = null, ManagedServiceIdentity identity = null, HealthBotProperties properties = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new HealthBotData(id, name, resourceType, systemData, tags, location, new HealthBotSku(skuName), identity, properties);
+            return new HealthBotData(id, name, resourceType, systemData, tags, location, skuName.HasValue ? new HealthBotSku(skuName.Value) : null, identity, properties);
         }
 
         /// <summary> Initializes a new instance of HealthBotProperties. </summary>

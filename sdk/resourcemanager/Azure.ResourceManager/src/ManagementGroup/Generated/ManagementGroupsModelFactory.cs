@@ -15,7 +15,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
     /// <summary> Model factory for generated models. </summary>
-    public static partial class AzureResourceManagerManagementGroupsModelFactory
+    public static partial class ManagementGroupsModelFactory
     {
         /// <summary> Initializes a new instance of ManagementGroupData. </summary>
         /// <param name="id"> The id. </param>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         /// <returns> A new <see cref="Models.DescendantData"/> instance for mocking. </returns>
         public static DescendantData DescendantData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, ResourceIdentifier parentId = null)
         {
-            return new DescendantData(id, name, resourceType, systemData, displayName, new DescendantParentGroupInfo(parentId));
+            return new DescendantData(id, name, resourceType, systemData, displayName, parentId != null ? new DescendantParentGroupInfo(parentId) : null);
         }
 
         /// <summary> Initializes a new instance of ManagementGroupNameAvailabilityResult. </summary>

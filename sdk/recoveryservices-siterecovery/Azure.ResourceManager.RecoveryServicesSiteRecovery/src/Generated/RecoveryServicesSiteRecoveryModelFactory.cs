@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <returns> A new <see cref="Models.ReplicationAppliance"/> instance for mocking. </returns>
         public static ReplicationAppliance ReplicationAppliance(ApplianceSpecificDetails replicationApplianceProviderSpecificDetails = null)
         {
-            return new ReplicationAppliance(new ReplicationApplianceProperties(replicationApplianceProviderSpecificDetails));
+            return new ReplicationAppliance(replicationApplianceProviderSpecificDetails != null ? new ReplicationApplianceProperties(replicationApplianceProviderSpecificDetails) : null);
         }
 
         /// <summary> Initializes a new instance of ApplianceSpecificDetails. </summary>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <returns> A new <see cref="Models.ProtectionContainerProperties"/> instance for mocking. </returns>
         public static ProtectionContainerProperties ProtectionContainerProperties(string fabricFriendlyName = null, string friendlyName = null, string fabricType = null, int? protectedItemCount = null, string pairingStatus = null, string role = null, string fabricSpecificDetailsInstanceType = null)
         {
-            return new ProtectionContainerProperties(fabricFriendlyName, friendlyName, fabricType, protectedItemCount, pairingStatus, role, new ProtectionContainerFabricSpecificDetails(fabricSpecificDetailsInstanceType));
+            return new ProtectionContainerProperties(fabricFriendlyName, friendlyName, fabricType, protectedItemCount, pairingStatus, role, fabricSpecificDetailsInstanceType != null ? new ProtectionContainerFabricSpecificDetails(fabricSpecificDetailsInstanceType) : null);
         }
 
         /// <summary> Initializes a new instance of MigrationItemData. </summary>
@@ -789,7 +789,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.StorageClassificationData"/> instance for mocking. </returns>
         public static StorageClassificationData StorageClassificationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string storageClassificationFriendlyName = null, AzureLocation? location = null)
         {
-            return new StorageClassificationData(id, name, resourceType, systemData, new StorageClassificationProperties(storageClassificationFriendlyName), location);
+            return new StorageClassificationData(id, name, resourceType, systemData, storageClassificationFriendlyName != null ? new StorageClassificationProperties(storageClassificationFriendlyName) : null, location);
         }
 
         /// <summary> Initializes a new instance of StorageClassificationMappingData. </summary>
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <returns> A new <see cref="RecoveryServicesSiteRecovery.StorageClassificationMappingData"/> instance for mocking. </returns>
         public static StorageClassificationMappingData StorageClassificationMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string targetStorageClassificationId = null, AzureLocation? location = null)
         {
-            return new StorageClassificationMappingData(id, name, resourceType, systemData, new StorageClassificationMappingProperties(targetStorageClassificationId), location);
+            return new StorageClassificationMappingData(id, name, resourceType, systemData, targetStorageClassificationId != null ? new StorageClassificationMappingProperties(targetStorageClassificationId) : null, location);
         }
 
         /// <summary> Initializes a new instance of VCenterData. </summary>
@@ -1145,7 +1145,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
             supportedOSList ??= new List<SupportedOSProperty>();
 
-            return new SupportedOperatingSystems(id, name, resourceType, systemData, new SupportedOSProperties(supportedOSList?.ToList()), location);
+            return new SupportedOperatingSystems(id, name, resourceType, systemData, supportedOSList != null ? new SupportedOSProperties(supportedOSList?.ToList()) : null, location);
         }
 
         /// <summary> Initializes a new instance of SupportedOSProperty. </summary>
@@ -1396,6 +1396,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static A2AEventDetails A2AEventDetails(string protectedItemName = null, string fabricObjectId = null, string fabricName = null, string fabricLocation = null, string remoteFabricName = null, string remoteFabricLocation = null)
         {
             return new A2AEventDetails("A2A", protectedItemName, fabricObjectId, fabricName, fabricLocation, remoteFabricName, remoteFabricLocation);
+        }
+
+        /// <summary> Initializes a new instance of A2AExtendedLocationDetails. </summary>
+        /// <param name="primaryExtendedLocation"> The primary ExtendedLocation. </param>
+        /// <param name="recoveryExtendedLocation"> The recovery ExtendedLocation. </param>
+        /// <returns> A new <see cref="Models.A2AExtendedLocationDetails"/> instance for mocking. </returns>
+        public static A2AExtendedLocationDetails A2AExtendedLocationDetails(ExtendedLocation primaryExtendedLocation = null, ExtendedLocation recoveryExtendedLocation = null)
+        {
+            return new A2AExtendedLocationDetails(primaryExtendedLocation, recoveryExtendedLocation);
         }
 
         /// <summary> Initializes a new instance of A2APolicyDetails. </summary>
@@ -1773,13 +1782,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="location"> The Location for the Azure fabric. </param>
         /// <param name="containerIds"> The container Ids for the Azure fabric. </param>
         /// <param name="zones"> The zones. </param>
+        /// <param name="extendedLocations"> The ExtendedLocations. </param>
         /// <returns> A new <see cref="Models.AzureFabricSpecificDetails"/> instance for mocking. </returns>
-        public static AzureFabricSpecificDetails AzureFabricSpecificDetails(AzureLocation? location = null, IEnumerable<string> containerIds = null, IEnumerable<A2AZoneDetails> zones = null)
+        public static AzureFabricSpecificDetails AzureFabricSpecificDetails(AzureLocation? location = null, IEnumerable<string> containerIds = null, IEnumerable<A2AZoneDetails> zones = null, IEnumerable<A2AExtendedLocationDetails> extendedLocations = null)
         {
             containerIds ??= new List<string>();
             zones ??= new List<A2AZoneDetails>();
+            extendedLocations ??= new List<A2AExtendedLocationDetails>();
 
-            return new AzureFabricSpecificDetails("Azure", location, containerIds?.ToList(), zones?.ToList());
+            return new AzureFabricSpecificDetails("Azure", location, containerIds?.ToList(), zones?.ToList(), extendedLocations?.ToList());
         }
 
         /// <summary> Initializes a new instance of AzureToAzureNetworkMappingSettings. </summary>
@@ -3371,10 +3382,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of RecoveryPlanA2ADetails. </summary>
         /// <param name="primaryZone"> The primary zone. </param>
         /// <param name="recoveryZone"> The recovery zone. </param>
+        /// <param name="primaryExtendedLocation"> The primary extended location. </param>
+        /// <param name="recoveryExtendedLocation"> The recovery extended location. </param>
         /// <returns> A new <see cref="Models.RecoveryPlanA2ADetails"/> instance for mocking. </returns>
-        public static RecoveryPlanA2ADetails RecoveryPlanA2ADetails(string primaryZone = null, string recoveryZone = null)
+        public static RecoveryPlanA2ADetails RecoveryPlanA2ADetails(string primaryZone = null, string recoveryZone = null, ExtendedLocation primaryExtendedLocation = null, ExtendedLocation recoveryExtendedLocation = null)
         {
-            return new RecoveryPlanA2ADetails("A2A", primaryZone, recoveryZone);
+            return new RecoveryPlanA2ADetails("A2A", primaryZone, recoveryZone, primaryExtendedLocation, recoveryExtendedLocation);
         }
 
         /// <summary> Initializes a new instance of RecoveryPlanAutomationRunbookActionDetails. </summary>

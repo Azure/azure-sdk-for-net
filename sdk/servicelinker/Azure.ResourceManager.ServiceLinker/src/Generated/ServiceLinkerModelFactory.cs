@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="ServiceLinker.LinkerResourceData"/> instance for mocking. </returns>
         public static LinkerResourceData LinkerResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TargetServiceBaseInfo targetService = null, AuthBaseInfo authInfo = null, LinkerClientType? clientType = null, string provisioningState = null, VnetSolutionType? solutionType = null, ResourceIdentifier secretStoreKeyVaultId = null, string scope = null)
         {
-            return new LinkerResourceData(id, name, resourceType, systemData, targetService, authInfo, clientType, provisioningState, new VnetSolution(solutionType), new LinkerSecretStore(secretStoreKeyVaultId), scope);
+            return new LinkerResourceData(id, name, resourceType, systemData, targetService, authInfo, clientType, provisioningState, solutionType != null ? new VnetSolution(solutionType) : null, secretStoreKeyVaultId != null ? new LinkerSecretStore(secretStoreKeyVaultId) : null, scope);
         }
 
         /// <summary> Initializes a new instance of TargetServiceBaseInfo. </summary>

@@ -11,7 +11,6 @@ using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ContainerRegistry;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -42,7 +41,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             statusDetails ??= new List<ConnectedRegistryStatusDetail>();
             notificationsList ??= new List<string>();
 
-            return new ConnectedRegistryData(id, name, resourceType, systemData, provisioningState, mode, version, connectionState, lastActivityOn, new ConnectedRegistryActivation(activationStatus), parent, clientTokenIds?.ToList(), loginServer, logging, statusDetails?.ToList(), notificationsList?.ToList());
+            return new ConnectedRegistryData(id, name, resourceType, systemData, provisioningState, mode, version, connectionState, lastActivityOn, activationStatus != null ? new ConnectedRegistryActivation(activationStatus) : null, parent, clientTokenIds?.ToList(), loginServer, logging, statusDetails?.ToList(), notificationsList?.ToList());
         }
 
         /// <summary> Initializes a new instance of ConnectedRegistryParent. </summary>
@@ -159,11 +158,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="options"> The list of all options configured for the pipeline. </param>
         /// <param name="provisioningState"> The provisioning state of the pipeline at the time the operation was called. </param>
         /// <returns> A new <see cref="ContainerRegistry.ImportPipelineData"/> instance for mocking. </returns>
-        public static ImportPipelineData ImportPipelineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ManagedServiceIdentity identity = null, ImportPipelineSourceProperties source = null, ContainerRegistryTriggerStatus sourceTriggerStatus = default, IEnumerable<PipelineOption> options = null, ContainerRegistryProvisioningState? provisioningState = null)
+        public static ImportPipelineData ImportPipelineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ManagedServiceIdentity identity = null, ImportPipelineSourceProperties source = null, ContainerRegistryTriggerStatus? sourceTriggerStatus = null, IEnumerable<PipelineOption> options = null, ContainerRegistryProvisioningState? provisioningState = null)
         {
             options ??= new List<PipelineOption>();
 
-            return new ImportPipelineData(id, name, resourceType, systemData, location, identity, source, new PipelineTriggerProperties(new PipelineSourceTriggerProperties(sourceTriggerStatus)), options?.ToList(), provisioningState);
+            return new ImportPipelineData(id, name, resourceType, systemData, location, identity, source, sourceTriggerStatus.HasValue ? new PipelineTriggerProperties(new PipelineSourceTriggerProperties(sourceTriggerStatus.Value)) : null, options?.ToList(), provisioningState);
         }
 
         /// <summary> Initializes a new instance of ImportPipelineSourceProperties. </summary>
@@ -258,7 +257,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             importedArtifacts ??= new List<string>();
 
-            return new PipelineRunResult(status, importedArtifacts?.ToList(), new PipelineProgress(progressPercentage), startOn, finishOn, source, target, catalogDigest, new PipelineTriggerDescriptor(new PipelineSourceTriggerDescriptor(sourceTriggerTimestamp)), pipelineRunErrorMessage);
+            return new PipelineRunResult(status, importedArtifacts?.ToList(), progressPercentage != null ? new PipelineProgress(progressPercentage) : null, startOn, finishOn, source, target, catalogDigest, sourceTriggerTimestamp != null ? new PipelineTriggerDescriptor(new PipelineSourceTriggerDescriptor(sourceTriggerTimestamp)) : null, pipelineRunErrorMessage);
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryPrivateEndpointConnectionData. </summary>
@@ -272,7 +271,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static ContainerRegistryPrivateEndpointConnectionData ContainerRegistryPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, ContainerRegistryPrivateLinkServiceConnectionState connectionState = null, ContainerRegistryProvisioningState? provisioningState = null)
         {
-            return new ContainerRegistryPrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.WritableSubResource(privateEndpointId), connectionState, provisioningState);
+            return new ContainerRegistryPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryPrivateLinkServiceConnectionState. </summary>
@@ -368,7 +367,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <returns> A new <see cref="Models.ContainerRegistryPolicies"/> instance for mocking. </returns>
         public static ContainerRegistryPolicies ContainerRegistryPolicies(ContainerRegistryPolicyStatus? quarantineStatus = null, ContainerRegistryTrustPolicy trustPolicy = null, ContainerRegistryRetentionPolicy retentionPolicy = null, ContainerRegistryExportPolicyStatus? exportStatus = null, AzureADAuthenticationAsArmPolicyStatus? azureADAuthenticationAsArmStatus = null, ContainerRegistrySoftDeletePolicy softDeletePolicy = null)
         {
-            return new ContainerRegistryPolicies(new ContainerRegistryQuarantinePolicy(quarantineStatus), trustPolicy, retentionPolicy, new ContainerRegistryExportPolicy(exportStatus), new AzureADAuthenticationAsArmPolicy(azureADAuthenticationAsArmStatus), softDeletePolicy);
+            return new ContainerRegistryPolicies(quarantineStatus != null ? new ContainerRegistryQuarantinePolicy(quarantineStatus) : null, trustPolicy, retentionPolicy, exportStatus != null ? new ContainerRegistryExportPolicy(exportStatus) : null, azureADAuthenticationAsArmStatus != null ? new AzureADAuthenticationAsArmPolicy(azureADAuthenticationAsArmStatus) : null, softDeletePolicy);
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryTrustPolicy. </summary>
@@ -634,7 +633,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <returns> A new <see cref="Models.ContainerRegistryWebhookEventContent"/> instance for mocking. </returns>
         public static ContainerRegistryWebhookEventContent ContainerRegistryWebhookEventContent(Guid? id = null, DateTimeOffset? timestamp = null, string action = null, ContainerRegistryWebhookEventTarget target = null, ContainerRegistryWebhookEventRequestContent request = null, string actorName = null, ContainerRegistryWebhookEventSource source = null)
         {
-            return new ContainerRegistryWebhookEventContent(id, timestamp, action, target, request, new ContainerRegistryWebhookEventActor(actorName), source);
+            return new ContainerRegistryWebhookEventContent(id, timestamp, action, target, request, actorName != null ? new ContainerRegistryWebhookEventActor(actorName) : null, source);
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryWebhookEventTarget. </summary>
@@ -771,7 +770,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             outputImages ??= new List<ContainerRegistryImageDescriptor>();
             customRegistries ??= new List<string>();
 
-            return new ContainerRegistryRunData(id, name, resourceType, systemData, runId, status, lastUpdatedOn, runType, agentPoolName, createdOn, startOn, finishOn, outputImages?.ToList(), task, imageUpdateTrigger, sourceTrigger, timerTrigger, platform, new ContainerRegistryAgentProperties(agentCpu), sourceRegistryAuth, customRegistries?.ToList(), runErrorMessage, updateTriggerToken, logArtifact, provisioningState, isArchiveEnabled);
+            return new ContainerRegistryRunData(id, name, resourceType, systemData, runId, status, lastUpdatedOn, runType, agentPoolName, createdOn, startOn, finishOn, outputImages?.ToList(), task, imageUpdateTrigger, sourceTrigger, timerTrigger, platform, agentCpu != null ? new ContainerRegistryAgentProperties(agentCpu) : null, sourceRegistryAuth, customRegistries?.ToList(), runErrorMessage, updateTriggerToken, logArtifact, provisioningState, isArchiveEnabled);
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryImageDescriptor. </summary>
@@ -898,7 +897,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ContainerRegistryTaskData(id, name, resourceType, systemData, tags, location, identity, provisioningState, createdOn, status, platform, new ContainerRegistryAgentProperties(agentCpu), agentPoolName, timeoutInSeconds, step, trigger, credentials, logTemplate, isSystemTask);
+            return new ContainerRegistryTaskData(id, name, resourceType, systemData, tags, location, identity, provisioningState, createdOn, status, platform, agentCpu != null ? new ContainerRegistryAgentProperties(agentCpu) : null, agentPoolName, timeoutInSeconds, step, trigger, credentials, logTemplate, isSystemTask);
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryTaskStepProperties. </summary>
@@ -1012,7 +1011,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             customRegistries ??= new Dictionary<string, CustomRegistryCredentials>();
 
-            return new ContainerRegistryCredentials(new SourceRegistryCredentials(sourceRegistryLoginMode), customRegistries);
+            return new ContainerRegistryCredentials(sourceRegistryLoginMode != null ? new SourceRegistryCredentials(sourceRegistryLoginMode) : null, customRegistries);
         }
 
         /// <summary> Initializes a new instance of CustomRegistryCredentials. </summary>
@@ -1074,7 +1073,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             imageNames ??= new List<string>();
             arguments ??= new List<ContainerRegistryRunArgument>();
 
-            return new ContainerRegistryDockerBuildContent("DockerBuildRequest", isArchiveEnabled, agentPoolName, logTemplate, imageNames?.ToList(), isPushEnabled, noCache, dockerFilePath, target, arguments?.ToList(), timeoutInSeconds, platform, new ContainerRegistryAgentProperties(agentCpu), sourceLocation, credentials);
+            return new ContainerRegistryDockerBuildContent("DockerBuildRequest", isArchiveEnabled, agentPoolName, logTemplate, imageNames?.ToList(), isPushEnabled, noCache, dockerFilePath, target, arguments?.ToList(), timeoutInSeconds, platform, agentCpu != null ? new ContainerRegistryAgentProperties(agentCpu) : null, sourceLocation, credentials);
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryRunArgument. </summary>
@@ -1107,7 +1106,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             values ??= new List<ContainerRegistryTaskOverridableValue>();
 
-            return new ContainerRegistryFileTaskRunContent("FileTaskRunRequest", isArchiveEnabled, agentPoolName, logTemplate, taskFilePath, valuesFilePath, values?.ToList(), timeoutInSeconds, platform, new ContainerRegistryAgentProperties(agentCpu), sourceLocation, credentials);
+            return new ContainerRegistryFileTaskRunContent("FileTaskRunRequest", isArchiveEnabled, agentPoolName, logTemplate, taskFilePath, valuesFilePath, values?.ToList(), timeoutInSeconds, platform, agentCpu != null ? new ContainerRegistryAgentProperties(agentCpu) : null, sourceLocation, credentials);
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryTaskOverridableValue. </summary>
@@ -1171,7 +1170,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             values ??= new List<ContainerRegistryTaskOverridableValue>();
 
-            return new ContainerRegistryEncodedTaskRunContent("EncodedTaskRunRequest", isArchiveEnabled, agentPoolName, logTemplate, encodedTaskContent, encodedValuesContent, values?.ToList(), timeoutInSeconds, platform, new ContainerRegistryAgentProperties(agentCpu), sourceLocation, credentials);
+            return new ContainerRegistryEncodedTaskRunContent("EncodedTaskRunRequest", isArchiveEnabled, agentPoolName, logTemplate, encodedTaskContent, encodedValuesContent, values?.ToList(), timeoutInSeconds, platform, agentCpu != null ? new ContainerRegistryAgentProperties(agentCpu) : null, sourceLocation, credentials);
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryDockerBuildStep. </summary>

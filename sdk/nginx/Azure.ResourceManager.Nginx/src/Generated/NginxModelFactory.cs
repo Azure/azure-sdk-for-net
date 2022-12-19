@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Nginx.Models
             files ??= new List<NginxConfigurationFile>();
             protectedFiles ??= new List<NginxConfigurationFile>();
 
-            return new NginxConfigurationProperties(provisioningState, files?.ToList(), protectedFiles?.ToList(), new NginxConfigurationPackage(packageData), rootFile);
+            return new NginxConfigurationProperties(provisioningState, files?.ToList(), protectedFiles?.ToList(), packageData != null ? new NginxConfigurationPackage(packageData) : null, rootFile);
         }
 
         /// <summary> Initializes a new instance of NginxConfigurationFile. </summary>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Nginx.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new NginxDeploymentData(id, name, resourceType, systemData, tags, location, identity, properties, new ResourceSku(skuName));
+            return new NginxDeploymentData(id, name, resourceType, systemData, tags, location, identity, properties, skuName != null ? new ResourceSku(skuName) : null);
         }
 
         /// <summary> Initializes a new instance of NginxDeploymentProperties. </summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <returns> A new <see cref="Models.NginxDeploymentProperties"/> instance for mocking. </returns>
         public static NginxDeploymentProperties NginxDeploymentProperties(ProvisioningState? provisioningState = null, string nginxVersion = null, string managedResourceGroup = null, NginxNetworkProfile networkProfile = null, string ipAddress = null, bool? enableDiagnosticsSupport = null, NginxStorageAccount loggingStorageAccount = null)
         {
-            return new NginxDeploymentProperties(provisioningState, nginxVersion, managedResourceGroup, networkProfile, ipAddress, enableDiagnosticsSupport, new NginxLogging(loggingStorageAccount));
+            return new NginxDeploymentProperties(provisioningState, nginxVersion, managedResourceGroup, networkProfile, ipAddress, enableDiagnosticsSupport, loggingStorageAccount != null ? new NginxLogging(loggingStorageAccount) : null);
         }
 
         /// <summary> Initializes a new instance of NginxNetworkProfile. </summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <returns> A new <see cref="Models.NginxNetworkProfile"/> instance for mocking. </returns>
         public static NginxNetworkProfile NginxNetworkProfile(NginxFrontendIPConfiguration frontEndIPConfiguration = null, string networkInterfaceSubnetId = null)
         {
-            return new NginxNetworkProfile(frontEndIPConfiguration, new NginxNetworkInterfaceConfiguration(networkInterfaceSubnetId));
+            return new NginxNetworkProfile(frontEndIPConfiguration, networkInterfaceSubnetId != null ? new NginxNetworkInterfaceConfiguration(networkInterfaceSubnetId) : null);
         }
 
         /// <summary> Initializes a new instance of NginxFrontendIPConfiguration. </summary>

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.AppPlatform;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Model factory for generated models. </summary>
     public static partial class AppPlatformModelFactory
     {
-        /// <summary> Initializes a new instance of AppPlatformServiceResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformServiceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -27,58 +28,61 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of the Service resource. </param>
         /// <param name="sku"> Sku of the Service resource. </param>
-        /// <returns> A new <see cref="AppPlatform.AppPlatformServiceResourceData"/> instance for mocking. </returns>
-        public static AppPlatformServiceResourceData AppPlatformServiceResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ClusterResourceProperties properties = null, AppPlatformSku sku = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformServiceData"/> instance for mocking. </returns>
+        public static AppPlatformServiceData AppPlatformServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AppPlatformServiceProperties properties = null, AppPlatformSku sku = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new AppPlatformServiceResourceData(id, name, resourceType, systemData, tags, location, properties, sku);
+            return new AppPlatformServiceData(id, name, resourceType, systemData, tags, location, properties, sku);
         }
 
-        /// <summary> Initializes a new instance of ClusterResourceProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformServiceProperties. </summary>
         /// <param name="provisioningState"> Provisioning state of the Service. </param>
         /// <param name="networkProfile"> Network profile of the Service. </param>
+        /// <param name="isLogStreamPublicEndpoint"> Additional Service settings in vnet injection instance. </param>
         /// <param name="version"> Version of the Service. </param>
         /// <param name="serviceId"> ServiceInstanceEntity GUID which uniquely identifies a created resource. </param>
         /// <param name="powerState"> Power state of the Service. </param>
-        /// <param name="zoneRedundant"></param>
+        /// <param name="isZoneRedundant"></param>
         /// <param name="fqdn"> Fully qualified dns name of the service instance. </param>
-        /// <returns> A new <see cref="Models.ClusterResourceProperties"/> instance for mocking. </returns>
-        public static ClusterResourceProperties ClusterResourceProperties(ProvisioningState? provisioningState = null, NetworkProfile networkProfile = null, int? version = null, string serviceId = null, PowerState? powerState = null, bool? zoneRedundant = null, string fqdn = null)
+        /// <returns> A new <see cref="Models.AppPlatformServiceProperties"/> instance for mocking. </returns>
+        public static AppPlatformServiceProperties AppPlatformServiceProperties(AppPlatformServiceProvisioningState? provisioningState = null, AppPlatformServiceNetworkProfile networkProfile = null, bool? isLogStreamPublicEndpoint = null, int? version = null, Guid? serviceId = null, AppPlatformServicePowerState? powerState = null, bool? isZoneRedundant = null, string fqdn = null)
         {
-            return new ClusterResourceProperties(provisioningState, networkProfile, version, serviceId, powerState, zoneRedundant, fqdn);
+            return new AppPlatformServiceProperties(provisioningState, networkProfile, isLogStreamPublicEndpoint != null ? new ServiceVnetAddons(isLogStreamPublicEndpoint) : null, version, serviceId, powerState, isZoneRedundant, fqdn);
         }
 
-        /// <summary> Initializes a new instance of NetworkProfile. </summary>
-        /// <param name="serviceRuntimeSubnetId"> Fully qualified resource Id of the subnet to host Azure Spring Cloud Service Runtime. </param>
-        /// <param name="appSubnetId"> Fully qualified resource Id of the subnet to host Azure Spring Cloud Apps. </param>
-        /// <param name="serviceCidr"> Azure Spring Cloud service reserved CIDR. </param>
-        /// <param name="serviceRuntimeNetworkResourceGroup"> Name of the resource group containing network resources of Azure Spring Cloud Service Runtime. </param>
-        /// <param name="appNetworkResourceGroup"> Name of the resource group containing network resources of Azure Spring Cloud Apps. </param>
-        /// <param name="outboundPublicIPs"> Desired outbound IP resources for Azure Spring Cloud instance. </param>
-        /// <param name="requiredTraffics"> Required inbound or outbound traffics for Azure Spring Cloud instance. </param>
-        /// <returns> A new <see cref="Models.NetworkProfile"/> instance for mocking. </returns>
-        public static NetworkProfile NetworkProfile(ResourceIdentifier serviceRuntimeSubnetId = null, ResourceIdentifier appSubnetId = null, string serviceCidr = null, string serviceRuntimeNetworkResourceGroup = null, string appNetworkResourceGroup = null, IEnumerable<string> outboundPublicIPs = null, IEnumerable<RequiredTraffic> requiredTraffics = null)
+        /// <summary> Initializes a new instance of AppPlatformServiceNetworkProfile. </summary>
+        /// <param name="serviceRuntimeSubnetId"> Fully qualified resource Id of the subnet to host Azure Spring Apps Service Runtime. </param>
+        /// <param name="appSubnetId"> Fully qualified resource Id of the subnet to host customer apps in Azure Spring Apps. </param>
+        /// <param name="serviceCidr"> Azure Spring Apps service reserved CIDR. </param>
+        /// <param name="serviceRuntimeNetworkResourceGroup"> Name of the resource group containing network resources of Azure Spring Apps Service Runtime. </param>
+        /// <param name="appNetworkResourceGroup"> Name of the resource group containing network resources for customer apps in Azure Spring Apps. </param>
+        /// <param name="outboundPublicIPs"> Desired outbound IP resources for Azure Spring Apps resource. </param>
+        /// <param name="requiredTraffics"> Required inbound or outbound traffics for Azure Spring Apps resource. </param>
+        /// <param name="ingressConfigReadTimeoutInSeconds"> Ingress configuration payload for Azure Spring Apps resource. </param>
+        /// <param name="outboundType"> The egress traffic type of Azure Spring Apps VNet instances. </param>
+        /// <returns> A new <see cref="Models.AppPlatformServiceNetworkProfile"/> instance for mocking. </returns>
+        public static AppPlatformServiceNetworkProfile AppPlatformServiceNetworkProfile(ResourceIdentifier serviceRuntimeSubnetId = null, ResourceIdentifier appSubnetId = null, string serviceCidr = null, string serviceRuntimeNetworkResourceGroup = null, string appNetworkResourceGroup = null, IEnumerable<IPAddress> outboundPublicIPs = null, IEnumerable<AppPlatformServiceRequiredTraffic> requiredTraffics = null, int? ingressConfigReadTimeoutInSeconds = null, string outboundType = null)
         {
-            outboundPublicIPs ??= new List<string>();
-            requiredTraffics ??= new List<RequiredTraffic>();
+            outboundPublicIPs ??= new List<IPAddress>();
+            requiredTraffics ??= new List<AppPlatformServiceRequiredTraffic>();
 
-            return new NetworkProfile(serviceRuntimeSubnetId, appSubnetId, serviceCidr, serviceRuntimeNetworkResourceGroup, appNetworkResourceGroup, new NetworkProfileOutboundIPs(outboundPublicIPs?.ToList()), requiredTraffics?.ToList());
+            return new AppPlatformServiceNetworkProfile(serviceRuntimeSubnetId, appSubnetId, serviceCidr, serviceRuntimeNetworkResourceGroup, appNetworkResourceGroup, outboundPublicIPs != null ? new NetworkProfileOutboundIPs(outboundPublicIPs?.ToList()) : null, requiredTraffics?.ToList(), ingressConfigReadTimeoutInSeconds != null ? new IngressConfig(ingressConfigReadTimeoutInSeconds) : null, outboundType);
         }
 
-        /// <summary> Initializes a new instance of RequiredTraffic. </summary>
+        /// <summary> Initializes a new instance of AppPlatformServiceRequiredTraffic. </summary>
         /// <param name="protocol"> The protocol of required traffic. </param>
         /// <param name="port"> The port of required traffic. </param>
         /// <param name="ips"> The ip list of required traffic. </param>
         /// <param name="fqdns"> The FQDN list of required traffic. </param>
         /// <param name="direction"> The direction of required traffic. </param>
-        /// <returns> A new <see cref="Models.RequiredTraffic"/> instance for mocking. </returns>
-        public static RequiredTraffic RequiredTraffic(string protocol = null, int? port = null, IEnumerable<string> ips = null, IEnumerable<string> fqdns = null, TrafficDirection? direction = null)
+        /// <returns> A new <see cref="Models.AppPlatformServiceRequiredTraffic"/> instance for mocking. </returns>
+        public static AppPlatformServiceRequiredTraffic AppPlatformServiceRequiredTraffic(string protocol = null, int? port = null, IEnumerable<IPAddress> ips = null, IEnumerable<string> fqdns = null, AppPlatformServiceTrafficDirection? direction = null)
         {
-            ips ??= new List<string>();
+            ips ??= new List<IPAddress>();
             fqdns ??= new List<string>();
 
-            return new RequiredTraffic(protocol, port, ips?.ToList(), fqdns?.ToList(), direction);
+            return new AppPlatformServiceRequiredTraffic(protocol, port, ips?.ToList(), fqdns?.ToList(), direction);
         }
 
         /// <summary> Initializes a new instance of AppPlatformSku. </summary>
@@ -91,38 +95,38 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformSku(name, tier, capacity);
         }
 
-        /// <summary> Initializes a new instance of TestKeys. </summary>
+        /// <summary> Initializes a new instance of AppPlatformServiceTestKeys. </summary>
         /// <param name="primaryKey"> Primary key. </param>
         /// <param name="secondaryKey"> Secondary key. </param>
         /// <param name="primaryTestEndpoint"> Primary test endpoint. </param>
         /// <param name="secondaryTestEndpoint"> Secondary test endpoint. </param>
-        /// <param name="enabled"> Indicates whether the test endpoint feature enabled or not. </param>
-        /// <returns> A new <see cref="Models.TestKeys"/> instance for mocking. </returns>
-        public static TestKeys TestKeys(string primaryKey = null, string secondaryKey = null, string primaryTestEndpoint = null, string secondaryTestEndpoint = null, bool? enabled = null)
+        /// <param name="isEnabled"> Indicates whether the test endpoint feature enabled or not. </param>
+        /// <returns> A new <see cref="Models.AppPlatformServiceTestKeys"/> instance for mocking. </returns>
+        public static AppPlatformServiceTestKeys AppPlatformServiceTestKeys(string primaryKey = null, string secondaryKey = null, string primaryTestEndpoint = null, string secondaryTestEndpoint = null, bool? isEnabled = null)
         {
-            return new TestKeys(primaryKey, secondaryKey, primaryTestEndpoint, secondaryTestEndpoint, enabled);
+            return new AppPlatformServiceTestKeys(primaryKey, secondaryKey, primaryTestEndpoint, secondaryTestEndpoint, isEnabled);
         }
 
-        /// <summary> Initializes a new instance of ConfigServerResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformConfigServerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the Config Server resource. </param>
-        /// <returns> A new <see cref="AppPlatform.ConfigServerResourceData"/> instance for mocking. </returns>
-        public static ConfigServerResourceData ConfigServerResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ConfigServerProperties properties = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformConfigServerData"/> instance for mocking. </returns>
+        public static AppPlatformConfigServerData AppPlatformConfigServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformConfigServerProperties properties = null)
         {
-            return new ConfigServerResourceData(id, name, resourceType, systemData, properties);
+            return new AppPlatformConfigServerData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of ConfigServerProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformConfigServerProperties. </summary>
         /// <param name="provisioningState"> State of the config server. </param>
         /// <param name="error"> Error when apply config server settings. </param>
         /// <param name="configServerGitProperty"> Settings of config server. </param>
-        /// <returns> A new <see cref="Models.ConfigServerProperties"/> instance for mocking. </returns>
-        public static ConfigServerProperties ConfigServerProperties(ConfigServerState? provisioningState = null, AppPlatformErrorInfo error = null, ConfigServerGitProperty configServerGitProperty = null)
+        /// <returns> A new <see cref="Models.AppPlatformConfigServerProperties"/> instance for mocking. </returns>
+        public static AppPlatformConfigServerProperties AppPlatformConfigServerProperties(AppPlatformConfigServerState? provisioningState = null, AppPlatformErrorInfo error = null, AppPlatformConfigServerGitProperty configServerGitProperty = null)
         {
-            return new ConfigServerProperties(provisioningState, error, new ConfigServerSettings(configServerGitProperty));
+            return new AppPlatformConfigServerProperties(provisioningState, error, configServerGitProperty != null ? new ConfigServerSettings(configServerGitProperty) : null);
         }
 
         /// <summary> Initializes a new instance of AppPlatformErrorInfo. </summary>
@@ -137,12 +141,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of ConfigServerSettings. </summary>
         /// <param name="gitProperty"> Property of git environment. </param>
         /// <returns> A new <see cref="Models.ConfigServerSettings"/> instance for mocking. </returns>
-        public static ConfigServerSettings ConfigServerSettings(ConfigServerGitProperty gitProperty = null)
+        public static ConfigServerSettings ConfigServerSettings(AppPlatformConfigServerGitProperty gitProperty = null)
         {
             return new ConfigServerSettings(gitProperty);
         }
 
-        /// <summary> Initializes a new instance of ConfigServerGitProperty. </summary>
+        /// <summary> Initializes a new instance of AppPlatformConfigServerGitProperty. </summary>
         /// <param name="repositories"> Repositories of git. </param>
         /// <param name="uri"> URI of the repository. </param>
         /// <param name="label"> Label of the repository. </param>
@@ -152,17 +156,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="hostKey"> Public sshKey of git repository. </param>
         /// <param name="hostKeyAlgorithm"> SshKey algorithm of git repository. </param>
         /// <param name="privateKey"> Private sshKey algorithm of git repository. </param>
-        /// <param name="strictHostKeyChecking"> Strict host key checking or not. </param>
-        /// <returns> A new <see cref="Models.ConfigServerGitProperty"/> instance for mocking. </returns>
-        public static ConfigServerGitProperty ConfigServerGitProperty(IEnumerable<GitPatternRepository> repositories = null, Uri uri = null, string label = null, IEnumerable<string> searchPaths = null, string username = null, string password = null, string hostKey = null, string hostKeyAlgorithm = null, string privateKey = null, bool? strictHostKeyChecking = null)
+        /// <param name="isHostKeyCheckingStrict"> Strict host key checking or not. </param>
+        /// <returns> A new <see cref="Models.AppPlatformConfigServerGitProperty"/> instance for mocking. </returns>
+        public static AppPlatformConfigServerGitProperty AppPlatformConfigServerGitProperty(IEnumerable<ConfigServerGitPatternRepository> repositories = null, Uri uri = null, string label = null, IEnumerable<string> searchPaths = null, string username = null, string password = null, string hostKey = null, string hostKeyAlgorithm = null, string privateKey = null, bool? isHostKeyCheckingStrict = null)
         {
-            repositories ??= new List<GitPatternRepository>();
+            repositories ??= new List<ConfigServerGitPatternRepository>();
             searchPaths ??= new List<string>();
 
-            return new ConfigServerGitProperty(repositories?.ToList(), uri, label, searchPaths?.ToList(), username, password, hostKey, hostKeyAlgorithm, privateKey, strictHostKeyChecking);
+            return new AppPlatformConfigServerGitProperty(repositories?.ToList(), uri, label, searchPaths?.ToList(), username, password, hostKey, hostKeyAlgorithm, privateKey, isHostKeyCheckingStrict);
         }
 
-        /// <summary> Initializes a new instance of GitPatternRepository. </summary>
+        /// <summary> Initializes a new instance of ConfigServerGitPatternRepository. </summary>
         /// <param name="name"> Name of the repository. </param>
         /// <param name="pattern"> Collection of pattern of the repository. </param>
         /// <param name="uri"> URI of the repository. </param>
@@ -173,14 +177,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="hostKey"> Public sshKey of git repository. </param>
         /// <param name="hostKeyAlgorithm"> SshKey algorithm of git repository. </param>
         /// <param name="privateKey"> Private sshKey algorithm of git repository. </param>
-        /// <param name="strictHostKeyChecking"> Strict host key checking or not. </param>
-        /// <returns> A new <see cref="Models.GitPatternRepository"/> instance for mocking. </returns>
-        public static GitPatternRepository GitPatternRepository(string name = null, IEnumerable<string> pattern = null, Uri uri = null, string label = null, IEnumerable<string> searchPaths = null, string username = null, string password = null, string hostKey = null, string hostKeyAlgorithm = null, string privateKey = null, bool? strictHostKeyChecking = null)
+        /// <param name="isHostKeyCheckingStrict"> Strict host key checking or not. </param>
+        /// <returns> A new <see cref="Models.ConfigServerGitPatternRepository"/> instance for mocking. </returns>
+        public static ConfigServerGitPatternRepository ConfigServerGitPatternRepository(string name = null, IEnumerable<string> pattern = null, Uri uri = null, string label = null, IEnumerable<string> searchPaths = null, string username = null, string password = null, string hostKey = null, string hostKeyAlgorithm = null, string privateKey = null, bool? isHostKeyCheckingStrict = null)
         {
             pattern ??= new List<string>();
             searchPaths ??= new List<string>();
 
-            return new GitPatternRepository(name, pattern?.ToList(), uri, label, searchPaths?.ToList(), username, password, hostKey, hostKeyAlgorithm, privateKey, strictHostKeyChecking);
+            return new ConfigServerGitPatternRepository(name, pattern?.ToList(), uri, label, searchPaths?.ToList(), username, password, hostKey, hostKeyAlgorithm, privateKey, isHostKeyCheckingStrict);
         }
 
         /// <summary> Initializes a new instance of ConfigServerSettingsValidateResult. </summary>
@@ -206,62 +210,62 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new ConfigServerSettingsErrorRecord(name, uri, messages?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ConfigurationServiceResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Application Configuration Service properties payload. </param>
-        /// <returns> A new <see cref="AppPlatform.ConfigurationServiceResourceData"/> instance for mocking. </returns>
-        public static ConfigurationServiceResourceData ConfigurationServiceResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ConfigurationServiceProperties properties = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformConfigurationServiceData"/> instance for mocking. </returns>
+        public static AppPlatformConfigurationServiceData AppPlatformConfigurationServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformConfigurationServiceProperties properties = null)
         {
-            return new ConfigurationServiceResourceData(id, name, resourceType, systemData, properties);
+            return new AppPlatformConfigurationServiceData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of ConfigurationServiceProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceProperties. </summary>
         /// <param name="provisioningState"> State of the Application Configuration Service. </param>
         /// <param name="resourceRequests"> The requested resource quantity for required CPU and Memory. </param>
         /// <param name="instances"> Collection of instances belong to Application Configuration Service. </param>
-        /// <param name="gitPropertyRepositories"> The settings of Application Configuration Service. </param>
-        /// <returns> A new <see cref="Models.ConfigurationServiceProperties"/> instance for mocking. </returns>
-        public static ConfigurationServiceProperties ConfigurationServiceProperties(ConfigurationServiceProvisioningState? provisioningState = null, ConfigurationServiceResourceRequests resourceRequests = null, IEnumerable<ConfigurationServiceInstance> instances = null, IEnumerable<ConfigurationServiceGitRepository> gitPropertyRepositories = null)
+        /// <param name="configurationServiceGitRepositories"> The settings of Application Configuration Service. </param>
+        /// <returns> A new <see cref="Models.AppPlatformConfigurationServiceProperties"/> instance for mocking. </returns>
+        public static AppPlatformConfigurationServiceProperties AppPlatformConfigurationServiceProperties(AppPlatformConfigurationServiceProvisioningState? provisioningState = null, AppPlatformConfigurationServiceRequirements resourceRequests = null, IEnumerable<AppPlatformConfigurationServiceInstance> instances = null, IEnumerable<AppPlatformConfigurationServiceGitRepository> configurationServiceGitRepositories = null)
         {
-            instances ??= new List<ConfigurationServiceInstance>();
-            gitPropertyRepositories ??= new List<ConfigurationServiceGitRepository>();
+            instances ??= new List<AppPlatformConfigurationServiceInstance>();
+            configurationServiceGitRepositories ??= new List<AppPlatformConfigurationServiceGitRepository>();
 
-            return new ConfigurationServiceProperties(provisioningState, resourceRequests, instances?.ToList(), new ConfigurationServiceSettings(new ConfigurationServiceGitProperty(gitPropertyRepositories?.ToList())));
+            return new AppPlatformConfigurationServiceProperties(provisioningState, resourceRequests, instances?.ToList(), configurationServiceGitRepositories != null ? new AppPlatformConfigurationServiceSettings(new ConfigurationServiceGitProperty(configurationServiceGitRepositories?.ToList())) : null);
         }
 
-        /// <summary> Initializes a new instance of ConfigurationServiceResourceRequests. </summary>
+        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceRequirements. </summary>
         /// <param name="cpu"> Cpu allocated to each Application Configuration Service instance. </param>
         /// <param name="memory"> Memory allocated to each Application Configuration Service instance. </param>
         /// <param name="instanceCount"> Instance count of the Application Configuration Service. </param>
-        /// <returns> A new <see cref="Models.ConfigurationServiceResourceRequests"/> instance for mocking. </returns>
-        public static ConfigurationServiceResourceRequests ConfigurationServiceResourceRequests(string cpu = null, string memory = null, int? instanceCount = null)
+        /// <returns> A new <see cref="Models.AppPlatformConfigurationServiceRequirements"/> instance for mocking. </returns>
+        public static AppPlatformConfigurationServiceRequirements AppPlatformConfigurationServiceRequirements(string cpu = null, string memory = null, int? instanceCount = null)
         {
-            return new ConfigurationServiceResourceRequests(cpu, memory, instanceCount);
+            return new AppPlatformConfigurationServiceRequirements(cpu, memory, instanceCount);
         }
 
-        /// <summary> Initializes a new instance of ConfigurationServiceInstance. </summary>
+        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceInstance. </summary>
         /// <param name="name"> Name of the Application Configuration Service instance. </param>
         /// <param name="status"> Status of the Application Configuration Service instance. </param>
-        /// <returns> A new <see cref="Models.ConfigurationServiceInstance"/> instance for mocking. </returns>
-        public static ConfigurationServiceInstance ConfigurationServiceInstance(string name = null, string status = null)
+        /// <returns> A new <see cref="Models.AppPlatformConfigurationServiceInstance"/> instance for mocking. </returns>
+        public static AppPlatformConfigurationServiceInstance AppPlatformConfigurationServiceInstance(string name = null, string status = null)
         {
-            return new ConfigurationServiceInstance(name, status);
+            return new AppPlatformConfigurationServiceInstance(name, status);
         }
 
-        /// <summary> Initializes a new instance of ConfigurationServiceSettings. </summary>
-        /// <param name="gitPropertyRepositories"> Property of git environment. </param>
-        /// <returns> A new <see cref="Models.ConfigurationServiceSettings"/> instance for mocking. </returns>
-        public static ConfigurationServiceSettings ConfigurationServiceSettings(IEnumerable<ConfigurationServiceGitRepository> gitPropertyRepositories = null)
+        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceSettings. </summary>
+        /// <param name="configurationServiceGitRepositories"> Property of git environment. </param>
+        /// <returns> A new <see cref="Models.AppPlatformConfigurationServiceSettings"/> instance for mocking. </returns>
+        public static AppPlatformConfigurationServiceSettings AppPlatformConfigurationServiceSettings(IEnumerable<AppPlatformConfigurationServiceGitRepository> configurationServiceGitRepositories = null)
         {
-            gitPropertyRepositories ??= new List<ConfigurationServiceGitRepository>();
+            configurationServiceGitRepositories ??= new List<AppPlatformConfigurationServiceGitRepository>();
 
-            return new ConfigurationServiceSettings(new ConfigurationServiceGitProperty(gitPropertyRepositories?.ToList()));
+            return new AppPlatformConfigurationServiceSettings(configurationServiceGitRepositories != null ? new ConfigurationServiceGitProperty(configurationServiceGitRepositories?.ToList()) : null);
         }
 
-        /// <summary> Initializes a new instance of ConfigurationServiceGitRepository. </summary>
+        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceGitRepository. </summary>
         /// <param name="name"> Name of the repository. </param>
         /// <param name="patterns"> Collection of patterns of the repository. </param>
         /// <param name="uri"> URI of the repository. </param>
@@ -272,167 +276,183 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="hostKey"> Public sshKey of git repository. </param>
         /// <param name="hostKeyAlgorithm"> SshKey algorithm of git repository. </param>
         /// <param name="privateKey"> Private sshKey algorithm of git repository. </param>
-        /// <param name="strictHostKeyChecking"> Strict host key checking or not. </param>
-        /// <returns> A new <see cref="Models.ConfigurationServiceGitRepository"/> instance for mocking. </returns>
-        public static ConfigurationServiceGitRepository ConfigurationServiceGitRepository(string name = null, IEnumerable<string> patterns = null, Uri uri = null, string label = null, IEnumerable<string> searchPaths = null, string username = null, string password = null, string hostKey = null, string hostKeyAlgorithm = null, string privateKey = null, bool? strictHostKeyChecking = null)
+        /// <param name="isHostKeyCheckingStrict"> Strict host key checking or not. </param>
+        /// <returns> A new <see cref="Models.AppPlatformConfigurationServiceGitRepository"/> instance for mocking. </returns>
+        public static AppPlatformConfigurationServiceGitRepository AppPlatformConfigurationServiceGitRepository(string name = null, IEnumerable<string> patterns = null, Uri uri = null, string label = null, IEnumerable<string> searchPaths = null, string username = null, string password = null, string hostKey = null, string hostKeyAlgorithm = null, string privateKey = null, bool? isHostKeyCheckingStrict = null)
         {
             patterns ??= new List<string>();
             searchPaths ??= new List<string>();
 
-            return new ConfigurationServiceGitRepository(name, patterns?.ToList(), uri, label, searchPaths?.ToList(), username, password, hostKey, hostKeyAlgorithm, privateKey, strictHostKeyChecking);
+            return new AppPlatformConfigurationServiceGitRepository(name, patterns?.ToList(), uri, label, searchPaths?.ToList(), username, password, hostKey, hostKeyAlgorithm, privateKey, isHostKeyCheckingStrict);
         }
 
-        /// <summary> Initializes a new instance of ConfigurationServiceSettingsValidateResult. </summary>
+        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceSettingsValidateResult. </summary>
         /// <param name="gitPropertyValidationResult"> Validation result for configuration service settings. </param>
-        /// <returns> A new <see cref="Models.ConfigurationServiceSettingsValidateResult"/> instance for mocking. </returns>
-        public static ConfigurationServiceSettingsValidateResult ConfigurationServiceSettingsValidateResult(ConfigurationServiceGitPropertyValidateResult gitPropertyValidationResult = null)
+        /// <returns> A new <see cref="Models.AppPlatformConfigurationServiceSettingsValidateResult"/> instance for mocking. </returns>
+        public static AppPlatformConfigurationServiceSettingsValidateResult AppPlatformConfigurationServiceSettingsValidateResult(AppPlatformConfigurationServiceGitValidateResult gitPropertyValidationResult = null)
         {
-            return new ConfigurationServiceSettingsValidateResult(gitPropertyValidationResult);
+            return new AppPlatformConfigurationServiceSettingsValidateResult(gitPropertyValidationResult);
         }
 
-        /// <summary> Initializes a new instance of ConfigurationServiceGitPropertyValidateResult. </summary>
+        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceGitValidateResult. </summary>
         /// <param name="isValid"> Indicate if the configuration service settings are valid. </param>
         /// <param name="gitReposValidationResult"> The detail validation results. </param>
-        /// <returns> A new <see cref="Models.ConfigurationServiceGitPropertyValidateResult"/> instance for mocking. </returns>
-        public static ConfigurationServiceGitPropertyValidateResult ConfigurationServiceGitPropertyValidateResult(bool? isValid = null, IEnumerable<ValidationMessages> gitReposValidationResult = null)
+        /// <returns> A new <see cref="Models.AppPlatformConfigurationServiceGitValidateResult"/> instance for mocking. </returns>
+        public static AppPlatformConfigurationServiceGitValidateResult AppPlatformConfigurationServiceGitValidateResult(bool? isValid = null, IEnumerable<AppPlatformConfigurationServiceGitReposValidationMessages> gitReposValidationResult = null)
         {
-            gitReposValidationResult ??= new List<ValidationMessages>();
+            gitReposValidationResult ??= new List<AppPlatformConfigurationServiceGitReposValidationMessages>();
 
-            return new ConfigurationServiceGitPropertyValidateResult(isValid, gitReposValidationResult?.ToList());
+            return new AppPlatformConfigurationServiceGitValidateResult(isValid, gitReposValidationResult?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ValidationMessages. </summary>
+        /// <summary> Initializes a new instance of AppPlatformConfigurationServiceGitReposValidationMessages. </summary>
         /// <param name="name"> The name of the configuration service git repository. </param>
         /// <param name="messages"> Detailed validation messages. </param>
-        /// <returns> A new <see cref="Models.ValidationMessages"/> instance for mocking. </returns>
-        public static ValidationMessages ValidationMessages(string name = null, IEnumerable<string> messages = null)
+        /// <returns> A new <see cref="Models.AppPlatformConfigurationServiceGitReposValidationMessages"/> instance for mocking. </returns>
+        public static AppPlatformConfigurationServiceGitReposValidationMessages AppPlatformConfigurationServiceGitReposValidationMessages(string name = null, IEnumerable<string> messages = null)
         {
             messages ??= new List<string>();
 
-            return new ValidationMessages(name, messages?.ToList());
+            return new AppPlatformConfigurationServiceGitReposValidationMessages(name, messages?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ServiceRegistryResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformServiceRegistryData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Service Registry properties payload. </param>
-        /// <returns> A new <see cref="AppPlatform.ServiceRegistryResourceData"/> instance for mocking. </returns>
-        public static ServiceRegistryResourceData ServiceRegistryResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ServiceRegistryProperties properties = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformServiceRegistryData"/> instance for mocking. </returns>
+        public static AppPlatformServiceRegistryData AppPlatformServiceRegistryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformServiceRegistryProperties properties = null)
         {
-            return new ServiceRegistryResourceData(id, name, resourceType, systemData, properties);
+            return new AppPlatformServiceRegistryData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of ServiceRegistryProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformServiceRegistryProperties. </summary>
         /// <param name="provisioningState"> State of the Service Registry. </param>
         /// <param name="resourceRequests"> The requested resource quantity for required CPU and Memory. </param>
         /// <param name="instances"> Collection of instances belong to Service Registry. </param>
-        /// <returns> A new <see cref="Models.ServiceRegistryProperties"/> instance for mocking. </returns>
-        public static ServiceRegistryProperties ServiceRegistryProperties(ServiceRegistryProvisioningState? provisioningState = null, ServiceRegistryResourceRequests resourceRequests = null, IEnumerable<ServiceRegistryInstance> instances = null)
+        /// <returns> A new <see cref="Models.AppPlatformServiceRegistryProperties"/> instance for mocking. </returns>
+        public static AppPlatformServiceRegistryProperties AppPlatformServiceRegistryProperties(AppPlatformServiceRegistryProvisioningState? provisioningState = null, AppPlatformServiceRegistryResourceRequirements resourceRequests = null, IEnumerable<AppPlatformServiceRegistryInstance> instances = null)
         {
-            instances ??= new List<ServiceRegistryInstance>();
+            instances ??= new List<AppPlatformServiceRegistryInstance>();
 
-            return new ServiceRegistryProperties(provisioningState, resourceRequests, instances?.ToList());
+            return new AppPlatformServiceRegistryProperties(provisioningState, resourceRequests, instances?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ServiceRegistryResourceRequests. </summary>
+        /// <summary> Initializes a new instance of AppPlatformServiceRegistryResourceRequirements. </summary>
         /// <param name="cpu"> Cpu allocated to each Service Registry instance. </param>
         /// <param name="memory"> Memory allocated to each Service Registry instance. </param>
         /// <param name="instanceCount"> Instance count of the Service Registry. </param>
-        /// <returns> A new <see cref="Models.ServiceRegistryResourceRequests"/> instance for mocking. </returns>
-        public static ServiceRegistryResourceRequests ServiceRegistryResourceRequests(string cpu = null, string memory = null, int? instanceCount = null)
+        /// <returns> A new <see cref="Models.AppPlatformServiceRegistryResourceRequirements"/> instance for mocking. </returns>
+        public static AppPlatformServiceRegistryResourceRequirements AppPlatformServiceRegistryResourceRequirements(string cpu = null, string memory = null, int? instanceCount = null)
         {
-            return new ServiceRegistryResourceRequests(cpu, memory, instanceCount);
+            return new AppPlatformServiceRegistryResourceRequirements(cpu, memory, instanceCount);
         }
 
-        /// <summary> Initializes a new instance of ServiceRegistryInstance. </summary>
+        /// <summary> Initializes a new instance of AppPlatformServiceRegistryInstance. </summary>
         /// <param name="name"> Name of the Service Registry instance. </param>
         /// <param name="status"> Status of the Service Registry instance. </param>
-        /// <returns> A new <see cref="Models.ServiceRegistryInstance"/> instance for mocking. </returns>
-        public static ServiceRegistryInstance ServiceRegistryInstance(string name = null, string status = null)
+        /// <returns> A new <see cref="Models.AppPlatformServiceRegistryInstance"/> instance for mocking. </returns>
+        public static AppPlatformServiceRegistryInstance AppPlatformServiceRegistryInstance(string name = null, string status = null)
         {
-            return new ServiceRegistryInstance(name, status);
+            return new AppPlatformServiceRegistryInstance(name, status);
         }
 
-        /// <summary> Initializes a new instance of AppBuildServiceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformBuildServiceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the build resource. </param>
-        /// <returns> A new <see cref="AppPlatform.AppBuildServiceData"/> instance for mocking. </returns>
-        public static AppBuildServiceData AppBuildServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BuildServiceProperties properties = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformBuildServiceData"/> instance for mocking. </returns>
+        public static AppPlatformBuildServiceData AppPlatformBuildServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformBuildServiceProperties properties = null)
         {
-            return new AppBuildServiceData(id, name, resourceType, systemData, properties);
+            return new AppPlatformBuildServiceData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of BuildServiceProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformBuildServiceProperties. </summary>
         /// <param name="kPackVersion"> The installed KPack version in this build service. </param>
         /// <param name="provisioningState"> Provisioning state of the KPack build result. </param>
         /// <param name="resourceRequests"> The runtime resource configuration of this build service. </param>
-        /// <returns> A new <see cref="Models.BuildServiceProperties"/> instance for mocking. </returns>
-        public static BuildServiceProperties BuildServiceProperties(string kPackVersion = null, BuildServiceProvisioningState? provisioningState = null, BuildServicePropertiesResourceRequests resourceRequests = null)
+        /// <returns> A new <see cref="Models.AppPlatformBuildServiceProperties"/> instance for mocking. </returns>
+        public static AppPlatformBuildServiceProperties AppPlatformBuildServiceProperties(string kPackVersion = null, AppPlatformBuildServiceProvisioningState? provisioningState = null, AppPlatformBuildServiceResourceRequirements resourceRequests = null)
         {
-            return new BuildServiceProperties(kPackVersion, provisioningState, resourceRequests);
+            return new AppPlatformBuildServiceProperties(kPackVersion, provisioningState, resourceRequests);
         }
 
-        /// <summary> Initializes a new instance of BuildServicePropertiesResourceRequests. </summary>
+        /// <summary> Initializes a new instance of AppPlatformBuildServiceResourceRequirements. </summary>
         /// <param name="cpu"> vCPU allocated to the entire build service node pool. </param>
         /// <param name="memory"> Memory allocated to the entire build service node pool. </param>
-        /// <returns> A new <see cref="Models.BuildServicePropertiesResourceRequests"/> instance for mocking. </returns>
-        public static BuildServicePropertiesResourceRequests BuildServicePropertiesResourceRequests(string cpu = null, string memory = null)
+        /// <returns> A new <see cref="Models.AppPlatformBuildServiceResourceRequirements"/> instance for mocking. </returns>
+        public static AppPlatformBuildServiceResourceRequirements AppPlatformBuildServiceResourceRequirements(string cpu = null, string memory = null)
         {
-            return new BuildServicePropertiesResourceRequests(cpu, memory);
+            return new AppPlatformBuildServiceResourceRequirements(cpu, memory);
         }
 
-        /// <summary> Initializes a new instance of AppBuildData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformBuildData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the build resource. </param>
-        /// <returns> A new <see cref="AppPlatform.AppBuildData"/> instance for mocking. </returns>
-        public static AppBuildData AppBuildData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppBuildProperties properties = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformBuildData"/> instance for mocking. </returns>
+        public static AppPlatformBuildData AppPlatformBuildData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformBuildProperties properties = null)
         {
-            return new AppBuildData(id, name, resourceType, systemData, properties);
+            return new AppPlatformBuildData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AppBuildProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformBuildProperties. </summary>
         /// <param name="relativePath"> The relative path of source code. </param>
         /// <param name="builder"> The resource id of builder to build the source code. </param>
         /// <param name="agentPool"> The resource id of agent pool. </param>
         /// <param name="provisioningState"> Provisioning state of the KPack build result. </param>
         /// <param name="env"> The environment variables for this build. </param>
         /// <param name="triggeredBuildResultId"> The build result triggered by this build. </param>
-        /// <returns> A new <see cref="Models.AppBuildProperties"/> instance for mocking. </returns>
-        public static AppBuildProperties AppBuildProperties(string relativePath = null, string builder = null, string agentPool = null, AppBuildProvisioningState? provisioningState = null, IDictionary<string, string> env = null, ResourceIdentifier triggeredBuildResultId = null)
+        /// <param name="resourceRequests"> The customized build resource for this build. </param>
+        /// <returns> A new <see cref="Models.AppPlatformBuildProperties"/> instance for mocking. </returns>
+        public static AppPlatformBuildProperties AppPlatformBuildProperties(string relativePath = null, string builder = null, string agentPool = null, AppPlatformBuildProvisioningState? provisioningState = null, IDictionary<string, string> env = null, ResourceIdentifier triggeredBuildResultId = null, AppPlatformBuildResourceRequirements resourceRequests = null)
         {
             env ??= new Dictionary<string, string>();
 
-            return new AppBuildProperties(relativePath, builder, agentPool, provisioningState, env, ResourceManagerModelFactory.SubResource(triggeredBuildResultId));
+            return new AppPlatformBuildProperties(relativePath, builder, agentPool, provisioningState, env, triggeredBuildResultId != null ? ResourceManagerModelFactory.SubResource(triggeredBuildResultId) : null, resourceRequests);
         }
 
-        /// <summary> Initializes a new instance of BuildpackBindingResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformBuildResourceRequirements. </summary>
+        /// <param name="cpu">
+        /// Optional Cpu allocated to the build resource. 1 core can be represented by 1 or 1000m. 
+        /// The default value is 1, this should not exceed build service agent pool cpu size.
+        /// </param>
+        /// <param name="memory">
+        /// Optional Memory allocated to the build resource. 1 GB can be represented by 1Gi or 1024Mi. 
+        /// The default value is 2Gi, this should not exceed build service agent pool memory size.
+        /// </param>
+        /// <returns> A new <see cref="Models.AppPlatformBuildResourceRequirements"/> instance for mocking. </returns>
+        public static AppPlatformBuildResourceRequirements AppPlatformBuildResourceRequirements(string cpu = null, string memory = null)
+        {
+            return new AppPlatformBuildResourceRequirements(cpu, memory);
+        }
+
+        /// <summary> Initializes a new instance of AppPlatformBuildpackBindingData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of a buildpack binding. </param>
-        /// <returns> A new <see cref="AppPlatform.BuildpackBindingResourceData"/> instance for mocking. </returns>
-        public static BuildpackBindingResourceData BuildpackBindingResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BuildpackBindingProperties properties = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformBuildpackBindingData"/> instance for mocking. </returns>
+        public static AppPlatformBuildpackBindingData AppPlatformBuildpackBindingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformBuildpackBindingProperties properties = null)
         {
-            return new BuildpackBindingResourceData(id, name, resourceType, systemData, properties);
+            return new AppPlatformBuildpackBindingData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of BuildpackBindingProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformBuildpackBindingProperties. </summary>
         /// <param name="bindingType"> Buildpack Binding Type. </param>
         /// <param name="provisioningState"> State of the Buildpack Binding. </param>
         /// <param name="launchProperties"> The object describes the buildpack binding launch properties. </param>
-        /// <returns> A new <see cref="Models.BuildpackBindingProperties"/> instance for mocking. </returns>
-        public static BuildpackBindingProperties BuildpackBindingProperties(BindingType? bindingType = null, BuildpackBindingProvisioningState? provisioningState = null, BuildpackBindingLaunchProperties launchProperties = null)
+        /// <returns> A new <see cref="Models.AppPlatformBuildpackBindingProperties"/> instance for mocking. </returns>
+        public static AppPlatformBuildpackBindingProperties AppPlatformBuildpackBindingProperties(BuildpackBindingType? bindingType = null, BuildpackBindingProvisioningState? provisioningState = null, BuildpackBindingLaunchProperties launchProperties = null)
         {
-            return new BuildpackBindingProperties(bindingType, provisioningState, launchProperties);
+            return new AppPlatformBuildpackBindingProperties(bindingType, provisioningState, launchProperties);
         }
 
         /// <summary> Initializes a new instance of BuildpackBindingLaunchProperties. </summary>
@@ -447,79 +467,79 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new BuildpackBindingLaunchProperties(properties, secrets);
         }
 
-        /// <summary> Initializes a new instance of AppBuildResultData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformBuildResultData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the build result resource. </param>
-        /// <returns> A new <see cref="AppPlatform.AppBuildResultData"/> instance for mocking. </returns>
-        public static AppBuildResultData AppBuildResultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BuildResultProperties properties = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformBuildResultData"/> instance for mocking. </returns>
+        public static AppPlatformBuildResultData AppPlatformBuildResultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformBuildResultProperties properties = null)
         {
-            return new AppBuildResultData(id, name, resourceType, systemData, properties);
+            return new AppPlatformBuildResultData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of BuildResultProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformBuildResultProperties. </summary>
         /// <param name="name"> The name of this build result. </param>
         /// <param name="provisioningState"> Provisioning state of the KPack build result. </param>
         /// <param name="buildPodName"> The build pod name which can be used to get the build log streaming. </param>
         /// <param name="buildStages"> All of the build stage (init-container and container) resources in build pod. </param>
-        /// <returns> A new <see cref="Models.BuildResultProperties"/> instance for mocking. </returns>
-        public static BuildResultProperties BuildResultProperties(string name = null, BuildResultProvisioningState? provisioningState = null, string buildPodName = null, IEnumerable<BuildStageProperties> buildStages = null)
+        /// <returns> A new <see cref="Models.AppPlatformBuildResultProperties"/> instance for mocking. </returns>
+        public static AppPlatformBuildResultProperties AppPlatformBuildResultProperties(string name = null, AppPlatformBuildResultProvisioningState? provisioningState = null, string buildPodName = null, IEnumerable<AppPlatformBuildStageProperties> buildStages = null)
         {
-            buildStages ??= new List<BuildStageProperties>();
+            buildStages ??= new List<AppPlatformBuildStageProperties>();
 
-            return new BuildResultProperties(name, provisioningState, buildPodName, buildStages?.ToList());
+            return new AppPlatformBuildResultProperties(name, provisioningState, buildPodName, buildStages?.ToList());
         }
 
-        /// <summary> Initializes a new instance of BuildStageProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformBuildStageProperties. </summary>
         /// <param name="name"> The name of this build stage resource. </param>
         /// <param name="status"> The provisioning state of this build stage resource. </param>
-        /// <returns> A new <see cref="Models.BuildStageProperties"/> instance for mocking. </returns>
-        public static BuildStageProperties BuildStageProperties(string name = null, KPackBuildStageProvisioningState? status = null)
+        /// <returns> A new <see cref="Models.AppPlatformBuildStageProperties"/> instance for mocking. </returns>
+        public static AppPlatformBuildStageProperties AppPlatformBuildStageProperties(string name = null, KPackBuildStageProvisioningState? status = null)
         {
-            return new BuildStageProperties(name, status);
+            return new AppPlatformBuildStageProperties(name, status);
         }
 
-        /// <summary> Initializes a new instance of BuildResultLog. </summary>
+        /// <summary> Initializes a new instance of AppPlatformBuildResultLog. </summary>
         /// <param name="blobUri"> The public download URL of this build result log. </param>
-        /// <returns> A new <see cref="Models.BuildResultLog"/> instance for mocking. </returns>
-        public static BuildResultLog BuildResultLog(Uri blobUri = null)
+        /// <returns> A new <see cref="Models.AppPlatformBuildResultLog"/> instance for mocking. </returns>
+        public static AppPlatformBuildResultLog AppPlatformBuildResultLog(Uri blobUri = null)
         {
-            return new BuildResultLog(blobUri);
+            return new AppPlatformBuildResultLog(blobUri);
         }
 
-        /// <summary> Initializes a new instance of AppBuilderResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformBuilderData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Property of the Builder resource. </param>
-        /// <returns> A new <see cref="AppPlatform.AppBuilderResourceData"/> instance for mocking. </returns>
-        public static AppBuilderResourceData AppBuilderResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppBuilderProperties properties = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformBuilderData"/> instance for mocking. </returns>
+        public static AppPlatformBuilderData AppPlatformBuilderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformBuilderProperties properties = null)
         {
-            return new AppBuilderResourceData(id, name, resourceType, systemData, properties);
+            return new AppPlatformBuilderData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of AppBuilderProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformBuilderProperties. </summary>
         /// <param name="provisioningState"> Builder provision status. </param>
         /// <param name="stack"> Builder cluster stack property. </param>
         /// <param name="buildpackGroups"> Builder buildpack groups. </param>
-        /// <returns> A new <see cref="Models.AppBuilderProperties"/> instance for mocking. </returns>
-        public static AppBuilderProperties AppBuilderProperties(AppBuilderProvisioningState? provisioningState = null, StackProperties stack = null, IEnumerable<BuildpacksGroupProperties> buildpackGroups = null)
+        /// <returns> A new <see cref="Models.AppPlatformBuilderProperties"/> instance for mocking. </returns>
+        public static AppPlatformBuilderProperties AppPlatformBuilderProperties(AppPlatformBuilderProvisioningState? provisioningState = null, AppPlatformClusterStackProperties stack = null, IEnumerable<BuildpacksGroupProperties> buildpackGroups = null)
         {
             buildpackGroups ??= new List<BuildpacksGroupProperties>();
 
-            return new AppBuilderProperties(provisioningState, stack, buildpackGroups?.ToList());
+            return new AppPlatformBuilderProperties(provisioningState, stack, buildpackGroups?.ToList());
         }
 
-        /// <summary> Initializes a new instance of StackProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformClusterStackProperties. </summary>
         /// <param name="id"> Id of the ClusterStack. </param>
         /// <param name="version"> Version of the ClusterStack. </param>
-        /// <returns> A new <see cref="Models.StackProperties"/> instance for mocking. </returns>
-        public static StackProperties StackProperties(string id = null, string version = null)
+        /// <returns> A new <see cref="Models.AppPlatformClusterStackProperties"/> instance for mocking. </returns>
+        public static AppPlatformClusterStackProperties AppPlatformClusterStackProperties(string id = null, string version = null)
         {
-            return new StackProperties(id, version);
+            return new AppPlatformClusterStackProperties(id, version);
         }
 
         /// <summary> Initializes a new instance of BuildpacksGroupProperties. </summary>
@@ -533,67 +553,67 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new BuildpacksGroupProperties(name, buildpacks?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ResourceUploadResult. </summary>
+        /// <summary> Initializes a new instance of AppPlatformResourceUploadResult. </summary>
         /// <param name="relativePath"> Source relative path. </param>
         /// <param name="uploadUri"> Upload URL. </param>
-        /// <returns> A new <see cref="Models.ResourceUploadResult"/> instance for mocking. </returns>
-        public static ResourceUploadResult ResourceUploadResult(string relativePath = null, Uri uploadUri = null)
+        /// <returns> A new <see cref="Models.AppPlatformResourceUploadResult"/> instance for mocking. </returns>
+        public static AppPlatformResourceUploadResult AppPlatformResourceUploadResult(string relativePath = null, Uri uploadUri = null)
         {
-            return new ResourceUploadResult(relativePath, uploadUri);
+            return new AppPlatformResourceUploadResult(relativePath, uploadUri);
         }
 
-        /// <summary> Initializes a new instance of SupportedBuildpackResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformSupportedBuildpackData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="supportedBuildpackId"> Supported buildpack resource properties. </param>
-        /// <returns> A new <see cref="AppPlatform.SupportedBuildpackResourceData"/> instance for mocking. </returns>
-        public static SupportedBuildpackResourceData SupportedBuildpackResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string supportedBuildpackId = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformSupportedBuildpackData"/> instance for mocking. </returns>
+        public static AppPlatformSupportedBuildpackData AppPlatformSupportedBuildpackData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string supportedBuildpackId = null)
         {
-            return new SupportedBuildpackResourceData(id, name, resourceType, systemData, new SupportedBuildpackResourceProperties(supportedBuildpackId));
+            return new AppPlatformSupportedBuildpackData(id, name, resourceType, systemData, supportedBuildpackId != null ? new SupportedBuildpackResourceProperties(supportedBuildpackId) : null);
         }
 
-        /// <summary> Initializes a new instance of SupportedStackResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformSupportedStackData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Supported stack resource properties. </param>
-        /// <returns> A new <see cref="AppPlatform.SupportedStackResourceData"/> instance for mocking. </returns>
-        public static SupportedStackResourceData SupportedStackResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SupportedStackResourceProperties properties = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformSupportedStackData"/> instance for mocking. </returns>
+        public static AppPlatformSupportedStackData AppPlatformSupportedStackData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformSupportedStackProperties properties = null)
         {
-            return new SupportedStackResourceData(id, name, resourceType, systemData, properties);
+            return new AppPlatformSupportedStackData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of SupportedStackResourceProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformSupportedStackProperties. </summary>
         /// <param name="stackId"> The id of supported stack. </param>
         /// <param name="version"> The version of supported stack. </param>
-        /// <returns> A new <see cref="Models.SupportedStackResourceProperties"/> instance for mocking. </returns>
-        public static SupportedStackResourceProperties SupportedStackResourceProperties(string stackId = null, string version = null)
+        /// <returns> A new <see cref="Models.AppPlatformSupportedStackProperties"/> instance for mocking. </returns>
+        public static AppPlatformSupportedStackProperties AppPlatformSupportedStackProperties(string stackId = null, string version = null)
         {
-            return new SupportedStackResourceProperties(stackId, version);
+            return new AppPlatformSupportedStackProperties(stackId, version);
         }
 
-        /// <summary> Initializes a new instance of AppBuildServiceAgentPoolResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformBuildServiceAgentPoolData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> build service agent pool properties. </param>
-        /// <returns> A new <see cref="AppPlatform.AppBuildServiceAgentPoolResourceData"/> instance for mocking. </returns>
-        public static AppBuildServiceAgentPoolResourceData AppBuildServiceAgentPoolResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BuildServiceAgentPoolProperties properties = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformBuildServiceAgentPoolData"/> instance for mocking. </returns>
+        public static AppPlatformBuildServiceAgentPoolData AppPlatformBuildServiceAgentPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformBuildServiceAgentPoolProperties properties = null)
         {
-            return new AppBuildServiceAgentPoolResourceData(id, name, resourceType, systemData, properties);
+            return new AppPlatformBuildServiceAgentPoolData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of BuildServiceAgentPoolProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformBuildServiceAgentPoolProperties. </summary>
         /// <param name="provisioningState"> Provisioning state of the build service agent pool. </param>
         /// <param name="poolSize"> build service agent pool size properties. </param>
-        /// <returns> A new <see cref="Models.BuildServiceAgentPoolProperties"/> instance for mocking. </returns>
-        public static BuildServiceAgentPoolProperties BuildServiceAgentPoolProperties(string provisioningState = null, BuildServiceAgentPoolSizeProperties poolSize = null)
+        /// <returns> A new <see cref="Models.AppPlatformBuildServiceAgentPoolProperties"/> instance for mocking. </returns>
+        public static AppPlatformBuildServiceAgentPoolProperties AppPlatformBuildServiceAgentPoolProperties(string provisioningState = null, BuildServiceAgentPoolSizeProperties poolSize = null)
         {
-            return new BuildServiceAgentPoolProperties(provisioningState, poolSize);
+            return new AppPlatformBuildServiceAgentPoolProperties(provisioningState, poolSize);
         }
 
         /// <summary> Initializes a new instance of BuildServiceAgentPoolSizeProperties. </summary>
@@ -606,32 +626,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new BuildServiceAgentPoolSizeProperties(name, cpu, memory);
         }
 
-        /// <summary> Initializes a new instance of MonitoringSettingResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformMonitoringSettingData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the Monitoring Setting resource. </param>
-        /// <returns> A new <see cref="AppPlatform.MonitoringSettingResourceData"/> instance for mocking. </returns>
-        public static MonitoringSettingResourceData MonitoringSettingResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MonitoringSettingProperties properties = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformMonitoringSettingData"/> instance for mocking. </returns>
+        public static AppPlatformMonitoringSettingData AppPlatformMonitoringSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformMonitoringSettingProperties properties = null)
         {
-            return new MonitoringSettingResourceData(id, name, resourceType, systemData, properties);
+            return new AppPlatformMonitoringSettingData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of MonitoringSettingProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformMonitoringSettingProperties. </summary>
         /// <param name="provisioningState"> State of the Monitoring Setting. </param>
         /// <param name="error"> Error when apply Monitoring Setting changes. </param>
-        /// <param name="traceEnabled"> Indicates whether enable the trace functionality, which will be deprecated since api version 2020-11-01-preview. Please leverage appInsightsInstrumentationKey to indicate if monitoringSettings enabled or not. </param>
+        /// <param name="isTraceEnabled"> Indicates whether enable the trace functionality, which will be deprecated since api version 2020-11-01-preview. Please leverage appInsightsInstrumentationKey to indicate if monitoringSettings enabled or not. </param>
         /// <param name="appInsightsInstrumentationKey"> Target application insight instrumentation key, null or whitespace include empty will disable monitoringSettings. </param>
         /// <param name="appInsightsSamplingRate"> Indicates the sampling rate of application insight agent, should be in range [0.0, 100.0]. </param>
-        /// <param name="appInsightsAgentVersionsJava"> Indicates the versions of application insight agent. </param>
-        /// <returns> A new <see cref="Models.MonitoringSettingProperties"/> instance for mocking. </returns>
-        public static MonitoringSettingProperties MonitoringSettingProperties(MonitoringSettingState? provisioningState = null, AppPlatformErrorInfo error = null, bool? traceEnabled = null, string appInsightsInstrumentationKey = null, double? appInsightsSamplingRate = null, string appInsightsAgentVersionsJava = null)
+        /// <param name="appInsightsJavaAgentVersion"> Indicates the versions of application insight agent. </param>
+        /// <returns> A new <see cref="Models.AppPlatformMonitoringSettingProperties"/> instance for mocking. </returns>
+        public static AppPlatformMonitoringSettingProperties AppPlatformMonitoringSettingProperties(AppPlatformMonitoringSettingState? provisioningState = null, AppPlatformErrorInfo error = null, bool? isTraceEnabled = null, string appInsightsInstrumentationKey = null, double? appInsightsSamplingRate = null, string appInsightsJavaAgentVersion = null)
         {
-            return new MonitoringSettingProperties(provisioningState, error, traceEnabled, appInsightsInstrumentationKey, appInsightsSamplingRate, new ApplicationInsightsAgentVersions(appInsightsAgentVersionsJava));
+            return new AppPlatformMonitoringSettingProperties(provisioningState, error, isTraceEnabled, appInsightsInstrumentationKey, appInsightsSamplingRate, appInsightsJavaAgentVersion != null ? new ApplicationInsightsAgentVersions(appInsightsJavaAgentVersion) : null);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformAppResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformAppData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -639,314 +659,381 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="properties"> Properties of the App resource. </param>
         /// <param name="identity"> The Managed Identity type of the app resource. </param>
         /// <param name="location"> The GEO location of the application, always the same with its parent resource. </param>
-        /// <returns> A new <see cref="AppPlatform.AppPlatformAppResourceData"/> instance for mocking. </returns>
-        public static AppPlatformAppResourceData AppPlatformAppResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppResourceProperties properties = null, ManagedServiceIdentity identity = null, AzureLocation? location = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformAppData"/> instance for mocking. </returns>
+        public static AppPlatformAppData AppPlatformAppData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformAppProperties properties = null, ManagedServiceIdentity identity = null, AzureLocation? location = null)
         {
-            return new AppPlatformAppResourceData(id, name, resourceType, systemData, properties, identity, location);
+            return new AppPlatformAppData(id, name, resourceType, systemData, properties, identity, location);
         }
 
-        /// <summary> Initializes a new instance of AppResourceProperties. </summary>
-        /// <param name="public"> Indicates whether the App exposes public endpoint. </param>
+        /// <summary> Initializes a new instance of AppPlatformAppProperties. </summary>
+        /// <param name="isPublic"> Indicates whether the App exposes public endpoint. </param>
         /// <param name="uri"> URL of the App. </param>
         /// <param name="addonConfigs"> Collection of addons. </param>
         /// <param name="provisioningState"> Provisioning state of the App. </param>
         /// <param name="fqdn"> Fully qualified dns Name. </param>
-        /// <param name="httpsOnly"> Indicate if only https is allowed. </param>
+        /// <param name="isHttpsOnly"> Indicate if only https is allowed. </param>
         /// <param name="temporaryDisk"> Temporary disk settings. </param>
         /// <param name="persistentDisk"> Persistent disk settings. </param>
         /// <param name="customPersistentDisks"> List of custom persistent disks. </param>
-        /// <param name="enableEndToEndTls"> Indicate if end to end TLS is enabled. </param>
+        /// <param name="isEndToEndTlsEnabled"> Indicate if end to end TLS is enabled. </param>
         /// <param name="loadedCertificates"> Collection of loaded certificates. </param>
-        /// <returns> A new <see cref="Models.AppResourceProperties"/> instance for mocking. </returns>
-        public static AppResourceProperties AppResourceProperties(bool? @public = null, Uri uri = null, IDictionary<string, IDictionary<string, BinaryData>> addonConfigs = null, AppResourceProvisioningState? provisioningState = null, string fqdn = null, bool? httpsOnly = null, TemporaryDisk temporaryDisk = null, PersistentDisk persistentDisk = null, IEnumerable<CustomPersistentDiskData> customPersistentDisks = null, bool? enableEndToEndTls = null, IEnumerable<LoadedCertificate> loadedCertificates = null)
+        /// <param name="vnetAddons"> Additional App settings in vnet injection instance. </param>
+        /// <param name="ingressSettings"> App ingress settings payload. </param>
+        /// <returns> A new <see cref="Models.AppPlatformAppProperties"/> instance for mocking. </returns>
+        public static AppPlatformAppProperties AppPlatformAppProperties(bool? isPublic = null, Uri uri = null, IDictionary<string, IDictionary<string, BinaryData>> addonConfigs = null, AppPlatformAppProvisioningState? provisioningState = null, string fqdn = null, bool? isHttpsOnly = null, AppTemporaryDisk temporaryDisk = null, AppPersistentDisk persistentDisk = null, IEnumerable<AppCustomPersistentDisk> customPersistentDisks = null, bool? isEndToEndTlsEnabled = null, IEnumerable<AppLoadedCertificate> loadedCertificates = null, AppVnetAddons vnetAddons = null, AppIngressSettings ingressSettings = null)
         {
             addonConfigs ??= new Dictionary<string, IDictionary<string, BinaryData>>();
-            customPersistentDisks ??= new List<CustomPersistentDiskData>();
-            loadedCertificates ??= new List<LoadedCertificate>();
+            customPersistentDisks ??= new List<AppCustomPersistentDisk>();
+            loadedCertificates ??= new List<AppLoadedCertificate>();
 
-            return new AppResourceProperties(@public, uri, addonConfigs, provisioningState, fqdn, httpsOnly, temporaryDisk, persistentDisk, customPersistentDisks?.ToList(), enableEndToEndTls, loadedCertificates?.ToList());
+            return new AppPlatformAppProperties(isPublic, uri, addonConfigs, provisioningState, fqdn, isHttpsOnly, temporaryDisk, persistentDisk, customPersistentDisks?.ToList(), isEndToEndTlsEnabled, loadedCertificates?.ToList(), vnetAddons, ingressSettings);
         }
 
-        /// <summary> Initializes a new instance of TemporaryDisk. </summary>
+        /// <summary> Initializes a new instance of AppTemporaryDisk. </summary>
         /// <param name="sizeInGB"> Size of the temporary disk in GB. </param>
         /// <param name="mountPath"> Mount path of the temporary disk. </param>
-        /// <returns> A new <see cref="Models.TemporaryDisk"/> instance for mocking. </returns>
-        public static TemporaryDisk TemporaryDisk(int? sizeInGB = null, string mountPath = null)
+        /// <returns> A new <see cref="Models.AppTemporaryDisk"/> instance for mocking. </returns>
+        public static AppTemporaryDisk AppTemporaryDisk(int? sizeInGB = null, string mountPath = null)
         {
-            return new TemporaryDisk(sizeInGB, mountPath);
+            return new AppTemporaryDisk(sizeInGB, mountPath);
         }
 
-        /// <summary> Initializes a new instance of PersistentDisk. </summary>
+        /// <summary> Initializes a new instance of AppPersistentDisk. </summary>
         /// <param name="sizeInGB"> Size of the persistent disk in GB. </param>
         /// <param name="usedInGB"> Size of the used persistent disk in GB. </param>
         /// <param name="mountPath"> Mount path of the persistent disk. </param>
-        /// <returns> A new <see cref="Models.PersistentDisk"/> instance for mocking. </returns>
-        public static PersistentDisk PersistentDisk(int? sizeInGB = null, int? usedInGB = null, string mountPath = null)
+        /// <returns> A new <see cref="Models.AppPersistentDisk"/> instance for mocking. </returns>
+        public static AppPersistentDisk AppPersistentDisk(int? sizeInGB = null, int? usedInGB = null, string mountPath = null)
         {
-            return new PersistentDisk(sizeInGB, usedInGB, mountPath);
+            return new AppPersistentDisk(sizeInGB, usedInGB, mountPath);
         }
 
-        /// <summary> Initializes a new instance of CustomPersistentDiskData. </summary>
+        /// <summary> Initializes a new instance of AppCustomPersistentDisk. </summary>
         /// <param name="customPersistentDiskProperties">
         /// Properties of the custom persistent disk resource payload.
-        /// Please note <see cref="CustomPersistentDiskProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureFileVolume"/>.
+        /// Please note <see cref="AppCustomPersistentDiskProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AppPlatformAzureFileVolume"/>.
         /// </param>
-        /// <param name="storageId"> The resource id of Azure Spring Cloud Storage resource. </param>
-        /// <returns> A new <see cref="Models.CustomPersistentDiskData"/> instance for mocking. </returns>
-        public static CustomPersistentDiskData CustomPersistentDiskData(CustomPersistentDiskProperties customPersistentDiskProperties = null, string storageId = null)
+        /// <param name="storageId"> The resource id of Azure Spring Apps Storage resource. </param>
+        /// <returns> A new <see cref="Models.AppCustomPersistentDisk"/> instance for mocking. </returns>
+        public static AppCustomPersistentDisk AppCustomPersistentDisk(AppCustomPersistentDiskProperties customPersistentDiskProperties = null, string storageId = null)
         {
-            return new CustomPersistentDiskData(customPersistentDiskProperties, storageId);
+            return new AppCustomPersistentDisk(customPersistentDiskProperties, storageId);
         }
 
-        /// <summary> Initializes a new instance of CustomPersistentDiskProperties. </summary>
+        /// <summary> Initializes a new instance of AppCustomPersistentDiskProperties. </summary>
         /// <param name="underlyingResourceType"> The type of the underlying resource to mount as a persistent disk. </param>
         /// <param name="mountPath"> The mount path of the persistent disk. </param>
-        /// <param name="readOnly"> Indicates whether the persistent disk is a readOnly one. </param>
+        /// <param name="isReadOnly"> Indicates whether the persistent disk is a readOnly one. </param>
         /// <param name="mountOptions"> These are the mount options for a persistent disk. </param>
-        /// <returns> A new <see cref="Models.CustomPersistentDiskProperties"/> instance for mocking. </returns>
-        public static CustomPersistentDiskProperties CustomPersistentDiskProperties(string underlyingResourceType = null, string mountPath = null, bool? readOnly = null, IEnumerable<string> mountOptions = null)
+        /// <returns> A new <see cref="Models.AppCustomPersistentDiskProperties"/> instance for mocking. </returns>
+        public static AppCustomPersistentDiskProperties AppCustomPersistentDiskProperties(string underlyingResourceType = null, string mountPath = null, bool? isReadOnly = null, IEnumerable<string> mountOptions = null)
         {
             mountOptions ??= new List<string>();
 
-            return new UnknownCustomPersistentDiskProperties(underlyingResourceType, mountPath, readOnly, mountOptions?.ToList());
+            return new UnknownCustomPersistentDiskProperties(underlyingResourceType, mountPath, isReadOnly, mountOptions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of LoadedCertificate. </summary>
+        /// <summary> Initializes a new instance of AppLoadedCertificate. </summary>
         /// <param name="resourceId"> Resource Id of loaded certificate. </param>
         /// <param name="loadTrustStore"> Indicate whether the certificate will be loaded into default trust store, only work for Java runtime. </param>
-        /// <returns> A new <see cref="Models.LoadedCertificate"/> instance for mocking. </returns>
-        public static LoadedCertificate LoadedCertificate(ResourceIdentifier resourceId = null, bool? loadTrustStore = null)
+        /// <returns> A new <see cref="Models.AppLoadedCertificate"/> instance for mocking. </returns>
+        public static AppLoadedCertificate AppLoadedCertificate(ResourceIdentifier resourceId = null, bool? loadTrustStore = null)
         {
-            return new LoadedCertificate(resourceId, loadTrustStore);
+            return new AppLoadedCertificate(resourceId, loadTrustStore);
         }
 
-        /// <summary> Initializes a new instance of BindingResourceData. </summary>
+        /// <summary> Initializes a new instance of AppVnetAddons. </summary>
+        /// <param name="isPublicEndpoint"> Indicates whether the App in vnet injection instance exposes endpoint which could be accessed from internet. </param>
+        /// <param name="publicEndpointUri"> URL of the App in vnet injection instance which could be accessed from internet. </param>
+        /// <returns> A new <see cref="Models.AppVnetAddons"/> instance for mocking. </returns>
+        public static AppVnetAddons AppVnetAddons(bool? isPublicEndpoint = null, Uri publicEndpointUri = null)
+        {
+            return new AppVnetAddons(isPublicEndpoint, publicEndpointUri);
+        }
+
+        /// <summary> Initializes a new instance of AppIngressSettings. </summary>
+        /// <param name="readTimeoutInSeconds"> Ingress read time out in seconds. </param>
+        /// <param name="sendTimeoutInSeconds"> Ingress send time out in seconds. </param>
+        /// <param name="sessionAffinity"> Type of the affinity, set this to Cookie to enable session affinity. </param>
+        /// <param name="sessionCookieMaxAge"> Time in seconds until the cookie expires. </param>
+        /// <param name="backendProtocol"> How ingress should communicate with this app backend service. </param>
+        /// <param name="clientAuthCertificates"> Client-Certification Authentication. </param>
+        /// <returns> A new <see cref="Models.AppIngressSettings"/> instance for mocking. </returns>
+        public static AppIngressSettings AppIngressSettings(int? readTimeoutInSeconds = null, int? sendTimeoutInSeconds = null, AppSessionAffinity? sessionAffinity = null, int? sessionCookieMaxAge = null, AppBackendProtocol? backendProtocol = null, IEnumerable<string> clientAuthCertificates = null)
+        {
+            clientAuthCertificates ??= new List<string>();
+
+            return new AppIngressSettings(readTimeoutInSeconds, sendTimeoutInSeconds, sessionAffinity, sessionCookieMaxAge, backendProtocol, clientAuthCertificates != null ? new IngressSettingsClientAuth(clientAuthCertificates?.ToList()) : null);
+        }
+
+        /// <summary> Initializes a new instance of AppPlatformBindingData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the Binding resource. </param>
-        /// <returns> A new <see cref="AppPlatform.BindingResourceData"/> instance for mocking. </returns>
-        public static BindingResourceData BindingResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BindingResourceProperties properties = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformBindingData"/> instance for mocking. </returns>
+        public static AppPlatformBindingData AppPlatformBindingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformBindingProperties properties = null)
         {
-            return new BindingResourceData(id, name, resourceType, systemData, properties);
+            return new AppPlatformBindingData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of BindingResourceProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformBindingProperties. </summary>
         /// <param name="resourceName"> The name of the bound resource. </param>
         /// <param name="resourceType"> The standard Azure resource type of the bound resource. </param>
         /// <param name="resourceId"> The Azure resource id of the bound resource. </param>
         /// <param name="key"> The key of the bound resource. </param>
         /// <param name="bindingParameters"> Binding parameters of the Binding resource. </param>
         /// <param name="generatedProperties"> The generated Spring Boot property file for this binding. The secret will be deducted. </param>
-        /// <param name="createdAt"> Creation time of the Binding resource. </param>
-        /// <param name="updatedAt"> Update time of the Binding resource. </param>
-        /// <returns> A new <see cref="Models.BindingResourceProperties"/> instance for mocking. </returns>
-        public static BindingResourceProperties BindingResourceProperties(string resourceName = null, ResourceType? resourceType = null, ResourceIdentifier resourceId = null, string key = null, IDictionary<string, BinaryData> bindingParameters = null, string generatedProperties = null, string createdAt = null, string updatedAt = null)
+        /// <param name="createdOn"> Creation time of the Binding resource. </param>
+        /// <param name="updatedOn"> Update time of the Binding resource. </param>
+        /// <returns> A new <see cref="Models.AppPlatformBindingProperties"/> instance for mocking. </returns>
+        public static AppPlatformBindingProperties AppPlatformBindingProperties(string resourceName = null, string resourceType = null, ResourceIdentifier resourceId = null, string key = null, IDictionary<string, BinaryData> bindingParameters = null, string generatedProperties = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
         {
             bindingParameters ??= new Dictionary<string, BinaryData>();
 
-            return new BindingResourceProperties(resourceName, resourceType, resourceId, key, bindingParameters, generatedProperties, createdAt, updatedAt);
+            return new AppPlatformBindingProperties(resourceName, resourceType, resourceId, key, bindingParameters, generatedProperties, createdOn, updatedOn);
         }
 
-        /// <summary> Initializes a new instance of StorageResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformStorageData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// Properties of the storage resource payload.
-        /// Please note <see cref="StorageProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="StorageAccount"/>.
+        /// Please note <see cref="AppPlatformStorageProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AppPlatformStorageAccount"/>.
         /// </param>
-        /// <returns> A new <see cref="AppPlatform.StorageResourceData"/> instance for mocking. </returns>
-        public static StorageResourceData StorageResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, StorageProperties properties = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformStorageData"/> instance for mocking. </returns>
+        public static AppPlatformStorageData AppPlatformStorageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformStorageProperties properties = null)
         {
-            return new StorageResourceData(id, name, resourceType, systemData, properties);
+            return new AppPlatformStorageData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of StorageProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformStorageProperties. </summary>
         /// <param name="storageType"> The type of the storage. </param>
-        /// <returns> A new <see cref="Models.StorageProperties"/> instance for mocking. </returns>
-        public static StorageProperties StorageProperties(string storageType = null)
+        /// <returns> A new <see cref="Models.AppPlatformStorageProperties"/> instance for mocking. </returns>
+        public static AppPlatformStorageProperties AppPlatformStorageProperties(string storageType = null)
         {
             return new UnknownStorageProperties(storageType);
         }
 
-        /// <summary> Initializes a new instance of CertificateResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformCertificateData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// Properties of the certificate resource payload.
-        /// Please note <see cref="CertificateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContentCertificateProperties"/> and <see cref="KeyVaultCertificateProperties"/>.
+        /// Please note <see cref="AppPlatformCertificateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AppPlatformContentCertificateProperties"/> and <see cref="AppPlatformKeyVaultCertificateProperties"/>.
         /// </param>
-        /// <returns> A new <see cref="AppPlatform.CertificateResourceData"/> instance for mocking. </returns>
-        public static CertificateResourceData CertificateResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CertificateProperties properties = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformCertificateData"/> instance for mocking. </returns>
+        public static AppPlatformCertificateData AppPlatformCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformCertificateProperties properties = null)
         {
-            return new CertificateResourceData(id, name, resourceType, systemData, properties);
+            return new AppPlatformCertificateData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of CertificateProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformCertificateProperties. </summary>
         /// <param name="certificatePropertiesType"> The type of the certificate source. </param>
         /// <param name="thumbprint"> The thumbprint of certificate. </param>
         /// <param name="issuer"> The issuer of certificate. </param>
-        /// <param name="issuedDate"> The issue date of certificate. </param>
-        /// <param name="expirationDate"> The expiration date of certificate. </param>
-        /// <param name="activateDate"> The activate date of certificate. </param>
+        /// <param name="issuedOn"> The issue date of certificate. </param>
+        /// <param name="expireOn"> The expiration date of certificate. </param>
+        /// <param name="activateOn"> The activate date of certificate. </param>
         /// <param name="subjectName"> The subject name of certificate. </param>
         /// <param name="dnsNames"> The domain list of certificate. </param>
-        /// <returns> A new <see cref="Models.CertificateProperties"/> instance for mocking. </returns>
-        public static CertificateProperties CertificateProperties(string certificatePropertiesType = null, string thumbprint = null, string issuer = null, string issuedDate = null, string expirationDate = null, string activateDate = null, string subjectName = null, IEnumerable<string> dnsNames = null)
+        /// <param name="provisioningState"> Provisioning state of the Certificate. </param>
+        /// <returns> A new <see cref="Models.AppPlatformCertificateProperties"/> instance for mocking. </returns>
+        public static AppPlatformCertificateProperties AppPlatformCertificateProperties(string certificatePropertiesType = null, string thumbprint = null, string issuer = null, DateTimeOffset? issuedOn = null, DateTimeOffset? expireOn = null, DateTimeOffset? activateOn = null, string subjectName = null, IEnumerable<string> dnsNames = null, AppPlatformCertificateProvisioningState? provisioningState = null)
         {
             dnsNames ??= new List<string>();
 
-            return new UnknownCertificateProperties(certificatePropertiesType, thumbprint, issuer, issuedDate, expirationDate, activateDate, subjectName, dnsNames?.ToList());
+            return new UnknownCertificateProperties(certificatePropertiesType, thumbprint, issuer, issuedOn, expireOn, activateOn, subjectName, dnsNames?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ServiceNameAvailabilityResult. </summary>
-        /// <param name="nameAvailable"> Indicates whether the name is available. </param>
+        /// <summary> Initializes a new instance of AppPlatformNameAvailabilityResult. </summary>
+        /// <param name="isNameAvailable"> Indicates whether the name is available. </param>
         /// <param name="reason"> Reason why the name is not available. </param>
         /// <param name="message"> Message why the name is not available. </param>
-        /// <returns> A new <see cref="Models.ServiceNameAvailabilityResult"/> instance for mocking. </returns>
-        public static ServiceNameAvailabilityResult ServiceNameAvailabilityResult(bool? nameAvailable = null, string reason = null, string message = null)
+        /// <returns> A new <see cref="Models.AppPlatformNameAvailabilityResult"/> instance for mocking. </returns>
+        public static AppPlatformNameAvailabilityResult AppPlatformNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
         {
-            return new ServiceNameAvailabilityResult(nameAvailable, reason, message);
+            return new AppPlatformNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of AppPlatformCustomDomainResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformCustomDomainData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the custom domain resource. </param>
-        /// <returns> A new <see cref="AppPlatform.AppPlatformCustomDomainResourceData"/> instance for mocking. </returns>
-        public static AppPlatformCustomDomainResourceData AppPlatformCustomDomainResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CustomDomainProperties properties = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformCustomDomainData"/> instance for mocking. </returns>
+        public static AppPlatformCustomDomainData AppPlatformCustomDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformCustomDomainProperties properties = null)
         {
-            return new AppPlatformCustomDomainResourceData(id, name, resourceType, systemData, properties);
+            return new AppPlatformCustomDomainData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of CustomDomainProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformCustomDomainProperties. </summary>
         /// <param name="thumbprint"> The thumbprint of bound certificate. </param>
         /// <param name="appName"> The app name of domain. </param>
         /// <param name="certName"> The bound certificate name of domain. </param>
-        /// <returns> A new <see cref="Models.CustomDomainProperties"/> instance for mocking. </returns>
-        public static CustomDomainProperties CustomDomainProperties(string thumbprint = null, string appName = null, string certName = null)
+        /// <param name="provisioningState"> Provisioning state of the Domain. </param>
+        /// <returns> A new <see cref="Models.AppPlatformCustomDomainProperties"/> instance for mocking. </returns>
+        public static AppPlatformCustomDomainProperties AppPlatformCustomDomainProperties(string thumbprint = null, string appName = null, string certName = null, AppPlatformCustomDomainProvisioningState? provisioningState = null)
         {
-            return new CustomDomainProperties(thumbprint, appName, certName);
+            return new AppPlatformCustomDomainProperties(thumbprint, appName, certName, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of CustomDomainValidateResult. </summary>
+        /// <summary> Initializes a new instance of AppPlatformCustomDomainValidateResult. </summary>
         /// <param name="isValid"> Indicates if domain name is valid. </param>
         /// <param name="message"> Message of why domain name is invalid. </param>
-        /// <returns> A new <see cref="Models.CustomDomainValidateResult"/> instance for mocking. </returns>
-        public static CustomDomainValidateResult CustomDomainValidateResult(bool? isValid = null, string message = null)
+        /// <returns> A new <see cref="Models.AppPlatformCustomDomainValidateResult"/> instance for mocking. </returns>
+        public static AppPlatformCustomDomainValidateResult AppPlatformCustomDomainValidateResult(bool? isValid = null, string message = null)
         {
-            return new CustomDomainValidateResult(isValid, message);
+            return new AppPlatformCustomDomainValidateResult(isValid, message);
         }
 
-        /// <summary> Initializes a new instance of AppDeploymentResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformDeploymentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the Deployment resource. </param>
         /// <param name="sku"> Sku of the Deployment resource. </param>
-        /// <returns> A new <see cref="AppPlatform.AppDeploymentResourceData"/> instance for mocking. </returns>
-        public static AppDeploymentResourceData AppDeploymentResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DeploymentResourceProperties properties = null, AppPlatformSku sku = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformDeploymentData"/> instance for mocking. </returns>
+        public static AppPlatformDeploymentData AppPlatformDeploymentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformDeploymentProperties properties = null, AppPlatformSku sku = null)
         {
-            return new AppDeploymentResourceData(id, name, resourceType, systemData, properties, sku);
+            return new AppPlatformDeploymentData(id, name, resourceType, systemData, properties, sku);
         }
 
-        /// <summary> Initializes a new instance of DeploymentResourceProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformDeploymentProperties. </summary>
         /// <param name="source">
         /// Uploaded source information of the deployment.
-        /// Please note <see cref="UserSourceInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="BuildResultUserSourceInfo"/>, <see cref="CustomContainerUserSourceInfo"/>, <see cref="JarUploadedUserSourceInfo"/>, <see cref="NetCoreZipUploadedUserSourceInfo"/>, <see cref="SourceUploadedUserSourceInfo"/> and <see cref="UploadedUserSourceInfo"/>.
+        /// Please note <see cref="AppPlatformUserSourceInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AppPlatformBuildResultUserSourceInfo"/>, <see cref="AppPlatformCustomContainerUserSourceInfo"/>, <see cref="JarUploadedUserSourceInfo"/>, <see cref="NetCoreZipUploadedUserSourceInfo"/>, <see cref="SourceUploadedUserSourceInfo"/> and <see cref="AppPlatformUploadedUserSourceInfo"/>.
         /// </param>
         /// <param name="deploymentSettings"> Deployment settings of the Deployment. </param>
         /// <param name="provisioningState"> Provisioning state of the Deployment. </param>
         /// <param name="status"> Status of the Deployment. </param>
-        /// <param name="active"> Indicates whether the Deployment is active. </param>
+        /// <param name="isActive"> Indicates whether the Deployment is active. </param>
         /// <param name="instances"> Collection of instances belong to the Deployment. </param>
-        /// <returns> A new <see cref="Models.DeploymentResourceProperties"/> instance for mocking. </returns>
-        public static DeploymentResourceProperties DeploymentResourceProperties(UserSourceInfo source = null, DeploymentSettings deploymentSettings = null, DeploymentResourceProvisioningState? provisioningState = null, DeploymentResourceStatus? status = null, bool? active = null, IEnumerable<DeploymentInstance> instances = null)
+        /// <returns> A new <see cref="Models.AppPlatformDeploymentProperties"/> instance for mocking. </returns>
+        public static AppPlatformDeploymentProperties AppPlatformDeploymentProperties(AppPlatformUserSourceInfo source = null, AppPlatformDeploymentSettings deploymentSettings = null, AppPlatformDeploymentProvisioningState? provisioningState = null, AppPlatformDeploymentStatus? status = null, bool? isActive = null, IEnumerable<AppPlatformDeploymentInstance> instances = null)
         {
-            instances ??= new List<DeploymentInstance>();
+            instances ??= new List<AppPlatformDeploymentInstance>();
 
-            return new DeploymentResourceProperties(source, deploymentSettings, provisioningState, status, active, instances?.ToList());
+            return new AppPlatformDeploymentProperties(source, deploymentSettings, provisioningState, status, isActive, instances?.ToList());
         }
 
-        /// <summary> Initializes a new instance of UserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of AppPlatformUserSourceInfo. </summary>
         /// <param name="userSourceInfoType"> Type of the source uploaded. </param>
         /// <param name="version"> Version of the source. </param>
-        /// <returns> A new <see cref="Models.UserSourceInfo"/> instance for mocking. </returns>
-        public static UserSourceInfo UserSourceInfo(string userSourceInfoType = null, string version = null)
+        /// <returns> A new <see cref="Models.AppPlatformUserSourceInfo"/> instance for mocking. </returns>
+        public static AppPlatformUserSourceInfo AppPlatformUserSourceInfo(string userSourceInfoType = null, string version = null)
         {
             return new UnknownUserSourceInfo(userSourceInfoType, version);
         }
 
-        /// <summary> Initializes a new instance of DeploymentSettings. </summary>
+        /// <summary> Initializes a new instance of AppPlatformDeploymentSettings. </summary>
         /// <param name="resourceRequests"> The requested resource quantity for required CPU and Memory. It is recommended that using this field to represent the required CPU and Memory, the old field cpu and memoryInGB will be deprecated later. </param>
         /// <param name="environmentVariables"> Collection of environment variables. </param>
         /// <param name="addonConfigs"> Collection of addons. </param>
-        /// <param name="disableProbe"> Container liveness and readiness probe settings. </param>
-        /// <returns> A new <see cref="Models.DeploymentSettings"/> instance for mocking. </returns>
-        public static DeploymentSettings DeploymentSettings(ResourceRequests resourceRequests = null, IDictionary<string, string> environmentVariables = null, IDictionary<string, IDictionary<string, BinaryData>> addonConfigs = null, bool? disableProbe = null)
+        /// <param name="livenessProbe"> Periodic probe of App Instance liveness. App Instance will be restarted if the probe fails. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes. </param>
+        /// <param name="readinessProbe"> Periodic probe of App Instance service readiness. App Instance will be removed from service endpoints if the probe fails. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes. </param>
+        /// <param name="startupProbe"> StartupProbe indicates that the App Instance has successfully initialized. If specified, no other probes are executed until this completes successfully. If this probe fails, the Pod will be restarted, just as if the livenessProbe failed. This can be used to provide different probe parameters at the beginning of a App Instance&apos;s lifecycle, when it might take a long time to load data or warm a cache, than during steady-state operation. This cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes. </param>
+        /// <param name="terminationGracePeriodInSeconds"> Optional duration in seconds the App Instance needs to terminate gracefully. May be decreased in delete request. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). If this value is nil, the default grace period will be used instead. The grace period is the duration in seconds after the processes running in the App Instance are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. Defaults to 90 seconds. </param>
+        /// <param name="isProbeDisabled"> Container liveness and readiness probe settings. </param>
+        /// <returns> A new <see cref="Models.AppPlatformDeploymentSettings"/> instance for mocking. </returns>
+        public static AppPlatformDeploymentSettings AppPlatformDeploymentSettings(AppPlatformDeploymentResourceRequirements resourceRequests = null, IDictionary<string, string> environmentVariables = null, IDictionary<string, IDictionary<string, BinaryData>> addonConfigs = null, AppInstanceProbe livenessProbe = null, AppInstanceProbe readinessProbe = null, AppInstanceProbe startupProbe = null, int? terminationGracePeriodInSeconds = null, bool? isProbeDisabled = null)
         {
             environmentVariables ??= new Dictionary<string, string>();
             addonConfigs ??= new Dictionary<string, IDictionary<string, BinaryData>>();
 
-            return new DeploymentSettings(resourceRequests, environmentVariables, addonConfigs, new ContainerProbeSettings(disableProbe));
+            return new AppPlatformDeploymentSettings(resourceRequests, environmentVariables, addonConfigs, livenessProbe, readinessProbe, startupProbe, terminationGracePeriodInSeconds, isProbeDisabled != null ? new ContainerProbeSettings(isProbeDisabled) : null);
         }
 
-        /// <summary> Initializes a new instance of ResourceRequests. </summary>
+        /// <summary> Initializes a new instance of AppPlatformDeploymentResourceRequirements. </summary>
         /// <param name="cpu"> Required CPU. 1 core can be represented by 1 or 1000m. This should be 500m or 1 for Basic tier, and {500m, 1, 2, 3, 4} for Standard tier. </param>
         /// <param name="memory"> Required memory. 1 GB can be represented by 1Gi or 1024Mi. This should be {512Mi, 1Gi, 2Gi} for Basic tier, and {512Mi, 1Gi, 2Gi, ..., 8Gi} for Standard tier. </param>
-        /// <returns> A new <see cref="Models.ResourceRequests"/> instance for mocking. </returns>
-        public static ResourceRequests ResourceRequests(string cpu = null, string memory = null)
+        /// <returns> A new <see cref="Models.AppPlatformDeploymentResourceRequirements"/> instance for mocking. </returns>
+        public static AppPlatformDeploymentResourceRequirements AppPlatformDeploymentResourceRequirements(string cpu = null, string memory = null)
         {
-            return new ResourceRequests(cpu, memory);
+            return new AppPlatformDeploymentResourceRequirements(cpu, memory);
         }
 
-        /// <summary> Initializes a new instance of DeploymentInstance. </summary>
+        /// <summary> Initializes a new instance of AppInstanceProbe. </summary>
+        /// <param name="probeAction">
+        /// The action of the probe.
+        /// Please note <see cref="AppInstanceProbeAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AppInstanceExecAction"/>, <see cref="AppInstanceHttpGetAction"/> and <see cref="AppInstanceTcpSocketAction"/>.
+        /// </param>
+        /// <param name="isProbeDisabled"> Indicate whether the probe is disabled. </param>
+        /// <param name="initialDelayInSeconds"> Number of seconds after the App Instance has started before probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes. </param>
+        /// <param name="periodInSeconds"> How often (in seconds) to perform the probe. Minimum value is 1. </param>
+        /// <param name="timeoutInSeconds"> Number of seconds after which the probe times out. Minimum value is 1. </param>
+        /// <param name="failureThreshold"> Minimum consecutive failures for the probe to be considered failed after having succeeded. Minimum value is 1. </param>
+        /// <param name="successThreshold"> Minimum consecutive successes for the probe to be considered successful after having failed. Must be 1 for liveness and startup. Minimum value is 1. </param>
+        /// <returns> A new <see cref="Models.AppInstanceProbe"/> instance for mocking. </returns>
+        public static AppInstanceProbe AppInstanceProbe(AppInstanceProbeAction probeAction = null, bool isProbeDisabled = default, int? initialDelayInSeconds = null, int? periodInSeconds = null, int? timeoutInSeconds = null, int? failureThreshold = null, int? successThreshold = null)
+        {
+            return new AppInstanceProbe(probeAction, isProbeDisabled, initialDelayInSeconds, periodInSeconds, timeoutInSeconds, failureThreshold, successThreshold);
+        }
+
+        /// <summary> Initializes a new instance of AppInstanceProbeAction. </summary>
+        /// <param name="probeActionType"> The type of the action to take to perform the health check. </param>
+        /// <returns> A new <see cref="Models.AppInstanceProbeAction"/> instance for mocking. </returns>
+        public static AppInstanceProbeAction AppInstanceProbeAction(string probeActionType = null)
+        {
+            return new UnknownProbeAction(probeActionType);
+        }
+
+        /// <summary> Initializes a new instance of AppPlatformDeploymentInstance. </summary>
         /// <param name="name"> Name of the deployment instance. </param>
         /// <param name="status"> Status of the deployment instance. </param>
         /// <param name="reason"> Failed reason of the deployment instance. </param>
         /// <param name="discoveryStatus"> Discovery status of the deployment instance. </param>
-        /// <param name="startTime"> Start time of the deployment instance. </param>
+        /// <param name="startedOn"> Start time of the deployment instance. </param>
         /// <param name="zone"> Availability zone information of the deployment instance. </param>
-        /// <returns> A new <see cref="Models.DeploymentInstance"/> instance for mocking. </returns>
-        public static DeploymentInstance DeploymentInstance(string name = null, string status = null, string reason = null, string discoveryStatus = null, string startTime = null, string zone = null)
+        /// <returns> A new <see cref="Models.AppPlatformDeploymentInstance"/> instance for mocking. </returns>
+        public static AppPlatformDeploymentInstance AppPlatformDeploymentInstance(string name = null, string status = null, string reason = null, string discoveryStatus = null, DateTimeOffset? startedOn = null, string zone = null)
         {
-            return new DeploymentInstance(name, status, reason, discoveryStatus, startTime, zone);
+            return new AppPlatformDeploymentInstance(name, status, reason, discoveryStatus, startedOn, zone);
         }
 
-        /// <summary> Initializes a new instance of LogFileUriResult. </summary>
+        /// <summary> Initializes a new instance of ApplicationRemoteDebuggingConfig. </summary>
+        /// <param name="port"> Application debugging port. </param>
+        /// <param name="isEnabled"> Indicate if remote debugging is enabled. </param>
+        /// <returns> A new <see cref="Models.ApplicationRemoteDebuggingConfig"/> instance for mocking. </returns>
+        public static ApplicationRemoteDebuggingConfig ApplicationRemoteDebuggingConfig(int? port = null, bool? isEnabled = null)
+        {
+            return new ApplicationRemoteDebuggingConfig(port, isEnabled);
+        }
+
+        /// <summary> Initializes a new instance of AppPlatformLogFileUriResult. </summary>
         /// <param name="uri"> URL of the log file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        /// <returns> A new <see cref="Models.LogFileUriResult"/> instance for mocking. </returns>
-        public static LogFileUriResult LogFileUriResult(Uri uri = null)
+        /// <returns> A new <see cref="Models.AppPlatformLogFileUriResult"/> instance for mocking. </returns>
+        public static AppPlatformLogFileUriResult AppPlatformLogFileUriResult(Uri uri = null)
         {
             if (uri == null)
             {
                 throw new ArgumentNullException(nameof(uri));
             }
 
-            return new LogFileUriResult(uri);
+            return new AppPlatformLogFileUriResult(uri);
         }
 
-        /// <summary> Initializes a new instance of SupportedRuntimeVersion. </summary>
+        /// <summary> Initializes a new instance of AppPlatformSupportedRuntimeVersion. </summary>
         /// <param name="value"> The raw value which could be passed to deployment CRUD operations. </param>
         /// <param name="platform"> The platform of this runtime version (possible values: &quot;Java&quot; or &quot;.NET&quot;). </param>
         /// <param name="version"> The detailed version (major.minor) of the platform. </param>
-        /// <returns> A new <see cref="Models.SupportedRuntimeVersion"/> instance for mocking. </returns>
-        public static SupportedRuntimeVersion SupportedRuntimeVersion(SupportedRuntimeValue? value = null, SupportedRuntimePlatform? platform = null, string version = null)
+        /// <returns> A new <see cref="Models.AppPlatformSupportedRuntimeVersion"/> instance for mocking. </returns>
+        public static AppPlatformSupportedRuntimeVersion AppPlatformSupportedRuntimeVersion(AppPlatformSupportedRuntimeValue? value = null, AppPlatformSupportedRuntimePlatform? platform = null, string version = null)
         {
-            return new SupportedRuntimeVersion(value, platform, version);
+            return new AppPlatformSupportedRuntimeVersion(value, platform, version);
         }
 
         /// <summary> Initializes a new instance of AvailableAppPlatformSku. </summary>
@@ -961,40 +1048,40 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// empty if there are no restrictions.
         /// </param>
         /// <returns> A new <see cref="Models.AvailableAppPlatformSku"/> instance for mocking. </returns>
-        public static AvailableAppPlatformSku AvailableAppPlatformSku(ResourceType? resourceType = null, string name = null, string tier = null, SkuCapacity capacity = null, IEnumerable<AzureLocation> locations = null, IEnumerable<ResourceSkuLocationInfo> locationInfo = null, IEnumerable<ResourceSkuRestrictions> restrictions = null)
+        public static AvailableAppPlatformSku AvailableAppPlatformSku(ResourceType? resourceType = null, string name = null, string tier = null, AppPlatformSkuCapacity capacity = null, IEnumerable<AzureLocation> locations = null, IEnumerable<AppPlatformSkuLocationInfo> locationInfo = null, IEnumerable<AppPlatformSkuRestrictions> restrictions = null)
         {
             locations ??= new List<AzureLocation>();
-            locationInfo ??= new List<ResourceSkuLocationInfo>();
-            restrictions ??= new List<ResourceSkuRestrictions>();
+            locationInfo ??= new List<AppPlatformSkuLocationInfo>();
+            restrictions ??= new List<AppPlatformSkuRestrictions>();
 
             return new AvailableAppPlatformSku(resourceType, name, tier, capacity, locations?.ToList(), locationInfo?.ToList(), restrictions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SkuCapacity. </summary>
+        /// <summary> Initializes a new instance of AppPlatformSkuCapacity. </summary>
         /// <param name="minimum"> Gets or sets the minimum. </param>
         /// <param name="maximum"> Gets or sets the maximum. </param>
         /// <param name="default"> Gets or sets the default. </param>
         /// <param name="scaleType"> Gets or sets the type of the scale. </param>
-        /// <returns> A new <see cref="Models.SkuCapacity"/> instance for mocking. </returns>
-        public static SkuCapacity SkuCapacity(int minimum = default, int? maximum = null, int? @default = null, SkuScaleType? scaleType = null)
+        /// <returns> A new <see cref="Models.AppPlatformSkuCapacity"/> instance for mocking. </returns>
+        public static AppPlatformSkuCapacity AppPlatformSkuCapacity(int minimum = default, int? maximum = null, int? @default = null, AppPlatformSkuScaleType? scaleType = null)
         {
-            return new SkuCapacity(minimum, maximum, @default, scaleType);
+            return new AppPlatformSkuCapacity(minimum, maximum, @default, scaleType);
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuLocationInfo. </summary>
+        /// <summary> Initializes a new instance of AppPlatformSkuLocationInfo. </summary>
         /// <param name="location"> Gets location of the SKU. </param>
         /// <param name="zones"> Gets list of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Gets details of capabilities available to a SKU in specific zones. </param>
-        /// <returns> A new <see cref="Models.ResourceSkuLocationInfo"/> instance for mocking. </returns>
-        public static ResourceSkuLocationInfo ResourceSkuLocationInfo(AzureLocation? location = null, IEnumerable<string> zones = null, IEnumerable<AppPlatformResourceSkuZoneDetails> zoneDetails = null)
+        /// <returns> A new <see cref="Models.AppPlatformSkuLocationInfo"/> instance for mocking. </returns>
+        public static AppPlatformSkuLocationInfo AppPlatformSkuLocationInfo(AzureLocation? location = null, IEnumerable<string> zones = null, IEnumerable<AppPlatformSkuZoneDetails> zoneDetails = null)
         {
             zones ??= new List<string>();
-            zoneDetails ??= new List<AppPlatformResourceSkuZoneDetails>();
+            zoneDetails ??= new List<AppPlatformSkuZoneDetails>();
 
-            return new ResourceSkuLocationInfo(location, zones?.ToList(), zoneDetails?.ToList());
+            return new AppPlatformSkuLocationInfo(location, zones?.ToList(), zoneDetails?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppPlatformResourceSkuZoneDetails. </summary>
+        /// <summary> Initializes a new instance of AppPlatformSkuZoneDetails. </summary>
         /// <param name="name">
         /// Gets the set of zones that the SKU is available in with the
         /// specified capabilities.
@@ -1003,25 +1090,25 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// Gets a list of capabilities that are available for the SKU in the
         /// specified list of zones.
         /// </param>
-        /// <returns> A new <see cref="Models.AppPlatformResourceSkuZoneDetails"/> instance for mocking. </returns>
-        public static AppPlatformResourceSkuZoneDetails AppPlatformResourceSkuZoneDetails(IEnumerable<string> name = null, IEnumerable<AppPlatformResourceSkuCapabilities> capabilities = null)
+        /// <returns> A new <see cref="Models.AppPlatformSkuZoneDetails"/> instance for mocking. </returns>
+        public static AppPlatformSkuZoneDetails AppPlatformSkuZoneDetails(IEnumerable<string> name = null, IEnumerable<AppPlatformSkuCapabilities> capabilities = null)
         {
             name ??= new List<string>();
-            capabilities ??= new List<AppPlatformResourceSkuCapabilities>();
+            capabilities ??= new List<AppPlatformSkuCapabilities>();
 
-            return new AppPlatformResourceSkuZoneDetails(name?.ToList(), capabilities?.ToList());
+            return new AppPlatformSkuZoneDetails(name?.ToList(), capabilities?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AppPlatformResourceSkuCapabilities. </summary>
+        /// <summary> Initializes a new instance of AppPlatformSkuCapabilities. </summary>
         /// <param name="name"> Gets an invariant to describe the feature. </param>
         /// <param name="value"> Gets an invariant if the feature is measured by quantity. </param>
-        /// <returns> A new <see cref="Models.AppPlatformResourceSkuCapabilities"/> instance for mocking. </returns>
-        public static AppPlatformResourceSkuCapabilities AppPlatformResourceSkuCapabilities(string name = null, string value = null)
+        /// <returns> A new <see cref="Models.AppPlatformSkuCapabilities"/> instance for mocking. </returns>
+        public static AppPlatformSkuCapabilities AppPlatformSkuCapabilities(string name = null, string value = null)
         {
-            return new AppPlatformResourceSkuCapabilities(name, value);
+            return new AppPlatformSkuCapabilities(name, value);
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuRestrictions. </summary>
+        /// <summary> Initializes a new instance of AppPlatformSkuRestrictions. </summary>
         /// <param name="restrictionsType"> Gets the type of restrictions. Possible values include: &apos;Location&apos;, &apos;Zone&apos;. </param>
         /// <param name="values">
         /// Gets the value of restrictions. If the restriction type is set to
@@ -1029,325 +1116,329 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// </param>
         /// <param name="restrictionInfo"> Gets the information about the restriction where the SKU cannot be used. </param>
         /// <param name="reasonCode"> Gets the reason for restriction. Possible values include: &apos;QuotaId&apos;, &apos;NotAvailableForSubscription&apos;. </param>
-        /// <returns> A new <see cref="Models.ResourceSkuRestrictions"/> instance for mocking. </returns>
-        public static ResourceSkuRestrictions ResourceSkuRestrictions(AppPlatformResourceSkuRestrictionsType? restrictionsType = null, IEnumerable<string> values = null, ResourceSkuRestrictionInfo restrictionInfo = null, AppPlatformResourceSkuRestrictionsReasonCode? reasonCode = null)
+        /// <returns> A new <see cref="Models.AppPlatformSkuRestrictions"/> instance for mocking. </returns>
+        public static AppPlatformSkuRestrictions AppPlatformSkuRestrictions(AppPlatformSkuRestrictionsType? restrictionsType = null, IEnumerable<string> values = null, AppPlatformSkuRestrictionInfo restrictionInfo = null, AppPlatformSkuRestrictionsReasonCode? reasonCode = null)
         {
             values ??= new List<string>();
 
-            return new ResourceSkuRestrictions(restrictionsType, values?.ToList(), restrictionInfo, reasonCode);
+            return new AppPlatformSkuRestrictions(restrictionsType, values?.ToList(), restrictionInfo, reasonCode);
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuRestrictionInfo. </summary>
+        /// <summary> Initializes a new instance of AppPlatformSkuRestrictionInfo. </summary>
         /// <param name="locations"> Gets locations where the SKU is restricted. </param>
         /// <param name="zones"> Gets list of availability zones where the SKU is restricted. </param>
-        /// <returns> A new <see cref="Models.ResourceSkuRestrictionInfo"/> instance for mocking. </returns>
-        public static ResourceSkuRestrictionInfo ResourceSkuRestrictionInfo(IEnumerable<AzureLocation> locations = null, IEnumerable<string> zones = null)
+        /// <returns> A new <see cref="Models.AppPlatformSkuRestrictionInfo"/> instance for mocking. </returns>
+        public static AppPlatformSkuRestrictionInfo AppPlatformSkuRestrictionInfo(IEnumerable<AzureLocation> locations = null, IEnumerable<string> zones = null)
         {
             locations ??= new List<AzureLocation>();
             zones ??= new List<string>();
 
-            return new ResourceSkuRestrictionInfo(locations?.ToList(), zones?.ToList());
+            return new AppPlatformSkuRestrictionInfo(locations?.ToList(), zones?.ToList());
         }
 
-        /// <summary> Initializes a new instance of GatewayResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformGatewayData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Spring Cloud Gateway properties payload. </param>
         /// <param name="sku"> Sku of the Spring Cloud Gateway resource. </param>
-        /// <returns> A new <see cref="AppPlatform.GatewayResourceData"/> instance for mocking. </returns>
-        public static GatewayResourceData GatewayResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GatewayProperties properties = null, AppPlatformSku sku = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformGatewayData"/> instance for mocking. </returns>
+        public static AppPlatformGatewayData AppPlatformGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformGatewayProperties properties = null, AppPlatformSku sku = null)
         {
-            return new GatewayResourceData(id, name, resourceType, systemData, properties, sku);
+            return new AppPlatformGatewayData(id, name, resourceType, systemData, properties, sku);
         }
 
-        /// <summary> Initializes a new instance of GatewayProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformGatewayProperties. </summary>
         /// <param name="provisioningState"> State of the Spring Cloud Gateway. </param>
-        /// <param name="public"> Indicates whether the Spring Cloud Gateway exposes endpoint. </param>
+        /// <param name="isPublic"> Indicates whether the Spring Cloud Gateway exposes endpoint. </param>
         /// <param name="uri"> URL of the Spring Cloud Gateway, exposed when &apos;public&apos; is true. </param>
-        /// <param name="httpsOnly"> Indicate if only https is allowed. </param>
+        /// <param name="isHttpsOnly"> Indicate if only https is allowed. </param>
         /// <param name="ssoProperties"> Single sign-on related configuration. </param>
         /// <param name="apiMetadataProperties"> API metadata property for Spring Cloud Gateway. </param>
         /// <param name="corsProperties"> Cross-Origin Resource Sharing property. </param>
         /// <param name="resourceRequests"> The requested resource quantity for required CPU and Memory. </param>
         /// <param name="instances"> Collection of instances belong to Spring Cloud Gateway. </param>
         /// <param name="operatorProperties"> Properties of the Spring Cloud Gateway Operator. </param>
-        /// <returns> A new <see cref="Models.GatewayProperties"/> instance for mocking. </returns>
-        public static GatewayProperties GatewayProperties(GatewayProvisioningState? provisioningState = null, bool? @public = null, Uri uri = null, bool? httpsOnly = null, SsoProperties ssoProperties = null, GatewayApiMetadataProperties apiMetadataProperties = null, GatewayCorsProperties corsProperties = null, GatewayResourceRequests resourceRequests = null, IEnumerable<GatewayInstance> instances = null, GatewayOperatorProperties operatorProperties = null)
+        /// <returns> A new <see cref="Models.AppPlatformGatewayProperties"/> instance for mocking. </returns>
+        public static AppPlatformGatewayProperties AppPlatformGatewayProperties(AppPlatformGatewayProvisioningState? provisioningState = null, bool? isPublic = null, Uri uri = null, bool? isHttpsOnly = null, AppPlatformSsoProperties ssoProperties = null, AppPlatformGatewayApiMetadataProperties apiMetadataProperties = null, AppPlatformGatewayCorsProperties corsProperties = null, AppPlatformGatewayResourceRequirements resourceRequests = null, IEnumerable<AppPlatformGatewayInstance> instances = null, AppPlatformGatewayOperatorProperties operatorProperties = null)
         {
-            instances ??= new List<GatewayInstance>();
+            instances ??= new List<AppPlatformGatewayInstance>();
 
-            return new GatewayProperties(provisioningState, @public, uri, httpsOnly, ssoProperties, apiMetadataProperties, corsProperties, resourceRequests, instances?.ToList(), operatorProperties);
+            return new AppPlatformGatewayProperties(provisioningState, isPublic, uri, isHttpsOnly, ssoProperties, apiMetadataProperties, corsProperties, resourceRequests, instances?.ToList(), operatorProperties);
         }
 
-        /// <summary> Initializes a new instance of SsoProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformSsoProperties. </summary>
         /// <param name="scope"> It defines the specific actions applications can be allowed to do on a user&apos;s behalf. </param>
         /// <param name="clientId"> The public identifier for the application. </param>
         /// <param name="clientSecret"> The secret known only to the application and the authorization server. </param>
         /// <param name="issuerUri"> The URI of Issuer Identifier. </param>
-        /// <returns> A new <see cref="Models.SsoProperties"/> instance for mocking. </returns>
-        public static SsoProperties SsoProperties(IEnumerable<string> scope = null, string clientId = null, string clientSecret = null, Uri issuerUri = null)
+        /// <returns> A new <see cref="Models.AppPlatformSsoProperties"/> instance for mocking. </returns>
+        public static AppPlatformSsoProperties AppPlatformSsoProperties(IEnumerable<string> scope = null, string clientId = null, string clientSecret = null, Uri issuerUri = null)
         {
             scope ??= new List<string>();
 
-            return new SsoProperties(scope?.ToList(), clientId, clientSecret, issuerUri);
+            return new AppPlatformSsoProperties(scope?.ToList(), clientId, clientSecret, issuerUri);
         }
 
-        /// <summary> Initializes a new instance of GatewayApiMetadataProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformGatewayApiMetadataProperties. </summary>
         /// <param name="title"> Title describing the context of the APIs available on the Gateway instance (default: `Spring Cloud Gateway for K8S`). </param>
         /// <param name="description"> Detailed description of the APIs available on the Gateway instance (default: `Generated OpenAPI 3 document that describes the API routes configured.`). </param>
         /// <param name="documentation"> Location of additional documentation for the APIs available on the Gateway instance. </param>
         /// <param name="version"> Version of APIs available on this Gateway instance (default: `unspecified`). </param>
         /// <param name="serverUri"> Base URL that API consumers will use to access APIs on the Gateway instance. </param>
-        /// <returns> A new <see cref="Models.GatewayApiMetadataProperties"/> instance for mocking. </returns>
-        public static GatewayApiMetadataProperties GatewayApiMetadataProperties(string title = null, string description = null, string documentation = null, string version = null, Uri serverUri = null)
+        /// <returns> A new <see cref="Models.AppPlatformGatewayApiMetadataProperties"/> instance for mocking. </returns>
+        public static AppPlatformGatewayApiMetadataProperties AppPlatformGatewayApiMetadataProperties(string title = null, string description = null, string documentation = null, string version = null, Uri serverUri = null)
         {
-            return new GatewayApiMetadataProperties(title, description, documentation, version, serverUri);
+            return new AppPlatformGatewayApiMetadataProperties(title, description, documentation, version, serverUri);
         }
 
-        /// <summary> Initializes a new instance of GatewayCorsProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformGatewayCorsProperties. </summary>
         /// <param name="allowedOrigins"> Allowed origins to make cross-site requests. The special value `*` allows all domains. </param>
         /// <param name="allowedMethods"> Allowed HTTP methods on cross-site requests. The special value `*` allows all methods. If not set, `GET` and `HEAD` are allowed by default. </param>
         /// <param name="allowedHeaders"> Allowed headers in cross-site requests. The special value `*` allows actual requests to send any header. </param>
         /// <param name="maxAge"> How long, in seconds, the response from a pre-flight request can be cached by clients. </param>
-        /// <param name="allowCredentials"> Whether user credentials are supported on cross-site requests. Valid values: `true`, `false`. </param>
+        /// <param name="areCredentialsAllowed"> Whether user credentials are supported on cross-site requests. Valid values: `true`, `false`. </param>
         /// <param name="exposedHeaders"> HTTP response headers to expose for cross-site requests. </param>
-        /// <returns> A new <see cref="Models.GatewayCorsProperties"/> instance for mocking. </returns>
-        public static GatewayCorsProperties GatewayCorsProperties(IEnumerable<string> allowedOrigins = null, IEnumerable<string> allowedMethods = null, IEnumerable<string> allowedHeaders = null, int? maxAge = null, bool? allowCredentials = null, IEnumerable<string> exposedHeaders = null)
+        /// <returns> A new <see cref="Models.AppPlatformGatewayCorsProperties"/> instance for mocking. </returns>
+        public static AppPlatformGatewayCorsProperties AppPlatformGatewayCorsProperties(IEnumerable<string> allowedOrigins = null, IEnumerable<string> allowedMethods = null, IEnumerable<string> allowedHeaders = null, int? maxAge = null, bool? areCredentialsAllowed = null, IEnumerable<string> exposedHeaders = null)
         {
             allowedOrigins ??= new List<string>();
             allowedMethods ??= new List<string>();
             allowedHeaders ??= new List<string>();
             exposedHeaders ??= new List<string>();
 
-            return new GatewayCorsProperties(allowedOrigins?.ToList(), allowedMethods?.ToList(), allowedHeaders?.ToList(), maxAge, allowCredentials, exposedHeaders?.ToList());
+            return new AppPlatformGatewayCorsProperties(allowedOrigins?.ToList(), allowedMethods?.ToList(), allowedHeaders?.ToList(), maxAge, areCredentialsAllowed, exposedHeaders?.ToList());
         }
 
-        /// <summary> Initializes a new instance of GatewayResourceRequests. </summary>
+        /// <summary> Initializes a new instance of AppPlatformGatewayResourceRequirements. </summary>
         /// <param name="cpu"> Cpu allocated to each Spring Cloud Gateway instance. </param>
         /// <param name="memory"> Memory allocated to each Spring Cloud Gateway instance. </param>
-        /// <returns> A new <see cref="Models.GatewayResourceRequests"/> instance for mocking. </returns>
-        public static GatewayResourceRequests GatewayResourceRequests(string cpu = null, string memory = null)
+        /// <returns> A new <see cref="Models.AppPlatformGatewayResourceRequirements"/> instance for mocking. </returns>
+        public static AppPlatformGatewayResourceRequirements AppPlatformGatewayResourceRequirements(string cpu = null, string memory = null)
         {
-            return new GatewayResourceRequests(cpu, memory);
+            return new AppPlatformGatewayResourceRequirements(cpu, memory);
         }
 
-        /// <summary> Initializes a new instance of GatewayInstance. </summary>
+        /// <summary> Initializes a new instance of AppPlatformGatewayInstance. </summary>
         /// <param name="name"> Name of the Spring Cloud Gateway instance. </param>
         /// <param name="status"> Status of the Spring Cloud Gateway instance. </param>
-        /// <returns> A new <see cref="Models.GatewayInstance"/> instance for mocking. </returns>
-        public static GatewayInstance GatewayInstance(string name = null, string status = null)
+        /// <returns> A new <see cref="Models.AppPlatformGatewayInstance"/> instance for mocking. </returns>
+        public static AppPlatformGatewayInstance AppPlatformGatewayInstance(string name = null, string status = null)
         {
-            return new GatewayInstance(name, status);
+            return new AppPlatformGatewayInstance(name, status);
         }
 
-        /// <summary> Initializes a new instance of GatewayOperatorProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformGatewayOperatorProperties. </summary>
         /// <param name="resourceRequests"> The requested resource quantity for required CPU and Memory. </param>
         /// <param name="instances"> Collection of instances belong to Spring Cloud Gateway operator. </param>
-        /// <returns> A new <see cref="Models.GatewayOperatorProperties"/> instance for mocking. </returns>
-        public static GatewayOperatorProperties GatewayOperatorProperties(GatewayOperatorResourceRequests resourceRequests = null, IEnumerable<GatewayInstance> instances = null)
+        /// <returns> A new <see cref="Models.AppPlatformGatewayOperatorProperties"/> instance for mocking. </returns>
+        public static AppPlatformGatewayOperatorProperties AppPlatformGatewayOperatorProperties(AppPlatformGatewayOperatorResourceRequirements resourceRequests = null, IEnumerable<AppPlatformGatewayInstance> instances = null)
         {
-            instances ??= new List<GatewayInstance>();
+            instances ??= new List<AppPlatformGatewayInstance>();
 
-            return new GatewayOperatorProperties(resourceRequests, instances?.ToList());
+            return new AppPlatformGatewayOperatorProperties(resourceRequests, instances?.ToList());
         }
 
-        /// <summary> Initializes a new instance of GatewayOperatorResourceRequests. </summary>
+        /// <summary> Initializes a new instance of AppPlatformGatewayOperatorResourceRequirements. </summary>
         /// <param name="cpu"> Cpu allocated to each Spring Cloud Gateway Operator instance. </param>
         /// <param name="memory"> Memory allocated to each Spring Cloud Gateway Operator instance. </param>
         /// <param name="instanceCount"> Instance count of the Spring Cloud Gateway Operator. </param>
-        /// <returns> A new <see cref="Models.GatewayOperatorResourceRequests"/> instance for mocking. </returns>
-        public static GatewayOperatorResourceRequests GatewayOperatorResourceRequests(string cpu = null, string memory = null, int? instanceCount = null)
+        /// <returns> A new <see cref="Models.AppPlatformGatewayOperatorResourceRequirements"/> instance for mocking. </returns>
+        public static AppPlatformGatewayOperatorResourceRequirements AppPlatformGatewayOperatorResourceRequirements(string cpu = null, string memory = null, int? instanceCount = null)
         {
-            return new GatewayOperatorResourceRequests(cpu, memory, instanceCount);
+            return new AppPlatformGatewayOperatorResourceRequirements(cpu, memory, instanceCount);
         }
 
-        /// <summary> Initializes a new instance of GatewayRouteConfigResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformGatewayRouteConfigData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> API route config of the Spring Cloud Gateway. </param>
-        /// <returns> A new <see cref="AppPlatform.GatewayRouteConfigResourceData"/> instance for mocking. </returns>
-        public static GatewayRouteConfigResourceData GatewayRouteConfigResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GatewayRouteConfigProperties properties = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformGatewayRouteConfigData"/> instance for mocking. </returns>
+        public static AppPlatformGatewayRouteConfigData AppPlatformGatewayRouteConfigData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformGatewayRouteConfigProperties properties = null)
         {
-            return new GatewayRouteConfigResourceData(id, name, resourceType, systemData, properties);
+            return new AppPlatformGatewayRouteConfigData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of GatewayRouteConfigProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformGatewayRouteConfigProperties. </summary>
         /// <param name="provisioningState"> State of the Spring Cloud Gateway route config. </param>
-        /// <param name="appResourceId"> The resource Id of the Azure Spring Cloud app, required unless route defines `uri`. </param>
+        /// <param name="appResourceId"> The resource Id of the Azure Spring Apps app, required unless route defines `uri`. </param>
+        /// <param name="openApiUri"> OpenAPI properties of Spring Cloud Gateway route config. </param>
+        /// <param name="protocol"> Protocol of routed Azure Spring Apps applications. </param>
         /// <param name="routes"> Array of API routes, each route contains properties such as `title`, `uri`, `ssoEnabled`, `predicates`, `filters`. </param>
-        /// <returns> A new <see cref="Models.GatewayRouteConfigProperties"/> instance for mocking. </returns>
-        public static GatewayRouteConfigProperties GatewayRouteConfigProperties(GatewayProvisioningState? provisioningState = null, string appResourceId = null, IEnumerable<GatewayApiRoute> routes = null)
+        /// <returns> A new <see cref="Models.AppPlatformGatewayRouteConfigProperties"/> instance for mocking. </returns>
+        public static AppPlatformGatewayRouteConfigProperties AppPlatformGatewayRouteConfigProperties(AppPlatformGatewayProvisioningState? provisioningState = null, ResourceIdentifier appResourceId = null, Uri openApiUri = null, AppPlatformGatewayRouteConfigProtocol? protocol = null, IEnumerable<AppPlatformGatewayApiRoute> routes = null)
         {
-            routes ??= new List<GatewayApiRoute>();
+            routes ??= new List<AppPlatformGatewayApiRoute>();
 
-            return new GatewayRouteConfigProperties(provisioningState, appResourceId, routes?.ToList());
+            return new AppPlatformGatewayRouteConfigProperties(provisioningState, appResourceId, openApiUri != null ? new GatewayRouteConfigOpenApiProperties(openApiUri) : null, protocol, routes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of GatewayApiRoute. </summary>
+        /// <summary> Initializes a new instance of AppPlatformGatewayApiRoute. </summary>
         /// <param name="title"> A title, will be applied to methods in the generated OpenAPI documentation. </param>
         /// <param name="description"> A description, will be applied to methods in the generated OpenAPI documentation. </param>
         /// <param name="uri"> Full uri, will override `appName`. </param>
-        /// <param name="ssoEnabled"> Enable sso validation. </param>
-        /// <param name="tokenRelay"> Pass currently-authenticated user&apos;s identity token to application service, default is &apos;false&apos;. </param>
+        /// <param name="isSsoEnabled"> Enable sso validation. </param>
+        /// <param name="isTokenRelayed"> Pass currently-authenticated user&apos;s identity token to application service, default is &apos;false&apos;. </param>
         /// <param name="predicates"> A number of conditions to evaluate a route for each request. Each predicate may be evaluated against request headers and parameter values. All of the predicates associated with a route must evaluate to true for the route to be matched to the request. </param>
         /// <param name="filters"> To modify the request before sending it to the target endpoint, or the received response. </param>
         /// <param name="order"> Route processing order. </param>
         /// <param name="tags"> Classification tags, will be applied to methods in the generated OpenAPI documentation. </param>
-        /// <returns> A new <see cref="Models.GatewayApiRoute"/> instance for mocking. </returns>
-        public static GatewayApiRoute GatewayApiRoute(string title = null, string description = null, Uri uri = null, bool? ssoEnabled = null, bool? tokenRelay = null, IEnumerable<string> predicates = null, IEnumerable<string> filters = null, int? order = null, IEnumerable<string> tags = null)
+        /// <returns> A new <see cref="Models.AppPlatformGatewayApiRoute"/> instance for mocking. </returns>
+        public static AppPlatformGatewayApiRoute AppPlatformGatewayApiRoute(string title = null, string description = null, Uri uri = null, bool? isSsoEnabled = null, bool? isTokenRelayed = null, IEnumerable<string> predicates = null, IEnumerable<string> filters = null, int? order = null, IEnumerable<string> tags = null)
         {
             predicates ??= new List<string>();
             filters ??= new List<string>();
             tags ??= new List<string>();
 
-            return new GatewayApiRoute(title, description, uri, ssoEnabled, tokenRelay, predicates?.ToList(), filters?.ToList(), order, tags?.ToList());
+            return new AppPlatformGatewayApiRoute(title, description, uri, isSsoEnabled, isTokenRelayed, predicates?.ToList(), filters?.ToList(), order, tags?.ToList());
         }
 
-        /// <summary> Initializes a new instance of GatewayCustomDomainResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformGatewayCustomDomainData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="gatewayCustomDomainThumbprint"> The properties of custom domain for Spring Cloud Gateway. </param>
-        /// <returns> A new <see cref="AppPlatform.GatewayCustomDomainResourceData"/> instance for mocking. </returns>
-        public static GatewayCustomDomainResourceData GatewayCustomDomainResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string gatewayCustomDomainThumbprint = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformGatewayCustomDomainData"/> instance for mocking. </returns>
+        public static AppPlatformGatewayCustomDomainData AppPlatformGatewayCustomDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string gatewayCustomDomainThumbprint = null)
         {
-            return new GatewayCustomDomainResourceData(id, name, resourceType, systemData, new GatewayCustomDomainProperties(gatewayCustomDomainThumbprint));
+            return new AppPlatformGatewayCustomDomainData(id, name, resourceType, systemData, gatewayCustomDomainThumbprint != null ? new GatewayCustomDomainProperties(gatewayCustomDomainThumbprint) : null);
         }
 
-        /// <summary> Initializes a new instance of ApiPortalResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformApiPortalData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> API portal properties payload. </param>
         /// <param name="sku"> Sku of the API portal resource. </param>
-        /// <returns> A new <see cref="AppPlatform.ApiPortalResourceData"/> instance for mocking. </returns>
-        public static ApiPortalResourceData ApiPortalResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApiPortalProperties properties = null, AppPlatformSku sku = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformApiPortalData"/> instance for mocking. </returns>
+        public static AppPlatformApiPortalData AppPlatformApiPortalData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformApiPortalProperties properties = null, AppPlatformSku sku = null)
         {
-            return new ApiPortalResourceData(id, name, resourceType, systemData, properties, sku);
+            return new AppPlatformApiPortalData(id, name, resourceType, systemData, properties, sku);
         }
 
-        /// <summary> Initializes a new instance of ApiPortalProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformApiPortalProperties. </summary>
         /// <param name="provisioningState"> State of the API portal. </param>
-        /// <param name="public"> Indicates whether the API portal exposes endpoint. </param>
+        /// <param name="isPublic"> Indicates whether the API portal exposes endpoint. </param>
         /// <param name="uri"> URL of the API portal, exposed when &apos;public&apos; is true. </param>
-        /// <param name="httpsOnly"> Indicate if only https is allowed. </param>
+        /// <param name="isHttpsOnly"> Indicate if only https is allowed. </param>
         /// <param name="gatewayIds"> The array of resource Ids of gateway to integrate with API portal. </param>
         /// <param name="sourceUris"> Collection of OpenAPI source URL locations. </param>
         /// <param name="ssoProperties"> Single sign-on related configuration. </param>
         /// <param name="resourceRequests"> The requested resource quantity for required CPU and Memory. </param>
         /// <param name="instances"> Collection of instances belong to API portal. </param>
-        /// <returns> A new <see cref="Models.ApiPortalProperties"/> instance for mocking. </returns>
-        public static ApiPortalProperties ApiPortalProperties(ApiPortalProvisioningState? provisioningState = null, bool? @public = null, Uri uri = null, bool? httpsOnly = null, IEnumerable<string> gatewayIds = null, IEnumerable<Uri> sourceUris = null, SsoProperties ssoProperties = null, ApiPortalResourceRequests resourceRequests = null, IEnumerable<ApiPortalInstance> instances = null)
+        /// <returns> A new <see cref="Models.AppPlatformApiPortalProperties"/> instance for mocking. </returns>
+        public static AppPlatformApiPortalProperties AppPlatformApiPortalProperties(AppPlatformApiPortalProvisioningState? provisioningState = null, bool? isPublic = null, Uri uri = null, bool? isHttpsOnly = null, IEnumerable<ResourceIdentifier> gatewayIds = null, IEnumerable<Uri> sourceUris = null, AppPlatformSsoProperties ssoProperties = null, AppPlatformApiPortalResourceRequirements resourceRequests = null, IEnumerable<AppPlatformApiPortalInstance> instances = null)
         {
-            gatewayIds ??= new List<string>();
+            gatewayIds ??= new List<ResourceIdentifier>();
             sourceUris ??= new List<Uri>();
-            instances ??= new List<ApiPortalInstance>();
+            instances ??= new List<AppPlatformApiPortalInstance>();
 
-            return new ApiPortalProperties(provisioningState, @public, uri, httpsOnly, gatewayIds?.ToList(), sourceUris?.ToList(), ssoProperties, resourceRequests, instances?.ToList());
+            return new AppPlatformApiPortalProperties(provisioningState, isPublic, uri, isHttpsOnly, gatewayIds?.ToList(), sourceUris?.ToList(), ssoProperties, resourceRequests, instances?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ApiPortalResourceRequests. </summary>
+        /// <summary> Initializes a new instance of AppPlatformApiPortalResourceRequirements. </summary>
         /// <param name="cpu"> Cpu allocated to each API portal instance. </param>
         /// <param name="memory"> Memory allocated to each API portal instance. </param>
-        /// <returns> A new <see cref="Models.ApiPortalResourceRequests"/> instance for mocking. </returns>
-        public static ApiPortalResourceRequests ApiPortalResourceRequests(string cpu = null, string memory = null)
+        /// <returns> A new <see cref="Models.AppPlatformApiPortalResourceRequirements"/> instance for mocking. </returns>
+        public static AppPlatformApiPortalResourceRequirements AppPlatformApiPortalResourceRequirements(string cpu = null, string memory = null)
         {
-            return new ApiPortalResourceRequests(cpu, memory);
+            return new AppPlatformApiPortalResourceRequirements(cpu, memory);
         }
 
-        /// <summary> Initializes a new instance of ApiPortalInstance. </summary>
+        /// <summary> Initializes a new instance of AppPlatformApiPortalInstance. </summary>
         /// <param name="name"> Name of the API portal instance. </param>
         /// <param name="status"> Status of the API portal instance. </param>
-        /// <returns> A new <see cref="Models.ApiPortalInstance"/> instance for mocking. </returns>
-        public static ApiPortalInstance ApiPortalInstance(string name = null, string status = null)
+        /// <returns> A new <see cref="Models.AppPlatformApiPortalInstance"/> instance for mocking. </returns>
+        public static AppPlatformApiPortalInstance AppPlatformApiPortalInstance(string name = null, string status = null)
         {
-            return new ApiPortalInstance(name, status);
+            return new AppPlatformApiPortalInstance(name, status);
         }
 
-        /// <summary> Initializes a new instance of ApiPortalCustomDomainResourceData. </summary>
+        /// <summary> Initializes a new instance of AppPlatformApiPortalCustomDomainData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="apiPortalCustomDomainThumbprint"> The properties of custom domain for API portal. </param>
-        /// <returns> A new <see cref="AppPlatform.ApiPortalCustomDomainResourceData"/> instance for mocking. </returns>
-        public static ApiPortalCustomDomainResourceData ApiPortalCustomDomainResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string apiPortalCustomDomainThumbprint = null)
+        /// <returns> A new <see cref="AppPlatform.AppPlatformApiPortalCustomDomainData"/> instance for mocking. </returns>
+        public static AppPlatformApiPortalCustomDomainData AppPlatformApiPortalCustomDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string apiPortalCustomDomainThumbprint = null)
         {
-            return new ApiPortalCustomDomainResourceData(id, name, resourceType, systemData, new ApiPortalCustomDomainProperties(apiPortalCustomDomainThumbprint));
+            return new AppPlatformApiPortalCustomDomainData(id, name, resourceType, systemData, apiPortalCustomDomainThumbprint != null ? new ApiPortalCustomDomainProperties(apiPortalCustomDomainThumbprint) : null);
         }
 
-        /// <summary> Initializes a new instance of KeyVaultCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformKeyVaultCertificateProperties. </summary>
         /// <param name="thumbprint"> The thumbprint of certificate. </param>
         /// <param name="issuer"> The issuer of certificate. </param>
-        /// <param name="issuedDate"> The issue date of certificate. </param>
-        /// <param name="expirationDate"> The expiration date of certificate. </param>
-        /// <param name="activateDate"> The activate date of certificate. </param>
+        /// <param name="issuedOn"> The issue date of certificate. </param>
+        /// <param name="expireOn"> The expiration date of certificate. </param>
+        /// <param name="activateOn"> The activate date of certificate. </param>
         /// <param name="subjectName"> The subject name of certificate. </param>
         /// <param name="dnsNames"> The domain list of certificate. </param>
+        /// <param name="provisioningState"> Provisioning state of the Certificate. </param>
         /// <param name="vaultUri"> The vault uri of user key vault. </param>
         /// <param name="keyVaultCertName"> The certificate name of key vault. </param>
         /// <param name="certVersion"> The certificate version of key vault. </param>
-        /// <param name="excludePrivateKey"> Optional. If set to true, it will not import private key from key vault. </param>
-        /// <returns> A new <see cref="Models.KeyVaultCertificateProperties"/> instance for mocking. </returns>
-        public static KeyVaultCertificateProperties KeyVaultCertificateProperties(string thumbprint = null, string issuer = null, string issuedDate = null, string expirationDate = null, string activateDate = null, string subjectName = null, IEnumerable<string> dnsNames = null, Uri vaultUri = null, string keyVaultCertName = null, string certVersion = null, bool? excludePrivateKey = null)
+        /// <param name="isPrivateKeyExcluded"> Optional. If set to true, it will not import private key from key vault. </param>
+        /// <returns> A new <see cref="Models.AppPlatformKeyVaultCertificateProperties"/> instance for mocking. </returns>
+        public static AppPlatformKeyVaultCertificateProperties AppPlatformKeyVaultCertificateProperties(string thumbprint = null, string issuer = null, DateTimeOffset? issuedOn = null, DateTimeOffset? expireOn = null, DateTimeOffset? activateOn = null, string subjectName = null, IEnumerable<string> dnsNames = null, AppPlatformCertificateProvisioningState? provisioningState = null, Uri vaultUri = null, string keyVaultCertName = null, string certVersion = null, bool? isPrivateKeyExcluded = null)
         {
             dnsNames ??= new List<string>();
 
-            return new KeyVaultCertificateProperties("KeyVaultCertificate", thumbprint, issuer, issuedDate, expirationDate, activateDate, subjectName, dnsNames?.ToList(), vaultUri, keyVaultCertName, certVersion, excludePrivateKey);
+            return new AppPlatformKeyVaultCertificateProperties("KeyVaultCertificate", thumbprint, issuer, issuedOn, expireOn, activateOn, subjectName, dnsNames?.ToList(), provisioningState, vaultUri, keyVaultCertName, certVersion, isPrivateKeyExcluded);
         }
 
-        /// <summary> Initializes a new instance of ContentCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of AppPlatformContentCertificateProperties. </summary>
         /// <param name="thumbprint"> The thumbprint of certificate. </param>
         /// <param name="issuer"> The issuer of certificate. </param>
-        /// <param name="issuedDate"> The issue date of certificate. </param>
-        /// <param name="expirationDate"> The expiration date of certificate. </param>
-        /// <param name="activateDate"> The activate date of certificate. </param>
+        /// <param name="issuedOn"> The issue date of certificate. </param>
+        /// <param name="expireOn"> The expiration date of certificate. </param>
+        /// <param name="activateOn"> The activate date of certificate. </param>
         /// <param name="subjectName"> The subject name of certificate. </param>
         /// <param name="dnsNames"> The domain list of certificate. </param>
+        /// <param name="provisioningState"> Provisioning state of the Certificate. </param>
         /// <param name="content"> The content of uploaded certificate. </param>
-        /// <returns> A new <see cref="Models.ContentCertificateProperties"/> instance for mocking. </returns>
-        public static ContentCertificateProperties ContentCertificateProperties(string thumbprint = null, string issuer = null, string issuedDate = null, string expirationDate = null, string activateDate = null, string subjectName = null, IEnumerable<string> dnsNames = null, string content = null)
+        /// <returns> A new <see cref="Models.AppPlatformContentCertificateProperties"/> instance for mocking. </returns>
+        public static AppPlatformContentCertificateProperties AppPlatformContentCertificateProperties(string thumbprint = null, string issuer = null, DateTimeOffset? issuedOn = null, DateTimeOffset? expireOn = null, DateTimeOffset? activateOn = null, string subjectName = null, IEnumerable<string> dnsNames = null, AppPlatformCertificateProvisioningState? provisioningState = null, string content = null)
         {
             dnsNames ??= new List<string>();
 
-            return new ContentCertificateProperties("ContentCertificate", thumbprint, issuer, issuedDate, expirationDate, activateDate, subjectName, dnsNames?.ToList(), content);
+            return new AppPlatformContentCertificateProperties("ContentCertificate", thumbprint, issuer, issuedOn, expireOn, activateOn, subjectName, dnsNames?.ToList(), provisioningState, content);
         }
 
-        /// <summary> Initializes a new instance of StorageAccount. </summary>
+        /// <summary> Initializes a new instance of AppPlatformStorageAccount. </summary>
         /// <param name="accountName"> The account name of the Azure Storage Account. </param>
         /// <param name="accountKey"> The account key of the Azure Storage Account. </param>
-        /// <returns> A new <see cref="Models.StorageAccount"/> instance for mocking. </returns>
-        public static StorageAccount StorageAccount(string accountName = null, string accountKey = null)
+        /// <returns> A new <see cref="Models.AppPlatformStorageAccount"/> instance for mocking. </returns>
+        public static AppPlatformStorageAccount AppPlatformStorageAccount(string accountName = null, string accountKey = null)
         {
-            return new StorageAccount("StorageAccount", accountName, accountKey);
+            return new AppPlatformStorageAccount("StorageAccount", accountName, accountKey);
         }
 
-        /// <summary> Initializes a new instance of AzureFileVolume. </summary>
+        /// <summary> Initializes a new instance of AppPlatformAzureFileVolume. </summary>
         /// <param name="mountPath"> The mount path of the persistent disk. </param>
-        /// <param name="readOnly"> Indicates whether the persistent disk is a readOnly one. </param>
+        /// <param name="isReadOnly"> Indicates whether the persistent disk is a readOnly one. </param>
         /// <param name="mountOptions"> These are the mount options for a persistent disk. </param>
         /// <param name="shareName"> The share name of the Azure File share. </param>
-        /// <returns> A new <see cref="Models.AzureFileVolume"/> instance for mocking. </returns>
-        public static AzureFileVolume AzureFileVolume(string mountPath = null, bool? readOnly = null, IEnumerable<string> mountOptions = null, string shareName = null)
+        /// <returns> A new <see cref="Models.AppPlatformAzureFileVolume"/> instance for mocking. </returns>
+        public static AppPlatformAzureFileVolume AppPlatformAzureFileVolume(string mountPath = null, bool? isReadOnly = null, IEnumerable<string> mountOptions = null, string shareName = null)
         {
             mountOptions ??= new List<string>();
 
-            return new AzureFileVolume("AzureFileVolume", mountPath, readOnly, mountOptions?.ToList(), shareName);
+            return new AppPlatformAzureFileVolume("AzureFileVolume", mountPath, isReadOnly, mountOptions?.ToList(), shareName);
         }
 
-        /// <summary> Initializes a new instance of UploadedUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of AppPlatformUploadedUserSourceInfo. </summary>
         /// <param name="version"> Version of the source. </param>
         /// <param name="relativePath"> Relative path of the storage which stores the source. </param>
-        /// <returns> A new <see cref="Models.UploadedUserSourceInfo"/> instance for mocking. </returns>
-        public static UploadedUserSourceInfo UploadedUserSourceInfo(string version = null, string relativePath = null)
+        /// <returns> A new <see cref="Models.AppPlatformUploadedUserSourceInfo"/> instance for mocking. </returns>
+        public static AppPlatformUploadedUserSourceInfo AppPlatformUploadedUserSourceInfo(string version = null, string relativePath = null)
         {
-            return new UploadedUserSourceInfo("UploadedUserSourceInfo", version, relativePath);
+            return new AppPlatformUploadedUserSourceInfo("UploadedUserSourceInfo", version, relativePath);
         }
 
         /// <summary> Initializes a new instance of JarUploadedUserSourceInfo. </summary>
@@ -1386,47 +1477,79 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new NetCoreZipUploadedUserSourceInfo("NetCoreZip", version, relativePath, netCoreMainEntryPath, runtimeVersion);
         }
 
-        /// <summary> Initializes a new instance of BuildResultUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of AppPlatformBuildResultUserSourceInfo. </summary>
         /// <param name="version"> Version of the source. </param>
         /// <param name="buildResultId"> Resource id of an existing succeeded build result under the same Spring instance. </param>
-        /// <returns> A new <see cref="Models.BuildResultUserSourceInfo"/> instance for mocking. </returns>
-        public static BuildResultUserSourceInfo BuildResultUserSourceInfo(string version = null, string buildResultId = null)
+        /// <returns> A new <see cref="Models.AppPlatformBuildResultUserSourceInfo"/> instance for mocking. </returns>
+        public static AppPlatformBuildResultUserSourceInfo AppPlatformBuildResultUserSourceInfo(string version = null, string buildResultId = null)
         {
-            return new BuildResultUserSourceInfo("BuildResult", version, buildResultId);
+            return new AppPlatformBuildResultUserSourceInfo("BuildResult", version, buildResultId);
         }
 
-        /// <summary> Initializes a new instance of CustomContainerUserSourceInfo. </summary>
+        /// <summary> Initializes a new instance of AppPlatformCustomContainerUserSourceInfo. </summary>
         /// <param name="version"> Version of the source. </param>
         /// <param name="customContainer"> Custom container payload. </param>
-        /// <returns> A new <see cref="Models.CustomContainerUserSourceInfo"/> instance for mocking. </returns>
-        public static CustomContainerUserSourceInfo CustomContainerUserSourceInfo(string version = null, CustomContainer customContainer = null)
+        /// <returns> A new <see cref="Models.AppPlatformCustomContainerUserSourceInfo"/> instance for mocking. </returns>
+        public static AppPlatformCustomContainerUserSourceInfo AppPlatformCustomContainerUserSourceInfo(string version = null, AppPlatformCustomContainer customContainer = null)
         {
-            return new CustomContainerUserSourceInfo("Container", version, customContainer);
+            return new AppPlatformCustomContainerUserSourceInfo("Container", version, customContainer);
         }
 
-        /// <summary> Initializes a new instance of CustomContainer. </summary>
+        /// <summary> Initializes a new instance of AppPlatformCustomContainer. </summary>
         /// <param name="server"> The name of the registry that contains the container image. </param>
         /// <param name="containerImage"> Container image of the custom container. This should be in the form of &lt;repository&gt;:&lt;tag&gt; without the server name of the registry. </param>
         /// <param name="command"> Entrypoint array. Not executed within a shell. The docker image&apos;s ENTRYPOINT is used if this is not provided. </param>
         /// <param name="args"> Arguments to the entrypoint. The docker image&apos;s CMD is used if this is not provided. </param>
         /// <param name="imageRegistryCredential"> Credential of the image registry. </param>
         /// <param name="languageFramework"> Language framework of the container image uploaded. </param>
-        /// <returns> A new <see cref="Models.CustomContainer"/> instance for mocking. </returns>
-        public static CustomContainer CustomContainer(string server = null, string containerImage = null, IEnumerable<string> command = null, IEnumerable<string> args = null, ImageRegistryCredential imageRegistryCredential = null, string languageFramework = null)
+        /// <returns> A new <see cref="Models.AppPlatformCustomContainer"/> instance for mocking. </returns>
+        public static AppPlatformCustomContainer AppPlatformCustomContainer(string server = null, string containerImage = null, IEnumerable<string> command = null, IEnumerable<string> args = null, AppPlatformImageRegistryCredential imageRegistryCredential = null, string languageFramework = null)
         {
             command ??= new List<string>();
             args ??= new List<string>();
 
-            return new CustomContainer(server, containerImage, command?.ToList(), args?.ToList(), imageRegistryCredential, languageFramework);
+            return new AppPlatformCustomContainer(server, containerImage, command?.ToList(), args?.ToList(), imageRegistryCredential, languageFramework);
         }
 
-        /// <summary> Initializes a new instance of ImageRegistryCredential. </summary>
+        /// <summary> Initializes a new instance of AppPlatformImageRegistryCredential. </summary>
         /// <param name="username"> The username of the image registry credential. </param>
         /// <param name="password"> The password of the image registry credential. </param>
-        /// <returns> A new <see cref="Models.ImageRegistryCredential"/> instance for mocking. </returns>
-        public static ImageRegistryCredential ImageRegistryCredential(string username = null, string password = null)
+        /// <returns> A new <see cref="Models.AppPlatformImageRegistryCredential"/> instance for mocking. </returns>
+        public static AppPlatformImageRegistryCredential AppPlatformImageRegistryCredential(string username = null, string password = null)
         {
-            return new ImageRegistryCredential(username, password);
+            return new AppPlatformImageRegistryCredential(username, password);
+        }
+
+        /// <summary> Initializes a new instance of AppInstanceHttpGetAction. </summary>
+        /// <param name="path"> Path to access on the HTTP server. </param>
+        /// <param name="scheme">
+        /// Scheme to use for connecting to the host. Defaults to HTTP.
+        /// 
+        /// Possible enum values:
+        ///  - `&quot;HTTP&quot;` means that the scheme used will be http://
+        ///  - `&quot;HTTPS&quot;` means that the scheme used will be https://
+        /// </param>
+        /// <returns> A new <see cref="Models.AppInstanceHttpGetAction"/> instance for mocking. </returns>
+        public static AppInstanceHttpGetAction AppInstanceHttpGetAction(string path = null, AppInstanceHttpSchemeType? scheme = null)
+        {
+            return new AppInstanceHttpGetAction("HTTPGetAction", path, scheme);
+        }
+
+        /// <summary> Initializes a new instance of AppInstanceExecAction. </summary>
+        /// <param name="command"> Command is the command line to execute inside the container, the working directory for the command is root (&apos;/&apos;) in the container&apos;s filesystem. The command is not run inside a shell, so traditional shell instructions (&apos;|&apos;, etc) won&apos;t work. To use a shell, you need to explicitly call out to that shell. Exit status of 0 is treated as live/healthy and non-zero is unhealthy. </param>
+        /// <returns> A new <see cref="Models.AppInstanceExecAction"/> instance for mocking. </returns>
+        public static AppInstanceExecAction AppInstanceExecAction(IEnumerable<string> command = null)
+        {
+            command ??= new List<string>();
+
+            return new AppInstanceExecAction("ExecAction", command?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of AppInstanceTcpSocketAction. </summary>
+        /// <returns> A new <see cref="Models.AppInstanceTcpSocketAction"/> instance for mocking. </returns>
+        public static AppInstanceTcpSocketAction AppInstanceTcpSocketAction()
+        {
+            return new AppInstanceTcpSocketAction("TCPSocketAction");
         }
     }
 }

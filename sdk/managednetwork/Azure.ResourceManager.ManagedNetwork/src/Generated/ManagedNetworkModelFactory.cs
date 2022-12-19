@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             spokes ??= new List<WritableSubResource>();
             mesh ??= new List<WritableSubResource>();
 
-            return new ManagedNetworkPeeringPolicyProperties(provisioningState, etag, connectivityType, ResourceManagerModelFactory.WritableSubResource(hubId), spokes?.ToList(), mesh?.ToList());
+            return new ManagedNetworkPeeringPolicyProperties(provisioningState, etag, connectivityType, hubId != null ? ResourceManagerModelFactory.WritableSubResource(hubId) : null, spokes?.ToList(), mesh?.ToList());
         }
 
         /// <summary> Initializes a new instance of ScopeAssignmentData. </summary>

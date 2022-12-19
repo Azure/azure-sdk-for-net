@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="backupProfile"> Backup profile. </param>
         /// <param name="provisioningState"> Php workload resource provisioning state. </param>
         /// <returns> A new <see cref="Workloads.PhpWorkloadResourceData"/> instance for mocking. </returns>
-        public static PhpWorkloadResourceData PhpWorkloadResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WorkloadKind kind = default, WorkloadsSku sku = null, PhpWorkloadResourceIdentity identity = null, AzureLocation? appLocation = null, string managedResourceGroupName = null, UserProfile adminUserProfile = null, VmssNodesProfile webNodesProfile = null, NodeProfile controllerProfile = null, NetworkProfile networkProfile = null, DatabaseProfile databaseProfile = null, string siteDomainName = null, FileshareProfile fileshareProfile = null, PhpVersion phpVersion = default, SearchProfile searchProfile = null, CacheProfile cacheProfile = null, BackupProfile backupProfile = null, PhpWorkloadProvisioningState? provisioningState = null)
+        public static PhpWorkloadResourceData PhpWorkloadResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WorkloadKind kind = default, WorkloadsSku sku = null, PhpWorkloadResourceIdentity identity = null, AzureLocation? appLocation = null, string managedResourceGroupName = null, UserProfile adminUserProfile = null, VmssNodesProfile webNodesProfile = null, NodeProfile controllerProfile = null, NetworkProfile networkProfile = null, DatabaseProfile databaseProfile = null, string siteDomainName = null, FileshareProfile fileshareProfile = null, PhpVersion? phpVersion = null, SearchProfile searchProfile = null, CacheProfile cacheProfile = null, BackupProfile backupProfile = null, PhpWorkloadProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new PhpWorkloadResourceData(id, name, resourceType, systemData, tags, location, kind, sku, identity, appLocation, new ManagedRGConfiguration(managedResourceGroupName), adminUserProfile, webNodesProfile, controllerProfile, networkProfile, databaseProfile, new SiteProfile(siteDomainName), fileshareProfile, new PhpProfile(phpVersion), searchProfile, cacheProfile, backupProfile, provisioningState);
+            return new PhpWorkloadResourceData(id, name, resourceType, systemData, tags, location, kind, sku, identity, appLocation, managedResourceGroupName != null ? new ManagedRGConfiguration(managedResourceGroupName) : null, adminUserProfile, webNodesProfile, controllerProfile, networkProfile, databaseProfile, siteDomainName != null ? new SiteProfile(siteDomainName) : null, fileshareProfile, phpVersion.HasValue ? new PhpProfile(phpVersion.Value) : null, searchProfile, cacheProfile, backupProfile, provisioningState);
         }
 
         /// <summary> Initializes a new instance of VmssNodesProfile. </summary>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Workloads.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SapVirtualInstanceData(id, name, resourceType, systemData, tags, location, identity, environment, sapProduct, configuration, new ManagedRGConfiguration(managedResourceGroupName), status, health, state, provisioningState, new SapVirtualInstanceError(errorsProperties));
+            return new SapVirtualInstanceData(id, name, resourceType, systemData, tags, location, identity, environment, sapProduct, configuration, managedResourceGroupName != null ? new ManagedRGConfiguration(managedResourceGroupName) : null, status, health, state, provisioningState, errorsProperties != null ? new SapVirtualInstanceError(errorsProperties) : null);
         }
 
         /// <summary> Initializes a new instance of SapConfiguration. </summary>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Workloads.Models
             tags ??= new Dictionary<string, string>();
             vmDetails ??= new List<CentralServerVmDetails>();
 
-            return new SapCentralServerInstanceData(id, name, resourceType, systemData, tags, location, instanceNo, subnetId, messageServerProperties, enqueueServerProperties, gatewayServerProperties, enqueueReplicationServerProperties, kernelVersion, kernelPatch, vmDetails?.ToList(), status, health, provisioningState, new SapVirtualInstanceError(errorsProperties));
+            return new SapCentralServerInstanceData(id, name, resourceType, systemData, tags, location, instanceNo, subnetId, messageServerProperties, enqueueServerProperties, gatewayServerProperties, enqueueReplicationServerProperties, kernelVersion, kernelPatch, vmDetails?.ToList(), status, health, provisioningState, errorsProperties != null ? new SapVirtualInstanceError(errorsProperties) : null);
         }
 
         /// <summary> Initializes a new instance of MessageServerProperties. </summary>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Workloads.Models
             tags ??= new Dictionary<string, string>();
             vmDetails ??= new List<DatabaseVmDetails>();
 
-            return new SapDatabaseInstanceData(id, name, resourceType, systemData, tags, location, subnetId, databaseSid, databaseType, ipAddress, vmDetails?.ToList(), status, provisioningState, new SapVirtualInstanceError(errorsProperties));
+            return new SapDatabaseInstanceData(id, name, resourceType, systemData, tags, location, subnetId, databaseSid, databaseType, ipAddress, vmDetails?.ToList(), status, provisioningState, errorsProperties != null ? new SapVirtualInstanceError(errorsProperties) : null);
         }
 
         /// <summary> Initializes a new instance of DatabaseVmDetails. </summary>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Workloads.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SapApplicationServerInstanceData(id, name, resourceType, systemData, tags, location, instanceNo, subnetId, hostname, kernelVersion, kernelPatch, ipAddress, gatewayPort, icmHttpPort, icmHttpsPort, virtualMachineId, status, health, provisioningState, new SapVirtualInstanceError(errorsProperties));
+            return new SapApplicationServerInstanceData(id, name, resourceType, systemData, tags, location, instanceNo, subnetId, hostname, kernelVersion, kernelPatch, ipAddress, gatewayPort, icmHttpPort, icmHttpsPort, virtualMachineId, status, health, provisioningState, errorsProperties != null ? new SapVirtualInstanceError(errorsProperties) : null);
         }
 
         /// <summary> Initializes a new instance of SapMonitorData. </summary>
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.Workloads.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SapMonitorData(id, name, resourceType, systemData, tags, location, provisioningState, errors, appLocation, routingPreference, new ManagedRGConfiguration(managedResourceGroupName), logAnalyticsWorkspaceArmId, monitorSubnetId, msiArmId);
+            return new SapMonitorData(id, name, resourceType, systemData, tags, location, provisioningState, errors, appLocation, routingPreference, managedResourceGroupName != null ? new ManagedRGConfiguration(managedResourceGroupName) : null, logAnalyticsWorkspaceArmId, monitorSubnetId, msiArmId);
         }
 
         /// <summary> Initializes a new instance of SapProviderInstanceData. </summary>
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.Workloads.Models
         {
             sshPublicKeys ??= new List<SshPublicKey>();
 
-            return new LinuxConfiguration("Linux", disablePasswordAuthentication, new SshConfiguration(sshPublicKeys?.ToList()), sshKeyPair);
+            return new LinuxConfiguration("Linux", disablePasswordAuthentication, sshPublicKeys != null ? new SshConfiguration(sshPublicKeys?.ToList()) : null, sshKeyPair);
         }
 
         /// <summary> Initializes a new instance of SshKeyPair. </summary>
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <returns> A new <see cref="Models.SingleServerConfiguration"/> instance for mocking. </returns>
         public static SingleServerConfiguration SingleServerConfiguration(string appResourceGroup = null, bool? isSecondaryIPEnabled = null, SapDatabaseType? databaseType = null, ResourceIdentifier subnetId = null, VirtualMachineConfiguration virtualMachineConfiguration = null)
         {
-            return new SingleServerConfiguration("SingleServer", appResourceGroup, new NetworkConfiguration(isSecondaryIPEnabled), databaseType, subnetId, virtualMachineConfiguration);
+            return new SingleServerConfiguration("SingleServer", appResourceGroup, isSecondaryIPEnabled != null ? new NetworkConfiguration(isSecondaryIPEnabled) : null, databaseType, subnetId, virtualMachineConfiguration);
         }
 
         /// <summary> Initializes a new instance of InfrastructureConfiguration. </summary>
@@ -799,9 +799,9 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="databaseServer"> The database configuration. </param>
         /// <param name="highAvailabilityType"> The high availability configuration. </param>
         /// <returns> A new <see cref="Models.ThreeTierConfiguration"/> instance for mocking. </returns>
-        public static ThreeTierConfiguration ThreeTierConfiguration(string appResourceGroup = null, bool? isSecondaryIPEnabled = null, CentralServerConfiguration centralServer = null, ApplicationServerConfiguration applicationServer = null, DatabaseConfiguration databaseServer = null, SapHighAvailabilityType highAvailabilityType = default)
+        public static ThreeTierConfiguration ThreeTierConfiguration(string appResourceGroup = null, bool? isSecondaryIPEnabled = null, CentralServerConfiguration centralServer = null, ApplicationServerConfiguration applicationServer = null, DatabaseConfiguration databaseServer = null, SapHighAvailabilityType? highAvailabilityType = null)
         {
-            return new ThreeTierConfiguration("ThreeTier", appResourceGroup, new NetworkConfiguration(isSecondaryIPEnabled), centralServer, applicationServer, databaseServer, new HighAvailabilityConfiguration(highAvailabilityType));
+            return new ThreeTierConfiguration("ThreeTier", appResourceGroup, isSecondaryIPEnabled != null ? new NetworkConfiguration(isSecondaryIPEnabled) : null, centralServer, applicationServer, databaseServer, highAvailabilityType.HasValue ? new HighAvailabilityConfiguration(highAvailabilityType.Value) : null);
         }
 
         /// <summary> Initializes a new instance of SoftwareConfiguration. </summary>

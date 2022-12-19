@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DeviceProvisioningServices;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <returns> A new <see cref="Models.DeviceProvisioningServicesPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
         public static DeviceProvisioningServicesPrivateEndpointConnectionProperties DeviceProvisioningServicesPrivateEndpointConnectionProperties(ResourceIdentifier privateEndpointId = null, DeviceProvisioningServicesPrivateLinkServiceConnectionState connectionState = null)
         {
-            return new DeviceProvisioningServicesPrivateEndpointConnectionProperties(ResourceManagerModelFactory.SubResource(privateEndpointId), connectionState);
+            return new DeviceProvisioningServicesPrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState);
         }
 
         /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateLinkServiceConnectionState. </summary>

@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.Kusto.Models
             allowedFqdnList ??= new List<string>();
             privateEndpointConnections ??= new List<KustoPrivateEndpointConnectionData>();
 
-            return new KustoClusterData(id, name, resourceType, systemData, tags, location, sku, zones?.ToList(), identity, etag, state, provisioningState, clusterUri, dataIngestionUri, stateReason, trustedExternalTenants?.ToList(), optimizedAutoscale, isDiskEncryptionEnabled, isStreamingIngestEnabled, virtualNetworkConfiguration, keyVaultProperties, isPurgeEnabled, new KustoLanguageExtensionList(languageExtensionsValue?.ToList()), isDoubleEncryptionEnabled, publicNetworkAccess, allowedIPRangeList?.ToList(), engineType, acceptedAudiences?.ToList(), isAutoStopEnabled, restrictOutboundNetworkAccess, allowedFqdnList?.ToList(), publicIPType, virtualClusterGraduationProperties, privateEndpointConnections?.ToList());
+            return new KustoClusterData(id, name, resourceType, systemData, tags, location, sku, zones?.ToList(), identity, etag, state, provisioningState, clusterUri, dataIngestionUri, stateReason, trustedExternalTenants?.ToList(), optimizedAutoscale, isDiskEncryptionEnabled, isStreamingIngestEnabled, virtualNetworkConfiguration, keyVaultProperties, isPurgeEnabled, languageExtensionsValue != null ? new KustoLanguageExtensionList(languageExtensionsValue?.ToList()) : null, isDoubleEncryptionEnabled, publicNetworkAccess, allowedIPRangeList?.ToList(), engineType, acceptedAudiences?.ToList(), isAutoStopEnabled, restrictOutboundNetworkAccess, allowedFqdnList?.ToList(), publicIPType, virtualClusterGraduationProperties, privateEndpointConnections?.ToList());
         }
 
         /// <summary> Initializes a new instance of KustoSku. </summary>
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <returns> A new <see cref="Kusto.KustoPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static KustoPrivateEndpointConnectionData KustoPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, KustoPrivateLinkServiceConnectionStateProperty connectionState = null, string groupId = null, string provisioningState = null)
         {
-            return new KustoPrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.SubResource(privateEndpointId), connectionState, groupId, provisioningState);
+            return new KustoPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, groupId, provisioningState);
         }
 
         /// <summary> Initializes a new instance of KustoPrivateLinkServiceConnectionStateProperty. </summary>
@@ -193,7 +192,7 @@ namespace Azure.ResourceManager.Kusto.Models
             allowedFqdnList ??= new List<string>();
             privateEndpointConnections ??= new List<KustoPrivateEndpointConnectionData>();
 
-            return new KustoClusterPatch(id, name, resourceType, systemData, tags, location, sku, identity, state, provisioningState, uri, dataIngestionUri, stateReason, trustedExternalTenants?.ToList(), optimizedAutoscale, isDiskEncryptionEnabled, isStreamingIngestEnabled, virtualNetworkConfiguration, keyVaultProperties, isPurgeEnabled, new KustoLanguageExtensionList(languageExtensionsValue?.ToList()), isDoubleEncryptionEnabled, publicNetworkAccess, allowedIPRangeList?.ToList(), engineType, acceptedAudiences?.ToList(), isAutoStopEnabled, restrictOutboundNetworkAccess, allowedFqdnList?.ToList(), publicIPType, virtualClusterGraduationProperties, privateEndpointConnections?.ToList());
+            return new KustoClusterPatch(id, name, resourceType, systemData, tags, location, sku, identity, state, provisioningState, uri, dataIngestionUri, stateReason, trustedExternalTenants?.ToList(), optimizedAutoscale, isDiskEncryptionEnabled, isStreamingIngestEnabled, virtualNetworkConfiguration, keyVaultProperties, isPurgeEnabled, languageExtensionsValue != null ? new KustoLanguageExtensionList(languageExtensionsValue?.ToList()) : null, isDoubleEncryptionEnabled, publicNetworkAccess, allowedIPRangeList?.ToList(), engineType, acceptedAudiences?.ToList(), isAutoStopEnabled, restrictOutboundNetworkAccess, allowedFqdnList?.ToList(), publicIPType, virtualClusterGraduationProperties, privateEndpointConnections?.ToList());
         }
 
         /// <summary> Initializes a new instance of KustoNameAvailabilityResult. </summary>
@@ -516,7 +515,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <returns> A new <see cref="Models.KustoReadWriteDatabase"/> instance for mocking. </returns>
         public static KustoReadWriteDatabase KustoReadWriteDatabase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, KustoProvisioningState? provisioningState = null, TimeSpan? softDeletePeriod = null, TimeSpan? hotCachePeriod = null, float? statisticsSize = null, bool? isFollowed = null)
         {
-            return new KustoReadWriteDatabase(id, name, resourceType, systemData, location, "ReadWrite", provisioningState, softDeletePeriod, hotCachePeriod, new DatabaseStatistics(statisticsSize), isFollowed);
+            return new KustoReadWriteDatabase(id, name, resourceType, systemData, location, "ReadWrite", provisioningState, softDeletePeriod, hotCachePeriod, statisticsSize != null ? new DatabaseStatistics(statisticsSize) : null, isFollowed);
         }
 
         /// <summary> Initializes a new instance of KustoReadOnlyFollowingDatabase. </summary>
@@ -538,7 +537,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <returns> A new <see cref="Models.KustoReadOnlyFollowingDatabase"/> instance for mocking. </returns>
         public static KustoReadOnlyFollowingDatabase KustoReadOnlyFollowingDatabase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, KustoProvisioningState? provisioningState = null, TimeSpan? softDeletePeriod = null, TimeSpan? hotCachePeriod = null, float? statisticsSize = null, string leaderClusterResourceId = null, string attachedDatabaseConfigurationName = null, KustoDatabasePrincipalsModificationKind? principalsModificationKind = null, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = null, string originalDatabaseName = null, KustoDatabaseShareOrigin? databaseShareOrigin = null)
         {
-            return new KustoReadOnlyFollowingDatabase(id, name, resourceType, systemData, location, "ReadOnlyFollowing", provisioningState, softDeletePeriod, hotCachePeriod, new DatabaseStatistics(statisticsSize), leaderClusterResourceId, attachedDatabaseConfigurationName, principalsModificationKind, tableLevelSharingProperties, originalDatabaseName, databaseShareOrigin);
+            return new KustoReadOnlyFollowingDatabase(id, name, resourceType, systemData, location, "ReadOnlyFollowing", provisioningState, softDeletePeriod, hotCachePeriod, statisticsSize != null ? new DatabaseStatistics(statisticsSize) : null, leaderClusterResourceId, attachedDatabaseConfigurationName, principalsModificationKind, tableLevelSharingProperties, originalDatabaseName, databaseShareOrigin);
         }
 
         /// <summary> Initializes a new instance of KustoEventHubDataConnection. </summary>

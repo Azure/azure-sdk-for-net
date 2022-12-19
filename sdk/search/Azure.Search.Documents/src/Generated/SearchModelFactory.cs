@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
@@ -15,6 +16,40 @@ namespace Azure.Search.Documents.Models
     /// <summary> Model factory for generated models. </summary>
     public static partial class SearchModelFactory
     {
+        /// <summary> Initializes a new instance of SearchOptions. </summary>
+        /// <param name="includeTotalCount"> A value that specifies whether to fetch the total count of results. Default is false. Setting this value to true may have a performance impact. Note that the count returned is an approximation. </param>
+        /// <param name="facets"> The list of facet expressions to apply to the search query. Each facet expression contains a field name, optionally followed by a comma-separated list of name:value pairs. </param>
+        /// <param name="filter"> The OData $filter expression to apply to the search query. </param>
+        /// <param name="highlightFieldsRaw"> The comma-separated list of field names to use for hit highlights. Only searchable fields can be used for hit highlighting. </param>
+        /// <param name="highlightPostTag"> A string tag that is appended to hit highlights. Must be set with highlightPreTag. Default is &amp;lt;/em&amp;gt;. </param>
+        /// <param name="highlightPreTag"> A string tag that is prepended to hit highlights. Must be set with highlightPostTag. Default is &amp;lt;em&amp;gt;. </param>
+        /// <param name="minimumCoverage"> A number between 0 and 100 indicating the percentage of the index that must be covered by a search query in order for the query to be reported as a success. This parameter can be useful for ensuring search availability even for services with only one replica. The default is 100. </param>
+        /// <param name="orderByRaw"> The comma-separated list of OData $orderby expressions by which to sort the results. Each expression can be either a field name or a call to either the geo.distance() or the search.score() functions. Each expression can be followed by asc to indicate ascending, or desc to indicate descending. The default is ascending order. Ties will be broken by the match scores of documents. If no $orderby is specified, the default sort order is descending by document match score. There can be at most 32 $orderby clauses. </param>
+        /// <param name="queryType"> A value that specifies the syntax of the search query. The default is &apos;simple&apos;. Use &apos;full&apos; if your query uses the Lucene query syntax. </param>
+        /// <param name="scoringStatistics"> A value that specifies whether we want to calculate scoring statistics (such as document frequency) globally for more consistent scoring, or locally, for lower latency. The default is &apos;local&apos;. Use &apos;global&apos; to aggregate scoring statistics globally before scoring. Using global scoring statistics can increase latency of search queries. </param>
+        /// <param name="sessionId"> A value to be used to create a sticky session, which can help getting more consistent results. As long as the same sessionId is used, a best-effort attempt will be made to target the same replica set. Be wary that reusing the same sessionID values repeatedly can interfere with the load balancing of the requests across replicas and adversely affect the performance of the search service. The value used as sessionId cannot start with a &apos;_&apos; character. </param>
+        /// <param name="scoringParameters"> The list of parameter values to be used in scoring functions (for example, referencePointParameter) using the format name-values. For example, if the scoring profile defines a function with a parameter called &apos;mylocation&apos; the parameter string would be &quot;mylocation--122.2,44.8&quot; (without the quotes). </param>
+        /// <param name="scoringProfile"> The name of a scoring profile to evaluate match scores for matching documents in order to sort the results. </param>
+        /// <param name="semanticConfigurationName"> The name of a semantic configuration that will be used when processing documents for queries of type semantic. </param>
+        /// <param name="searchText"> A full-text search query expression; Use &quot;*&quot; or omit this parameter to match all documents. </param>
+        /// <param name="searchFieldsRaw"> The comma-separated list of field names to which to scope the full-text search. When using fielded search (fieldName:searchExpression) in a full Lucene query, the field names of each fielded search expression take precedence over any field names listed in this parameter. </param>
+        /// <param name="searchMode"> A value that specifies whether any or all of the search terms must be matched in order to count the document as a match. </param>
+        /// <param name="queryLanguage"> A value that specifies the language of the search query. </param>
+        /// <param name="querySpeller"> A value that specified the type of the speller to use to spell-correct individual search query terms. </param>
+        /// <param name="queryAnswerRaw"> A value that specifies whether answers should be returned as part of the search response. </param>
+        /// <param name="selectRaw"> The comma-separated list of fields to retrieve. If unspecified, all fields marked as retrievable in the schema are included. </param>
+        /// <param name="skip"> The number of search results to skip. This value cannot be greater than 100,000. If you need to scan documents in sequence, but cannot use skip due to this limitation, consider using orderby on a totally-ordered key and filter with a range query instead. </param>
+        /// <param name="size"> The number of search results to retrieve. This can be used in conjunction with $skip to implement client-side paging of search results. If results are truncated due to server-side paging, the response will include a continuation token that can be used to issue another Search request for the next page of results. </param>
+        /// <param name="queryCaptionRaw"> A value that specifies whether captions should be returned as part of the search response. </param>
+        /// <param name="semanticFieldsRaw"> The comma-separated list of field names used for semantic search. </param>
+        /// <returns> A new <see cref="Documents.SearchOptions"/> instance for mocking. </returns>
+        public static SearchOptions SearchOptions(bool? includeTotalCount = null, IEnumerable<string> facets = null, string filter = null, string highlightFieldsRaw = null, string highlightPostTag = null, string highlightPreTag = null, double? minimumCoverage = null, string orderByRaw = null, SearchQueryType? queryType = null, ScoringStatistics? scoringStatistics = null, string sessionId = null, IEnumerable<string> scoringParameters = null, string scoringProfile = null, string semanticConfigurationName = null, string searchText = null, string searchFieldsRaw = null, SearchMode? searchMode = null, QueryLanguage? queryLanguage = null, QuerySpellerType? querySpeller = null, string queryAnswerRaw = null, string selectRaw = null, int? skip = null, int? size = null, string queryCaptionRaw = null, string semanticFieldsRaw = null)
+        {
+            facets ??= new List<string>();
+            scoringParameters ??= new List<string>();
+
+            return new SearchOptions(includeTotalCount, facets?.ToList(), filter, highlightFieldsRaw, highlightPostTag, highlightPreTag, minimumCoverage, orderByRaw, queryType, scoringStatistics, sessionId, scoringParameters?.ToList(), scoringProfile, semanticConfigurationName, searchText, searchFieldsRaw, searchMode, queryLanguage, querySpeller, queryAnswerRaw, selectRaw, skip, size, queryCaptionRaw, semanticFieldsRaw);
+        }
 
         /// <summary> Initializes a new instance of AnswerResult. </summary>
         /// <param name="score"> The score value represents how relevant the answer is to the query relative to other answers returned for the query. </param>
@@ -70,6 +105,29 @@ namespace Azure.Search.Documents.Models
             return new UnknownSearchIndexerDataIdentity(oDataType);
         }
 
+        /// <summary> Initializes a new instance of SearchIndexer. </summary>
+        /// <param name="name"> The name of the indexer. </param>
+        /// <param name="description"> The description of the indexer. </param>
+        /// <param name="dataSourceName"> The name of the datasource from which this indexer reads data. </param>
+        /// <param name="skillsetName"> The name of the skillset executing with this indexer. </param>
+        /// <param name="targetIndexName"> The name of the index to which this indexer writes data. </param>
+        /// <param name="schedule"> The schedule for this indexer. </param>
+        /// <param name="parameters"> Parameters for indexer execution. </param>
+        /// <param name="fieldMappings"> Defines mappings between fields in the data source and corresponding target fields in the index. </param>
+        /// <param name="outputFieldMappings"> Output field mappings are applied after enrichment and immediately before indexing. </param>
+        /// <param name="isDisabled"> A value indicating whether the indexer is disabled. Default is false. </param>
+        /// <param name="etag"> The ETag of the indexer. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your indexer definition (as well as indexer execution status) when you want full assurance that no one, not even Microsoft, can decrypt them in Azure Cognitive Search. Once you have encrypted your indexer definition, it will always remain encrypted. Azure Cognitive Search will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your indexer definition (and indexer execution status) will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <param name="cache"> Adds caching to an enrichment pipeline to allow for incremental modification steps without having to rebuild the index every time. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchIndexer"/> instance for mocking. </returns>
+        public static SearchIndexer SearchIndexer(string name = null, string description = null, string dataSourceName = null, string skillsetName = null, string targetIndexName = null, IndexingSchedule schedule = null, IndexingParameters parameters = null, IEnumerable<FieldMapping> fieldMappings = null, IEnumerable<FieldMapping> outputFieldMappings = null, bool? isDisabled = null, string etag = null, SearchResourceEncryptionKey encryptionKey = null, SearchIndexerCache cache = null)
+        {
+            fieldMappings ??= new List<FieldMapping>();
+            outputFieldMappings ??= new List<FieldMapping>();
+
+            return new SearchIndexer(name, description, dataSourceName, skillsetName, targetIndexName, schedule, parameters, fieldMappings?.ToList(), outputFieldMappings?.ToList(), isDisabled, etag, encryptionKey, cache);
+        }
+
         /// <summary> Initializes a new instance of IndexingSchedule. </summary>
         /// <param name="interval"> The interval of time between indexer executions. </param>
         /// <param name="startTime"> The time when an indexer should start running. </param>
@@ -88,6 +146,32 @@ namespace Azure.Search.Documents.Models
         public static IndexingParameters IndexingParameters(int? batchSize = null, int? maxFailedItems = null, int? maxFailedItemsPerBatch = null, IndexingParametersConfiguration indexingParametersConfiguration = null)
         {
             return new IndexingParameters(batchSize, maxFailedItems, maxFailedItemsPerBatch, indexingParametersConfiguration);
+        }
+
+        /// <summary> Initializes a new instance of IndexingParametersConfiguration. </summary>
+        /// <param name="parsingMode"> Represents the parsing mode for indexing from an Azure blob data source. </param>
+        /// <param name="excludedFileNameExtensions"> Comma-delimited list of filename extensions to ignore when processing from Azure blob storage.  For example, you could exclude &quot;.png, .mp4&quot; to skip over those files during indexing. </param>
+        /// <param name="indexedFileNameExtensions"> Comma-delimited list of filename extensions to select when processing from Azure blob storage.  For example, you could focus indexing on specific application files &quot;.docx, .pptx, .msg&quot; to specifically include those file types. </param>
+        /// <param name="failOnUnsupportedContentType"> For Azure blobs, set to false if you want to continue indexing when an unsupported content type is encountered, and you don&apos;t know all the content types (file extensions) in advance. </param>
+        /// <param name="failOnUnprocessableDocument"> For Azure blobs, set to false if you want to continue indexing if a document fails indexing. </param>
+        /// <param name="indexStorageMetadataOnlyForOversizedDocuments"> For Azure blobs, set this property to true to still index storage metadata for blob content that is too large to process. Oversized blobs are treated as errors by default. For limits on blob size, see https://docs.microsoft.com/azure/search/search-limits-quotas-capacity. </param>
+        /// <param name="delimitedTextHeaders"> For CSV blobs, specifies a comma-delimited list of column headers, useful for mapping source fields to destination fields in an index. </param>
+        /// <param name="delimitedTextDelimiter"> For CSV blobs, specifies the end-of-line single-character delimiter for CSV files where each line starts a new document (for example, &quot;|&quot;). </param>
+        /// <param name="firstLineContainsHeaders"> For CSV blobs, indicates that the first (non-blank) line of each blob contains headers. </param>
+        /// <param name="documentRoot"> For JSON arrays, given a structured or semi-structured document, you can specify a path to the array using this property. </param>
+        /// <param name="dataToExtract"> Specifies the data to extract from Azure blob storage and tells the indexer which data to extract from image content when &quot;imageAction&quot; is set to a value other than &quot;none&quot;.  This applies to embedded image content in a .PDF or other application, or image files such as .jpg and .png, in Azure blobs. </param>
+        /// <param name="imageAction"> Determines how to process embedded images and image files in Azure blob storage.  Setting the &quot;imageAction&quot; configuration to any value other than &quot;none&quot; requires that a skillset also be attached to that indexer. </param>
+        /// <param name="allowSkillsetToReadFileData"> If true, will create a path //document//file_data that is an object representing the original file data downloaded from your blob data source.  This allows you to pass the original file data to a custom skill for processing within the enrichment pipeline, or to the Document Extraction skill. </param>
+        /// <param name="pdfTextRotationAlgorithm"> Determines algorithm for text extraction from PDF files in Azure blob storage. </param>
+        /// <param name="executionEnvironment"> Specifies the environment in which the indexer should execute. </param>
+        /// <param name="queryTimeout"> Increases the timeout beyond the 5-minute default for Azure SQL database data sources, specified in the format &quot;hh:mm:ss&quot;. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Indexes.Models.IndexingParametersConfiguration"/> instance for mocking. </returns>
+        public static IndexingParametersConfiguration IndexingParametersConfiguration(BlobIndexerParsingMode? parsingMode = null, string excludedFileNameExtensions = null, string indexedFileNameExtensions = null, bool? failOnUnsupportedContentType = null, bool? failOnUnprocessableDocument = null, bool? indexStorageMetadataOnlyForOversizedDocuments = null, string delimitedTextHeaders = null, string delimitedTextDelimiter = null, bool? firstLineContainsHeaders = null, string documentRoot = null, BlobIndexerDataToExtract? dataToExtract = null, BlobIndexerImageAction? imageAction = null, bool? allowSkillsetToReadFileData = null, BlobIndexerPdfTextRotationAlgorithm? pdfTextRotationAlgorithm = null, IndexerExecutionEnvironment? executionEnvironment = null, string queryTimeout = null, IDictionary<string, object> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new IndexingParametersConfiguration(parsingMode, excludedFileNameExtensions, indexedFileNameExtensions, failOnUnsupportedContentType, failOnUnprocessableDocument, indexStorageMetadataOnlyForOversizedDocuments, delimitedTextHeaders, delimitedTextDelimiter, firstLineContainsHeaders, documentRoot, dataToExtract, imageAction, allowSkillsetToReadFileData, pdfTextRotationAlgorithm, executionEnvironment, queryTimeout, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of FieldMapping. </summary>
@@ -109,6 +193,15 @@ namespace Azure.Search.Documents.Models
             parameters ??= new Dictionary<string, object>();
 
             return new FieldMappingFunction(name, parameters);
+        }
+
+        /// <summary> Initializes a new instance of SearchIndexerCache. </summary>
+        /// <param name="storageConnectionString"> The connection string to the storage account where the cache data will be persisted. </param>
+        /// <param name="enableReprocessing"> Specifies whether incremental reprocessing is enabled. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchIndexerCache"/> instance for mocking. </returns>
+        public static SearchIndexerCache SearchIndexerCache(string storageConnectionString = null, bool? enableReprocessing = null)
+        {
+            return new SearchIndexerCache(storageConnectionString, enableReprocessing);
         }
 
         /// <summary> Initializes a new instance of SearchIndexerStatus. </summary>
@@ -144,6 +237,30 @@ namespace Azure.Search.Documents.Models
             warnings ??= new List<SearchIndexerWarning>();
 
             return new IndexerExecutionResult(status, statusDetail, currentState, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState);
+        }
+
+        /// <summary> Initializes a new instance of SearchIndexerSkillset. </summary>
+        /// <param name="name"> The name of the skillset. </param>
+        /// <param name="description"> The description of the skillset. </param>
+        /// <param name="skills">
+        /// A list of skills in the skillset.
+        /// Please note <see cref="SearchIndexerSkill"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureMachineLearningSkill"/>, <see cref="WebApiSkill"/>, <see cref="CustomEntityLookupSkill"/>, <see cref="EntityRecognitionSkill"/>, <see cref="KeyPhraseExtractionSkill"/>, <see cref="LanguageDetectionSkill"/>, <see cref="MergeSkill"/>, <see cref="PiiDetectionSkill"/>, <see cref="SentimentSkill"/>, <see cref="SplitSkill"/>, <see cref="TextTranslationSkill"/>, <see cref="EntityLinkingSkill"/>, <see cref="EntityRecognitionSkillV3"/>, <see cref="SentimentSkillV3"/>, <see cref="ConditionalSkill"/>, <see cref="DocumentExtractionSkill"/>, <see cref="ShaperSkill"/>, <see cref="ImageAnalysisSkill"/> and <see cref="OcrSkill"/>.
+        /// </param>
+        /// <param name="cognitiveServicesAccount">
+        /// Details about cognitive services to be used when running skills.
+        /// Please note <see cref="CognitiveServicesAccount"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CognitiveServicesAccountKey"/> and <see cref="DefaultCognitiveServicesAccount"/>.
+        /// </param>
+        /// <param name="knowledgeStore"> Definition of additional projections to azure blob, table, or files, of enriched data. </param>
+        /// <param name="etag"> The ETag of the skillset. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your skillset definition when you want full assurance that no one, not even Microsoft, can decrypt your skillset definition in Azure Cognitive Search. Once you have encrypted your skillset definition, it will always remain encrypted. Azure Cognitive Search will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your skillset definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchIndexerSkillset"/> instance for mocking. </returns>
+        public static SearchIndexerSkillset SearchIndexerSkillset(string name = null, string description = null, IEnumerable<SearchIndexerSkill> skills = null, CognitiveServicesAccount cognitiveServicesAccount = null, KnowledgeStore knowledgeStore = null, string etag = null, SearchResourceEncryptionKey encryptionKey = null)
+        {
+            skills ??= new List<SearchIndexerSkill>();
+
+            return new SearchIndexerSkillset(name, description, skills?.ToList(), cognitiveServicesAccount, knowledgeStore, etag, encryptionKey);
         }
 
         /// <summary> Initializes a new instance of SearchIndexerSkill. </summary>
@@ -243,6 +360,97 @@ namespace Azure.Search.Documents.Models
             return new KnowledgeStoreFileProjectionSelector(referenceKeyName, generatedKeyName, source, sourceContext, inputs?.ToList(), storageContainer);
         }
 
+        /// <summary> Initializes a new instance of SynonymMap. </summary>
+        /// <param name="name"> The name of the synonym map. </param>
+        /// <param name="format"> The format of the synonym map. Only the &apos;solr&apos; format is currently supported. </param>
+        /// <param name="synonyms"> A series of synonym rules in the specified synonym map format. The rules must be separated by newlines. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your data when you want full assurance that no one, not even Microsoft, can decrypt your data in Azure Cognitive Search. Once you have encrypted your data, it will always remain encrypted. Azure Cognitive Search will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your data will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <param name="etag"> The ETag of the synonym map. </param>
+        /// <returns> A new <see cref="Indexes.Models.SynonymMap"/> instance for mocking. </returns>
+        public static SynonymMap SynonymMap(string name = null, string format = null, string synonyms = null, SearchResourceEncryptionKey encryptionKey = null, string etag = null)
+        {
+            return new SynonymMap(name, format, synonyms, encryptionKey, etag);
+        }
+
+        /// <summary> Initializes a new instance of SearchIndex. </summary>
+        /// <param name="name"> The name of the index. </param>
+        /// <param name="fields"> The fields of the index. </param>
+        /// <param name="scoringProfiles"> The scoring profiles for the index. </param>
+        /// <param name="defaultScoringProfile"> The name of the scoring profile to use if none is specified in the query. If this property is not set and no scoring profile is specified in the query, then default scoring (tf-idf) will be used. </param>
+        /// <param name="corsOptions"> Options to control Cross-Origin Resource Sharing (CORS) for the index. </param>
+        /// <param name="suggesters"> The suggesters for the index. </param>
+        /// <param name="analyzers">
+        /// The analyzers for the index.
+        /// Please note <see cref="LexicalAnalyzer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CustomAnalyzer"/>, <see cref="PatternAnalyzer"/>, <see cref="LuceneStandardAnalyzer"/> and <see cref="StopAnalyzer"/>.
+        /// </param>
+        /// <param name="tokenizers">
+        /// The tokenizers for the index.
+        /// Please note <see cref="LexicalTokenizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ClassicTokenizer"/>, <see cref="EdgeNGramTokenizer"/>, <see cref="KeywordTokenizer"/>, <see cref="KeywordTokenizer"/>, <see cref="MicrosoftLanguageStemmingTokenizer"/>, <see cref="MicrosoftLanguageTokenizer"/>, <see cref="NGramTokenizer"/>, <see cref="PathHierarchyTokenizer"/>, <see cref="PatternTokenizer"/>, <see cref="LuceneStandardTokenizer"/>, <see cref="LuceneStandardTokenizer"/> and <see cref="UaxUrlEmailTokenizer"/>.
+        /// </param>
+        /// <param name="tokenFilters">
+        /// The token filters for the index.
+        /// Please note <see cref="TokenFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AsciiFoldingTokenFilter"/>, <see cref="CjkBigramTokenFilter"/>, <see cref="CommonGramTokenFilter"/>, <see cref="DictionaryDecompounderTokenFilter"/>, <see cref="EdgeNGramTokenFilter"/>, <see cref="EdgeNGramTokenFilter"/>, <see cref="ElisionTokenFilter"/>, <see cref="KeepTokenFilter"/>, <see cref="KeywordMarkerTokenFilter"/>, <see cref="LengthTokenFilter"/>, <see cref="LimitTokenFilter"/>, <see cref="NGramTokenFilter"/>, <see cref="NGramTokenFilter"/>, <see cref="PatternCaptureTokenFilter"/>, <see cref="PatternReplaceTokenFilter"/>, <see cref="PhoneticTokenFilter"/>, <see cref="ShingleTokenFilter"/>, <see cref="SnowballTokenFilter"/>, <see cref="StemmerOverrideTokenFilter"/>, <see cref="StemmerTokenFilter"/>, <see cref="StopwordsTokenFilter"/>, <see cref="SynonymTokenFilter"/>, <see cref="TruncateTokenFilter"/>, <see cref="UniqueTokenFilter"/> and <see cref="WordDelimiterTokenFilter"/>.
+        /// </param>
+        /// <param name="charFilters">
+        /// The character filters for the index.
+        /// Please note <see cref="CharFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MappingCharFilter"/> and <see cref="PatternReplaceCharFilter"/>.
+        /// </param>
+        /// <param name="normalizers">
+        /// The normalizers for the index.
+        /// Please note <see cref="LexicalNormalizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CustomNormalizer"/>.
+        /// </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your data when you want full assurance that no one, not even Microsoft, can decrypt your data in Azure Cognitive Search. Once you have encrypted your data, it will always remain encrypted. Azure Cognitive Search will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your data will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <param name="similarity">
+        /// The type of similarity algorithm to be used when scoring and ranking the documents matching a search query. The similarity algorithm can only be defined at index creation time and cannot be modified on existing indexes. If null, the ClassicSimilarity algorithm is used.
+        /// Please note <see cref="SimilarityAlgorithm"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BM25Similarity"/> and <see cref="ClassicSimilarity"/>.
+        /// </param>
+        /// <param name="semanticSettings"> Defines parameters for a search index that influence semantic capabilities. </param>
+        /// <param name="etag"> The ETag of the index. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchIndex"/> instance for mocking. </returns>
+        public static SearchIndex SearchIndex(string name = null, IEnumerable<SearchField> fields = null, IEnumerable<ScoringProfile> scoringProfiles = null, string defaultScoringProfile = null, CorsOptions corsOptions = null, IEnumerable<SearchSuggester> suggesters = null, IEnumerable<LexicalAnalyzer> analyzers = null, IEnumerable<LexicalTokenizer> tokenizers = null, IEnumerable<TokenFilter> tokenFilters = null, IEnumerable<CharFilter> charFilters = null, IEnumerable<LexicalNormalizer> normalizers = null, SearchResourceEncryptionKey encryptionKey = null, SimilarityAlgorithm similarity = null, SemanticSettings semanticSettings = null, string etag = null)
+        {
+            fields ??= new List<SearchField>();
+            scoringProfiles ??= new List<ScoringProfile>();
+            suggesters ??= new List<SearchSuggester>();
+            analyzers ??= new List<LexicalAnalyzer>();
+            tokenizers ??= new List<LexicalTokenizer>();
+            tokenFilters ??= new List<TokenFilter>();
+            charFilters ??= new List<CharFilter>();
+            normalizers ??= new List<LexicalNormalizer>();
+
+            return new SearchIndex(name, fields?.ToList(), scoringProfiles?.ToList(), defaultScoringProfile, corsOptions, suggesters?.ToList(), analyzers?.ToList(), tokenizers?.ToList(), tokenFilters?.ToList(), charFilters?.ToList(), normalizers?.ToList(), encryptionKey, similarity, semanticSettings, etag);
+        }
+
+        /// <summary> Initializes a new instance of SearchField. </summary>
+        /// <param name="name"> The name of the field, which must be unique within the fields collection of the index or parent field. </param>
+        /// <param name="type"> The data type of the field. </param>
+        /// <param name="isKey"> A value indicating whether the field uniquely identifies documents in the index. Exactly one top-level field in each index must be chosen as the key field and it must be of type Edm.String. Key fields can be used to look up documents directly and update or delete specific documents. Default is false for simple fields and null for complex fields. </param>
+        /// <param name="isRetrievable"> A value indicating whether the field can be returned in a search result. You can disable this option if you want to use a field (for example, margin) as a filter, sorting, or scoring mechanism but do not want the field to be visible to the end user. This property must be true for key fields, and it must be null for complex fields. This property can be changed on existing fields. Enabling this property does not cause any increase in index storage requirements. Default is true for simple fields and null for complex fields. </param>
+        /// <param name="isSearchable"> A value indicating whether the field is full-text searchable. This means it will undergo analysis such as word-breaking during indexing. If you set a searchable field to a value like &quot;sunny day&quot;, internally it will be split into the individual tokens &quot;sunny&quot; and &quot;day&quot;. This enables full-text searches for these terms. Fields of type Edm.String or Collection(Edm.String) are searchable by default. This property must be false for simple fields of other non-string data types, and it must be null for complex fields. Note: searchable fields consume extra space in your index since Azure Cognitive Search will store an additional tokenized version of the field value for full-text searches. If you want to save space in your index and you don&apos;t need a field to be included in searches, set searchable to false. </param>
+        /// <param name="isFilterable"> A value indicating whether to enable the field to be referenced in $filter queries. filterable differs from searchable in how strings are handled. Fields of type Edm.String or Collection(Edm.String) that are filterable do not undergo word-breaking, so comparisons are for exact matches only. For example, if you set such a field f to &quot;sunny day&quot;, $filter=f eq &apos;sunny&apos; will find no matches, but $filter=f eq &apos;sunny day&apos; will. This property must be null for complex fields. Default is true for simple fields and null for complex fields. </param>
+        /// <param name="isSortable"> A value indicating whether to enable the field to be referenced in $orderby expressions. By default Azure Cognitive Search sorts results by score, but in many experiences users will want to sort by fields in the documents. A simple field can be sortable only if it is single-valued (it has a single value in the scope of the parent document). Simple collection fields cannot be sortable, since they are multi-valued. Simple sub-fields of complex collections are also multi-valued, and therefore cannot be sortable. This is true whether it&apos;s an immediate parent field, or an ancestor field, that&apos;s the complex collection. Complex fields cannot be sortable and the sortable property must be null for such fields. The default for sortable is true for single-valued simple fields, false for multi-valued simple fields, and null for complex fields. </param>
+        /// <param name="isFacetable"> A value indicating whether to enable the field to be referenced in facet queries. Typically used in a presentation of search results that includes hit count by category (for example, search for digital cameras and see hits by brand, by megapixels, by price, and so on). This property must be null for complex fields. Fields of type Edm.GeographyPoint or Collection(Edm.GeographyPoint) cannot be facetable. Default is true for all other simple fields. </param>
+        /// <param name="analyzerName"> The name of the analyzer to use for the field. This option can be used only with searchable fields and it can&apos;t be set together with either searchAnalyzer or indexAnalyzer. Once the analyzer is chosen, it cannot be changed for the field. Must be null for complex fields. </param>
+        /// <param name="searchAnalyzerName"> The name of the analyzer used at search time for the field. This option can be used only with searchable fields. It must be set together with indexAnalyzer and it cannot be set together with the analyzer option. This property cannot be set to the name of a language analyzer; use the analyzer property instead if you need a language analyzer. This analyzer can be updated on an existing field. Must be null for complex fields. </param>
+        /// <param name="indexAnalyzerName"> The name of the analyzer used at indexing time for the field. This option can be used only with searchable fields. It must be set together with searchAnalyzer and it cannot be set together with the analyzer option.  This property cannot be set to the name of a language analyzer; use the analyzer property instead if you need a language analyzer. Once the analyzer is chosen, it cannot be changed for the field. Must be null for complex fields. </param>
+        /// <param name="normalizerName"> The name of the normalizer to use for the field. This option can be used only with fields with filterable, sortable, or facetable enabled. Once the normalizer is chosen, it cannot be changed for the field. Must be null for complex fields. </param>
+        /// <param name="synonymMapNames"> A list of the names of synonym maps to associate with this field. This option can be used only with searchable fields. Currently only one synonym map per field is supported. Assigning a synonym map to a field ensures that query terms targeting that field are expanded at query-time using the rules in the synonym map. This attribute can be changed on existing fields. Must be null or an empty collection for complex fields. </param>
+        /// <param name="fields"> A list of sub-fields if this is a field of type Edm.ComplexType or Collection(Edm.ComplexType). Must be null or empty for simple fields. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchField"/> instance for mocking. </returns>
+        public static SearchField SearchField(string name = null, SearchFieldDataType type = default, bool? isKey = null, bool? isRetrievable = null, bool? isSearchable = null, bool? isFilterable = null, bool? isSortable = null, bool? isFacetable = null, LexicalAnalyzerName? analyzerName = null, LexicalAnalyzerName? searchAnalyzerName = null, LexicalAnalyzerName? indexAnalyzerName = null, LexicalNormalizerName? normalizerName = null, IEnumerable<string> synonymMapNames = null, IEnumerable<SearchField> fields = null)
+        {
+            synonymMapNames ??= new List<string>();
+            fields ??= new List<SearchField>();
+
+            return new SearchField(name, type, isKey, isRetrievable, isSearchable, isFilterable, isSortable, isFacetable, analyzerName, searchAnalyzerName, indexAnalyzerName, normalizerName, synonymMapNames?.ToList(), fields?.ToList());
+        }
+
         /// <summary> Initializes a new instance of ScoringProfile. </summary>
         /// <param name="name"> The name of the scoring profile. </param>
         /// <param name="textWeights"> Parameters that boost scoring based on text matches in certain index fields. </param>
@@ -269,6 +477,18 @@ namespace Azure.Search.Documents.Models
             allowedOrigins ??= new List<string>();
 
             return new CorsOptions(allowedOrigins?.ToList(), maxAgeInSeconds);
+        }
+
+        /// <summary> Initializes a new instance of SearchSuggester. </summary>
+        /// <param name="name"> The name of the suggester. </param>
+        /// <param name="searchMode"> A value indicating the capabilities of the suggester. </param>
+        /// <param name="sourceFields"> The list of field names to which the suggester applies. Each field must be searchable. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchSuggester"/> instance for mocking. </returns>
+        public static SearchSuggester SearchSuggester(string name = null, string searchMode = null, IEnumerable<string> sourceFields = null)
+        {
+            sourceFields ??= new List<string>();
+
+            return new SearchSuggester(name, searchMode, sourceFields?.ToList());
         }
 
         /// <summary> Initializes a new instance of LexicalNormalizer. </summary>
@@ -311,6 +531,18 @@ namespace Azure.Search.Documents.Models
             return new SemanticField(fieldName);
         }
 
+        /// <summary> Initializes a new instance of SearchAlias. </summary>
+        /// <param name="name"> The name of the alias. </param>
+        /// <param name="indexes"> The name of the index this alias maps to. Only one index name may be specified. </param>
+        /// <param name="etag"> The ETag of the alias. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchAlias"/> instance for mocking. </returns>
+        public static SearchAlias SearchAlias(string name = null, IEnumerable<string> indexes = null, string etag = null)
+        {
+            indexes ??= new List<string>();
+
+            return new SearchAlias(name, indexes?.ToList(), etag);
+        }
+
         /// <summary> Initializes a new instance of CustomAnalyzer. </summary>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="tokenizerName"> The name of the tokenizer to use to divide continuous text into a sequence of tokens, such as breaking a sentence into words. </param>
@@ -323,6 +555,20 @@ namespace Azure.Search.Documents.Models
             charFilters ??= new List<string>();
 
             return new CustomAnalyzer("#Microsoft.Azure.Search.CustomAnalyzer", name, tokenizerName, tokenFilters?.ToList(), charFilters?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of PatternAnalyzer. </summary>
+        /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="lowerCaseTerms"> A value indicating whether terms should be lower-cased. Default is true. </param>
+        /// <param name="pattern"> A regular expression pattern to match token separators. Default is an expression that matches one or more non-word characters. </param>
+        /// <param name="flagsInternal"> Regular expression flags. </param>
+        /// <param name="stopwords"> A list of stopwords. </param>
+        /// <returns> A new <see cref="Indexes.Models.PatternAnalyzer"/> instance for mocking. </returns>
+        public static PatternAnalyzer PatternAnalyzer(string name = null, bool? lowerCaseTerms = null, string pattern = null, string flagsInternal = null, IEnumerable<string> stopwords = null)
+        {
+            stopwords ??= new List<string>();
+
+            return new PatternAnalyzer("#Microsoft.Azure.Search.PatternAnalyzer", name, lowerCaseTerms, pattern, flagsInternal, stopwords?.ToList());
         }
 
         /// <summary> Initializes a new instance of LuceneStandardAnalyzer. </summary>
@@ -447,6 +693,17 @@ namespace Azure.Search.Documents.Models
         public static PathHierarchyTokenizer PathHierarchyTokenizer(string name = null, char? delimiter = null, char? replacement = null, int? maxTokenLength = null, bool? reverseTokenOrder = null, int? numberOfTokensToSkip = null)
         {
             return new PathHierarchyTokenizer("#Microsoft.Azure.Search.PathHierarchyTokenizerV2", name, delimiter, replacement, maxTokenLength, reverseTokenOrder, numberOfTokensToSkip);
+        }
+
+        /// <summary> Initializes a new instance of PatternTokenizer. </summary>
+        /// <param name="name"> The name of the tokenizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="pattern"> A regular expression pattern to match token separators. Default is an expression that matches one or more non-word characters. </param>
+        /// <param name="flagsInternal"> Regular expression flags. </param>
+        /// <param name="group"> The zero-based ordinal of the matching group in the regular expression pattern to extract into tokens. Use -1 if you want to use the entire pattern to split the input into tokens, irrespective of matching groups. Default is -1. </param>
+        /// <returns> A new <see cref="Indexes.Models.PatternTokenizer"/> instance for mocking. </returns>
+        public static PatternTokenizer PatternTokenizer(string name = null, string pattern = null, string flagsInternal = null, int? group = null)
+        {
+            return new PatternTokenizer("#Microsoft.Azure.Search.PatternTokenizer", name, pattern, flagsInternal, group);
         }
 
         /// <summary> Initializes a new instance of LuceneStandardTokenizer. </summary>
@@ -956,6 +1213,24 @@ namespace Azure.Search.Documents.Models
             return new ConditionalSkill("#Microsoft.Skills.Util.ConditionalSkill", name, description, context, inputs?.ToList(), outputs?.ToList());
         }
 
+        /// <summary> Initializes a new instance of KeyPhraseExtractionSkill. </summary>
+        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character &apos;#&apos;. </param>
+        /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
+        /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is en. </param>
+        /// <param name="maxKeyPhraseCount"> A number indicating how many key phrases to return. If absent, all identified key phrases will be returned. </param>
+        /// <param name="modelVersion"> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </param>
+        /// <returns> A new <see cref="Indexes.Models.KeyPhraseExtractionSkill"/> instance for mocking. </returns>
+        public static KeyPhraseExtractionSkill KeyPhraseExtractionSkill(string name = null, string description = null, string context = null, IEnumerable<InputFieldMappingEntry> inputs = null, IEnumerable<OutputFieldMappingEntry> outputs = null, KeyPhraseExtractionSkillLanguage? defaultLanguageCode = null, int? maxKeyPhraseCount = null, string modelVersion = null)
+        {
+            inputs ??= new List<InputFieldMappingEntry>();
+            outputs ??= new List<OutputFieldMappingEntry>();
+
+            return new KeyPhraseExtractionSkill("#Microsoft.Skills.Text.KeyPhraseExtractionSkill", name, description, context, inputs?.ToList(), outputs?.ToList(), defaultLanguageCode, maxKeyPhraseCount, modelVersion);
+        }
+
         /// <summary> Initializes a new instance of OcrSkill. </summary>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character &apos;#&apos;. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
@@ -992,6 +1267,23 @@ namespace Azure.Search.Documents.Models
             details ??= new List<ImageDetail>();
 
             return new ImageAnalysisSkill("#Microsoft.Skills.Vision.ImageAnalysisSkill", name, description, context, inputs?.ToList(), outputs?.ToList(), defaultLanguageCode, visualFeatures?.ToList(), details?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of LanguageDetectionSkill. </summary>
+        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character &apos;#&apos;. </param>
+        /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
+        /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <param name="defaultCountryHint"> A country code to use as a hint to the language detection model if it cannot disambiguate the language. </param>
+        /// <param name="modelVersion"> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </param>
+        /// <returns> A new <see cref="Indexes.Models.LanguageDetectionSkill"/> instance for mocking. </returns>
+        public static LanguageDetectionSkill LanguageDetectionSkill(string name = null, string description = null, string context = null, IEnumerable<InputFieldMappingEntry> inputs = null, IEnumerable<OutputFieldMappingEntry> outputs = null, string defaultCountryHint = null, string modelVersion = null)
+        {
+            inputs ??= new List<InputFieldMappingEntry>();
+            outputs ??= new List<OutputFieldMappingEntry>();
+
+            return new LanguageDetectionSkill("#Microsoft.Skills.Text.LanguageDetectionSkill", name, description, context, inputs?.ToList(), outputs?.ToList(), defaultCountryHint, modelVersion);
         }
 
         /// <summary> Initializes a new instance of ShaperSkill. </summary>
@@ -1200,6 +1492,27 @@ namespace Azure.Search.Documents.Models
             httpHeaders ??= new Dictionary<string, string>();
 
             return new WebApiSkill("#Microsoft.Skills.Custom.WebApiSkill", name, description, context, inputs?.ToList(), outputs?.ToList(), uri, httpHeaders, httpMethod, timeout, batchSize, degreeOfParallelism);
+        }
+
+        /// <summary> Initializes a new instance of AzureMachineLearningSkill. </summary>
+        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character &apos;#&apos;. </param>
+        /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
+        /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
+        /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
+        /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <param name="scoringUri"> (Required for no authentication or key authentication) The scoring URI of the AML service to which the JSON payload will be sent. Only the https URI scheme is allowed. </param>
+        /// <param name="authenticationKey"> (Required for key authentication) The key for the AML service. </param>
+        /// <param name="rawResourceId"> (Required for token authentication). The Azure Resource Manager resource ID of the AML service. It should be in the format subscriptions/{guid}/resourceGroups/{resource-group-name}/Microsoft.MachineLearningServices/workspaces/{workspace-name}/services/{service_name}. </param>
+        /// <param name="timeout"> (Optional) When specified, indicates the timeout for the http client making the API call. </param>
+        /// <param name="rawLocation"> (Optional for token authentication). The region the AML service is deployed in. </param>
+        /// <param name="degreeOfParallelism"> (Optional) When specified, indicates the number of calls the indexer will make in parallel to the endpoint you have provided. You can decrease this value if your endpoint is failing under too high of a request load, or raise it if your endpoint is able to accept more requests and you would like an increase in the performance of the indexer. If not set, a default value of 5 is used. The degreeOfParallelism can be set to a maximum of 10 and a minimum of 1. </param>
+        /// <returns> A new <see cref="Indexes.Models.AzureMachineLearningSkill"/> instance for mocking. </returns>
+        public static AzureMachineLearningSkill AzureMachineLearningSkill(string name = null, string description = null, string context = null, IEnumerable<InputFieldMappingEntry> inputs = null, IEnumerable<OutputFieldMappingEntry> outputs = null, Uri scoringUri = null, string authenticationKey = null, string rawResourceId = null, TimeSpan? timeout = null, string rawLocation = null, int? degreeOfParallelism = null)
+        {
+            inputs ??= new List<InputFieldMappingEntry>();
+            outputs ??= new List<OutputFieldMappingEntry>();
+
+            return new AzureMachineLearningSkill("#Microsoft.Skills.Custom.AmlSkill", name, description, context, inputs?.ToList(), outputs?.ToList(), scoringUri, authenticationKey, rawResourceId, timeout, rawLocation, degreeOfParallelism);
         }
     }
 }

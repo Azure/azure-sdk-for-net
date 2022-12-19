@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             tags ??= new Dictionary<string, string>();
             provisioningErrors ??= new List<ErrorResponseWrapper>();
 
-            return new OperationalizationClusterData(id, name, resourceType, systemData, tags, location, description, createdOn, modifiedOn, provisioningState, provisioningErrors?.ToList(), clusterType, new StorageAccountProperties(storageAccountResourceId), new ContainerRegistryProperties(containerRegistryResourceId), containerService, new AppInsightsProperties(appInsightsResourceId), globalServiceConfiguration);
+            return new OperationalizationClusterData(id, name, resourceType, systemData, tags, location, description, createdOn, modifiedOn, provisioningState, provisioningErrors?.ToList(), clusterType, storageAccountResourceId != null ? new StorageAccountProperties(storageAccountResourceId) : null, containerRegistryResourceId != null ? new ContainerRegistryProperties(containerRegistryResourceId) : null, containerService, appInsightsResourceId != null ? new AppInsightsProperties(appInsightsResourceId) : null, globalServiceConfiguration);
         }
 
         /// <summary> Initializes a new instance of ErrorResponseWrapper. </summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         {
             systemServices ??= new List<SystemService>();
 
-            return new AcsClusterProperties(clusterFqdn, orchestratorType, new KubernetesClusterProperties(orchestratorServicePrincipal), systemServices?.ToList(), masterCount, agentCount, agentVmSize);
+            return new AcsClusterProperties(clusterFqdn, orchestratorType, orchestratorServicePrincipal != null ? new KubernetesClusterProperties(orchestratorServicePrincipal) : null, systemServices?.ToList(), masterCount, agentCount, agentVmSize);
         }
 
         /// <summary> Initializes a new instance of SystemService. </summary>

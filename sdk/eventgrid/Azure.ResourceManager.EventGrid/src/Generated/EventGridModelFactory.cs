@@ -11,7 +11,6 @@ using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -164,7 +163,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             groupIds ??= new List<string>();
 
-            return new EventGridPrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.WritableSubResource(privateEndpointId), groupIds?.ToList(), connectionState, provisioningState);
+            return new EventGridPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, groupIds?.ToList(), connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of EventGridPrivateEndpointConnectionState. </summary>
@@ -683,7 +682,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <returns> A new <see cref="Models.EventGridJsonInputSchemaMapping"/> instance for mocking. </returns>
         public static EventGridJsonInputSchemaMapping EventGridJsonInputSchemaMapping(string idSourceField = null, string topicSourceField = null, string eventTimeSourceField = null, JsonFieldWithDefault eventType = null, JsonFieldWithDefault subject = null, JsonFieldWithDefault dataVersion = null)
         {
-            return new EventGridJsonInputSchemaMapping("Json", new JsonField(idSourceField), new JsonField(topicSourceField), new JsonField(eventTimeSourceField), eventType, subject, dataVersion);
+            return new EventGridJsonInputSchemaMapping("Json", idSourceField != null ? new JsonField(idSourceField) : null, topicSourceField != null ? new JsonField(topicSourceField) : null, eventTimeSourceField != null ? new JsonField(eventTimeSourceField) : null, eventType, subject, dataVersion);
         }
 
         /// <summary> Initializes a new instance of StaticDeliveryAttributeMapping. </summary>

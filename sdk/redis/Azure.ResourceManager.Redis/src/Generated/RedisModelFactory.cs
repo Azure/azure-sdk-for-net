@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <returns> A new <see cref="Redis.RedisPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static RedisPrivateEndpointConnectionData RedisPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, RedisPrivateLinkServiceConnectionState redisPrivateLinkServiceConnectionState = null, RedisPrivateEndpointConnectionProvisioningState? redisProvisioningState = null)
         {
-            return new RedisPrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.SubResource(privateEndpointId), redisPrivateLinkServiceConnectionState, redisProvisioningState);
+            return new RedisPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, redisPrivateLinkServiceConnectionState, redisProvisioningState);
         }
 
         /// <summary> Initializes a new instance of RedisPrivateLinkServiceConnectionState. </summary>

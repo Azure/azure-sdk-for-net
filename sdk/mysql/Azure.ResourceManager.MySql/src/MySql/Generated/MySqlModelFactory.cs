@@ -12,7 +12,6 @@ using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MySql;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MySql.Models
 {
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <returns> A new <see cref="Models.MySqlServerPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
         public static MySqlServerPrivateEndpointConnectionProperties MySqlServerPrivateEndpointConnectionProperties(ResourceIdentifier privateEndpointId = null, MySqlServerPrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = null, MySqlPrivateEndpointProvisioningState? provisioningState = null)
         {
-            return new MySqlServerPrivateEndpointConnectionProperties(ResourceManagerModelFactory.WritableSubResource(privateEndpointId), privateLinkServiceConnectionState, provisioningState);
+            return new MySqlServerPrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, privateLinkServiceConnectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of MySqlServerPrivateLinkServiceConnectionStateProperty. </summary>
@@ -392,7 +391,7 @@ namespace Azure.ResourceManager.MySql.Models
         /// <returns> A new <see cref="MySql.MySqlPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static MySqlPrivateEndpointConnectionData MySqlPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, MySqlPrivateLinkServiceConnectionStateProperty connectionState = null, string provisioningState = null)
         {
-            return new MySqlPrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.WritableSubResource(privateEndpointId), connectionState, provisioningState);
+            return new MySqlPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of MySqlPrivateLinkServiceConnectionStateProperty. </summary>

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Automanage.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConfigurationProfileData(id, name, resourceType, systemData, tags, location, new ConfigurationProfileProperties(configuration));
+            return new ConfigurationProfileData(id, name, resourceType, systemData, tags, location, configuration != null ? new ConfigurationProfileProperties(configuration) : null);
         }
 
         /// <summary> Initializes a new instance of ConfigurationProfileAssignmentData. </summary>

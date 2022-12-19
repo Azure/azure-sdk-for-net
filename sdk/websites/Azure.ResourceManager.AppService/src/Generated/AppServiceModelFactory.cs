@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.CsmOperationDescription"/> instance for mocking. </returns>
         public static CsmOperationDescription CsmOperationDescription(string name = null, bool? isDataAction = null, CsmOperationDisplay display = null, string origin = null, ServiceSpecification csmOperationDescriptionServiceSpecification = null)
         {
-            return new CsmOperationDescription(name, isDataAction, display, origin, new CsmOperationDescriptionProperties(csmOperationDescriptionServiceSpecification));
+            return new CsmOperationDescription(name, isDataAction, display, origin, csmOperationDescriptionServiceSpecification != null ? new CsmOperationDescriptionProperties(csmOperationDescriptionServiceSpecification) : null);
         }
 
         /// <summary> Initializes a new instance of CsmOperationDisplay. </summary>
@@ -1090,7 +1090,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             ipAddresses ??= new List<IPAddress>();
 
-            return new RemotePrivateEndpointConnectionARMResourceData(id, name, resourceType, systemData, provisioningState, ResourceManagerModelFactory.SubResource(privateEndpointId), privateLinkServiceConnectionState, ipAddresses?.ToList(), kind);
+            return new RemotePrivateEndpointConnectionARMResourceData(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState, ipAddresses?.ToList(), kind);
         }
 
         /// <summary> Initializes a new instance of PrivateLinkConnectionState. </summary>
@@ -1397,7 +1397,7 @@ namespace Azure.ResourceManager.AppService.Models
             scmIPSecurityRestrictions ??= new List<AppServiceIPSecurityRestriction>();
             azureStorageAccounts ??= new Dictionary<string, AppServiceStorageAccessInfo>();
 
-            return new SiteConfigProperties(numberOfWorkers, defaultDocuments?.ToList(), netFrameworkVersion, phpVersion, pythonVersion, nodeVersion, powerShellVersion, linuxFxVersion, windowsFxVersion, isRequestTracingEnabled, requestTracingExpirationOn, isRemoteDebuggingEnabled, remoteDebuggingVersion, isHttpLoggingEnabled, useManagedIdentityCreds, acrUserManagedIdentityId, logsDirectorySizeLimit, isDetailedErrorLoggingEnabled, publishingUsername, appSettings?.ToList(), connectionStrings?.ToList(), machineKey, handlerMappings?.ToList(), documentRoot, scmType, use32BitWorkerProcess, isWebSocketsEnabled, isAlwaysOn, javaVersion, javaContainer, javaContainerVersion, appCommandLine, managedPipelineMode, virtualApplications?.ToList(), loadBalancing, new RoutingRuleExperiments(experimentsRampUpRules?.ToList()), limits, isAutoHealEnabled, autoHealRules, tracingOptions, vnetName, isVnetRouteAllEnabled, vnetPrivatePortsCount, cors, push, new AppServiceApiDefinitionInfo(apiDefinitionUri), new ApiManagementConfig(apiManagementConfigId), autoSwapSlotName, isLocalMySqlEnabled, managedServiceIdentityId, xManagedServiceIdentityId, keyVaultReferenceIdentity, ipSecurityRestrictions?.ToList(), scmIPSecurityRestrictions?.ToList(), allowIPSecurityRestrictionsForScmToUseMain, isHttp20Enabled, minTlsVersion, scmMinTlsVersion, ftpsState, preWarmedInstanceCount, functionAppScaleLimit, healthCheckPath, isFunctionsRuntimeScaleMonitoringEnabled, websiteTimeZone, minimumElasticInstanceCount, azureStorageAccounts, publicNetworkAccess);
+            return new SiteConfigProperties(numberOfWorkers, defaultDocuments?.ToList(), netFrameworkVersion, phpVersion, pythonVersion, nodeVersion, powerShellVersion, linuxFxVersion, windowsFxVersion, isRequestTracingEnabled, requestTracingExpirationOn, isRemoteDebuggingEnabled, remoteDebuggingVersion, isHttpLoggingEnabled, useManagedIdentityCreds, acrUserManagedIdentityId, logsDirectorySizeLimit, isDetailedErrorLoggingEnabled, publishingUsername, appSettings?.ToList(), connectionStrings?.ToList(), machineKey, handlerMappings?.ToList(), documentRoot, scmType, use32BitWorkerProcess, isWebSocketsEnabled, isAlwaysOn, javaVersion, javaContainer, javaContainerVersion, appCommandLine, managedPipelineMode, virtualApplications?.ToList(), loadBalancing, experimentsRampUpRules != null ? new RoutingRuleExperiments(experimentsRampUpRules?.ToList()) : null, limits, isAutoHealEnabled, autoHealRules, tracingOptions, vnetName, isVnetRouteAllEnabled, vnetPrivatePortsCount, cors, push, apiDefinitionUri != null ? new AppServiceApiDefinitionInfo(apiDefinitionUri) : null, apiManagementConfigId != null ? new ApiManagementConfig(apiManagementConfigId) : null, autoSwapSlotName, isLocalMySqlEnabled, managedServiceIdentityId, xManagedServiceIdentityId, keyVaultReferenceIdentity, ipSecurityRestrictions?.ToList(), scmIPSecurityRestrictions?.ToList(), allowIPSecurityRestrictionsForScmToUseMain, isHttp20Enabled, minTlsVersion, scmMinTlsVersion, ftpsState, preWarmedInstanceCount, functionAppScaleLimit, healthCheckPath, isFunctionsRuntimeScaleMonitoringEnabled, websiteTimeZone, minimumElasticInstanceCount, azureStorageAccounts, publicNetworkAccess);
         }
 
         /// <summary> Initializes a new instance of ConnStringInfo. </summary>
@@ -2106,7 +2106,7 @@ namespace Azure.ResourceManager.AppService.Models
             metrics ??= new List<DiagnosticMetricSet>();
             data ??= new List<IList<AppServiceNameValuePair>>();
 
-            return new AnalysisDetectorEvidences(source, detectorDefinition, metrics?.ToList(), data?.ToList(), new DetectorMetadata(dataSource));
+            return new AnalysisDetectorEvidences(source, detectorDefinition, metrics?.ToList(), data?.ToList(), dataSource != null ? new DetectorMetadata(dataSource) : null);
         }
 
         /// <summary> Initializes a new instance of DetectorDefinition. </summary>
@@ -2202,7 +2202,7 @@ namespace Azure.ResourceManager.AppService.Models
             abnormalTimePeriods ??= new List<DetectorAbnormalTimePeriod>();
             data ??= new List<IList<AppServiceNameValuePair>>();
 
-            return new DiagnosticDetectorResponse(id, name, resourceType, systemData, startOn, endOn, issueDetected, detectorDefinition, metrics?.ToList(), abnormalTimePeriods?.ToList(), data?.ToList(), new DetectorMetadata(dataSource), kind);
+            return new DiagnosticDetectorResponse(id, name, resourceType, systemData, startOn, endOn, issueDetected, detectorDefinition, metrics?.ToList(), abnormalTimePeriods?.ToList(), data?.ToList(), dataSource != null ? new DetectorMetadata(dataSource) : null, kind);
         }
 
         /// <summary> Initializes a new instance of AppSnapshot. </summary>
@@ -2262,7 +2262,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.ArcConfiguration"/> instance for mocking. </returns>
         public static ArcConfiguration ArcConfiguration(ArtifactStorageType? artifactsStorageType = null, string artifactStorageClassName = null, string artifactStorageMountPath = null, string artifactStorageNodeName = null, string artifactStorageAccessMode = null, FrontEndServiceType? frontEndServiceKind = null, string kubeConfig = null)
         {
-            return new ArcConfiguration(artifactsStorageType, artifactStorageClassName, artifactStorageMountPath, artifactStorageNodeName, artifactStorageAccessMode, new FrontEndConfiguration(frontEndServiceKind), kubeConfig);
+            return new ArcConfiguration(artifactsStorageType, artifactStorageClassName, artifactStorageMountPath, artifactStorageNodeName, artifactStorageAccessMode, frontEndServiceKind != null ? new FrontEndConfiguration(frontEndServiceKind) : null, kubeConfig);
         }
 
         /// <summary> Initializes a new instance of AppLogsConfiguration. </summary>
@@ -3034,7 +3034,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             ipAddresses ??= new List<IPAddress>();
 
-            return new RemotePrivateEndpointConnection(id, name, resourceType, systemData, provisioningState, ResourceManagerModelFactory.SubResource(privateEndpointId), privateLinkServiceConnectionState, ipAddresses?.ToList(), kind);
+            return new RemotePrivateEndpointConnection(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState, ipAddresses?.ToList(), kind);
         }
 
         /// <summary> Initializes a new instance of StaticSiteTemplate. </summary>
@@ -3590,7 +3590,7 @@ namespace Azure.ResourceManager.AppService.Models
             scmIPSecurityRestrictions ??= new List<AppServiceIPSecurityRestriction>();
             azureStorageAccounts ??= new Dictionary<string, AppServiceStorageAccessInfo>();
 
-            return new SiteConfigData(id, name, resourceType, systemData, numberOfWorkers, defaultDocuments?.ToList(), netFrameworkVersion, phpVersion, pythonVersion, nodeVersion, powerShellVersion, linuxFxVersion, windowsFxVersion, isRequestTracingEnabled, requestTracingExpirationOn, isRemoteDebuggingEnabled, remoteDebuggingVersion, isHttpLoggingEnabled, useManagedIdentityCreds, acrUserManagedIdentityId, logsDirectorySizeLimit, isDetailedErrorLoggingEnabled, publishingUsername, appSettings?.ToList(), connectionStrings?.ToList(), machineKey, handlerMappings?.ToList(), documentRoot, scmType, use32BitWorkerProcess, isWebSocketsEnabled, isAlwaysOn, javaVersion, javaContainer, javaContainerVersion, appCommandLine, managedPipelineMode, virtualApplications?.ToList(), loadBalancing, new RoutingRuleExperiments(experimentsRampUpRules?.ToList()), limits, isAutoHealEnabled, autoHealRules, tracingOptions, vnetName, isVnetRouteAllEnabled, vnetPrivatePortsCount, cors, push, new AppServiceApiDefinitionInfo(apiDefinitionUri), new ApiManagementConfig(apiManagementConfigId), autoSwapSlotName, isLocalMySqlEnabled, managedServiceIdentityId, xManagedServiceIdentityId, keyVaultReferenceIdentity, ipSecurityRestrictions?.ToList(), scmIPSecurityRestrictions?.ToList(), allowIPSecurityRestrictionsForScmToUseMain, isHttp20Enabled, minTlsVersion, scmMinTlsVersion, ftpsState, preWarmedInstanceCount, functionAppScaleLimit, healthCheckPath, isFunctionsRuntimeScaleMonitoringEnabled, websiteTimeZone, minimumElasticInstanceCount, azureStorageAccounts, publicNetworkAccess, kind);
+            return new SiteConfigData(id, name, resourceType, systemData, numberOfWorkers, defaultDocuments?.ToList(), netFrameworkVersion, phpVersion, pythonVersion, nodeVersion, powerShellVersion, linuxFxVersion, windowsFxVersion, isRequestTracingEnabled, requestTracingExpirationOn, isRemoteDebuggingEnabled, remoteDebuggingVersion, isHttpLoggingEnabled, useManagedIdentityCreds, acrUserManagedIdentityId, logsDirectorySizeLimit, isDetailedErrorLoggingEnabled, publishingUsername, appSettings?.ToList(), connectionStrings?.ToList(), machineKey, handlerMappings?.ToList(), documentRoot, scmType, use32BitWorkerProcess, isWebSocketsEnabled, isAlwaysOn, javaVersion, javaContainer, javaContainerVersion, appCommandLine, managedPipelineMode, virtualApplications?.ToList(), loadBalancing, experimentsRampUpRules != null ? new RoutingRuleExperiments(experimentsRampUpRules?.ToList()) : null, limits, isAutoHealEnabled, autoHealRules, tracingOptions, vnetName, isVnetRouteAllEnabled, vnetPrivatePortsCount, cors, push, apiDefinitionUri != null ? new AppServiceApiDefinitionInfo(apiDefinitionUri) : null, apiManagementConfigId != null ? new ApiManagementConfig(apiManagementConfigId) : null, autoSwapSlotName, isLocalMySqlEnabled, managedServiceIdentityId, xManagedServiceIdentityId, keyVaultReferenceIdentity, ipSecurityRestrictions?.ToList(), scmIPSecurityRestrictions?.ToList(), allowIPSecurityRestrictionsForScmToUseMain, isHttp20Enabled, minTlsVersion, scmMinTlsVersion, ftpsState, preWarmedInstanceCount, functionAppScaleLimit, healthCheckPath, isFunctionsRuntimeScaleMonitoringEnabled, websiteTimeZone, minimumElasticInstanceCount, azureStorageAccounts, publicNetworkAccess, kind);
         }
 
         /// <summary> Initializes a new instance of SiteAuthSettings. </summary>
@@ -3957,7 +3957,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             loginScopes ??= new List<string>();
 
-            return new AppServiceFacebookProvider(isEnabled, registration, graphApiVersion, new LoginScopes(loginScopes?.ToList()));
+            return new AppServiceFacebookProvider(isEnabled, registration, graphApiVersion, loginScopes != null ? new LoginScopes(loginScopes?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of AppRegistration. </summary>
@@ -3978,7 +3978,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             loginScopes ??= new List<string>();
 
-            return new AppServiceGitHubProvider(isEnabled, registration, new LoginScopes(loginScopes?.ToList()));
+            return new AppServiceGitHubProvider(isEnabled, registration, loginScopes != null ? new LoginScopes(loginScopes?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of ClientRegistration. </summary>
@@ -4001,7 +4001,7 @@ namespace Azure.ResourceManager.AppService.Models
             loginScopes ??= new List<string>();
             validationAllowedAudiences ??= new List<string>();
 
-            return new AppServiceGoogleProvider(isEnabled, registration, new LoginScopes(loginScopes?.ToList()), new AllowedAudiencesValidation(validationAllowedAudiences?.ToList()));
+            return new AppServiceGoogleProvider(isEnabled, registration, loginScopes != null ? new LoginScopes(loginScopes?.ToList()) : null, validationAllowedAudiences != null ? new AllowedAudiencesValidation(validationAllowedAudiences?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of LegacyMicrosoftAccount. </summary>
@@ -4015,7 +4015,7 @@ namespace Azure.ResourceManager.AppService.Models
             loginScopes ??= new List<string>();
             validationAllowedAudiences ??= new List<string>();
 
-            return new LegacyMicrosoftAccount(isEnabled, registration, new LoginScopes(loginScopes?.ToList()), new AllowedAudiencesValidation(validationAllowedAudiences?.ToList()));
+            return new LegacyMicrosoftAccount(isEnabled, registration, loginScopes != null ? new LoginScopes(loginScopes?.ToList()) : null, validationAllowedAudiences != null ? new AllowedAudiencesValidation(validationAllowedAudiences?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of AppServiceTwitterProvider. </summary>
@@ -4052,7 +4052,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             loginScopes ??= new List<string>();
 
-            return new AppServiceAppleProvider(isEnabled, registration, new LoginScopes(loginScopes?.ToList()));
+            return new AppServiceAppleProvider(isEnabled, registration, loginScopes != null ? new LoginScopes(loginScopes?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of AppServiceAppleRegistration. </summary>
@@ -4070,7 +4070,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServiceStaticWebAppsProvider"/> instance for mocking. </returns>
         public static AppServiceStaticWebAppsProvider AppServiceStaticWebAppsProvider(bool? isEnabled = null, string registrationClientId = null)
         {
-            return new AppServiceStaticWebAppsProvider(isEnabled, new AppServiceStaticWebAppsRegistration(registrationClientId));
+            return new AppServiceStaticWebAppsProvider(isEnabled, registrationClientId != null ? new AppServiceStaticWebAppsRegistration(registrationClientId) : null);
         }
 
         /// <summary> Initializes a new instance of CustomOpenIdConnectProvider. </summary>
@@ -4141,7 +4141,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             allowedExternalRedirectUrls ??= new List<string>();
 
-            return new WebAppLoginInfo(new LoginRoutes(routesLogoutEndpoint), tokenStore, preserveUrlFragmentsForLogins, allowedExternalRedirectUrls?.ToList(), cookieExpiration, nonce);
+            return new WebAppLoginInfo(routesLogoutEndpoint != null ? new LoginRoutes(routesLogoutEndpoint) : null, tokenStore, preserveUrlFragmentsForLogins, allowedExternalRedirectUrls?.ToList(), cookieExpiration, nonce);
         }
 
         /// <summary> Initializes a new instance of AppServiceTokenStore. </summary>
@@ -4158,7 +4158,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServiceTokenStore"/> instance for mocking. </returns>
         public static AppServiceTokenStore AppServiceTokenStore(bool? isEnabled = null, double? tokenRefreshExtensionHours = null, string fileSystemDirectory = null, string azureBlobStorageSasUrlSettingName = null)
         {
-            return new AppServiceTokenStore(isEnabled, tokenRefreshExtensionHours, new FileSystemTokenStore(fileSystemDirectory), new AppServiceBlobStorageTokenStore(azureBlobStorageSasUrlSettingName));
+            return new AppServiceTokenStore(isEnabled, tokenRefreshExtensionHours, fileSystemDirectory != null ? new FileSystemTokenStore(fileSystemDirectory) : null, azureBlobStorageSasUrlSettingName != null ? new AppServiceBlobStorageTokenStore(azureBlobStorageSasUrlSettingName) : null);
         }
 
         /// <summary> Initializes a new instance of WebAppCookieExpiration. </summary>
@@ -4186,7 +4186,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServiceHttpSettings"/> instance for mocking. </returns>
         public static AppServiceHttpSettings AppServiceHttpSettings(bool? isHttpsRequired = null, string routesApiPrefix = null, AppServiceForwardProxy forwardProxy = null)
         {
-            return new AppServiceHttpSettings(isHttpsRequired, new AppServiceHttpSettingsRoutes(routesApiPrefix), forwardProxy);
+            return new AppServiceHttpSettings(isHttpsRequired, routesApiPrefix != null ? new AppServiceHttpSettingsRoutes(routesApiPrefix) : null, forwardProxy);
         }
 
         /// <summary> Initializes a new instance of AppServiceForwardProxy. </summary>
@@ -4263,7 +4263,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.SiteLogsConfigData"/> instance for mocking. </returns>
         public static SiteLogsConfigData SiteLogsConfigData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApplicationLogsConfig applicationLogs = null, AppServiceHttpLogsConfig httpLogs = null, bool? isFailedRequestsTracingEnabled = null, bool? isDetailedErrorMessagesEnabled = null, string kind = null)
         {
-            return new SiteLogsConfigData(id, name, resourceType, systemData, applicationLogs, httpLogs, new WebAppEnabledConfig(isFailedRequestsTracingEnabled), new WebAppEnabledConfig(isDetailedErrorMessagesEnabled), kind);
+            return new SiteLogsConfigData(id, name, resourceType, systemData, applicationLogs, httpLogs, isFailedRequestsTracingEnabled != null ? new WebAppEnabledConfig(isFailedRequestsTracingEnabled) : null, isDetailedErrorMessagesEnabled != null ? new WebAppEnabledConfig(isDetailedErrorMessagesEnabled) : null, kind);
         }
 
         /// <summary> Initializes a new instance of ApplicationLogsConfig. </summary>
@@ -4273,7 +4273,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.ApplicationLogsConfig"/> instance for mocking. </returns>
         public static ApplicationLogsConfig ApplicationLogsConfig(WebAppLogLevel? fileSystemLevel = null, AppServiceTableStorageApplicationLogsConfig azureTableStorage = null, AppServiceBlobStorageApplicationLogsConfig azureBlobStorage = null)
         {
-            return new ApplicationLogsConfig(new FileSystemApplicationLogsConfig(fileSystemLevel), azureTableStorage, azureBlobStorage);
+            return new ApplicationLogsConfig(fileSystemLevel != null ? new FileSystemApplicationLogsConfig(fileSystemLevel) : null, azureTableStorage, azureBlobStorage);
         }
 
         /// <summary> Initializes a new instance of AppServiceTableStorageApplicationLogsConfig. </summary>

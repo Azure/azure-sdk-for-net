@@ -11,12 +11,11 @@ using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.DeviceUpdate;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     /// <summary> Model factory for generated models. </summary>
-    public static partial class AzureResourceManagerDeviceUpdateModelFactory
+    public static partial class DeviceUpdateModelFactory
     {
         /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         {
             groupIds ??= new List<string>();
 
-            return new DeviceUpdatePrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.SubResource(privateEndpointId), connectionState, groupIds?.ToList(), provisioningState);
+            return new DeviceUpdatePrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, groupIds?.ToList(), provisioningState);
         }
 
         /// <summary> Initializes a new instance of DeviceUpdatePrivateLinkServiceConnectionState. </summary>
@@ -195,7 +194,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         {
             groupConnectivityInformation ??= new List<GroupConnectivityInformation>();
 
-            return new PrivateLinkServiceProxy(id, remotePrivateLinkServiceConnectionState, ResourceManagerModelFactory.SubResource(remotePrivateEndpointConnectionId), groupConnectivityInformation?.ToList());
+            return new PrivateLinkServiceProxy(id, remotePrivateLinkServiceConnectionState, remotePrivateEndpointConnectionId != null ? ResourceManagerModelFactory.SubResource(remotePrivateEndpointConnectionId) : null, groupConnectivityInformation?.ToList());
         }
 
         /// <summary> Initializes a new instance of GroupConnectivityInformation. </summary>

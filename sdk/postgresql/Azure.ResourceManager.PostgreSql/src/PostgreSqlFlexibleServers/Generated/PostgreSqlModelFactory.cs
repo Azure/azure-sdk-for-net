@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new PostgreSqlFlexibleServerData(id, name, resourceType, systemData, tags, location, sku, administratorLogin, administratorLoginPassword, version, minorVersion, state, fullyQualifiedDomainName, new PostgreSqlFlexibleServerStorage(storageSizeInGB), backup, network, highAvailability, maintenanceWindow, sourceServerResourceId, pointInTimeUtc, availabilityZone, createMode);
+            return new PostgreSqlFlexibleServerData(id, name, resourceType, systemData, tags, location, sku, administratorLogin, administratorLoginPassword, version, minorVersion, state, fullyQualifiedDomainName, storageSizeInGB != null ? new PostgreSqlFlexibleServerStorage(storageSizeInGB) : null, backup, network, highAvailability, maintenanceWindow, sourceServerResourceId, pointInTimeUtc, availabilityZone, createMode);
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerBackupProperties. </summary>

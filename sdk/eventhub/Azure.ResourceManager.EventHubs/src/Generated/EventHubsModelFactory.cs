@@ -17,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Model factory for generated models. </summary>
-    public static partial class AzureResourceManagerEventHubsModelFactory
+    public static partial class EventHubsModelFactory
     {
 
         /// <summary> Initializes a new instance of AvailableCluster. </summary>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <returns> A new <see cref="Models.EventHubsKeyVaultProperties"/> instance for mocking. </returns>
         public static EventHubsKeyVaultProperties EventHubsKeyVaultProperties(string keyName = null, Uri keyVaultUri = null, string keyVersion = null, string userAssignedIdentity = null)
         {
-            return new EventHubsKeyVaultProperties(keyName, keyVaultUri, keyVersion, new UserAssignedIdentityProperties(userAssignedIdentity));
+            return new EventHubsKeyVaultProperties(keyName, keyVaultUri, keyVersion, userAssignedIdentity != null ? new UserAssignedIdentityProperties(userAssignedIdentity) : null);
         }
 
         /// <summary> Initializes a new instance of EventHubsPrivateEndpointConnectionData. </summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <returns> A new <see cref="EventHubs.EventHubsPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static EventHubsPrivateEndpointConnectionData EventHubsPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, EventHubsPrivateLinkServiceConnectionState connectionState = null, EventHubsPrivateEndpointConnectionProvisioningState? provisioningState = null, AzureLocation? location = null)
         {
-            return new EventHubsPrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.WritableSubResource(privateEndpointId), connectionState, provisioningState, location);
+            return new EventHubsPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState, location);
         }
 
         /// <summary> Initializes a new instance of EventHubsPrivateLinkServiceConnectionState. </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <returns> A new <see cref="Models.EventHubsNetworkRuleSetVirtualNetworkRules"/> instance for mocking. </returns>
         public static EventHubsNetworkRuleSetVirtualNetworkRules EventHubsNetworkRuleSetVirtualNetworkRules(ResourceIdentifier subnetId = null, bool? ignoreMissingVnetServiceEndpoint = null)
         {
-            return new EventHubsNetworkRuleSetVirtualNetworkRules(ResourceManagerModelFactory.WritableSubResource(subnetId), ignoreMissingVnetServiceEndpoint);
+            return new EventHubsNetworkRuleSetVirtualNetworkRules(subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, ignoreMissingVnetServiceEndpoint);
         }
 
         /// <summary> Initializes a new instance of EventHubsNetworkRuleSetIPRules. </summary>

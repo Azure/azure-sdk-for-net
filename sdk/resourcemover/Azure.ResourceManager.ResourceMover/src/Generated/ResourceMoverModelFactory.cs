@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <returns> A new <see cref="Models.MoverResourceSetProperties"/> instance for mocking. </returns>
         public static MoverResourceSetProperties MoverResourceSetProperties(AzureLocation sourceRegion = default, AzureLocation targetRegion = default, MoverProvisioningState? provisioningState = null, ResponseError errorsProperties = null)
         {
-            return new MoverResourceSetProperties(sourceRegion, targetRegion, provisioningState, new MoveCollectionPropertiesErrors(errorsProperties));
+            return new MoverResourceSetProperties(sourceRegion, targetRegion, provisioningState, errorsProperties != null ? new MoveCollectionPropertiesErrors(errorsProperties) : null);
         }
 
         /// <summary> Initializes a new instance of MoverOperationStatus. </summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         {
             infoMoverResources ??= new List<AffectedMoverResourceInfo>();
 
-            return new MoverOperationErrorAdditionalInfo(operationErrorAdditionalInfoType, new MoveErrorInfo(infoMoverResources?.ToList()));
+            return new MoverOperationErrorAdditionalInfo(operationErrorAdditionalInfoType, infoMoverResources != null ? new MoveErrorInfo(infoMoverResources?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of AffectedMoverResourceInfo. </summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             dependsOn ??= new List<MoverResourceDependency>();
             dependsOnOverrides ??= new List<MoverResourceDependencyOverride>();
 
-            return new MoverResourceProperties(provisioningState, sourceId, targetId, existingTargetId, resourceSettings, sourceResourceSettings, moveStatus, dependsOn?.ToList(), dependsOnOverrides?.ToList(), isResolveRequired, new MoveResourcePropertiesErrors(errorsProperties));
+            return new MoverResourceProperties(provisioningState, sourceId, targetId, existingTargetId, resourceSettings, sourceResourceSettings, moveStatus, dependsOn?.ToList(), dependsOnOverrides?.ToList(), isResolveRequired, errorsProperties != null ? new MoveResourcePropertiesErrors(errorsProperties) : null);
         }
 
         /// <summary> Initializes a new instance of MoverResourceSettings. </summary>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <returns> A new <see cref="Models.MoverResourcePropertiesMoveStatus"/> instance for mocking. </returns>
         public static MoverResourcePropertiesMoveStatus MoverResourcePropertiesMoveStatus(MoverResourceMoveState? moveState = null, MoverResourceJobStatus jobStatus = null, ResponseError errorsProperties = null)
         {
-            return new MoverResourcePropertiesMoveStatus(moveState, jobStatus, new MoveResourceError(errorsProperties));
+            return new MoverResourcePropertiesMoveStatus(moveState, jobStatus, errorsProperties != null ? new MoveResourceError(errorsProperties) : null);
         }
 
         /// <summary> Initializes a new instance of MoverResourceStatus. </summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <returns> A new <see cref="Models.MoverResourceStatus"/> instance for mocking. </returns>
         public static MoverResourceStatus MoverResourceStatus(MoverResourceMoveState? moveState = null, MoverResourceJobStatus jobStatus = null, ResponseError errorsProperties = null)
         {
-            return new MoverResourceStatus(moveState, jobStatus, new MoveResourceError(errorsProperties));
+            return new MoverResourceStatus(moveState, jobStatus, errorsProperties != null ? new MoveResourceError(errorsProperties) : null);
         }
 
         /// <summary> Initializes a new instance of MoverResourceJobStatus. </summary>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <returns> A new <see cref="Models.MoverResourceDependency"/> instance for mocking. </returns>
         public static MoverResourceDependency MoverResourceDependency(ResourceIdentifier id = null, string resolutionStatus = null, MoverResourceResolutionType? resolutionType = null, MoverDependencyType? dependencyType = null, ResourceIdentifier manualResolutionTargetId = null, ResourceIdentifier automaticResolutionResourceId = null, bool? isOptional = null)
         {
-            return new MoverResourceDependency(id, resolutionStatus, resolutionType, dependencyType, new ManualResolutionProperties(manualResolutionTargetId), new AutomaticResolutionProperties(automaticResolutionResourceId), isOptional);
+            return new MoverResourceDependency(id, resolutionStatus, resolutionType, dependencyType, manualResolutionTargetId != null ? new ManualResolutionProperties(manualResolutionTargetId) : null, automaticResolutionResourceId != null ? new AutomaticResolutionProperties(automaticResolutionResourceId) : null, isOptional);
         }
 
         /// <summary> Initializes a new instance of MoverResourceDependencyOverride. </summary>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <returns> A new <see cref="Models.SubnetResourceSettings"/> instance for mocking. </returns>
         public static SubnetResourceSettings SubnetResourceSettings(string name = null, string addressPrefix = null, ResourceIdentifier networkSecurityGroupSourceArmResourceId = null)
         {
-            return new SubnetResourceSettings(name, addressPrefix, new NetworkSecurityGroupResourceReferenceInfo(networkSecurityGroupSourceArmResourceId));
+            return new SubnetResourceSettings(name, addressPrefix, networkSecurityGroupSourceArmResourceId != null ? new NetworkSecurityGroupResourceReferenceInfo(networkSecurityGroupSourceArmResourceId) : null);
         }
 
         /// <summary> Initializes a new instance of MoverVirtualNetworkResourceSettings. </summary>
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             loadBalancerBackendAddressPools ??= new List<LoadBalancerBackendAddressPoolReferenceInfo>();
             loadBalancerNatRules ??= new List<LoadBalancerNatRuleReferenceInfo>();
 
-            return new NicIPConfigurationResourceSettings(name, privateIPAddress, privateIPAllocationMethod, subnet, isPrimary, loadBalancerBackendAddressPools?.ToList(), loadBalancerNatRules?.ToList(), new PublicIPReferenceInfo(publicIPSourceArmResourceId));
+            return new NicIPConfigurationResourceSettings(name, privateIPAddress, privateIPAllocationMethod, subnet, isPrimary, loadBalancerBackendAddressPools?.ToList(), loadBalancerNatRules?.ToList(), publicIPSourceArmResourceId != null ? new PublicIPReferenceInfo(publicIPSourceArmResourceId) : null);
         }
 
         /// <summary> Initializes a new instance of SubnetReferenceInfo. </summary>

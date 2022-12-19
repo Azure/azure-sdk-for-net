@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             virtualNetworkRules ??= new List<ElasticSanVirtualNetworkRule>();
             tags ??= new Dictionary<string, string>();
 
-            return new ElasticSanVolumeGroupData(id, name, resourceType, systemData, provisioningState, protocolType, encryption, new NetworkRuleSet(virtualNetworkRules?.ToList()), tags);
+            return new ElasticSanVolumeGroupData(id, name, resourceType, systemData, provisioningState, protocolType, encryption, virtualNetworkRules != null ? new NetworkRuleSet(virtualNetworkRules?.ToList()) : null, tags);
         }
 
         /// <summary> Initializes a new instance of ElasticSanVirtualNetworkRule. </summary>

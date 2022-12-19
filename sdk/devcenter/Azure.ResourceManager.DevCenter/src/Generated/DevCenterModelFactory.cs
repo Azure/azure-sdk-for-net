@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             roles ??= new Dictionary<string, EnvironmentRole>();
             userRoleAssignments ??= new Dictionary<string, UserRoleAssignmentValue>();
 
-            return new ProjectEnvironmentTypeData(id, name, resourceType, systemData, tags, location, identity, deploymentTargetId, status, new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(roles), userRoleAssignments, provisioningState);
+            return new ProjectEnvironmentTypeData(id, name, resourceType, systemData, tags, location, identity, deploymentTargetId, status, roles != null ? new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(roles) : null, userRoleAssignments, provisioningState);
         }
 
         /// <summary> Initializes a new instance of EnvironmentRole. </summary>

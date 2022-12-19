@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.MetricsAdvisor;
 using Azure.AI.MetricsAdvisor.Administration;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -35,6 +36,21 @@ namespace Azure.AI.MetricsAdvisor.Models
             metricAlertConfigurations ??= new List<MetricAlertConfiguration>();
 
             return new AnomalyAlertConfiguration(id, name, description, crossMetricsOperator, dimensionsToSplitAlert?.ToList(), idsOfHooksToAlert?.ToList(), metricAlertConfigurations?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of MetricAlertConfiguration. </summary>
+        /// <param name="detectionConfigurationId"> Anomaly detection configuration unique id. </param>
+        /// <param name="anomalyScopeType"> Anomaly scope. </param>
+        /// <param name="useDetectionResultToFilterAnomalies"> Negation operation. </param>
+        /// <param name="dimensionAnomalyScope"></param>
+        /// <param name="topNAnomalyScope"></param>
+        /// <param name="severityFilter"></param>
+        /// <param name="alertSnoozeCondition"></param>
+        /// <param name="valueFilter"></param>
+        /// <returns> A new <see cref="Models.MetricAlertConfiguration"/> instance for mocking. </returns>
+        public static MetricAlertConfiguration MetricAlertConfiguration(string detectionConfigurationId = null, MetricAnomalyAlertScopeType anomalyScopeType = default, bool? useDetectionResultToFilterAnomalies = null, DimensionKey dimensionAnomalyScope = null, TopNGroupScope topNAnomalyScope = null, SeverityCondition severityFilter = null, MetricAnomalyAlertSnoozeCondition alertSnoozeCondition = null, MetricBoundaryCondition valueFilter = null)
+        {
+            return new MetricAlertConfiguration(detectionConfigurationId, anomalyScopeType, useDetectionResultToFilterAnomalies, dimensionAnomalyScope, topNAnomalyScope, severityFilter, alertSnoozeCondition, valueFilter);
         }
 
         /// <summary> Initializes a new instance of MetricBoundaryCondition. </summary>
@@ -190,6 +206,34 @@ namespace Azure.AI.MetricsAdvisor.Models
             return new DataFeedDimension(name, displayName);
         }
 
+        /// <summary> Initializes a new instance of MetricFeedback. </summary>
+        /// <param name="feedbackKind"> feedback type. </param>
+        /// <param name="id"> feedback unique id. </param>
+        /// <param name="createdOn"> feedback created time. </param>
+        /// <param name="userPrincipal"> user who gives this feedback. </param>
+        /// <param name="metricId"> metric unique id. </param>
+        /// <param name="dimensionFilter"></param>
+        /// <returns> A new <see cref="MetricsAdvisor.MetricFeedback"/> instance for mocking. </returns>
+        public static MetricFeedback MetricFeedback(string feedbackKind = null, string id = null, DateTimeOffset? createdOn = null, string userPrincipal = null, string metricId = null, FeedbackFilter dimensionFilter = null)
+        {
+            return new UnknownMetricFeedback(feedbackKind, id, createdOn, userPrincipal, metricId, dimensionFilter);
+        }
+
+        /// <summary> Initializes a new instance of NotificationHook. </summary>
+        /// <param name="hookKind"> hook type. </param>
+        /// <param name="id"> Hook unique id. </param>
+        /// <param name="name"> hook unique name. </param>
+        /// <param name="description"> hook description. </param>
+        /// <param name="internalExternalLink"> hook external link. </param>
+        /// <param name="administrators"> hook administrators. </param>
+        /// <returns> A new <see cref="Administration.NotificationHook"/> instance for mocking. </returns>
+        public static NotificationHook NotificationHook(string hookKind = null, string id = null, string name = null, string description = null, string internalExternalLink = null, IEnumerable<string> administrators = null)
+        {
+            administrators ??= new List<string>();
+
+            return new UnknownHookInfo(hookKind, id, name, description, internalExternalLink, administrators?.ToList());
+        }
+
         /// <summary> Initializes a new instance of DataFeedIngestionStatus. </summary>
         /// <param name="timestamp"> data slice timestamp. </param>
         /// <param name="status"> latest ingestion task status for this data slice. </param>
@@ -219,6 +263,35 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static DataFeedIngestionProgress DataFeedIngestionProgress(DateTimeOffset? latestSuccessTimestamp = null, DateTimeOffset? latestActiveTimestamp = null)
         {
             return new DataFeedIngestionProgress(latestSuccessTimestamp, latestActiveTimestamp);
+        }
+
+        /// <summary> Initializes a new instance of MetricSeriesData. </summary>
+        /// <param name="definition"></param>
+        /// <param name="timestamps"> timestamps of the data related to this time series. </param>
+        /// <param name="metricValues"> values of the data related to this time series. </param>
+        /// <returns> A new <see cref="Models.MetricSeriesData"/> instance for mocking. </returns>
+        public static MetricSeriesData MetricSeriesData(MetricSeriesDefinition definition = null, IEnumerable<DateTimeOffset> timestamps = null, IEnumerable<double> metricValues = null)
+        {
+            timestamps ??= new List<DateTimeOffset>();
+            metricValues ??= new List<double>();
+
+            return new MetricSeriesData(definition, timestamps?.ToList(), metricValues?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of MetricSeriesDefinition. </summary>
+        /// <param name="metricId"> metric unique id. </param>
+        /// <param name="dimension"> dimension name and value pair. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metricId"/> or <paramref name="dimension"/> is null. </exception>
+        /// <returns> A new <see cref="Models.MetricSeriesDefinition"/> instance for mocking. </returns>
+        public static MetricSeriesDefinition MetricSeriesDefinition(string metricId = null, IReadOnlyDictionary<string, string> dimension = null)
+        {
+            if (metricId == null)
+            {
+                throw new ArgumentNullException(nameof(metricId));
+            }
+            dimension ??= new Dictionary<string, string>();
+
+            return new MetricSeriesDefinition(metricId, dimension);
         }
 
         /// <summary> Initializes a new instance of EnrichmentStatus. </summary>

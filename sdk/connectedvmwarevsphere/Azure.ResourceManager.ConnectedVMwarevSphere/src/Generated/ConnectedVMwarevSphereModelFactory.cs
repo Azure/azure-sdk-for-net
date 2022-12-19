@@ -17,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> Model factory for generated models. </summary>
-    public static partial class AzureResourceManagerConnectedVMwarevSphereModelFactory
+    public static partial class ConnectedVMwarevSphereModelFactory
     {
         /// <summary> Initializes a new instance of ResourcePoolData. </summary>
         /// <param name="id"> The id. </param>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             networkInterfaces ??= new List<NetworkInterface>();
             statuses ??= new List<ResourceStatus>();
 
-            return new VirtualMachineData(id, name, resourceType, systemData, tags, location, extendedLocation, kind, identity, resourcePoolId, templateId, vCenterId, placementProfile, osProfile, hardwareProfile, new NetworkProfile(networkInterfaces?.ToList()), storageProfile, guestAgentProfile, moRefId, inventoryItemId, moName, folderPath, instanceUuid, smbiosUuid, firmwareType, powerState, customResourceName, uuid, statuses?.ToList(), provisioningState, vmId);
+            return new VirtualMachineData(id, name, resourceType, systemData, tags, location, extendedLocation, kind, identity, resourcePoolId, templateId, vCenterId, placementProfile, osProfile, hardwareProfile, networkInterfaces != null ? new NetworkProfile(networkInterfaces?.ToList()) : null, storageProfile, guestAgentProfile, moRefId, inventoryItemId, moName, folderPath, instanceUuid, smbiosUuid, firmwareType, powerState, customResourceName, uuid, statuses?.ToList(), provisioningState, vmId);
         }
 
         /// <summary> Initializes a new instance of PlacementProfile. </summary>
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         {
             statuses ??= new List<ResourceStatus>();
 
-            return new GuestAgentData(id, name, resourceType, systemData, uuid, credentials, new HttpProxyConfiguration(httpsProxy), provisioningAction, status, customResourceName, statuses?.ToList(), provisioningState);
+            return new GuestAgentData(id, name, resourceType, systemData, uuid, credentials, httpsProxy != null ? new HttpProxyConfiguration(httpsProxy) : null, provisioningAction, status, customResourceName, statuses?.ToList(), provisioningState);
         }
 
         /// <summary> Initializes a new instance of GuestCredential. </summary>

@@ -15,6 +15,20 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Model factory for generated models. </summary>
     public static partial class ContainerRegistryModelFactory
     {
+        /// <summary> Initializes a new instance of OciBlobDescriptor. </summary>
+        /// <param name="mediaType"> Layer media type. </param>
+        /// <param name="size"> Layer size. </param>
+        /// <param name="digest"> Layer digest. </param>
+        /// <param name="urls"> Specifies a list of URIs from which this object may be downloaded. </param>
+        /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
+        /// <returns> A new <see cref="Specialized.OciBlobDescriptor"/> instance for mocking. </returns>
+        public static OciBlobDescriptor OciBlobDescriptor(string mediaType = null, long? size = null, string digest = null, IEnumerable<Uri> urls = null, OciAnnotations annotations = null)
+        {
+            urls ??= new List<Uri>();
+
+            return new OciBlobDescriptor(mediaType, size, digest, urls?.ToList(), annotations);
+        }
+
         /// <summary> Initializes a new instance of OciAnnotations. </summary>
         /// <param name="createdOn"> Date and time on which the image was built (string, date-time as defined by https://tools.ietf.org/html/rfc3339#section-5.6). </param>
         /// <param name="authors"> Contact details of the people or organization responsible for the image. </param>

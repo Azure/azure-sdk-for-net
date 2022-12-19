@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DnsResolverData(id, name, resourceType, systemData, tags, location, etag, ResourceManagerModelFactory.WritableSubResource(virtualNetworkId), dnsResolverState, provisioningState, resourceGuid);
+            return new DnsResolverData(id, name, resourceType, systemData, tags, location, etag, virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null, dnsResolverState, provisioningState, resourceGuid);
         }
 
         /// <summary> Initializes a new instance of DnsResolverInboundEndpointData. </summary>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <returns> A new <see cref="Models.InboundEndpointIPConfiguration"/> instance for mocking. </returns>
         public static InboundEndpointIPConfiguration InboundEndpointIPConfiguration(ResourceIdentifier subnetId = null, IPAddress privateIPAddress = null, InboundEndpointIPAllocationMethod? privateIPAllocationMethod = null)
         {
-            return new InboundEndpointIPConfiguration(ResourceManagerModelFactory.WritableSubResource(subnetId), privateIPAddress, privateIPAllocationMethod);
+            return new InboundEndpointIPConfiguration(subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, privateIPAddress, privateIPAllocationMethod);
         }
 
         /// <summary> Initializes a new instance of DnsResolverOutboundEndpointData. </summary>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DnsResolverOutboundEndpointData(id, name, resourceType, systemData, tags, location, etag, ResourceManagerModelFactory.WritableSubResource(subnetId), provisioningState, resourceGuid);
+            return new DnsResolverOutboundEndpointData(id, name, resourceType, systemData, tags, location, etag, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, provisioningState, resourceGuid);
         }
 
         /// <summary> Initializes a new instance of DnsForwardingRulesetData. </summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         {
             metadata ??= new Dictionary<string, string>();
 
-            return new DnsForwardingRulesetVirtualNetworkLinkData(id, name, resourceType, systemData, etag, ResourceManagerModelFactory.WritableSubResource(virtualNetworkId), metadata, provisioningState);
+            return new DnsForwardingRulesetVirtualNetworkLinkData(id, name, resourceType, systemData, etag, virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null, metadata, provisioningState);
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkDnsForwardingRuleset. </summary>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <returns> A new <see cref="Models.VirtualNetworkDnsForwardingRuleset"/> instance for mocking. </returns>
         public static VirtualNetworkDnsForwardingRuleset VirtualNetworkDnsForwardingRuleset(ResourceIdentifier id = null, ResourceIdentifier virtualNetworkLinkId = null)
         {
-            return new VirtualNetworkDnsForwardingRuleset(id, ResourceManagerModelFactory.WritableSubResource(virtualNetworkLinkId));
+            return new VirtualNetworkDnsForwardingRuleset(id, virtualNetworkLinkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkLinkId) : null);
         }
     }
 }

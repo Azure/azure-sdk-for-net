@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -167,7 +166,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         {
             groupIds ??= new List<string>();
 
-            return new CognitiveServicesPrivateEndpointConnectionData(id, name, resourceType, systemData, location, ResourceManagerModelFactory.SubResource(privateEndpointId), connectionState, provisioningState, groupIds?.ToList(), etag);
+            return new CognitiveServicesPrivateEndpointConnectionData(id, name, resourceType, systemData, location, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, groupIds?.ToList(), etag);
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesPrivateLinkServiceConnectionState. </summary>

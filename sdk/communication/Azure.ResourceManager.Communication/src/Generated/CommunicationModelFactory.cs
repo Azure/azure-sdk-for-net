@@ -15,7 +15,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> Model factory for generated models. </summary>
-    public static partial class AzureResourceManagerCommunicationModelFactory
+    public static partial class CommunicationModelFactory
     {
         /// <summary> Initializes a new instance of CommunicationNameAvailabilityResult. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>

@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.AppConfiguration;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<AppConfigurationPrivateEndpointConnectionReference>();
 
-            return new AppConfigurationStoreData(id, name, resourceType, systemData, tags, location, identity, new AppConfigurationSku(skuName), provisioningState, createdOn, endpoint, new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties), privateEndpointConnections?.ToList(), publicNetworkAccess, disableLocalAuth, softDeleteRetentionInDays, enablePurgeProtection, createMode);
+            return new AppConfigurationStoreData(id, name, resourceType, systemData, tags, location, identity, skuName != null ? new AppConfigurationSku(skuName) : null, provisioningState, createdOn, endpoint, encryptionKeyVaultProperties != null ? new AppConfigurationStoreEncryptionProperties(encryptionKeyVaultProperties) : null, privateEndpointConnections?.ToList(), publicNetworkAccess, disableLocalAuth, softDeleteRetentionInDays, enablePurgeProtection, createMode);
         }
 
         /// <summary> Initializes a new instance of AppConfigurationKeyVaultProperties. </summary>
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <returns> A new <see cref="Models.AppConfigurationPrivateEndpointConnectionReference"/> instance for mocking. </returns>
         public static AppConfigurationPrivateEndpointConnectionReference AppConfigurationPrivateEndpointConnectionReference(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppConfigurationProvisioningState? provisioningState = null, ResourceIdentifier privateEndpointId = null, AppConfigurationPrivateLinkServiceConnectionState connectionState = null)
         {
-            return new AppConfigurationPrivateEndpointConnectionReference(id, name, resourceType, systemData, provisioningState, ResourceManagerModelFactory.WritableSubResource(privateEndpointId), connectionState);
+            return new AppConfigurationPrivateEndpointConnectionReference(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState);
         }
 
         /// <summary> Initializes a new instance of AppConfigurationPrivateLinkServiceConnectionState. </summary>
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <returns> A new <see cref="AppConfiguration.AppConfigurationPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static AppConfigurationPrivateEndpointConnectionData AppConfigurationPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppConfigurationProvisioningState? provisioningState = null, ResourceIdentifier privateEndpointId = null, AppConfigurationPrivateLinkServiceConnectionState connectionState = null)
         {
-            return new AppConfigurationPrivateEndpointConnectionData(id, name, resourceType, systemData, provisioningState, ResourceManagerModelFactory.WritableSubResource(privateEndpointId), connectionState);
+            return new AppConfigurationPrivateEndpointConnectionData(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState);
         }
 
         /// <summary> Initializes a new instance of AppConfigurationPrivateLinkResourceData. </summary>

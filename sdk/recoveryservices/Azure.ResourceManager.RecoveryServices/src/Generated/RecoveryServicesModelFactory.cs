@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServices;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         {
             privateEndpointConnections ??= new List<PrivateEndpointConnectionVaultProperties>();
 
-            return new VaultProperties(provisioningState, upgradeDetails, privateEndpointConnections?.ToList(), privateEndpointStateForBackup, privateEndpointStateForSiteRecovery, encryption, moveDetails, moveState, backupStorageVersion, monitoringSettings, redundancySettings, new SecuritySettings(new ImmutabilitySettings(immutabilityState)));
+            return new VaultProperties(provisioningState, upgradeDetails, privateEndpointConnections?.ToList(), privateEndpointStateForBackup, privateEndpointStateForSiteRecovery, encryption, moveDetails, moveState, backupStorageVersion, monitoringSettings, redundancySettings, immutabilityState != null ? new SecuritySettings(new ImmutabilitySettings(immutabilityState)) : null);
         }
 
         /// <summary> Initializes a new instance of UpgradeDetails. </summary>
@@ -190,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <returns> A new <see cref="Models.RecoveryServicesPrivateEndpointConnection"/> instance for mocking. </returns>
         public static RecoveryServicesPrivateEndpointConnection RecoveryServicesPrivateEndpointConnection(ProvisioningState? provisioningState = null, ResourceIdentifier privateEndpointId = null, RecoveryServicesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null)
         {
-            return new RecoveryServicesPrivateEndpointConnection(provisioningState, ResourceManagerModelFactory.SubResource(privateEndpointId), privateLinkServiceConnectionState);
+            return new RecoveryServicesPrivateEndpointConnection(provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState);
         }
 
         /// <summary> Initializes a new instance of RecoveryServicesPrivateLinkServiceConnectionState. </summary>
@@ -210,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <returns> A new <see cref="Models.VaultPropertiesEncryption"/> instance for mocking. </returns>
         public static VaultPropertiesEncryption VaultPropertiesEncryption(Uri keyUri = null, CmkKekIdentity kekIdentity = null, InfrastructureEncryptionState? infrastructureEncryption = null)
         {
-            return new VaultPropertiesEncryption(new CmkKeyVaultProperties(keyUri), kekIdentity, infrastructureEncryption);
+            return new VaultPropertiesEncryption(keyUri != null ? new CmkKeyVaultProperties(keyUri) : null, kekIdentity, infrastructureEncryption);
         }
 
         /// <summary> Initializes a new instance of CmkKekIdentity. </summary>
@@ -240,7 +239,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <returns> A new <see cref="Models.MonitoringSettings"/> instance for mocking. </returns>
         public static MonitoringSettings MonitoringSettings(AlertsState? azureMonitorAlertAlertsForAllJobFailures = null, AlertsState? classicAlertAlertsForCriticalOperations = null)
         {
-            return new MonitoringSettings(new AzureMonitorAlertSettings(azureMonitorAlertAlertsForAllJobFailures), new ClassicAlertSettings(classicAlertAlertsForCriticalOperations));
+            return new MonitoringSettings(azureMonitorAlertAlertsForAllJobFailures != null ? new AzureMonitorAlertSettings(azureMonitorAlertAlertsForAllJobFailures) : null, classicAlertAlertsForCriticalOperations != null ? new ClassicAlertSettings(classicAlertAlertsForCriticalOperations) : null);
         }
 
         /// <summary> Initializes a new instance of VaultPropertiesRedundancySettings. </summary>

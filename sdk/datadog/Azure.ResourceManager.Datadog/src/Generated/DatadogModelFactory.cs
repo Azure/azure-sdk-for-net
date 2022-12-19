@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <returns> A new <see cref="Models.DatadogHostMetadata"/> instance for mocking. </returns>
         public static DatadogHostMetadata DatadogHostMetadata(string agentVersion = null, DatadogInstallMethod installMethod = null, string logsAgentTransport = null)
         {
-            return new DatadogHostMetadata(agentVersion, installMethod, new DatadogLogsAgent(logsAgentTransport));
+            return new DatadogHostMetadata(agentVersion, installMethod, logsAgentTransport != null ? new DatadogLogsAgent(logsAgentTransport) : null);
         }
 
         /// <summary> Initializes a new instance of DatadogInstallMethod. </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Datadog.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DatadogMonitorResourceData(id, name, resourceType, systemData, tags, location, new ResourceSku(skuName), properties, identity);
+            return new DatadogMonitorResourceData(id, name, resourceType, systemData, tags, location, skuName != null ? new ResourceSku(skuName) : null, properties, identity);
         }
 
         /// <summary> Initializes a new instance of MonitorProperties. </summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Datadog.Models
         {
             metricRulesFilteringTags ??= new List<FilteringTag>();
 
-            return new MonitoringTagRulesProperties(provisioningState, logRules, new MetricRules(metricRulesFilteringTags?.ToList()));
+            return new MonitoringTagRulesProperties(provisioningState, logRules, metricRulesFilteringTags != null ? new MetricRules(metricRulesFilteringTags?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of LogRules. </summary>

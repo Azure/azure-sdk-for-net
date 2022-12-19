@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -79,6 +80,33 @@ namespace Azure.IoT.TimeSeriesInsights
         public static TimeSeriesVariable TimeSeriesVariable(string kind = null, TimeSeriesExpression filter = null)
         {
             return new UnknownVariable(kind, filter);
+        }
+
+        /// <summary> Initializes a new instance of PropertyValues. </summary>
+        /// <param name="name"> The name of the property. </param>
+        /// <param name="propertyValueType"> The type of the property. </param>
+        /// <param name="valuesInternal"> Values of a single property corresponding to the timestamps. May contain nulls. Type of values matches the type of property. </param>
+        /// <returns> A new <see cref="TimeSeriesInsights.PropertyValues"/> instance for mocking. </returns>
+        public static PropertyValues PropertyValues(string name = null, TimeSeriesPropertyType? propertyValueType = null, JsonElement valuesInternal = default)
+        {
+            return new PropertyValues(name, propertyValueType, valuesInternal);
+        }
+
+        /// <summary> Initializes a new instance of TimeSeriesInstance. </summary>
+        /// <param name="timeSeriesIdInternal"> Time Series ID that uniquely identifies the instance. It matches Time Series ID properties in an environment. Immutable, never null. </param>
+        /// <param name="timeSeriesTypeId"> This represents the type that this instance belongs to. Never null. </param>
+        /// <param name="name"> Optional name of the instance which is unique in an environment. Names acts as a mutable alias or display name of the time series instance. Mutable, may be null. </param>
+        /// <param name="description"> This optional field contains description about the instance. </param>
+        /// <param name="hierarchyIds"> Set of time series hierarchy IDs that the instance belong to. May be null. </param>
+        /// <param name="instanceFields"> Set of key-value pairs that contain user-defined instance properties. It may be null. Supported property value types are: bool, string, long, double and it cannot be nested or null. </param>
+        /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesInstance"/> instance for mocking. </returns>
+        public static TimeSeriesInstance TimeSeriesInstance(IEnumerable<object> timeSeriesIdInternal = null, string timeSeriesTypeId = null, string name = null, string description = null, IEnumerable<string> hierarchyIds = null, IDictionary<string, object> instanceFields = null)
+        {
+            timeSeriesIdInternal ??= new List<object>();
+            hierarchyIds ??= new List<string>();
+            instanceFields ??= new Dictionary<string, object>();
+
+            return new TimeSeriesInstance(timeSeriesIdInternal?.ToList(), timeSeriesTypeId, name, description, hierarchyIds?.ToList(), instanceFields);
         }
 
         /// <summary> Initializes a new instance of InstancesOperationResult. </summary>

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         {
             filterLocations ??= new List<AzureLocation>();
 
-            return new PolicyRemediationData(id, name, resourceType, systemData, policyAssignmentId, policyDefinitionReferenceId, resourceDiscoveryMode, provisioningState, createdOn, lastUpdatedOn, new RemediationFilters(filterLocations?.ToList()), deploymentStatus, statusMessage, correlationId, resourceCount, parallelDeployments, new RemediationPropertiesFailureThreshold(failureThresholdPercentage));
+            return new PolicyRemediationData(id, name, resourceType, systemData, policyAssignmentId, policyDefinitionReferenceId, resourceDiscoveryMode, provisioningState, createdOn, lastUpdatedOn, filterLocations != null ? new RemediationFilters(filterLocations?.ToList()) : null, deploymentStatus, statusMessage, correlationId, resourceCount, parallelDeployments, failureThresholdPercentage != null ? new RemediationPropertiesFailureThreshold(failureThresholdPercentage) : null);
         }
 
         /// <summary> Initializes a new instance of RemediationDeploymentSummary. </summary>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             fieldRestrictions ??= new List<FieldRestrictions>();
             policyEvaluations ??= new List<PolicyEvaluationResult>();
 
-            return new CheckPolicyRestrictionsResult(fieldRestrictions?.ToList(), new CheckRestrictionsResultContentEvaluationResult(policyEvaluations?.ToList()));
+            return new CheckPolicyRestrictionsResult(fieldRestrictions?.ToList(), policyEvaluations != null ? new CheckRestrictionsResultContentEvaluationResult(policyEvaluations?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of FieldRestrictions. </summary>

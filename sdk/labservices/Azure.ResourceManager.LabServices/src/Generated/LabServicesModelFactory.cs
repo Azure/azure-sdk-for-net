@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.LabServices.Models
             tags ??= new Dictionary<string, string>();
             allowedRegions ??= new List<AzureLocation>();
 
-            return new LabPlanData(id, name, resourceType, systemData, tags, location, identity, defaultConnectionProfile, defaultAutoShutdownProfile, new LabPlanNetworkProfile(defaultNetworkSubnetId), allowedRegions?.ToList(), sharedGalleryId, supportInfo, linkedLmsInstance, provisioningState);
+            return new LabPlanData(id, name, resourceType, systemData, tags, location, identity, defaultConnectionProfile, defaultAutoShutdownProfile, defaultNetworkSubnetId != null ? new LabPlanNetworkProfile(defaultNetworkSubnetId) : null, allowedRegions?.ToList(), sharedGalleryId, supportInfo, linkedLmsInstance, provisioningState);
         }
 
         /// <summary> Initializes a new instance of LabConnectionProfile. </summary>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// <returns> A new <see cref="Models.LabVirtualMachineProfile"/> instance for mocking. </returns>
         public static LabVirtualMachineProfile LabVirtualMachineProfile(LabVirtualMachineCreateOption createOption = default, LabVirtualMachineImageReference imageReference = null, LabVirtualMachineImageOSType? osType = null, LabServicesSku sku = null, LabServicesEnableState? additionalCapabilitiesInstallGpuDrivers = null, TimeSpan usageQuota = default, LabServicesEnableState? useSharedPassword = null, LabVirtualMachineCredential adminUser = null, LabVirtualMachineCredential nonAdminUser = null)
         {
-            return new LabVirtualMachineProfile(createOption, imageReference, osType, sku, new LabVirtualMachineAdditionalCapability(additionalCapabilitiesInstallGpuDrivers), usageQuota, useSharedPassword, adminUser, nonAdminUser);
+            return new LabVirtualMachineProfile(createOption, imageReference, osType, sku, additionalCapabilitiesInstallGpuDrivers != null ? new LabVirtualMachineAdditionalCapability(additionalCapabilitiesInstallGpuDrivers) : null, usageQuota, useSharedPassword, adminUser, nonAdminUser);
         }
 
         /// <summary> Initializes a new instance of LabVirtualMachineImageReference. </summary>

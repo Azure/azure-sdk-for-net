@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network.Models
             privateEndpointConnections ??= new List<ApplicationGatewayPrivateEndpointConnectionData>();
             customErrorConfigurations ??= new List<ApplicationGatewayCustomError>();
 
-            return new ApplicationGatewayData(id, name, resourceType, location, tags, etag, availabilityZones?.ToList(), identity, sku, sslPolicy, operationalState, gatewayIPConfigurations?.ToList(), authenticationCertificates?.ToList(), trustedRootCertificates?.ToList(), trustedClientCertificates?.ToList(), sslCertificates?.ToList(), frontendIPConfigurations?.ToList(), frontendPorts?.ToList(), probes?.ToList(), backendAddressPools?.ToList(), backendHttpSettingsCollection?.ToList(), httpListeners?.ToList(), sslProfiles?.ToList(), urlPathMaps?.ToList(), requestRoutingRules?.ToList(), rewriteRuleSets?.ToList(), redirectConfigurations?.ToList(), webApplicationFirewallConfiguration, ResourceManagerModelFactory.WritableSubResource(firewallPolicyId), enableHttp2, enableFips, autoscaleConfiguration, privateLinkConfigurations?.ToList(), privateEndpointConnections?.ToList(), resourceGuid, provisioningState, customErrorConfigurations?.ToList(), forceFirewallPolicyAssociation);
+            return new ApplicationGatewayData(id, name, resourceType, location, tags, etag, availabilityZones?.ToList(), identity, sku, sslPolicy, operationalState, gatewayIPConfigurations?.ToList(), authenticationCertificates?.ToList(), trustedRootCertificates?.ToList(), trustedClientCertificates?.ToList(), sslCertificates?.ToList(), frontendIPConfigurations?.ToList(), frontendPorts?.ToList(), probes?.ToList(), backendAddressPools?.ToList(), backendHttpSettingsCollection?.ToList(), httpListeners?.ToList(), sslProfiles?.ToList(), urlPathMaps?.ToList(), requestRoutingRules?.ToList(), rewriteRuleSets?.ToList(), redirectConfigurations?.ToList(), webApplicationFirewallConfiguration, firewallPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(firewallPolicyId) : null, enableHttp2, enableFips, autoscaleConfiguration, privateLinkConfigurations?.ToList(), privateEndpointConnections?.ToList(), resourceGuid, provisioningState, customErrorConfigurations?.ToList(), forceFirewallPolicyAssociation);
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewaySku. </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.ApplicationGatewayIPConfiguration"/> instance for mocking. </returns>
         public static ApplicationGatewayIPConfiguration ApplicationGatewayIPConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier subnetId = null, NetworkProvisioningState? provisioningState = null)
         {
-            return new ApplicationGatewayIPConfiguration(id, name, resourceType, etag, ResourceManagerModelFactory.WritableSubResource(subnetId), provisioningState);
+            return new ApplicationGatewayIPConfiguration(id, name, resourceType, etag, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, provisioningState);
         }
 
         /// <summary> Initializes a new instance of NetworkSubResource. </summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.ApplicationGatewayFrontendIPConfiguration"/> instance for mocking. </returns>
         public static ApplicationGatewayFrontendIPConfiguration ApplicationGatewayFrontendIPConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, string privateIPAddress = null, NetworkIPAllocationMethod? privateIPAllocationMethod = null, ResourceIdentifier subnetId = null, ResourceIdentifier publicIPAddressId = null, ResourceIdentifier privateLinkConfigurationId = null, NetworkProvisioningState? provisioningState = null)
         {
-            return new ApplicationGatewayFrontendIPConfiguration(id, name, resourceType, etag, privateIPAddress, privateIPAllocationMethod, ResourceManagerModelFactory.WritableSubResource(subnetId), ResourceManagerModelFactory.WritableSubResource(publicIPAddressId), ResourceManagerModelFactory.WritableSubResource(privateLinkConfigurationId), provisioningState);
+            return new ApplicationGatewayFrontendIPConfiguration(id, name, resourceType, etag, privateIPAddress, privateIPAllocationMethod, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, publicIPAddressId != null ? ResourceManagerModelFactory.WritableSubResource(publicIPAddressId) : null, privateLinkConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(privateLinkConfigurationId) : null, provisioningState);
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayFrontendPort. </summary>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Network.Models
             loadBalancerInboundNatRules ??= new List<InboundNatRuleData>();
             applicationSecurityGroups ??= new List<ApplicationSecurityGroupData>();
 
-            return new NetworkInterfaceIPConfigurationData(id, name, resourceType, etag, ResourceManagerModelFactory.WritableSubResource(gatewayLoadBalancerId), virtualNetworkTaps?.ToList(), applicationGatewayBackendAddressPools?.ToList(), loadBalancerBackendAddressPools?.ToList(), loadBalancerInboundNatRules?.ToList(), privateIPAddress, privateIPAllocationMethod, privateIPAddressVersion, subnet, primary, publicIPAddress, applicationSecurityGroups?.ToList(), provisioningState, privateLinkConnectionProperties);
+            return new NetworkInterfaceIPConfigurationData(id, name, resourceType, etag, gatewayLoadBalancerId != null ? ResourceManagerModelFactory.WritableSubResource(gatewayLoadBalancerId) : null, virtualNetworkTaps?.ToList(), applicationGatewayBackendAddressPools?.ToList(), loadBalancerBackendAddressPools?.ToList(), loadBalancerInboundNatRules?.ToList(), privateIPAddress, privateIPAllocationMethod, privateIPAddressVersion, subnet, primary, publicIPAddress, applicationSecurityGroups?.ToList(), provisioningState, privateLinkConnectionProperties);
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkTapData. </summary>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Network.Models
             outboundRules ??= new List<WritableSubResource>();
             loadBalancingRules ??= new List<WritableSubResource>();
 
-            return new FrontendIPConfigurationData(id, name, resourceType, etag, zones?.ToList(), inboundNatRules?.ToList(), inboundNatPools?.ToList(), outboundRules?.ToList(), loadBalancingRules?.ToList(), privateIPAddress, privateIPAllocationMethod, privateIPAddressVersion, subnet, publicIPAddress, ResourceManagerModelFactory.WritableSubResource(publicIPPrefixId), ResourceManagerModelFactory.WritableSubResource(gatewayLoadBalancerId), provisioningState);
+            return new FrontendIPConfigurationData(id, name, resourceType, etag, zones?.ToList(), inboundNatRules?.ToList(), inboundNatPools?.ToList(), outboundRules?.ToList(), loadBalancingRules?.ToList(), privateIPAddress, privateIPAllocationMethod, privateIPAddressVersion, subnet, publicIPAddress, publicIPPrefixId != null ? ResourceManagerModelFactory.WritableSubResource(publicIPPrefixId) : null, gatewayLoadBalancerId != null ? ResourceManagerModelFactory.WritableSubResource(gatewayLoadBalancerId) : null, provisioningState);
         }
 
         /// <summary> Initializes a new instance of SubnetData. </summary>
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Network.Models
             delegations ??= new List<ServiceDelegation>();
             applicationGatewayIPConfigurations ??= new List<ApplicationGatewayIPConfiguration>();
 
-            return new SubnetData(id, name, resourceType, etag, addressPrefix, addressPrefixes?.ToList(), networkSecurityGroup, routeTable, ResourceManagerModelFactory.WritableSubResource(natGatewayId), serviceEndpoints?.ToList(), serviceEndpointPolicies?.ToList(), privateEndpoints?.ToList(), ipConfigurations?.ToList(), ipConfigurationProfiles?.ToList(), ipAllocations?.ToList(), resourceNavigationLinks?.ToList(), serviceAssociationLinks?.ToList(), delegations?.ToList(), purpose, provisioningState, privateEndpointNetworkPolicy, privateLinkServiceNetworkPolicy, applicationGatewayIPConfigurations?.ToList());
+            return new SubnetData(id, name, resourceType, etag, addressPrefix, addressPrefixes?.ToList(), networkSecurityGroup, routeTable, natGatewayId != null ? ResourceManagerModelFactory.WritableSubResource(natGatewayId) : null, serviceEndpoints?.ToList(), serviceEndpointPolicies?.ToList(), privateEndpoints?.ToList(), ipConfigurations?.ToList(), ipConfigurationProfiles?.ToList(), ipAllocations?.ToList(), resourceNavigationLinks?.ToList(), serviceAssociationLinks?.ToList(), delegations?.ToList(), purpose, provisioningState, privateEndpointNetworkPolicy, privateLinkServiceNetworkPolicy, applicationGatewayIPConfigurations?.ToList());
         }
 
         /// <summary> Initializes a new instance of NetworkSecurityGroupData. </summary>
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Network.Models
             tapConfigurations ??= new List<NetworkInterfaceTapConfigurationData>();
             hostedWorkloads ??= new List<string>();
 
-            return new NetworkInterfaceData(id, name, resourceType, location, tags, extendedLocation, etag, ResourceManagerModelFactory.WritableSubResource(virtualMachineId), networkSecurityGroup, privateEndpoint, ipConfigurations?.ToList(), tapConfigurations?.ToList(), dnsSettings, macAddress, primary, enableAcceleratedNetworking, enableIPForwarding, hostedWorkloads?.ToList(), ResourceManagerModelFactory.WritableSubResource(dscpConfigurationId), resourceGuid, provisioningState, workloadType, nicType, privateLinkService, migrationPhase);
+            return new NetworkInterfaceData(id, name, resourceType, location, tags, extendedLocation, etag, virtualMachineId != null ? ResourceManagerModelFactory.WritableSubResource(virtualMachineId) : null, networkSecurityGroup, privateEndpoint, ipConfigurations?.ToList(), tapConfigurations?.ToList(), dnsSettings, macAddress, primary, enableAcceleratedNetworking, enableIPForwarding, hostedWorkloads?.ToList(), dscpConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(dscpConfigurationId) : null, resourceGuid, provisioningState, workloadType, nicType, privateLinkService, migrationPhase);
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointData. </summary>
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.Network.Models
             autoApprovalSubscriptions ??= new List<string>();
             fqdns ??= new List<string>();
 
-            return new PrivateLinkServiceData(id, name, resourceType, location, tags, extendedLocation, etag, loadBalancerFrontendIPConfigurations?.ToList(), ipConfigurations?.ToList(), networkInterfaces?.ToList(), provisioningState, privateEndpointConnections?.ToList(), new PrivateLinkServicePropertiesVisibility(visibilitySubscriptions?.ToList()), new PrivateLinkServicePropertiesAutoApproval(autoApprovalSubscriptions?.ToList()), fqdns?.ToList(), @alias, enableProxyProtocol);
+            return new PrivateLinkServiceData(id, name, resourceType, location, tags, extendedLocation, etag, loadBalancerFrontendIPConfigurations?.ToList(), ipConfigurations?.ToList(), networkInterfaces?.ToList(), provisioningState, privateEndpointConnections?.ToList(), visibilitySubscriptions != null ? new PrivateLinkServicePropertiesVisibility(visibilitySubscriptions?.ToList()) : null, autoApprovalSubscriptions != null ? new PrivateLinkServicePropertiesAutoApproval(autoApprovalSubscriptions?.ToList()) : null, fqdns?.ToList(), @alias, enableProxyProtocol);
         }
 
         /// <summary> Initializes a new instance of PrivateLinkServiceIPConfiguration. </summary>
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new FlowLogData(id, name, resourceType, location, tags, etag, targetResourceId, targetResourceGuid, storageId, enabled, retentionPolicy, format, new TrafficAnalyticsProperties(trafficAnalyticsConfiguration), provisioningState);
+            return new FlowLogData(id, name, resourceType, location, tags, etag, targetResourceId, targetResourceGuid, storageId, enabled, retentionPolicy, format, trafficAnalyticsConfiguration != null ? new TrafficAnalyticsProperties(trafficAnalyticsConfiguration) : null, provisioningState);
         }
 
         /// <summary> Initializes a new instance of RetentionPolicyParameters. </summary>
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.Network.Models
             zones ??= new List<string>();
             ipTags ??= new List<IPTag>();
 
-            return new PublicIPAddressData(id, name, resourceType, location, tags, extendedLocation, sku, etag, zones?.ToList(), publicIPAllocationMethod, publicIPAddressVersion, ipConfiguration, dnsSettings, ddosSettings, ipTags?.ToList(), ipAddress, ResourceManagerModelFactory.WritableSubResource(publicIPPrefixId), idleTimeoutInMinutes, resourceGuid, provisioningState, servicePublicIPAddress, natGateway, migrationPhase, linkedPublicIPAddress, deleteOption);
+            return new PublicIPAddressData(id, name, resourceType, location, tags, extendedLocation, sku, etag, zones?.ToList(), publicIPAllocationMethod, publicIPAddressVersion, ipConfiguration, dnsSettings, ddosSettings, ipTags?.ToList(), ipAddress, publicIPPrefixId != null ? ResourceManagerModelFactory.WritableSubResource(publicIPPrefixId) : null, idleTimeoutInMinutes, resourceGuid, provisioningState, servicePublicIPAddress, natGateway, migrationPhase, linkedPublicIPAddress, deleteOption);
         }
 
         /// <summary> Initializes a new instance of PublicIPAddressSku. </summary>
@@ -922,7 +922,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.DdosSettings"/> instance for mocking. </returns>
         public static DdosSettings DdosSettings(ResourceIdentifier ddosCustomPolicyId = null, DdosSettingsProtectionCoverage? protectionCoverage = null, bool? protectedIP = null)
         {
-            return new DdosSettings(ResourceManagerModelFactory.WritableSubResource(ddosCustomPolicyId), protectionCoverage, protectedIP);
+            return new DdosSettings(ddosCustomPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(ddosCustomPolicyId) : null, protectionCoverage, protectedIP);
         }
 
         /// <summary> Initializes a new instance of IPTag. </summary>
@@ -958,7 +958,7 @@ namespace Azure.ResourceManager.Network.Models
             publicIPPrefixes ??= new List<WritableSubResource>();
             subnets ??= new List<WritableSubResource>();
 
-            return new NatGatewayData(id, name, resourceType, location, tags, new NatGatewaySku(skuName), zones?.ToList(), etag, idleTimeoutInMinutes, publicIPAddresses?.ToList(), publicIPPrefixes?.ToList(), subnets?.ToList(), resourceGuid, provisioningState);
+            return new NatGatewayData(id, name, resourceType, location, tags, skuName != null ? new NatGatewaySku(skuName) : null, zones?.ToList(), etag, idleTimeoutInMinutes, publicIPAddresses?.ToList(), publicIPPrefixes?.ToList(), subnets?.ToList(), resourceGuid, provisioningState);
         }
 
         /// <summary> Initializes a new instance of NetworkIPConfigurationProfile. </summary>
@@ -1044,7 +1044,7 @@ namespace Azure.ResourceManager.Network.Models
             loadBalancingRules ??= new List<WritableSubResource>();
             outboundRules ??= new List<WritableSubResource>();
 
-            return new BackendAddressPoolData(id, name, resourceType, etag, location, tunnelInterfaces?.ToList(), loadBalancerBackendAddresses?.ToList(), backendIPConfigurations?.ToList(), loadBalancingRules?.ToList(), ResourceManagerModelFactory.WritableSubResource(outboundRuleId), outboundRules?.ToList(), provisioningState);
+            return new BackendAddressPoolData(id, name, resourceType, etag, location, tunnelInterfaces?.ToList(), loadBalancerBackendAddresses?.ToList(), backendIPConfigurations?.ToList(), loadBalancingRules?.ToList(), outboundRuleId != null ? ResourceManagerModelFactory.WritableSubResource(outboundRuleId) : null, outboundRules?.ToList(), provisioningState);
         }
 
         /// <summary> Initializes a new instance of GatewayLoadBalancerTunnelInterface. </summary>
@@ -1068,7 +1068,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.LoadBalancerBackendAddress"/> instance for mocking. </returns>
         public static LoadBalancerBackendAddress LoadBalancerBackendAddress(string name = null, ResourceIdentifier virtualNetworkId = null, ResourceIdentifier subnetId = null, string ipAddress = null, ResourceIdentifier networkInterfaceIPConfigurationId = null, ResourceIdentifier loadBalancerFrontendIPConfigurationId = null)
         {
-            return new LoadBalancerBackendAddress(name, ResourceManagerModelFactory.WritableSubResource(virtualNetworkId), ResourceManagerModelFactory.WritableSubResource(subnetId), ipAddress, ResourceManagerModelFactory.WritableSubResource(networkInterfaceIPConfigurationId), ResourceManagerModelFactory.WritableSubResource(loadBalancerFrontendIPConfigurationId));
+            return new LoadBalancerBackendAddress(name, virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, ipAddress, networkInterfaceIPConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(networkInterfaceIPConfigurationId) : null, loadBalancerFrontendIPConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(loadBalancerFrontendIPConfigurationId) : null);
         }
 
         /// <summary> Initializes a new instance of InboundNatRuleData. </summary>
@@ -1088,7 +1088,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Network.InboundNatRuleData"/> instance for mocking. </returns>
         public static InboundNatRuleData InboundNatRuleData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier frontendIPConfigurationId = null, NetworkInterfaceIPConfigurationData backendIPConfiguration = null, LoadBalancingTransportProtocol? protocol = null, int? frontendPort = null, int? backendPort = null, int? idleTimeoutInMinutes = null, bool? enableFloatingIP = null, bool? enableTcpReset = null, NetworkProvisioningState? provisioningState = null)
         {
-            return new InboundNatRuleData(id, name, resourceType, etag, ResourceManagerModelFactory.WritableSubResource(frontendIPConfigurationId), backendIPConfiguration, protocol, frontendPort, backendPort, idleTimeoutInMinutes, enableFloatingIP, enableTcpReset, provisioningState);
+            return new InboundNatRuleData(id, name, resourceType, etag, frontendIPConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(frontendIPConfigurationId) : null, backendIPConfiguration, protocol, frontendPort, backendPort, idleTimeoutInMinutes, enableFloatingIP, enableTcpReset, provisioningState);
         }
 
         /// <summary> Initializes a new instance of NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties. </summary>
@@ -1137,7 +1137,7 @@ namespace Azure.ResourceManager.Network.Models
             authenticationCertificates ??= new List<WritableSubResource>();
             trustedRootCertificates ??= new List<WritableSubResource>();
 
-            return new ApplicationGatewayBackendHttpSettings(id, name, resourceType, etag, port, protocol, cookieBasedAffinity, requestTimeoutInSeconds, ResourceManagerModelFactory.WritableSubResource(probeId), authenticationCertificates?.ToList(), trustedRootCertificates?.ToList(), connectionDraining, hostName, pickHostNameFromBackendAddress, affinityCookieName, probeEnabled, path, provisioningState);
+            return new ApplicationGatewayBackendHttpSettings(id, name, resourceType, etag, port, protocol, cookieBasedAffinity, requestTimeoutInSeconds, probeId != null ? ResourceManagerModelFactory.WritableSubResource(probeId) : null, authenticationCertificates?.ToList(), trustedRootCertificates?.ToList(), connectionDraining, hostName, pickHostNameFromBackendAddress, affinityCookieName, probeEnabled, path, provisioningState);
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayHttpListener. </summary>
@@ -1162,7 +1162,7 @@ namespace Azure.ResourceManager.Network.Models
             customErrorConfigurations ??= new List<ApplicationGatewayCustomError>();
             hostNames ??= new List<string>();
 
-            return new ApplicationGatewayHttpListener(id, name, resourceType, etag, ResourceManagerModelFactory.WritableSubResource(frontendIPConfigurationId), ResourceManagerModelFactory.WritableSubResource(frontendPortId), protocol, hostName, ResourceManagerModelFactory.WritableSubResource(sslCertificateId), ResourceManagerModelFactory.WritableSubResource(sslProfileId), requireServerNameIndication, provisioningState, customErrorConfigurations?.ToList(), ResourceManagerModelFactory.WritableSubResource(firewallPolicyId), hostNames?.ToList());
+            return new ApplicationGatewayHttpListener(id, name, resourceType, etag, frontendIPConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(frontendIPConfigurationId) : null, frontendPortId != null ? ResourceManagerModelFactory.WritableSubResource(frontendPortId) : null, protocol, hostName, sslCertificateId != null ? ResourceManagerModelFactory.WritableSubResource(sslCertificateId) : null, sslProfileId != null ? ResourceManagerModelFactory.WritableSubResource(sslProfileId) : null, requireServerNameIndication, provisioningState, customErrorConfigurations?.ToList(), firewallPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(firewallPolicyId) : null, hostNames?.ToList());
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayCustomError. </summary>
@@ -1188,7 +1188,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             trustedClientCertificates ??= new List<WritableSubResource>();
 
-            return new ApplicationGatewaySslProfile(id, name, resourceType, etag, trustedClientCertificates?.ToList(), sslPolicy, new ApplicationGatewayClientAuthConfiguration(verifyClientCertIssuerDN), provisioningState);
+            return new ApplicationGatewaySslProfile(id, name, resourceType, etag, trustedClientCertificates?.ToList(), sslPolicy, verifyClientCertIssuerDN != null ? new ApplicationGatewayClientAuthConfiguration(verifyClientCertIssuerDN) : null, provisioningState);
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayUrlPathMap. </summary>
@@ -1207,7 +1207,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             pathRules ??= new List<ApplicationGatewayPathRule>();
 
-            return new ApplicationGatewayUrlPathMap(id, name, resourceType, etag, ResourceManagerModelFactory.WritableSubResource(defaultBackendAddressPoolId), ResourceManagerModelFactory.WritableSubResource(defaultBackendHttpSettingsId), ResourceManagerModelFactory.WritableSubResource(defaultRewriteRuleSetId), ResourceManagerModelFactory.WritableSubResource(defaultRedirectConfigurationId), pathRules?.ToList(), provisioningState);
+            return new ApplicationGatewayUrlPathMap(id, name, resourceType, etag, defaultBackendAddressPoolId != null ? ResourceManagerModelFactory.WritableSubResource(defaultBackendAddressPoolId) : null, defaultBackendHttpSettingsId != null ? ResourceManagerModelFactory.WritableSubResource(defaultBackendHttpSettingsId) : null, defaultRewriteRuleSetId != null ? ResourceManagerModelFactory.WritableSubResource(defaultRewriteRuleSetId) : null, defaultRedirectConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(defaultRedirectConfigurationId) : null, pathRules?.ToList(), provisioningState);
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayPathRule. </summary>
@@ -1227,7 +1227,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             paths ??= new List<string>();
 
-            return new ApplicationGatewayPathRule(id, name, resourceType, etag, paths?.ToList(), ResourceManagerModelFactory.WritableSubResource(backendAddressPoolId), ResourceManagerModelFactory.WritableSubResource(backendHttpSettingsId), ResourceManagerModelFactory.WritableSubResource(redirectConfigurationId), ResourceManagerModelFactory.WritableSubResource(rewriteRuleSetId), provisioningState, ResourceManagerModelFactory.WritableSubResource(firewallPolicyId));
+            return new ApplicationGatewayPathRule(id, name, resourceType, etag, paths?.ToList(), backendAddressPoolId != null ? ResourceManagerModelFactory.WritableSubResource(backendAddressPoolId) : null, backendHttpSettingsId != null ? ResourceManagerModelFactory.WritableSubResource(backendHttpSettingsId) : null, redirectConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(redirectConfigurationId) : null, rewriteRuleSetId != null ? ResourceManagerModelFactory.WritableSubResource(rewriteRuleSetId) : null, provisioningState, firewallPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(firewallPolicyId) : null);
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayRequestRoutingRule. </summary>
@@ -1247,7 +1247,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.ApplicationGatewayRequestRoutingRule"/> instance for mocking. </returns>
         public static ApplicationGatewayRequestRoutingRule ApplicationGatewayRequestRoutingRule(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ApplicationGatewayRequestRoutingRuleType? ruleType = null, int? priority = null, ResourceIdentifier backendAddressPoolId = null, ResourceIdentifier backendHttpSettingsId = null, ResourceIdentifier httpListenerId = null, ResourceIdentifier urlPathMapId = null, ResourceIdentifier rewriteRuleSetId = null, ResourceIdentifier redirectConfigurationId = null, NetworkProvisioningState? provisioningState = null)
         {
-            return new ApplicationGatewayRequestRoutingRule(id, name, resourceType, etag, ruleType, priority, ResourceManagerModelFactory.WritableSubResource(backendAddressPoolId), ResourceManagerModelFactory.WritableSubResource(backendHttpSettingsId), ResourceManagerModelFactory.WritableSubResource(httpListenerId), ResourceManagerModelFactory.WritableSubResource(urlPathMapId), ResourceManagerModelFactory.WritableSubResource(rewriteRuleSetId), ResourceManagerModelFactory.WritableSubResource(redirectConfigurationId), provisioningState);
+            return new ApplicationGatewayRequestRoutingRule(id, name, resourceType, etag, ruleType, priority, backendAddressPoolId != null ? ResourceManagerModelFactory.WritableSubResource(backendAddressPoolId) : null, backendHttpSettingsId != null ? ResourceManagerModelFactory.WritableSubResource(backendHttpSettingsId) : null, httpListenerId != null ? ResourceManagerModelFactory.WritableSubResource(httpListenerId) : null, urlPathMapId != null ? ResourceManagerModelFactory.WritableSubResource(urlPathMapId) : null, rewriteRuleSetId != null ? ResourceManagerModelFactory.WritableSubResource(rewriteRuleSetId) : null, redirectConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(redirectConfigurationId) : null, provisioningState);
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayRewriteRuleSet. </summary>
@@ -1341,7 +1341,7 @@ namespace Azure.ResourceManager.Network.Models
             urlPathMaps ??= new List<WritableSubResource>();
             pathRules ??= new List<WritableSubResource>();
 
-            return new ApplicationGatewayRedirectConfiguration(id, name, resourceType, etag, redirectType, ResourceManagerModelFactory.WritableSubResource(targetListenerId), targetUri, includePath, includeQueryString, requestRoutingRules?.ToList(), urlPathMaps?.ToList(), pathRules?.ToList());
+            return new ApplicationGatewayRedirectConfiguration(id, name, resourceType, etag, redirectType, targetListenerId != null ? ResourceManagerModelFactory.WritableSubResource(targetListenerId) : null, targetUri, includePath, includeQueryString, requestRoutingRules?.ToList(), urlPathMaps?.ToList(), pathRules?.ToList());
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayWebApplicationFirewallConfiguration. </summary>
@@ -1412,7 +1412,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.ApplicationGatewayPrivateLinkIPConfiguration"/> instance for mocking. </returns>
         public static ApplicationGatewayPrivateLinkIPConfiguration ApplicationGatewayPrivateLinkIPConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, string privateIPAddress = null, NetworkIPAllocationMethod? privateIPAllocationMethod = null, ResourceIdentifier subnetId = null, bool? isPrimary = null, NetworkProvisioningState? provisioningState = null)
         {
-            return new ApplicationGatewayPrivateLinkIPConfiguration(id, name, resourceType, etag, privateIPAddress, privateIPAllocationMethod, ResourceManagerModelFactory.WritableSubResource(subnetId), isPrimary, provisioningState);
+            return new ApplicationGatewayPrivateLinkIPConfiguration(id, name, resourceType, etag, privateIPAddress, privateIPAllocationMethod, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, isPrimary, provisioningState);
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayPrivateEndpointConnectionData. </summary>
@@ -1634,7 +1634,7 @@ namespace Azure.ResourceManager.Network.Models
             ipGroups ??= new List<AzureFirewallIPGroups>();
             additionalProperties ??= new Dictionary<string, string>();
 
-            return new AzureFirewallData(id, name, resourceType, location, tags, zones?.ToList(), etag, applicationRuleCollections?.ToList(), natRuleCollections?.ToList(), networkRuleCollections?.ToList(), ipConfigurations?.ToList(), managementIPConfiguration, provisioningState, threatIntelMode, ResourceManagerModelFactory.WritableSubResource(virtualHubId), ResourceManagerModelFactory.WritableSubResource(firewallPolicyId), hubIPAddresses, ipGroups?.ToList(), sku, additionalProperties);
+            return new AzureFirewallData(id, name, resourceType, location, tags, zones?.ToList(), etag, applicationRuleCollections?.ToList(), natRuleCollections?.ToList(), networkRuleCollections?.ToList(), ipConfigurations?.ToList(), managementIPConfiguration, provisioningState, threatIntelMode, virtualHubId != null ? ResourceManagerModelFactory.WritableSubResource(virtualHubId) : null, firewallPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(firewallPolicyId) : null, hubIPAddresses, ipGroups?.ToList(), sku, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of AzureFirewallApplicationRuleCollectionData. </summary>
@@ -1651,7 +1651,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             rules ??= new List<AzureFirewallApplicationRule>();
 
-            return new AzureFirewallApplicationRuleCollectionData(id, name, resourceType, etag, priority, new AzureFirewallRCAction(actionType), rules?.ToList(), provisioningState);
+            return new AzureFirewallApplicationRuleCollectionData(id, name, resourceType, etag, priority, actionType != null ? new AzureFirewallRCAction(actionType) : null, rules?.ToList(), provisioningState);
         }
 
         /// <summary> Initializes a new instance of AzureFirewallApplicationRule. </summary>
@@ -1697,7 +1697,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             rules ??= new List<AzureFirewallNatRule>();
 
-            return new AzureFirewallNatRuleCollectionData(id, name, resourceType, etag, priority, new AzureFirewallNatRCAction(actionType), rules?.ToList(), provisioningState);
+            return new AzureFirewallNatRuleCollectionData(id, name, resourceType, etag, priority, actionType != null ? new AzureFirewallNatRCAction(actionType) : null, rules?.ToList(), provisioningState);
         }
 
         /// <summary> Initializes a new instance of AzureFirewallNatRule. </summary>
@@ -1737,7 +1737,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             rules ??= new List<AzureFirewallNetworkRule>();
 
-            return new AzureFirewallNetworkRuleCollectionData(id, name, resourceType, etag, priority, new AzureFirewallRCAction(actionType), rules?.ToList(), provisioningState);
+            return new AzureFirewallNetworkRuleCollectionData(id, name, resourceType, etag, priority, actionType != null ? new AzureFirewallRCAction(actionType) : null, rules?.ToList(), provisioningState);
         }
 
         /// <summary> Initializes a new instance of AzureFirewallNetworkRule. </summary>
@@ -1776,7 +1776,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.AzureFirewallIPConfiguration"/> instance for mocking. </returns>
         public static AzureFirewallIPConfiguration AzureFirewallIPConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, string privateIPAddress = null, ResourceIdentifier subnetId = null, ResourceIdentifier publicIPAddressId = null, NetworkProvisioningState? provisioningState = null)
         {
-            return new AzureFirewallIPConfiguration(id, name, resourceType, etag, privateIPAddress, ResourceManagerModelFactory.WritableSubResource(subnetId), ResourceManagerModelFactory.WritableSubResource(publicIPAddressId), provisioningState);
+            return new AzureFirewallIPConfiguration(id, name, resourceType, etag, privateIPAddress, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, publicIPAddressId != null ? ResourceManagerModelFactory.WritableSubResource(publicIPAddressId) : null, provisioningState);
         }
 
         /// <summary> Initializes a new instance of HubIPAddresses. </summary>
@@ -1872,7 +1872,7 @@ namespace Azure.ResourceManager.Network.Models
             tags ??= new Dictionary<string, string>();
             ipConfigurations ??= new List<BastionHostIPConfiguration>();
 
-            return new BastionHostData(id, name, resourceType, location, tags, etag, new NetworkSku(skuName), ipConfigurations?.ToList(), dnsName, provisioningState);
+            return new BastionHostData(id, name, resourceType, location, tags, etag, skuName != null ? new NetworkSku(skuName) : null, ipConfigurations?.ToList(), dnsName, provisioningState);
         }
 
         /// <summary> Initializes a new instance of BastionHostIPConfiguration. </summary>
@@ -1887,7 +1887,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.BastionHostIPConfiguration"/> instance for mocking. </returns>
         public static BastionHostIPConfiguration BastionHostIPConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier subnetId = null, ResourceIdentifier publicIPAddressId = null, NetworkProvisioningState? provisioningState = null, NetworkIPAllocationMethod? privateIPAllocationMethod = null)
         {
-            return new BastionHostIPConfiguration(id, name, resourceType, etag, ResourceManagerModelFactory.WritableSubResource(subnetId), ResourceManagerModelFactory.WritableSubResource(publicIPAddressId), provisioningState, privateIPAllocationMethod);
+            return new BastionHostIPConfiguration(id, name, resourceType, etag, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, publicIPAddressId != null ? ResourceManagerModelFactory.WritableSubResource(publicIPAddressId) : null, provisioningState, privateIPAllocationMethod);
         }
 
         /// <summary> Initializes a new instance of DnsNameAvailabilityResult. </summary>
@@ -2084,7 +2084,7 @@ namespace Azure.ResourceManager.Network.Models
             connections ??= new List<ExpressRouteCircuitConnectionData>();
             peeredConnections ??= new List<PeerExpressRouteCircuitConnectionData>();
 
-            return new ExpressRouteCircuitPeeringData(id, name, resourceType, etag, peeringType, state, azureASN, peerASN, primaryPeerAddressPrefix, secondaryPeerAddressPrefix, primaryAzurePort, secondaryAzurePort, sharedKey, vlanId, microsoftPeeringConfig, stats, provisioningState, gatewayManagerETag, lastModifiedBy, ResourceManagerModelFactory.WritableSubResource(routeFilterId), ipv6PeeringConfig, ResourceManagerModelFactory.SubResource(expressRouteConnectionId), connections?.ToList(), peeredConnections?.ToList());
+            return new ExpressRouteCircuitPeeringData(id, name, resourceType, etag, peeringType, state, azureASN, peerASN, primaryPeerAddressPrefix, secondaryPeerAddressPrefix, primaryAzurePort, secondaryAzurePort, sharedKey, vlanId, microsoftPeeringConfig, stats, provisioningState, gatewayManagerETag, lastModifiedBy, routeFilterId != null ? ResourceManagerModelFactory.WritableSubResource(routeFilterId) : null, ipv6PeeringConfig, expressRouteConnectionId != null ? ResourceManagerModelFactory.SubResource(expressRouteConnectionId) : null, connections?.ToList(), peeredConnections?.ToList());
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringConfig. </summary>
@@ -2123,7 +2123,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.IPv6ExpressRouteCircuitPeeringConfig"/> instance for mocking. </returns>
         public static IPv6ExpressRouteCircuitPeeringConfig IPv6ExpressRouteCircuitPeeringConfig(string primaryPeerAddressPrefix = null, string secondaryPeerAddressPrefix = null, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = null, ResourceIdentifier routeFilterId = null, ExpressRouteCircuitPeeringState? state = null)
         {
-            return new IPv6ExpressRouteCircuitPeeringConfig(primaryPeerAddressPrefix, secondaryPeerAddressPrefix, microsoftPeeringConfig, ResourceManagerModelFactory.WritableSubResource(routeFilterId), state);
+            return new IPv6ExpressRouteCircuitPeeringConfig(primaryPeerAddressPrefix, secondaryPeerAddressPrefix, microsoftPeeringConfig, routeFilterId != null ? ResourceManagerModelFactory.WritableSubResource(routeFilterId) : null, state);
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitConnectionData. </summary>
@@ -2141,7 +2141,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Network.ExpressRouteCircuitConnectionData"/> instance for mocking. </returns>
         public static ExpressRouteCircuitConnectionData ExpressRouteCircuitConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier expressRouteCircuitPeeringId = null, ResourceIdentifier peerExpressRouteCircuitPeeringId = null, string addressPrefix = null, string authorizationKey = null, IPv6CircuitConnectionConfig ipv6CircuitConnectionConfig = null, CircuitConnectionStatus? circuitConnectionStatus = null, NetworkProvisioningState? provisioningState = null)
         {
-            return new ExpressRouteCircuitConnectionData(id, name, resourceType, etag, ResourceManagerModelFactory.WritableSubResource(expressRouteCircuitPeeringId), ResourceManagerModelFactory.WritableSubResource(peerExpressRouteCircuitPeeringId), addressPrefix, authorizationKey, ipv6CircuitConnectionConfig, circuitConnectionStatus, provisioningState);
+            return new ExpressRouteCircuitConnectionData(id, name, resourceType, etag, expressRouteCircuitPeeringId != null ? ResourceManagerModelFactory.WritableSubResource(expressRouteCircuitPeeringId) : null, peerExpressRouteCircuitPeeringId != null ? ResourceManagerModelFactory.WritableSubResource(peerExpressRouteCircuitPeeringId) : null, addressPrefix, authorizationKey, ipv6CircuitConnectionConfig, circuitConnectionStatus, provisioningState);
         }
 
         /// <summary> Initializes a new instance of IPv6CircuitConnectionConfig. </summary>
@@ -2168,7 +2168,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Network.PeerExpressRouteCircuitConnectionData"/> instance for mocking. </returns>
         public static PeerExpressRouteCircuitConnectionData PeerExpressRouteCircuitConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier expressRouteCircuitPeeringId = null, ResourceIdentifier peerExpressRouteCircuitPeeringId = null, string addressPrefix = null, CircuitConnectionStatus? circuitConnectionStatus = null, string connectionName = null, Guid? authResourceGuid = null, NetworkProvisioningState? provisioningState = null)
         {
-            return new PeerExpressRouteCircuitConnectionData(id, name, resourceType, etag, ResourceManagerModelFactory.WritableSubResource(expressRouteCircuitPeeringId), ResourceManagerModelFactory.WritableSubResource(peerExpressRouteCircuitPeeringId), addressPrefix, circuitConnectionStatus, connectionName, authResourceGuid, provisioningState);
+            return new PeerExpressRouteCircuitConnectionData(id, name, resourceType, etag, expressRouteCircuitPeeringId != null ? ResourceManagerModelFactory.WritableSubResource(expressRouteCircuitPeeringId) : null, peerExpressRouteCircuitPeeringId != null ? ResourceManagerModelFactory.WritableSubResource(peerExpressRouteCircuitPeeringId) : null, addressPrefix, circuitConnectionStatus, connectionName, authResourceGuid, provisioningState);
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitData. </summary>
@@ -2200,7 +2200,7 @@ namespace Azure.ResourceManager.Network.Models
             authorizations ??= new List<ExpressRouteCircuitAuthorizationData>();
             peerings ??= new List<ExpressRouteCircuitPeeringData>();
 
-            return new ExpressRouteCircuitData(id, name, resourceType, location, tags, sku, etag, allowClassicOperations, circuitProvisioningState, serviceProviderProvisioningState, authorizations?.ToList(), peerings?.ToList(), serviceKey, serviceProviderNotes, serviceProviderProperties, ResourceManagerModelFactory.WritableSubResource(expressRoutePortId), bandwidthInGbps, stag, provisioningState, gatewayManagerETag, globalReachEnabled);
+            return new ExpressRouteCircuitData(id, name, resourceType, location, tags, sku, etag, allowClassicOperations, circuitProvisioningState, serviceProviderProvisioningState, authorizations?.ToList(), peerings?.ToList(), serviceKey, serviceProviderNotes, serviceProviderProperties, expressRoutePortId != null ? ResourceManagerModelFactory.WritableSubResource(expressRoutePortId) : null, bandwidthInGbps, stag, provisioningState, gatewayManagerETag, globalReachEnabled);
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitSku. </summary>
@@ -2342,7 +2342,7 @@ namespace Azure.ResourceManager.Network.Models
             tags ??= new Dictionary<string, string>();
             peerings ??= new List<ExpressRouteCrossConnectionPeeringData>();
 
-            return new ExpressRouteCrossConnectionData(id, name, resourceType, location, tags, etag, primaryAzurePort, secondaryAzurePort, stag, peeringLocation, bandwidthInMbps, ResourceManagerModelFactory.WritableSubResource(expressRouteCircuitId), serviceProviderProvisioningState, serviceProviderNotes, provisioningState, peerings?.ToList());
+            return new ExpressRouteCrossConnectionData(id, name, resourceType, location, tags, etag, primaryAzurePort, secondaryAzurePort, stag, peeringLocation, bandwidthInMbps, expressRouteCircuitId != null ? ResourceManagerModelFactory.WritableSubResource(expressRouteCircuitId) : null, serviceProviderProvisioningState, serviceProviderNotes, provisioningState, peerings?.ToList());
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCrossConnectionPeeringData. </summary>
@@ -2518,7 +2518,7 @@ namespace Azure.ResourceManager.Network.Models
             childPolicies ??= new List<WritableSubResource>();
             snatPrivateRanges ??= new List<string>();
 
-            return new FirewallPolicyData(id, name, resourceType, location, tags, etag, identity, ruleCollectionGroups?.ToList(), provisioningState, ResourceManagerModelFactory.WritableSubResource(basePolicyId), firewalls?.ToList(), childPolicies?.ToList(), threatIntelMode, threatIntelWhitelist, insights, new FirewallPolicySnat(snatPrivateRanges?.ToList()), dnsSettings, intrusionDetection, new FirewallPolicyTransportSecurity(transportSecurityCertificateAuthority), new FirewallPolicySku(skuTier));
+            return new FirewallPolicyData(id, name, resourceType, location, tags, etag, identity, ruleCollectionGroups?.ToList(), provisioningState, basePolicyId != null ? ResourceManagerModelFactory.WritableSubResource(basePolicyId) : null, firewalls?.ToList(), childPolicies?.ToList(), threatIntelMode, threatIntelWhitelist, insights, snatPrivateRanges != null ? new FirewallPolicySnat(snatPrivateRanges?.ToList()) : null, dnsSettings, intrusionDetection, transportSecurityCertificateAuthority != null ? new FirewallPolicyTransportSecurity(transportSecurityCertificateAuthority) : null, skuTier != null ? new FirewallPolicySku(skuTier) : null);
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyThreatIntelWhitelist. </summary>
@@ -2551,7 +2551,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             workspaces ??= new List<FirewallPolicyLogAnalyticsWorkspace>();
 
-            return new FirewallPolicyLogAnalyticsResources(workspaces?.ToList(), ResourceManagerModelFactory.WritableSubResource(defaultWorkspaceIdId));
+            return new FirewallPolicyLogAnalyticsResources(workspaces?.ToList(), defaultWorkspaceIdId != null ? ResourceManagerModelFactory.WritableSubResource(defaultWorkspaceIdId) : null);
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyLogAnalyticsWorkspace. </summary>
@@ -2560,7 +2560,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.FirewallPolicyLogAnalyticsWorkspace"/> instance for mocking. </returns>
         public static FirewallPolicyLogAnalyticsWorkspace FirewallPolicyLogAnalyticsWorkspace(string region = null, ResourceIdentifier workspaceIdId = null)
         {
-            return new FirewallPolicyLogAnalyticsWorkspace(region, ResourceManagerModelFactory.WritableSubResource(workspaceIdId));
+            return new FirewallPolicyLogAnalyticsWorkspace(region, workspaceIdId != null ? ResourceManagerModelFactory.WritableSubResource(workspaceIdId) : null);
         }
 
         /// <summary> Initializes a new instance of DnsSettings. </summary>
@@ -2686,7 +2686,7 @@ namespace Azure.ResourceManager.Network.Models
             tags ??= new Dictionary<string, string>();
             allocationTags ??= new Dictionary<string, string>();
 
-            return new IPAllocationData(id, name, resourceType, location, tags, etag, ResourceManagerModelFactory.WritableSubResource(subnetId), ResourceManagerModelFactory.WritableSubResource(virtualNetworkId), ipAllocationType, prefix, prefixLength, prefixType, ipamAllocationId, allocationTags);
+            return new IPAllocationData(id, name, resourceType, location, tags, etag, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null, ipAllocationType, prefix, prefixLength, prefixType, ipamAllocationId, allocationTags);
         }
 
         /// <summary> Initializes a new instance of IPGroupData. </summary>
@@ -2776,7 +2776,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             backendAddressPools ??= new List<WritableSubResource>();
 
-            return new LoadBalancingRuleData(id, name, resourceType, etag, ResourceManagerModelFactory.WritableSubResource(frontendIPConfigurationId), ResourceManagerModelFactory.WritableSubResource(backendAddressPoolId), backendAddressPools?.ToList(), ResourceManagerModelFactory.WritableSubResource(probeId), protocol, loadDistribution, frontendPort, backendPort, idleTimeoutInMinutes, enableFloatingIP, enableTcpReset, disableOutboundSnat, provisioningState);
+            return new LoadBalancingRuleData(id, name, resourceType, etag, frontendIPConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(frontendIPConfigurationId) : null, backendAddressPoolId != null ? ResourceManagerModelFactory.WritableSubResource(backendAddressPoolId) : null, backendAddressPools?.ToList(), probeId != null ? ResourceManagerModelFactory.WritableSubResource(probeId) : null, protocol, loadDistribution, frontendPort, backendPort, idleTimeoutInMinutes, enableFloatingIP, enableTcpReset, disableOutboundSnat, provisioningState);
         }
 
         /// <summary> Initializes a new instance of ProbeData. </summary>
@@ -2816,7 +2816,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.LoadBalancerInboundNatPool"/> instance for mocking. </returns>
         public static LoadBalancerInboundNatPool LoadBalancerInboundNatPool(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier frontendIPConfigurationId = null, LoadBalancingTransportProtocol? protocol = null, int? frontendPortRangeStart = null, int? frontendPortRangeEnd = null, int? backendPort = null, int? idleTimeoutInMinutes = null, bool? enableFloatingIP = null, bool? enableTcpReset = null, NetworkProvisioningState? provisioningState = null)
         {
-            return new LoadBalancerInboundNatPool(id, name, resourceType, etag, ResourceManagerModelFactory.WritableSubResource(frontendIPConfigurationId), protocol, frontendPortRangeStart, frontendPortRangeEnd, backendPort, idleTimeoutInMinutes, enableFloatingIP, enableTcpReset, provisioningState);
+            return new LoadBalancerInboundNatPool(id, name, resourceType, etag, frontendIPConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(frontendIPConfigurationId) : null, protocol, frontendPortRangeStart, frontendPortRangeEnd, backendPort, idleTimeoutInMinutes, enableFloatingIP, enableTcpReset, provisioningState);
         }
 
         /// <summary> Initializes a new instance of OutboundRuleData. </summary>
@@ -2836,7 +2836,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             frontendIPConfigurations ??= new List<WritableSubResource>();
 
-            return new OutboundRuleData(id, name, resourceType, etag, allocatedOutboundPorts, frontendIPConfigurations?.ToList(), ResourceManagerModelFactory.WritableSubResource(backendAddressPoolId), provisioningState, protocol, enableTcpReset, idleTimeoutInMinutes);
+            return new OutboundRuleData(id, name, resourceType, etag, allocatedOutboundPorts, frontendIPConfigurations?.ToList(), backendAddressPoolId != null ? ResourceManagerModelFactory.WritableSubResource(backendAddressPoolId) : null, provisioningState, protocol, enableTcpReset, idleTimeoutInMinutes);
         }
 
         /// <summary> Initializes a new instance of EffectiveRouteListResult. </summary>
@@ -2888,7 +2888,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             effectiveSecurityRules ??= new List<EffectiveNetworkSecurityRule>();
 
-            return new EffectiveNetworkSecurityGroup(ResourceManagerModelFactory.WritableSubResource(networkSecurityGroupId), association, effectiveSecurityRules?.ToList(), tagMap);
+            return new EffectiveNetworkSecurityGroup(networkSecurityGroupId != null ? ResourceManagerModelFactory.WritableSubResource(networkSecurityGroupId) : null, association, effectiveSecurityRules?.ToList(), tagMap);
         }
 
         /// <summary> Initializes a new instance of EffectiveNetworkSecurityGroupAssociation. </summary>
@@ -2898,7 +2898,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.EffectiveNetworkSecurityGroupAssociation"/> instance for mocking. </returns>
         public static EffectiveNetworkSecurityGroupAssociation EffectiveNetworkSecurityGroupAssociation(ResourceIdentifier networkManagerId = null, ResourceIdentifier subnetId = null, ResourceIdentifier networkInterfaceId = null)
         {
-            return new EffectiveNetworkSecurityGroupAssociation(ResourceManagerModelFactory.WritableSubResource(networkManagerId), ResourceManagerModelFactory.WritableSubResource(subnetId), ResourceManagerModelFactory.WritableSubResource(networkInterfaceId));
+            return new EffectiveNetworkSecurityGroupAssociation(networkManagerId != null ? ResourceManagerModelFactory.WritableSubResource(networkManagerId) : null, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, networkInterfaceId != null ? ResourceManagerModelFactory.WritableSubResource(networkInterfaceId) : null);
         }
 
         /// <summary> Initializes a new instance of EffectiveNetworkSecurityRule. </summary>
@@ -2965,7 +2965,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             ipConfigurations ??= new List<ContainerNetworkInterfaceIPConfiguration>();
 
-            return new ContainerNetworkInterface(id, name, resourceType, etag, containerNetworkInterfaceConfiguration, ResourceManagerModelFactory.WritableSubResource(containerId), ipConfigurations?.ToList(), provisioningState);
+            return new ContainerNetworkInterface(id, name, resourceType, etag, containerNetworkInterfaceConfiguration, containerId != null ? ResourceManagerModelFactory.WritableSubResource(containerId) : null, ipConfigurations?.ToList(), provisioningState);
         }
 
         /// <summary> Initializes a new instance of ContainerNetworkInterfaceConfiguration. </summary>
@@ -3025,7 +3025,7 @@ namespace Azure.ResourceManager.Network.Models
             virtualApplianceSites ??= new List<WritableSubResource>();
             inboundSecurityRules ??= new List<WritableSubResource>();
 
-            return new NetworkVirtualApplianceData(id, name, resourceType, location, tags, identity, etag, nvaSku, addressPrefix, bootStrapConfigurationBlobs?.ToList(), ResourceManagerModelFactory.WritableSubResource(virtualHubId), cloudInitConfigurationBlobs?.ToList(), cloudInitConfiguration, virtualApplianceAsn, virtualApplianceNics?.ToList(), virtualApplianceSites?.ToList(), inboundSecurityRules?.ToList(), provisioningState);
+            return new NetworkVirtualApplianceData(id, name, resourceType, location, tags, identity, etag, nvaSku, addressPrefix, bootStrapConfigurationBlobs?.ToList(), virtualHubId != null ? ResourceManagerModelFactory.WritableSubResource(virtualHubId) : null, cloudInitConfigurationBlobs?.ToList(), cloudInitConfiguration, virtualApplianceAsn, virtualApplianceNics?.ToList(), virtualApplianceSites?.ToList(), inboundSecurityRules?.ToList(), provisioningState);
         }
 
         /// <summary> Initializes a new instance of VirtualApplianceSkuProperties. </summary>
@@ -3059,7 +3059,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Network.VirtualApplianceSiteData"/> instance for mocking. </returns>
         public static VirtualApplianceSiteData VirtualApplianceSiteData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, string addressPrefix = null, BreakOutCategoryPolicies o365BreakOutCategories = null, NetworkProvisioningState? provisioningState = null)
         {
-            return new VirtualApplianceSiteData(id, name, resourceType, etag, addressPrefix, new Office365PolicyProperties(o365BreakOutCategories), provisioningState);
+            return new VirtualApplianceSiteData(id, name, resourceType, etag, addressPrefix, o365BreakOutCategories != null ? new Office365PolicyProperties(o365BreakOutCategories) : null, provisioningState);
         }
 
         /// <summary> Initializes a new instance of BreakOutCategoryPolicies. </summary>
@@ -3358,7 +3358,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.FlowLogInformation"/> instance for mocking. </returns>
         public static FlowLogInformation FlowLogInformation(ResourceIdentifier targetResourceId = null, TrafficAnalyticsConfigurationProperties trafficAnalyticsConfiguration = null, ResourceIdentifier storageId = null, bool enabled = default, RetentionPolicyParameters retentionPolicy = null, FlowLogProperties format = null)
         {
-            return new FlowLogInformation(targetResourceId, new TrafficAnalyticsProperties(trafficAnalyticsConfiguration), storageId, enabled, retentionPolicy, format);
+            return new FlowLogInformation(targetResourceId, trafficAnalyticsConfiguration != null ? new TrafficAnalyticsProperties(trafficAnalyticsConfiguration) : null, storageId, enabled, retentionPolicy, format);
         }
 
         /// <summary> Initializes a new instance of NetworkWatcherHttpHeader. </summary>
@@ -3679,7 +3679,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.ConnectionMonitorTestConfiguration"/> instance for mocking. </returns>
         public static ConnectionMonitorTestConfiguration ConnectionMonitorTestConfiguration(string name = null, int? testFrequencySec = null, ConnectionMonitorTestConfigurationProtocol protocol = default, TestEvalPreferredIPVersion? preferredIPVersion = null, ConnectionMonitorHttpConfiguration httpConfiguration = null, ConnectionMonitorTcpConfiguration tcpConfiguration = null, bool? disableTraceRoute = null, ConnectionMonitorSuccessThreshold successThreshold = null)
         {
-            return new ConnectionMonitorTestConfiguration(name, testFrequencySec, protocol, preferredIPVersion, httpConfiguration, tcpConfiguration, new ConnectionMonitorIcmpConfiguration(disableTraceRoute), successThreshold);
+            return new ConnectionMonitorTestConfiguration(name, testFrequencySec, protocol, preferredIPVersion, httpConfiguration, tcpConfiguration, disableTraceRoute != null ? new ConnectionMonitorIcmpConfiguration(disableTraceRoute) : null, successThreshold);
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorHttpConfiguration. </summary>
@@ -3739,7 +3739,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.ConnectionMonitorOutput"/> instance for mocking. </returns>
         public static ConnectionMonitorOutput ConnectionMonitorOutput(OutputType? outputType = null, ResourceIdentifier workspaceResourceId = null)
         {
-            return new ConnectionMonitorOutput(outputType, new ConnectionMonitorWorkspaceSettings(workspaceResourceId));
+            return new ConnectionMonitorOutput(outputType, workspaceResourceId != null ? new ConnectionMonitorWorkspaceSettings(workspaceResourceId) : null);
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorData. </summary>
@@ -3904,7 +3904,7 @@ namespace Azure.ResourceManager.Network.Models
             ipTags ??= new List<IPTag>();
             publicIPAddresses ??= new List<SubResource>();
 
-            return new PublicIPPrefixData(id, name, resourceType, location, tags, extendedLocation, sku, etag, zones?.ToList(), publicIPAddressVersion, ipTags?.ToList(), prefixLength, ipPrefix, publicIPAddresses?.ToList(), ResourceManagerModelFactory.WritableSubResource(loadBalancerFrontendIPConfigurationId), ResourceManagerModelFactory.WritableSubResource(customIPPrefixId), resourceGuid, provisioningState, natGateway);
+            return new PublicIPPrefixData(id, name, resourceType, location, tags, extendedLocation, sku, etag, zones?.ToList(), publicIPAddressVersion, ipTags?.ToList(), prefixLength, ipPrefix, publicIPAddresses?.ToList(), loadBalancerFrontendIPConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(loadBalancerFrontendIPConfigurationId) : null, customIPPrefixId != null ? ResourceManagerModelFactory.WritableSubResource(customIPPrefixId) : null, resourceGuid, provisioningState, natGateway);
         }
 
         /// <summary> Initializes a new instance of PublicIPPrefixSku. </summary>
@@ -3972,7 +3972,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SecurityPartnerProviderData(id, name, resourceType, location, tags, etag, provisioningState, securityProviderName, connectionStatus, ResourceManagerModelFactory.WritableSubResource(virtualHubId));
+            return new SecurityPartnerProviderData(id, name, resourceType, location, tags, etag, provisioningState, securityProviderName, connectionStatus, virtualHubId != null ? ResourceManagerModelFactory.WritableSubResource(virtualHubId) : null);
         }
 
         /// <summary> Initializes a new instance of BgpServiceCommunity. </summary>
@@ -4099,7 +4099,7 @@ namespace Azure.ResourceManager.Network.Models
             virtualNetworkPeerings ??= new List<VirtualNetworkPeeringData>();
             ipAllocations ??= new List<WritableSubResource>();
 
-            return new VirtualNetworkData(id, name, resourceType, location, tags, extendedLocation, etag, new AddressSpace(addressPrefixes?.ToList()), new DhcpOptions(dhcpOptionsDnsServers?.ToList()), flowTimeoutInMinutes, subnets?.ToList(), virtualNetworkPeerings?.ToList(), resourceGuid, provisioningState, enableDdosProtection, enableVmProtection, ResourceManagerModelFactory.WritableSubResource(ddosProtectionPlanId), bgpCommunities, ipAllocations?.ToList());
+            return new VirtualNetworkData(id, name, resourceType, location, tags, extendedLocation, etag, addressPrefixes != null ? new AddressSpace(addressPrefixes?.ToList()) : null, dhcpOptionsDnsServers != null ? new DhcpOptions(dhcpOptionsDnsServers?.ToList()) : null, flowTimeoutInMinutes, subnets?.ToList(), virtualNetworkPeerings?.ToList(), resourceGuid, provisioningState, enableDdosProtection, enableVmProtection, ddosProtectionPlanId != null ? ResourceManagerModelFactory.WritableSubResource(ddosProtectionPlanId) : null, bgpCommunities, ipAllocations?.ToList());
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkPeeringData. </summary>
@@ -4126,7 +4126,7 @@ namespace Azure.ResourceManager.Network.Models
             remoteAddressPrefixes ??= new List<string>();
             remoteVirtualNetworkAddressPrefixes ??= new List<string>();
 
-            return new VirtualNetworkPeeringData(id, name, resourceType, etag, allowVirtualNetworkAccess, allowForwardedTraffic, allowGatewayTransit, useRemoteGateways, ResourceManagerModelFactory.WritableSubResource(remoteVirtualNetworkId), new AddressSpace(remoteAddressPrefixes?.ToList()), new AddressSpace(remoteVirtualNetworkAddressPrefixes?.ToList()), remoteBgpCommunities, peeringState, peeringSyncLevel, provisioningState, doNotVerifyRemoteGateways, resourceGuid);
+            return new VirtualNetworkPeeringData(id, name, resourceType, etag, allowVirtualNetworkAccess, allowForwardedTraffic, allowGatewayTransit, useRemoteGateways, remoteVirtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(remoteVirtualNetworkId) : null, remoteAddressPrefixes != null ? new AddressSpace(remoteAddressPrefixes?.ToList()) : null, remoteVirtualNetworkAddressPrefixes != null ? new AddressSpace(remoteVirtualNetworkAddressPrefixes?.ToList()) : null, remoteBgpCommunities, peeringState, peeringSyncLevel, provisioningState, doNotVerifyRemoteGateways, resourceGuid);
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkBgpCommunities. </summary>
@@ -4221,7 +4221,7 @@ namespace Azure.ResourceManager.Network.Models
             customRoutesAddressPrefixes ??= new List<string>();
             natRules ??= new List<VirtualNetworkGatewayNatRuleData>();
 
-            return new VirtualNetworkGatewayData(id, name, resourceType, location, tags, extendedLocation, etag, ipConfigurations?.ToList(), gatewayType, vpnType, vpnGatewayGeneration, enableBgp, enablePrivateIPAddress, active, ResourceManagerModelFactory.WritableSubResource(gatewayDefaultSiteId), sku, vpnClientConfiguration, bgpSettings, new AddressSpace(customRoutesAddressPrefixes?.ToList()), resourceGuid, provisioningState, enableDnsForwarding, inboundDnsForwardingEndpoint, vNetExtendedLocationResourceId, natRules?.ToList(), enableBgpRouteTranslationForNat);
+            return new VirtualNetworkGatewayData(id, name, resourceType, location, tags, extendedLocation, etag, ipConfigurations?.ToList(), gatewayType, vpnType, vpnGatewayGeneration, enableBgp, enablePrivateIPAddress, active, gatewayDefaultSiteId != null ? ResourceManagerModelFactory.WritableSubResource(gatewayDefaultSiteId) : null, sku, vpnClientConfiguration, bgpSettings, customRoutesAddressPrefixes != null ? new AddressSpace(customRoutesAddressPrefixes?.ToList()) : null, resourceGuid, provisioningState, enableDnsForwarding, inboundDnsForwardingEndpoint, vNetExtendedLocationResourceId, natRules?.ToList(), enableBgpRouteTranslationForNat);
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewayIPConfiguration. </summary>
@@ -4237,7 +4237,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.VirtualNetworkGatewayIPConfiguration"/> instance for mocking. </returns>
         public static VirtualNetworkGatewayIPConfiguration VirtualNetworkGatewayIPConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, NetworkIPAllocationMethod? privateIPAllocationMethod = null, ResourceIdentifier subnetId = null, ResourceIdentifier publicIPAddressId = null, string privateIPAddress = null, NetworkProvisioningState? provisioningState = null)
         {
-            return new VirtualNetworkGatewayIPConfiguration(id, name, resourceType, etag, privateIPAllocationMethod, ResourceManagerModelFactory.WritableSubResource(subnetId), ResourceManagerModelFactory.WritableSubResource(publicIPAddressId), privateIPAddress, provisioningState);
+            return new VirtualNetworkGatewayIPConfiguration(id, name, resourceType, etag, privateIPAllocationMethod, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, publicIPAddressId != null ? ResourceManagerModelFactory.WritableSubResource(publicIPAddressId) : null, privateIPAddress, provisioningState);
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkGatewaySku. </summary>
@@ -4274,7 +4274,7 @@ namespace Azure.ResourceManager.Network.Models
             vpnClientIPsecPolicies ??= new List<IPsecPolicy>();
             radiusServers ??= new List<RadiusServer>();
 
-            return new VpnClientConfiguration(new AddressSpace(vpnClientAddressPrefixes?.ToList()), vpnClientRootCertificates?.ToList(), vpnClientRevokedCertificates?.ToList(), vpnClientProtocols?.ToList(), vpnAuthenticationTypes?.ToList(), vpnClientIPsecPolicies?.ToList(), radiusServerAddress, radiusServerSecret, radiusServers?.ToList(), aadTenant, aadAudience, aadIssuer);
+            return new VpnClientConfiguration(vpnClientAddressPrefixes != null ? new AddressSpace(vpnClientAddressPrefixes?.ToList()) : null, vpnClientRootCertificates?.ToList(), vpnClientRevokedCertificates?.ToList(), vpnClientProtocols?.ToList(), vpnAuthenticationTypes?.ToList(), vpnClientIPsecPolicies?.ToList(), radiusServerAddress, radiusServerSecret, radiusServers?.ToList(), aadTenant, aadAudience, aadIssuer);
         }
 
         /// <summary> Initializes a new instance of VpnClientRootCertificate. </summary>
@@ -4405,7 +4405,7 @@ namespace Azure.ResourceManager.Network.Models
             ipsecPolicies ??= new List<IPsecPolicy>();
             trafficSelectorPolicies ??= new List<TrafficSelectorPolicy>();
 
-            return new VirtualNetworkGatewayConnectionListEntity(id, name, resourceType, location, tags, etag, authorizationKey, ResourceManagerModelFactory.WritableSubResource(virtualNetworkGateway1Id), ResourceManagerModelFactory.WritableSubResource(virtualNetworkGateway2Id), ResourceManagerModelFactory.WritableSubResource(localNetworkGateway2Id), connectionType, connectionProtocol, routingWeight, connectionMode, sharedKey, connectionStatus, tunnelConnectionStatus?.ToList(), egressBytesTransferred, ingressBytesTransferred, ResourceManagerModelFactory.WritableSubResource(peerId), enableBgp, usePolicyBasedTrafficSelectors, ipsecPolicies?.ToList(), trafficSelectorPolicies?.ToList(), resourceGuid, provisioningState, expressRouteGatewayBypass);
+            return new VirtualNetworkGatewayConnectionListEntity(id, name, resourceType, location, tags, etag, authorizationKey, virtualNetworkGateway1Id != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkGateway1Id) : null, virtualNetworkGateway2Id != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkGateway2Id) : null, localNetworkGateway2Id != null ? ResourceManagerModelFactory.WritableSubResource(localNetworkGateway2Id) : null, connectionType, connectionProtocol, routingWeight, connectionMode, sharedKey, connectionStatus, tunnelConnectionStatus?.ToList(), egressBytesTransferred, ingressBytesTransferred, peerId != null ? ResourceManagerModelFactory.WritableSubResource(peerId) : null, enableBgp, usePolicyBasedTrafficSelectors, ipsecPolicies?.ToList(), trafficSelectorPolicies?.ToList(), resourceGuid, provisioningState, expressRouteGatewayBypass);
         }
 
         /// <summary> Initializes a new instance of TunnelConnectionHealth. </summary>
@@ -4511,7 +4511,7 @@ namespace Azure.ResourceManager.Network.Models
             ipsecPolicies ??= new List<IPsecPolicy>();
             trafficSelectorPolicies ??= new List<TrafficSelectorPolicy>();
 
-            return new VirtualNetworkGatewayConnectionData(id, name, resourceType, location, tags, etag, authorizationKey, virtualNetworkGateway1, virtualNetworkGateway2, localNetworkGateway2, ingressNatRules?.ToList(), egressNatRules?.ToList(), connectionType, connectionProtocol, routingWeight, dpdTimeoutSeconds, connectionMode, sharedKey, connectionStatus, tunnelConnectionStatus?.ToList(), egressBytesTransferred, ingressBytesTransferred, ResourceManagerModelFactory.WritableSubResource(peerId), enableBgp, useLocalAzureIPAddress, usePolicyBasedTrafficSelectors, ipsecPolicies?.ToList(), trafficSelectorPolicies?.ToList(), resourceGuid, provisioningState, expressRouteGatewayBypass);
+            return new VirtualNetworkGatewayConnectionData(id, name, resourceType, location, tags, etag, authorizationKey, virtualNetworkGateway1, virtualNetworkGateway2, localNetworkGateway2, ingressNatRules?.ToList(), egressNatRules?.ToList(), connectionType, connectionProtocol, routingWeight, dpdTimeoutSeconds, connectionMode, sharedKey, connectionStatus, tunnelConnectionStatus?.ToList(), egressBytesTransferred, ingressBytesTransferred, peerId != null ? ResourceManagerModelFactory.WritableSubResource(peerId) : null, enableBgp, useLocalAzureIPAddress, usePolicyBasedTrafficSelectors, ipsecPolicies?.ToList(), trafficSelectorPolicies?.ToList(), resourceGuid, provisioningState, expressRouteGatewayBypass);
         }
 
         /// <summary> Initializes a new instance of LocalNetworkGatewayData. </summary>
@@ -4533,7 +4533,7 @@ namespace Azure.ResourceManager.Network.Models
             tags ??= new Dictionary<string, string>();
             localNetworkAddressPrefixes ??= new List<string>();
 
-            return new LocalNetworkGatewayData(id, name, resourceType, location, tags, etag, new AddressSpace(localNetworkAddressPrefixes?.ToList()), gatewayIPAddress, fqdn, bgpSettings, resourceGuid, provisioningState);
+            return new LocalNetworkGatewayData(id, name, resourceType, location, tags, etag, localNetworkAddressPrefixes != null ? new AddressSpace(localNetworkAddressPrefixes?.ToList()) : null, gatewayIPAddress, fqdn, bgpSettings, resourceGuid, provisioningState);
         }
 
         /// <summary> Initializes a new instance of ConnectionSharedKey. </summary>
@@ -4594,7 +4594,7 @@ namespace Azure.ResourceManager.Network.Models
             virtualRouterIPs ??= new List<string>();
             peerings ??= new List<WritableSubResource>();
 
-            return new VirtualRouterData(id, name, resourceType, location, tags, etag, virtualRouterAsn, virtualRouterIPs?.ToList(), ResourceManagerModelFactory.WritableSubResource(hostedSubnetId), ResourceManagerModelFactory.WritableSubResource(hostedGatewayId), peerings?.ToList(), provisioningState);
+            return new VirtualRouterData(id, name, resourceType, location, tags, etag, virtualRouterAsn, virtualRouterIPs?.ToList(), hostedSubnetId != null ? ResourceManagerModelFactory.WritableSubResource(hostedSubnetId) : null, hostedGatewayId != null ? ResourceManagerModelFactory.WritableSubResource(hostedGatewayId) : null, peerings?.ToList(), provisioningState);
         }
 
         /// <summary> Initializes a new instance of VirtualRouterPeeringData. </summary>
@@ -4660,7 +4660,7 @@ namespace Azure.ResourceManager.Network.Models
             addressPrefixes ??= new List<string>();
             vpnSiteLinks ??= new List<VpnSiteLinkData>();
 
-            return new VpnSiteData(id, name, resourceType, location, tags, etag, ResourceManagerModelFactory.WritableSubResource(virtualWanId), deviceProperties, ipAddress, siteKey, new AddressSpace(addressPrefixes?.ToList()), bgpProperties, provisioningState, isSecuritySite, vpnSiteLinks?.ToList(), new O365PolicyProperties(o365BreakOutCategories));
+            return new VpnSiteData(id, name, resourceType, location, tags, etag, virtualWanId != null ? ResourceManagerModelFactory.WritableSubResource(virtualWanId) : null, deviceProperties, ipAddress, siteKey, addressPrefixes != null ? new AddressSpace(addressPrefixes?.ToList()) : null, bgpProperties, provisioningState, isSecuritySite, vpnSiteLinks?.ToList(), o365BreakOutCategories != null ? new O365PolicyProperties(o365BreakOutCategories) : null);
         }
 
         /// <summary> Initializes a new instance of DeviceProperties. </summary>
@@ -4842,7 +4842,7 @@ namespace Azure.ResourceManager.Network.Models
             p2sConnectionConfigurations ??= new List<P2SConnectionConfiguration>();
             customDnsServers ??= new List<string>();
 
-            return new P2SVpnGatewayData(id, name, resourceType, location, tags, etag, ResourceManagerModelFactory.WritableSubResource(virtualHubId), p2sConnectionConfigurations?.ToList(), provisioningState, vpnGatewayScaleUnit, ResourceManagerModelFactory.WritableSubResource(vpnServerConfigurationId), vpnClientConnectionHealth, customDnsServers?.ToList(), isRoutingPreferenceInternet);
+            return new P2SVpnGatewayData(id, name, resourceType, location, tags, etag, virtualHubId != null ? ResourceManagerModelFactory.WritableSubResource(virtualHubId) : null, p2sConnectionConfigurations?.ToList(), provisioningState, vpnGatewayScaleUnit, vpnServerConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(vpnServerConfigurationId) : null, vpnClientConnectionHealth, customDnsServers?.ToList(), isRoutingPreferenceInternet);
         }
 
         /// <summary> Initializes a new instance of P2SConnectionConfiguration. </summary>
@@ -4859,7 +4859,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             vpnClientAddressPrefixes ??= new List<string>();
 
-            return new P2SConnectionConfiguration(id, name, resourceType, etag, new AddressSpace(vpnClientAddressPrefixes?.ToList()), routingConfiguration, enableInternetSecurity, provisioningState);
+            return new P2SConnectionConfiguration(id, name, resourceType, etag, vpnClientAddressPrefixes != null ? new AddressSpace(vpnClientAddressPrefixes?.ToList()) : null, routingConfiguration, enableInternetSecurity, provisioningState);
         }
 
         /// <summary> Initializes a new instance of RoutingConfiguration. </summary>
@@ -4871,7 +4871,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             staticRoutes ??= new List<StaticRoute>();
 
-            return new RoutingConfiguration(ResourceManagerModelFactory.WritableSubResource(associatedRouteTableId), propagatedRouteTables, new VnetRoute(staticRoutes?.ToList()));
+            return new RoutingConfiguration(associatedRouteTableId != null ? ResourceManagerModelFactory.WritableSubResource(associatedRouteTableId) : null, propagatedRouteTables, staticRoutes != null ? new VnetRoute(staticRoutes?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of PropagatedRouteTable. </summary>
@@ -4947,7 +4947,7 @@ namespace Azure.ResourceManager.Network.Models
             ipConfigurations ??= new List<WritableSubResource>();
             virtualRouterIPs ??= new List<string>();
 
-            return new VirtualHubData(id, name, resourceType, location, tags, etag, ResourceManagerModelFactory.WritableSubResource(virtualWanId), ResourceManagerModelFactory.WritableSubResource(vpnGatewayId), ResourceManagerModelFactory.WritableSubResource(p2sVpnGatewayId), ResourceManagerModelFactory.WritableSubResource(expressRouteGatewayId), ResourceManagerModelFactory.WritableSubResource(azureFirewallId), ResourceManagerModelFactory.WritableSubResource(securityPartnerProviderId), addressPrefix, new VirtualHubRouteTable(routes?.ToList()), provisioningState, securityProviderName, virtualHubRouteTableV2S?.ToList(), sku, routingState, bgpConnections?.ToList(), ipConfigurations?.ToList(), virtualRouterAsn, virtualRouterIPs?.ToList(), allowBranchToBranchTraffic, preferredRoutingGateway);
+            return new VirtualHubData(id, name, resourceType, location, tags, etag, virtualWanId != null ? ResourceManagerModelFactory.WritableSubResource(virtualWanId) : null, vpnGatewayId != null ? ResourceManagerModelFactory.WritableSubResource(vpnGatewayId) : null, p2sVpnGatewayId != null ? ResourceManagerModelFactory.WritableSubResource(p2sVpnGatewayId) : null, expressRouteGatewayId != null ? ResourceManagerModelFactory.WritableSubResource(expressRouteGatewayId) : null, azureFirewallId != null ? ResourceManagerModelFactory.WritableSubResource(azureFirewallId) : null, securityPartnerProviderId != null ? ResourceManagerModelFactory.WritableSubResource(securityPartnerProviderId) : null, addressPrefix, routes != null ? new VirtualHubRouteTable(routes?.ToList()) : null, provisioningState, securityProviderName, virtualHubRouteTableV2S?.ToList(), sku, routingState, bgpConnections?.ToList(), ipConfigurations?.ToList(), virtualRouterAsn, virtualRouterIPs?.ToList(), allowBranchToBranchTraffic, preferredRoutingGateway);
         }
 
         /// <summary> Initializes a new instance of VirtualHubRoute. </summary>
@@ -5006,7 +5006,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Network.HubVirtualNetworkConnectionData"/> instance for mocking. </returns>
         public static HubVirtualNetworkConnectionData HubVirtualNetworkConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier remoteVirtualNetworkId = null, bool? allowHubToRemoteVnetTransit = null, bool? allowRemoteVnetToUseHubVnetGateways = null, bool? enableInternetSecurity = null, RoutingConfiguration routingConfiguration = null, NetworkProvisioningState? provisioningState = null)
         {
-            return new HubVirtualNetworkConnectionData(id, name, resourceType, etag, ResourceManagerModelFactory.WritableSubResource(remoteVirtualNetworkId), allowHubToRemoteVnetTransit, allowRemoteVnetToUseHubVnetGateways, enableInternetSecurity, routingConfiguration, provisioningState);
+            return new HubVirtualNetworkConnectionData(id, name, resourceType, etag, remoteVirtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(remoteVirtualNetworkId) : null, allowHubToRemoteVnetTransit, allowRemoteVnetToUseHubVnetGateways, enableInternetSecurity, routingConfiguration, provisioningState);
         }
 
         /// <summary> Initializes a new instance of VpnGatewayData. </summary>
@@ -5032,7 +5032,7 @@ namespace Azure.ResourceManager.Network.Models
             ipConfigurations ??= new List<VpnGatewayIPConfiguration>();
             natRules ??= new List<VpnGatewayNatRuleData>();
 
-            return new VpnGatewayData(id, name, resourceType, location, tags, etag, ResourceManagerModelFactory.WritableSubResource(virtualHubId), connections?.ToList(), bgpSettings, provisioningState, vpnGatewayScaleUnit, ipConfigurations?.ToList(), isRoutingPreferenceInternet, natRules?.ToList());
+            return new VpnGatewayData(id, name, resourceType, location, tags, etag, virtualHubId != null ? ResourceManagerModelFactory.WritableSubResource(virtualHubId) : null, connections?.ToList(), bgpSettings, provisioningState, vpnGatewayScaleUnit, ipConfigurations?.ToList(), isRoutingPreferenceInternet, natRules?.ToList());
         }
 
         /// <summary> Initializes a new instance of VpnConnectionData. </summary>
@@ -5066,7 +5066,7 @@ namespace Azure.ResourceManager.Network.Models
             trafficSelectorPolicies ??= new List<TrafficSelectorPolicy>();
             vpnLinkConnections ??= new List<VpnSiteLinkConnectionData>();
 
-            return new VpnConnectionData(id, name, resourceType, etag, ResourceManagerModelFactory.WritableSubResource(remoteVpnSiteId), routingWeight, dpdTimeoutSeconds, connectionStatus, vpnConnectionProtocolType, ingressBytesTransferred, egressBytesTransferred, connectionBandwidth, sharedKey, enableBgp, usePolicyBasedTrafficSelectors, ipsecPolicies?.ToList(), trafficSelectorPolicies?.ToList(), enableRateLimiting, enableInternetSecurity, useLocalAzureIPAddress, provisioningState, vpnLinkConnections?.ToList(), routingConfiguration);
+            return new VpnConnectionData(id, name, resourceType, etag, remoteVpnSiteId != null ? ResourceManagerModelFactory.WritableSubResource(remoteVpnSiteId) : null, routingWeight, dpdTimeoutSeconds, connectionStatus, vpnConnectionProtocolType, ingressBytesTransferred, egressBytesTransferred, connectionBandwidth, sharedKey, enableBgp, usePolicyBasedTrafficSelectors, ipsecPolicies?.ToList(), trafficSelectorPolicies?.ToList(), enableRateLimiting, enableInternetSecurity, useLocalAzureIPAddress, provisioningState, vpnLinkConnections?.ToList(), routingConfiguration);
         }
 
         /// <summary> Initializes a new instance of VpnSiteLinkConnectionData. </summary>
@@ -5098,7 +5098,7 @@ namespace Azure.ResourceManager.Network.Models
             ingressNatRules ??= new List<WritableSubResource>();
             egressNatRules ??= new List<WritableSubResource>();
 
-            return new VpnSiteLinkConnectionData(id, name, resourceType, etag, ResourceManagerModelFactory.WritableSubResource(vpnSiteLinkId), routingWeight, vpnLinkConnectionMode, connectionStatus, vpnConnectionProtocolType, ingressBytesTransferred, egressBytesTransferred, connectionBandwidth, sharedKey, enableBgp, usePolicyBasedTrafficSelectors, ipsecPolicies?.ToList(), enableRateLimiting, useLocalAzureIPAddress, provisioningState, ingressNatRules?.ToList(), egressNatRules?.ToList());
+            return new VpnSiteLinkConnectionData(id, name, resourceType, etag, vpnSiteLinkId != null ? ResourceManagerModelFactory.WritableSubResource(vpnSiteLinkId) : null, routingWeight, vpnLinkConnectionMode, connectionStatus, vpnConnectionProtocolType, ingressBytesTransferred, egressBytesTransferred, connectionBandwidth, sharedKey, enableBgp, usePolicyBasedTrafficSelectors, ipsecPolicies?.ToList(), enableRateLimiting, useLocalAzureIPAddress, provisioningState, ingressNatRules?.ToList(), egressNatRules?.ToList());
         }
 
         /// <summary> Initializes a new instance of VpnGatewayIPConfiguration. </summary>
@@ -5178,7 +5178,7 @@ namespace Azure.ResourceManager.Network.Models
             tags ??= new Dictionary<string, string>();
             expressRouteConnections ??= new List<ExpressRouteConnectionData>();
 
-            return new ExpressRouteGatewayData(id, name, resourceType, location, tags, etag, new ExpressRouteGatewayPropertiesAutoScaleConfiguration(autoScaleBounds), expressRouteConnections?.ToList(), provisioningState, ResourceManagerModelFactory.WritableSubResource(virtualHubId));
+            return new ExpressRouteGatewayData(id, name, resourceType, location, tags, etag, autoScaleBounds != null ? new ExpressRouteGatewayPropertiesAutoScaleConfiguration(autoScaleBounds) : null, expressRouteConnections?.ToList(), provisioningState, virtualHubId != null ? ResourceManagerModelFactory.WritableSubResource(virtualHubId) : null);
         }
 
         /// <summary> Initializes a new instance of ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds. </summary>
@@ -5204,7 +5204,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Network.ExpressRouteConnectionData"/> instance for mocking. </returns>
         public static ExpressRouteConnectionData ExpressRouteConnectionData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, NetworkProvisioningState? provisioningState = null, ResourceIdentifier expressRouteCircuitPeeringId = null, string authorizationKey = null, int? routingWeight = null, bool? enableInternetSecurity = null, bool? expressRouteGatewayBypass = null, RoutingConfiguration routingConfiguration = null)
         {
-            return new ExpressRouteConnectionData(id, name, resourceType, provisioningState, ResourceManagerModelFactory.WritableSubResource(expressRouteCircuitPeeringId), authorizationKey, routingWeight, enableInternetSecurity, expressRouteGatewayBypass, routingConfiguration);
+            return new ExpressRouteConnectionData(id, name, resourceType, provisioningState, expressRouteCircuitPeeringId != null ? ResourceManagerModelFactory.WritableSubResource(expressRouteCircuitPeeringId) : null, authorizationKey, routingWeight, enableInternetSecurity, expressRouteGatewayBypass, routingConfiguration);
         }
 
         /// <summary> Initializes a new instance of BgpConnectionData. </summary>
@@ -5420,7 +5420,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             rules ??= new List<FirewallPolicyRule>();
 
-            return new FirewallPolicyNatRuleCollectionInfo("FirewallPolicyNatRuleCollection", name, priority, new FirewallPolicyNatRuleCollectionAction(actionType), rules?.ToList());
+            return new FirewallPolicyNatRuleCollectionInfo("FirewallPolicyNatRuleCollection", name, priority, actionType != null ? new FirewallPolicyNatRuleCollectionAction(actionType) : null, rules?.ToList());
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyRule. </summary>
@@ -5447,7 +5447,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             rules ??= new List<FirewallPolicyRule>();
 
-            return new FirewallPolicyFilterRuleCollectionInfo("FirewallPolicyFilterRuleCollection", name, priority, new FirewallPolicyFilterRuleCollectionAction(actionType), rules?.ToList());
+            return new FirewallPolicyFilterRuleCollectionInfo("FirewallPolicyFilterRuleCollection", name, priority, actionType != null ? new FirewallPolicyFilterRuleCollectionAction(actionType) : null, rules?.ToList());
         }
 
         /// <summary> Initializes a new instance of ApplicationRule. </summary>

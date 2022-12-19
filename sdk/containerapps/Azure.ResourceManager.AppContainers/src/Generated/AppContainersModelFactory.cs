@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             loginScopes ??= new List<string>();
 
-            return new FacebookProvider(enabled, registration, graphApiVersion, new LoginScopes(loginScopes?.ToList()));
+            return new FacebookProvider(enabled, registration, graphApiVersion, loginScopes != null ? new LoginScopes(loginScopes?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of AppRegistration. </summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             loginScopes ??= new List<string>();
 
-            return new GitHubProvider(enabled, registration, new LoginScopes(loginScopes?.ToList()));
+            return new GitHubProvider(enabled, registration, loginScopes != null ? new LoginScopes(loginScopes?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of ClientRegistration. </summary>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             loginScopes ??= new List<string>();
             validationAllowedAudiences ??= new List<string>();
 
-            return new GoogleProvider(enabled, registration, new LoginScopes(loginScopes?.ToList()), new AllowedAudiencesValidation(validationAllowedAudiences?.ToList()));
+            return new GoogleProvider(enabled, registration, loginScopes != null ? new LoginScopes(loginScopes?.ToList()) : null, validationAllowedAudiences != null ? new AllowedAudiencesValidation(validationAllowedAudiences?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of TwitterProvider. </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             loginScopes ??= new List<string>();
 
-            return new AppleProvider(enabled, registration, new LoginScopes(loginScopes?.ToList()));
+            return new AppleProvider(enabled, registration, loginScopes != null ? new LoginScopes(loginScopes?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of AppleRegistration. </summary>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <returns> A new <see cref="Models.AzureStaticWebApps"/> instance for mocking. </returns>
         public static AzureStaticWebApps AzureStaticWebApps(bool? enabled = null, string registrationClientId = null)
         {
-            return new AzureStaticWebApps(enabled, new AzureStaticWebAppsRegistration(registrationClientId));
+            return new AzureStaticWebApps(enabled, registrationClientId != null ? new AzureStaticWebAppsRegistration(registrationClientId) : null);
         }
 
         /// <summary> Initializes a new instance of CustomOpenIdConnectProvider. </summary>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             allowedExternalRedirectUrls ??= new List<string>();
 
-            return new ContainerAppLogin(new LoginRoutes(routesLogoutEndpoint), preserveUrlFragmentsForLogins, allowedExternalRedirectUrls?.ToList(), cookieExpiration, nonce);
+            return new ContainerAppLogin(routesLogoutEndpoint != null ? new LoginRoutes(routesLogoutEndpoint) : null, preserveUrlFragmentsForLogins, allowedExternalRedirectUrls?.ToList(), cookieExpiration, nonce);
         }
 
         /// <summary> Initializes a new instance of CookieExpiration. </summary>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <returns> A new <see cref="Models.HttpSettings"/> instance for mocking. </returns>
         public static HttpSettings HttpSettings(bool? requireHttps = null, string routesApiPrefix = null, ForwardProxy forwardProxy = null)
         {
-            return new HttpSettings(requireHttps, new HttpSettingsRoutes(routesApiPrefix), forwardProxy);
+            return new HttpSettings(requireHttps, routesApiPrefix != null ? new HttpSettingsRoutes(routesApiPrefix) : null, forwardProxy);
         }
 
         /// <summary> Initializes a new instance of ForwardProxy. </summary>
@@ -1107,12 +1107,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the Environment. </param>
         /// <param name="workloadProfiles"> Workload profiles configured for the Managed Environment. </param>
         /// <returns> A new <see cref="AppContainers.ManagedEnvironmentData"/> instance for mocking. </returns>
-        public static ManagedEnvironmentData ManagedEnvironmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AppContainersSkuName skuName = default, EnvironmentProvisioningState? provisioningState = null, string daprAIInstrumentationKey = null, string daprAIConnectionString = null, VnetConfiguration vnetConfiguration = null, string deploymentErrors = null, string defaultDomain = null, string staticIP = null, AppLogsConfiguration appLogsConfiguration = null, bool? zoneRedundant = null, CustomDomainConfiguration customDomainConfiguration = null, string eventStreamEndpoint = null, IEnumerable<WorkloadProfile> workloadProfiles = null)
+        public static ManagedEnvironmentData ManagedEnvironmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AppContainersSkuName? skuName = null, EnvironmentProvisioningState? provisioningState = null, string daprAIInstrumentationKey = null, string daprAIConnectionString = null, VnetConfiguration vnetConfiguration = null, string deploymentErrors = null, string defaultDomain = null, string staticIP = null, AppLogsConfiguration appLogsConfiguration = null, bool? zoneRedundant = null, CustomDomainConfiguration customDomainConfiguration = null, string eventStreamEndpoint = null, IEnumerable<WorkloadProfile> workloadProfiles = null)
         {
             tags ??= new Dictionary<string, string>();
             workloadProfiles ??= new List<WorkloadProfile>();
 
-            return new ManagedEnvironmentData(id, name, resourceType, systemData, tags, location, new EnvironmentSkuProperties(skuName), provisioningState, daprAIInstrumentationKey, daprAIConnectionString, vnetConfiguration, deploymentErrors, defaultDomain, staticIP, appLogsConfiguration, zoneRedundant, customDomainConfiguration, eventStreamEndpoint, workloadProfiles?.ToList());
+            return new ManagedEnvironmentData(id, name, resourceType, systemData, tags, location, skuName.HasValue ? new EnvironmentSkuProperties(skuName.Value) : null, provisioningState, daprAIInstrumentationKey, daprAIConnectionString, vnetConfiguration, deploymentErrors, defaultDomain, staticIP, appLogsConfiguration, zoneRedundant, customDomainConfiguration, eventStreamEndpoint, workloadProfiles?.ToList());
         }
 
         /// <summary> Initializes a new instance of VnetConfiguration. </summary>
@@ -1264,7 +1264,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <returns> A new <see cref="AppContainers.ManagedEnvironmentStorageData"/> instance for mocking. </returns>
         public static ManagedEnvironmentStorageData ManagedEnvironmentStorageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureFileProperties managedEnvironmentStorageAzureFile = null)
         {
-            return new ManagedEnvironmentStorageData(id, name, resourceType, systemData, new ManagedEnvironmentStorageProperties(managedEnvironmentStorageAzureFile));
+            return new ManagedEnvironmentStorageData(id, name, resourceType, systemData, managedEnvironmentStorageAzureFile != null ? new ManagedEnvironmentStorageProperties(managedEnvironmentStorageAzureFile) : null);
         }
 
         /// <summary> Initializes a new instance of AzureFileProperties. </summary>
@@ -1364,7 +1364,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <returns> A new <see cref="AppContainers.ConnectedEnvironmentStorageData"/> instance for mocking. </returns>
         public static ConnectedEnvironmentStorageData ConnectedEnvironmentStorageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureFileProperties connectedEnvironmentStorageAzureFile = null)
         {
-            return new ConnectedEnvironmentStorageData(id, name, resourceType, systemData, new ConnectedEnvironmentStorageProperties(connectedEnvironmentStorageAzureFile));
+            return new ConnectedEnvironmentStorageData(id, name, resourceType, systemData, connectedEnvironmentStorageAzureFile != null ? new ConnectedEnvironmentStorageProperties(connectedEnvironmentStorageAzureFile) : null);
         }
 
         /// <summary> Initializes a new instance of AvailableWorkloadProfile. </summary>

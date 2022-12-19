@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.SignalR.Models
             corsAllowedOrigins ??= new List<string>();
             upstreamTemplates ??= new List<UpstreamTemplate>();
 
-            return new SignalRData(id, name, resourceType, systemData, tags, location, sku, kind, identity, provisioningState, externalIP, hostName, publicPort, serverPort, version, privateEndpointConnections?.ToList(), sharedPrivateLinkResources?.ToList(), new SignalRTlsSettings(clientCertEnabled), hostNamePrefix, features?.ToList(), liveTraceConfiguration, new ResourceLogConfiguration(resourceLogCategories?.ToList()), new SignalRCorsSettings(corsAllowedOrigins?.ToList()), new ServerlessUpstreamSettings(upstreamTemplates?.ToList()), networkACLs, publicNetworkAccess, disableLocalAuth, disableAadAuth);
+            return new SignalRData(id, name, resourceType, systemData, tags, location, sku, kind, identity, provisioningState, externalIP, hostName, publicPort, serverPort, version, privateEndpointConnections?.ToList(), sharedPrivateLinkResources?.ToList(), clientCertEnabled != null ? new SignalRTlsSettings(clientCertEnabled) : null, hostNamePrefix, features?.ToList(), liveTraceConfiguration, resourceLogCategories != null ? new ResourceLogConfiguration(resourceLogCategories?.ToList()) : null, corsAllowedOrigins != null ? new SignalRCorsSettings(corsAllowedOrigins?.ToList()) : null, upstreamTemplates != null ? new ServerlessUpstreamSettings(upstreamTemplates?.ToList()) : null, networkACLs, publicNetworkAccess, disableLocalAuth, disableAadAuth);
         }
 
         /// <summary> Initializes a new instance of ResourceSku. </summary>
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.SignalR.Models
         {
             groupIds ??= new List<string>();
 
-            return new SignalRPrivateEndpointConnectionData(id, name, resourceType, systemData, provisioningState, ResourceManagerModelFactory.WritableSubResource(privateEndpointId), groupIds?.ToList(), connectionState);
+            return new SignalRPrivateEndpointConnectionData(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, groupIds?.ToList(), connectionState);
         }
 
         /// <summary> Initializes a new instance of SignalRPrivateLinkServiceConnectionState. </summary>
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.UpstreamAuthSettings"/> instance for mocking. </returns>
         public static UpstreamAuthSettings UpstreamAuthSettings(UpstreamAuthType? authType = null, string managedIdentityResource = null)
         {
-            return new UpstreamAuthSettings(authType, new ManagedIdentitySettings(managedIdentityResource));
+            return new UpstreamAuthSettings(authType, managedIdentityResource != null ? new ManagedIdentitySettings(managedIdentityResource) : null);
         }
 
         /// <summary> Initializes a new instance of SignalRNetworkACLs. </summary>
@@ -354,7 +353,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="SignalR.CustomDomainData"/> instance for mocking. </returns>
         public static CustomDomainData CustomDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisioningState? provisioningState = null, string domainName = null, ResourceIdentifier customCertificateId = null)
         {
-            return new CustomDomainData(id, name, resourceType, systemData, provisioningState, domainName, ResourceManagerModelFactory.WritableSubResource(customCertificateId));
+            return new CustomDomainData(id, name, resourceType, systemData, provisioningState, domainName, customCertificateId != null ? ResourceManagerModelFactory.WritableSubResource(customCertificateId) : null);
         }
 
         /// <summary> Initializes a new instance of SignalRKeys. </summary>

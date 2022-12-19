@@ -12,7 +12,6 @@ using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Peering;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.Peering.Models
         {
             connections ??= new List<PeeringDirectConnection>();
 
-            return new DirectPeeringProperties(connections?.ToList(), useForPeeringService, ResourceManagerModelFactory.WritableSubResource(peerAsnId), directPeeringType);
+            return new DirectPeeringProperties(connections?.ToList(), useForPeeringService, peerAsnId != null ? ResourceManagerModelFactory.WritableSubResource(peerAsnId) : null, directPeeringType);
         }
 
         /// <summary> Initializes a new instance of PeeringDirectConnection. </summary>
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Peering.Models
         {
             connections ??= new List<PeeringExchangeConnection>();
 
-            return new ExchangePeeringProperties(connections?.ToList(), ResourceManagerModelFactory.WritableSubResource(peerAsnId));
+            return new ExchangePeeringProperties(connections?.ToList(), peerAsnId != null ? ResourceManagerModelFactory.WritableSubResource(peerAsnId) : null);
         }
 
         /// <summary> Initializes a new instance of PeeringExchangeConnection. </summary>
@@ -191,7 +190,7 @@ namespace Azure.ResourceManager.Peering.Models
         {
             exchangePeeringFacilities ??= new List<ExchangePeeringFacility>();
 
-            return new PeeringLocation(id, name, resourceType, systemData, kind, direct, new PeeringLocationPropertiesExchange(exchangePeeringFacilities?.ToList()), peeringLocationValue, country, azureRegion);
+            return new PeeringLocation(id, name, resourceType, systemData, kind, direct, exchangePeeringFacilities != null ? new PeeringLocationPropertiesExchange(exchangePeeringFacilities?.ToList()) : null, peeringLocationValue, country, azureRegion);
         }
 
         /// <summary> Initializes a new instance of DirectPeeringLocationProperties. </summary>
@@ -396,7 +395,7 @@ namespace Azure.ResourceManager.Peering.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new PeeringServiceData(id, name, resourceType, systemData, tags, location, new PeeringServiceSku(skuName), peeringServiceLocation, peeringServiceProvider, provisioningState, providerPrimaryPeeringLocation, providerBackupPeeringLocation, logAnalyticsWorkspaceProperties);
+            return new PeeringServiceData(id, name, resourceType, systemData, tags, location, skuName != null ? new PeeringServiceSku(skuName) : null, peeringServiceLocation, peeringServiceProvider, provisioningState, providerPrimaryPeeringLocation, providerBackupPeeringLocation, logAnalyticsWorkspaceProperties);
         }
 
         /// <summary> Initializes a new instance of PeeringLogAnalyticsWorkspaceProperties. </summary>
@@ -411,14 +410,14 @@ namespace Azure.ResourceManager.Peering.Models
             return new PeeringLogAnalyticsWorkspaceProperties(workspaceId, key, connectedAgents?.ToList());
         }
 
-        /// <summary> Initializes a new instance of RpUnbilledPrefix. </summary>
+        /// <summary> Initializes a new instance of RoutingPreferenceUnbilledPrefix. </summary>
         /// <param name="prefix"> The prefix. </param>
         /// <param name="azureRegion"> The Azure region. </param>
         /// <param name="peerAsn"> The peer ASN. </param>
-        /// <returns> A new <see cref="Models.RpUnbilledPrefix"/> instance for mocking. </returns>
-        public static RpUnbilledPrefix RpUnbilledPrefix(string prefix = null, string azureRegion = null, int? peerAsn = null)
+        /// <returns> A new <see cref="Models.RoutingPreferenceUnbilledPrefix"/> instance for mocking. </returns>
+        public static RoutingPreferenceUnbilledPrefix RoutingPreferenceUnbilledPrefix(string prefix = null, AzureLocation? azureRegion = null, int? peerAsn = null)
         {
-            return new RpUnbilledPrefix(prefix, azureRegion, peerAsn);
+            return new RoutingPreferenceUnbilledPrefix(prefix, azureRegion, peerAsn);
         }
     }
 }

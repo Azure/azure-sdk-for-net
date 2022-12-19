@@ -11,7 +11,6 @@ using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Purview;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Purview.Models
 {
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.Purview.Models
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<PurviewPrivateEndpointConnectionData>();
 
-            return new PurviewAccountData(id, name, resourceType, systemData, tags, location, sku, new CloudConnectors(cloudConnectorsAwsExternalId), createdOn, createdBy, createdByObjectId, endpoints, friendlyName, managedResourceGroupName, managedResources, privateEndpointConnections?.ToList(), provisioningState, publicNetworkAccess, identity);
+            return new PurviewAccountData(id, name, resourceType, systemData, tags, location, sku, cloudConnectorsAwsExternalId != null ? new CloudConnectors(cloudConnectorsAwsExternalId) : null, createdOn, createdBy, createdByObjectId, endpoints, friendlyName, managedResourceGroupName, managedResources, privateEndpointConnections?.ToList(), provisioningState, publicNetworkAccess, identity);
         }
 
         /// <summary> Initializes a new instance of PurviewAccountEndpoint. </summary>
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <returns> A new <see cref="Purview.PurviewPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static PurviewPrivateEndpointConnectionData PurviewPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, PurviewPrivateLinkServiceConnectionState connectionState = null, string provisioningState = null)
         {
-            return new PurviewPrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.WritableSubResource(privateEndpointId), connectionState, provisioningState);
+            return new PurviewPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of PurviewPrivateLinkServiceConnectionState. </summary>

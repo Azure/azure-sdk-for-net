@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
         {
             orgs ??= new List<AzureDevOpsOrgMetadata>();
 
-            return new AzureDevOpsConnectorProperties(provisioningState, new AuthorizationInfo(authorizationCode), orgs?.ToList());
+            return new AzureDevOpsConnectorProperties(provisioningState, authorizationCode != null ? new AuthorizationInfo(authorizationCode) : null, orgs?.ToList());
         }
 
         /// <summary> Initializes a new instance of AzureDevOpsOrgMetadata. </summary>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             categories ??= new List<ActionableRemediationRuleCategory>();
             branchNames ??= new List<string>();
 
-            return new ActionableRemediation(state, severityLevels?.ToList(), categories?.ToList(), new TargetBranchConfiguration(branchNames?.ToList()));
+            return new ActionableRemediation(state, severityLevels?.ToList(), categories?.ToList(), branchNames != null ? new TargetBranchConfiguration(branchNames?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of AzureDevOpsConnectorStats. </summary>

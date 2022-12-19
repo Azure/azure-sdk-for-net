@@ -12,7 +12,6 @@ using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Media;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -28,11 +27,11 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="firstQualityBitrate"> The first quality. </param>
         /// <param name="tracks"> The tracks selection conditions. </param>
         /// <returns> A new <see cref="Media.MediaServicesAccountFilterData"/> instance for mocking. </returns>
-        public static MediaServicesAccountFilterData MediaServicesAccountFilterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PresentationTimeRange presentationTimeRange = null, int firstQualityBitrate = default, IEnumerable<FilterTrackSelection> tracks = null)
+        public static MediaServicesAccountFilterData MediaServicesAccountFilterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PresentationTimeRange presentationTimeRange = null, int? firstQualityBitrate = null, IEnumerable<FilterTrackSelection> tracks = null)
         {
             tracks ??= new List<FilterTrackSelection>();
 
-            return new MediaServicesAccountFilterData(id, name, resourceType, systemData, presentationTimeRange, new FirstQuality(firstQualityBitrate), tracks?.ToList());
+            return new MediaServicesAccountFilterData(id, name, resourceType, systemData, presentationTimeRange, firstQualityBitrate.HasValue ? new FirstQuality(firstQualityBitrate.Value) : null, tracks?.ToList());
         }
 
         /// <summary> Initializes a new instance of PresentationTimeRange. </summary>
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Media.Models
             storageAccounts ??= new List<MediaServicesStorageAccount>();
             privateEndpointConnections ??= new List<MediaServicesPrivateEndpointConnectionData>();
 
-            return new MediaServicesAccountData(id, name, resourceType, systemData, tags, location, identity, mediaServicesAccountId, storageAccounts?.ToList(), storageAuthentication, encryption, new MediaKeyDelivery(keyDeliveryAccessControl), publicNetworkAccess, provisioningState, privateEndpointConnections?.ToList());
+            return new MediaServicesAccountData(id, name, resourceType, systemData, tags, location, identity, mediaServicesAccountId, storageAccounts?.ToList(), storageAuthentication, encryption, keyDeliveryAccessControl != null ? new MediaKeyDelivery(keyDeliveryAccessControl) : null, publicNetworkAccess, provisioningState, privateEndpointConnections?.ToList());
         }
 
         /// <summary> Initializes a new instance of MediaServicesStorageAccount. </summary>
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Media.MediaServicesPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static MediaServicesPrivateEndpointConnectionData MediaServicesPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, MediaPrivateLinkServiceConnectionState connectionState = null, MediaPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new MediaServicesPrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.SubResource(privateEndpointId), connectionState, provisioningState);
+            return new MediaServicesPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of MediaPrivateLinkServiceConnectionState. </summary>
@@ -269,11 +268,11 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="firstQualityBitrate"> The first quality. </param>
         /// <param name="tracks"> The tracks selection conditions. </param>
         /// <returns> A new <see cref="Media.MediaAssetFilterData"/> instance for mocking. </returns>
-        public static MediaAssetFilterData MediaAssetFilterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PresentationTimeRange presentationTimeRange = null, int firstQualityBitrate = default, IEnumerable<FilterTrackSelection> tracks = null)
+        public static MediaAssetFilterData MediaAssetFilterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PresentationTimeRange presentationTimeRange = null, int? firstQualityBitrate = null, IEnumerable<FilterTrackSelection> tracks = null)
         {
             tracks ??= new List<FilterTrackSelection>();
 
-            return new MediaAssetFilterData(id, name, resourceType, systemData, presentationTimeRange, new FirstQuality(firstQualityBitrate), tracks?.ToList());
+            return new MediaAssetFilterData(id, name, resourceType, systemData, presentationTimeRange, firstQualityBitrate.HasValue ? new FirstQuality(firstQualityBitrate.Value) : null, tracks?.ToList());
         }
 
         /// <summary> Initializes a new instance of MediaAssetTrackData. </summary>
@@ -503,7 +502,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Media.StreamingPolicyData"/> instance for mocking. </returns>
         public static StreamingPolicyData StreamingPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, string defaultContentKeyPolicyName = null, EnvelopeEncryption envelopeEncryption = null, CommonEncryptionCenc commonEncryptionCenc = null, CommonEncryptionCbcs commonEncryptionCbcs = null, MediaEnabledProtocols noEncryptionEnabledProtocols = null)
         {
-            return new StreamingPolicyData(id, name, resourceType, systemData, createdOn, defaultContentKeyPolicyName, envelopeEncryption, commonEncryptionCenc, commonEncryptionCbcs, new NoEncryption(noEncryptionEnabledProtocols));
+            return new StreamingPolicyData(id, name, resourceType, systemData, createdOn, defaultContentKeyPolicyName, envelopeEncryption, commonEncryptionCenc, commonEncryptionCbcs, noEncryptionEnabledProtocols != null ? new NoEncryption(noEncryptionEnabledProtocols) : null);
         }
 
         /// <summary> Initializes a new instance of EnvelopeEncryption. </summary>
@@ -582,7 +581,7 @@ namespace Azure.ResourceManager.Media.Models
         {
             clearTracks ??= new List<MediaTrackSelection>();
 
-            return new CommonEncryptionCenc(enabledProtocols, clearTracks?.ToList(), contentKeys, drm, new ClearKeyEncryptionConfiguration(clearKeyEncryptionCustomKeysAcquisitionUriTemplate));
+            return new CommonEncryptionCenc(enabledProtocols, clearTracks?.ToList(), contentKeys, drm, clearKeyEncryptionCustomKeysAcquisitionUriTemplate != null ? new ClearKeyEncryptionConfiguration(clearKeyEncryptionCustomKeysAcquisitionUriTemplate) : null);
         }
 
         /// <summary> Initializes a new instance of CencDrmConfiguration. </summary>
@@ -591,7 +590,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Models.CencDrmConfiguration"/> instance for mocking. </returns>
         public static CencDrmConfiguration CencDrmConfiguration(StreamingPolicyPlayReadyConfiguration playReady = null, string widevineCustomLicenseAcquisitionUriTemplate = null)
         {
-            return new CencDrmConfiguration(playReady, new StreamingPolicyWidevineConfiguration(widevineCustomLicenseAcquisitionUriTemplate));
+            return new CencDrmConfiguration(playReady, widevineCustomLicenseAcquisitionUriTemplate != null ? new StreamingPolicyWidevineConfiguration(widevineCustomLicenseAcquisitionUriTemplate) : null);
         }
 
         /// <summary> Initializes a new instance of StreamingPolicyPlayReadyConfiguration. </summary>
@@ -614,7 +613,7 @@ namespace Azure.ResourceManager.Media.Models
         {
             clearTracks ??= new List<MediaTrackSelection>();
 
-            return new CommonEncryptionCbcs(enabledProtocols, clearTracks?.ToList(), contentKeys, drm, new ClearKeyEncryptionConfiguration(clearKeyEncryptionCustomKeysAcquisitionUriTemplate));
+            return new CommonEncryptionCbcs(enabledProtocols, clearTracks?.ToList(), contentKeys, drm, clearKeyEncryptionCustomKeysAcquisitionUriTemplate != null ? new ClearKeyEncryptionConfiguration(clearKeyEncryptionCustomKeysAcquisitionUriTemplate) : null);
         }
 
         /// <summary> Initializes a new instance of CbcsDrmConfiguration. </summary>
@@ -624,7 +623,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Models.CbcsDrmConfiguration"/> instance for mocking. </returns>
         public static CbcsDrmConfiguration CbcsDrmConfiguration(StreamingPolicyFairPlayConfiguration fairPlay = null, StreamingPolicyPlayReadyConfiguration playReady = null, string widevineCustomLicenseAcquisitionUriTemplate = null)
         {
-            return new CbcsDrmConfiguration(fairPlay, playReady, new StreamingPolicyWidevineConfiguration(widevineCustomLicenseAcquisitionUriTemplate));
+            return new CbcsDrmConfiguration(fairPlay, playReady, widevineCustomLicenseAcquisitionUriTemplate != null ? new StreamingPolicyWidevineConfiguration(widevineCustomLicenseAcquisitionUriTemplate) : null);
         }
 
         /// <summary> Initializes a new instance of StreamingPolicyFairPlayConfiguration. </summary>
@@ -729,6 +728,21 @@ namespace Azure.ResourceManager.Media.Models
             return new MediaLiveEventData(id, name, resourceType, systemData, tags, location, description, input, preview, encoding, transcriptions?.ToList(), provisioningState, resourceState, crossSiteAccessPolicies, useStaticHostname, hostnamePrefix, streamOptions?.ToList(), createdOn, lastModifiedOn);
         }
 
+        /// <summary> Initializes a new instance of LiveEventInput. </summary>
+        /// <param name="streamingProtocol"> The input protocol for the live event. This is specified at creation time and cannot be updated. </param>
+        /// <param name="ipAllowedIPs"> Access control for live event input. </param>
+        /// <param name="keyFrameIntervalDuration"> ISO 8601 time duration of the key frame interval duration of the input. This value sets the EXT-X-TARGETDURATION property in the HLS output. For example, use PT2S to indicate 2 seconds. Leave the value empty for encoding live events. </param>
+        /// <param name="accessToken"> A UUID in string form to uniquely identify the stream. This can be specified at creation time but cannot be updated. If omitted, the service will generate a unique value. </param>
+        /// <param name="endpoints"> The input endpoints for the live event. </param>
+        /// <returns> A new <see cref="Models.LiveEventInput"/> instance for mocking. </returns>
+        public static LiveEventInput LiveEventInput(LiveEventInputProtocol streamingProtocol = default, IEnumerable<IPRange> ipAllowedIPs = null, TimeSpan? keyFrameIntervalDuration = null, string accessToken = null, IEnumerable<LiveEventEndpoint> endpoints = null)
+        {
+            ipAllowedIPs ??= new List<IPRange>();
+            endpoints ??= new List<LiveEventEndpoint>();
+
+            return new LiveEventInput(streamingProtocol, ipAllowedIPs != null ? new LiveEventInputAccessControl(new IPAccessControl(ipAllowedIPs?.ToList())) : null, keyFrameIntervalDuration, accessToken, endpoints?.ToList());
+        }
+
         /// <summary> Initializes a new instance of IPRange. </summary>
         /// <param name="name"> The friendly name for the IP address range. </param>
         /// <param name="address"> The IP address. </param>
@@ -760,7 +774,7 @@ namespace Azure.ResourceManager.Media.Models
             endpoints ??= new List<LiveEventEndpoint>();
             ipAllowedIPs ??= new List<IPRange>();
 
-            return new LiveEventPreview(endpoints?.ToList(), new LiveEventPreviewAccessControl(new IPAccessControl(ipAllowedIPs?.ToList())), previewLocator, streamingPolicyName, alternativeMediaId);
+            return new LiveEventPreview(endpoints?.ToList(), ipAllowedIPs != null ? new LiveEventPreviewAccessControl(new IPAccessControl(ipAllowedIPs?.ToList())) : null, previewLocator, streamingPolicyName, alternativeMediaId);
         }
 
         /// <summary> Initializes a new instance of LiveEventEncoding. </summary>
@@ -783,7 +797,7 @@ namespace Azure.ResourceManager.Media.Models
         {
             inputTrackSelection ??= new List<LiveEventInputTrackSelection>();
 
-            return new LiveEventTranscription(language, inputTrackSelection?.ToList(), new LiveEventOutputTranscriptionTrack(trackName));
+            return new LiveEventTranscription(language, inputTrackSelection?.ToList(), trackName != null ? new LiveEventOutputTranscriptionTrack(trackName) : null);
         }
 
         /// <summary> Initializes a new instance of LiveEventInputTrackSelection. </summary>
@@ -824,7 +838,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Media.MediaLiveOutputData"/> instance for mocking. </returns>
         public static MediaLiveOutputData MediaLiveOutputData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string assetName = null, TimeSpan? archiveWindowLength = null, TimeSpan? rewindWindowLength = null, string manifestName = null, int? hlsFragmentsPerTsSegment = null, long? outputSnapTime = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string provisioningState = null, LiveOutputResourceState? resourceState = null)
         {
-            return new MediaLiveOutputData(id, name, resourceType, systemData, description, assetName, archiveWindowLength, rewindWindowLength, manifestName, new Hls(hlsFragmentsPerTsSegment), outputSnapTime, createdOn, lastModifiedOn, provisioningState, resourceState);
+            return new MediaLiveOutputData(id, name, resourceType, systemData, description, assetName, archiveWindowLength, rewindWindowLength, manifestName, hlsFragmentsPerTsSegment != null ? new Hls(hlsFragmentsPerTsSegment) : null, outputSnapTime, createdOn, lastModifiedOn, provisioningState, resourceState);
         }
 
         /// <summary> Initializes a new instance of StreamingEndpointData. </summary>
@@ -869,7 +883,7 @@ namespace Azure.ResourceManager.Media.Models
             akamaiSignatureHeaderAuthenticationKeyList ??= new List<AkamaiSignatureHeaderAuthenticationKey>();
             allowedIPs ??= new List<IPRange>();
 
-            return new StreamingEndpointAccessControl(new AkamaiAccessControl(akamaiSignatureHeaderAuthenticationKeyList?.ToList()), new IPAccessControl(allowedIPs?.ToList()));
+            return new StreamingEndpointAccessControl(akamaiSignatureHeaderAuthenticationKeyList != null ? new AkamaiAccessControl(akamaiSignatureHeaderAuthenticationKeyList?.ToList()) : null, allowedIPs != null ? new IPAccessControl(allowedIPs?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of AkamaiSignatureHeaderAuthenticationKey. </summary>
@@ -898,7 +912,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Models.StreamingEndpointSkuInfo"/> instance for mocking. </returns>
         public static StreamingEndpointSkuInfo StreamingEndpointSkuInfo(ResourceType? resourceType = null, StreamingEndpointCapacity capacity = null, string skuName = null)
         {
-            return new StreamingEndpointSkuInfo(resourceType, capacity, new StreamingEndpointSku(skuName));
+            return new StreamingEndpointSkuInfo(resourceType, capacity, skuName != null ? new StreamingEndpointSku(skuName) : null);
         }
 
         /// <summary> Initializes a new instance of StreamingEndpointCapacity. </summary>
@@ -933,7 +947,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <returns> A new <see cref="Models.AudioTrack"/> instance for mocking. </returns>
         public static AudioTrack AudioTrack(string fileName = null, string displayName = null, string languageCode = null, HlsSettings hlsSettings = null, string dashRole = null, int? mpeg4TrackId = null, int? bitRate = null)
         {
-            return new AudioTrack("#Microsoft.Media.AudioTrack", fileName, displayName, languageCode, hlsSettings, new TrackDashSettings(dashRole), mpeg4TrackId, bitRate);
+            return new AudioTrack("#Microsoft.Media.AudioTrack", fileName, displayName, languageCode, hlsSettings, dashRole != null ? new TrackDashSettings(dashRole) : null, mpeg4TrackId, bitRate);
         }
 
         /// <summary> Initializes a new instance of VideoTrack. </summary>

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             cors ??= new List<CosmosDBAccountCorsPolicy>();
             networkAclBypassResourceIds ??= new List<ResourceIdentifier>();
 
-            return new CosmosDBAccountData(id, name, resourceType, systemData, tags, location, kind, identity, provisioningState, documentEndpoint, databaseAccountOfferType, ipRules?.ToList(), isVirtualNetworkFilterEnabled, enableAutomaticFailover, consistencyPolicy, capabilities?.ToList(), writeLocations?.ToList(), readLocations?.ToList(), locations?.ToList(), failoverPolicies?.ToList(), virtualNetworkRules?.ToList(), privateEndpointConnections?.ToList(), enableMultipleWriteLocations, enableCassandraConnector, connectorOffer, disableKeyBasedMetadataWriteAccess, keyVaultKeyUri, defaultIdentity, publicNetworkAccess, isFreeTierEnabled, new ApiProperties(apiServerVersion), isAnalyticalStorageEnabled, new AnalyticalStorageConfiguration(analyticalStorageSchemaType), instanceId, createMode, restoreParameters, backupPolicy, cors?.ToList(), networkAclBypass, networkAclBypassResourceIds?.ToList(), disableLocalAuth, new CosmosDBAccountCapacity(capacityTotalThroughputLimit), keysMetadata, enablePartitionMerge);
+            return new CosmosDBAccountData(id, name, resourceType, systemData, tags, location, kind, identity, provisioningState, documentEndpoint, databaseAccountOfferType, ipRules?.ToList(), isVirtualNetworkFilterEnabled, enableAutomaticFailover, consistencyPolicy, capabilities?.ToList(), writeLocations?.ToList(), readLocations?.ToList(), locations?.ToList(), failoverPolicies?.ToList(), virtualNetworkRules?.ToList(), privateEndpointConnections?.ToList(), enableMultipleWriteLocations, enableCassandraConnector, connectorOffer, disableKeyBasedMetadataWriteAccess, keyVaultKeyUri, defaultIdentity, publicNetworkAccess, isFreeTierEnabled, apiServerVersion != null ? new ApiProperties(apiServerVersion) : null, isAnalyticalStorageEnabled, analyticalStorageSchemaType != null ? new AnalyticalStorageConfiguration(analyticalStorageSchemaType) : null, instanceId, createMode, restoreParameters, backupPolicy, cors?.ToList(), networkAclBypass, networkAclBypassResourceIds?.ToList(), disableLocalAuth, capacityTotalThroughputLimit != null ? new CosmosDBAccountCapacity(capacityTotalThroughputLimit) : null, keysMetadata, enablePartitionMerge);
         }
 
         /// <summary> Initializes a new instance of CosmosDBIPAddressOrRange. </summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="CosmosDB.CosmosDBPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static CosmosDBPrivateEndpointConnectionData CosmosDBPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, CosmosDBPrivateLinkServiceConnectionStateProperty connectionState = null, string groupId = null, string provisioningState = null)
         {
-            return new CosmosDBPrivateEndpointConnectionData(id, name, resourceType, systemData, new PrivateEndpointProperty(privateEndpointId), connectionState, groupId, provisioningState);
+            return new CosmosDBPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? new PrivateEndpointProperty(privateEndpointId) : null, connectionState, groupId, provisioningState);
         }
 
         /// <summary> Initializes a new instance of CosmosDBPrivateLinkServiceConnectionStateProperty. </summary>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.DatabaseAccountKeysMetadata"/> instance for mocking. </returns>
         public static DatabaseAccountKeysMetadata DatabaseAccountKeysMetadata(DateTimeOffset? primaryMasterKeyGeneratedOn = null, DateTimeOffset? secondaryMasterKeyGeneratedOn = null, DateTimeOffset? primaryReadonlyMasterKeyGeneratedOn = null, DateTimeOffset? secondaryReadonlyMasterKeyGeneratedOn = null)
         {
-            return new DatabaseAccountKeysMetadata(new AccountKeyMetadata(primaryMasterKeyGeneratedOn), new AccountKeyMetadata(secondaryMasterKeyGeneratedOn), new AccountKeyMetadata(primaryReadonlyMasterKeyGeneratedOn), new AccountKeyMetadata(secondaryReadonlyMasterKeyGeneratedOn));
+            return new DatabaseAccountKeysMetadata(primaryMasterKeyGeneratedOn != null ? new AccountKeyMetadata(primaryMasterKeyGeneratedOn) : null, secondaryMasterKeyGeneratedOn != null ? new AccountKeyMetadata(secondaryMasterKeyGeneratedOn) : null, primaryReadonlyMasterKeyGeneratedOn != null ? new AccountKeyMetadata(primaryReadonlyMasterKeyGeneratedOn) : null, secondaryReadonlyMasterKeyGeneratedOn != null ? new AccountKeyMetadata(secondaryReadonlyMasterKeyGeneratedOn) : null);
         }
 
         /// <summary> Initializes a new instance of CosmosDBAccountCreateOrUpdateContent. </summary>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             cors ??= new List<CosmosDBAccountCorsPolicy>();
             networkAclBypassResourceIds ??= new List<ResourceIdentifier>();
 
-            return new CosmosDBAccountCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, kind, identity, consistencyPolicy, locations?.ToList(), databaseAccountOfferType, ipRules?.ToList(), isVirtualNetworkFilterEnabled, enableAutomaticFailover, capabilities?.ToList(), virtualNetworkRules?.ToList(), enableMultipleWriteLocations, enableCassandraConnector, connectorOffer, disableKeyBasedMetadataWriteAccess, keyVaultKeyUri, defaultIdentity, publicNetworkAccess, isFreeTierEnabled, new ApiProperties(apiServerVersion), isAnalyticalStorageEnabled, new AnalyticalStorageConfiguration(analyticalStorageSchemaType), createMode, backupPolicy, cors?.ToList(), networkAclBypass, networkAclBypassResourceIds?.ToList(), disableLocalAuth, restoreParameters, new CosmosDBAccountCapacity(capacityTotalThroughputLimit), keysMetadata, enablePartitionMerge);
+            return new CosmosDBAccountCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, kind, identity, consistencyPolicy, locations?.ToList(), databaseAccountOfferType, ipRules?.ToList(), isVirtualNetworkFilterEnabled, enableAutomaticFailover, capabilities?.ToList(), virtualNetworkRules?.ToList(), enableMultipleWriteLocations, enableCassandraConnector, connectorOffer, disableKeyBasedMetadataWriteAccess, keyVaultKeyUri, defaultIdentity, publicNetworkAccess, isFreeTierEnabled, apiServerVersion != null ? new ApiProperties(apiServerVersion) : null, isAnalyticalStorageEnabled, analyticalStorageSchemaType != null ? new AnalyticalStorageConfiguration(analyticalStorageSchemaType) : null, createMode, backupPolicy, cors?.ToList(), networkAclBypass, networkAclBypassResourceIds?.ToList(), disableLocalAuth, restoreParameters, capacityTotalThroughputLimit != null ? new CosmosDBAccountCapacity(capacityTotalThroughputLimit) : null, keysMetadata, enablePartitionMerge);
         }
 
         /// <summary> Initializes a new instance of CosmosDBAccountKeyList. </summary>
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CosmosDBSqlDatabasePropertiesConfig"/> instance for mocking. </returns>
         public static CosmosDBSqlDatabasePropertiesConfig CosmosDBSqlDatabasePropertiesConfig(int? throughput = null, int? autoscaleMaxThroughput = null)
         {
-            return new CosmosDBSqlDatabasePropertiesConfig(throughput, new AutoscaleSettings(autoscaleMaxThroughput));
+            return new CosmosDBSqlDatabasePropertiesConfig(throughput, autoscaleMaxThroughput != null ? new AutoscaleSettings(autoscaleMaxThroughput) : null);
         }
 
         /// <summary> Initializes a new instance of CosmosDBBaseConfig. </summary>
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CosmosDBBaseConfig"/> instance for mocking. </returns>
         public static CosmosDBBaseConfig CosmosDBBaseConfig(int? throughput = null, int? autoscaleMaxThroughput = null)
         {
-            return new CosmosDBBaseConfig(throughput, new AutoscaleSettings(autoscaleMaxThroughput));
+            return new CosmosDBBaseConfig(throughput, autoscaleMaxThroughput != null ? new AutoscaleSettings(autoscaleMaxThroughput) : null);
         }
 
         /// <summary> Initializes a new instance of CosmosDBSqlDatabaseCreateOrUpdateContent. </summary>
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CosmosDBSqlDatabaseCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, new CosmosDBSqlDatabaseResourceInfo(resourceDatabaseName), options);
+            return new CosmosDBSqlDatabaseCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, resourceDatabaseName != null ? new CosmosDBSqlDatabaseResourceInfo(resourceDatabaseName) : null, options);
         }
 
         /// <summary> Initializes a new instance of CosmosDBCreateUpdateConfig. </summary>
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CosmosDBCreateUpdateConfig"/> instance for mocking. </returns>
         public static CosmosDBCreateUpdateConfig CosmosDBCreateUpdateConfig(int? throughput = null, int? autoscaleMaxThroughput = null)
         {
-            return new CosmosDBCreateUpdateConfig(throughput, new AutoscaleSettings(autoscaleMaxThroughput));
+            return new CosmosDBCreateUpdateConfig(throughput, autoscaleMaxThroughput != null ? new AutoscaleSettings(autoscaleMaxThroughput) : null);
         }
 
         /// <summary> Initializes a new instance of ThroughputSettingData. </summary>
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.AutoscaleSettingsResourceInfo"/> instance for mocking. </returns>
         public static AutoscaleSettingsResourceInfo AutoscaleSettingsResourceInfo(int maxThroughput = default, ThroughputPolicyResourceInfo autoUpgradeThroughputPolicy = null, int? targetMaxThroughput = null)
         {
-            return new AutoscaleSettingsResourceInfo(maxThroughput, new AutoUpgradePolicyResourceInfo(autoUpgradeThroughputPolicy), targetMaxThroughput);
+            return new AutoscaleSettingsResourceInfo(maxThroughput, autoUpgradeThroughputPolicy != null ? new AutoUpgradePolicyResourceInfo(autoUpgradeThroughputPolicy) : null, targetMaxThroughput);
         }
 
         /// <summary> Initializes a new instance of ThroughputPolicyResourceInfo. </summary>
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             uniqueKeys ??= new List<CosmosDBUniqueKey>();
 
-            return new ExtendedCosmosDBSqlContainerResourceInfo(containerName, indexingPolicy, partitionKey, defaultTtl, new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList()), conflictResolutionPolicy, analyticalStorageTtl, rid, timestamp, etag);
+            return new ExtendedCosmosDBSqlContainerResourceInfo(containerName, indexingPolicy, partitionKey, defaultTtl, uniqueKeys != null ? new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList()) : null, conflictResolutionPolicy, analyticalStorageTtl, rid, timestamp, etag);
         }
 
         /// <summary> Initializes a new instance of CosmosDBSqlContainerResourceInfo. </summary>
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             uniqueKeys ??= new List<CosmosDBUniqueKey>();
 
-            return new CosmosDBSqlContainerResourceInfo(containerName, indexingPolicy, partitionKey, defaultTtl, new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList()), conflictResolutionPolicy, analyticalStorageTtl);
+            return new CosmosDBSqlContainerResourceInfo(containerName, indexingPolicy, partitionKey, defaultTtl, uniqueKeys != null ? new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList()) : null, conflictResolutionPolicy, analyticalStorageTtl);
         }
 
         /// <summary> Initializes a new instance of CosmosDBIndexingPolicy. </summary>
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CosmosDBSqlContainerPropertiesConfig"/> instance for mocking. </returns>
         public static CosmosDBSqlContainerPropertiesConfig CosmosDBSqlContainerPropertiesConfig(int? throughput = null, int? autoscaleMaxThroughput = null)
         {
-            return new CosmosDBSqlContainerPropertiesConfig(throughput, new AutoscaleSettings(autoscaleMaxThroughput));
+            return new CosmosDBSqlContainerPropertiesConfig(throughput, autoscaleMaxThroughput != null ? new AutoscaleSettings(autoscaleMaxThroughput) : null);
         }
 
         /// <summary> Initializes a new instance of CosmosDBSqlContainerCreateOrUpdateContent. </summary>
@@ -997,7 +997,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.MongoDBDatabasePropertiesConfig"/> instance for mocking. </returns>
         public static MongoDBDatabasePropertiesConfig MongoDBDatabasePropertiesConfig(int? throughput = null, int? autoscaleMaxThroughput = null)
         {
-            return new MongoDBDatabasePropertiesConfig(throughput, new AutoscaleSettings(autoscaleMaxThroughput));
+            return new MongoDBDatabasePropertiesConfig(throughput, autoscaleMaxThroughput != null ? new AutoscaleSettings(autoscaleMaxThroughput) : null);
         }
 
         /// <summary> Initializes a new instance of MongoDBDatabaseCreateOrUpdateContent. </summary>
@@ -1014,7 +1014,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MongoDBDatabaseCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, new MongoDBDatabaseResourceInfo(resourceDatabaseName), options);
+            return new MongoDBDatabaseCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, resourceDatabaseName != null ? new MongoDBDatabaseResourceInfo(resourceDatabaseName) : null, options);
         }
 
         /// <summary> Initializes a new instance of MongoDBCollectionData. </summary>
@@ -1073,7 +1073,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             keys ??= new List<string>();
 
-            return new MongoDBIndex(new MongoIndexKeys(keys?.ToList()), options);
+            return new MongoDBIndex(keys != null ? new MongoIndexKeys(keys?.ToList()) : null, options);
         }
 
         /// <summary> Initializes a new instance of MongoDBIndexConfig. </summary>
@@ -1091,7 +1091,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.MongoDBCollectionPropertiesConfig"/> instance for mocking. </returns>
         public static MongoDBCollectionPropertiesConfig MongoDBCollectionPropertiesConfig(int? throughput = null, int? autoscaleMaxThroughput = null)
         {
-            return new MongoDBCollectionPropertiesConfig(throughput, new AutoscaleSettings(autoscaleMaxThroughput));
+            return new MongoDBCollectionPropertiesConfig(throughput, autoscaleMaxThroughput != null ? new AutoscaleSettings(autoscaleMaxThroughput) : null);
         }
 
         /// <summary> Initializes a new instance of MongoDBCollectionCreateOrUpdateContent. </summary>
@@ -1151,7 +1151,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CosmosDBTablePropertiesOptions"/> instance for mocking. </returns>
         public static CosmosDBTablePropertiesOptions CosmosDBTablePropertiesOptions(int? throughput = null, int? autoscaleMaxThroughput = null)
         {
-            return new CosmosDBTablePropertiesOptions(throughput, new AutoscaleSettings(autoscaleMaxThroughput));
+            return new CosmosDBTablePropertiesOptions(throughput, autoscaleMaxThroughput != null ? new AutoscaleSettings(autoscaleMaxThroughput) : null);
         }
 
         /// <summary> Initializes a new instance of CosmosDBTableCreateOrUpdateContent. </summary>
@@ -1168,7 +1168,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CosmosDBTableCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, new CosmosDBTableResourceInfo(resourceTableName), options);
+            return new CosmosDBTableCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, resourceTableName != null ? new CosmosDBTableResourceInfo(resourceTableName) : null, options);
         }
 
         /// <summary> Initializes a new instance of CassandraKeyspaceData. </summary>
@@ -1211,7 +1211,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CassandraKeyspacePropertiesConfig"/> instance for mocking. </returns>
         public static CassandraKeyspacePropertiesConfig CassandraKeyspacePropertiesConfig(int? throughput = null, int? autoscaleMaxThroughput = null)
         {
-            return new CassandraKeyspacePropertiesConfig(throughput, new AutoscaleSettings(autoscaleMaxThroughput));
+            return new CassandraKeyspacePropertiesConfig(throughput, autoscaleMaxThroughput != null ? new AutoscaleSettings(autoscaleMaxThroughput) : null);
         }
 
         /// <summary> Initializes a new instance of CassandraKeyspaceCreateOrUpdateContent. </summary>
@@ -1228,7 +1228,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CassandraKeyspaceCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, new CassandraKeyspaceResourceInfo(resourceKeyspaceName), options);
+            return new CassandraKeyspaceCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, resourceKeyspaceName != null ? new CassandraKeyspaceResourceInfo(resourceKeyspaceName) : null, options);
         }
 
         /// <summary> Initializes a new instance of CassandraTableData. </summary>
@@ -1319,7 +1319,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CassandraTablePropertiesConfig"/> instance for mocking. </returns>
         public static CassandraTablePropertiesConfig CassandraTablePropertiesConfig(int? throughput = null, int? autoscaleMaxThroughput = null)
         {
-            return new CassandraTablePropertiesConfig(throughput, new AutoscaleSettings(autoscaleMaxThroughput));
+            return new CassandraTablePropertiesConfig(throughput, autoscaleMaxThroughput != null ? new AutoscaleSettings(autoscaleMaxThroughput) : null);
         }
 
         /// <summary> Initializes a new instance of CassandraTableCreateOrUpdateContent. </summary>
@@ -1379,7 +1379,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.GremlinDatabasePropertiesConfig"/> instance for mocking. </returns>
         public static GremlinDatabasePropertiesConfig GremlinDatabasePropertiesConfig(int? throughput = null, int? autoscaleMaxThroughput = null)
         {
-            return new GremlinDatabasePropertiesConfig(throughput, new AutoscaleSettings(autoscaleMaxThroughput));
+            return new GremlinDatabasePropertiesConfig(throughput, autoscaleMaxThroughput != null ? new AutoscaleSettings(autoscaleMaxThroughput) : null);
         }
 
         /// <summary> Initializes a new instance of GremlinDatabaseCreateOrUpdateContent. </summary>
@@ -1396,7 +1396,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new GremlinDatabaseCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, new GremlinDatabaseResourceInfo(resourceDatabaseName), options);
+            return new GremlinDatabaseCreateOrUpdateContent(id, name, resourceType, systemData, tags, location, resourceDatabaseName != null ? new GremlinDatabaseResourceInfo(resourceDatabaseName) : null, options);
         }
 
         /// <summary> Initializes a new instance of GremlinGraphData. </summary>
@@ -1432,7 +1432,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             uniqueKeys ??= new List<CosmosDBUniqueKey>();
 
-            return new ExtendedGremlinGraphResourceInfo(graphName, indexingPolicy, partitionKey, defaultTtl, new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList()), conflictResolutionPolicy, analyticalStorageTtl, rid, timestamp, etag);
+            return new ExtendedGremlinGraphResourceInfo(graphName, indexingPolicy, partitionKey, defaultTtl, uniqueKeys != null ? new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList()) : null, conflictResolutionPolicy, analyticalStorageTtl, rid, timestamp, etag);
         }
 
         /// <summary> Initializes a new instance of GremlinGraphResourceInfo. </summary>
@@ -1448,7 +1448,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             uniqueKeys ??= new List<CosmosDBUniqueKey>();
 
-            return new GremlinGraphResourceInfo(graphName, indexingPolicy, partitionKey, defaultTtl, new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList()), conflictResolutionPolicy, analyticalStorageTtl);
+            return new GremlinGraphResourceInfo(graphName, indexingPolicy, partitionKey, defaultTtl, uniqueKeys != null ? new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList()) : null, conflictResolutionPolicy, analyticalStorageTtl);
         }
 
         /// <summary> Initializes a new instance of GremlinGraphPropertiesConfig. </summary>
@@ -1457,7 +1457,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.GremlinGraphPropertiesConfig"/> instance for mocking. </returns>
         public static GremlinGraphPropertiesConfig GremlinGraphPropertiesConfig(int? throughput = null, int? autoscaleMaxThroughput = null)
         {
-            return new GremlinGraphPropertiesConfig(throughput, new AutoscaleSettings(autoscaleMaxThroughput));
+            return new GremlinGraphPropertiesConfig(throughput, autoscaleMaxThroughput != null ? new AutoscaleSettings(autoscaleMaxThroughput) : null);
         }
 
         /// <summary> Initializes a new instance of GremlinGraphCreateOrUpdateContent. </summary>
@@ -1545,7 +1545,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             externalSeedNodes ??= new List<CassandraDataCenterSeedNode>();
             seedNodes ??= new List<CassandraDataCenterSeedNode>();
 
-            return new CassandraClusterProperties(provisioningState, restoreFromBackupId, delegatedManagementSubnetId, cassandraVersion, clusterNameOverride, authenticationMethod, initialCassandraAdminPassword, new CassandraDataCenterSeedNode(prometheusEndpointIPAddress), isRepairEnabled, clientCertificates?.ToList(), externalGossipCertificates?.ToList(), gossipCertificates?.ToList(), externalSeedNodes?.ToList(), seedNodes?.ToList(), hoursBetweenBackups, isDeallocated, isCassandraAuditLoggingEnabled);
+            return new CassandraClusterProperties(provisioningState, restoreFromBackupId, delegatedManagementSubnetId, cassandraVersion, clusterNameOverride, authenticationMethod, initialCassandraAdminPassword, prometheusEndpointIPAddress != null ? new CassandraDataCenterSeedNode(prometheusEndpointIPAddress) : null, isRepairEnabled, clientCertificates?.ToList(), externalGossipCertificates?.ToList(), gossipCertificates?.ToList(), externalSeedNodes?.ToList(), seedNodes?.ToList(), hoursBetweenBackups, isDeallocated, isCassandraAuditLoggingEnabled);
         }
 
         /// <summary> Initializes a new instance of CassandraDataCenterSeedNode. </summary>
@@ -1845,7 +1845,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CosmosDBBackupInformation"/> instance for mocking. </returns>
         public static CosmosDBBackupInformation CosmosDBBackupInformation(DateTimeOffset? continuousBackupInformationLatestRestorableTimestamp = null)
         {
-            return new CosmosDBBackupInformation(new ContinuousBackupInformation(continuousBackupInformationLatestRestorableTimestamp));
+            return new CosmosDBBackupInformation(continuousBackupInformationLatestRestorableTimestamp != null ? new ContinuousBackupInformation(continuousBackupInformationLatestRestorableTimestamp) : null);
         }
 
         /// <summary> Initializes a new instance of RestorableSqlDatabase. </summary>
@@ -1935,7 +1935,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             uniqueKeys ??= new List<CosmosDBUniqueKey>();
 
-            return new RestorableSqlContainerPropertiesResourceContainer(containerName, indexingPolicy, partitionKey, defaultTtl, new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList()), conflictResolutionPolicy, analyticalStorageTtl, self, rid, timestamp, etag);
+            return new RestorableSqlContainerPropertiesResourceContainer(containerName, indexingPolicy, partitionKey, defaultTtl, uniqueKeys != null ? new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList()) : null, conflictResolutionPolicy, analyticalStorageTtl, self, rid, timestamp, etag);
         }
 
         /// <summary> Initializes a new instance of RestorableSqlResourceData. </summary>

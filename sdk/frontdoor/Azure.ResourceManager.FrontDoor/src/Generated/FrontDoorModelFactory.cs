@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             routingRuleLinks ??= new List<SubResource>();
             securityPolicyLinks ??= new List<SubResource>();
 
-            return new FrontDoorWebApplicationFirewallPolicyData(id, name, resourceType, systemData, tags, location, etag, new FrontDoorSku(skuName), policySettings, new CustomRuleList(rules?.ToList()), new ManagedRuleSetList(managedRuleSets?.ToList()), frontendEndpointLinks?.ToList(), routingRuleLinks?.ToList(), securityPolicyLinks?.ToList(), provisioningState, resourceState);
+            return new FrontDoorWebApplicationFirewallPolicyData(id, name, resourceType, systemData, tags, location, etag, skuName != null ? new FrontDoorSku(skuName) : null, policySettings, rules != null ? new CustomRuleList(rules?.ToList()) : null, managedRuleSets != null ? new ManagedRuleSetList(managedRuleSets?.ToList()) : null, frontendEndpointLinks?.ToList(), routingRuleLinks?.ToList(), securityPolicyLinks?.ToList(), provisioningState, resourceState);
         }
 
         /// <summary> Initializes a new instance of FrontDoorWebApplicationFirewallPolicySettings. </summary>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             acceptedProtocols ??= new List<FrontDoorProtocol>();
             patternsToMatch ??= new List<string>();
 
-            return new RoutingRuleData(id, name, resourceType, frontendEndpoints?.ToList(), acceptedProtocols?.ToList(), patternsToMatch?.ToList(), enabledState, routeConfiguration, ResourceManagerModelFactory.WritableSubResource(rulesEngineId), ResourceManagerModelFactory.WritableSubResource(webApplicationFirewallPolicyLinkId), resourceState);
+            return new RoutingRuleData(id, name, resourceType, frontendEndpoints?.ToList(), acceptedProtocols?.ToList(), patternsToMatch?.ToList(), enabledState, routeConfiguration, rulesEngineId != null ? ResourceManagerModelFactory.WritableSubResource(rulesEngineId) : null, webApplicationFirewallPolicyLinkId != null ? ResourceManagerModelFactory.WritableSubResource(webApplicationFirewallPolicyLinkId) : null, resourceState);
         }
 
         /// <summary> Initializes a new instance of FrontDoorResourceData. </summary>
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             backends ??= new List<FrontDoorBackend>();
 
-            return new FrontDoorBackendPool(id, name, resourceType, backends?.ToList(), ResourceManagerModelFactory.WritableSubResource(loadBalancingSettingsId), ResourceManagerModelFactory.WritableSubResource(healthProbeSettingsId), resourceState);
+            return new FrontDoorBackendPool(id, name, resourceType, backends?.ToList(), loadBalancingSettingsId != null ? ResourceManagerModelFactory.WritableSubResource(loadBalancingSettingsId) : null, healthProbeSettingsId != null ? ResourceManagerModelFactory.WritableSubResource(healthProbeSettingsId) : null, resourceState);
         }
 
         /// <summary> Initializes a new instance of FrontDoorBackend. </summary>
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <returns> A new <see cref="FrontDoor.FrontendEndpointData"/> instance for mocking. </returns>
         public static FrontendEndpointData FrontendEndpointData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, string hostName = null, SessionAffinityEnabledState? sessionAffinityEnabledState = null, int? sessionAffinityTtlInSeconds = null, ResourceIdentifier webApplicationFirewallPolicyLinkId = null, FrontDoorResourceState? resourceState = null, FrontendEndpointCustomHttpsProvisioningState? customHttpsProvisioningState = null, FrontendEndpointCustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate = null, CustomHttpsConfiguration customHttpsConfiguration = null)
         {
-            return new FrontendEndpointData(id, name, resourceType, hostName, sessionAffinityEnabledState, sessionAffinityTtlInSeconds, ResourceManagerModelFactory.WritableSubResource(webApplicationFirewallPolicyLinkId), resourceState, customHttpsProvisioningState, customHttpsProvisioningSubstate, customHttpsConfiguration);
+            return new FrontendEndpointData(id, name, resourceType, hostName, sessionAffinityEnabledState, sessionAffinityTtlInSeconds, webApplicationFirewallPolicyLinkId != null ? ResourceManagerModelFactory.WritableSubResource(webApplicationFirewallPolicyLinkId) : null, resourceState, customHttpsProvisioningState, customHttpsProvisioningSubstate, customHttpsConfiguration);
         }
 
         /// <summary> Initializes a new instance of CustomHttpsConfiguration. </summary>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <returns> A new <see cref="Models.CustomHttpsConfiguration"/> instance for mocking. </returns>
         public static CustomHttpsConfiguration CustomHttpsConfiguration(FrontDoorCertificateSource certificateSource = default, FrontDoorTlsProtocolType protocolType = default, FrontDoorRequiredMinimumTlsVersion minimumTlsVersion = default, FrontDoorEndpointConnectionCertificateType? certificateType = null, ResourceIdentifier vaultId = null, string secretName = null, string secretVersion = null)
         {
-            return new CustomHttpsConfiguration(certificateSource, protocolType, minimumTlsVersion, certificateType, ResourceManagerModelFactory.WritableSubResource(vaultId), secretName, secretVersion);
+            return new CustomHttpsConfiguration(certificateSource, protocolType, minimumTlsVersion, certificateType, vaultId != null ? ResourceManagerModelFactory.WritableSubResource(vaultId) : null, secretName, secretVersion);
         }
 
         /// <summary> Initializes a new instance of BackendPoolsSettings. </summary>
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <returns> A new <see cref="Models.ForwardingConfiguration"/> instance for mocking. </returns>
         public static ForwardingConfiguration ForwardingConfiguration(string customForwardingPath = null, FrontDoorForwardingProtocol? forwardingProtocol = null, FrontDoorCacheConfiguration cacheConfiguration = null, ResourceIdentifier backendPoolId = null)
         {
-            return new ForwardingConfiguration("#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration", customForwardingPath, forwardingProtocol, cacheConfiguration, ResourceManagerModelFactory.WritableSubResource(backendPoolId));
+            return new ForwardingConfiguration("#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration", customForwardingPath, forwardingProtocol, cacheConfiguration, backendPoolId != null ? ResourceManagerModelFactory.WritableSubResource(backendPoolId) : null);
         }
 
         /// <summary> Initializes a new instance of FrontDoorCacheConfiguration. </summary>

@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HybridCompute;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             errorDetails ??= new List<ResponseError>();
             detectedProperties ??= new Dictionary<string, string>();
 
-            return new MachineProperties(locationData, agentConfiguration, serviceStatuses, new CloudMetadata(cloudMetadataProvider), osProfile, provisioningState, status, lastStatusChange, errorDetails?.ToList(), agentVersion, vmId, displayName, machineFqdn, clientPublicKey, osName, osVersion, osType, vmUuid, osSku, domainName, adFqdn, dnsFqdn, privateLinkScopeResourceId, parentClusterResourceId, mssqlDiscovered, detectedProperties);
+            return new MachineProperties(locationData, agentConfiguration, serviceStatuses, cloudMetadataProvider != null ? new CloudMetadata(cloudMetadataProvider) : null, osProfile, provisioningState, status, lastStatusChange, errorDetails?.ToList(), agentVersion, vmId, displayName, machineFqdn, clientPublicKey, osName, osVersion, osType, vmUuid, osSku, domainName, adFqdn, dnsFqdn, privateLinkScopeResourceId, parentClusterResourceId, mssqlDiscovered, detectedProperties);
         }
 
         /// <summary> Initializes a new instance of LocationData. </summary>
@@ -270,7 +269,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
             groupIds ??= new List<string>();
 
-            return new PrivateEndpointConnectionProperties(ResourceManagerModelFactory.WritableSubResource(privateEndpointId), connectionState, provisioningState, groupIds?.ToList());
+            return new PrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState, groupIds?.ToList());
         }
 
         /// <summary> Initializes a new instance of HybridComputePrivateLinkServiceConnectionStateProperty. </summary>

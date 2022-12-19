@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Reservations.Models
         {
             scopes ??= new List<ScopeProperties>();
 
-            return new AvailableScopesProperties(new SubscriptionScopeProperties(scopes?.ToList()));
+            return new AvailableScopesProperties(scopes != null ? new SubscriptionScopeProperties(scopes?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of ScopeProperties. </summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Reservations.Models
             restrictions ??= new List<SkuRestriction>();
             capabilities ??= new List<SkuCapability>();
 
-            return new ReservationCatalog(appliedResourceType, skuName, billingPlans, terms?.ToList(), locations?.ToList(), skuProperties?.ToList(), new CatalogMsrp(msrpP1Y), restrictions?.ToList(), tier, size, capabilities?.ToList());
+            return new ReservationCatalog(appliedResourceType, skuName, billingPlans, terms?.ToList(), locations?.ToList(), skuProperties?.ToList(), msrpP1Y != null ? new CatalogMsrp(msrpP1Y) : null, restrictions?.ToList(), tier, size, capabilities?.ToList());
         }
 
         /// <summary> Initializes a new instance of SkuProperty. </summary>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Reservations.Models
         {
             appliedScopes ??= new List<string>();
 
-            return new ReservationPurchaseContent(new ReservationsSkuName(skuName), location, reservedResourceType, billingScopeId, term, billingPlan, quantity, displayName, appliedScopeType, appliedScopes?.ToList(), isRenewEnabled, new PurchaseRequestPropertiesReservedResourceProperties(reservedResourceInstanceFlexibility));
+            return new ReservationPurchaseContent(skuName != null ? new ReservationsSkuName(skuName) : null, location, reservedResourceType, billingScopeId, term, billingPlan, quantity, displayName, appliedScopeType, appliedScopes?.ToList(), isRenewEnabled, reservedResourceInstanceFlexibility != null ? new PurchaseRequestPropertiesReservedResourceProperties(reservedResourceInstanceFlexibility) : null);
         }
 
         /// <summary> Initializes a new instance of CalculatePriceResult. </summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <returns> A new <see cref="Reservations.ReservationDetailData"/> instance for mocking. </returns>
         public static ReservationDetailData ReservationDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, int? version = null, string skuName = null, ReservationProperties properties = null, ReservationKind? kind = null)
         {
-            return new ReservationDetailData(id, name, resourceType, systemData, location, version, new ReservationsSkuName(skuName), properties, kind);
+            return new ReservationDetailData(id, name, resourceType, systemData, location, version, skuName != null ? new ReservationsSkuName(skuName) : null, properties, kind);
         }
 
         /// <summary> Initializes a new instance of ReservationProperties. </summary>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <returns> A new <see cref="Models.ReservationRefundResponseProperties"/> instance for mocking. </returns>
         public static ReservationRefundResponseProperties ReservationRefundResponseProperties(Guid? sessionId = null, int? quantity = null, PurchasePrice billingRefundAmount = null, PurchasePrice pricingRefundAmount = null, ReservationRefundPolicyResultProperty policyResultProperties = null, ReservationRefundBillingInformation billingInformation = null)
         {
-            return new ReservationRefundResponseProperties(sessionId, quantity, billingRefundAmount, pricingRefundAmount, new RefundPolicyResult(policyResultProperties), billingInformation);
+            return new ReservationRefundResponseProperties(sessionId, quantity, billingRefundAmount, pricingRefundAmount, policyResultProperties != null ? new RefundPolicyResult(policyResultProperties) : null, billingInformation);
         }
 
         /// <summary> Initializes a new instance of ReservationRefundPolicyResultProperty. </summary>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Reservations.Models
             reservationsToExchange ??= new List<ReservationToExchange>();
             policyErrors ??= new List<ExchangePolicyError>();
 
-            return new CalculateExchangeResultProperties(sessionId, netPayable, refundsTotal, purchasesTotal, reservationsToPurchase?.ToList(), reservationsToExchange?.ToList(), new ExchangePolicyErrors(policyErrors?.ToList()));
+            return new CalculateExchangeResultProperties(sessionId, netPayable, refundsTotal, purchasesTotal, reservationsToPurchase?.ToList(), reservationsToExchange?.ToList(), policyErrors != null ? new ExchangePolicyErrors(policyErrors?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of ReservationToPurchaseCalculateExchange. </summary>
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Reservations.Models
             reservationsToExchange ??= new List<ReservationToReturnForExchange>();
             policyErrors ??= new List<ExchangePolicyError>();
 
-            return new ExchangeResultProperties(sessionId, netPayable, refundsTotal, purchasesTotal, reservationsToPurchase?.ToList(), reservationsToExchange?.ToList(), new ExchangePolicyErrors(policyErrors?.ToList()));
+            return new ExchangeResultProperties(sessionId, netPayable, refundsTotal, purchasesTotal, reservationsToPurchase?.ToList(), reservationsToExchange?.ToList(), policyErrors != null ? new ExchangePolicyErrors(policyErrors?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of ReservationToPurchaseExchange. </summary>

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             initContainers ??= new List<InitContainerDefinitionContent>();
             zones ??= new List<string>();
 
-            return new ContainerGroupData(id, name, resourceType, systemData, tags, location, identity, provisioningState, containers?.ToList(), imageRegistryCredentials?.ToList(), restartPolicy, ipAddress, osType, volumes?.ToList(), instanceView, new ContainerGroupDiagnostics(diagnosticsLogAnalytics), subnetIds?.ToList(), dnsConfig, sku, encryptionProperties, initContainers?.ToList(), zones?.ToList());
+            return new ContainerGroupData(id, name, resourceType, systemData, tags, location, identity, provisioningState, containers?.ToList(), imageRegistryCredentials?.ToList(), restartPolicy, ipAddress, osType, volumes?.ToList(), instanceView, diagnosticsLogAnalytics != null ? new ContainerGroupDiagnostics(diagnosticsLogAnalytics) : null, subnetIds?.ToList(), dnsConfig, sku, encryptionProperties, initContainers?.ToList(), zones?.ToList());
         }
 
         /// <summary> Initializes a new instance of ContainerInstanceContainer. </summary>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             execCommand ??= new List<string>();
 
-            return new ContainerProbe(new ContainerExec(execCommand?.ToList()), httpGet, initialDelayInSeconds, periodInSeconds, failureThreshold, successThreshold, timeoutInSeconds);
+            return new ContainerProbe(execCommand != null ? new ContainerExec(execCommand?.ToList()) : null, httpGet, initialDelayInSeconds, periodInSeconds, failureThreshold, successThreshold, timeoutInSeconds);
         }
 
         /// <summary> Initializes a new instance of ContainerHttpGet. </summary>

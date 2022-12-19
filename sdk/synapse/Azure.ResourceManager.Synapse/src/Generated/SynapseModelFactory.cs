@@ -11,7 +11,6 @@ using System.Linq;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapsePrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static SynapsePrivateEndpointConnectionData SynapsePrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, SynapsePrivateLinkServiceConnectionState connectionState = null, string provisioningState = null)
         {
-            return new SynapsePrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.SubResource(privateEndpointId), connectionState, provisioningState);
+            return new SynapsePrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionProperties. </summary>
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.PrivateEndpointConnectionProperties"/> instance for mocking. </returns>
         public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(ResourceIdentifier privateEndpointId = null, SynapsePrivateLinkServiceConnectionState connectionState = null, string provisioningState = null)
         {
-            return new PrivateEndpointConnectionProperties(ResourceManagerModelFactory.SubResource(privateEndpointId), connectionState, provisioningState);
+            return new PrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of SynapsePrivateLinkServiceConnectionState. </summary>
@@ -1241,7 +1240,7 @@ namespace Azure.ResourceManager.Synapse.Models
             extraProperties ??= new Dictionary<string, BinaryData>();
             settings ??= new Dictionary<string, BinaryData>();
 
-            return new WorkspaceData(id, name, resourceType, systemData, tags, location, identity, defaultDataLakeStorage, sqlAdministratorLoginPassword, managedResourceGroupName, provisioningState, sqlAdministratorLogin, new VirtualNetworkProfile(virtualNetworkComputeSubnetId), connectivityEndpoints, managedVirtualNetwork, privateEndpointConnections?.ToList(), encryption, workspaceUID, extraProperties, managedVirtualNetworkSettings, workspaceRepositoryConfiguration, new PurviewConfiguration(purviewResourceId), adlaResourceId, publicNetworkAccess, new CspWorkspaceAdminProperties(initialWorkspaceAdminObjectId), settings, azureADOnlyAuthentication, trustedServiceBypassEnabled);
+            return new WorkspaceData(id, name, resourceType, systemData, tags, location, identity, defaultDataLakeStorage, sqlAdministratorLoginPassword, managedResourceGroupName, provisioningState, sqlAdministratorLogin, virtualNetworkComputeSubnetId != null ? new VirtualNetworkProfile(virtualNetworkComputeSubnetId) : null, connectivityEndpoints, managedVirtualNetwork, privateEndpointConnections?.ToList(), encryption, workspaceUID, extraProperties, managedVirtualNetworkSettings, workspaceRepositoryConfiguration, purviewResourceId != null ? new PurviewConfiguration(purviewResourceId) : null, adlaResourceId, publicNetworkAccess, initialWorkspaceAdminObjectId != null ? new CspWorkspaceAdminProperties(initialWorkspaceAdminObjectId) : null, settings, azureADOnlyAuthentication, trustedServiceBypassEnabled);
         }
 
         /// <summary> Initializes a new instance of DataLakeStorageAccountDetails. </summary>
@@ -1801,7 +1800,7 @@ namespace Azure.ResourceManager.Synapse.Models
             tags ??= new Dictionary<string, string>();
             languageExtensionsValue ??= new List<LanguageExtension>();
 
-            return new KustoPoolData(id, name, resourceType, systemData, tags, location, sku, etag, state, provisioningState, uri, dataIngestionUri, stateReason, optimizedAutoscale, enableStreamingIngest, enablePurge, new LanguageExtensionsList(languageExtensionsValue?.ToList()), workspaceUID);
+            return new KustoPoolData(id, name, resourceType, systemData, tags, location, sku, etag, state, provisioningState, uri, dataIngestionUri, stateReason, optimizedAutoscale, enableStreamingIngest, enablePurge, languageExtensionsValue != null ? new LanguageExtensionsList(languageExtensionsValue?.ToList()) : null, workspaceUID);
         }
 
         /// <summary> Initializes a new instance of AzureSku. </summary>
@@ -1855,7 +1854,7 @@ namespace Azure.ResourceManager.Synapse.Models
             tags ??= new Dictionary<string, string>();
             languageExtensionsValue ??= new List<LanguageExtension>();
 
-            return new KustoPoolPatch(id, name, resourceType, systemData, tags, sku, state, provisioningState, uri, dataIngestionUri, stateReason, optimizedAutoscale, enableStreamingIngest, enablePurge, new LanguageExtensionsList(languageExtensionsValue?.ToList()), workspaceUID);
+            return new KustoPoolPatch(id, name, resourceType, systemData, tags, sku, state, provisioningState, uri, dataIngestionUri, stateReason, optimizedAutoscale, enableStreamingIngest, enablePurge, languageExtensionsValue != null ? new LanguageExtensionsList(languageExtensionsValue?.ToList()) : null, workspaceUID);
         }
 
         /// <summary> Initializes a new instance of AzureResourceSku. </summary>
@@ -2463,7 +2462,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.ReadWriteDatabase"/> instance for mocking. </returns>
         public static ReadWriteDatabase ReadWriteDatabase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceProvisioningState? provisioningState = null, TimeSpan? softDeletePeriod = null, TimeSpan? hotCachePeriod = null, float? statisticsSize = null, bool? isFollowed = null)
         {
-            return new ReadWriteDatabase(id, name, resourceType, systemData, location, "ReadWrite", provisioningState, softDeletePeriod, hotCachePeriod, new DatabaseStatistics(statisticsSize), isFollowed);
+            return new ReadWriteDatabase(id, name, resourceType, systemData, location, "ReadWrite", provisioningState, softDeletePeriod, hotCachePeriod, statisticsSize != null ? new DatabaseStatistics(statisticsSize) : null, isFollowed);
         }
 
         /// <summary> Initializes a new instance of ReadOnlyFollowingDatabase. </summary>
@@ -2482,7 +2481,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.ReadOnlyFollowingDatabase"/> instance for mocking. </returns>
         public static ReadOnlyFollowingDatabase ReadOnlyFollowingDatabase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceProvisioningState? provisioningState = null, TimeSpan? softDeletePeriod = null, TimeSpan? hotCachePeriod = null, float? statisticsSize = null, string leaderClusterResourceId = null, string attachedDatabaseConfigurationName = null, PrincipalsModificationKind? principalsModificationKind = null)
         {
-            return new ReadOnlyFollowingDatabase(id, name, resourceType, systemData, location, "ReadOnlyFollowing", provisioningState, softDeletePeriod, hotCachePeriod, new DatabaseStatistics(statisticsSize), leaderClusterResourceId, attachedDatabaseConfigurationName, principalsModificationKind);
+            return new ReadOnlyFollowingDatabase(id, name, resourceType, systemData, location, "ReadOnlyFollowing", provisioningState, softDeletePeriod, hotCachePeriod, statisticsSize != null ? new DatabaseStatistics(statisticsSize) : null, leaderClusterResourceId, attachedDatabaseConfigurationName, principalsModificationKind);
         }
 
         /// <summary> Initializes a new instance of EventHubDataConnection. </summary>

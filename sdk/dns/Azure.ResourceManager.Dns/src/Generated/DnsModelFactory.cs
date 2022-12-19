@@ -19,6 +19,42 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> Model factory for generated models. </summary>
     public static partial class DnsModelFactory
     {
+        /// <summary> Initializes a new instance of DnsRecordData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The etag of the record set. </param>
+        /// <param name="metadata"> The metadata attached to the record set. </param>
+        /// <param name="ttlInSeconds"> The TTL (time-to-live) of the records in the record set. </param>
+        /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
+        /// <param name="provisioningState"> provisioning State of the record set. </param>
+        /// <param name="targetResourceId"> A reference to an azure resource from where the dns resource value is taken. </param>
+        /// <param name="aRecords"> The list of A records in the record set. </param>
+        /// <param name="aaaaRecords"> The list of AAAA records in the record set. </param>
+        /// <param name="mxRecords"> The list of MX records in the record set. </param>
+        /// <param name="nsRecords"> The list of NS records in the record set. </param>
+        /// <param name="ptrRecords"> The list of PTR records in the record set. </param>
+        /// <param name="srvRecords"> The list of SRV records in the record set. </param>
+        /// <param name="txtRecords"> The list of TXT records in the record set. </param>
+        /// <param name="cname"> The CNAME record in the  record set. </param>
+        /// <param name="dnsSoaRecordInfo"> The SOA record in the record set. </param>
+        /// <param name="caaRecords"> The list of CAA records in the record set. </param>
+        /// <returns> A new <see cref="Dns.DnsRecordData"/> instance for mocking. </returns>
+        public static DnsRecordData DnsRecordData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IDictionary<string, string> metadata = null, long? ttlInSeconds = null, string fqdn = null, string provisioningState = null, ResourceIdentifier targetResourceId = null, IEnumerable<DnsARecordInfo> aRecords = null, IEnumerable<DnsAaaaRecordInfo> aaaaRecords = null, IEnumerable<DnsMXRecordInfo> mxRecords = null, IEnumerable<DnsNSRecordInfo> nsRecords = null, IEnumerable<DnsPtrRecordInfo> ptrRecords = null, IEnumerable<DnsSrvRecordInfo> srvRecords = null, IEnumerable<DnsTxtRecordInfo> txtRecords = null, string cname = null, DnsSoaRecordInfo dnsSoaRecordInfo = null, IEnumerable<DnsCaaRecordInfo> caaRecords = null)
+        {
+            metadata ??= new Dictionary<string, string>();
+            aRecords ??= new List<DnsARecordInfo>();
+            aaaaRecords ??= new List<DnsAaaaRecordInfo>();
+            mxRecords ??= new List<DnsMXRecordInfo>();
+            nsRecords ??= new List<DnsNSRecordInfo>();
+            ptrRecords ??= new List<DnsPtrRecordInfo>();
+            srvRecords ??= new List<DnsSrvRecordInfo>();
+            txtRecords ??= new List<DnsTxtRecordInfo>();
+            caaRecords ??= new List<DnsCaaRecordInfo>();
+
+            return new DnsRecordData(id, name, resourceType, systemData, etag, metadata, ttlInSeconds, fqdn, provisioningState, targetResourceId != null ? ResourceManagerModelFactory.WritableSubResource(targetResourceId) : null, aRecords?.ToList(), aaaaRecords?.ToList(), mxRecords?.ToList(), nsRecords?.ToList(), ptrRecords?.ToList(), srvRecords?.ToList(), txtRecords?.ToList(), cname != null ? new DnsCnameRecordInfo(cname) : null, dnsSoaRecordInfo, caaRecords?.ToList());
+        }
 
         /// <summary> Initializes a new instance of DnsARecordInfo. </summary>
         /// <param name="ipv4Address"> The IPv4 address of this A record. </param>
@@ -150,7 +186,7 @@ namespace Azure.ResourceManager.Dns.Models
         {
             dnsResources ??= new List<WritableSubResource>();
 
-            return new DnsResourceReference(dnsResources?.ToList(), ResourceManagerModelFactory.WritableSubResource(targetResourceId));
+            return new DnsResourceReference(dnsResources?.ToList(), targetResourceId != null ? ResourceManagerModelFactory.WritableSubResource(targetResourceId) : null);
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             multiSubnetIPConfigurations ??= new List<MultiSubnetIPConfiguration>();
             availabilityGroupReplicas ??= new List<AvailabilityGroupReplica>();
 
-            return new AvailabilityGroupListenerData(id, name, resourceType, systemData, provisioningState, availabilityGroupName, loadBalancerConfigurations?.ToList(), multiSubnetIPConfigurations?.ToList(), createDefaultAvailabilityGroupIfNotExist, port, new AvailabilityGroupConfiguration(availabilityGroupReplicas?.ToList()));
+            return new AvailabilityGroupListenerData(id, name, resourceType, systemData, provisioningState, availabilityGroupName, loadBalancerConfigurations?.ToList(), multiSubnetIPConfigurations?.ToList(), createDefaultAvailabilityGroupIfNotExist, port, availabilityGroupReplicas != null ? new AvailabilityGroupConfiguration(availabilityGroupReplicas?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of AvailabilityGroupListenerLoadBalancerConfiguration. </summary>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <returns> A new <see cref="Models.SqlServerConfigurationsManagementSettings"/> instance for mocking. </returns>
         public static SqlServerConfigurationsManagementSettings SqlServerConfigurationsManagementSettings(SqlConnectivityUpdateSettings sqlConnectivityUpdateSettings = null, SqlWorkloadType? sqlWorkloadType = null, SqlStorageUpdateSettings sqlStorageUpdateSettings = null, bool? isRServicesEnabled = null, SqlInstanceSettings sqlInstanceSettings = null)
         {
-            return new SqlServerConfigurationsManagementSettings(sqlConnectivityUpdateSettings, new SqlWorkloadTypeUpdateSettings(sqlWorkloadType), sqlStorageUpdateSettings, new AdditionalFeaturesServerConfigurations(isRServicesEnabled), sqlInstanceSettings);
+            return new SqlServerConfigurationsManagementSettings(sqlConnectivityUpdateSettings, sqlWorkloadType != null ? new SqlWorkloadTypeUpdateSettings(sqlWorkloadType) : null, sqlStorageUpdateSettings, isRServicesEnabled != null ? new AdditionalFeaturesServerConfigurations(isRServicesEnabled) : null, sqlInstanceSettings);
         }
 
         /// <summary> Initializes a new instance of SqlConnectivityUpdateSettings. </summary>

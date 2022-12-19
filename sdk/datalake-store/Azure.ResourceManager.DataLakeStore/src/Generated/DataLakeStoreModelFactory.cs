@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.DataLakeStore;
 using Azure.ResourceManager.Models;
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> Model factory for generated models. </summary>
     public static partial class DataLakeStoreModelFactory
     {
-        /// <summary> Initializes a new instance of DataLakeStoreAccountBasic. </summary>
+        /// <summary> Initializes a new instance of DataLakeStoreAccountBasicData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,21 +31,21 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <param name="endpoint"> The full CName endpoint for this account. </param>
         /// <param name="location"> The resource location. </param>
         /// <param name="tags"> The resource tags. </param>
-        /// <returns> A new <see cref="Models.DataLakeStoreAccountBasic"/> instance for mocking. </returns>
-        public static DataLakeStoreAccountBasic DataLakeStoreAccountBasic(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? accountId = null, DataLakeStoreAccountStatus? provisioningState = null, DataLakeStoreAccountState? state = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string endpoint = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null)
+        /// <returns> A new <see cref="Models.DataLakeStoreAccountBasicData"/> instance for mocking. </returns>
+        public static DataLakeStoreAccountBasicData DataLakeStoreAccountBasicData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? accountId = null, DataLakeStoreAccountStatus? provisioningState = null, DataLakeStoreAccountState? state = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string endpoint = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DataLakeStoreAccountBasic(id, name, resourceType, systemData, accountId, provisioningState, state, createdOn, lastModifiedOn, endpoint, location, tags);
+            return new DataLakeStoreAccountBasicData(id, name, resourceType, systemData, accountId, provisioningState, state, createdOn, lastModifiedOn, endpoint, location, tags);
         }
 
-        /// <summary> Initializes a new instance of EncryptionConfig. </summary>
+        /// <summary> Initializes a new instance of DataLakeStoreAccountEncryptionConfig. </summary>
         /// <param name="configType"> The type of encryption configuration being used. Currently the only supported types are &apos;UserManaged&apos; and &apos;ServiceManaged&apos;. </param>
         /// <param name="keyVaultMetaInfo"> The Key Vault information for connecting to user managed encryption keys. </param>
-        /// <returns> A new <see cref="Models.EncryptionConfig"/> instance for mocking. </returns>
-        public static EncryptionConfig EncryptionConfig(EncryptionConfigType configType = default, KeyVaultMetaInfo keyVaultMetaInfo = null)
+        /// <returns> A new <see cref="Models.DataLakeStoreAccountEncryptionConfig"/> instance for mocking. </returns>
+        public static DataLakeStoreAccountEncryptionConfig DataLakeStoreAccountEncryptionConfig(DataLakeStoreAccountEncryptionConfigType configType = default, DataLakeStoreAccountKeyVaultMetaInfo keyVaultMetaInfo = null)
         {
-            return new EncryptionConfig(configType, keyVaultMetaInfo);
+            return new DataLakeStoreAccountEncryptionConfig(configType, keyVaultMetaInfo);
         }
 
         /// <summary> Initializes a new instance of DataLakeStoreAccountData. </summary>
@@ -74,63 +75,63 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <param name="location"> The resource location. </param>
         /// <param name="tags"> The resource tags. </param>
         /// <returns> A new <see cref="DataLakeStore.DataLakeStoreAccountData"/> instance for mocking. </returns>
-        public static DataLakeStoreAccountData DataLakeStoreAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, Guid? accountId = null, DataLakeStoreAccountStatus? provisioningState = null, DataLakeStoreAccountState? state = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string endpoint = null, string defaultGroup = null, EncryptionConfig encryptionConfig = null, EncryptionState? encryptionState = null, EncryptionProvisioningState? encryptionProvisioningState = null, IEnumerable<FirewallRuleData> firewallRules = null, IEnumerable<VirtualNetworkRuleData> virtualNetworkRules = null, FirewallState? firewallState = null, FirewallAllowAzureIPsState? firewallAllowAzureIPs = null, IEnumerable<TrustedIdProviderData> trustedIdProviders = null, TrustedIdProviderState? trustedIdProviderState = null, TierType? newTier = null, TierType? currentTier = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null)
+        public static DataLakeStoreAccountData DataLakeStoreAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, Guid? accountId = null, DataLakeStoreAccountStatus? provisioningState = null, DataLakeStoreAccountState? state = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string endpoint = null, string defaultGroup = null, DataLakeStoreAccountEncryptionConfig encryptionConfig = null, DataLakeStoreEncryptionState? encryptionState = null, DataLakeStoreEncryptionProvisioningState? encryptionProvisioningState = null, IEnumerable<DataLakeStoreFirewallRuleData> firewallRules = null, IEnumerable<DataLakeStoreVirtualNetworkRuleData> virtualNetworkRules = null, DataLakeStoreFirewallState? firewallState = null, DataLakeStoreFirewallAllowAzureIPsState? firewallAllowAzureIPs = null, IEnumerable<DataLakeStoreTrustedIdProviderData> trustedIdProviders = null, DataLakeStoreTrustedIdProviderState? trustedIdProviderState = null, DataLakeStoreCommitmentTierType? newTier = null, DataLakeStoreCommitmentTierType? currentTier = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null)
         {
-            firewallRules ??= new List<FirewallRuleData>();
-            virtualNetworkRules ??= new List<VirtualNetworkRuleData>();
-            trustedIdProviders ??= new List<TrustedIdProviderData>();
+            firewallRules ??= new List<DataLakeStoreFirewallRuleData>();
+            virtualNetworkRules ??= new List<DataLakeStoreVirtualNetworkRuleData>();
+            trustedIdProviders ??= new List<DataLakeStoreTrustedIdProviderData>();
             tags ??= new Dictionary<string, string>();
 
             return new DataLakeStoreAccountData(id, name, resourceType, systemData, identity, accountId, provisioningState, state, createdOn, lastModifiedOn, endpoint, defaultGroup, encryptionConfig, encryptionState, encryptionProvisioningState, firewallRules?.ToList(), virtualNetworkRules?.ToList(), firewallState, firewallAllowAzureIPs, trustedIdProviders?.ToList(), trustedIdProviderState, newTier, currentTier, location, tags);
         }
 
-        /// <summary> Initializes a new instance of FirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of DataLakeStoreFirewallRuleData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="startIPAddress"> The start IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </param>
         /// <param name="endIPAddress"> The end IP address for the firewall rule. This can be either ipv4 or ipv6. Start and End should be in the same protocol. </param>
-        /// <returns> A new <see cref="DataLakeStore.FirewallRuleData"/> instance for mocking. </returns>
-        public static FirewallRuleData FirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string startIPAddress = null, string endIPAddress = null)
+        /// <returns> A new <see cref="DataLakeStore.DataLakeStoreFirewallRuleData"/> instance for mocking. </returns>
+        public static DataLakeStoreFirewallRuleData DataLakeStoreFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IPAddress startIPAddress = null, IPAddress endIPAddress = null)
         {
-            return new FirewallRuleData(id, name, resourceType, systemData, startIPAddress, endIPAddress);
+            return new DataLakeStoreFirewallRuleData(id, name, resourceType, systemData, startIPAddress, endIPAddress);
         }
 
-        /// <summary> Initializes a new instance of VirtualNetworkRuleData. </summary>
+        /// <summary> Initializes a new instance of DataLakeStoreVirtualNetworkRuleData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="subnetId"> The resource identifier for the subnet. </param>
-        /// <returns> A new <see cref="DataLakeStore.VirtualNetworkRuleData"/> instance for mocking. </returns>
-        public static VirtualNetworkRuleData VirtualNetworkRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string subnetId = null)
+        /// <returns> A new <see cref="DataLakeStore.DataLakeStoreVirtualNetworkRuleData"/> instance for mocking. </returns>
+        public static DataLakeStoreVirtualNetworkRuleData DataLakeStoreVirtualNetworkRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier subnetId = null)
         {
-            return new VirtualNetworkRuleData(id, name, resourceType, systemData, subnetId);
+            return new DataLakeStoreVirtualNetworkRuleData(id, name, resourceType, systemData, subnetId);
         }
 
-        /// <summary> Initializes a new instance of TrustedIdProviderData. </summary>
+        /// <summary> Initializes a new instance of DataLakeStoreTrustedIdProviderData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="idProvider"> The URL of this trusted identity provider. </param>
-        /// <returns> A new <see cref="DataLakeStore.TrustedIdProviderData"/> instance for mocking. </returns>
-        public static TrustedIdProviderData TrustedIdProviderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string idProvider = null)
+        /// <returns> A new <see cref="DataLakeStore.DataLakeStoreTrustedIdProviderData"/> instance for mocking. </returns>
+        public static DataLakeStoreTrustedIdProviderData DataLakeStoreTrustedIdProviderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri idProvider = null)
         {
-            return new TrustedIdProviderData(id, name, resourceType, systemData, idProvider);
+            return new DataLakeStoreTrustedIdProviderData(id, name, resourceType, systemData, idProvider);
         }
 
-        /// <summary> Initializes a new instance of CapabilityInformation. </summary>
+        /// <summary> Initializes a new instance of DataLakeStoreCapabilityInformation. </summary>
         /// <param name="subscriptionId"> The subscription credentials that uniquely identifies the subscription. </param>
         /// <param name="state"> The subscription state. </param>
         /// <param name="maxAccountCount"> The maximum supported number of accounts under this subscription. </param>
         /// <param name="accountCount"> The current number of accounts under this subscription. </param>
-        /// <param name="migrationState"> The Boolean value of true or false to indicate the maintenance state. </param>
-        /// <returns> A new <see cref="Models.CapabilityInformation"/> instance for mocking. </returns>
-        public static CapabilityInformation CapabilityInformation(Guid? subscriptionId = null, SubscriptionState? state = null, int? maxAccountCount = null, int? accountCount = null, bool? migrationState = null)
+        /// <param name="isUnderMigrationState"> The Boolean value of true or false to indicate the maintenance state. </param>
+        /// <returns> A new <see cref="Models.DataLakeStoreCapabilityInformation"/> instance for mocking. </returns>
+        public static DataLakeStoreCapabilityInformation DataLakeStoreCapabilityInformation(Guid? subscriptionId = null, DataLakeStoreSubscriptionState? state = null, int? maxAccountCount = null, int? accountCount = null, bool? isUnderMigrationState = null)
         {
-            return new CapabilityInformation(subscriptionId, state, maxAccountCount, accountCount, migrationState);
+            return new DataLakeStoreCapabilityInformation(subscriptionId, state, maxAccountCount, accountCount, isUnderMigrationState);
         }
 
         /// <summary> Initializes a new instance of DataLakeStoreUsage. </summary>
@@ -140,28 +141,28 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <param name="limit"> Gets the maximum count of the resources that can be allocated in the subscription. </param>
         /// <param name="name"> Gets the name of the type of usage. </param>
         /// <returns> A new <see cref="Models.DataLakeStoreUsage"/> instance for mocking. </returns>
-        public static DataLakeStoreUsage DataLakeStoreUsage(UsageUnit? unit = null, string id = null, int? currentValue = null, int? limit = null, UsageName name = null)
+        public static DataLakeStoreUsage DataLakeStoreUsage(DataLakeStoreUsageUnit? unit = null, ResourceIdentifier id = null, int? currentValue = null, int? limit = null, DataLakeStoreUsageName name = null)
         {
             return new DataLakeStoreUsage(unit, id, currentValue, limit, name);
         }
 
-        /// <summary> Initializes a new instance of UsageName. </summary>
+        /// <summary> Initializes a new instance of DataLakeStoreUsageName. </summary>
         /// <param name="value"> Gets a string describing the resource name. </param>
         /// <param name="localizedValue"> Gets a localized string describing the resource name. </param>
-        /// <returns> A new <see cref="Models.UsageName"/> instance for mocking. </returns>
-        public static UsageName UsageName(string value = null, string localizedValue = null)
+        /// <returns> A new <see cref="Models.DataLakeStoreUsageName"/> instance for mocking. </returns>
+        public static DataLakeStoreUsageName DataLakeStoreUsageName(string value = null, string localizedValue = null)
         {
-            return new UsageName(value, localizedValue);
+            return new DataLakeStoreUsageName(value, localizedValue);
         }
 
-        /// <summary> Initializes a new instance of NameAvailabilityInformation. </summary>
-        /// <param name="nameAvailable"> The Boolean value of true or false to indicate whether the Data Lake Store account name is available or not. </param>
+        /// <summary> Initializes a new instance of DataLakeStoreAccountNameAvailabilityResult. </summary>
+        /// <param name="isNameAvailable"> The Boolean value of true or false to indicate whether the Data Lake Store account name is available or not. </param>
         /// <param name="reason"> The reason why the Data Lake Store account name is not available, if nameAvailable is false. </param>
         /// <param name="message"> The message describing why the Data Lake Store account name is not available, if nameAvailable is false. </param>
-        /// <returns> A new <see cref="Models.NameAvailabilityInformation"/> instance for mocking. </returns>
-        public static NameAvailabilityInformation NameAvailabilityInformation(bool? nameAvailable = null, string reason = null, string message = null)
+        /// <returns> A new <see cref="Models.DataLakeStoreAccountNameAvailabilityResult"/> instance for mocking. </returns>
+        public static DataLakeStoreAccountNameAvailabilityResult DataLakeStoreAccountNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
         {
-            return new NameAvailabilityInformation(nameAvailable, reason, message);
+            return new DataLakeStoreAccountNameAvailabilityResult(isNameAvailable, reason, message);
         }
     }
 }

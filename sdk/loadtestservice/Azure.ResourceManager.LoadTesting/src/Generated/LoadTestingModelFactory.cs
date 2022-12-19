@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new LoadTestingQuotaAvailabilityResponse(id, name, resourceType, systemData, isAvailable, availabilityStatus);
         }
 
-        /// <summary> Initializes a new instance of LoadTestingData. </summary>
+        /// <summary> Initializes a new instance of LoadTestingResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.LoadTesting.Models
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="dataPlaneUri"> Resource data plane URI. </param>
         /// <param name="encryption"> CMK Encryption property. </param>
-        /// <returns> A new <see cref="LoadTesting.LoadTestingData"/> instance for mocking. </returns>
-        public static LoadTestingData LoadTestingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string description = null, LoadTestingProvisioningState? provisioningState = null, string dataPlaneUri = null, CustomerManagedKeyEncryptionProperties encryption = null)
+        /// <returns> A new <see cref="LoadTesting.LoadTestingResourceData"/> instance for mocking. </returns>
+        public static LoadTestingResourceData LoadTestingResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string description = null, LoadTestingProvisioningState? provisioningState = null, string dataPlaneUri = null, CustomerManagedKeyEncryptionProperties encryption = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new LoadTestingData(id, name, resourceType, systemData, tags, location, identity, description, provisioningState, dataPlaneUri, encryption);
+            return new LoadTestingResourceData(id, name, resourceType, systemData, tags, location, identity, description, provisioningState, dataPlaneUri, encryption);
         }
 
         /// <summary> Initializes a new instance of CustomerManagedKeyEncryptionProperties. </summary>

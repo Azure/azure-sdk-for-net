@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RedisEnterprise;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <returns> A new <see cref="Models.RedisEnterpriseOperationStatus"/> instance for mocking. </returns>
         public static RedisEnterpriseOperationStatus RedisEnterpriseOperationStatus(ResourceIdentifier id = null, string name = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string status = null, ResponseError error = null)
         {
-            return new RedisEnterpriseOperationStatus(id, name, startOn, endOn, status, new ErrorResponse(error));
+            return new RedisEnterpriseOperationStatus(id, name, startOn, endOn, status, error != null ? new ErrorResponse(error) : null);
         }
 
         /// <summary> Initializes a new instance of RedisEnterpriseClusterData. </summary>
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <returns> A new <see cref="RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static RedisEnterprisePrivateEndpointConnectionData RedisEnterprisePrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, RedisEnterprisePrivateLinkServiceConnectionState connectionState = null, RedisEnterprisePrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new RedisEnterprisePrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.SubResource(privateEndpointId), connectionState, provisioningState);
+            return new RedisEnterprisePrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of RedisEnterprisePrivateLinkServiceConnectionState. </summary>

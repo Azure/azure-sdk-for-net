@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <returns> A new <see cref="Models.StorageCacheUsageModel"/> instance for mocking. </returns>
         public static StorageCacheUsageModel StorageCacheUsageModel(string displayDescription = null, string modelName = null, string targetType = null)
         {
-            return new StorageCacheUsageModel(new StorageCacheUsageModelDisplay(displayDescription), modelName, targetType);
+            return new StorageCacheUsageModel(displayDescription != null ? new StorageCacheUsageModelDisplay(displayDescription) : null, modelName, targetType);
         }
 
         /// <summary> Initializes a new instance of StorageCacheUsage. </summary>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             primingJobs ??= new List<PrimingJob>();
             spaceAllocation ??= new List<StorageTargetSpaceAllocation>();
 
-            return new StorageCacheData(id, name, resourceType, systemData, tags, location, identity, new StorageCacheSkuInfo(skuName), cacheSizeGB, health, mountAddresses?.ToList(), provisioningState, subnet, upgradeStatus, upgradeSettings, networkSettings, encryptionSettings, new StorageCacheSecuritySettings(securityAccessPolicies?.ToList()), directoryServicesSettings, zones?.ToList(), primingJobs?.ToList(), spaceAllocation?.ToList());
+            return new StorageCacheData(id, name, resourceType, systemData, tags, location, identity, skuName != null ? new StorageCacheSkuInfo(skuName) : null, cacheSizeGB, health, mountAddresses?.ToList(), provisioningState, subnet, upgradeStatus, upgradeSettings, networkSettings, encryptionSettings, securityAccessPolicies != null ? new StorageCacheSecuritySettings(securityAccessPolicies?.ToList()) : null, directoryServicesSettings, zones?.ToList(), primingJobs?.ToList(), spaceAllocation?.ToList());
         }
 
         /// <summary> Initializes a new instance of StorageCacheHealth. </summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             junctions ??= new List<NamespaceJunction>();
             unknownAttributes ??= new Dictionary<string, string>();
 
-            return new StorageTargetData(id, name, resourceType, systemData, junctions?.ToList(), targetType, provisioningState, state, nfs3, new ClfsTarget(clfsTarget), new UnknownTarget(unknownAttributes), blobNfs, allocationPercentage, location);
+            return new StorageTargetData(id, name, resourceType, systemData, junctions?.ToList(), targetType, provisioningState, state, nfs3, clfsTarget != null ? new ClfsTarget(clfsTarget) : null, unknownAttributes != null ? new UnknownTarget(unknownAttributes) : null, blobNfs, allocationPercentage, location);
         }
 
         /// <summary> Initializes a new instance of NamespaceJunction. </summary>

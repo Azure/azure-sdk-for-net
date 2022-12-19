@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesBackup;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -262,7 +261,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.RecoveryServicesBackupPrivateEndpointConnection"/> instance for mocking. </returns>
         public static RecoveryServicesBackupPrivateEndpointConnection RecoveryServicesBackupPrivateEndpointConnection(ProvisioningState? provisioningState = null, ResourceIdentifier privateEndpointId = null, RecoveryServicesBackupPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null)
         {
-            return new RecoveryServicesBackupPrivateEndpointConnection(provisioningState, ResourceManagerModelFactory.WritableSubResource(privateEndpointId), privateLinkServiceConnectionState);
+            return new RecoveryServicesBackupPrivateEndpointConnection(provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, privateLinkServiceConnectionState);
         }
 
         /// <summary> Initializes a new instance of RecoveryServicesBackupPrivateLinkServiceConnectionState. </summary>
@@ -534,7 +533,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             validateOperationResponseValidationResults ??= new List<ErrorDetail>();
 
-            return new ValidateOperationsResponse(new ValidateOperationResponse(validateOperationResponseValidationResults?.ToList()));
+            return new ValidateOperationsResponse(validateOperationResponseValidationResults != null ? new ValidateOperationResponse(validateOperationResponseValidationResults?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of ErrorDetail. </summary>
@@ -2515,7 +2514,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             retentionScheduleDailyDaysOfTheMonth ??= new List<Day>();
             retentionTimes ??= new List<DateTimeOffset>();
 
-            return new MonthlyRetentionSchedule(retentionScheduleFormatType, new DailyRetentionFormat(retentionScheduleDailyDaysOfTheMonth?.ToList()), retentionScheduleWeekly, retentionTimes?.ToList(), retentionDuration);
+            return new MonthlyRetentionSchedule(retentionScheduleFormatType, retentionScheduleDailyDaysOfTheMonth != null ? new DailyRetentionFormat(retentionScheduleDailyDaysOfTheMonth?.ToList()) : null, retentionScheduleWeekly, retentionTimes?.ToList(), retentionDuration);
         }
 
         /// <summary> Initializes a new instance of WeeklyRetentionFormat. </summary>
@@ -2544,7 +2543,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             retentionScheduleDailyDaysOfTheMonth ??= new List<Day>();
             retentionTimes ??= new List<DateTimeOffset>();
 
-            return new YearlyRetentionSchedule(retentionScheduleFormatType, monthsOfYear?.ToList(), new DailyRetentionFormat(retentionScheduleDailyDaysOfTheMonth?.ToList()), retentionScheduleWeekly, retentionTimes?.ToList(), retentionDuration);
+            return new YearlyRetentionSchedule(retentionScheduleFormatType, monthsOfYear?.ToList(), retentionScheduleDailyDaysOfTheMonth != null ? new DailyRetentionFormat(retentionScheduleDailyDaysOfTheMonth?.ToList()) : null, retentionScheduleWeekly, retentionTimes?.ToList(), retentionDuration);
         }
 
         /// <summary> Initializes a new instance of LongTermSchedulePolicy. </summary>
@@ -2731,7 +2730,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             scheduleRunTimes ??= new List<DateTimeOffset>();
 
-            return new SimpleSchedulePolicyV2("SimpleSchedulePolicyV2", scheduleRunFrequency, hourlySchedule, new DailySchedule(scheduleRunTimes?.ToList()), weeklySchedule);
+            return new SimpleSchedulePolicyV2("SimpleSchedulePolicyV2", scheduleRunFrequency, hourlySchedule, scheduleRunTimes != null ? new DailySchedule(scheduleRunTimes?.ToList()) : null, weeklySchedule);
         }
 
         /// <summary> Initializes a new instance of VaultJob. </summary>
@@ -2753,7 +2752,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             errorDetails ??= new List<VaultJobErrorInfo>();
             extendedInfoPropertyBag ??= new Dictionary<string, string>();
 
-            return new VaultJob(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, "VaultJob", duration, actionsInfo?.ToList(), errorDetails?.ToList(), new VaultJobExtendedInfo(extendedInfoPropertyBag));
+            return new VaultJob(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, "VaultJob", duration, actionsInfo?.ToList(), errorDetails?.ToList(), extendedInfoPropertyBag != null ? new VaultJobExtendedInfo(extendedInfoPropertyBag) : null);
         }
 
         /// <summary> Initializes a new instance of VaultJobErrorInfo. </summary>
@@ -2787,7 +2786,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             dpmServers ??= new List<string>();
 
-            return new AzureBackupServerContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, "AzureBackupServerContainer", protectableObjectType, canReRegister, containerId, protectedItemCount, dpmAgentVersion, dpmServers?.ToList(), upgradeAvailable, protectionStatus, new DpmContainerExtendedInfo(extendedInfoLastRefreshedOn));
+            return new AzureBackupServerContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, "AzureBackupServerContainer", protectableObjectType, canReRegister, containerId, protectedItemCount, dpmAgentVersion, dpmServers?.ToList(), upgradeAvailable, protectionStatus, extendedInfoLastRefreshedOn != null ? new DpmContainerExtendedInfo(extendedInfoLastRefreshedOn) : null);
         }
 
         /// <summary> Initializes a new instance of DpmContainer. </summary>
@@ -2809,7 +2808,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             dpmServers ??= new List<string>();
 
-            return new DpmContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, "DPMContainer", protectableObjectType, canReRegister, containerId, protectedItemCount, dpmAgentVersion, dpmServers?.ToList(), upgradeAvailable, protectionStatus, new DpmContainerExtendedInfo(extendedInfoLastRefreshedOn));
+            return new DpmContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, "DPMContainer", protectableObjectType, canReRegister, containerId, protectedItemCount, dpmAgentVersion, dpmServers?.ToList(), upgradeAvailable, protectionStatus, extendedInfoLastRefreshedOn != null ? new DpmContainerExtendedInfo(extendedInfoLastRefreshedOn) : null);
         }
 
         /// <summary> Initializes a new instance of AzureBackupServerEngine. </summary>
@@ -3674,7 +3673,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             recoveryTargetClientScripts ??= new List<ClientScriptForConnect>();
 
-            return new OperationStatusProvisionILRExtendedInfo("OperationStatusProvisionILRExtendedInfo", new InstantItemRecoveryTarget(recoveryTargetClientScripts?.ToList()));
+            return new OperationStatusProvisionILRExtendedInfo("OperationStatusProvisionILRExtendedInfo", recoveryTargetClientScripts != null ? new InstantItemRecoveryTarget(recoveryTargetClientScripts?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of OperationStatusValidateOperationExtendedInfo. </summary>
@@ -3684,7 +3683,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             validateOperationResponseValidationResults ??= new List<ErrorDetail>();
 
-            return new OperationStatusValidateOperationExtendedInfo("OperationStatusValidateOperationExtendedInfo", new ValidateOperationResponse(validateOperationResponseValidationResults?.ToList()));
+            return new OperationStatusValidateOperationExtendedInfo("OperationStatusValidateOperationExtendedInfo", validateOperationResponseValidationResults != null ? new ValidateOperationResponse(validateOperationResponseValidationResults?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest. </summary>

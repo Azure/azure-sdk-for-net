@@ -15,6 +15,7 @@ namespace Azure.Data.Tables.Models
     /// <summary> Model factory for generated models. </summary>
     public static partial class TableModelFactory
     {
+
         /// <summary> Initializes a new instance of TableServiceProperties. </summary>
         /// <param name="logging"> Azure Analytics Logging settings. </param>
         /// <param name="hourMetrics"> A summary of request statistics grouped by API in hourly aggregates for tables. </param>

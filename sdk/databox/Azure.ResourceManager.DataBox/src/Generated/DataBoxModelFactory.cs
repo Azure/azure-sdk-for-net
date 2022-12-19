@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DataBoxJobData(id, name, resourceType, systemData, tags, location, transferType, isCancellable, isDeletable, isShippingAddressEditable, isPrepareToShipEnabled, status, startOn, error, details, cancellationReason, deliveryType, new JobDeliveryInfo(deliveryInfoScheduledOn), isCancellableWithoutFee, sku, identity);
+            return new DataBoxJobData(id, name, resourceType, systemData, tags, location, transferType, isCancellable, isDeletable, isShippingAddressEditable, isPrepareToShipEnabled, status, startOn, error, details, cancellationReason, deliveryType, deliveryInfoScheduledOn != null ? new JobDeliveryInfo(deliveryInfoScheduledOn) : null, isCancellableWithoutFee, sku, identity);
         }
 
         /// <summary> Initializes a new instance of DataBoxBasicJobDetails. </summary>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <returns> A new <see cref="Models.TransferConfiguration"/> instance for mocking. </returns>
         public static TransferConfiguration TransferConfiguration(TransferConfigurationType transferConfigurationType = default, TransferFilterDetails transferFilterDetailsInclude = null, TransferAllDetails transferAllDetailsInclude = null)
         {
-            return new TransferConfiguration(transferConfigurationType, new TransferConfigurationTransferFilterDetails(transferFilterDetailsInclude), new TransferConfigurationTransferAllDetails(transferAllDetailsInclude));
+            return new TransferConfiguration(transferConfigurationType, transferFilterDetailsInclude != null ? new TransferConfigurationTransferFilterDetails(transferFilterDetailsInclude) : null, transferAllDetailsInclude != null ? new TransferConfigurationTransferAllDetails(transferAllDetailsInclude) : null);
         }
 
         /// <summary> Initializes a new instance of TransferFilterDetails. </summary>
@@ -250,12 +250,12 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="doubleEncryption"> Preferences related to the Encryption. </param>
         /// <param name="storageAccountAccessTierPreferences"> Preferences related to the Access Tier of storage accounts. </param>
         /// <returns> A new <see cref="Models.DataBoxOrderPreferences"/> instance for mocking. </returns>
-        public static DataBoxOrderPreferences DataBoxOrderPreferences(IEnumerable<string> preferredDataCenterRegion = null, TransportShipmentType transportPreferencesPreferredShipmentType = default, DataBoxDoubleEncryption? doubleEncryption = null, IEnumerable<string> storageAccountAccessTierPreferences = null)
+        public static DataBoxOrderPreferences DataBoxOrderPreferences(IEnumerable<string> preferredDataCenterRegion = null, TransportShipmentType? transportPreferencesPreferredShipmentType = null, DataBoxDoubleEncryption? doubleEncryption = null, IEnumerable<string> storageAccountAccessTierPreferences = null)
         {
             preferredDataCenterRegion ??= new List<string>();
             storageAccountAccessTierPreferences ??= new List<string>();
 
-            return new DataBoxOrderPreferences(preferredDataCenterRegion?.ToList(), new TransportPreferences(transportPreferencesPreferredShipmentType), new DataBoxEncryptionPreferences(doubleEncryption), storageAccountAccessTierPreferences?.ToList());
+            return new DataBoxOrderPreferences(preferredDataCenterRegion?.ToList(), transportPreferencesPreferredShipmentType.HasValue ? new TransportPreferences(transportPreferencesPreferredShipmentType.Value) : null, doubleEncryption != null ? new DataBoxEncryptionPreferences(doubleEncryption) : null, storageAccountAccessTierPreferences?.ToList());
         }
 
         /// <summary> Initializes a new instance of CopyLogDetails. </summary>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <returns> A new <see cref="Models.DataBoxManagedIdentity"/> instance for mocking. </returns>
         public static DataBoxManagedIdentity DataBoxManagedIdentity(string identityType = null, ResourceIdentifier userAssignedResourceId = null)
         {
-            return new DataBoxManagedIdentity(identityType, new DataBoxUserAssignedIdentity(userAssignedResourceId));
+            return new DataBoxManagedIdentity(identityType, userAssignedResourceId != null ? new DataBoxUserAssignedIdentity(userAssignedResourceId) : null);
         }
 
         /// <summary> Initializes a new instance of LastMitigationActionOnJob. </summary>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.DataBox.Models
             scheduleAvailabilityResponseAvailableDates ??= new List<DateTimeOffset>();
             transportAvailabilityDetails ??= new List<TransportAvailabilityDetails>();
 
-            return new RegionConfigurationResult(new ScheduleAvailabilityResponse(scheduleAvailabilityResponseAvailableDates?.ToList()), new TransportAvailabilityResponse(transportAvailabilityDetails?.ToList()), dataCenterAddressResponse);
+            return new RegionConfigurationResult(scheduleAvailabilityResponseAvailableDates != null ? new ScheduleAvailabilityResponse(scheduleAvailabilityResponseAvailableDates?.ToList()) : null, transportAvailabilityDetails != null ? new TransportAvailabilityResponse(transportAvailabilityDetails?.ToList()) : null, dataCenterAddressResponse);
         }
 
         /// <summary> Initializes a new instance of TransportAvailabilityDetails. </summary>

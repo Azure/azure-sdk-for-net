@@ -11,7 +11,6 @@ using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.IotCentral;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.IotCentral.Models
 {
@@ -37,12 +36,12 @@ namespace Azure.ResourceManager.IotCentral.Models
         /// <param name="networkRuleSets"> Network Rule Set Properties of this IoT Central application. </param>
         /// <param name="privateEndpointConnections"> Private endpoint connections created on this IoT Central application. </param>
         /// <returns> A new <see cref="IotCentral.IotCentralAppData"/> instance for mocking. </returns>
-        public static IotCentralAppData IotCentralAppData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IotCentralAppSku skuName = default, ManagedServiceIdentity identity = null, IotCentralProvisioningState? provisioningState = null, Guid? applicationId = null, string displayName = null, string subdomain = null, string template = null, IotCentralAppState? state = null, IotCentralPublicNetworkAccess? publicNetworkAccess = null, IotCentralNetworkRuleSets networkRuleSets = null, IEnumerable<IotCentralPrivateEndpointConnectionData> privateEndpointConnections = null)
+        public static IotCentralAppData IotCentralAppData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IotCentralAppSku? skuName = null, ManagedServiceIdentity identity = null, IotCentralProvisioningState? provisioningState = null, Guid? applicationId = null, string displayName = null, string subdomain = null, string template = null, IotCentralAppState? state = null, IotCentralPublicNetworkAccess? publicNetworkAccess = null, IotCentralNetworkRuleSets networkRuleSets = null, IEnumerable<IotCentralPrivateEndpointConnectionData> privateEndpointConnections = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<IotCentralPrivateEndpointConnectionData>();
 
-            return new IotCentralAppData(id, name, resourceType, systemData, tags, location, new IotCentralAppSkuInfo(skuName), identity, provisioningState, applicationId, displayName, subdomain, template, state, publicNetworkAccess, networkRuleSets, privateEndpointConnections?.ToList());
+            return new IotCentralAppData(id, name, resourceType, systemData, tags, location, skuName.HasValue ? new IotCentralAppSkuInfo(skuName.Value) : null, identity, provisioningState, applicationId, displayName, subdomain, template, state, publicNetworkAccess, networkRuleSets, privateEndpointConnections?.ToList());
         }
 
         /// <summary> Initializes a new instance of IotCentralNetworkRuleSets. </summary>
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         {
             groupIds ??= new List<string>();
 
-            return new IotCentralPrivateEndpointConnectionData(id, name, resourceType, systemData, groupIds?.ToList(), ResourceManagerModelFactory.SubResource(privateEndpointId), connectionState, provisioningState);
+            return new IotCentralPrivateEndpointConnectionData(id, name, resourceType, systemData, groupIds?.ToList(), privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of IotCentralPrivateLinkServiceConnectionState. </summary>

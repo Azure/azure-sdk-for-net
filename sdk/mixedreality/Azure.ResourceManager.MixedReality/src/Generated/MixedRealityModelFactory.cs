@@ -16,23 +16,14 @@ namespace Azure.ResourceManager.MixedReality.Models
     /// <summary> Model factory for generated models. </summary>
     public static partial class MixedRealityModelFactory
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
-        /// <param name="nameAvailable">
-        /// if name Available
-        /// Serialized Name: CheckNameAvailabilityResponse.nameAvailable
-        /// </param>
-        /// <param name="reason">
-        /// Resource Name To Verify
-        /// Serialized Name: CheckNameAvailabilityResponse.reason
-        /// </param>
-        /// <param name="message">
-        /// detail message
-        /// Serialized Name: CheckNameAvailabilityResponse.message
-        /// </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool nameAvailable = default, NameUnavailableReason? reason = null, string message = null)
+        /// <summary> Initializes a new instance of MixedRealityNameAvailabilityResult. </summary>
+        /// <param name="isNameAvailable"> if name Available. </param>
+        /// <param name="reason"> Resource Name To Verify. </param>
+        /// <param name="message"> detail message. </param>
+        /// <returns> A new <see cref="Models.MixedRealityNameAvailabilityResult"/> instance for mocking. </returns>
+        public static MixedRealityNameAvailabilityResult MixedRealityNameAvailabilityResult(bool isNameAvailable = default, MixedRealityNameUnavailableReason? reason = null, string message = null)
         {
-            return new CheckNameAvailabilityResponse(nameAvailable, reason, message);
+            return new MixedRealityNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
         /// <summary> Initializes a new instance of SpatialAnchorsAccountData. </summary>
@@ -42,36 +33,15 @@ namespace Azure.ResourceManager.MixedReality.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity">
-        /// The identity associated with this account
-        /// Serialized Name: SpatialAnchorsAccount.identity. Current supported identity types: SystemAssigned
-        /// </param>
-        /// <param name="plan">
-        /// The plan associated with this account
-        /// Serialized Name: SpatialAnchorsAccount.plan. Current supported identity types: SystemAssigned
-        /// </param>
-        /// <param name="sku">
-        /// The sku associated with this account
-        /// Serialized Name: SpatialAnchorsAccount.sku
-        /// </param>
-        /// <param name="kind">
-        /// The kind of account, if supported
-        /// Serialized Name: SpatialAnchorsAccount.kind
-        /// </param>
-        /// <param name="storageAccountName">
-        /// The name of the storage account associated with this accountId
-        /// Serialized Name: SpatialAnchorsAccount.properties.storageAccountName
-        /// </param>
-        /// <param name="accountId">
-        /// unique id of certain account.
-        /// Serialized Name: SpatialAnchorsAccount.properties.accountId
-        /// </param>
-        /// <param name="accountDomain">
-        /// Correspond domain name of certain Spatial Anchors Account
-        /// Serialized Name: SpatialAnchorsAccount.properties.accountDomain
-        /// </param>
+        /// <param name="identity"> The identity associated with this account. Current supported identity types: SystemAssigned. </param>
+        /// <param name="plan"> The plan associated with this account. Current supported identity types: SystemAssigned. </param>
+        /// <param name="sku"> The sku associated with this account. </param>
+        /// <param name="kind"> The kind of account, if supported. </param>
+        /// <param name="storageAccountName"> The name of the storage account associated with this accountId. </param>
+        /// <param name="accountId"> unique id of certain account. </param>
+        /// <param name="accountDomain"> Correspond domain name of certain Spatial Anchors Account. </param>
         /// <returns> A new <see cref="MixedReality.SpatialAnchorsAccountData"/> instance for mocking. </returns>
-        public static SpatialAnchorsAccountData SpatialAnchorsAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ManagedServiceIdentity plan = null, MixedRealitySku sku = null, MixedRealitySku kind = null, string storageAccountName = null, string accountId = null, string accountDomain = null)
+        public static SpatialAnchorsAccountData SpatialAnchorsAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ManagedServiceIdentity plan = null, MixedRealitySku sku = null, MixedRealitySku kind = null, string storageAccountName = null, Guid? accountId = null, string accountDomain = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -79,45 +49,24 @@ namespace Azure.ResourceManager.MixedReality.Models
         }
 
         /// <summary> Initializes a new instance of MixedRealitySku. </summary>
-        /// <param name="name">
-        /// The name of the SKU. Ex - P3. It is typically a letter+number code
-        /// Serialized Name: Sku.name
-        /// </param>
-        /// <param name="tier">
-        /// This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT.
-        /// Serialized Name: Sku.tier
-        /// </param>
-        /// <param name="size">
-        /// The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. 
-        /// Serialized Name: Sku.size
-        /// </param>
-        /// <param name="family">
-        /// If the service has different generations of hardware, for the same SKU, then that can be captured here.
-        /// Serialized Name: Sku.family
-        /// </param>
-        /// <param name="capacity">
-        /// If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted.
-        /// Serialized Name: Sku.capacity
-        /// </param>
+        /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
+        /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
+        /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
+        /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
+        /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>
         /// <returns> A new <see cref="Models.MixedRealitySku"/> instance for mocking. </returns>
         public static MixedRealitySku MixedRealitySku(string name = null, MixedRealitySkuTier? tier = null, string size = null, string family = null, int? capacity = null)
         {
             return new MixedRealitySku(name, tier, size, family, capacity);
         }
 
-        /// <summary> Initializes a new instance of AccountKeys. </summary>
-        /// <param name="primaryKey">
-        /// value of primary key.
-        /// Serialized Name: AccountKeys.primaryKey
-        /// </param>
-        /// <param name="secondaryKey">
-        /// value of secondary key.
-        /// Serialized Name: AccountKeys.secondaryKey
-        /// </param>
-        /// <returns> A new <see cref="Models.AccountKeys"/> instance for mocking. </returns>
-        public static AccountKeys AccountKeys(string primaryKey = null, string secondaryKey = null)
+        /// <summary> Initializes a new instance of MixedRealityAccountKeys. </summary>
+        /// <param name="primaryKey"> value of primary key. </param>
+        /// <param name="secondaryKey"> value of secondary key. </param>
+        /// <returns> A new <see cref="Models.MixedRealityAccountKeys"/> instance for mocking. </returns>
+        public static MixedRealityAccountKeys MixedRealityAccountKeys(string primaryKey = null, string secondaryKey = null)
         {
-            return new AccountKeys(primaryKey, secondaryKey);
+            return new MixedRealityAccountKeys(primaryKey, secondaryKey);
         }
 
         /// <summary> Initializes a new instance of RemoteRenderingAccountData. </summary>
@@ -127,80 +76,19 @@ namespace Azure.ResourceManager.MixedReality.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity">
-        /// The identity associated with this account
-        /// Serialized Name: RemoteRenderingAccount.identity. Current supported identity types: SystemAssigned
-        /// </param>
-        /// <param name="plan">
-        /// The plan associated with this account
-        /// Serialized Name: RemoteRenderingAccount.plan. Current supported identity types: SystemAssigned
-        /// </param>
-        /// <param name="sku">
-        /// The sku associated with this account
-        /// Serialized Name: RemoteRenderingAccount.sku
-        /// </param>
-        /// <param name="kind">
-        /// The kind of account, if supported
-        /// Serialized Name: RemoteRenderingAccount.kind
-        /// </param>
-        /// <param name="storageAccountName">
-        /// The name of the storage account associated with this accountId
-        /// Serialized Name: RemoteRenderingAccount.properties.storageAccountName
-        /// </param>
-        /// <param name="accountId">
-        /// unique id of certain account.
-        /// Serialized Name: RemoteRenderingAccount.properties.accountId
-        /// </param>
-        /// <param name="accountDomain">
-        /// Correspond domain name of certain Spatial Anchors Account
-        /// Serialized Name: RemoteRenderingAccount.properties.accountDomain
-        /// </param>
+        /// <param name="identity"> The identity associated with this account. Current supported identity types: SystemAssigned. </param>
+        /// <param name="plan"> The plan associated with this account. Current supported identity types: SystemAssigned. </param>
+        /// <param name="sku"> The sku associated with this account. </param>
+        /// <param name="kind"> The kind of account, if supported. </param>
+        /// <param name="storageAccountName"> The name of the storage account associated with this accountId. </param>
+        /// <param name="accountId"> unique id of certain account. </param>
+        /// <param name="accountDomain"> Correspond domain name of certain Spatial Anchors Account. </param>
         /// <returns> A new <see cref="MixedReality.RemoteRenderingAccountData"/> instance for mocking. </returns>
-        public static RemoteRenderingAccountData RemoteRenderingAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ManagedServiceIdentity plan = null, MixedRealitySku sku = null, MixedRealitySku kind = null, string storageAccountName = null, string accountId = null, string accountDomain = null)
+        public static RemoteRenderingAccountData RemoteRenderingAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ManagedServiceIdentity plan = null, MixedRealitySku sku = null, MixedRealitySku kind = null, string storageAccountName = null, Guid? accountId = null, string accountDomain = null)
         {
             tags ??= new Dictionary<string, string>();
 
             return new RemoteRenderingAccountData(id, name, resourceType, systemData, tags, location, identity, plan, sku, kind, storageAccountName, accountId, accountDomain);
-        }
-
-        /// <summary> Initializes a new instance of ObjectAnchorsAccountData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> Serialized Name: ObjectAnchorsAccount.identity. Current supported identity types: SystemAssigned. </param>
-        /// <param name="plan">
-        /// The plan associated with this account
-        /// Serialized Name: ObjectAnchorsAccount.plan. Current supported identity types: SystemAssigned
-        /// </param>
-        /// <param name="sku">
-        /// The sku associated with this account
-        /// Serialized Name: ObjectAnchorsAccount.sku
-        /// </param>
-        /// <param name="kind">
-        /// The kind of account, if supported
-        /// Serialized Name: ObjectAnchorsAccount.kind
-        /// </param>
-        /// <param name="storageAccountName">
-        /// The name of the storage account associated with this accountId
-        /// Serialized Name: ObjectAnchorsAccount.properties.storageAccountName
-        /// </param>
-        /// <param name="accountId">
-        /// unique id of certain account.
-        /// Serialized Name: ObjectAnchorsAccount.properties.accountId
-        /// </param>
-        /// <param name="accountDomain">
-        /// Correspond domain name of certain Spatial Anchors Account
-        /// Serialized Name: ObjectAnchorsAccount.properties.accountDomain
-        /// </param>
-        /// <returns> A new <see cref="MixedReality.ObjectAnchorsAccountData"/> instance for mocking. </returns>
-        public static ObjectAnchorsAccountData ObjectAnchorsAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ManagedServiceIdentity plan = null, MixedRealitySku sku = null, MixedRealitySku kind = null, string storageAccountName = null, string accountId = null, string accountDomain = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new ObjectAnchorsAccountData(id, name, resourceType, systemData, tags, location, identity, plan, sku, kind, storageAccountName, accountId, accountDomain);
         }
     }
 }

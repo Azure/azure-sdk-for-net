@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new FluidRelayServerData(id, name, resourceType, systemData, tags, location, identity, frsTenantId, fluidRelayEndpoints, provisioningState, new EncryptionProperties(customerManagedKeyEncryption), storageSku);
+            return new FluidRelayServerData(id, name, resourceType, systemData, tags, location, identity, frsTenantId, fluidRelayEndpoints, provisioningState, customerManagedKeyEncryption != null ? new EncryptionProperties(customerManagedKeyEncryption) : null, storageSku);
         }
 
         /// <summary> Initializes a new instance of FluidRelayEndpoints. </summary>

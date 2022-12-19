@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             subscriptions ??= new List<string>();
             resources ??= new List<ResourceMetadata>();
 
-            return new ReportProperties(id, status, tenantId, reportName, offerGuid, timeZone, triggerOn, nextTriggerOn, lastTriggerOn, subscriptions?.ToList(), resources?.ToList(), new ReportComplianceStatus(complianceStatusM365), provisioningState);
+            return new ReportProperties(id, status, tenantId, reportName, offerGuid, timeZone, triggerOn, nextTriggerOn, lastTriggerOn, subscriptions?.ToList(), resources?.ToList(), complianceStatusM365 != null ? new ReportComplianceStatus(complianceStatusM365) : null, provisioningState);
         }
 
         /// <summary> Initializes a new instance of ResourceMetadata. </summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             resourceList ??= new List<ResourceItem>();
             complianceReport ??= new List<ComplianceReportItem>();
 
-            return new DownloadResponse(resourceList?.ToList(), complianceReport?.ToList(), new DownloadResponseCompliancePdfReport(compliancePdfReportSasUri), new DownloadResponseComplianceDetailedPdfReport(complianceDetailedPdfReportSasUri));
+            return new DownloadResponse(resourceList?.ToList(), complianceReport?.ToList(), compliancePdfReportSasUri != null ? new DownloadResponseCompliancePdfReport(compliancePdfReportSasUri) : null, complianceDetailedPdfReportSasUri != null ? new DownloadResponseComplianceDetailedPdfReport(complianceDetailedPdfReportSasUri) : null);
         }
 
         /// <summary> Initializes a new instance of ResourceItem. </summary>

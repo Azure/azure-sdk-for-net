@@ -11,7 +11,6 @@ using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.DigitalTwins;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="hostName"> Api endpoint to work with DigitalTwinsInstance. </param>
         /// <param name="privateEndpointConnections"> The private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> Public network access for the DigitalTwinsInstance. </param>
-        /// <param name="identity"> The managed identity for the DigitalTwinsInstance. Current supported identity types: None, SystemAssigned. </param>
+        /// <param name="identity"> The managed identity for the DigitalTwinsInstance. </param>
         /// <returns> A new <see cref="DigitalTwins.DigitalTwinsDescriptionData"/> instance for mocking. </returns>
         public static DigitalTwinsDescriptionData DigitalTwinsDescriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DateTimeOffset? createdOn = null, DateTimeOffset? lastUpdatedOn = null, DigitalTwinsProvisioningState? provisioningState = null, string hostName = null, IEnumerable<DigitalTwinsPrivateEndpointConnectionData> privateEndpointConnections = null, DigitalTwinsPublicNetworkAccess? publicNetworkAccess = null, ManagedServiceIdentity identity = null)
         {
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         {
             groupIds ??= new List<string>();
 
-            return new DigitalTwinsPrivateEndpointConnectionProperties(provisioningState, ResourceManagerModelFactory.SubResource(privateEndpointId), groupIds?.ToList(), privateLinkServiceConnectionState);
+            return new DigitalTwinsPrivateEndpointConnectionProperties(provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, groupIds?.ToList(), privateLinkServiceConnectionState);
         }
 
         /// <summary> Initializes a new instance of DigitalTwinsPrivateLinkServiceConnectionState. </summary>
@@ -99,10 +98,20 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="authenticationType"> Specifies the authentication type being used for connecting to the endpoint. Defaults to &apos;KeyBased&apos;. If &apos;KeyBased&apos; is selected, a connection string must be specified (at least the primary connection string). If &apos;IdentityBased&apos; is select, the endpointUri and entityPath properties must be specified. </param>
         /// <param name="deadLetterSecret"> Dead letter storage secret for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="deadLetterUri"> Dead letter storage URL for identity-based authentication. </param>
+        /// <param name="identity"> Managed identity properties for the endpoint. </param>
         /// <returns> A new <see cref="Models.DigitalTwinsEndpointResourceProperties"/> instance for mocking. </returns>
-        public static DigitalTwinsEndpointResourceProperties DigitalTwinsEndpointResourceProperties(string endpointType = null, DigitalTwinsEndpointProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DigitalTwinsAuthenticationType? authenticationType = null, string deadLetterSecret = null, Uri deadLetterUri = null)
+        public static DigitalTwinsEndpointResourceProperties DigitalTwinsEndpointResourceProperties(string endpointType = null, DigitalTwinsEndpointProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DigitalTwinsAuthenticationType? authenticationType = null, string deadLetterSecret = null, Uri deadLetterUri = null, DigitalTwinsManagedIdentityReference identity = null)
         {
-            return new UnknownDigitalTwinsEndpointResourceProperties(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri);
+            return new UnknownDigitalTwinsEndpointResourceProperties(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity);
+        }
+
+        /// <summary> Initializes a new instance of DigitalTwinsManagedIdentityReference. </summary>
+        /// <param name="identityType"> The type of managed identity used. </param>
+        /// <param name="userAssignedIdentity"> The user identity ARM resource id if the managed identity type is &apos;UserAssigned&apos;. </param>
+        /// <returns> A new <see cref="Models.DigitalTwinsManagedIdentityReference"/> instance for mocking. </returns>
+        public static DigitalTwinsManagedIdentityReference DigitalTwinsManagedIdentityReference(DigitalTwinsManagedIdentityType? identityType = null, string userAssignedIdentity = null)
+        {
+            return new DigitalTwinsManagedIdentityReference(identityType, userAssignedIdentity);
         }
 
         /// <summary> Initializes a new instance of DigitalTwinsNameResult. </summary>
@@ -159,10 +168,11 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <summary> Initializes a new instance of TimeSeriesDatabaseConnectionProperties. </summary>
         /// <param name="connectionType"> The type of time series connection resource. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="identity"> Managed identity properties for the time series database connection resource. </param>
         /// <returns> A new <see cref="Models.TimeSeriesDatabaseConnectionProperties"/> instance for mocking. </returns>
-        public static TimeSeriesDatabaseConnectionProperties TimeSeriesDatabaseConnectionProperties(string connectionType = null, TimeSeriesDatabaseConnectionState? provisioningState = null)
+        public static TimeSeriesDatabaseConnectionProperties TimeSeriesDatabaseConnectionProperties(string connectionType = null, TimeSeriesDatabaseConnectionState? provisioningState = null, DigitalTwinsManagedIdentityReference identity = null)
         {
-            return new UnknownTimeSeriesDatabaseConnectionProperties(connectionType, provisioningState);
+            return new UnknownTimeSeriesDatabaseConnectionProperties(connectionType, provisioningState, identity);
         }
 
         /// <summary> Initializes a new instance of DigitalTwinsServiceBusProperties. </summary>
@@ -171,14 +181,15 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="authenticationType"> Specifies the authentication type being used for connecting to the endpoint. Defaults to &apos;KeyBased&apos;. If &apos;KeyBased&apos; is selected, a connection string must be specified (at least the primary connection string). If &apos;IdentityBased&apos; is select, the endpointUri and entityPath properties must be specified. </param>
         /// <param name="deadLetterSecret"> Dead letter storage secret for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="deadLetterUri"> Dead letter storage URL for identity-based authentication. </param>
+        /// <param name="identity"> Managed identity properties for the endpoint. </param>
         /// <param name="primaryConnectionString"> PrimaryConnectionString of the endpoint for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="secondaryConnectionString"> SecondaryConnectionString of the endpoint for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="endpointUri"> The URL of the ServiceBus namespace for identity-based authentication. It must include the protocol &apos;sb://&apos;. </param>
         /// <param name="entityPath"> The ServiceBus Topic name for identity-based authentication. </param>
         /// <returns> A new <see cref="Models.DigitalTwinsServiceBusProperties"/> instance for mocking. </returns>
-        public static DigitalTwinsServiceBusProperties DigitalTwinsServiceBusProperties(DigitalTwinsEndpointProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DigitalTwinsAuthenticationType? authenticationType = null, string deadLetterSecret = null, Uri deadLetterUri = null, string primaryConnectionString = null, string secondaryConnectionString = null, Uri endpointUri = null, string entityPath = null)
+        public static DigitalTwinsServiceBusProperties DigitalTwinsServiceBusProperties(DigitalTwinsEndpointProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DigitalTwinsAuthenticationType? authenticationType = null, string deadLetterSecret = null, Uri deadLetterUri = null, DigitalTwinsManagedIdentityReference identity = null, string primaryConnectionString = null, string secondaryConnectionString = null, Uri endpointUri = null, string entityPath = null)
         {
-            return new DigitalTwinsServiceBusProperties("ServiceBus", provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, primaryConnectionString, secondaryConnectionString, endpointUri, entityPath);
+            return new DigitalTwinsServiceBusProperties("ServiceBus", provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity, primaryConnectionString, secondaryConnectionString, endpointUri, entityPath);
         }
 
         /// <summary> Initializes a new instance of DigitalTwinsEventHubProperties. </summary>
@@ -187,14 +198,15 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="authenticationType"> Specifies the authentication type being used for connecting to the endpoint. Defaults to &apos;KeyBased&apos;. If &apos;KeyBased&apos; is selected, a connection string must be specified (at least the primary connection string). If &apos;IdentityBased&apos; is select, the endpointUri and entityPath properties must be specified. </param>
         /// <param name="deadLetterSecret"> Dead letter storage secret for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="deadLetterUri"> Dead letter storage URL for identity-based authentication. </param>
+        /// <param name="identity"> Managed identity properties for the endpoint. </param>
         /// <param name="connectionStringPrimaryKey"> PrimaryConnectionString of the endpoint for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="connectionStringSecondaryKey"> SecondaryConnectionString of the endpoint for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="endpointUri"> The URL of the EventHub namespace for identity-based authentication. It must include the protocol &apos;sb://&apos;. </param>
         /// <param name="entityPath"> The EventHub name in the EventHub namespace for identity-based authentication. </param>
         /// <returns> A new <see cref="Models.DigitalTwinsEventHubProperties"/> instance for mocking. </returns>
-        public static DigitalTwinsEventHubProperties DigitalTwinsEventHubProperties(DigitalTwinsEndpointProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DigitalTwinsAuthenticationType? authenticationType = null, string deadLetterSecret = null, Uri deadLetterUri = null, string connectionStringPrimaryKey = null, string connectionStringSecondaryKey = null, Uri endpointUri = null, string entityPath = null)
+        public static DigitalTwinsEventHubProperties DigitalTwinsEventHubProperties(DigitalTwinsEndpointProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DigitalTwinsAuthenticationType? authenticationType = null, string deadLetterSecret = null, Uri deadLetterUri = null, DigitalTwinsManagedIdentityReference identity = null, string connectionStringPrimaryKey = null, string connectionStringSecondaryKey = null, Uri endpointUri = null, string entityPath = null)
         {
-            return new DigitalTwinsEventHubProperties("EventHub", provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, connectionStringPrimaryKey, connectionStringSecondaryKey, endpointUri, entityPath);
+            return new DigitalTwinsEventHubProperties("EventHub", provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity, connectionStringPrimaryKey, connectionStringSecondaryKey, endpointUri, entityPath);
         }
 
         /// <summary> Initializes a new instance of DigitalTwinsEventGridProperties. </summary>
@@ -203,29 +215,31 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="authenticationType"> Specifies the authentication type being used for connecting to the endpoint. Defaults to &apos;KeyBased&apos;. If &apos;KeyBased&apos; is selected, a connection string must be specified (at least the primary connection string). If &apos;IdentityBased&apos; is select, the endpointUri and entityPath properties must be specified. </param>
         /// <param name="deadLetterSecret"> Dead letter storage secret for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="deadLetterUri"> Dead letter storage URL for identity-based authentication. </param>
+        /// <param name="identity"> Managed identity properties for the endpoint. </param>
         /// <param name="topicEndpoint"> EventGrid Topic Endpoint. </param>
         /// <param name="accessKey1"> EventGrid secondary accesskey. Will be obfuscated during read. </param>
         /// <param name="accessKey2"> EventGrid secondary accesskey. Will be obfuscated during read. </param>
         /// <returns> A new <see cref="Models.DigitalTwinsEventGridProperties"/> instance for mocking. </returns>
-        public static DigitalTwinsEventGridProperties DigitalTwinsEventGridProperties(DigitalTwinsEndpointProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DigitalTwinsAuthenticationType? authenticationType = null, string deadLetterSecret = null, Uri deadLetterUri = null, string topicEndpoint = null, string accessKey1 = null, string accessKey2 = null)
+        public static DigitalTwinsEventGridProperties DigitalTwinsEventGridProperties(DigitalTwinsEndpointProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DigitalTwinsAuthenticationType? authenticationType = null, string deadLetterSecret = null, Uri deadLetterUri = null, DigitalTwinsManagedIdentityReference identity = null, string topicEndpoint = null, string accessKey1 = null, string accessKey2 = null)
         {
-            return new DigitalTwinsEventGridProperties("EventGrid", provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, topicEndpoint, accessKey1, accessKey2);
+            return new DigitalTwinsEventGridProperties("EventGrid", provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity, topicEndpoint, accessKey1, accessKey2);
         }
 
         /// <summary> Initializes a new instance of DataExplorerConnectionProperties. </summary>
         /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="identity"> Managed identity properties for the time series database connection resource. </param>
         /// <param name="adxResourceId"> The resource ID of the Azure Data Explorer cluster. </param>
         /// <param name="adxEndpointUri"> The URI of the Azure Data Explorer endpoint. </param>
         /// <param name="adxDatabaseName"> The name of the Azure Data Explorer database. </param>
-        /// <param name="adxTableName"> The name of the Azure Data Explorer table. </param>
+        /// <param name="adxTableName"> The name of the Azure Data Explorer table. Defaults to AdtPropertyEvents. </param>
         /// <param name="eventHubEndpointUri"> The URL of the EventHub namespace for identity-based authentication. It must include the protocol sb://. </param>
         /// <param name="eventHubEntityPath"> The EventHub name in the EventHub namespace for identity-based authentication. </param>
         /// <param name="eventHubNamespaceResourceId"> The resource ID of the EventHub namespace. </param>
         /// <param name="eventHubConsumerGroup"> The EventHub consumer group to use when ADX reads from EventHub. Defaults to $Default. </param>
         /// <returns> A new <see cref="Models.DataExplorerConnectionProperties"/> instance for mocking. </returns>
-        public static DataExplorerConnectionProperties DataExplorerConnectionProperties(TimeSeriesDatabaseConnectionState? provisioningState = null, ResourceIdentifier adxResourceId = null, Uri adxEndpointUri = null, string adxDatabaseName = null, string adxTableName = null, Uri eventHubEndpointUri = null, string eventHubEntityPath = null, ResourceIdentifier eventHubNamespaceResourceId = null, string eventHubConsumerGroup = null)
+        public static DataExplorerConnectionProperties DataExplorerConnectionProperties(TimeSeriesDatabaseConnectionState? provisioningState = null, DigitalTwinsManagedIdentityReference identity = null, ResourceIdentifier adxResourceId = null, Uri adxEndpointUri = null, string adxDatabaseName = null, string adxTableName = null, Uri eventHubEndpointUri = null, string eventHubEntityPath = null, ResourceIdentifier eventHubNamespaceResourceId = null, string eventHubConsumerGroup = null)
         {
-            return new DataExplorerConnectionProperties("AzureDataExplorer", provisioningState, adxResourceId, adxEndpointUri, adxDatabaseName, adxTableName, eventHubEndpointUri, eventHubEntityPath, eventHubNamespaceResourceId, eventHubConsumerGroup);
+            return new DataExplorerConnectionProperties("AzureDataExplorer", provisioningState, identity, adxResourceId, adxEndpointUri, adxDatabaseName, adxTableName, eventHubEndpointUri, eventHubEntityPath, eventHubNamespaceResourceId, eventHubConsumerGroup);
         }
     }
 }

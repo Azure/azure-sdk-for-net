@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -680,7 +679,7 @@ namespace Azure.ResourceManager.Monitor.Models
             targetResourceTypes ??= new List<string>();
             criteriaAllOf ??= new List<ScheduledQueryRuleCondition>();
 
-            return new ScheduledQueryRuleData(id, name, resourceType, systemData, tags, location, kind, etag, createdWithApiVersion, isLegacyLogAnalyticsRule, description, displayName, severity, isEnabled, scopes?.ToList(), evaluationFrequency, windowSize, overrideQueryTimeRange, targetResourceTypes?.ToList(), new ScheduledQueryRuleCriteria(criteriaAllOf?.ToList()), muteActionsDuration, actions, isWorkspaceAlertsStorageConfigured, checkWorkspaceAlertsStorageConfigured, skipQueryValidation, autoMitigate);
+            return new ScheduledQueryRuleData(id, name, resourceType, systemData, tags, location, kind, etag, createdWithApiVersion, isLegacyLogAnalyticsRule, description, displayName, severity, isEnabled, scopes?.ToList(), evaluationFrequency, windowSize, overrideQueryTimeRange, targetResourceTypes?.ToList(), criteriaAllOf != null ? new ScheduledQueryRuleCriteria(criteriaAllOf?.ToList()) : null, muteActionsDuration, actions, isWorkspaceAlertsStorageConfigured, checkWorkspaceAlertsStorageConfigured, skipQueryValidation, autoMitigate);
         }
 
         /// <summary> Initializes a new instance of ScheduledQueryRuleCondition. </summary>
@@ -803,7 +802,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <returns> A new <see cref="Monitor.MonitorPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static MonitorPrivateEndpointConnectionData MonitorPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, MonitorPrivateLinkServiceConnectionState connectionState = null, MonitorPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new MonitorPrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.SubResource(privateEndpointId), connectionState, provisioningState);
+            return new MonitorPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of MonitorPrivateLinkServiceConnectionState. </summary>
@@ -901,7 +900,7 @@ namespace Azure.ResourceManager.Monitor.Models
             conditionAllOf ??= new List<ActivityLogAlertAnyOfOrLeafCondition>();
             actionsActionGroups ??= new List<ActivityLogAlertActionGroup>();
 
-            return new ActivityLogAlertData(id, name, resourceType, systemData, tags, location, scopes?.ToList(), new AlertRuleAllOfCondition(conditionAllOf?.ToList()), new ActionList(actionsActionGroups?.ToList()), isEnabled, description);
+            return new ActivityLogAlertData(id, name, resourceType, systemData, tags, location, scopes?.ToList(), conditionAllOf != null ? new AlertRuleAllOfCondition(conditionAllOf?.ToList()) : null, actionsActionGroups != null ? new ActionList(actionsActionGroups?.ToList()) : null, isEnabled, description);
         }
 
         /// <summary> Initializes a new instance of ActivityLogAlertAnyOfOrLeafCondition. </summary>
@@ -967,7 +966,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DataCollectionEndpointData(id, name, resourceType, systemData, tags, location, kind, etag, description, immutableId, new DataCollectionEndpointConfigurationAccess(configurationAccessEndpoint), new DataCollectionEndpointLogsIngestion(logsIngestionEndpoint), new DataCollectionEndpointNetworkAcls(publicNetworkAccess), provisioningState);
+            return new DataCollectionEndpointData(id, name, resourceType, systemData, tags, location, kind, etag, description, immutableId, configurationAccessEndpoint != null ? new DataCollectionEndpointConfigurationAccess(configurationAccessEndpoint) : null, logsIngestionEndpoint != null ? new DataCollectionEndpointLogsIngestion(logsIngestionEndpoint) : null, publicNetworkAccess != null ? new DataCollectionEndpointNetworkAcls(publicNetworkAccess) : null, provisioningState);
         }
 
         /// <summary> Initializes a new instance of DataCollectionRuleAssociationData. </summary>
@@ -984,7 +983,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <returns> A new <see cref="Monitor.DataCollectionRuleAssociationData"/> instance for mocking. </returns>
         public static DataCollectionRuleAssociationData DataCollectionRuleAssociationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string description = null, ResourceIdentifier dataCollectionRuleId = null, ResourceIdentifier dataCollectionEndpointId = null, DataCollectionRuleAssociationProvisioningState? provisioningState = null, string metadataProvisionedBy = null)
         {
-            return new DataCollectionRuleAssociationData(id, name, resourceType, systemData, etag, description, dataCollectionRuleId, dataCollectionEndpointId, provisioningState, new DataCollectionRuleAssociationMetadata(metadataProvisionedBy));
+            return new DataCollectionRuleAssociationData(id, name, resourceType, systemData, etag, description, dataCollectionRuleId, dataCollectionEndpointId, provisioningState, metadataProvisionedBy != null ? new DataCollectionRuleAssociationMetadata(metadataProvisionedBy) : null);
         }
 
         /// <summary> Initializes a new instance of DataCollectionRuleData. </summary>
@@ -1015,7 +1014,7 @@ namespace Azure.ResourceManager.Monitor.Models
             streamDeclarations ??= new Dictionary<string, DataStreamDeclaration>();
             dataFlows ??= new List<DataFlow>();
 
-            return new DataCollectionRuleData(id, name, resourceType, systemData, tags, location, kind, etag, description, immutableId, dataCollectionEndpointId, new DataCollectionRuleMetadata(metadataProvisionedBy), streamDeclarations, dataSources, destinations, dataFlows?.ToList(), provisioningState);
+            return new DataCollectionRuleData(id, name, resourceType, systemData, tags, location, kind, etag, description, immutableId, dataCollectionEndpointId, metadataProvisionedBy != null ? new DataCollectionRuleMetadata(metadataProvisionedBy) : null, streamDeclarations, dataSources, destinations, dataFlows?.ToList(), provisioningState);
         }
 
         /// <summary> Initializes a new instance of DataStreamDeclaration. </summary>
@@ -1175,12 +1174,12 @@ namespace Azure.ResourceManager.Monitor.Models
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
         /// <returns> A new <see cref="Models.LogFilesDataSource"/> instance for mocking. </returns>
-        public static LogFilesDataSource LogFilesDataSource(IEnumerable<string> streams = null, IEnumerable<string> filePatterns = null, LogFilesDataSourceFormat format = default, LogFileTextSettingsRecordStartTimestampFormat textRecordStartTimestampFormat = default, string name = null)
+        public static LogFilesDataSource LogFilesDataSource(IEnumerable<string> streams = null, IEnumerable<string> filePatterns = null, LogFilesDataSourceFormat format = default, LogFileTextSettingsRecordStartTimestampFormat? textRecordStartTimestampFormat = null, string name = null)
         {
             streams ??= new List<string>();
             filePatterns ??= new List<string>();
 
-            return new LogFilesDataSource(streams?.ToList(), filePatterns?.ToList(), format, new LogFilesDataSourceSettings(new LogFileSettingsText(textRecordStartTimestampFormat)), name);
+            return new LogFilesDataSource(streams?.ToList(), filePatterns?.ToList(), format, textRecordStartTimestampFormat.HasValue ? new LogFilesDataSourceSettings(new LogFileSettingsText(textRecordStartTimestampFormat.Value)) : null, name);
         }
 
         /// <summary> Initializes a new instance of IisLogsDataSource. </summary>
@@ -1207,7 +1206,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             logAnalytics ??= new List<LogAnalyticsDestination>();
 
-            return new DataCollectionRuleDestinations(logAnalytics?.ToList(), new DestinationsSpecAzureMonitorMetrics(azureMonitorMetricsName));
+            return new DataCollectionRuleDestinations(logAnalytics?.ToList(), azureMonitorMetricsName != null ? new DestinationsSpecAzureMonitorMetrics(azureMonitorMetricsName) : null);
         }
 
         /// <summary> Initializes a new instance of DestinationsSpec. </summary>
@@ -1218,7 +1217,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             logAnalytics ??= new List<LogAnalyticsDestination>();
 
-            return new DestinationsSpec(logAnalytics?.ToList(), new DestinationsSpecAzureMonitorMetrics(azureMonitorMetricsName));
+            return new DestinationsSpec(logAnalytics?.ToList(), azureMonitorMetricsName != null ? new DestinationsSpecAzureMonitorMetrics(azureMonitorMetricsName) : null);
         }
 
         /// <summary> Initializes a new instance of LogAnalyticsDestination. </summary>
@@ -1277,7 +1276,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <returns> A new <see cref="Models.RuleManagementEventDataSource"/> instance for mocking. </returns>
         public static RuleManagementEventDataSource RuleManagementEventDataSource(ResourceIdentifier resourceId = null, ResourceIdentifier legacyResourceId = null, string resourceLocation = null, string metricNamespace = null, string eventName = null, string eventSource = null, string level = null, string operationName = null, string resourceGroupName = null, string resourceProviderName = null, string status = null, string subStatus = null, string claimsEmailAddress = null)
         {
-            return new RuleManagementEventDataSource("Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource", resourceId, legacyResourceId, resourceLocation, metricNamespace, eventName, eventSource, level, operationName, resourceGroupName, resourceProviderName, status, subStatus, new RuleManagementEventClaimsDataSource(claimsEmailAddress));
+            return new RuleManagementEventDataSource("Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource", resourceId, legacyResourceId, resourceLocation, metricNamespace, eventName, eventSource, level, operationName, resourceGroupName, resourceProviderName, status, subStatus, claimsEmailAddress != null ? new RuleManagementEventClaimsDataSource(claimsEmailAddress) : null);
         }
 
         /// <summary> Initializes a new instance of ThresholdRuleCondition. </summary>

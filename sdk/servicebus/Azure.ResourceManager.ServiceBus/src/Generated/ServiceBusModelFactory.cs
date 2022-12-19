@@ -10,13 +10,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Model factory for generated models. </summary>
-    public static partial class AzureResourceManagerServiceBusModelFactory
+    public static partial class ServiceBusModelFactory
     {
         /// <summary> Initializes a new instance of ServiceBusNamespaceData. </summary>
         /// <param name="id"> The id. </param>
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <returns> A new <see cref="Models.ServiceBusKeyVaultProperties"/> instance for mocking. </returns>
         public static ServiceBusKeyVaultProperties ServiceBusKeyVaultProperties(string keyName = null, Uri keyVaultUri = null, string keyVersion = null, string userAssignedIdentity = null)
         {
-            return new ServiceBusKeyVaultProperties(keyName, keyVaultUri, keyVersion, new UserAssignedIdentityProperties(userAssignedIdentity));
+            return new ServiceBusKeyVaultProperties(keyName, keyVaultUri, keyVersion, userAssignedIdentity != null ? new UserAssignedIdentityProperties(userAssignedIdentity) : null);
         }
 
         /// <summary> Initializes a new instance of ServiceBusPrivateEndpointConnectionData. </summary>
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <returns> A new <see cref="ServiceBus.ServiceBusPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static ServiceBusPrivateEndpointConnectionData ServiceBusPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, ServiceBusPrivateLinkServiceConnectionState connectionState = null, ServiceBusPrivateEndpointConnectionProvisioningState? provisioningState = null, AzureLocation? location = null)
         {
-            return new ServiceBusPrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.WritableSubResource(privateEndpointId), connectionState, provisioningState, location);
+            return new ServiceBusPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState, location);
         }
 
         /// <summary> Initializes a new instance of ServiceBusPrivateLinkServiceConnectionState. </summary>
@@ -209,7 +208,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <returns> A new <see cref="Models.ServiceBusNetworkRuleSetVirtualNetworkRules"/> instance for mocking. </returns>
         public static ServiceBusNetworkRuleSetVirtualNetworkRules ServiceBusNetworkRuleSetVirtualNetworkRules(ResourceIdentifier subnetId = null, bool? ignoreMissingVnetServiceEndpoint = null)
         {
-            return new ServiceBusNetworkRuleSetVirtualNetworkRules(ResourceManagerModelFactory.WritableSubResource(subnetId), ignoreMissingVnetServiceEndpoint);
+            return new ServiceBusNetworkRuleSetVirtualNetworkRules(subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, ignoreMissingVnetServiceEndpoint);
         }
 
         /// <summary> Initializes a new instance of ServiceBusNetworkRuleSetIPRules. </summary>

@@ -11,7 +11,6 @@ using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Relay;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Relay.Models
 {
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// <returns> A new <see cref="Relay.RelayPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static RelayPrivateEndpointConnectionData RelayPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, RelayPrivateLinkServiceConnectionState connectionState = null, RelayPrivateEndpointConnectionProvisioningState? provisioningState = null, AzureLocation? location = null)
         {
-            return new RelayPrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.WritableSubResource(privateEndpointId), connectionState, provisioningState, location);
+            return new RelayPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState, location);
         }
 
         /// <summary> Initializes a new instance of RelayPrivateLinkServiceConnectionState. </summary>

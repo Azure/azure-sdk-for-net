@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Automation;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.Automation.Models
         {
             groupIds ??= new List<string>();
 
-            return new AutomationPrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.WritableSubResource(privateEndpointId), groupIds?.ToList(), connectionState);
+            return new AutomationPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, groupIds?.ToList(), connectionState);
         }
 
         /// <summary> Initializes a new instance of AutomationPrivateLinkServiceConnectionStateProperty. </summary>
@@ -266,7 +265,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Automation.DscNodeConfigurationData"/> instance for mocking. </returns>
         public static DscNodeConfigurationData DscNodeConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? lastModifiedOn = null, DateTimeOffset? createdOn = null, string configurationName = null, string source = null, long? nodeCount = null, bool? isIncrementNodeConfigurationBuildRequired = null)
         {
-            return new DscNodeConfigurationData(id, name, resourceType, systemData, lastModifiedOn, createdOn, new DscConfigurationAssociationProperty(configurationName), source, nodeCount, isIncrementNodeConfigurationBuildRequired);
+            return new DscNodeConfigurationData(id, name, resourceType, systemData, lastModifiedOn, createdOn, configurationName != null ? new DscConfigurationAssociationProperty(configurationName) : null, source, nodeCount, isIncrementNodeConfigurationBuildRequired);
         }
 
         /// <summary> Initializes a new instance of DscConfigurationAssociationProperty. </summary>
@@ -312,7 +311,7 @@ namespace Azure.ResourceManager.Automation.Models
         {
             parameters ??= new Dictionary<string, string>();
 
-            return new DscCompilationJobData(id, name, resourceType, systemData, new DscConfigurationAssociationProperty(configurationName), startedBy, jobId, createdOn, provisioningState, runOn, status, statusDetails, startOn, endOn, exception, lastModifiedOn, lastStatusModifiedOn, parameters);
+            return new DscCompilationJobData(id, name, resourceType, systemData, configurationName != null ? new DscConfigurationAssociationProperty(configurationName) : null, startedBy, jobId, createdOn, provisioningState, runOn, status, statusDetails, startOn, endOn, exception, lastModifiedOn, lastStatusModifiedOn, parameters);
         }
 
         /// <summary> Initializes a new instance of AutomationJobStream. </summary>
@@ -337,7 +336,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.DscNodeCount"/> instance for mocking. </returns>
         public static DscNodeCount DscNodeCount(string name = null, int? nameCount = null)
         {
-            return new DscNodeCount(name, new DscNodeCountProperties(nameCount));
+            return new DscNodeCount(name, nameCount != null ? new DscNodeCountProperties(nameCount) : null);
         }
 
         /// <summary> Initializes a new instance of AutomationSourceControlData. </summary>
@@ -437,7 +436,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.AutomationEncryptionProperties"/> instance for mocking. </returns>
         public static AutomationEncryptionProperties AutomationEncryptionProperties(AutomationKeyVaultProperties keyVaultProperties = null, EncryptionKeySourceType? keySource = null, BinaryData userAssignedIdentity = null)
         {
-            return new AutomationEncryptionProperties(keyVaultProperties, keySource, new EncryptionPropertiesIdentity(userAssignedIdentity));
+            return new AutomationEncryptionProperties(keyVaultProperties, keySource, userAssignedIdentity != null ? new EncryptionPropertiesIdentity(userAssignedIdentity) : null);
         }
 
         /// <summary> Initializes a new instance of AutomationKeyVaultProperties. </summary>
@@ -555,7 +554,7 @@ namespace Azure.ResourceManager.Automation.Models
         {
             fieldDefinitionValues ??= new Dictionary<string, string>();
 
-            return new AutomationConnectionData(id, name, resourceType, systemData, new ConnectionTypeAssociationProperty(connectionTypeName), fieldDefinitionValues, createdOn, lastModifiedOn, description);
+            return new AutomationConnectionData(id, name, resourceType, systemData, connectionTypeName != null ? new ConnectionTypeAssociationProperty(connectionTypeName) : null, fieldDefinitionValues, createdOn, lastModifiedOn, description);
         }
 
         /// <summary> Initializes a new instance of ConnectionTypeAssociationProperty. </summary>
@@ -624,7 +623,7 @@ namespace Azure.ResourceManager.Automation.Models
         {
             parameters ??= new Dictionary<string, string>();
 
-            return new AutomationJobScheduleData(id, name, resourceType, systemData, jobScheduleId, new ScheduleAssociationProperty(scheduleName), new RunbookAssociationProperty(runbookName), runOn, parameters);
+            return new AutomationJobScheduleData(id, name, resourceType, systemData, jobScheduleId, scheduleName != null ? new ScheduleAssociationProperty(scheduleName) : null, runbookName != null ? new RunbookAssociationProperty(runbookName) : null, runOn, parameters);
         }
 
         /// <summary> Initializes a new instance of ScheduleAssociationProperty. </summary>
@@ -877,7 +876,7 @@ namespace Azure.ResourceManager.Automation.Models
         {
             parameters ??= new Dictionary<string, string>();
 
-            return new AutomationJobData(id, name, resourceType, systemData, new RunbookAssociationProperty(runbookName), startedBy, runOn, jobId, createdOn, status, statusDetails, startOn, endOn, exception, lastModifiedOn, lastStatusModifiedOn, parameters, provisioningState);
+            return new AutomationJobData(id, name, resourceType, systemData, runbookName != null ? new RunbookAssociationProperty(runbookName) : null, startedBy, runOn, jobId, createdOn, status, statusDetails, startOn, endOn, exception, lastModifiedOn, lastStatusModifiedOn, parameters, provisioningState);
         }
 
         /// <summary> Initializes a new instance of AutomationJobCollectionItemData. </summary>
@@ -897,7 +896,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.AutomationJobCollectionItemData"/> instance for mocking. </returns>
         public static AutomationJobCollectionItemData AutomationJobCollectionItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string runbookName = null, Guid? jobId = null, DateTimeOffset? createdOn = null, AutomationJobStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, DateTimeOffset? lastModifiedOn = null, string provisioningState = null, string runOn = null)
         {
-            return new AutomationJobCollectionItemData(id, name, resourceType, systemData, new RunbookAssociationProperty(runbookName), jobId, createdOn, status, startOn, endOn, lastModifiedOn, provisioningState, runOn);
+            return new AutomationJobCollectionItemData(id, name, resourceType, systemData, runbookName != null ? new RunbookAssociationProperty(runbookName) : null, jobId, createdOn, status, startOn, endOn, lastModifiedOn, provisioningState, runOn);
         }
 
         /// <summary> Initializes a new instance of GraphicalRunbookContent. </summary>
@@ -1106,7 +1105,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.SoftwareUpdateConfigurationRun"/> instance for mocking. </returns>
         public static SoftwareUpdateConfigurationRun SoftwareUpdateConfigurationRun(string name = null, ResourceIdentifier id = null, string softwareUpdateName = null, string status = null, TimeSpan? configuredDuration = null, string osType = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, int? computerCount = null, int? failedCount = null, DateTimeOffset? createdOn = null, string createdBy = null, DateTimeOffset? lastModifiedOn = null, string lastModifiedBy = null, SoftwareUpdateConfigurationRunTasks tasks = null)
         {
-            return new SoftwareUpdateConfigurationRun(name, id, new SoftwareUpdateConfigurationNavigation(softwareUpdateName), status, configuredDuration, osType, startOn, endOn, computerCount, failedCount, createdOn, createdBy, lastModifiedOn, lastModifiedBy, tasks);
+            return new SoftwareUpdateConfigurationRun(name, id, softwareUpdateName != null ? new SoftwareUpdateConfigurationNavigation(softwareUpdateName) : null, status, configuredDuration, osType, startOn, endOn, computerCount, failedCount, createdOn, createdBy, lastModifiedOn, lastModifiedBy, tasks);
         }
 
         /// <summary> Initializes a new instance of SoftwareUpdateConfigurationRunTasks. </summary>
@@ -1150,7 +1149,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.SoftwareUpdateConfigurationMachineRun"/> instance for mocking. </returns>
         public static SoftwareUpdateConfigurationMachineRun SoftwareUpdateConfigurationMachineRun(string name = null, ResourceIdentifier id = null, ResourceIdentifier targetComputerId = null, string targetComputerType = null, string softwareUpdateName = null, string status = null, string osType = null, Guid? correlationId = null, Guid? sourceComputerId = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, TimeSpan? configuredDuration = null, Guid? jobId = null, DateTimeOffset? createdOn = null, string createdBy = null, DateTimeOffset? lastModifiedOn = null, string lastModifiedBy = null, AutomationResponseError error = null)
         {
-            return new SoftwareUpdateConfigurationMachineRun(name, id, targetComputerId, targetComputerType, new SoftwareUpdateConfigurationNavigation(softwareUpdateName), status, osType, correlationId, sourceComputerId, startOn, endOn, configuredDuration, new JobNavigation(jobId), createdOn, createdBy, lastModifiedOn, lastModifiedBy, error);
+            return new SoftwareUpdateConfigurationMachineRun(name, id, targetComputerId, targetComputerType, softwareUpdateName != null ? new SoftwareUpdateConfigurationNavigation(softwareUpdateName) : null, status, osType, correlationId, sourceComputerId, startOn, endOn, configuredDuration, jobId != null ? new JobNavigation(jobId) : null, createdOn, createdBy, lastModifiedOn, lastModifiedBy, error);
         }
 
         /// <summary> Initializes a new instance of AutomationRunbookDraft. </summary>
@@ -1263,7 +1262,7 @@ namespace Azure.ResourceManager.Automation.Models
         {
             parameters ??= new Dictionary<string, string>();
 
-            return new AutomationWebhookData(id, name, resourceType, systemData, isEnabled, uri, expireOn, lastInvokedOn, parameters, new RunbookAssociationProperty(runbookName), runOn, createdOn, lastModifiedOn, lastModifiedBy, description);
+            return new AutomationWebhookData(id, name, resourceType, systemData, isEnabled, uri, expireOn, lastInvokedOn, parameters, runbookName != null ? new RunbookAssociationProperty(runbookName) : null, runOn, createdOn, lastModifiedOn, lastModifiedBy, description);
         }
 
         /// <summary> Initializes a new instance of HybridRunbookWorkerData. </summary>
@@ -1309,7 +1308,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Automation.HybridRunbookWorkerGroupData"/> instance for mocking. </returns>
         public static HybridRunbookWorkerGroupData HybridRunbookWorkerGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HybridWorkerGroup? groupType = null, string credentialName = null)
         {
-            return new HybridRunbookWorkerGroupData(id, name, resourceType, systemData, groupType, new RunAsCredentialAssociationProperty(credentialName));
+            return new HybridRunbookWorkerGroupData(id, name, resourceType, systemData, groupType, credentialName != null ? new RunAsCredentialAssociationProperty(credentialName) : null);
         }
     }
 }

@@ -8,17 +8,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.AnalysisServices;
+using Azure.ResourceManager.Analysis;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.AnalysisServices.Models
+namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> Model factory for generated models. </summary>
     public static partial class AnalysiservicesModelFactory
     {
-        /// <summary> Initializes a new instance of AnalysisServicesServerData. </summary>
+        /// <summary> Initializes a new instance of AnalysisServerData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,103 +27,90 @@ namespace Azure.ResourceManager.AnalysisServices.Models
         /// <param name="asAdministratorIdentities"> A collection of AS server administrators. </param>
         /// <param name="backupBlobContainerUri"> The SAS container URI to the backup container. </param>
         /// <param name="gatewayDetails"> The gateway details configured for the AS server. </param>
-        /// <param name="ipV4FirewallSettings"> The firewall settings for the AS server. </param>
-        /// <param name="querypoolConnectionMode"> How the read-write server&apos;s participation in the query pool is controlled.&lt;br/&gt;It can have the following values: &lt;ul&gt;&lt;li&gt;readOnly - indicates that the read-write server is intended not to participate in query operations&lt;/li&gt;&lt;li&gt;all - indicates that the read-write server can participate in query operations&lt;/li&gt;&lt;/ul&gt;Specifying readOnly when capacity is 1 results in error. </param>
+        /// <param name="ipv4FirewallSettings"> The firewall settings for the AS server. </param>
+        /// <param name="queryPoolConnectionMode"> How the read-write server&apos;s participation in the query pool is controlled.&lt;br/&gt;It can have the following values: &lt;ul&gt;&lt;li&gt;readOnly - indicates that the read-write server is intended not to participate in query operations&lt;/li&gt;&lt;li&gt;all - indicates that the read-write server can participate in query operations&lt;/li&gt;&lt;/ul&gt;Specifying readOnly when capacity is 1 results in error. </param>
         /// <param name="managedMode"> The managed mode of the server (0 = not managed, 1 = managed). </param>
         /// <param name="serverMonitorMode"> The server monitor mode for AS server. </param>
         /// <param name="state"> The current state of Analysis Services resource. The state is to indicate more states outside of resource provisioning. </param>
         /// <param name="provisioningState"> The current deployment state of Analysis Services resource. The provisioningState is to indicate states for resource provisioning. </param>
         /// <param name="serverFullName"> The full name of the Analysis Services resource. </param>
-        /// <param name="analysisServicesServerSKU"> The SKU of the Analysis Services resource. </param>
-        /// <param name="analysisServicesSKU"> The SKU of the Analysis Services resource. </param>
-        /// <returns> A new <see cref="AnalysisServices.AnalysisServicesServerData"/> instance for mocking. </returns>
-        public static AnalysisServicesServerData AnalysisServicesServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<string> asAdministratorIdentities = null, Uri backupBlobContainerUri = null, GatewayDetails gatewayDetails = null, IPv4FirewallSettings ipV4FirewallSettings = null, ConnectionMode? querypoolConnectionMode = null, ManagedMode? managedMode = null, ServerMonitorMode? serverMonitorMode = null, AnalysisServicesState? state = null, ProvisioningState? provisioningState = null, string serverFullName = null, ResourceSku analysisServicesServerSKU = null, ResourceSku analysisServicesSKU = null)
+        /// <param name="analysisServerSku"> The SKU of the Analysis Services resource. </param>
+        /// <param name="analysisSku"> The SKU of the Analysis Services resource. </param>
+        /// <returns> A new <see cref="Analysis.AnalysisServerData"/> instance for mocking. </returns>
+        public static AnalysisServerData AnalysisServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<string> asAdministratorIdentities = null, Uri backupBlobContainerUri = null, AnalysisGatewayDetails gatewayDetails = null, AnalysisIPv4FirewallSettings ipv4FirewallSettings = null, AnalysisConnectionMode? queryPoolConnectionMode = null, AnalysisManagedMode? managedMode = null, ServerMonitorMode? serverMonitorMode = null, AnalysisState? state = null, AnalysisProvisioningState? provisioningState = null, string serverFullName = null, AnalysisResourceSku analysisServerSku = null, AnalysisResourceSku analysisSku = null)
         {
             tags ??= new Dictionary<string, string>();
             asAdministratorIdentities ??= new List<string>();
 
-            return new AnalysisServicesServerData(id, name, resourceType, systemData, tags, location, new ServerAdministrators(asAdministratorIdentities?.ToList()), backupBlobContainerUri, gatewayDetails, ipV4FirewallSettings, querypoolConnectionMode, managedMode, serverMonitorMode, state, provisioningState, serverFullName, analysisServicesServerSKU, analysisServicesSKU);
+            return new AnalysisServerData(id, name, resourceType, systemData, tags, location, asAdministratorIdentities != null ? new ServerAdministrators(asAdministratorIdentities?.ToList()) : null, backupBlobContainerUri, gatewayDetails, ipv4FirewallSettings, queryPoolConnectionMode, managedMode, serverMonitorMode, state, provisioningState, serverFullName, analysisServerSku, analysisSku);
         }
 
-        /// <summary> Initializes a new instance of ResourceSku. </summary>
+        /// <summary> Initializes a new instance of AnalysisResourceSku. </summary>
         /// <param name="name"> Name of the SKU level. </param>
         /// <param name="tier"> The name of the Azure pricing tier to which the SKU applies. </param>
         /// <param name="capacity"> The number of instances in the read only query pool. </param>
-        /// <returns> A new <see cref="Models.ResourceSku"/> instance for mocking. </returns>
-        public static ResourceSku ResourceSku(string name = null, AnalysisServicesSkuTier? tier = null, int? capacity = null)
+        /// <returns> A new <see cref="Models.AnalysisResourceSku"/> instance for mocking. </returns>
+        public static AnalysisResourceSku AnalysisResourceSku(string name = null, AnalysisSkuTier? tier = null, int? capacity = null)
         {
-            return new ResourceSku(name, tier, capacity);
+            return new AnalysisResourceSku(name, tier, capacity);
         }
 
-        /// <summary> Initializes a new instance of GatewayDetails. </summary>
+        /// <summary> Initializes a new instance of AnalysisGatewayDetails. </summary>
         /// <param name="gatewayResourceId"> Gateway resource to be associated with the server. </param>
         /// <param name="gatewayObjectId"> Gateway object id from in the DMTS cluster for the gateway resource. </param>
         /// <param name="dmtsClusterUri"> Uri of the DMTS cluster. </param>
-        /// <returns> A new <see cref="Models.GatewayDetails"/> instance for mocking. </returns>
-        public static GatewayDetails GatewayDetails(string gatewayResourceId = null, string gatewayObjectId = null, Uri dmtsClusterUri = null)
+        /// <returns> A new <see cref="Models.AnalysisGatewayDetails"/> instance for mocking. </returns>
+        public static AnalysisGatewayDetails AnalysisGatewayDetails(string gatewayResourceId = null, string gatewayObjectId = null, Uri dmtsClusterUri = null)
         {
-            return new GatewayDetails(gatewayResourceId, gatewayObjectId, dmtsClusterUri);
+            return new AnalysisGatewayDetails(gatewayResourceId, gatewayObjectId, dmtsClusterUri);
         }
 
-        /// <summary> Initializes a new instance of IPv4FirewallSettings. </summary>
+        /// <summary> Initializes a new instance of AnalysisIPv4FirewallSettings. </summary>
         /// <param name="firewallRules"> An array of firewall rules. </param>
         /// <param name="isPowerBIServiceEnabled"> The indicator of enabling PBI service. </param>
-        /// <returns> A new <see cref="Models.IPv4FirewallSettings"/> instance for mocking. </returns>
-        public static IPv4FirewallSettings IPv4FirewallSettings(IEnumerable<IPv4FirewallRule> firewallRules = null, bool? isPowerBIServiceEnabled = null)
+        /// <returns> A new <see cref="Models.AnalysisIPv4FirewallSettings"/> instance for mocking. </returns>
+        public static AnalysisIPv4FirewallSettings AnalysisIPv4FirewallSettings(IEnumerable<AnalysisIPv4FirewallRule> firewallRules = null, bool? isPowerBIServiceEnabled = null)
         {
-            firewallRules ??= new List<IPv4FirewallRule>();
+            firewallRules ??= new List<AnalysisIPv4FirewallRule>();
 
-            return new IPv4FirewallSettings(firewallRules?.ToList(), isPowerBIServiceEnabled);
+            return new AnalysisIPv4FirewallSettings(firewallRules?.ToList(), isPowerBIServiceEnabled);
         }
 
-        /// <summary> Initializes a new instance of IPv4FirewallRule. </summary>
+        /// <summary> Initializes a new instance of AnalysisIPv4FirewallRule. </summary>
         /// <param name="firewallRuleName"> The rule name. </param>
         /// <param name="rangeStart"> The start range of IPv4. </param>
         /// <param name="rangeEnd"> The end range of IPv4. </param>
-        /// <returns> A new <see cref="Models.IPv4FirewallRule"/> instance for mocking. </returns>
-        public static IPv4FirewallRule IPv4FirewallRule(string firewallRuleName = null, string rangeStart = null, string rangeEnd = null)
+        /// <returns> A new <see cref="Models.AnalysisIPv4FirewallRule"/> instance for mocking. </returns>
+        public static AnalysisIPv4FirewallRule AnalysisIPv4FirewallRule(string firewallRuleName = null, string rangeStart = null, string rangeEnd = null)
         {
-            return new IPv4FirewallRule(firewallRuleName, rangeStart, rangeEnd);
+            return new AnalysisIPv4FirewallRule(firewallRuleName, rangeStart, rangeEnd);
         }
 
-        /// <summary> Initializes a new instance of ExistingResourceSkuDetails. </summary>
+        /// <summary> Initializes a new instance of AnalysisExistingSku. </summary>
         /// <param name="sku"> The SKU in SKU details for existing resources. </param>
         /// <param name="resourceType"> The resource type. </param>
-        /// <returns> A new <see cref="Models.ExistingResourceSkuDetails"/> instance for mocking. </returns>
-        public static ExistingResourceSkuDetails ExistingResourceSkuDetails(ResourceSku sku = null, ResourceType? resourceType = null)
+        /// <returns> A new <see cref="Models.AnalysisExistingSku"/> instance for mocking. </returns>
+        public static AnalysisExistingSku AnalysisExistingSku(AnalysisResourceSku sku = null, ResourceType? resourceType = null)
         {
-            return new ExistingResourceSkuDetails(sku, resourceType);
+            return new AnalysisExistingSku(sku, resourceType);
         }
 
-        /// <summary> Initializes a new instance of GatewayListStatusLive. </summary>
+        /// <summary> Initializes a new instance of AnalysisGatewayStatus. </summary>
         /// <param name="status"> Live message of list gateway. Status: 0 - Live. </param>
-        /// <returns> A new <see cref="Models.GatewayListStatusLive"/> instance for mocking. </returns>
-        public static GatewayListStatusLive GatewayListStatusLive(AnalysisServicesStatus? status = null)
+        /// <returns> A new <see cref="Models.AnalysisGatewayStatus"/> instance for mocking. </returns>
+        public static AnalysisGatewayStatus AnalysisGatewayStatus(AnalysisStatus? status = null)
         {
-            return new GatewayListStatusLive(status);
+            return new AnalysisGatewayStatus(status);
         }
 
-        /// <summary> Initializes a new instance of CheckServerNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of AnalysisServerNameAvailabilityResult. </summary>
         /// <param name="isNameAvailable"> Indicator of available of the server name. </param>
         /// <param name="reason"> The reason of unavailability. </param>
         /// <param name="message"> The detailed message of the request unavailability. </param>
-        /// <returns> A new <see cref="Models.CheckServerNameAvailabilityResult"/> instance for mocking. </returns>
-        public static CheckServerNameAvailabilityResult CheckServerNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
+        /// <returns> A new <see cref="Models.AnalysisServerNameAvailabilityResult"/> instance for mocking. </returns>
+        public static AnalysisServerNameAvailabilityResult AnalysisServerNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
         {
-            return new CheckServerNameAvailabilityResult(isNameAvailable, reason, message);
-        }
-
-        /// <summary> Initializes a new instance of OperationStatus. </summary>
-        /// <param name="id"> The operation Id. </param>
-        /// <param name="name"> The operation name. </param>
-        /// <param name="startTime"> The start time of the operation. </param>
-        /// <param name="endTime"> The end time of the operation. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="error"> The error detail of the operation if any. </param>
-        /// <returns> A new <see cref="Models.OperationStatus"/> instance for mocking. </returns>
-        public static OperationStatus OperationStatus(string id = null, string name = null, string startTime = null, string endTime = null, string status = null, ResponseError error = null)
-        {
-            return new OperationStatus(id, name, startTime, endTime, status, error);
+            return new AnalysisServerNameAvailabilityResult(isNameAvailable, reason, message);
         }
     }
 }

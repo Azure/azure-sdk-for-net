@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Elastic.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ElasticMonitorResourceData(id, name, resourceType, systemData, tags, location, new ResourceSku(skuName), properties, identity);
+            return new ElasticMonitorResourceData(id, name, resourceType, systemData, tags, location, skuName != null ? new ResourceSku(skuName) : null, properties, identity);
         }
 
         /// <summary> Initializes a new instance of MonitorProperties. </summary>

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             canaryRegions ??= new List<string>();
             resourceTypeRegistrations ??= new List<ResourceTypeRegistrationData>();
 
-            return new CustomRolloutPropertiesSpecification(new CustomRolloutSpecificationCanary(canaryRegions?.ToList()), providerRegistration, resourceTypeRegistrations?.ToList());
+            return new CustomRolloutPropertiesSpecification(canaryRegions != null ? new CustomRolloutSpecificationCanary(canaryRegions?.ToList()) : null, providerRegistration, resourceTypeRegistrations?.ToList());
         }
 
         /// <summary> Initializes a new instance of CustomRolloutSpecification. </summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             canaryRegions ??= new List<string>();
             resourceTypeRegistrations ??= new List<ResourceTypeRegistrationData>();
 
-            return new CustomRolloutSpecification(new CustomRolloutSpecificationCanary(canaryRegions?.ToList()), providerRegistration, resourceTypeRegistrations?.ToList());
+            return new CustomRolloutSpecification(canaryRegions != null ? new CustomRolloutSpecificationCanary(canaryRegions?.ToList()) : null, providerRegistration, resourceTypeRegistrations?.ToList());
         }
 
         /// <summary> Initializes a new instance of CustomRolloutSpecificationCanary. </summary>
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="subscriptionLifecycleNotificationSpecifications"></param>
         /// <returns> A new <see cref="Models.ProviderRegistrationProperties"/> instance for mocking. </returns>
-        public static ProviderRegistrationProperties ProviderRegistrationProperties(IEnumerable<string> providerAuthenticationAllowedAudiences = null, IEnumerable<ResourceProviderAuthorization> providerAuthorizations = null, string @namespace = null, string providerVersion = null, ResourceProviderType? providerType = null, IEnumerable<string> requiredFeatures = null, FeaturesPolicy requiredFeaturesPolicy = default, OptInHeaderType? optInHeaders = null, ResourceProviderManifestPropertiesManagement management = null, IEnumerable<ResourceProviderCapabilities> capabilities = null, BinaryData metadata = null, ResourceProviderManifestPropertiesTemplateDeploymentOptions templateDeploymentOptions = null, ProviderRegistrationPropertiesProviderHubMetadata providerHubMetadata = null, ProvisioningState? provisioningState = null, ProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications = null)
+        public static ProviderRegistrationProperties ProviderRegistrationProperties(IEnumerable<string> providerAuthenticationAllowedAudiences = null, IEnumerable<ResourceProviderAuthorization> providerAuthorizations = null, string @namespace = null, string providerVersion = null, ResourceProviderType? providerType = null, IEnumerable<string> requiredFeatures = null, FeaturesPolicy? requiredFeaturesPolicy = null, OptInHeaderType? optInHeaders = null, ResourceProviderManifestPropertiesManagement management = null, IEnumerable<ResourceProviderCapabilities> capabilities = null, BinaryData metadata = null, ResourceProviderManifestPropertiesTemplateDeploymentOptions templateDeploymentOptions = null, ProviderRegistrationPropertiesProviderHubMetadata providerHubMetadata = null, ProvisioningState? provisioningState = null, ProviderRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications = null)
         {
             providerAuthenticationAllowedAudiences ??= new List<string>();
             providerAuthorizations ??= new List<ResourceProviderAuthorization>();
             requiredFeatures ??= new List<string>();
             capabilities ??= new List<ResourceProviderCapabilities>();
 
-            return new ProviderRegistrationProperties(new ResourceProviderManifestPropertiesProviderAuthentication(providerAuthenticationAllowedAudiences?.ToList()), providerAuthorizations?.ToList(), @namespace, providerVersion, providerType, requiredFeatures?.ToList(), new ResourceProviderManifestPropertiesFeaturesRule(requiredFeaturesPolicy), new ResourceProviderManifestPropertiesRequestHeaderOptions(optInHeaders), management, capabilities?.ToList(), metadata, templateDeploymentOptions, providerHubMetadata, provisioningState, subscriptionLifecycleNotificationSpecifications);
+            return new ProviderRegistrationProperties(providerAuthenticationAllowedAudiences != null ? new ResourceProviderManifestPropertiesProviderAuthentication(providerAuthenticationAllowedAudiences?.ToList()) : null, providerAuthorizations?.ToList(), @namespace, providerVersion, providerType, requiredFeatures?.ToList(), requiredFeaturesPolicy.HasValue ? new ResourceProviderManifestPropertiesFeaturesRule(requiredFeaturesPolicy.Value) : null, optInHeaders != null ? new ResourceProviderManifestPropertiesRequestHeaderOptions(optInHeaders) : null, management, capabilities?.ToList(), metadata, templateDeploymentOptions, providerHubMetadata, provisioningState, subscriptionLifecycleNotificationSpecifications);
         }
 
         /// <summary> Initializes a new instance of ProviderRegistrationPropertiesProviderHubMetadata. </summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             providerAuthorizations ??= new List<ResourceProviderAuthorization>();
             providerAuthenticationAllowedAudiences ??= new List<string>();
 
-            return new ProviderRegistrationPropertiesProviderHubMetadata(providerAuthorizations?.ToList(), new ProviderHubMetadataProviderAuthentication(providerAuthenticationAllowedAudiences?.ToList()), thirdPartyProviderAuthorization);
+            return new ProviderRegistrationPropertiesProviderHubMetadata(providerAuthorizations?.ToList(), providerAuthenticationAllowedAudiences != null ? new ProviderHubMetadataProviderAuthentication(providerAuthenticationAllowedAudiences?.ToList()) : null, thirdPartyProviderAuthorization);
         }
 
         /// <summary> Initializes a new instance of ProviderHubMetadata. </summary>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             providerAuthorizations ??= new List<ResourceProviderAuthorization>();
             providerAuthenticationAllowedAudiences ??= new List<string>();
 
-            return new ProviderHubMetadata(providerAuthorizations?.ToList(), new ProviderHubMetadataProviderAuthentication(providerAuthenticationAllowedAudiences?.ToList()), thirdPartyProviderAuthorization);
+            return new ProviderHubMetadata(providerAuthorizations?.ToList(), providerAuthenticationAllowedAudiences != null ? new ProviderHubMetadataProviderAuthentication(providerAuthenticationAllowedAudiences?.ToList()) : null, thirdPartyProviderAuthorization);
         }
 
         /// <summary> Initializes a new instance of ResourceProviderAuthorization. </summary>
@@ -230,14 +230,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="metadata"> Anything. </param>
         /// <param name="templateDeploymentOptions"></param>
         /// <returns> A new <see cref="Models.ResourceProviderManifestProperties"/> instance for mocking. </returns>
-        public static ResourceProviderManifestProperties ResourceProviderManifestProperties(IEnumerable<string> providerAuthenticationAllowedAudiences = null, IEnumerable<ResourceProviderAuthorization> providerAuthorizations = null, string @namespace = null, string providerVersion = null, ResourceProviderType? providerType = null, IEnumerable<string> requiredFeatures = null, FeaturesPolicy requiredFeaturesPolicy = default, OptInHeaderType? optInHeaders = null, ResourceProviderManifestPropertiesManagement management = null, IEnumerable<ResourceProviderCapabilities> capabilities = null, BinaryData metadata = null, ResourceProviderManifestPropertiesTemplateDeploymentOptions templateDeploymentOptions = null)
+        public static ResourceProviderManifestProperties ResourceProviderManifestProperties(IEnumerable<string> providerAuthenticationAllowedAudiences = null, IEnumerable<ResourceProviderAuthorization> providerAuthorizations = null, string @namespace = null, string providerVersion = null, ResourceProviderType? providerType = null, IEnumerable<string> requiredFeatures = null, FeaturesPolicy? requiredFeaturesPolicy = null, OptInHeaderType? optInHeaders = null, ResourceProviderManifestPropertiesManagement management = null, IEnumerable<ResourceProviderCapabilities> capabilities = null, BinaryData metadata = null, ResourceProviderManifestPropertiesTemplateDeploymentOptions templateDeploymentOptions = null)
         {
             providerAuthenticationAllowedAudiences ??= new List<string>();
             providerAuthorizations ??= new List<ResourceProviderAuthorization>();
             requiredFeatures ??= new List<string>();
             capabilities ??= new List<ResourceProviderCapabilities>();
 
-            return new ResourceProviderManifestProperties(new ResourceProviderManifestPropertiesProviderAuthentication(providerAuthenticationAllowedAudiences?.ToList()), providerAuthorizations?.ToList(), @namespace, providerVersion, providerType, requiredFeatures?.ToList(), new ResourceProviderManifestPropertiesFeaturesRule(requiredFeaturesPolicy), new ResourceProviderManifestPropertiesRequestHeaderOptions(optInHeaders), management, capabilities?.ToList(), metadata, templateDeploymentOptions);
+            return new ResourceProviderManifestProperties(providerAuthenticationAllowedAudiences != null ? new ResourceProviderManifestPropertiesProviderAuthentication(providerAuthenticationAllowedAudiences?.ToList()) : null, providerAuthorizations?.ToList(), @namespace, providerVersion, providerType, requiredFeatures?.ToList(), requiredFeaturesPolicy.HasValue ? new ResourceProviderManifestPropertiesFeaturesRule(requiredFeaturesPolicy.Value) : null, optInHeaders != null ? new ResourceProviderManifestPropertiesRequestHeaderOptions(optInHeaders) : null, management, capabilities?.ToList(), metadata, templateDeploymentOptions);
         }
 
         /// <summary> Initializes a new instance of ResourceProviderManifestPropertiesManagement. </summary>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="management"></param>
         /// <param name="allowNoncompliantCollectionResponse"></param>
         /// <returns> A new <see cref="Models.ResourceTypeRegistrationProperties"/> instance for mocking. </returns>
-        public static ResourceTypeRegistrationProperties ResourceTypeRegistrationProperties(RoutingType? routingType = null, Regionality? regionality = null, IEnumerable<ResourceTypeEndpoint> endpoints = null, ResourceTypeExtensionOptionsResourceCreationBegin extensionOptionsResourceCreationBegin = null, ResourceTypeRegistrationPropertiesMarketplaceType? marketplaceType = null, IEnumerable<SwaggerSpecification> swaggerSpecifications = null, IEnumerable<string> allowedUnauthorizedActions = null, IEnumerable<AuthorizationActionMapping> authorizationActionMappings = null, IEnumerable<LinkedAccessCheck> linkedAccessChecks = null, string defaultApiVersion = null, IEnumerable<LoggingRule> loggingRules = null, IEnumerable<ThrottlingRule> throttlingRules = null, IEnumerable<string> requiredFeatures = null, FeaturesPolicy requiredFeaturesPolicy = default, bool? enableAsyncOperation = null, ProvisioningState? provisioningState = null, bool? enableThirdPartyS2S = null, ResourceTypeRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications = null, bool? isPureProxy = null, ResourceTypeRegistrationPropertiesIdentityManagement identityManagement = null, ResourceTypeRegistrationPropertiesCheckNameAvailabilitySpecifications checkNameAvailabilitySpecifications = null, IEnumerable<string> disallowedActionVerbs = null, IEnumerable<ServiceTreeInfo> serviceTreeInfos = null, OptInHeaderType? optInHeaders = null, IEnumerable<SubscriptionStateRule> subscriptionStateRules = null, ResourceTypeRegistrationPropertiesTemplateDeploymentOptions templateDeploymentOptions = null, IEnumerable<ExtendedLocationOptions> extendedLocations = null, ResourceTypeRegistrationPropertiesResourceMovePolicy resourceMovePolicy = null, ResourceDeletionPolicy? resourceDeletionPolicy = null, IDictionary<string, ResourceConcurrencyControlOption> resourceConcurrencyControlOptions = null, ResourceTypeRegistrationPropertiesResourceGraphConfiguration resourceGraphConfiguration = null, ResourceTypeRegistrationPropertiesManagement management = null, bool? allowNoncompliantCollectionResponse = null)
+        public static ResourceTypeRegistrationProperties ResourceTypeRegistrationProperties(RoutingType? routingType = null, Regionality? regionality = null, IEnumerable<ResourceTypeEndpoint> endpoints = null, ResourceTypeExtensionOptionsResourceCreationBegin extensionOptionsResourceCreationBegin = null, ResourceTypeRegistrationPropertiesMarketplaceType? marketplaceType = null, IEnumerable<SwaggerSpecification> swaggerSpecifications = null, IEnumerable<string> allowedUnauthorizedActions = null, IEnumerable<AuthorizationActionMapping> authorizationActionMappings = null, IEnumerable<LinkedAccessCheck> linkedAccessChecks = null, string defaultApiVersion = null, IEnumerable<LoggingRule> loggingRules = null, IEnumerable<ThrottlingRule> throttlingRules = null, IEnumerable<string> requiredFeatures = null, FeaturesPolicy? requiredFeaturesPolicy = null, bool? enableAsyncOperation = null, ProvisioningState? provisioningState = null, bool? enableThirdPartyS2S = null, ResourceTypeRegistrationPropertiesSubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications = null, bool? isPureProxy = null, ResourceTypeRegistrationPropertiesIdentityManagement identityManagement = null, ResourceTypeRegistrationPropertiesCheckNameAvailabilitySpecifications checkNameAvailabilitySpecifications = null, IEnumerable<string> disallowedActionVerbs = null, IEnumerable<ServiceTreeInfo> serviceTreeInfos = null, OptInHeaderType? optInHeaders = null, IEnumerable<SubscriptionStateRule> subscriptionStateRules = null, ResourceTypeRegistrationPropertiesTemplateDeploymentOptions templateDeploymentOptions = null, IEnumerable<ExtendedLocationOptions> extendedLocations = null, ResourceTypeRegistrationPropertiesResourceMovePolicy resourceMovePolicy = null, ResourceDeletionPolicy? resourceDeletionPolicy = null, IDictionary<string, ResourceConcurrencyControlOption> resourceConcurrencyControlOptions = null, ResourceTypeRegistrationPropertiesResourceGraphConfiguration resourceGraphConfiguration = null, ResourceTypeRegistrationPropertiesManagement management = null, bool? allowNoncompliantCollectionResponse = null)
         {
             endpoints ??= new List<ResourceTypeEndpoint>();
             swaggerSpecifications ??= new List<SwaggerSpecification>();
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             extendedLocations ??= new List<ExtendedLocationOptions>();
             resourceConcurrencyControlOptions ??= new Dictionary<string, ResourceConcurrencyControlOption>();
 
-            return new ResourceTypeRegistrationProperties(routingType, regionality, endpoints?.ToList(), new ResourceTypeRegistrationPropertiesExtensionOptions(extensionOptionsResourceCreationBegin), marketplaceType, swaggerSpecifications?.ToList(), allowedUnauthorizedActions?.ToList(), authorizationActionMappings?.ToList(), linkedAccessChecks?.ToList(), defaultApiVersion, loggingRules?.ToList(), throttlingRules?.ToList(), requiredFeatures?.ToList(), new ResourceTypeRegistrationPropertiesFeaturesRule(requiredFeaturesPolicy), enableAsyncOperation, provisioningState, enableThirdPartyS2S, subscriptionLifecycleNotificationSpecifications, isPureProxy, identityManagement, checkNameAvailabilitySpecifications, disallowedActionVerbs?.ToList(), serviceTreeInfos?.ToList(), new ResourceTypeRegistrationPropertiesRequestHeaderOptions(optInHeaders), subscriptionStateRules?.ToList(), templateDeploymentOptions, extendedLocations?.ToList(), resourceMovePolicy, resourceDeletionPolicy, resourceConcurrencyControlOptions, resourceGraphConfiguration, management, new OpenApiConfiguration(new OpenApiValidation(allowNoncompliantCollectionResponse)));
+            return new ResourceTypeRegistrationProperties(routingType, regionality, endpoints?.ToList(), extensionOptionsResourceCreationBegin != null ? new ResourceTypeRegistrationPropertiesExtensionOptions(extensionOptionsResourceCreationBegin) : null, marketplaceType, swaggerSpecifications?.ToList(), allowedUnauthorizedActions?.ToList(), authorizationActionMappings?.ToList(), linkedAccessChecks?.ToList(), defaultApiVersion, loggingRules?.ToList(), throttlingRules?.ToList(), requiredFeatures?.ToList(), requiredFeaturesPolicy.HasValue ? new ResourceTypeRegistrationPropertiesFeaturesRule(requiredFeaturesPolicy.Value) : null, enableAsyncOperation, provisioningState, enableThirdPartyS2S, subscriptionLifecycleNotificationSpecifications, isPureProxy, identityManagement, checkNameAvailabilitySpecifications, disallowedActionVerbs?.ToList(), serviceTreeInfos?.ToList(), optInHeaders != null ? new ResourceTypeRegistrationPropertiesRequestHeaderOptions(optInHeaders) : null, subscriptionStateRules?.ToList(), templateDeploymentOptions, extendedLocations?.ToList(), resourceMovePolicy, resourceDeletionPolicy, resourceConcurrencyControlOptions, resourceGraphConfiguration, management, allowNoncompliantCollectionResponse != null ? new OpenApiConfiguration(new OpenApiValidation(allowNoncompliantCollectionResponse)) : null);
         }
 
         /// <summary> Initializes a new instance of ResourceTypeEndpoint. </summary>
@@ -400,14 +400,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="timeout"></param>
         /// <param name="endpointType"></param>
         /// <returns> A new <see cref="Models.ResourceTypeEndpoint"/> instance for mocking. </returns>
-        public static ResourceTypeEndpoint ResourceTypeEndpoint(bool? enabled = null, IEnumerable<string> apiVersions = null, IEnumerable<string> locations = null, IEnumerable<string> requiredFeatures = null, FeaturesPolicy requiredFeaturesPolicy = default, IEnumerable<ResourceTypeExtension> extensions = null, TimeSpan? timeout = null, EndpointType? endpointType = null)
+        public static ResourceTypeEndpoint ResourceTypeEndpoint(bool? enabled = null, IEnumerable<string> apiVersions = null, IEnumerable<string> locations = null, IEnumerable<string> requiredFeatures = null, FeaturesPolicy? requiredFeaturesPolicy = null, IEnumerable<ResourceTypeExtension> extensions = null, TimeSpan? timeout = null, EndpointType? endpointType = null)
         {
             apiVersions ??= new List<string>();
             locations ??= new List<string>();
             requiredFeatures ??= new List<string>();
             extensions ??= new List<ResourceTypeExtension>();
 
-            return new ResourceTypeEndpoint(enabled, apiVersions?.ToList(), locations?.ToList(), requiredFeatures?.ToList(), new ResourceTypeEndpointFeaturesRule(requiredFeaturesPolicy), extensions?.ToList(), timeout, endpointType);
+            return new ResourceTypeEndpoint(enabled, apiVersions?.ToList(), locations?.ToList(), requiredFeatures?.ToList(), requiredFeaturesPolicy.HasValue ? new ResourceTypeEndpointFeaturesRule(requiredFeaturesPolicy.Value) : null, extensions?.ToList(), timeout, endpointType);
         }
 
         /// <summary> Initializes a new instance of ResourceTypeExtension. </summary>
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             resourceTypeRegistrations ??= new List<ResourceTypeRegistrationData>();
 
-            return new DefaultRolloutPropertiesSpecification(new DefaultRolloutSpecificationExpeditedRollout(expeditedRolloutEnabled), canary, lowTraffic, mediumTraffic, highTraffic, restOfTheWorldGroupOne, restOfTheWorldGroupTwo, providerRegistration, resourceTypeRegistrations?.ToList());
+            return new DefaultRolloutPropertiesSpecification(expeditedRolloutEnabled != null ? new DefaultRolloutSpecificationExpeditedRollout(expeditedRolloutEnabled) : null, canary, lowTraffic, mediumTraffic, highTraffic, restOfTheWorldGroupOne, restOfTheWorldGroupTwo, providerRegistration, resourceTypeRegistrations?.ToList());
         }
 
         /// <summary> Initializes a new instance of DefaultRolloutSpecification. </summary>
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             resourceTypeRegistrations ??= new List<ResourceTypeRegistrationData>();
 
-            return new DefaultRolloutSpecification(new DefaultRolloutSpecificationExpeditedRollout(expeditedRolloutEnabled), canary, lowTraffic, mediumTraffic, highTraffic, restOfTheWorldGroupOne, restOfTheWorldGroupTwo, providerRegistration, resourceTypeRegistrations?.ToList());
+            return new DefaultRolloutSpecification(expeditedRolloutEnabled != null ? new DefaultRolloutSpecificationExpeditedRollout(expeditedRolloutEnabled) : null, canary, lowTraffic, mediumTraffic, highTraffic, restOfTheWorldGroupOne, restOfTheWorldGroupTwo, providerRegistration, resourceTypeRegistrations?.ToList());
         }
 
         /// <summary> Initializes a new instance of DefaultRolloutSpecificationCanary. </summary>
@@ -950,7 +950,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="globalNotificationEndpoints"></param>
         /// <param name="reRegisterSubscriptionMetadata"></param>
         /// <returns> A new <see cref="Models.ResourceProviderManifest"/> instance for mocking. </returns>
-        public static ResourceProviderManifest ResourceProviderManifest(IEnumerable<string> providerAuthenticationAllowedAudiences = null, IEnumerable<ResourceProviderAuthorization> providerAuthorizations = null, string @namespace = null, string providerVersion = null, ResourceProviderType? providerType = null, IEnumerable<string> requiredFeatures = null, FeaturesPolicy requiredFeaturesPolicy = default, OptInHeaderType? optInHeaders = null, IEnumerable<ResourceType> resourceTypes = null, ResourceProviderManifestManagement management = null, IEnumerable<ResourceProviderCapabilities> capabilities = null, BinaryData metadata = null, IEnumerable<ResourceProviderEndpoint> globalNotificationEndpoints = null, ResourceProviderManifestReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata = null)
+        public static ResourceProviderManifest ResourceProviderManifest(IEnumerable<string> providerAuthenticationAllowedAudiences = null, IEnumerable<ResourceProviderAuthorization> providerAuthorizations = null, string @namespace = null, string providerVersion = null, ResourceProviderType? providerType = null, IEnumerable<string> requiredFeatures = null, FeaturesPolicy? requiredFeaturesPolicy = null, OptInHeaderType? optInHeaders = null, IEnumerable<ResourceType> resourceTypes = null, ResourceProviderManifestManagement management = null, IEnumerable<ResourceProviderCapabilities> capabilities = null, BinaryData metadata = null, IEnumerable<ResourceProviderEndpoint> globalNotificationEndpoints = null, ResourceProviderManifestReRegisterSubscriptionMetadata reRegisterSubscriptionMetadata = null)
         {
             providerAuthenticationAllowedAudiences ??= new List<string>();
             providerAuthorizations ??= new List<ResourceProviderAuthorization>();
@@ -959,7 +959,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             capabilities ??= new List<ResourceProviderCapabilities>();
             globalNotificationEndpoints ??= new List<ResourceProviderEndpoint>();
 
-            return new ResourceProviderManifest(new ResourceProviderManifestProviderAuthentication(providerAuthenticationAllowedAudiences?.ToList()), providerAuthorizations?.ToList(), @namespace, providerVersion, providerType, requiredFeatures?.ToList(), new ResourceProviderManifestFeaturesRule(requiredFeaturesPolicy), new ResourceProviderManifestRequestHeaderOptions(optInHeaders), resourceTypes?.ToList(), management, capabilities?.ToList(), metadata, globalNotificationEndpoints?.ToList(), reRegisterSubscriptionMetadata);
+            return new ResourceProviderManifest(providerAuthenticationAllowedAudiences != null ? new ResourceProviderManifestProviderAuthentication(providerAuthenticationAllowedAudiences?.ToList()) : null, providerAuthorizations?.ToList(), @namespace, providerVersion, providerType, requiredFeatures?.ToList(), requiredFeaturesPolicy.HasValue ? new ResourceProviderManifestFeaturesRule(requiredFeaturesPolicy.Value) : null, optInHeaders != null ? new ResourceProviderManifestRequestHeaderOptions(optInHeaders) : null, resourceTypes?.ToList(), management, capabilities?.ToList(), metadata, globalNotificationEndpoints?.ToList(), reRegisterSubscriptionMetadata);
         }
 
         /// <summary> Initializes a new instance of ResourceType. </summary>
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="linkedOperationRules"></param>
         /// <param name="resourceDeletionPolicy"></param>
         /// <returns> A new <see cref="Models.ResourceType"/> instance for mocking. </returns>
-        public static ResourceType ResourceType(string name = null, RoutingType? routingType = null, ResourceValidation? resourceValidation = null, IEnumerable<string> allowedUnauthorizedActions = null, IEnumerable<AuthorizationActionMapping> authorizationActionMappings = null, IEnumerable<LinkedAccessCheck> linkedAccessChecks = null, string defaultApiVersion = null, IEnumerable<LoggingRule> loggingRules = null, IEnumerable<ThrottlingRule> throttlingRules = null, IEnumerable<ResourceProviderEndpoint> endpoints = null, ResourceTypeMarketplaceType? marketplaceType = null, IdentityManagementType? managementType = null, BinaryData metadata = null, IEnumerable<string> requiredFeatures = null, FeaturesPolicy requiredFeaturesPolicy = default, IEnumerable<SubscriptionStateRule> subscriptionStateRules = null, IEnumerable<ServiceTreeInfo> serviceTreeInfos = null, OptInHeaderType? optInHeaders = null, string skuLink = null, IEnumerable<string> disallowedActionVerbs = null, ResourceTypeTemplateDeploymentPolicy templateDeploymentPolicy = null, IEnumerable<ExtendedLocationOptions> extendedLocations = null, IEnumerable<LinkedOperationRule> linkedOperationRules = null, ManifestResourceDeletionPolicy? resourceDeletionPolicy = null)
+        public static ResourceType ResourceType(string name = null, RoutingType? routingType = null, ResourceValidation? resourceValidation = null, IEnumerable<string> allowedUnauthorizedActions = null, IEnumerable<AuthorizationActionMapping> authorizationActionMappings = null, IEnumerable<LinkedAccessCheck> linkedAccessChecks = null, string defaultApiVersion = null, IEnumerable<LoggingRule> loggingRules = null, IEnumerable<ThrottlingRule> throttlingRules = null, IEnumerable<ResourceProviderEndpoint> endpoints = null, ResourceTypeMarketplaceType? marketplaceType = null, IdentityManagementType? managementType = null, BinaryData metadata = null, IEnumerable<string> requiredFeatures = null, FeaturesPolicy? requiredFeaturesPolicy = null, IEnumerable<SubscriptionStateRule> subscriptionStateRules = null, IEnumerable<ServiceTreeInfo> serviceTreeInfos = null, OptInHeaderType? optInHeaders = null, string skuLink = null, IEnumerable<string> disallowedActionVerbs = null, ResourceTypeTemplateDeploymentPolicy templateDeploymentPolicy = null, IEnumerable<ExtendedLocationOptions> extendedLocations = null, IEnumerable<LinkedOperationRule> linkedOperationRules = null, ManifestResourceDeletionPolicy? resourceDeletionPolicy = null)
         {
             allowedUnauthorizedActions ??= new List<string>();
             authorizationActionMappings ??= new List<AuthorizationActionMapping>();
@@ -1003,7 +1003,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             extendedLocations ??= new List<ExtendedLocationOptions>();
             linkedOperationRules ??= new List<LinkedOperationRule>();
 
-            return new ResourceType(name, routingType, resourceValidation, allowedUnauthorizedActions?.ToList(), authorizationActionMappings?.ToList(), linkedAccessChecks?.ToList(), defaultApiVersion, loggingRules?.ToList(), throttlingRules?.ToList(), endpoints?.ToList(), marketplaceType, new ResourceTypeIdentityManagement(managementType), metadata, requiredFeatures?.ToList(), new ResourceTypeFeaturesRule(requiredFeaturesPolicy), subscriptionStateRules?.ToList(), serviceTreeInfos?.ToList(), new ResourceTypeRequestHeaderOptions(optInHeaders), skuLink, disallowedActionVerbs?.ToList(), templateDeploymentPolicy, extendedLocations?.ToList(), linkedOperationRules?.ToList(), resourceDeletionPolicy);
+            return new ResourceType(name, routingType, resourceValidation, allowedUnauthorizedActions?.ToList(), authorizationActionMappings?.ToList(), linkedAccessChecks?.ToList(), defaultApiVersion, loggingRules?.ToList(), throttlingRules?.ToList(), endpoints?.ToList(), marketplaceType, managementType != null ? new ResourceTypeIdentityManagement(managementType) : null, metadata, requiredFeatures?.ToList(), requiredFeaturesPolicy.HasValue ? new ResourceTypeFeaturesRule(requiredFeaturesPolicy.Value) : null, subscriptionStateRules?.ToList(), serviceTreeInfos?.ToList(), optInHeaders != null ? new ResourceTypeRequestHeaderOptions(optInHeaders) : null, skuLink, disallowedActionVerbs?.ToList(), templateDeploymentPolicy, extendedLocations?.ToList(), linkedOperationRules?.ToList(), resourceDeletionPolicy);
         }
 
         /// <summary> Initializes a new instance of ResourceProviderEndpoint. </summary>
@@ -1016,13 +1016,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="timeout"></param>
         /// <param name="endpointType"></param>
         /// <returns> A new <see cref="Models.ResourceProviderEndpoint"/> instance for mocking. </returns>
-        public static ResourceProviderEndpoint ResourceProviderEndpoint(bool? enabled = null, IEnumerable<string> apiVersions = null, Uri endpointUri = null, IEnumerable<string> locations = null, IEnumerable<string> requiredFeatures = null, FeaturesPolicy requiredFeaturesPolicy = default, TimeSpan? timeout = null, EndpointType? endpointType = null)
+        public static ResourceProviderEndpoint ResourceProviderEndpoint(bool? enabled = null, IEnumerable<string> apiVersions = null, Uri endpointUri = null, IEnumerable<string> locations = null, IEnumerable<string> requiredFeatures = null, FeaturesPolicy? requiredFeaturesPolicy = null, TimeSpan? timeout = null, EndpointType? endpointType = null)
         {
             apiVersions ??= new List<string>();
             locations ??= new List<string>();
             requiredFeatures ??= new List<string>();
 
-            return new ResourceProviderEndpoint(enabled, apiVersions?.ToList(), endpointUri, locations?.ToList(), requiredFeatures?.ToList(), new ResourceProviderEndpointFeaturesRule(requiredFeaturesPolicy), timeout, endpointType);
+            return new ResourceProviderEndpoint(enabled, apiVersions?.ToList(), endpointUri, locations?.ToList(), requiredFeatures?.ToList(), requiredFeaturesPolicy.HasValue ? new ResourceProviderEndpointFeaturesRule(requiredFeaturesPolicy.Value) : null, timeout, endpointType);
         }
 
         /// <summary> Initializes a new instance of ResourceTypeTemplateDeploymentPolicy. </summary>
@@ -1175,15 +1175,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new SkuResourceProperties(skuSettings?.ToList(), provisioningState);
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeSku. </summary>
+        /// <summary> Initializes a new instance of ResourceTypeSkuInfo. </summary>
         /// <param name="skuSettings"></param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <returns> A new <see cref="Models.ResourceTypeSku"/> instance for mocking. </returns>
-        public static ResourceTypeSku ResourceTypeSku(IEnumerable<SkuSetting> skuSettings = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.ResourceTypeSkuInfo"/> instance for mocking. </returns>
+        public static ResourceTypeSkuInfo ResourceTypeSkuInfo(IEnumerable<SkuSetting> skuSettings = null, ProvisioningState? provisioningState = null)
         {
             skuSettings ??= new List<SkuSetting>();
 
-            return new ResourceTypeSku(skuSettings?.ToList(), provisioningState);
+            return new ResourceTypeSkuInfo(skuSettings?.ToList(), provisioningState);
         }
 
         /// <summary> Initializes a new instance of SkuSetting. </summary>

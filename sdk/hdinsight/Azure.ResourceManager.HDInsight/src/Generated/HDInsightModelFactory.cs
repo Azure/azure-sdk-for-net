@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HDInsight;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             dataDisksGroups ??= new List<HDInsightClusterDataDiskGroup>();
             scriptActions ??= new List<ScriptAction>();
 
-            return new HDInsightClusterRole(name, minInstanceCount, targetInstanceCount, vmGroupName, autoScaleConfiguration, new HardwareProfile(hardwareVmSize), new OSProfile(osLinuxProfile), virtualNetworkProfile, dataDisksGroups?.ToList(), scriptActions?.ToList(), encryptDataDisks);
+            return new HDInsightClusterRole(name, minInstanceCount, targetInstanceCount, vmGroupName, autoScaleConfiguration, hardwareVmSize != null ? new HardwareProfile(hardwareVmSize) : null, osLinuxProfile != null ? new OSProfile(osLinuxProfile) : null, virtualNetworkProfile, dataDisksGroups?.ToList(), scriptActions?.ToList(), encryptDataDisks);
         }
 
         /// <summary> Initializes a new instance of HDInsightAutoScaleConfiguration. </summary>
@@ -152,7 +151,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
             sshPublicKeys ??= new List<HDInsightSshPublicKey>();
 
-            return new HDInsightLinuxOSProfile(username, password, new SshProfile(sshPublicKeys?.ToList()));
+            return new HDInsightLinuxOSProfile(username, password, sshPublicKeys != null ? new SshProfile(sshPublicKeys?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of HDInsightSshPublicKey. </summary>
@@ -256,7 +255,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <returns> A new <see cref="Models.HDInsightIPConfiguration"/> instance for mocking. </returns>
         public static HDInsightIPConfiguration HDInsightIPConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState = null, bool? isPrimary = null, IPAddress privateIPAddress = null, HDInsightPrivateIPAllocationMethod? privateIPAllocationMethod = null, ResourceIdentifier subnetId = null)
         {
-            return new HDInsightIPConfiguration(id, name, resourceType, provisioningState, isPrimary, privateIPAddress, privateIPAllocationMethod, ResourceManagerModelFactory.WritableSubResource(subnetId));
+            return new HDInsightIPConfiguration(id, name, resourceType, provisioningState, isPrimary, privateIPAddress, privateIPAllocationMethod, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null);
         }
 
         /// <summary> Initializes a new instance of HDInsightClusterData. </summary>
@@ -314,7 +313,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             privateLinkConfigurations ??= new List<HDInsightPrivateLinkConfiguration>();
             privateEndpointConnections ??= new List<HDInsightPrivateEndpointConnectionData>();
 
-            return new HDInsightClusterProperties(clusterVersion, clusterHdpVersion, osType, tier, clusterId, clusterDefinition, kafkaRestProperties, securityProfile, new ComputeProfile(computeRoles?.ToList()), provisioningState, createdOn, clusterState, new QuotaInfo(quotaInfoCoresUsed), errors?.ToList(), connectivityEndpoints?.ToList(), diskEncryptionProperties, new EncryptionInTransitProperties(isEncryptionInTransitEnabled), new StorageProfile(storageAccounts?.ToList()), minSupportedTlsVersion, excludedServicesConfig, networkProperties, computeIsolationProperties, privateLinkConfigurations?.ToList(), privateEndpointConnections?.ToList());
+            return new HDInsightClusterProperties(clusterVersion, clusterHdpVersion, osType, tier, clusterId, clusterDefinition, kafkaRestProperties, securityProfile, computeRoles != null ? new ComputeProfile(computeRoles?.ToList()) : null, provisioningState, createdOn, clusterState, quotaInfoCoresUsed != null ? new QuotaInfo(quotaInfoCoresUsed) : null, errors?.ToList(), connectivityEndpoints?.ToList(), diskEncryptionProperties, isEncryptionInTransitEnabled != null ? new EncryptionInTransitProperties(isEncryptionInTransitEnabled) : null, storageAccounts != null ? new StorageProfile(storageAccounts?.ToList()) : null, minSupportedTlsVersion, excludedServicesConfig, networkProperties, computeIsolationProperties, privateLinkConfigurations?.ToList(), privateEndpointConnections?.ToList());
         }
 
         /// <summary> Initializes a new instance of ConnectivityEndpoint. </summary>
@@ -350,7 +349,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <returns> A new <see cref="HDInsight.HDInsightPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static HDInsightPrivateEndpointConnectionData HDInsightPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, HDInsightPrivateLinkServiceConnectionState connectionState = null, string linkIdentifier = null, HDInsightPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new HDInsightPrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.SubResource(privateEndpointId), connectionState, linkIdentifier, provisioningState);
+            return new HDInsightPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, linkIdentifier, provisioningState);
         }
 
         /// <summary> Initializes a new instance of HDInsightPrivateLinkServiceConnectionState. </summary>
@@ -422,7 +421,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             errors ??= new List<ResponseError>();
             privateLinkConfigurations ??= new List<HDInsightPrivateLinkConfiguration>();
 
-            return new HDInsightApplicationProperties(new ComputeProfile(computeRoles?.ToList()), installScriptActions?.ToList(), uninstallScriptActions?.ToList(), httpsEndpoints?.ToList(), sshEndpoints?.ToList(), provisioningState, applicationType, applicationState, errors?.ToList(), createdOn, marketplaceIdentifier, privateLinkConfigurations?.ToList());
+            return new HDInsightApplicationProperties(computeRoles != null ? new ComputeProfile(computeRoles?.ToList()) : null, installScriptActions?.ToList(), uninstallScriptActions?.ToList(), httpsEndpoints?.ToList(), sshEndpoints?.ToList(), provisioningState, applicationType, applicationState, errors?.ToList(), createdOn, marketplaceIdentifier, privateLinkConfigurations?.ToList());
         }
 
         /// <summary> Initializes a new instance of RuntimeScriptAction. </summary>

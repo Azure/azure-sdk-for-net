@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             tableList ??= new List<string>();
 
-            return new DatabaseMigrationSqlDBProperties("SqlDb", scope, provisioningState, migrationStatus, startedOn, endedOn, sourceSqlConnection, sourceDatabaseName, sourceServerName, migrationService, migrationOperationId, migrationFailureError, targetDatabaseCollation, provisioningError, migrationStatusDetails, targetSqlConnection, new SqlDBOfflineConfiguration(offline), tableList?.ToList());
+            return new DatabaseMigrationSqlDBProperties("SqlDb", scope, provisioningState, migrationStatus, startedOn, endedOn, sourceSqlConnection, sourceDatabaseName, sourceServerName, migrationService, migrationOperationId, migrationFailureError, targetDatabaseCollation, provisioningError, migrationStatusDetails, targetSqlConnection, offline != null ? new SqlDBOfflineConfiguration(offline) : null, tableList?.ToList());
         }
 
         /// <summary> Initializes a new instance of SqlDBMigrationStatusDetails. </summary>
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             errors ??= new List<ODataError>();
             outputErrors ??= new List<ReportableException>();
 
-            return new MigrateMISyncCompleteCommandProperties("Migrate.SqlServer.AzureDbSqlMi.Complete", errors?.ToList(), state, new MigrateMISyncCompleteCommandInput(inputSourceDatabaseName), new MigrateMISyncCompleteCommandOutput(outputErrors?.ToList()));
+            return new MigrateMISyncCompleteCommandProperties("Migrate.SqlServer.AzureDbSqlMi.Complete", errors?.ToList(), state, inputSourceDatabaseName != null ? new MigrateMISyncCompleteCommandInput(inputSourceDatabaseName) : null, outputErrors != null ? new MigrateMISyncCompleteCommandOutput(outputErrors?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of MongoDBConnectionInfo. </summary>
@@ -2193,7 +2193,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             selectedLogins ??= new List<string>();
             selectedAgentJobs ??= new List<string>();
 
-            return new MigrateSqlServerSqlMITaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases?.ToList(), startedOn, selectedLogins?.ToList(), selectedAgentJobs?.ToList(), backupFileShare, new BlobShare(backupBlobShareSasUri), backupMode, aadDomainName, encryptedKeyForSecureFields);
+            return new MigrateSqlServerSqlMITaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases?.ToList(), startedOn, selectedLogins?.ToList(), selectedAgentJobs?.ToList(), backupFileShare, backupBlobShareSasUri != null ? new BlobShare(backupBlobShareSasUri) : null, backupMode, aadDomainName, encryptedKeyForSecureFields);
         }
 
         /// <summary> Initializes a new instance of BlobShare. </summary>
@@ -2366,7 +2366,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             errors ??= new List<ODataError>();
 
-            return new MongoDBCancelCommand("cancel", errors?.ToList(), state, new MongoDBCommandInput(inputObjectName));
+            return new MongoDBCancelCommand("cancel", errors?.ToList(), state, inputObjectName != null ? new MongoDBCommandInput(inputObjectName) : null);
         }
 
         /// <summary> Initializes a new instance of MongoDBCommandInput. </summary>
@@ -2668,7 +2668,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             errors ??= new List<ODataError>();
 
-            return new MongoDBRestartCommand("restart", errors?.ToList(), state, new MongoDBCommandInput(inputObjectName));
+            return new MongoDBRestartCommand("restart", errors?.ToList(), state, inputObjectName != null ? new MongoDBCommandInput(inputObjectName) : null);
         }
 
         /// <summary> Initializes a new instance of ConnectToSourceOracleSyncTaskOutput. </summary>
@@ -2922,7 +2922,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<CheckOciDriverTaskOutput>();
 
-            return new CheckOciDriverTaskProperties("Service.Check.OCI", errors?.ToList(), state, commands?.ToList(), clientData, new CheckOciDriverTaskInput(inputServerVersion), output?.ToList());
+            return new CheckOciDriverTaskProperties("Service.Check.OCI", errors?.ToList(), state, commands?.ToList(), clientData, inputServerVersion != null ? new CheckOciDriverTaskInput(inputServerVersion) : null, output?.ToList());
         }
 
         /// <summary> Initializes a new instance of UploadOciDriverTaskProperties. </summary>
@@ -2944,7 +2944,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<UploadOciDriverTaskOutput>();
 
-            return new UploadOciDriverTaskProperties("Service.Upload.OCI", errors?.ToList(), state, commands?.ToList(), clientData, new UploadOciDriverTaskInput(inputDriverShare), output?.ToList());
+            return new UploadOciDriverTaskProperties("Service.Upload.OCI", errors?.ToList(), state, commands?.ToList(), clientData, inputDriverShare != null ? new UploadOciDriverTaskInput(inputDriverShare) : null, output?.ToList());
         }
 
         /// <summary> Initializes a new instance of InstallOciDriverTaskProperties. </summary>
@@ -2966,7 +2966,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<InstallOciDriverTaskOutput>();
 
-            return new InstallOciDriverTaskProperties("Service.Install.OCI", errors?.ToList(), state, commands?.ToList(), clientData, new InstallOciDriverTaskInput(inputDriverPackageName), output?.ToList());
+            return new InstallOciDriverTaskProperties("Service.Install.OCI", errors?.ToList(), state, commands?.ToList(), clientData, inputDriverPackageName != null ? new InstallOciDriverTaskInput(inputDriverPackageName) : null, output?.ToList());
         }
 
         /// <summary> Initializes a new instance of ConnectToMongoDBTaskProperties. </summary>
@@ -3063,7 +3063,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToSourcePostgreSqlSyncTaskOutput>();
 
-            return new ConnectToSourcePostgreSqlSyncTaskProperties("ConnectToSource.PostgreSql.Sync", errors?.ToList(), state, commands?.ToList(), clientData, new ConnectToSourcePostgreSqlSyncTaskInput(inputSourceConnectionInfo), output?.ToList());
+            return new ConnectToSourcePostgreSqlSyncTaskProperties("ConnectToSource.PostgreSql.Sync", errors?.ToList(), state, commands?.ToList(), clientData, inputSourceConnectionInfo != null ? new ConnectToSourcePostgreSqlSyncTaskInput(inputSourceConnectionInfo) : null, output?.ToList());
         }
 
         /// <summary> Initializes a new instance of ConnectToSourceMySqlTaskProperties. </summary>
@@ -3135,7 +3135,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToSourceOracleSyncTaskOutput>();
 
-            return new ConnectToSourceOracleSyncTaskProperties("ConnectToSource.Oracle.Sync", errors?.ToList(), state, commands?.ToList(), clientData, new ConnectToSourceOracleSyncTaskInput(inputSourceConnectionInfo), output?.ToList());
+            return new ConnectToSourceOracleSyncTaskProperties("ConnectToSource.Oracle.Sync", errors?.ToList(), state, commands?.ToList(), clientData, inputSourceConnectionInfo != null ? new ConnectToSourceOracleSyncTaskInput(inputSourceConnectionInfo) : null, output?.ToList());
         }
 
         /// <summary> Initializes a new instance of ConnectToTargetSqlDBTaskProperties. </summary>
@@ -3224,7 +3224,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             clientData ??= new Dictionary<string, string>();
             output ??= new List<ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput>();
 
-            return new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties("ConnectToTarget.Oracle.AzureDbForPostgreSql.Sync", errors?.ToList(), state, commands?.ToList(), clientData, new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(inputTargetConnectionInfo), output?.ToList());
+            return new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties("ConnectToTarget.Oracle.AzureDbForPostgreSql.Sync", errors?.ToList(), state, commands?.ToList(), clientData, inputTargetConnectionInfo != null ? new ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(inputTargetConnectionInfo) : null, output?.ToList());
         }
 
         /// <summary> Initializes a new instance of GetUserTablesSqlTaskProperties. </summary>
@@ -3758,7 +3758,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             selectedDatabases ??= new List<MigrateSqlServerSqlMIDatabaseInput>();
             selectedLogins ??= new List<string>();
 
-            return new ValidateMigrationInputSqlServerSqlMITaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases?.ToList(), selectedLogins?.ToList(), backupFileShare, new BlobShare(backupBlobShareSasUri), backupMode);
+            return new ValidateMigrationInputSqlServerSqlMITaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases?.ToList(), selectedLogins?.ToList(), backupFileShare, backupBlobShareSasUri != null ? new BlobShare(backupBlobShareSasUri) : null, backupMode);
         }
 
         /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlMITaskOutput. </summary>

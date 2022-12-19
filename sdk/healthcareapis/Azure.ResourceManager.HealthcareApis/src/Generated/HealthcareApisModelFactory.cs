@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HealthcareApis;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             accessPolicies ??= new List<HealthcareApisServiceAccessPolicyEntry>();
             privateEndpointConnections ??= new List<HealthcareApisPrivateEndpointConnectionData>();
 
-            return new HealthcareApisServiceProperties(provisioningState, accessPolicies?.ToList(), cosmosDbConfiguration, authenticationConfiguration, corsConfiguration, new ServiceExportConfigurationInfo(exportStorageAccountName), privateEndpointConnections?.ToList(), publicNetworkAccess, acrConfiguration, importConfiguration);
+            return new HealthcareApisServiceProperties(provisioningState, accessPolicies?.ToList(), cosmosDbConfiguration, authenticationConfiguration, corsConfiguration, exportStorageAccountName != null ? new ServiceExportConfigurationInfo(exportStorageAccountName) : null, privateEndpointConnections?.ToList(), publicNetworkAccess, acrConfiguration, importConfiguration);
         }
 
         /// <summary> Initializes a new instance of HealthcareApisServiceCosmosDbConfiguration. </summary>
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <returns> A new <see cref="HealthcareApis.HealthcareApisPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static HealthcareApisPrivateEndpointConnectionData HealthcareApisPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, HealthcareApisPrivateLinkServiceConnectionState connectionState = null, HealthcareApisPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new HealthcareApisPrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.SubResource(privateEndpointId), connectionState, provisioningState);
+            return new HealthcareApisPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of HealthcareApisPrivateLinkServiceConnectionState. </summary>
@@ -304,7 +303,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new HealthcareApisIotConnectorData(id, name, resourceType, systemData, tags, location, provisioningState, ingestionEndpointConfiguration, new HealthcareApisIotMappingProperties(deviceMappingContent), identity, etag);
+            return new HealthcareApisIotConnectorData(id, name, resourceType, systemData, tags, location, provisioningState, ingestionEndpointConfiguration, deviceMappingContent != null ? new HealthcareApisIotMappingProperties(deviceMappingContent) : null, identity, etag);
         }
 
         /// <summary> Initializes a new instance of HealthcareApisIotConnectorEventHubIngestionConfiguration. </summary>
@@ -350,7 +349,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <returns> A new <see cref="HealthcareApis.HealthcareApisIotFhirDestinationData"/> instance for mocking. </returns>
         public static HealthcareApisIotFhirDestinationData HealthcareApisIotFhirDestinationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HealthcareApisProvisioningState? provisioningState = null, HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType = default, ResourceIdentifier fhirServiceResourceId = null, BinaryData fhirMappingContent = null, AzureLocation? location = null, ETag? etag = null)
         {
-            return new HealthcareApisIotFhirDestinationData(id, name, resourceType, systemData, provisioningState, resourceIdentityResolutionType, fhirServiceResourceId, new HealthcareApisIotMappingProperties(fhirMappingContent), location, etag);
+            return new HealthcareApisIotFhirDestinationData(id, name, resourceType, systemData, provisioningState, resourceIdentityResolutionType, fhirServiceResourceId, fhirMappingContent != null ? new HealthcareApisIotMappingProperties(fhirMappingContent) : null, location, etag);
         }
 
         /// <summary> Initializes a new instance of FhirServiceData. </summary>
@@ -381,7 +380,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             accessPolicies ??= new List<FhirServiceAccessPolicyEntry>();
             privateEndpointConnections ??= new List<HealthcareApisPrivateEndpointConnectionData>();
 
-            return new FhirServiceData(id, name, resourceType, systemData, tags, location, kind, provisioningState, accessPolicies?.ToList(), acrConfiguration, authenticationConfiguration, corsConfiguration, new FhirServiceExportConfiguration(exportStorageAccountName), privateEndpointConnections?.ToList(), publicNetworkAccess, eventState, resourceVersionPolicyConfiguration, importConfiguration, identity, etag);
+            return new FhirServiceData(id, name, resourceType, systemData, tags, location, kind, provisioningState, accessPolicies?.ToList(), acrConfiguration, authenticationConfiguration, corsConfiguration, exportStorageAccountName != null ? new FhirServiceExportConfiguration(exportStorageAccountName) : null, privateEndpointConnections?.ToList(), publicNetworkAccess, eventState, resourceVersionPolicyConfiguration, importConfiguration, identity, etag);
         }
 
         /// <summary> Initializes a new instance of FhirServiceAcrConfiguration. </summary>

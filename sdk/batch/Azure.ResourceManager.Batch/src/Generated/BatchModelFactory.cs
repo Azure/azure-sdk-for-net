@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Batch;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <returns> A new <see cref="Models.BatchAccountAutoStorageBaseConfiguration"/> instance for mocking. </returns>
         public static BatchAccountAutoStorageBaseConfiguration BatchAccountAutoStorageBaseConfiguration(ResourceIdentifier storageAccountId = null, BatchAutoStorageAuthenticationMode? authenticationMode = null, ResourceIdentifier nodeIdentityResourceId = null)
         {
-            return new BatchAccountAutoStorageBaseConfiguration(storageAccountId, authenticationMode, new ComputeNodeIdentityReference(nodeIdentityResourceId));
+            return new BatchAccountAutoStorageBaseConfiguration(storageAccountId, authenticationMode, nodeIdentityResourceId != null ? new ComputeNodeIdentityReference(nodeIdentityResourceId) : null);
         }
 
         /// <summary> Initializes a new instance of BatchNetworkProfile. </summary>
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <returns> A new <see cref="Models.BatchAccountEncryptionConfiguration"/> instance for mocking. </returns>
         public static BatchAccountEncryptionConfiguration BatchAccountEncryptionConfiguration(BatchAccountKeySource? keySource = null, Uri keyIdentifier = null)
         {
-            return new BatchAccountEncryptionConfiguration(keySource, new KeyVaultProperties(keyIdentifier));
+            return new BatchAccountEncryptionConfiguration(keySource, keyIdentifier != null ? new KeyVaultProperties(keyIdentifier) : null);
         }
 
         /// <summary> Initializes a new instance of BatchAccountData. </summary>
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.Batch.Models
         {
             groupIds ??= new List<string>();
 
-            return new BatchPrivateEndpointConnectionData(id, name, resourceType, systemData, provisioningState, ResourceManagerModelFactory.SubResource(privateEndpointId), groupIds?.ToList(), connectionState, etag);
+            return new BatchPrivateEndpointConnectionData(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, groupIds?.ToList(), connectionState, etag);
         }
 
         /// <summary> Initializes a new instance of BatchPrivateLinkServiceConnectionState. </summary>
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <returns> A new <see cref="Models.BatchAccountAutoStorageConfiguration"/> instance for mocking. </returns>
         public static BatchAccountAutoStorageConfiguration BatchAccountAutoStorageConfiguration(ResourceIdentifier storageAccountId = null, BatchAutoStorageAuthenticationMode? authenticationMode = null, ResourceIdentifier nodeIdentityResourceId = null, DateTimeOffset lastKeySyncedOn = default)
         {
-            return new BatchAccountAutoStorageConfiguration(storageAccountId, authenticationMode, new ComputeNodeIdentityReference(nodeIdentityResourceId), lastKeySyncedOn);
+            return new BatchAccountAutoStorageConfiguration(storageAccountId, authenticationMode, nodeIdentityResourceId != null ? new ComputeNodeIdentityReference(nodeIdentityResourceId) : null, lastKeySyncedOn);
         }
 
         /// <summary> Initializes a new instance of BatchVmFamilyCoreQuota. </summary>
@@ -340,7 +339,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="currentNodeCommunicationMode"> Determines how a pool communicates with the Batch service. </param>
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
         /// <returns> A new <see cref="Batch.BatchAccountPoolData"/> instance for mocking. </returns>
-        public static BatchAccountPoolData BatchAccountPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, string displayName = null, DateTimeOffset? lastModifiedOn = null, DateTimeOffset? createdOn = null, BatchAccountPoolProvisioningState? provisioningState = null, DateTimeOffset? provisioningStateTransitOn = null, BatchAccountPoolAllocationState? allocationState = null, DateTimeOffset? allocationStateTransitionOn = null, string vmSize = null, BatchDeploymentConfiguration deploymentConfiguration = null, int? currentDedicatedNodes = null, int? currentLowPriorityNodes = null, BatchAccountPoolScaleSettings scaleSettings = null, BatchAccountPoolAutoScaleRun autoScaleRun = null, InterNodeCommunicationState? interNodeCommunication = null, BatchNetworkConfiguration networkConfiguration = null, int? taskSlotsPerNode = null, BatchNodeFillType taskSchedulingNodeFillType = default, IEnumerable<BatchUserAccount> userAccounts = null, IEnumerable<BatchAccountPoolMetadataItem> metadata = null, BatchAccountPoolStartTask startTask = null, IEnumerable<BatchCertificateReference> certificates = null, IEnumerable<BatchApplicationPackageReference> applicationPackages = null, IEnumerable<string> applicationLicenses = null, BatchResizeOperationStatus resizeOperationStatus = null, IEnumerable<BatchMountConfiguration> mountConfiguration = null, NodeCommunicationMode? targetNodeCommunicationMode = null, NodeCommunicationMode? currentNodeCommunicationMode = null, ETag? etag = null)
+        public static BatchAccountPoolData BatchAccountPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, string displayName = null, DateTimeOffset? lastModifiedOn = null, DateTimeOffset? createdOn = null, BatchAccountPoolProvisioningState? provisioningState = null, DateTimeOffset? provisioningStateTransitOn = null, BatchAccountPoolAllocationState? allocationState = null, DateTimeOffset? allocationStateTransitionOn = null, string vmSize = null, BatchDeploymentConfiguration deploymentConfiguration = null, int? currentDedicatedNodes = null, int? currentLowPriorityNodes = null, BatchAccountPoolScaleSettings scaleSettings = null, BatchAccountPoolAutoScaleRun autoScaleRun = null, InterNodeCommunicationState? interNodeCommunication = null, BatchNetworkConfiguration networkConfiguration = null, int? taskSlotsPerNode = null, BatchNodeFillType? taskSchedulingNodeFillType = null, IEnumerable<BatchUserAccount> userAccounts = null, IEnumerable<BatchAccountPoolMetadataItem> metadata = null, BatchAccountPoolStartTask startTask = null, IEnumerable<BatchCertificateReference> certificates = null, IEnumerable<BatchApplicationPackageReference> applicationPackages = null, IEnumerable<string> applicationLicenses = null, BatchResizeOperationStatus resizeOperationStatus = null, IEnumerable<BatchMountConfiguration> mountConfiguration = null, NodeCommunicationMode? targetNodeCommunicationMode = null, NodeCommunicationMode? currentNodeCommunicationMode = null, ETag? etag = null)
         {
             userAccounts ??= new List<BatchUserAccount>();
             metadata ??= new List<BatchAccountPoolMetadataItem>();
@@ -349,7 +348,7 @@ namespace Azure.ResourceManager.Batch.Models
             applicationLicenses ??= new List<string>();
             mountConfiguration ??= new List<BatchMountConfiguration>();
 
-            return new BatchAccountPoolData(id, name, resourceType, systemData, identity, displayName, lastModifiedOn, createdOn, provisioningState, provisioningStateTransitOn, allocationState, allocationStateTransitionOn, vmSize, deploymentConfiguration, currentDedicatedNodes, currentLowPriorityNodes, scaleSettings, autoScaleRun, interNodeCommunication, networkConfiguration, taskSlotsPerNode, new TaskSchedulingPolicy(taskSchedulingNodeFillType), userAccounts?.ToList(), metadata?.ToList(), startTask, certificates?.ToList(), applicationPackages?.ToList(), applicationLicenses?.ToList(), resizeOperationStatus, mountConfiguration?.ToList(), targetNodeCommunicationMode, currentNodeCommunicationMode, etag);
+            return new BatchAccountPoolData(id, name, resourceType, systemData, identity, displayName, lastModifiedOn, createdOn, provisioningState, provisioningStateTransitOn, allocationState, allocationStateTransitionOn, vmSize, deploymentConfiguration, currentDedicatedNodes, currentLowPriorityNodes, scaleSettings, autoScaleRun, interNodeCommunication, networkConfiguration, taskSlotsPerNode, taskSchedulingNodeFillType.HasValue ? new TaskSchedulingPolicy(taskSchedulingNodeFillType.Value) : null, userAccounts?.ToList(), metadata?.ToList(), startTask, certificates?.ToList(), applicationPackages?.ToList(), applicationLicenses?.ToList(), resizeOperationStatus, mountConfiguration?.ToList(), targetNodeCommunicationMode, currentNodeCommunicationMode, etag);
         }
 
         /// <summary> Initializes a new instance of BatchDeploymentConfiguration. </summary>
@@ -394,7 +393,7 @@ namespace Azure.ResourceManager.Batch.Models
             diskEncryptionTargets ??= new List<BatchDiskEncryptionTarget>();
             extensions ??= new List<BatchVmExtension>();
 
-            return new BatchVmConfiguration(imageReference, nodeAgentSkuId, new WindowsConfiguration(isAutomaticUpdateEnabled), dataDisks?.ToList(), licenseType, containerConfiguration, new DiskEncryptionConfiguration(diskEncryptionTargets?.ToList()), new NodePlacementConfiguration(nodePlacementPolicy), extensions?.ToList(), new OSDisk(new DiffDiskSettings(ephemeralOSDiskPlacement)));
+            return new BatchVmConfiguration(imageReference, nodeAgentSkuId, isAutomaticUpdateEnabled != null ? new WindowsConfiguration(isAutomaticUpdateEnabled) : null, dataDisks?.ToList(), licenseType, containerConfiguration, diskEncryptionTargets != null ? new DiskEncryptionConfiguration(diskEncryptionTargets?.ToList()) : null, nodePlacementPolicy != null ? new NodePlacementConfiguration(nodePlacementPolicy) : null, extensions?.ToList(), ephemeralOSDiskPlacement != null ? new OSDisk(new DiffDiskSettings(ephemeralOSDiskPlacement)) : null);
         }
 
         /// <summary> Initializes a new instance of BatchImageReference. </summary>
@@ -454,7 +453,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <returns> A new <see cref="Models.BatchVmContainerRegistry"/> instance for mocking. </returns>
         public static BatchVmContainerRegistry BatchVmContainerRegistry(string userName = null, string password = null, string registryServer = null, ResourceIdentifier identityResourceId = null)
         {
-            return new BatchVmContainerRegistry(userName, password, registryServer, new ComputeNodeIdentityReference(identityResourceId));
+            return new BatchVmContainerRegistry(userName, password, registryServer, identityResourceId != null ? new ComputeNodeIdentityReference(identityResourceId) : null);
         }
 
         /// <summary> Initializes a new instance of BatchVmExtension. </summary>
@@ -523,7 +522,7 @@ namespace Azure.ResourceManager.Batch.Models
         {
             endpointInboundNatPools ??= new List<BatchInboundNatPool>();
 
-            return new BatchNetworkConfiguration(subnetId, dynamicVNetAssignmentScope, new PoolEndpointConfiguration(endpointInboundNatPools?.ToList()), publicIPAddressConfiguration);
+            return new BatchNetworkConfiguration(subnetId, dynamicVNetAssignmentScope, endpointInboundNatPools != null ? new PoolEndpointConfiguration(endpointInboundNatPools?.ToList()) : null, publicIPAddressConfiguration);
         }
 
         /// <summary> Initializes a new instance of BatchInboundNatPool. </summary>
@@ -574,7 +573,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <returns> A new <see cref="Models.BatchUserAccount"/> instance for mocking. </returns>
         public static BatchUserAccount BatchUserAccount(string name = null, string password = null, BatchUserAccountElevationLevel? elevationLevel = null, BatchLinuxUserConfiguration linuxUserConfiguration = null, BatchWindowsLoginMode? windowsUserLoginMode = null)
         {
-            return new BatchUserAccount(name, password, elevationLevel, linuxUserConfiguration, new BatchWindowsUserConfiguration(windowsUserLoginMode));
+            return new BatchUserAccount(name, password, elevationLevel, linuxUserConfiguration, windowsUserLoginMode != null ? new BatchWindowsUserConfiguration(windowsUserLoginMode) : null);
         }
 
         /// <summary> Initializes a new instance of BatchLinuxUserConfiguration. </summary>
@@ -615,7 +614,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <returns> A new <see cref="Models.BatchResourceFile"/> instance for mocking. </returns>
         public static BatchResourceFile BatchResourceFile(string autoBlobContainerName = null, Uri blobContainerUri = null, Uri httpUri = null, string blobPrefix = null, string filePath = null, string fileMode = null, ResourceIdentifier identityResourceId = null)
         {
-            return new BatchResourceFile(autoBlobContainerName, blobContainerUri, httpUri, blobPrefix, filePath, fileMode, new ComputeNodeIdentityReference(identityResourceId));
+            return new BatchResourceFile(autoBlobContainerName, blobContainerUri, httpUri, blobPrefix, filePath, fileMode, identityResourceId != null ? new ComputeNodeIdentityReference(identityResourceId) : null);
         }
 
         /// <summary> Initializes a new instance of BatchEnvironmentSetting. </summary>
@@ -715,7 +714,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <returns> A new <see cref="Models.BatchBlobFileSystemConfiguration"/> instance for mocking. </returns>
         public static BatchBlobFileSystemConfiguration BatchBlobFileSystemConfiguration(string accountName = null, string containerName = null, string accountKey = null, string sasKey = null, string blobfuseOptions = null, string relativeMountPath = null, ResourceIdentifier identityResourceId = null)
         {
-            return new BatchBlobFileSystemConfiguration(accountName, containerName, accountKey, sasKey, blobfuseOptions, relativeMountPath, new ComputeNodeIdentityReference(identityResourceId));
+            return new BatchBlobFileSystemConfiguration(accountName, containerName, accountKey, sasKey, blobfuseOptions, relativeMountPath, identityResourceId != null ? new ComputeNodeIdentityReference(identityResourceId) : null);
         }
 
         /// <summary> Initializes a new instance of BatchNfsMountConfiguration. </summary>

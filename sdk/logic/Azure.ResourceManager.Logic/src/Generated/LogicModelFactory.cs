@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Logic.Models
             allowedCallerIPAddresses ??= new List<FlowAccessControlIPAddressRange>();
             accessPolicies ??= new Dictionary<string, OpenAuthenticationAccessPolicy>();
 
-            return new FlowAccessControlConfigurationPolicy(allowedCallerIPAddresses?.ToList(), new OpenAuthenticationAccessPolicies(accessPolicies));
+            return new FlowAccessControlConfigurationPolicy(allowedCallerIPAddresses?.ToList(), accessPolicies != null ? new OpenAuthenticationAccessPolicies(accessPolicies) : null);
         }
 
         /// <summary> Initializes a new instance of FlowAccessControlIPAddressRange. </summary>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Logic.LogicWorkflowTriggerHistoryData"/> instance for mocking. </returns>
         public static LogicWorkflowTriggerHistoryData LogicWorkflowTriggerHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, DateTimeOffset? scheduledOn = null, LogicWorkflowStatus? status = null, string code = null, BinaryData error = null, Guid? trackingId = null, string correlationClientTrackingId = null, LogicContentLink inputsLink = null, LogicContentLink outputsLink = null, bool? isFired = null, LogicResourceReference run = null)
         {
-            return new LogicWorkflowTriggerHistoryData(id, name, resourceType, systemData, startOn, endOn, scheduledOn, status, code, error, trackingId, new Correlation(correlationClientTrackingId), inputsLink, outputsLink, isFired, run);
+            return new LogicWorkflowTriggerHistoryData(id, name, resourceType, systemData, startOn, endOn, scheduledOn, status, code, error, trackingId, correlationClientTrackingId != null ? new Correlation(correlationClientTrackingId) : null, inputsLink, outputsLink, isFired, run);
         }
 
         /// <summary> Initializes a new instance of LogicContentLink. </summary>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Logic.Models
         {
             outputs ??= new Dictionary<string, LogicWorkflowOutputParameterInfo>();
 
-            return new LogicWorkflowRunData(id, name, resourceType, systemData, waitEndOn, startOn, endOn, status, code, error, correlationId, new Correlation(correlationClientTrackingId), workflow, trigger, outputs, response);
+            return new LogicWorkflowRunData(id, name, resourceType, systemData, waitEndOn, startOn, endOn, status, code, error, correlationId, correlationClientTrackingId != null ? new Correlation(correlationClientTrackingId) : null, workflow, trigger, outputs, response);
         }
 
         /// <summary> Initializes a new instance of LogicWorkflowRunTrigger. </summary>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.LogicWorkflowRunTrigger"/> instance for mocking. </returns>
         public static LogicWorkflowRunTrigger LogicWorkflowRunTrigger(string name = null, BinaryData inputs = null, LogicContentLink inputsLink = null, BinaryData outputs = null, LogicContentLink outputsLink = null, DateTimeOffset? scheduledOn = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, Guid? trackingId = null, string correlationClientTrackingId = null, string code = null, LogicWorkflowStatus? status = null, BinaryData error = null, BinaryData trackedProperties = null)
         {
-            return new LogicWorkflowRunTrigger(name, inputs, inputsLink, outputs, outputsLink, scheduledOn, startOn, endOn, trackingId, new Correlation(correlationClientTrackingId), code, status, error, trackedProperties);
+            return new LogicWorkflowRunTrigger(name, inputs, inputsLink, outputs, outputsLink, scheduledOn, startOn, endOn, trackingId, correlationClientTrackingId != null ? new Correlation(correlationClientTrackingId) : null, code, status, error, trackedProperties);
         }
 
         /// <summary> Initializes a new instance of LogicWorkflowOutputParameterInfo. </summary>
@@ -631,11 +631,11 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="integrationServiceEnvironment"> The integration service environment. </param>
         /// <param name="state"> The workflow state. </param>
         /// <returns> A new <see cref="Logic.IntegrationAccountData"/> instance for mocking. </returns>
-        public static IntegrationAccountData IntegrationAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IntegrationAccountSkuName skuName = default, LogicResourceReference integrationServiceEnvironment = null, LogicWorkflowState? state = null)
+        public static IntegrationAccountData IntegrationAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IntegrationAccountSkuName? skuName = null, LogicResourceReference integrationServiceEnvironment = null, LogicWorkflowState? state = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new IntegrationAccountData(id, name, resourceType, systemData, tags, location, new IntegrationAccountSku(skuName), integrationServiceEnvironment, state);
+            return new IntegrationAccountData(id, name, resourceType, systemData, tags, location, skuName.HasValue ? new IntegrationAccountSku(skuName.Value) : null, integrationServiceEnvironment, state);
         }
 
         /// <summary> Initializes a new instance of IntegrationAccountAssemblyDefinitionData. </summary>
@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.Logic.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new IntegrationAccountMapData(id, name, resourceType, systemData, tags, location, mapType, new IntegrationAccountMapPropertiesParametersSchema(parametersSchemaRef), createdOn, changedOn, content, contentType, contentLink, metadata);
+            return new IntegrationAccountMapData(id, name, resourceType, systemData, tags, location, mapType, parametersSchemaRef != null ? new IntegrationAccountMapPropertiesParametersSchema(parametersSchemaRef) : null, createdOn, changedOn, content, contentType, contentLink, metadata);
         }
 
         /// <summary> Initializes a new instance of IntegrationAccountPartnerData. </summary>
@@ -827,7 +827,7 @@ namespace Azure.ResourceManager.Logic.Models
             tags ??= new Dictionary<string, string>();
             b2bBusinessIdentities ??= new List<IntegrationAccountBusinessIdentity>();
 
-            return new IntegrationAccountPartnerData(id, name, resourceType, systemData, tags, location, partnerType, createdOn, changedOn, metadata, new IntegrationAccountPartnerContent(new B2BPartnerContent(b2bBusinessIdentities?.ToList())));
+            return new IntegrationAccountPartnerData(id, name, resourceType, systemData, tags, location, partnerType, createdOn, changedOn, metadata, b2bBusinessIdentities != null ? new IntegrationAccountPartnerContent(new B2BPartnerContent(b2bBusinessIdentities?.ToList())) : null);
         }
 
         /// <summary> Initializes a new instance of IntegrationAccountPartnerContent. </summary>
@@ -837,7 +837,7 @@ namespace Azure.ResourceManager.Logic.Models
         {
             b2bBusinessIdentities ??= new List<IntegrationAccountBusinessIdentity>();
 
-            return new IntegrationAccountPartnerContent(new B2BPartnerContent(b2bBusinessIdentities?.ToList()));
+            return new IntegrationAccountPartnerContent(b2bBusinessIdentities != null ? new B2BPartnerContent(b2bBusinessIdentities?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of IntegrationAccountAgreementData. </summary>
@@ -938,7 +938,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="schemaReferences"> The X12 schema references. </param>
         /// <param name="x12DelimiterOverrides"> The X12 delimiter override settings. </param>
         /// <returns> A new <see cref="Models.X12ProtocolSettings"/> instance for mocking. </returns>
-        public static X12ProtocolSettings X12ProtocolSettings(X12ValidationSettings validationSettings = null, X12FramingSettings framingSettings = null, X12EnvelopeSettings envelopeSettings = null, X12AcknowledgementSettings acknowledgementSettings = null, MessageFilterType messageFilterType = default, X12SecuritySettings securitySettings = null, X12ProcessingSettings processingSettings = null, IEnumerable<X12EnvelopeOverride> envelopeOverrides = null, IEnumerable<X12ValidationOverride> validationOverrides = null, IEnumerable<X12MessageIdentifier> messageFilterList = null, IEnumerable<X12SchemaReference> schemaReferences = null, IEnumerable<X12DelimiterOverrides> x12DelimiterOverrides = null)
+        public static X12ProtocolSettings X12ProtocolSettings(X12ValidationSettings validationSettings = null, X12FramingSettings framingSettings = null, X12EnvelopeSettings envelopeSettings = null, X12AcknowledgementSettings acknowledgementSettings = null, MessageFilterType? messageFilterType = null, X12SecuritySettings securitySettings = null, X12ProcessingSettings processingSettings = null, IEnumerable<X12EnvelopeOverride> envelopeOverrides = null, IEnumerable<X12ValidationOverride> validationOverrides = null, IEnumerable<X12MessageIdentifier> messageFilterList = null, IEnumerable<X12SchemaReference> schemaReferences = null, IEnumerable<X12DelimiterOverrides> x12DelimiterOverrides = null)
         {
             envelopeOverrides ??= new List<X12EnvelopeOverride>();
             validationOverrides ??= new List<X12ValidationOverride>();
@@ -946,7 +946,7 @@ namespace Azure.ResourceManager.Logic.Models
             schemaReferences ??= new List<X12SchemaReference>();
             x12DelimiterOverrides ??= new List<X12DelimiterOverrides>();
 
-            return new X12ProtocolSettings(validationSettings, framingSettings, envelopeSettings, acknowledgementSettings, new X12MessageFilter(messageFilterType), securitySettings, processingSettings, envelopeOverrides?.ToList(), validationOverrides?.ToList(), messageFilterList?.ToList(), schemaReferences?.ToList(), x12DelimiterOverrides?.ToList());
+            return new X12ProtocolSettings(validationSettings, framingSettings, envelopeSettings, acknowledgementSettings, messageFilterType.HasValue ? new X12MessageFilter(messageFilterType.Value) : null, securitySettings, processingSettings, envelopeOverrides?.ToList(), validationOverrides?.ToList(), messageFilterList?.ToList(), schemaReferences?.ToList(), x12DelimiterOverrides?.ToList());
         }
 
         /// <summary> Initializes a new instance of X12EnvelopeSettings. </summary>
@@ -1070,7 +1070,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="validationOverrides"> The EDIFACT validation override settings. </param>
         /// <param name="edifactDelimiterOverrides"> The EDIFACT delimiter override settings. </param>
         /// <returns> A new <see cref="Models.EdifactProtocolSettings"/> instance for mocking. </returns>
-        public static EdifactProtocolSettings EdifactProtocolSettings(EdifactValidationSettings validationSettings = null, EdifactFramingSettings framingSettings = null, EdifactEnvelopeSettings envelopeSettings = null, EdifactAcknowledgementSettings acknowledgementSettings = null, MessageFilterType messageFilterType = default, EdifactProcessingSettings processingSettings = null, IEnumerable<EdifactEnvelopeOverride> envelopeOverrides = null, IEnumerable<EdifactMessageIdentifier> messageFilterList = null, IEnumerable<EdifactSchemaReference> schemaReferences = null, IEnumerable<EdifactValidationOverride> validationOverrides = null, IEnumerable<EdifactDelimiterOverride> edifactDelimiterOverrides = null)
+        public static EdifactProtocolSettings EdifactProtocolSettings(EdifactValidationSettings validationSettings = null, EdifactFramingSettings framingSettings = null, EdifactEnvelopeSettings envelopeSettings = null, EdifactAcknowledgementSettings acknowledgementSettings = null, MessageFilterType? messageFilterType = null, EdifactProcessingSettings processingSettings = null, IEnumerable<EdifactEnvelopeOverride> envelopeOverrides = null, IEnumerable<EdifactMessageIdentifier> messageFilterList = null, IEnumerable<EdifactSchemaReference> schemaReferences = null, IEnumerable<EdifactValidationOverride> validationOverrides = null, IEnumerable<EdifactDelimiterOverride> edifactDelimiterOverrides = null)
         {
             envelopeOverrides ??= new List<EdifactEnvelopeOverride>();
             messageFilterList ??= new List<EdifactMessageIdentifier>();
@@ -1078,7 +1078,7 @@ namespace Azure.ResourceManager.Logic.Models
             validationOverrides ??= new List<EdifactValidationOverride>();
             edifactDelimiterOverrides ??= new List<EdifactDelimiterOverride>();
 
-            return new EdifactProtocolSettings(validationSettings, framingSettings, envelopeSettings, acknowledgementSettings, new EdifactMessageFilter(messageFilterType), processingSettings, envelopeOverrides?.ToList(), messageFilterList?.ToList(), schemaReferences?.ToList(), validationOverrides?.ToList(), edifactDelimiterOverrides?.ToList());
+            return new EdifactProtocolSettings(validationSettings, framingSettings, envelopeSettings, acknowledgementSettings, messageFilterType.HasValue ? new EdifactMessageFilter(messageFilterType.Value) : null, processingSettings, envelopeOverrides?.ToList(), messageFilterList?.ToList(), schemaReferences?.ToList(), validationOverrides?.ToList(), edifactDelimiterOverrides?.ToList());
         }
 
         /// <summary> Initializes a new instance of EdifactFramingSettings. </summary>
@@ -1298,7 +1298,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.IntegrationServiceEnvironmentProperties"/> instance for mocking. </returns>
         public static IntegrationServiceEnvironmentProperties IntegrationServiceEnvironmentProperties(LogicWorkflowProvisioningState? provisioningState = null, LogicWorkflowState? state = null, string integrationServiceEnvironmentId = null, FlowEndpointsConfiguration endpointsConfiguration = null, IntegrationServiceNetworkConfiguration networkConfiguration = null, IntegrationServiceEnvironmenEncryptionKeyReference encryptionKeyReference = null)
         {
-            return new IntegrationServiceEnvironmentProperties(provisioningState, state, integrationServiceEnvironmentId, endpointsConfiguration, networkConfiguration, new IntegrationServiceEnvironmenEncryptionConfiguration(encryptionKeyReference));
+            return new IntegrationServiceEnvironmentProperties(provisioningState, state, integrationServiceEnvironmentId, endpointsConfiguration, networkConfiguration, encryptionKeyReference != null ? new IntegrationServiceEnvironmenEncryptionConfiguration(encryptionKeyReference) : null);
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceNetworkConfiguration. </summary>
@@ -1310,7 +1310,7 @@ namespace Azure.ResourceManager.Logic.Models
         {
             subnets ??= new List<LogicResourceReference>();
 
-            return new IntegrationServiceNetworkConfiguration(virtualNetworkAddressSpace, new IntegrationServiceEnvironmentAccessEndpoint(endpointType), subnets?.ToList());
+            return new IntegrationServiceNetworkConfiguration(virtualNetworkAddressSpace, endpointType != null ? new IntegrationServiceEnvironmentAccessEndpoint(endpointType) : null, subnets?.ToList());
         }
 
         /// <summary> Initializes a new instance of IntegrationServiceEnvironmenEncryptionKeyReference. </summary>
@@ -1449,7 +1449,7 @@ namespace Azure.ResourceManager.Logic.Models
             runtimeUris ??= new List<Uri>();
             capabilities ??= new List<string>();
 
-            return new IntegrationServiceEnvironmentManagedApiData(id, name, resourceType, systemData, tags, location, namePropertiesName, connectionParameters, metadata, runtimeUris?.ToList(), generalInformation, capabilities?.ToList(), new LogicApiResourceBackendService(serviceUri), policies, apiDefinitionUri, apiDefinitions, integrationServiceEnvironment, provisioningState, category, new IntegrationServiceEnvironmentManagedApiDeploymentParameters(deploymentParametersContentLinkDefinition));
+            return new IntegrationServiceEnvironmentManagedApiData(id, name, resourceType, systemData, tags, location, namePropertiesName, connectionParameters, metadata, runtimeUris?.ToList(), generalInformation, capabilities?.ToList(), serviceUri != null ? new LogicApiResourceBackendService(serviceUri) : null, policies, apiDefinitionUri, apiDefinitions, integrationServiceEnvironment, provisioningState, category, deploymentParametersContentLinkDefinition != null ? new IntegrationServiceEnvironmentManagedApiDeploymentParameters(deploymentParametersContentLinkDefinition) : null);
         }
 
         /// <summary> Initializes a new instance of LogicApiResourceMetadata. </summary>

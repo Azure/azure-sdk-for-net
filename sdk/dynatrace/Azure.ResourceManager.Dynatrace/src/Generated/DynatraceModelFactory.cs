@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         {
             metricRulesFilteringTags ??= new List<DynatraceMonitorResourceFilteringTag>();
 
-            return new DynatraceTagRuleData(id, name, resourceType, systemData, logRules, new DynatraceMonitorResourceMetricRules(metricRulesFilteringTags?.ToList()), provisioningState);
+            return new DynatraceTagRuleData(id, name, resourceType, systemData, logRules, metricRulesFilteringTags != null ? new DynatraceMonitorResourceMetricRules(metricRulesFilteringTags?.ToList()) : null, provisioningState);
         }
 
         /// <summary> Initializes a new instance of DynatraceMonitorResourceLogRules. </summary>

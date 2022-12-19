@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.AgFoodPlatform;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
@@ -119,7 +118,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         /// <returns> A new <see cref="Models.SensorIntegration"/> instance for mocking. </returns>
         public static SensorIntegration SensorIntegration(string enabled = null, ProvisioningState? provisioningState = null, ResponseError provisioningInfoError = null)
         {
-            return new SensorIntegration(enabled, provisioningState, new ErrorResponse(provisioningInfoError));
+            return new SensorIntegration(enabled, provisioningState, provisioningInfoError != null ? new ErrorResponse(provisioningInfoError) : null);
         }
 
         /// <summary> Initializes a new instance of AgFoodPlatformPrivateEndpointConnectionData. </summary>
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         /// <returns> A new <see cref="AgFoodPlatform.AgFoodPlatformPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static AgFoodPlatformPrivateEndpointConnectionData AgFoodPlatformPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, AgFoodPlatformPrivateLinkServiceConnectionState connectionState = null, AgFoodPlatformPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new AgFoodPlatformPrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.SubResource(privateEndpointId), connectionState, provisioningState);
+            return new AgFoodPlatformPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of AgFoodPlatformPrivateLinkServiceConnectionState. </summary>

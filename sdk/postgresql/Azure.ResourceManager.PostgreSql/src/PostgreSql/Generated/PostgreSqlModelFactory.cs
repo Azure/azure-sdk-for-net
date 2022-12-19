@@ -12,7 +12,6 @@ using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <returns> A new <see cref="Models.PostgreSqlServerPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
         public static PostgreSqlServerPrivateEndpointConnectionProperties PostgreSqlServerPrivateEndpointConnectionProperties(ResourceIdentifier privateEndpointId = null, PostgreSqlServerPrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = null, PostgreSqlPrivateEndpointProvisioningState? provisioningState = null)
         {
-            return new PostgreSqlServerPrivateEndpointConnectionProperties(ResourceManagerModelFactory.WritableSubResource(privateEndpointId), privateLinkServiceConnectionState, provisioningState);
+            return new PostgreSqlServerPrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, privateLinkServiceConnectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of PostgreSqlServerPrivateLinkServiceConnectionStateProperty. </summary>
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <returns> A new <see cref="PostgreSql.PostgreSqlPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static PostgreSqlPrivateEndpointConnectionData PostgreSqlPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, PostgreSqlPrivateLinkServiceConnectionStateProperty connectionState = null, string provisioningState = null)
         {
-            return new PostgreSqlPrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.WritableSubResource(privateEndpointId), connectionState, provisioningState);
+            return new PostgreSqlPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of PostgreSqlPrivateLinkServiceConnectionStateProperty. </summary>

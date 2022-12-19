@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="Models.KeyVaultPrivateEndpointConnectionItemData"/> instance for mocking. </returns>
         public static KeyVaultPrivateEndpointConnectionItemData KeyVaultPrivateEndpointConnectionItemData(string id = null, ETag? etag = null, ResourceIdentifier privateEndpointId = null, KeyVaultPrivateLinkServiceConnectionState connectionState = null, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new KeyVaultPrivateEndpointConnectionItemData(id, etag, ResourceManagerModelFactory.SubResource(privateEndpointId), connectionState, provisioningState);
+            return new KeyVaultPrivateEndpointConnectionItemData(id, etag, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of KeyVaultPrivateLinkServiceConnectionState. </summary>
@@ -146,7 +145,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             accessPolicies ??= new List<KeyVaultAccessPolicy>();
 
-            return new KeyVaultAccessPolicyParameters(id, name, resourceType, systemData, location, new KeyVaultAccessPolicyProperties(accessPolicies?.ToList()));
+            return new KeyVaultAccessPolicyParameters(id, name, resourceType, systemData, location, accessPolicies != null ? new KeyVaultAccessPolicyProperties(accessPolicies?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of DeletedKeyVaultData. </summary>
@@ -202,7 +201,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new KeyVaultPrivateEndpointConnectionData(id, name, resourceType, systemData, etag, ResourceManagerModelFactory.SubResource(privateEndpointId), connectionState, provisioningState, location, tags);
+            return new KeyVaultPrivateEndpointConnectionData(id, name, resourceType, systemData, etag, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, location, tags);
         }
 
         /// <summary> Initializes a new instance of KeyVaultPrivateLinkResourceData. </summary>
@@ -286,7 +285,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="Models.ManagedHsmPrivateEndpointConnectionItemData"/> instance for mocking. </returns>
         public static ManagedHsmPrivateEndpointConnectionItemData ManagedHsmPrivateEndpointConnectionItemData(ResourceIdentifier privateEndpointId = null, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new ManagedHsmPrivateEndpointConnectionItemData(ResourceManagerModelFactory.SubResource(privateEndpointId), privateLinkServiceConnectionState, provisioningState);
+            return new ManagedHsmPrivateEndpointConnectionItemData(privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of ManagedHsmPrivateLinkServiceConnectionState. </summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ManagedHsmPrivateEndpointConnectionData(id, name, resourceType, systemData, tags, location, etag, ResourceManagerModelFactory.SubResource(privateEndpointId), privateLinkServiceConnectionState, provisioningState, sku);
+            return new ManagedHsmPrivateEndpointConnectionData(id, name, resourceType, systemData, tags, location, etag, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState, provisioningState, sku);
         }
 
         /// <summary> Initializes a new instance of DeletedManagedHsmData. </summary>

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.Search.Models
             privateEndpointConnections ??= new List<SearchPrivateEndpointConnectionData>();
             sharedPrivateLinkResources ??= new List<SharedSearchServicePrivateLinkResourceData>();
 
-            return new SearchServiceData(id, name, resourceType, systemData, tags, location, new SearchSku(skuName), identity, replicaCount, partitionCount, hostingMode, publicNetworkAccess, status, statusDetails, provisioningState, new NetworkRuleSet(ipRules?.ToList()), privateEndpointConnections?.ToList(), sharedPrivateLinkResources?.ToList());
+            return new SearchServiceData(id, name, resourceType, systemData, tags, location, skuName != null ? new SearchSku(skuName) : null, identity, replicaCount, partitionCount, hostingMode, publicNetworkAccess, status, statusDetails, provisioningState, ipRules != null ? new NetworkRuleSet(ipRules?.ToList()) : null, privateEndpointConnections?.ToList(), sharedPrivateLinkResources?.ToList());
         }
 
         /// <summary> Initializes a new instance of SearchServiceIPRule. </summary>
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <returns> A new <see cref="Models.SearchServicePrivateEndpointConnectionProperties"/> instance for mocking. </returns>
         public static SearchServicePrivateEndpointConnectionProperties SearchServicePrivateEndpointConnectionProperties(ResourceIdentifier privateEndpointId = null, SearchServicePrivateLinkServiceConnectionState connectionState = null)
         {
-            return new SearchServicePrivateEndpointConnectionProperties(ResourceManagerModelFactory.WritableSubResource(privateEndpointId), connectionState);
+            return new SearchServicePrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState);
         }
 
         /// <summary> Initializes a new instance of SearchServicePrivateLinkServiceConnectionState. </summary>
@@ -157,7 +156,7 @@ namespace Azure.ResourceManager.Search.Models
             privateEndpointConnections ??= new List<SearchPrivateEndpointConnectionData>();
             sharedPrivateLinkResources ??= new List<SharedSearchServicePrivateLinkResourceData>();
 
-            return new SearchServicePatch(id, name, resourceType, systemData, tags, location, new SearchSku(skuName), identity, replicaCount, partitionCount, hostingMode, publicNetworkAccess, status, statusDetails, provisioningState, new NetworkRuleSet(ipRules?.ToList()), privateEndpointConnections?.ToList(), sharedPrivateLinkResources?.ToList());
+            return new SearchServicePatch(id, name, resourceType, systemData, tags, location, skuName != null ? new SearchSku(skuName) : null, identity, replicaCount, partitionCount, hostingMode, publicNetworkAccess, status, statusDetails, provisioningState, ipRules != null ? new NetworkRuleSet(ipRules?.ToList()) : null, privateEndpointConnections?.ToList(), sharedPrivateLinkResources?.ToList());
         }
 
         /// <summary> Initializes a new instance of SearchPrivateLinkResource. </summary>

@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             networkInterfaces ??= new List<NetworkInterfaces>();
             storageDisks ??= new List<VirtualDisk>();
 
-            return new ScVmmVirtualMachineData(id, name, resourceType, systemData, tags, location, extendedLocation, inventoryItemId, vmmServerId, cloudId, templateId, checkpointType, checkpoints?.ToList(), availabilitySets?.ToList(), osProfile, hardwareProfile, new NetworkProfile(networkInterfaces?.ToList()), new StorageProfile(storageDisks?.ToList()), vmName, uuid, generation, powerState, provisioningState);
+            return new ScVmmVirtualMachineData(id, name, resourceType, systemData, tags, location, extendedLocation, inventoryItemId, vmmServerId, cloudId, templateId, checkpointType, checkpoints?.ToList(), availabilitySets?.ToList(), osProfile, hardwareProfile, networkInterfaces != null ? new NetworkProfile(networkInterfaces?.ToList()) : null, storageDisks != null ? new StorageProfile(storageDisks?.ToList()) : null, vmName, uuid, generation, powerState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of Checkpoint. </summary>

@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DevTestLabScheduleData(id, name, resourceType, systemData, tags, location, status, taskType, weeklyRecurrence, new DayDetails(dailyRecurrenceTime), new HourDetails(hourlyRecurrenceMinute), timeZoneId, notificationSettings, createdOn, targetResourceId, provisioningState, uniqueIdentifier);
+            return new DevTestLabScheduleData(id, name, resourceType, systemData, tags, location, status, taskType, weeklyRecurrence, dailyRecurrenceTime != null ? new DayDetails(dailyRecurrenceTime) : null, hourlyRecurrenceMinute != null ? new HourDetails(hourlyRecurrenceMinute) : null, timeZoneId, notificationSettings, createdOn, targetResourceId, provisioningState, uniqueIdentifier);
         }
 
         /// <summary> Initializes a new instance of DevTestLabWeekDetails. </summary>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             labCostDetails ??= new List<DevTestLabCostDetails>();
             resourceCosts ??= new List<DevTestLabResourceCost>();
 
-            return new DevTestLabCostData(id, name, resourceType, systemData, tags, location, targetCost, new LabCostSummaryProperties(estimatedLabCost), labCostDetails?.ToList(), resourceCosts?.ToList(), currencyCode, startOn, endOn, createdOn, provisioningState, uniqueIdentifier);
+            return new DevTestLabCostData(id, name, resourceType, systemData, tags, location, targetCost, estimatedLabCost != null ? new LabCostSummaryProperties(estimatedLabCost) : null, labCostDetails?.ToList(), resourceCosts?.ToList(), currencyCode, startOn, endOn, createdOn, provisioningState, uniqueIdentifier);
         }
 
         /// <summary> Initializes a new instance of DevTestLabTargetCost. </summary>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <returns> A new <see cref="Models.DevTestLabCostThreshold"/> instance for mocking. </returns>
         public static DevTestLabCostThreshold DevTestLabCostThreshold(string thresholdId = null, double? thresholdValue = null, DevTestLabCostThresholdStatus? displayOnChart = null, DevTestLabCostThresholdStatus? sendNotificationWhenExceeded = null, string notificationSent = null)
         {
-            return new DevTestLabCostThreshold(thresholdId, new PercentageCostThresholdProperties(thresholdValue), displayOnChart, sendNotificationWhenExceeded, notificationSent);
+            return new DevTestLabCostThreshold(thresholdId, thresholdValue != null ? new PercentageCostThresholdProperties(thresholdValue) : null, displayOnChart, sendNotificationWhenExceeded, notificationSent);
         }
 
         /// <summary> Initializes a new instance of DevTestLabCostDetails. </summary>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <returns> A new <see cref="Models.DevTestLabCustomImageVm"/> instance for mocking. </returns>
         public static DevTestLabCustomImageVm DevTestLabCustomImageVm(string sourceVmId = null, WindowsOSState? windowsOSState = null, DevTestLabLinuxOSState? linuxOSState = null)
         {
-            return new DevTestLabCustomImageVm(sourceVmId, new WindowsOSInfo(windowsOSState), new LinuxOSInfo(linuxOSState));
+            return new DevTestLabCustomImageVm(sourceVmId, windowsOSState != null ? new WindowsOSInfo(windowsOSState) : null, linuxOSState != null ? new LinuxOSInfo(linuxOSState) : null);
         }
 
         /// <summary> Initializes a new instance of DevTestLabCustomImageVhd. </summary>
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DevTestLabFormulaData(id, name, resourceType, systemData, tags, location, description, author, osType, createdOn, formulaContent, new FormulaPropertiesFromVm(labVmId), provisioningState, uniqueIdentifier);
+            return new DevTestLabFormulaData(id, name, resourceType, systemData, tags, location, description, author, osType, createdOn, formulaContent, labVmId != null ? new FormulaPropertiesFromVm(labVmId) : null, provisioningState, uniqueIdentifier);
         }
 
         /// <summary> Initializes a new instance of DevTestLabVmCreationContent. </summary>
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             dataDiskParameters ??= new List<DevTestLabDataDiskProperties>();
             scheduleParameters ??= new List<DevTestLabScheduleCreationParameter>();
 
-            return new DevTestLabVmCreationContent(name, location, tags, new BulkCreationParameters(bulkCreationParametersInstanceCount), notes, ownerObjectId, ownerUserPrincipalName, createdOn, customImageId, size, userName, password, sshKey, isAuthenticationWithSshKey, labSubnetName, labVirtualNetworkId, disallowPublicIPAddress, artifacts?.ToList(), galleryImageReference, planId, networkInterface, expireOn, allowClaim, storageType, environmentId, dataDiskParameters?.ToList(), scheduleParameters?.ToList());
+            return new DevTestLabVmCreationContent(name, location, tags, bulkCreationParametersInstanceCount != null ? new BulkCreationParameters(bulkCreationParametersInstanceCount) : null, notes, ownerObjectId, ownerUserPrincipalName, createdOn, customImageId, size, userName, password, sshKey, isAuthenticationWithSshKey, labSubnetName, labVirtualNetworkId, disallowPublicIPAddress, artifacts?.ToList(), galleryImageReference, planId, networkInterface, expireOn, allowClaim, storageType, environmentId, dataDiskParameters?.ToList(), scheduleParameters?.ToList());
         }
 
         /// <summary> Initializes a new instance of DevTestLabArtifactInstallInfo. </summary>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             sharedPublicIPAddressInboundNatRules ??= new List<DevTestLabInboundNatRule>();
 
-            return new DevTestLabNetworkInterface(virtualNetworkId, subnetId, publicIPAddressId, publicIPAddress, privateIPAddress, dnsName, rdpAuthority, sshAuthority, new SharedPublicIPAddressConfiguration(sharedPublicIPAddressInboundNatRules?.ToList()));
+            return new DevTestLabNetworkInterface(virtualNetworkId, subnetId, publicIPAddressId, publicIPAddress, privateIPAddress, dnsName, rdpAuthority, sshAuthority, sharedPublicIPAddressInboundNatRules != null ? new SharedPublicIPAddressConfiguration(sharedPublicIPAddressInboundNatRules?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of DevTestLabInboundNatRule. </summary>
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DevTestLabScheduleCreationParameter(name, location, tags, status, taskType, weeklyRecurrence, new DayDetails(dailyRecurrenceTime), new HourDetails(hourlyRecurrenceMinute), timeZoneId, notificationSettings, targetResourceId);
+            return new DevTestLabScheduleCreationParameter(name, location, tags, status, taskType, weeklyRecurrence, dailyRecurrenceTime != null ? new DayDetails(dailyRecurrenceTime) : null, hourlyRecurrenceMinute != null ? new HourDetails(hourlyRecurrenceMinute) : null, timeZoneId, notificationSettings, targetResourceId);
         }
 
         /// <summary> Initializes a new instance of DevTestLabGalleryImage. </summary>
@@ -1002,7 +1002,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             sharedPublicIPAddressAllowedPorts ??= new List<DevTestLabPort>();
 
-            return new DevTestLabSubnetOverride(resourceId, labSubnetName, useInVmCreationPermission, usePublicIPAddressPermission, new SubnetSharedPublicIPAddressConfiguration(sharedPublicIPAddressAllowedPorts?.ToList()), virtualNetworkPoolName);
+            return new DevTestLabSubnetOverride(resourceId, labSubnetName, useInVmCreationPermission, usePublicIPAddressPermission, sharedPublicIPAddressAllowedPorts != null ? new SubnetSharedPublicIPAddressConfiguration(sharedPublicIPAddressAllowedPorts?.ToList()) : null, virtualNetworkPoolName);
         }
 
         /// <summary> Initializes a new instance of DevTestLabPort. </summary>

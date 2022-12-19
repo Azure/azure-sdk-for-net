@@ -433,9 +433,9 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <summary> Initializes a new instance of WaitStepProperties. </summary>
         /// <param name="attributesDuration"> The Wait attributes. </param>
         /// <returns> A new <see cref="Models.WaitStepProperties"/> instance for mocking. </returns>
-        public static WaitStepProperties WaitStepProperties(TimeSpan attributesDuration = default)
+        public static WaitStepProperties WaitStepProperties(TimeSpan? attributesDuration = null)
         {
-            return new WaitStepProperties("Wait", new WaitStepAttributes(attributesDuration));
+            return new WaitStepProperties("Wait", attributesDuration.HasValue ? new WaitStepAttributes(attributesDuration.Value) : null);
         }
     }
 }

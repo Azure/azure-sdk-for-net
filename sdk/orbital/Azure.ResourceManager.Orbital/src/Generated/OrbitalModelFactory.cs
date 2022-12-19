@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Orbital;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.Orbital.Models
         /// <returns> A new <see cref="Orbital.OrbitalContactData"/> instance for mocking. </returns>
         public static OrbitalContactData OrbitalContactData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, OrbitalProvisioningState? provisioningState = null, OrbitalContactStatus? status = null, DateTimeOffset? reservationStartOn = null, DateTimeOffset? reservationEndOn = null, DateTimeOffset? rxStartOn = null, DateTimeOffset? rxEndOn = null, DateTimeOffset? txStartOn = null, DateTimeOffset? txEndOn = null, string errorMessage = null, float? maximumElevationDegrees = null, float? startAzimuthDegrees = null, float? endAzimuthDegrees = null, string groundStationName = null, float? startElevationDegrees = null, float? endElevationDegrees = null, OrbitalContactAntennaConfiguration antennaConfiguration = null, ResourceIdentifier contactProfileId = null)
         {
-            return new OrbitalContactData(id, name, resourceType, systemData, etag, provisioningState, status, reservationStartOn, reservationEndOn, rxStartOn, rxEndOn, txStartOn, txEndOn, errorMessage, maximumElevationDegrees, startAzimuthDegrees, endAzimuthDegrees, groundStationName, startElevationDegrees, endElevationDegrees, antennaConfiguration, ResourceManagerModelFactory.WritableSubResource(contactProfileId));
+            return new OrbitalContactData(id, name, resourceType, systemData, etag, provisioningState, status, reservationStartOn, reservationEndOn, rxStartOn, rxEndOn, txStartOn, txEndOn, errorMessage, maximumElevationDegrees, startAzimuthDegrees, endAzimuthDegrees, groundStationName, startElevationDegrees, endElevationDegrees, antennaConfiguration, contactProfileId != null ? ResourceManagerModelFactory.WritableSubResource(contactProfileId) : null);
         }
 
         /// <summary> Initializes a new instance of OrbitalContactAntennaConfiguration. </summary>
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.Orbital.Models
         /// <returns> A new <see cref="Models.OrbitalAvailableContact"/> instance for mocking. </returns>
         public static OrbitalAvailableContact OrbitalAvailableContact(ResourceIdentifier spacecraftId = null, string groundStationName = null, float? maximumElevationDegrees = null, DateTimeOffset? txStartOn = null, DateTimeOffset? txEndOn = null, DateTimeOffset? rxStartOn = null, DateTimeOffset? rxEndOn = null, float? startAzimuthDegrees = null, float? endAzimuthDegrees = null, float? startElevationDegrees = null, float? endElevationDegrees = null)
         {
-            return new OrbitalAvailableContact(ResourceManagerModelFactory.WritableSubResource(spacecraftId), groundStationName, maximumElevationDegrees, txStartOn, txEndOn, rxStartOn, rxEndOn, startAzimuthDegrees, endAzimuthDegrees, startElevationDegrees, endElevationDegrees);
+            return new OrbitalAvailableContact(spacecraftId != null ? ResourceManagerModelFactory.WritableSubResource(spacecraftId) : null, groundStationName, maximumElevationDegrees, txStartOn, txEndOn, rxStartOn, rxEndOn, startAzimuthDegrees, endAzimuthDegrees, startElevationDegrees, endElevationDegrees);
         }
 
         /// <summary> Initializes a new instance of OrbitalContactProfileData. </summary>
@@ -156,7 +155,7 @@ namespace Azure.ResourceManager.Orbital.Models
             tags ??= new Dictionary<string, string>();
             links ??= new List<OrbitalContactProfileLink>();
 
-            return new OrbitalContactProfileData(id, name, resourceType, systemData, tags, location, etag, provisioningState, minimumViableContactDuration, minimumElevationDegrees, autoTrackingConfiguration, eventHubUri, new ContactProfilesPropertiesNetworkConfiguration(networkSubnetId), links?.ToList());
+            return new OrbitalContactProfileData(id, name, resourceType, systemData, tags, location, etag, provisioningState, minimumViableContactDuration, minimumElevationDegrees, autoTrackingConfiguration, eventHubUri, networkSubnetId != null ? new ContactProfilesPropertiesNetworkConfiguration(networkSubnetId) : null, links?.ToList());
         }
 
         /// <summary> Initializes a new instance of OrbitalContactProfileLink. </summary>

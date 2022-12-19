@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="sku"> The billing information of the resource.(e.g. Free, Standard). </param>
-        /// <param name="identity"> The managed identity response. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="sku"> The billing information of the resource. </param>
+        /// <param name="identity"> A class represent managed identities used for request and response. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="externalIP"> The publicly accessible IP of the resource. </param>
         /// <param name="hostName"> FQDN of the service instance. </param>
@@ -65,15 +65,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="version"> Version of the resource. Probably you need the same or higher version of client SDKs. </param>
         /// <param name="privateEndpointConnections"> Private endpoint connections to the resource. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources. </param>
-        /// <param name="isClientCertEnabled"> TLS settings. </param>
+        /// <param name="isClientCertEnabled"> TLS settings for the resource. </param>
         /// <param name="hostNamePrefix"> Deprecated. </param>
         /// <param name="liveTraceConfiguration"> Live trace configuration of a Microsoft.SignalRService resource. </param>
-        /// <param name="resourceLogCategories">
-        /// Resource log configuration of a Microsoft.SignalRService resource.
-        /// If resourceLogConfiguration isn&apos;t null or empty, it will override options &quot;EnableConnectivityLog&quot; and &quot;EnableMessagingLogs&quot; in features.
-        /// Otherwise, use options &quot;EnableConnectivityLog&quot; and &quot;EnableMessagingLogs&quot; in features.
-        /// </param>
-        /// <param name="networkAcls"> Network ACLs. </param>
+        /// <param name="resourceLogCategories"> Resource log configuration of a Microsoft.SignalRService resource. </param>
+        /// <param name="networkAcls"> Network ACLs for the resource. </param>
         /// <param name="publicNetworkAccess">
         /// Enable or disable public network access. Default to &quot;Enabled&quot;.
         /// When it&apos;s Enabled, network ACLs still apply.
@@ -97,7 +93,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             sharedPrivateLinkResources ??= new List<WebPubSubSharedPrivateLinkData>();
             resourceLogCategories ??= new List<ResourceLogCategory>();
 
-            return new WebPubSubData(id, name, resourceType, systemData, tags, location, sku, identity, provisioningState, externalIP, hostName, publicPort, serverPort, version, privateEndpointConnections?.ToList(), sharedPrivateLinkResources?.ToList(), new WebPubSubTlsSettings(isClientCertEnabled), hostNamePrefix, liveTraceConfiguration, new ResourceLogConfiguration(resourceLogCategories?.ToList()), networkAcls, publicNetworkAccess, isLocalAuthDisabled, isAadAuthDisabled);
+            return new WebPubSubData(id, name, resourceType, systemData, tags, location, sku, identity, provisioningState, externalIP, hostName, publicPort, serverPort, version, privateEndpointConnections?.ToList(), sharedPrivateLinkResources?.ToList(), isClientCertEnabled != null ? new WebPubSubTlsSettings(isClientCertEnabled) : null, hostNamePrefix, liveTraceConfiguration, resourceLogCategories != null ? new ResourceLogConfiguration(resourceLogCategories?.ToList()) : null, networkAcls, publicNetworkAccess, isLocalAuthDisabled, isAadAuthDisabled);
         }
 
         /// <summary> Initializes a new instance of BillingInfoSku. </summary>
@@ -131,16 +127,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        /// <param name="privateEndpointId"> Private endpoint associated with the private endpoint connection. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="privateEndpointId"> Private endpoint. </param>
         /// <param name="groupIds"> Group IDs. </param>
-        /// <param name="connectionState"> Connection state. </param>
+        /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <returns> A new <see cref="WebPubSub.WebPubSubPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static WebPubSubPrivateEndpointConnectionData WebPubSubPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WebPubSubProvisioningState? provisioningState = null, ResourceIdentifier privateEndpointId = null, IEnumerable<string> groupIds = null, WebPubSubPrivateLinkServiceConnectionState connectionState = null)
         {
             groupIds ??= new List<string>();
 
-            return new WebPubSubPrivateEndpointConnectionData(id, name, resourceType, systemData, provisioningState, new PrivateEndpoint(privateEndpointId), groupIds?.ToList(), connectionState);
+            return new WebPubSubPrivateEndpointConnectionData(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? new PrivateEndpoint(privateEndpointId) : null, groupIds?.ToList(), connectionState);
         }
 
         /// <summary> Initializes a new instance of WebPubSubPrivateLinkServiceConnectionState. </summary>
@@ -160,13 +156,47 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="groupId"> The group id from the provider of resource the shared private link resource is for. </param>
         /// <param name="privateLinkResourceId"> The resource id of the resource the shared private link resource is for. </param>
-        /// <param name="provisioningState"> Provisioning state of the shared private link resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>
         /// <param name="status"> Status of the shared private link resource. </param>
         /// <returns> A new <see cref="WebPubSub.WebPubSubSharedPrivateLinkData"/> instance for mocking. </returns>
         public static WebPubSubSharedPrivateLinkData WebPubSubSharedPrivateLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, ResourceIdentifier privateLinkResourceId = null, WebPubSubProvisioningState? provisioningState = null, string requestMessage = null, WebPubSubSharedPrivateLinkStatus? status = null)
         {
             return new WebPubSubSharedPrivateLinkData(id, name, resourceType, systemData, groupId, privateLinkResourceId, provisioningState, requestMessage, status);
+        }
+
+        /// <summary> Initializes a new instance of LiveTraceConfiguration. </summary>
+        /// <param name="enabled">
+        /// Indicates whether or not enable live trace.
+        /// When it&apos;s set to true, live trace client can connect to the service.
+        /// Otherwise, live trace client can&apos;t connect to the service, so that you are unable to receive any log, no matter what you configure in &quot;categories&quot;.
+        /// Available values: true, false.
+        /// Case insensitive.
+        /// </param>
+        /// <param name="categories"> Gets or sets the list of category configurations. </param>
+        /// <returns> A new <see cref="Models.LiveTraceConfiguration"/> instance for mocking. </returns>
+        public static LiveTraceConfiguration LiveTraceConfiguration(string enabled = null, IEnumerable<LiveTraceCategory> categories = null)
+        {
+            categories ??= new List<LiveTraceCategory>();
+
+            return new LiveTraceConfiguration(enabled, categories?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of LiveTraceCategory. </summary>
+        /// <param name="name">
+        /// Gets or sets the live trace category&apos;s name.
+        /// Available values: ConnectivityLogs, MessagingLogs.
+        /// Case insensitive.
+        /// </param>
+        /// <param name="enabled">
+        /// Indicates whether or the live trace category is enabled.
+        /// Available values: true, false.
+        /// Case insensitive.
+        /// </param>
+        /// <returns> A new <see cref="Models.LiveTraceCategory"/> instance for mocking. </returns>
+        public static LiveTraceCategory LiveTraceCategory(string name = null, string enabled = null)
+        {
+            return new LiveTraceCategory(name, enabled);
         }
 
         /// <summary> Initializes a new instance of ResourceLogCategory. </summary>
@@ -187,8 +217,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> Initializes a new instance of WebPubSubNetworkAcls. </summary>
-        /// <param name="defaultAction"> Default action when no other rule matches. </param>
-        /// <param name="publicNetwork"> ACL for requests from public network. </param>
+        /// <param name="defaultAction"> Azure Networking ACL Action. </param>
+        /// <param name="publicNetwork"> Network ACL. </param>
         /// <param name="privateEndpoints"> ACLs for requests from private endpoints. </param>
         /// <returns> A new <see cref="Models.WebPubSubNetworkAcls"/> instance for mocking. </returns>
         public static WebPubSubNetworkAcls WebPubSubNetworkAcls(AclAction? defaultAction = null, PublicNetworkAcls publicNetwork = null, IEnumerable<PrivateEndpointAcl> privateEndpoints = null)
@@ -228,7 +258,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Properties of the hub setting. </param>
+        /// <param name="properties"> Properties of a hub. </param>
         /// <returns> A new <see cref="WebPubSub.WebPubSubHubData"/> instance for mocking. </returns>
         public static WebPubSubHubData WebPubSubHubData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WebPubSubHubProperties properties = null)
         {
@@ -259,7 +289,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         ///     3. The single event name, for example, &quot;event1&quot;, it matches &quot;event1&quot;
         /// </param>
         /// <param name="systemEvents"> Gets ot sets the list of system events. </param>
-        /// <param name="auth"> Gets or sets the auth settings for an event handler. If not set, no auth is used. </param>
+        /// <param name="auth"> Upstream auth settings. If not set, no auth is used for upstream messages. </param>
         /// <returns> A new <see cref="Models.WebPubSubEventHandler"/> instance for mocking. </returns>
         public static WebPubSubEventHandler WebPubSubEventHandler(string urlTemplate = null, string userEventPattern = null, IEnumerable<string> systemEvents = null, UpstreamAuthSettings auth = null)
         {
@@ -269,12 +299,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> Initializes a new instance of UpstreamAuthSettings. </summary>
-        /// <param name="authType"> Gets or sets the type of auth. None or ManagedIdentity is supported now. </param>
-        /// <param name="managedIdentityResource"> Gets or sets the managed identity settings. It&apos;s required if the auth type is set to ManagedIdentity. </param>
+        /// <param name="authType"> Upstream auth type enum. </param>
+        /// <param name="managedIdentityResource"> Managed identity settings for upstream. </param>
         /// <returns> A new <see cref="Models.UpstreamAuthSettings"/> instance for mocking. </returns>
         public static UpstreamAuthSettings UpstreamAuthSettings(UpstreamAuthType? authType = null, string managedIdentityResource = null)
         {
-            return new UpstreamAuthSettings(authType, new ManagedIdentitySettings(managedIdentityResource));
+            return new UpstreamAuthSettings(authType, managedIdentityResource != null ? new ManagedIdentitySettings(managedIdentityResource) : null);
         }
 
         /// <summary> Initializes a new instance of WebPubSubKeys. </summary>
@@ -328,8 +358,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Initializes a new instance of WebPubSubSku. </summary>
         /// <param name="resourceType"> The resource type that this object applies to. </param>
-        /// <param name="sku"> The exact set of keys that define this sku. </param>
-        /// <param name="capacity"> Specifies the unit of the resource. </param>
+        /// <param name="sku"> The billing information of the resource. </param>
+        /// <param name="capacity"> Describes scaling information of a sku. </param>
         /// <returns> A new <see cref="Models.WebPubSubSku"/> instance for mocking. </returns>
         public static WebPubSubSku WebPubSubSku(ResourceType? resourceType = null, BillingInfoSku sku = null, WebPubSubSkuCapacity capacity = null)
         {

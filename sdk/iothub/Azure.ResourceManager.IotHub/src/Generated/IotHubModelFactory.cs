@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.IotHub;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <returns> A new <see cref="Models.IotHubPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
         public static IotHubPrivateEndpointConnectionProperties IotHubPrivateEndpointConnectionProperties(ResourceIdentifier privateEndpointId = null, IotHubPrivateLinkServiceConnectionState connectionState = null)
         {
-            return new IotHubPrivateEndpointConnectionProperties(ResourceManagerModelFactory.SubResource(privateEndpointId), connectionState);
+            return new IotHubPrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState);
         }
 
         /// <summary> Initializes a new instance of IotHubPrivateLinkServiceConnectionState. </summary>
@@ -200,7 +199,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <returns> A new <see cref="Models.RoutingServiceBusQueueEndpointProperties"/> instance for mocking. </returns>
         public static RoutingServiceBusQueueEndpointProperties RoutingServiceBusQueueEndpointProperties(Guid? id = null, string connectionString = null, string endpoint = null, string entityPath = null, IotHubAuthenticationType? authenticationType = null, ResourceIdentifier userAssignedIdentity = null, string name = null, string subscriptionId = null, string resourceGroup = null)
         {
-            return new RoutingServiceBusQueueEndpointProperties(id, connectionString, endpoint, entityPath, authenticationType, new ManagedIdentity(userAssignedIdentity), name, subscriptionId, resourceGroup);
+            return new RoutingServiceBusQueueEndpointProperties(id, connectionString, endpoint, entityPath, authenticationType, userAssignedIdentity != null ? new ManagedIdentity(userAssignedIdentity) : null, name, subscriptionId, resourceGroup);
         }
 
         /// <summary> Initializes a new instance of RoutingServiceBusTopicEndpointProperties. </summary>
@@ -216,7 +215,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <returns> A new <see cref="Models.RoutingServiceBusTopicEndpointProperties"/> instance for mocking. </returns>
         public static RoutingServiceBusTopicEndpointProperties RoutingServiceBusTopicEndpointProperties(Guid? id = null, string connectionString = null, string endpoint = null, string entityPath = null, IotHubAuthenticationType? authenticationType = null, ResourceIdentifier userAssignedIdentity = null, string name = null, string subscriptionId = null, string resourceGroup = null)
         {
-            return new RoutingServiceBusTopicEndpointProperties(id, connectionString, endpoint, entityPath, authenticationType, new ManagedIdentity(userAssignedIdentity), name, subscriptionId, resourceGroup);
+            return new RoutingServiceBusTopicEndpointProperties(id, connectionString, endpoint, entityPath, authenticationType, userAssignedIdentity != null ? new ManagedIdentity(userAssignedIdentity) : null, name, subscriptionId, resourceGroup);
         }
 
         /// <summary> Initializes a new instance of RoutingEventHubProperties. </summary>
@@ -232,7 +231,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <returns> A new <see cref="Models.RoutingEventHubProperties"/> instance for mocking. </returns>
         public static RoutingEventHubProperties RoutingEventHubProperties(Guid? id = null, string connectionString = null, string endpoint = null, string entityPath = null, IotHubAuthenticationType? authenticationType = null, ResourceIdentifier userAssignedIdentity = null, string name = null, string subscriptionId = null, string resourceGroup = null)
         {
-            return new RoutingEventHubProperties(id, connectionString, endpoint, entityPath, authenticationType, new ManagedIdentity(userAssignedIdentity), name, subscriptionId, resourceGroup);
+            return new RoutingEventHubProperties(id, connectionString, endpoint, entityPath, authenticationType, userAssignedIdentity != null ? new ManagedIdentity(userAssignedIdentity) : null, name, subscriptionId, resourceGroup);
         }
 
         /// <summary> Initializes a new instance of RoutingStorageContainerProperties. </summary>
@@ -252,7 +251,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <returns> A new <see cref="Models.RoutingStorageContainerProperties"/> instance for mocking. </returns>
         public static RoutingStorageContainerProperties RoutingStorageContainerProperties(Guid? id = null, string connectionString = null, string endpoint = null, IotHubAuthenticationType? authenticationType = null, ResourceIdentifier userAssignedIdentity = null, string name = null, string subscriptionId = null, string resourceGroup = null, string containerName = null, string fileNameFormat = null, int? batchFrequencyInSeconds = null, int? maxChunkSizeInBytes = null, RoutingStorageContainerPropertiesEncoding? encoding = null)
         {
-            return new RoutingStorageContainerProperties(id, connectionString, endpoint, authenticationType, new ManagedIdentity(userAssignedIdentity), name, subscriptionId, resourceGroup, containerName, fileNameFormat, batchFrequencyInSeconds, maxChunkSizeInBytes, encoding);
+            return new RoutingStorageContainerProperties(id, connectionString, endpoint, authenticationType, userAssignedIdentity != null ? new ManagedIdentity(userAssignedIdentity) : null, name, subscriptionId, resourceGroup, containerName, fileNameFormat, batchFrequencyInSeconds, maxChunkSizeInBytes, encoding);
         }
 
         /// <summary> Initializes a new instance of RoutingRuleProperties. </summary>
@@ -292,7 +291,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <returns> A new <see cref="Models.IotHubStorageEndpointProperties"/> instance for mocking. </returns>
         public static IotHubStorageEndpointProperties IotHubStorageEndpointProperties(TimeSpan? sasTtlAsIso8601 = null, string connectionString = null, string containerName = null, IotHubAuthenticationType? authenticationType = null, ResourceIdentifier userAssignedIdentity = null)
         {
-            return new IotHubStorageEndpointProperties(sasTtlAsIso8601, connectionString, containerName, authenticationType, new ManagedIdentity(userAssignedIdentity));
+            return new IotHubStorageEndpointProperties(sasTtlAsIso8601, connectionString, containerName, authenticationType, userAssignedIdentity != null ? new ManagedIdentity(userAssignedIdentity) : null);
         }
 
         /// <summary> Initializes a new instance of MessagingEndpointProperties. </summary>
@@ -486,7 +485,7 @@ namespace Azure.ResourceManager.IotHub.Models
         {
             detailsCompilationErrors ??= new List<RouteCompilationError>();
 
-            return new IotHubTestRouteResult(result, new IotHubTestRouteResultDetails(detailsCompilationErrors?.ToList()));
+            return new IotHubTestRouteResult(result, detailsCompilationErrors != null ? new IotHubTestRouteResultDetails(detailsCompilationErrors?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of RouteCompilationError. </summary>

@@ -12,6 +12,14 @@ namespace Azure.Security.Attestation.Models
     /// <summary> Model factory for generated models. </summary>
     public static partial class AzureSecurityAttestationModelFactory
     {
+        /// <summary> Initializes a new instance of TpmAttestationResponse. </summary>
+        /// <param name="internalData"> Protocol data containing attestation service response. </param>
+        /// <returns> A new <see cref="Attestation.TpmAttestationResponse"/> instance for mocking. </returns>
+        public static TpmAttestationResponse TpmAttestationResponse(string internalData = null)
+        {
+            return new TpmAttestationResponse(internalData);
+        }
+
         /// <summary> Initializes a new instance of PolicyCertificatesModificationResult. </summary>
         /// <param name="certificateThumbprint"> Hex encoded SHA1 Hash of the binary representation certificate which was added or removed. </param>
         /// <param name="certificateResolution"> The result of the operation. </param>

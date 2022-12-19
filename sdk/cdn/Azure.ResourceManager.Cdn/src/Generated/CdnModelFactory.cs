@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Cdn.FrontDoorCustomDomainData"/> instance for mocking. </returns>
         public static FrontDoorCustomDomainData FrontDoorCustomDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string profileName = null, FrontDoorCustomDomainHttpsContent tlsSettings = null, ResourceIdentifier dnsZoneId = null, ResourceIdentifier preValidatedCustomDomainResourceId = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null, DomainValidationState? domainValidationState = null, string hostName = null, DomainValidationProperties validationProperties = null)
         {
-            return new FrontDoorCustomDomainData(id, name, resourceType, systemData, profileName, tlsSettings, ResourceManagerModelFactory.WritableSubResource(dnsZoneId), new FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(preValidatedCustomDomainResourceId), provisioningState, deploymentStatus, domainValidationState, hostName, validationProperties);
+            return new FrontDoorCustomDomainData(id, name, resourceType, systemData, profileName, tlsSettings, dnsZoneId != null ? ResourceManagerModelFactory.WritableSubResource(dnsZoneId) : null, preValidatedCustomDomainResourceId != null ? new FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(preValidatedCustomDomainResourceId) : null, provisioningState, deploymentStatus, domainValidationState, hostName, validationProperties);
         }
 
         /// <summary> Initializes a new instance of DomainValidationProperties. </summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.FrontDoorCustomDomainHttpsContent"/> instance for mocking. </returns>
         public static FrontDoorCustomDomainHttpsContent FrontDoorCustomDomainHttpsContent(FrontDoorCertificateType certificateType = default, FrontDoorMinimumTlsVersion? minimumTlsVersion = null, ResourceIdentifier secretId = null)
         {
-            return new FrontDoorCustomDomainHttpsContent(certificateType, minimumTlsVersion, new FrontDoorCustomDomainHttpsContentSecret(secretId));
+            return new FrontDoorCustomDomainHttpsContent(certificateType, minimumTlsVersion, secretId != null ? new FrontDoorCustomDomainHttpsContentSecret(secretId) : null);
         }
 
         /// <summary> Initializes a new instance of FrontDoorEndpointData. </summary>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Cdn.FrontDoorOriginData"/> instance for mocking. </returns>
         public static FrontDoorOriginData FrontDoorOriginData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string originGroupName = null, ResourceIdentifier originId = null, string hostName = null, int? httpPort = null, int? httpsPort = null, string originHostHeader = null, int? priority = null, int? weight = null, SharedPrivateLinkResourceProperties sharedPrivateLinkResource = null, EnabledState? enabledState = null, bool? enforceCertificateNameCheck = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null)
         {
-            return new FrontDoorOriginData(id, name, resourceType, systemData, originGroupName, ResourceManagerModelFactory.WritableSubResource(originId), hostName, httpPort, httpsPort, originHostHeader, priority, weight, sharedPrivateLinkResource, enabledState, enforceCertificateNameCheck, provisioningState, deploymentStatus);
+            return new FrontDoorOriginData(id, name, resourceType, systemData, originGroupName, originId != null ? ResourceManagerModelFactory.WritableSubResource(originId) : null, hostName, httpPort, httpsPort, originHostHeader, priority, weight, sharedPrivateLinkResource, enabledState, enforceCertificateNameCheck, provisioningState, deploymentStatus);
         }
 
         /// <summary> Initializes a new instance of SharedPrivateLinkResourceProperties. </summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.SharedPrivateLinkResourceProperties"/> instance for mocking. </returns>
         public static SharedPrivateLinkResourceProperties SharedPrivateLinkResourceProperties(ResourceIdentifier privateLinkId = null, string privateLinkLocation = null, string groupId = null, string requestMessage = null, SharedPrivateLinkResourceStatus? status = null)
         {
-            return new SharedPrivateLinkResourceProperties(ResourceManagerModelFactory.WritableSubResource(privateLinkId), privateLinkLocation, groupId, requestMessage, status);
+            return new SharedPrivateLinkResourceProperties(privateLinkId != null ? ResourceManagerModelFactory.WritableSubResource(privateLinkId) : null, privateLinkLocation, groupId, requestMessage, status);
         }
 
         /// <summary> Initializes a new instance of FrontDoorRouteData. </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Cdn.Models
             supportedProtocols ??= new List<FrontDoorEndpointProtocol>();
             patternsToMatch ??= new List<string>();
 
-            return new FrontDoorRouteData(id, name, resourceType, systemData, endpointName, customDomains?.ToList(), ResourceManagerModelFactory.WritableSubResource(originGroupId), originPath, ruleSets?.ToList(), supportedProtocols?.ToList(), patternsToMatch?.ToList(), cacheConfiguration, forwardingProtocol, linkToDefaultDomain, httpsRedirect, enabledState, provisioningState, deploymentStatus);
+            return new FrontDoorRouteData(id, name, resourceType, systemData, endpointName, customDomains?.ToList(), originGroupId != null ? ResourceManagerModelFactory.WritableSubResource(originGroupId) : null, originPath, ruleSets?.ToList(), supportedProtocols?.ToList(), patternsToMatch?.ToList(), cacheConfiguration, forwardingProtocol, linkToDefaultDomain, httpsRedirect, enabledState, provisioningState, deploymentStatus);
         }
 
         /// <summary> Initializes a new instance of FrontDoorActivatedResourceInfo. </summary>
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ProfileData(id, name, resourceType, systemData, tags, location, new CdnSku(skuName), kind, resourceState, provisioningState, frontDoorId, originResponseTimeoutSeconds);
+            return new ProfileData(id, name, resourceType, systemData, tags, location, skuName != null ? new CdnSku(skuName) : null, kind, resourceState, provisioningState, frontDoorId, originResponseTimeoutSeconds);
         }
 
         /// <summary> Initializes a new instance of CdnSku. </summary>
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.Cdn.Models
             originGroups ??= new List<DeepCreatedOriginGroup>();
             customDomains ??= new List<CdnCustomDomainData>();
 
-            return new CdnEndpointData(id, name, resourceType, systemData, tags, location, originPath, contentTypesToCompress?.ToList(), originHostHeader, isCompressionEnabled, isHttpAllowed, isHttpsAllowed, queryStringCachingBehavior, optimizationType, probePath, geoFilters?.ToList(), new EndpointPropertiesUpdateParametersDefaultOriginGroup(defaultOriginGroupId), uriSigningKeys?.ToList(), deliveryPolicy, new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId), hostName, origins?.ToList(), originGroups?.ToList(), customDomains?.ToList(), resourceState, provisioningState);
+            return new CdnEndpointData(id, name, resourceType, systemData, tags, location, originPath, contentTypesToCompress?.ToList(), originHostHeader, isCompressionEnabled, isHttpAllowed, isHttpsAllowed, queryStringCachingBehavior, optimizationType, probePath, geoFilters?.ToList(), defaultOriginGroupId != null ? new EndpointPropertiesUpdateParametersDefaultOriginGroup(defaultOriginGroupId) : null, uriSigningKeys?.ToList(), deliveryPolicy, webApplicationFirewallPolicyLinkId != null ? new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId) : null, hostName, origins?.ToList(), originGroups?.ToList(), customDomains?.ToList(), resourceState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of DeepCreatedOrigin. </summary>
@@ -959,7 +959,7 @@ namespace Azure.ResourceManager.Cdn.Models
             managedRuleSets ??= new List<WafPolicyManagedRuleSet>();
             endpointLinks ??= new List<SubResource>();
 
-            return new CdnWebApplicationFirewallPolicyData(id, name, resourceType, systemData, tags, location, etag, new CdnSku(skuName), policySettings, new RateLimitRuleList(rateLimitRules?.ToList()), new CustomRuleList(customRules?.ToList()), new ManagedRuleSetList(managedRuleSets?.ToList()), endpointLinks?.ToList(), provisioningState, resourceState);
+            return new CdnWebApplicationFirewallPolicyData(id, name, resourceType, systemData, tags, location, etag, skuName != null ? new CdnSku(skuName) : null, policySettings, rateLimitRules != null ? new RateLimitRuleList(rateLimitRules?.ToList()) : null, customRules != null ? new CustomRuleList(customRules?.ToList()) : null, managedRuleSets != null ? new ManagedRuleSetList(managedRuleSets?.ToList()) : null, endpointLinks?.ToList(), provisioningState, resourceState);
         }
 
         /// <summary> Initializes a new instance of WafPolicySettings. </summary>
@@ -1069,7 +1069,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             ruleGroups ??= new List<ManagedRuleGroupDefinition>();
 
-            return new ManagedRuleSetDefinition(id, name, resourceType, systemData, new CdnSku(skuName), provisioningState, ruleSetType, ruleSetVersion, ruleGroups?.ToList());
+            return new ManagedRuleSetDefinition(id, name, resourceType, systemData, skuName != null ? new CdnSku(skuName) : null, provisioningState, ruleSetType, ruleSetVersion, ruleGroups?.ToList());
         }
 
         /// <summary> Initializes a new instance of ManagedRuleGroupDefinition. </summary>
@@ -1101,7 +1101,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             associations ??= new List<SecurityPolicyWebApplicationFirewallAssociation>();
 
-            return new SecurityPolicyWebApplicationFirewall("WebApplicationFirewall", ResourceManagerModelFactory.WritableSubResource(wafPolicyId), associations?.ToList());
+            return new SecurityPolicyWebApplicationFirewall("WebApplicationFirewall", wafPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(wafPolicyId) : null, associations?.ToList());
         }
 
         /// <summary> Initializes a new instance of SecurityPolicyWebApplicationFirewallAssociation. </summary>
@@ -1123,7 +1123,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.UriSigningKeyProperties"/> instance for mocking. </returns>
         public static UriSigningKeyProperties UriSigningKeyProperties(string keyId = null, ResourceIdentifier secretSourceId = null, string secretVersion = null)
         {
-            return new UriSigningKeyProperties("UrlSigningKey", keyId, ResourceManagerModelFactory.WritableSubResource(secretSourceId), secretVersion);
+            return new UriSigningKeyProperties("UrlSigningKey", keyId, secretSourceId != null ? ResourceManagerModelFactory.WritableSubResource(secretSourceId) : null, secretVersion);
         }
 
         /// <summary> Initializes a new instance of ManagedCertificateProperties. </summary>
@@ -1149,7 +1149,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             subjectAlternativeNames ??= new List<string>();
 
-            return new CustomerCertificateProperties("CustomerCertificate", ResourceManagerModelFactory.WritableSubResource(secretSourceId), secretVersion, useLatestVersion, subject, expiresOn, certificateAuthority, subjectAlternativeNames?.ToList(), thumbprint);
+            return new CustomerCertificateProperties("CustomerCertificate", secretSourceId != null ? ResourceManagerModelFactory.WritableSubResource(secretSourceId) : null, secretVersion, useLatestVersion, subject, expiresOn, certificateAuthority, subjectAlternativeNames?.ToList(), thumbprint);
         }
 
         /// <summary> Initializes a new instance of AzureFirstPartyManagedCertificateProperties. </summary>
@@ -1756,7 +1756,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.OriginGroupOverride"/> instance for mocking. </returns>
         public static OriginGroupOverride OriginGroupOverride(ResourceIdentifier originGroupId = null, ForwardingProtocol? forwardingProtocol = null)
         {
-            return new OriginGroupOverride(ResourceManagerModelFactory.WritableSubResource(originGroupId), forwardingProtocol);
+            return new OriginGroupOverride(originGroupId != null ? ResourceManagerModelFactory.WritableSubResource(originGroupId) : null, forwardingProtocol);
         }
 
         /// <summary> Initializes a new instance of CacheConfiguration. </summary>

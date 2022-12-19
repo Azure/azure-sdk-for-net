@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.EnergyServices.Models
             return new DataPartitionName(name);
         }
 
+        /// <summary> Initializes a new instance of DataPartitionAddOrRemoveContent. </summary>
+        /// <param name="name"> The list of Energy services resource&apos;s Data Partition Names. </param>
+        /// <returns> A new <see cref="Models.DataPartitionAddOrRemoveContent"/> instance for mocking. </returns>
+        public static DataPartitionAddOrRemoveContent DataPartitionAddOrRemoveContent(string name = null)
+        {
+            return new DataPartitionAddOrRemoveContent(name != null ? new DataPartitionName(name) : null);
+        }
+
         /// <summary> Initializes a new instance of DataPartitionsListResult. </summary>
         /// <param name="dataPartitionInfo"> List of data partitions along with their properties in a given OEP resource. </param>
         /// <returns> A new <see cref="Models.DataPartitionsListResult"/> instance for mocking. </returns>

@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             globalParameters ??= new Dictionary<string, FactoryGlobalParameterSpecification>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new DataFactoryData(id, name, resourceType, systemData, tags, location, identity, provisioningState, createdOn, version, new FactoryPurviewConfiguration(purviewResourceId), repoConfiguration, globalParameters, encryption, publicNetworkAccess, eTag, additionalProperties);
+            return new DataFactoryData(id, name, resourceType, systemData, tags, location, identity, provisioningState, createdOn, version, purviewResourceId != null ? new FactoryPurviewConfiguration(purviewResourceId) : null, repoConfiguration, globalParameters, encryption, publicNetworkAccess, eTag, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of FactoryRepoConfiguration. </summary>
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <returns> A new <see cref="Models.FactoryEncryptionConfiguration"/> instance for mocking. </returns>
         public static FactoryEncryptionConfiguration FactoryEncryptionConfiguration(string keyName = null, Uri vaultBaseUri = null, string keyVersion = null, string userAssignedIdentity = null)
         {
-            return new FactoryEncryptionConfiguration(keyName, vaultBaseUri, keyVersion, new CmkIdentityDefinition(userAssignedIdentity));
+            return new FactoryEncryptionConfiguration(keyName, vaultBaseUri, keyVersion, userAssignedIdentity != null ? new CmkIdentityDefinition(userAssignedIdentity) : null);
         }
 
         /// <summary> Initializes a new instance of ExposureControlResult. </summary>
@@ -421,7 +420,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownDataset(datasetType, description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties);
+            return new UnknownDataset(datasetType, description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of FactoryLinkedServiceReference. </summary>
@@ -466,7 +465,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             runDimensions ??= new Dictionary<string, BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new FactoryPipelineData(id, name, resourceType, systemData, description, activities?.ToList(), parameters, variables, concurrency, annotations?.ToList(), runDimensions, new PipelineFolder(folderName), new FactoryPipelinePolicy(new PipelineElapsedTimeMetricPolicy(elapsedTimeMetricDuration)), eTag, additionalProperties);
+            return new FactoryPipelineData(id, name, resourceType, systemData, description, activities?.ToList(), parameters, variables, concurrency, annotations?.ToList(), runDimensions, folderName != null ? new PipelineFolder(folderName) : null, elapsedTimeMetricDuration != null ? new FactoryPipelinePolicy(new PipelineElapsedTimeMetricPolicy(elapsedTimeMetricDuration)) : null, eTag, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of PipelineActivity. </summary>
@@ -668,7 +667,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             annotations ??= new List<BinaryData>();
 
-            return new UnknownDataFlow(dataFlowType, description, annotations?.ToList(), new DataFlowFolder(folderName));
+            return new UnknownDataFlow(dataFlowType, description, annotations?.ToList(), folderName != null ? new DataFlowFolder(folderName) : null);
         }
 
         /// <summary> Initializes a new instance of FactoryDataFlowCreateDebugSessionResult. </summary>
@@ -810,7 +809,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <returns> A new <see cref="Models.FactoryPrivateEndpointProperties"/> instance for mocking. </returns>
         public static FactoryPrivateEndpointProperties FactoryPrivateEndpointProperties(string provisioningState = null, ResourceIdentifier privateEndpointId = null, PrivateLinkConnectionState privateLinkServiceConnectionState = null)
         {
-            return new FactoryPrivateEndpointProperties(provisioningState, ResourceManagerModelFactory.SubResource(privateEndpointId), privateLinkServiceConnectionState);
+            return new FactoryPrivateEndpointProperties(provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState);
         }
 
         /// <summary> Initializes a new instance of PrivateLinkConnectionState. </summary>
@@ -842,7 +841,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <returns> A new <see cref="Models.PrivateLinkConnectionApprovalRequest"/> instance for mocking. </returns>
         public static PrivateLinkConnectionApprovalRequest PrivateLinkConnectionApprovalRequest(PrivateLinkConnectionState privateLinkServiceConnectionState = null, ResourceIdentifier privateEndpointId = null)
         {
-            return new PrivateLinkConnectionApprovalRequest(privateLinkServiceConnectionState, ResourceManagerModelFactory.WritableSubResource(privateEndpointId));
+            return new PrivateLinkConnectionApprovalRequest(privateLinkServiceConnectionState, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null);
         }
 
         /// <summary> Initializes a new instance of FactoryPrivateLinkResource. </summary>
@@ -1019,7 +1018,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             transformations ??= new List<DataFlowTransformation>();
             scriptLines ??= new List<string>();
 
-            return new FactoryMappingDataFlowDefinition("MappingDataFlow", description, annotations?.ToList(), new DataFlowFolder(folderName), sources?.ToList(), sinks?.ToList(), transformations?.ToList(), script, scriptLines?.ToList());
+            return new FactoryMappingDataFlowDefinition("MappingDataFlow", description, annotations?.ToList(), folderName != null ? new DataFlowFolder(folderName) : null, sources?.ToList(), sinks?.ToList(), transformations?.ToList(), script, scriptLines?.ToList());
         }
 
         /// <summary> Initializes a new instance of DataFlowSource. </summary>
@@ -1079,7 +1078,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             transformations ??= new List<DataFlowTransformation>();
             scriptLines ??= new List<string>();
 
-            return new FactoryFlowletDefinition("Flowlet", description, annotations?.ToList(), new DataFlowFolder(folderName), sources?.ToList(), sinks?.ToList(), transformations?.ToList(), script, scriptLines?.ToList());
+            return new FactoryFlowletDefinition("Flowlet", description, annotations?.ToList(), folderName != null ? new DataFlowFolder(folderName) : null, sources?.ToList(), sinks?.ToList(), transformations?.ToList(), script, scriptLines?.ToList());
         }
 
         /// <summary> Initializes a new instance of FactoryWranglingDataFlowDefinition. </summary>
@@ -1095,7 +1094,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             sources ??= new List<PowerQuerySource>();
 
-            return new FactoryWranglingDataFlowDefinition("WranglingDataFlow", description, annotations?.ToList(), new DataFlowFolder(folderName), sources?.ToList(), script, documentLocale);
+            return new FactoryWranglingDataFlowDefinition("WranglingDataFlow", description, annotations?.ToList(), folderName != null ? new DataFlowFolder(folderName) : null, sources?.ToList(), script, documentLocale);
         }
 
         /// <summary> Initializes a new instance of PowerQuerySource. </summary>
@@ -1434,7 +1433,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new AmazonS3Dataset("AmazonS3Object", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, bucketName, key, prefix, version, modifiedDatetimeStart, modifiedDatetimeEnd, format, compression);
+            return new AmazonS3Dataset("AmazonS3Object", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, bucketName, key, prefix, version, modifiedDatetimeStart, modifiedDatetimeEnd, format, compression);
         }
 
         /// <summary> Initializes a new instance of AvroDataset. </summary>
@@ -1460,7 +1459,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new AvroDataset("Avro", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, dataLocation, avroCompressionCodec, avroCompressionLevel);
+            return new AvroDataset("Avro", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, dataLocation, avroCompressionCodec, avroCompressionLevel);
         }
 
         /// <summary> Initializes a new instance of ExcelDataset. </summary>
@@ -1490,7 +1489,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new ExcelDataset("Excel", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, dataLocation, sheetName, sheetIndex, range, firstRowAsHeader, compression, nullValue);
+            return new ExcelDataset("Excel", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, dataLocation, sheetName, sheetIndex, range, firstRowAsHeader, compression, nullValue);
         }
 
         /// <summary> Initializes a new instance of ParquetDataset. </summary>
@@ -1515,7 +1514,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new ParquetDataset("Parquet", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, dataLocation, compressionCodec);
+            return new ParquetDataset("Parquet", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, dataLocation, compressionCodec);
         }
 
         /// <summary> Initializes a new instance of DelimitedTextDataset. </summary>
@@ -1548,7 +1547,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new DelimitedTextDataset("DelimitedText", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, dataLocation, columnDelimiter, rowDelimiter, encodingName, compressionCodec, compressionLevel, quoteChar, escapeChar, firstRowAsHeader, nullValue);
+            return new DelimitedTextDataset("DelimitedText", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, dataLocation, columnDelimiter, rowDelimiter, encodingName, compressionCodec, compressionLevel, quoteChar, escapeChar, firstRowAsHeader, nullValue);
         }
 
         /// <summary> Initializes a new instance of JsonDataset. </summary>
@@ -1574,7 +1573,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new JsonDataset("Json", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, dataLocation, encodingName, compression);
+            return new JsonDataset("Json", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, dataLocation, encodingName, compression);
         }
 
         /// <summary> Initializes a new instance of XmlDataset. </summary>
@@ -1601,7 +1600,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new XmlDataset("Xml", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, dataLocation, encodingName, nullValue, compression);
+            return new XmlDataset("Xml", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, dataLocation, encodingName, nullValue, compression);
         }
 
         /// <summary> Initializes a new instance of OrcDataset. </summary>
@@ -1626,7 +1625,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new OrcDataset("Orc", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, dataLocation, orcCompressionCodec);
+            return new OrcDataset("Orc", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, dataLocation, orcCompressionCodec);
         }
 
         /// <summary> Initializes a new instance of BinaryDataset. </summary>
@@ -1651,7 +1650,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new BinaryDataset("Binary", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, dataLocation, compression);
+            return new BinaryDataset("Binary", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, dataLocation, compression);
         }
 
         /// <summary> Initializes a new instance of AzureBlobDataset. </summary>
@@ -1681,7 +1680,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new AzureBlobDataset("AzureBlob", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, folderPath, tableRootLocation, fileName, modifiedDatetimeStart, modifiedDatetimeEnd, format, compression);
+            return new AzureBlobDataset("AzureBlob", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, folderPath, tableRootLocation, fileName, modifiedDatetimeStart, modifiedDatetimeEnd, format, compression);
         }
 
         /// <summary> Initializes a new instance of AzureTableDataset. </summary>
@@ -1701,7 +1700,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new AzureTableDataset("AzureTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new AzureTableDataset("AzureTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of AzureSqlTableDataset. </summary>
@@ -1723,7 +1722,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new AzureSqlTableDataset("AzureSqlTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName, schemaTypePropertiesSchema, table);
+            return new AzureSqlTableDataset("AzureSqlTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName, schemaTypePropertiesSchema, table);
         }
 
         /// <summary> Initializes a new instance of AzureSqlMITableDataset. </summary>
@@ -1745,7 +1744,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new AzureSqlMITableDataset("AzureSqlMITable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName, schemaTypePropertiesSchema, table);
+            return new AzureSqlMITableDataset("AzureSqlMITable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName, schemaTypePropertiesSchema, table);
         }
 
         /// <summary> Initializes a new instance of AzureSqlDWTableDataset. </summary>
@@ -1767,7 +1766,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new AzureSqlDWTableDataset("AzureSqlDWTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName, schemaTypePropertiesSchema, table);
+            return new AzureSqlDWTableDataset("AzureSqlDWTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName, schemaTypePropertiesSchema, table);
         }
 
         /// <summary> Initializes a new instance of CassandraTableDataset. </summary>
@@ -1788,7 +1787,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new CassandraTableDataset("CassandraTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName, keyspace);
+            return new CassandraTableDataset("CassandraTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName, keyspace);
         }
 
         /// <summary> Initializes a new instance of CustomDataset. </summary>
@@ -1808,7 +1807,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new CustomDataset("CustomDataset", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, typeProperties);
+            return new CustomDataset("CustomDataset", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, typeProperties);
         }
 
         /// <summary> Initializes a new instance of CosmosDBSqlApiCollectionDataset. </summary>
@@ -1828,7 +1827,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new CosmosDBSqlApiCollectionDataset("CosmosDbSqlApiCollection", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, collectionName);
+            return new CosmosDBSqlApiCollectionDataset("CosmosDbSqlApiCollection", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, collectionName);
         }
 
         /// <summary> Initializes a new instance of DocumentDBCollectionDataset. </summary>
@@ -1848,7 +1847,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new DocumentDBCollectionDataset("DocumentDbCollection", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, collectionName);
+            return new DocumentDBCollectionDataset("DocumentDbCollection", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, collectionName);
         }
 
         /// <summary> Initializes a new instance of DynamicsEntityDataset. </summary>
@@ -1868,7 +1867,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new DynamicsEntityDataset("DynamicsEntity", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, entityName);
+            return new DynamicsEntityDataset("DynamicsEntity", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, entityName);
         }
 
         /// <summary> Initializes a new instance of DynamicsCrmEntityDataset. </summary>
@@ -1888,7 +1887,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new DynamicsCrmEntityDataset("DynamicsCrmEntity", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, entityName);
+            return new DynamicsCrmEntityDataset("DynamicsCrmEntity", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, entityName);
         }
 
         /// <summary> Initializes a new instance of CommonDataServiceForAppsEntityDataset. </summary>
@@ -1908,7 +1907,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new CommonDataServiceForAppsEntityDataset("CommonDataServiceForAppsEntity", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, entityName);
+            return new CommonDataServiceForAppsEntityDataset("CommonDataServiceForAppsEntity", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, entityName);
         }
 
         /// <summary> Initializes a new instance of AzureDataLakeStoreDataset. </summary>
@@ -1935,7 +1934,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new AzureDataLakeStoreDataset("AzureDataLakeStoreFile", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, folderPath, fileName, format, compression);
+            return new AzureDataLakeStoreDataset("AzureDataLakeStoreFile", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, folderPath, fileName, format, compression);
         }
 
         /// <summary> Initializes a new instance of AzureBlobFSDataset. </summary>
@@ -1962,7 +1961,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new AzureBlobFSDataset("AzureBlobFSFile", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, folderPath, fileName, format, compression);
+            return new AzureBlobFSDataset("AzureBlobFSFile", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, folderPath, fileName, format, compression);
         }
 
         /// <summary> Initializes a new instance of Office365Dataset. </summary>
@@ -1983,7 +1982,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new Office365Dataset("Office365Table", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName, predicate);
+            return new Office365Dataset("Office365Table", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName, predicate);
         }
 
         /// <summary> Initializes a new instance of FileShareDataset. </summary>
@@ -2013,7 +2012,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new FileShareDataset("FileShare", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, folderPath, fileName, modifiedDatetimeStart, modifiedDatetimeEnd, format, fileFilter, compression);
+            return new FileShareDataset("FileShare", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, folderPath, fileName, modifiedDatetimeStart, modifiedDatetimeEnd, format, fileFilter, compression);
         }
 
         /// <summary> Initializes a new instance of MongoDBCollectionDataset. </summary>
@@ -2033,7 +2032,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new MongoDBCollectionDataset("MongoDbCollection", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, collectionName);
+            return new MongoDBCollectionDataset("MongoDbCollection", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, collectionName);
         }
 
         /// <summary> Initializes a new instance of MongoDBAtlasCollectionDataset. </summary>
@@ -2053,7 +2052,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new MongoDBAtlasCollectionDataset("MongoDbAtlasCollection", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, collection);
+            return new MongoDBAtlasCollectionDataset("MongoDbAtlasCollection", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, collection);
         }
 
         /// <summary> Initializes a new instance of MongoDBV2CollectionDataset. </summary>
@@ -2073,7 +2072,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new MongoDBV2CollectionDataset("MongoDbV2Collection", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, collection);
+            return new MongoDBV2CollectionDataset("MongoDbV2Collection", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, collection);
         }
 
         /// <summary> Initializes a new instance of CosmosDBMongoDBApiCollectionDataset. </summary>
@@ -2093,7 +2092,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new CosmosDBMongoDBApiCollectionDataset("CosmosDbMongoDbApiCollection", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, collection);
+            return new CosmosDBMongoDBApiCollectionDataset("CosmosDbMongoDbApiCollection", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, collection);
         }
 
         /// <summary> Initializes a new instance of ODataResourceDataset. </summary>
@@ -2113,7 +2112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new ODataResourceDataset("ODataResource", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, path);
+            return new ODataResourceDataset("ODataResource", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, path);
         }
 
         /// <summary> Initializes a new instance of OracleTableDataset. </summary>
@@ -2135,7 +2134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new OracleTableDataset("OracleTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName, schemaTypePropertiesSchema, table);
+            return new OracleTableDataset("OracleTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName, schemaTypePropertiesSchema, table);
         }
 
         /// <summary> Initializes a new instance of AmazonRdsForOracleTableDataset. </summary>
@@ -2156,7 +2155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new AmazonRdsForOracleTableDataset("AmazonRdsForOracleTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, schemaTypePropertiesSchema, table);
+            return new AmazonRdsForOracleTableDataset("AmazonRdsForOracleTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, schemaTypePropertiesSchema, table);
         }
 
         /// <summary> Initializes a new instance of TeradataTableDataset. </summary>
@@ -2177,7 +2176,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new TeradataTableDataset("TeradataTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, database, table);
+            return new TeradataTableDataset("TeradataTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, database, table);
         }
 
         /// <summary> Initializes a new instance of AzureMySqlTableDataset. </summary>
@@ -2198,7 +2197,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new AzureMySqlTableDataset("AzureMySqlTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName, table);
+            return new AzureMySqlTableDataset("AzureMySqlTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName, table);
         }
 
         /// <summary> Initializes a new instance of AmazonRedshiftTableDataset. </summary>
@@ -2220,7 +2219,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new AmazonRedshiftTableDataset("AmazonRedshiftTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName, table, schemaTypePropertiesSchema);
+            return new AmazonRedshiftTableDataset("AmazonRedshiftTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName, table, schemaTypePropertiesSchema);
         }
 
         /// <summary> Initializes a new instance of Db2TableDataset. </summary>
@@ -2242,7 +2241,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new Db2TableDataset("Db2Table", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName, schemaTypePropertiesSchema, table);
+            return new Db2TableDataset("Db2Table", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName, schemaTypePropertiesSchema, table);
         }
 
         /// <summary> Initializes a new instance of RelationalTableDataset. </summary>
@@ -2262,7 +2261,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new RelationalTableDataset("RelationalTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new RelationalTableDataset("RelationalTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of InformixTableDataset. </summary>
@@ -2282,7 +2281,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new InformixTableDataset("InformixTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new InformixTableDataset("InformixTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of OdbcTableDataset. </summary>
@@ -2302,7 +2301,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new OdbcTableDataset("OdbcTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new OdbcTableDataset("OdbcTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of MySqlTableDataset. </summary>
@@ -2322,7 +2321,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new MySqlTableDataset("MySqlTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new MySqlTableDataset("MySqlTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of PostgreSqlTableDataset. </summary>
@@ -2344,7 +2343,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new PostgreSqlTableDataset("PostgreSqlTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName, table, schemaTypePropertiesSchema);
+            return new PostgreSqlTableDataset("PostgreSqlTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName, table, schemaTypePropertiesSchema);
         }
 
         /// <summary> Initializes a new instance of MicrosoftAccessTableDataset. </summary>
@@ -2364,7 +2363,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new MicrosoftAccessTableDataset("MicrosoftAccessTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new MicrosoftAccessTableDataset("MicrosoftAccessTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of SalesforceObjectDataset. </summary>
@@ -2384,7 +2383,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SalesforceObjectDataset("SalesforceObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, objectApiName);
+            return new SalesforceObjectDataset("SalesforceObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, objectApiName);
         }
 
         /// <summary> Initializes a new instance of SalesforceServiceCloudObjectDataset. </summary>
@@ -2404,7 +2403,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SalesforceServiceCloudObjectDataset("SalesforceServiceCloudObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, objectApiName);
+            return new SalesforceServiceCloudObjectDataset("SalesforceServiceCloudObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, objectApiName);
         }
 
         /// <summary> Initializes a new instance of SybaseTableDataset. </summary>
@@ -2424,7 +2423,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SybaseTableDataset("SybaseTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new SybaseTableDataset("SybaseTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of SapBwCubeDataset. </summary>
@@ -2443,7 +2442,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SapBwCubeDataset("SapBwCube", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties);
+            return new SapBwCubeDataset("SapBwCube", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of SapCloudForCustomerResourceDataset. </summary>
@@ -2463,7 +2462,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SapCloudForCustomerResourceDataset("SapCloudForCustomerResource", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, path);
+            return new SapCloudForCustomerResourceDataset("SapCloudForCustomerResource", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, path);
         }
 
         /// <summary> Initializes a new instance of SapEccResourceDataset. </summary>
@@ -2483,7 +2482,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SapEccResourceDataset("SapEccResource", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, path);
+            return new SapEccResourceDataset("SapEccResource", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, path);
         }
 
         /// <summary> Initializes a new instance of SapHanaTableDataset. </summary>
@@ -2504,7 +2503,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SapHanaTableDataset("SapHanaTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, schemaTypePropertiesSchema, table);
+            return new SapHanaTableDataset("SapHanaTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, schemaTypePropertiesSchema, table);
         }
 
         /// <summary> Initializes a new instance of SapOpenHubTableDataset. </summary>
@@ -2526,7 +2525,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SapOpenHubTableDataset("SapOpenHubTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, openHubDestinationName, excludeLastRequest, baseRequestId);
+            return new SapOpenHubTableDataset("SapOpenHubTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, openHubDestinationName, excludeLastRequest, baseRequestId);
         }
 
         /// <summary> Initializes a new instance of SqlServerTableDataset. </summary>
@@ -2548,7 +2547,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SqlServerTableDataset("SqlServerTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName, schemaTypePropertiesSchema, table);
+            return new SqlServerTableDataset("SqlServerTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName, schemaTypePropertiesSchema, table);
         }
 
         /// <summary> Initializes a new instance of AmazonRdsForSqlServerTableDataset. </summary>
@@ -2569,7 +2568,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new AmazonRdsForSqlServerTableDataset("AmazonRdsForSqlServerTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, schemaTypePropertiesSchema, table);
+            return new AmazonRdsForSqlServerTableDataset("AmazonRdsForSqlServerTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, schemaTypePropertiesSchema, table);
         }
 
         /// <summary> Initializes a new instance of RestResourceDataset. </summary>
@@ -2593,7 +2592,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new RestResourceDataset("RestResource", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, relativeUri, requestMethod, requestBody, additionalHeaders, paginationRules);
+            return new RestResourceDataset("RestResource", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, relativeUri, requestMethod, requestBody, additionalHeaders, paginationRules);
         }
 
         /// <summary> Initializes a new instance of SapTableResourceDataset. </summary>
@@ -2613,7 +2612,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SapTableResourceDataset("SapTableResource", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new SapTableResourceDataset("SapTableResource", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of SapOdpResourceDataset. </summary>
@@ -2634,7 +2633,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SapOdpResourceDataset("SapOdpResource", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, context, objectName);
+            return new SapOdpResourceDataset("SapOdpResource", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, context, objectName);
         }
 
         /// <summary> Initializes a new instance of WebTableDataset. </summary>
@@ -2655,7 +2654,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new WebTableDataset("WebTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, index, path);
+            return new WebTableDataset("WebTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, index, path);
         }
 
         /// <summary> Initializes a new instance of AzureSearchIndexDataset. </summary>
@@ -2675,7 +2674,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new AzureSearchIndexDataset("AzureSearchIndex", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, indexName);
+            return new AzureSearchIndexDataset("AzureSearchIndex", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, indexName);
         }
 
         /// <summary> Initializes a new instance of HttpFileDataset. </summary>
@@ -2708,7 +2707,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new HttpFileDataset("HttpFile", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, relativeUri, requestMethod, requestBody, additionalHeaders, format, compression);
+            return new HttpFileDataset("HttpFile", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, relativeUri, requestMethod, requestBody, additionalHeaders, format, compression);
         }
 
         /// <summary> Initializes a new instance of AmazonMwsObjectDataset. </summary>
@@ -2728,7 +2727,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new AmazonMwsObjectDataset("AmazonMWSObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new AmazonMwsObjectDataset("AmazonMWSObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of AzurePostgreSqlTableDataset. </summary>
@@ -2750,7 +2749,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new AzurePostgreSqlTableDataset("AzurePostgreSqlTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName, table, schemaTypePropertiesSchema);
+            return new AzurePostgreSqlTableDataset("AzurePostgreSqlTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName, table, schemaTypePropertiesSchema);
         }
 
         /// <summary> Initializes a new instance of ConcurObjectDataset. </summary>
@@ -2770,7 +2769,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new ConcurObjectDataset("ConcurObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new ConcurObjectDataset("ConcurObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of CouchbaseTableDataset. </summary>
@@ -2790,7 +2789,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new CouchbaseTableDataset("CouchbaseTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new CouchbaseTableDataset("CouchbaseTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of DrillTableDataset. </summary>
@@ -2812,7 +2811,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new DrillTableDataset("DrillTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName, table, schemaTypePropertiesSchema);
+            return new DrillTableDataset("DrillTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName, table, schemaTypePropertiesSchema);
         }
 
         /// <summary> Initializes a new instance of EloquaObjectDataset. </summary>
@@ -2832,7 +2831,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new EloquaObjectDataset("EloquaObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new EloquaObjectDataset("EloquaObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of GoogleBigQueryObjectDataset. </summary>
@@ -2854,7 +2853,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new GoogleBigQueryObjectDataset("GoogleBigQueryObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName, table, dataset);
+            return new GoogleBigQueryObjectDataset("GoogleBigQueryObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName, table, dataset);
         }
 
         /// <summary> Initializes a new instance of GreenplumTableDataset. </summary>
@@ -2876,7 +2875,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new GreenplumTableDataset("GreenplumTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName, table, schemaTypePropertiesSchema);
+            return new GreenplumTableDataset("GreenplumTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName, table, schemaTypePropertiesSchema);
         }
 
         /// <summary> Initializes a new instance of HBaseObjectDataset. </summary>
@@ -2896,7 +2895,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new HBaseObjectDataset("HBaseObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new HBaseObjectDataset("HBaseObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of HiveObjectDataset. </summary>
@@ -2918,7 +2917,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new HiveObjectDataset("HiveObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName, table, schemaTypePropertiesSchema);
+            return new HiveObjectDataset("HiveObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName, table, schemaTypePropertiesSchema);
         }
 
         /// <summary> Initializes a new instance of HubspotObjectDataset. </summary>
@@ -2938,7 +2937,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new HubspotObjectDataset("HubspotObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new HubspotObjectDataset("HubspotObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of ImpalaObjectDataset. </summary>
@@ -2960,7 +2959,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new ImpalaObjectDataset("ImpalaObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName, table, schemaTypePropertiesSchema);
+            return new ImpalaObjectDataset("ImpalaObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName, table, schemaTypePropertiesSchema);
         }
 
         /// <summary> Initializes a new instance of JiraObjectDataset. </summary>
@@ -2980,7 +2979,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new JiraObjectDataset("JiraObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new JiraObjectDataset("JiraObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of MagentoObjectDataset. </summary>
@@ -3000,7 +2999,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new MagentoObjectDataset("MagentoObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new MagentoObjectDataset("MagentoObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of MariaDBTableDataset. </summary>
@@ -3020,7 +3019,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new MariaDBTableDataset("MariaDBTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new MariaDBTableDataset("MariaDBTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of AzureMariaDBTableDataset. </summary>
@@ -3040,7 +3039,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new AzureMariaDBTableDataset("AzureMariaDBTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new AzureMariaDBTableDataset("AzureMariaDBTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of MarketoObjectDataset. </summary>
@@ -3060,7 +3059,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new MarketoObjectDataset("MarketoObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new MarketoObjectDataset("MarketoObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of PaypalObjectDataset. </summary>
@@ -3080,7 +3079,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new PaypalObjectDataset("PaypalObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new PaypalObjectDataset("PaypalObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of PhoenixObjectDataset. </summary>
@@ -3102,7 +3101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new PhoenixObjectDataset("PhoenixObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName, table, schemaTypePropertiesSchema);
+            return new PhoenixObjectDataset("PhoenixObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName, table, schemaTypePropertiesSchema);
         }
 
         /// <summary> Initializes a new instance of PrestoObjectDataset. </summary>
@@ -3124,7 +3123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new PrestoObjectDataset("PrestoObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName, table, schemaTypePropertiesSchema);
+            return new PrestoObjectDataset("PrestoObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName, table, schemaTypePropertiesSchema);
         }
 
         /// <summary> Initializes a new instance of QuickBooksObjectDataset. </summary>
@@ -3144,7 +3143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new QuickBooksObjectDataset("QuickBooksObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new QuickBooksObjectDataset("QuickBooksObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of ServiceNowObjectDataset. </summary>
@@ -3164,7 +3163,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new ServiceNowObjectDataset("ServiceNowObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new ServiceNowObjectDataset("ServiceNowObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of ShopifyObjectDataset. </summary>
@@ -3184,7 +3183,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new ShopifyObjectDataset("ShopifyObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new ShopifyObjectDataset("ShopifyObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of SparkObjectDataset. </summary>
@@ -3206,7 +3205,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SparkObjectDataset("SparkObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName, table, schemaTypePropertiesSchema);
+            return new SparkObjectDataset("SparkObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName, table, schemaTypePropertiesSchema);
         }
 
         /// <summary> Initializes a new instance of SquareObjectDataset. </summary>
@@ -3226,7 +3225,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SquareObjectDataset("SquareObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new SquareObjectDataset("SquareObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of XeroObjectDataset. </summary>
@@ -3246,7 +3245,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new XeroObjectDataset("XeroObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new XeroObjectDataset("XeroObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of ZohoObjectDataset. </summary>
@@ -3266,7 +3265,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new ZohoObjectDataset("ZohoObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new ZohoObjectDataset("ZohoObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of NetezzaTableDataset. </summary>
@@ -3288,7 +3287,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new NetezzaTableDataset("NetezzaTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName, table, schemaTypePropertiesSchema);
+            return new NetezzaTableDataset("NetezzaTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName, table, schemaTypePropertiesSchema);
         }
 
         /// <summary> Initializes a new instance of VerticaTableDataset. </summary>
@@ -3310,7 +3309,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new VerticaTableDataset("VerticaTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName, table, schemaTypePropertiesSchema);
+            return new VerticaTableDataset("VerticaTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName, table, schemaTypePropertiesSchema);
         }
 
         /// <summary> Initializes a new instance of SalesforceMarketingCloudObjectDataset. </summary>
@@ -3330,7 +3329,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SalesforceMarketingCloudObjectDataset("SalesforceMarketingCloudObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new SalesforceMarketingCloudObjectDataset("SalesforceMarketingCloudObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of ResponsysObjectDataset. </summary>
@@ -3350,7 +3349,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new ResponsysObjectDataset("ResponsysObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new ResponsysObjectDataset("ResponsysObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of DynamicsAXResourceDataset. </summary>
@@ -3370,7 +3369,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new DynamicsAXResourceDataset("DynamicsAXResource", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, path);
+            return new DynamicsAXResourceDataset("DynamicsAXResource", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, path);
         }
 
         /// <summary> Initializes a new instance of OracleServiceCloudObjectDataset. </summary>
@@ -3390,7 +3389,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new OracleServiceCloudObjectDataset("OracleServiceCloudObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new OracleServiceCloudObjectDataset("OracleServiceCloudObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of AzureDataExplorerTableDataset. </summary>
@@ -3410,7 +3409,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new AzureDataExplorerTableDataset("AzureDataExplorerTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, table);
+            return new AzureDataExplorerTableDataset("AzureDataExplorerTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, table);
         }
 
         /// <summary> Initializes a new instance of GoogleAdWordsObjectDataset. </summary>
@@ -3430,7 +3429,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new GoogleAdWordsObjectDataset("GoogleAdWordsObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, tableName);
+            return new GoogleAdWordsObjectDataset("GoogleAdWordsObject", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, tableName);
         }
 
         /// <summary> Initializes a new instance of SnowflakeDataset. </summary>
@@ -3451,7 +3450,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SnowflakeDataset("SnowflakeTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, schemaTypePropertiesSchema, table);
+            return new SnowflakeDataset("SnowflakeTable", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, schemaTypePropertiesSchema, table);
         }
 
         /// <summary> Initializes a new instance of SharePointOnlineListResourceDataset. </summary>
@@ -3471,7 +3470,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SharePointOnlineListResourceDataset("SharePointOnlineListResource", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, listName);
+            return new SharePointOnlineListResourceDataset("SharePointOnlineListResource", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, listName);
         }
 
         /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeDataset. </summary>
@@ -3492,7 +3491,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new AzureDatabricksDeltaLakeDataset("AzureDatabricksDeltaLakeDataset", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), new DatasetFolder(folderName), additionalProperties, table, database);
+            return new AzureDatabricksDeltaLakeDataset("AzureDatabricksDeltaLakeDataset", description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties, table, database);
         }
 
         /// <summary> Initializes a new instance of ManagedIntegrationRuntime. </summary>
@@ -3508,7 +3507,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new ManagedIntegrationRuntime("Managed", description, additionalProperties, state, managedVirtualNetwork, computeProperties, ssisProperties, new IntegrationRuntimeCustomerVirtualNetwork(customerVirtualNetworkSubnetId));
+            return new ManagedIntegrationRuntime("Managed", description, additionalProperties, state, managedVirtualNetwork, computeProperties, ssisProperties, customerVirtualNetworkSubnetId != null ? new IntegrationRuntimeCustomerVirtualNetwork(customerVirtualNetworkSubnetId) : null);
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeComputeProperties. </summary>
@@ -8508,7 +8507,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SapHanaSource("SapHanaSource", sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns, query, packetSize, partitionOption, new SapHanaPartitionSettings(partitionColumnName));
+            return new SapHanaSource("SapHanaSource", sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties, queryTimeout, additionalColumns, query, packetSize, partitionOption, partitionColumnName != null ? new SapHanaPartitionSettings(partitionColumnName) : null);
         }
 
         /// <summary> Initializes a new instance of SapOpenHubSource. </summary>

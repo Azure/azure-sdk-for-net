@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             tags ??= new Dictionary<string, string>();
             collectorPolicies ??= new List<SubResource>();
 
-            return new AzureTrafficCollectorData(id, name, resourceType, systemData, tags, location, etag, collectorPolicies?.ToList(), ResourceManagerModelFactory.SubResource(virtualHubId), provisioningState);
+            return new AzureTrafficCollectorData(id, name, resourceType, systemData, tags, location, etag, collectorPolicies?.ToList(), virtualHubId != null ? ResourceManagerModelFactory.SubResource(virtualHubId) : null, provisioningState);
         }
 
         /// <summary> Initializes a new instance of CollectorPolicyData. </summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Model factory for generated models. </summary>
     public static partial class KubernetesConfigurationModelFactory
     {
-        /// <summary> Initializes a new instance of ExtensionData. </summary>
+        /// <summary> Initializes a new instance of KubernetesClusterExtensionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,39 +38,39 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <param name="customLocationSettings"> Custom Location settings properties. </param>
         /// <param name="packageUri"> Uri of the Helm package. </param>
         /// <param name="aksAssignedIdentity"> Identity of the Extension resource in an AKS cluster. Current supported identity types: SystemAssigned, UserAssigned. </param>
-        /// <returns> A new <see cref="KubernetesConfiguration.ExtensionData"/> instance for mocking. </returns>
-        public static ExtensionData ExtensionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, string extensionType = null, bool? autoUpgradeMinorVersion = null, string releaseTrain = null, string version = null, Scope scope = null, IDictionary<string, string> configurationSettings = null, IDictionary<string, string> configurationProtectedSettings = null, string installedVersion = null, ProvisioningState? provisioningState = null, IEnumerable<ExtensionStatus> statuses = null, ResponseError errorInfo = null, IReadOnlyDictionary<string, string> customLocationSettings = null, Uri packageUri = null, ManagedServiceIdentity aksAssignedIdentity = null)
+        /// <returns> A new <see cref="KubernetesConfiguration.KubernetesClusterExtensionData"/> instance for mocking. </returns>
+        public static KubernetesClusterExtensionData KubernetesClusterExtensionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, string extensionType = null, bool? autoUpgradeMinorVersion = null, string releaseTrain = null, string version = null, KubernetesClusterExtensionScope scope = null, IDictionary<string, string> configurationSettings = null, IDictionary<string, string> configurationProtectedSettings = null, string installedVersion = null, KubernetesConfigurationProvisioningState? provisioningState = null, IEnumerable<KubernetesClusterExtensionStatus> statuses = null, ResponseError errorInfo = null, IReadOnlyDictionary<string, string> customLocationSettings = null, Uri packageUri = null, ManagedServiceIdentity aksAssignedIdentity = null)
         {
             configurationSettings ??= new Dictionary<string, string>();
             configurationProtectedSettings ??= new Dictionary<string, string>();
-            statuses ??= new List<ExtensionStatus>();
+            statuses ??= new List<KubernetesClusterExtensionStatus>();
             customLocationSettings ??= new Dictionary<string, string>();
 
-            return new ExtensionData(id, name, resourceType, systemData, identity, extensionType, autoUpgradeMinorVersion, releaseTrain, version, scope, configurationSettings, configurationProtectedSettings, installedVersion, provisioningState, statuses?.ToList(), errorInfo, customLocationSettings, packageUri, aksAssignedIdentity);
+            return new KubernetesClusterExtensionData(id, name, resourceType, systemData, identity, extensionType, autoUpgradeMinorVersion, releaseTrain, version, scope, configurationSettings, configurationProtectedSettings, installedVersion, provisioningState, statuses?.ToList(), errorInfo, customLocationSettings, packageUri, aksAssignedIdentity);
         }
 
-        /// <summary> Initializes a new instance of Scope. </summary>
+        /// <summary> Initializes a new instance of KubernetesClusterExtensionScope. </summary>
         /// <param name="clusterReleaseNamespace"> Specifies that the scope of the extension is Cluster. </param>
         /// <param name="targetNamespace"> Specifies that the scope of the extension is Namespace. </param>
-        /// <returns> A new <see cref="Models.Scope"/> instance for mocking. </returns>
-        public static Scope Scope(string clusterReleaseNamespace = null, string targetNamespace = null)
+        /// <returns> A new <see cref="Models.KubernetesClusterExtensionScope"/> instance for mocking. </returns>
+        public static KubernetesClusterExtensionScope KubernetesClusterExtensionScope(string clusterReleaseNamespace = null, string targetNamespace = null)
         {
-            return new Scope(new ScopeCluster(clusterReleaseNamespace), new ScopeNamespace(targetNamespace));
+            return new KubernetesClusterExtensionScope(clusterReleaseNamespace != null ? new ScopeCluster(clusterReleaseNamespace) : null, targetNamespace != null ? new ScopeNamespace(targetNamespace) : null);
         }
 
-        /// <summary> Initializes a new instance of ExtensionStatus. </summary>
+        /// <summary> Initializes a new instance of KubernetesClusterExtensionStatus. </summary>
         /// <param name="code"> Status code provided by the Extension. </param>
         /// <param name="displayStatus"> Short description of status of the extension. </param>
         /// <param name="level"> Level of the status. </param>
         /// <param name="message"> Detailed message of the status from the Extension. </param>
         /// <param name="time"> DateLiteral (per ISO8601) noting the time of installation status. </param>
-        /// <returns> A new <see cref="Models.ExtensionStatus"/> instance for mocking. </returns>
-        public static ExtensionStatus ExtensionStatus(string code = null, string displayStatus = null, LevelType? level = null, string message = null, string time = null)
+        /// <returns> A new <see cref="Models.KubernetesClusterExtensionStatus"/> instance for mocking. </returns>
+        public static KubernetesClusterExtensionStatus KubernetesClusterExtensionStatus(string code = null, string displayStatus = null, KubernetesClusterExtensionStatusLevel? level = null, string message = null, string time = null)
         {
-            return new ExtensionStatus(code, displayStatus, level, message, time);
+            return new KubernetesClusterExtensionStatus(code, displayStatus, level, message, time);
         }
 
-        /// <summary> Initializes a new instance of FluxConfigurationData. </summary>
+        /// <summary> Initializes a new instance of KubernetesFluxConfigurationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <param name="scope"> Scope at which the operator will be installed. </param>
         /// <param name="namespace"> The namespace to which this configuration is installed to. Maximum of 253 lower case alphanumeric characters, hyphen and period only. </param>
         /// <param name="sourceKind"> Source Kind to pull the configuration data from. </param>
-        /// <param name="suspend"> Whether this configuration should suspend its reconciliation of its kustomizations and sources. </param>
+        /// <param name="isReconciliationSuspended"> Whether this configuration should suspend its reconciliation of its kustomizations and sources. </param>
         /// <param name="gitRepository"> Parameters to reconcile to the GitRepository source kind type. </param>
         /// <param name="bucket"> Parameters to reconcile to the Bucket source kind type. </param>
         /// <param name="azureBlob"> Parameters to reconcile to the AzureBlob source kind type. </param>
@@ -92,17 +92,17 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <param name="complianceState"> Combined status of the Flux Kubernetes resources created by the fluxConfiguration or created by the managed objects. </param>
         /// <param name="provisioningState"> Status of the creation of the fluxConfiguration. </param>
         /// <param name="errorMessage"> Error message returned to the user in the case of provisioning failure. </param>
-        /// <returns> A new <see cref="KubernetesConfiguration.FluxConfigurationData"/> instance for mocking. </returns>
-        public static FluxConfigurationData FluxConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ScopeType? scope = null, string @namespace = null, SourceKindType? sourceKind = null, bool? suspend = null, GitRepositoryDefinition gitRepository = null, BucketDefinition bucket = null, AzureBlobDefinition azureBlob = null, IDictionary<string, KustomizationDefinition> kustomizations = null, IDictionary<string, string> configurationProtectedSettings = null, IEnumerable<ObjectStatusDefinition> statuses = null, string repositoryPublicKey = null, string sourceSyncedCommitId = null, DateTimeOffset? sourceUpdatedOn = null, DateTimeOffset? statusUpdatedOn = null, FluxComplianceState? complianceState = null, ProvisioningState? provisioningState = null, string errorMessage = null)
+        /// <returns> A new <see cref="KubernetesConfiguration.KubernetesFluxConfigurationData"/> instance for mocking. </returns>
+        public static KubernetesFluxConfigurationData KubernetesFluxConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, KubernetesConfigurationScope? scope = null, string @namespace = null, KubernetesConfigurationSourceKind? sourceKind = null, bool? isReconciliationSuspended = null, KubernetesGitRepository gitRepository = null, KubernetesBucket bucket = null, KubernetesAzureBlob azureBlob = null, IDictionary<string, Kustomization> kustomizations = null, IDictionary<string, string> configurationProtectedSettings = null, IEnumerable<KubernetesObjectStatus> statuses = null, string repositoryPublicKey = null, string sourceSyncedCommitId = null, DateTimeOffset? sourceUpdatedOn = null, DateTimeOffset? statusUpdatedOn = null, KubernetesFluxComplianceState? complianceState = null, KubernetesConfigurationProvisioningState? provisioningState = null, string errorMessage = null)
         {
-            kustomizations ??= new Dictionary<string, KustomizationDefinition>();
+            kustomizations ??= new Dictionary<string, Kustomization>();
             configurationProtectedSettings ??= new Dictionary<string, string>();
-            statuses ??= new List<ObjectStatusDefinition>();
+            statuses ??= new List<KubernetesObjectStatus>();
 
-            return new FluxConfigurationData(id, name, resourceType, systemData, scope, @namespace, sourceKind, suspend, gitRepository, bucket, azureBlob, kustomizations, configurationProtectedSettings, statuses?.ToList(), repositoryPublicKey, sourceSyncedCommitId, sourceUpdatedOn, statusUpdatedOn, complianceState, provisioningState, errorMessage);
+            return new KubernetesFluxConfigurationData(id, name, resourceType, systemData, scope, @namespace, sourceKind, isReconciliationSuspended, gitRepository, bucket, azureBlob, kustomizations, configurationProtectedSettings, statuses?.ToList(), repositoryPublicKey, sourceSyncedCommitId, sourceUpdatedOn, statusUpdatedOn, complianceState, provisioningState, errorMessage);
         }
 
-        /// <summary> Initializes a new instance of GitRepositoryDefinition. </summary>
+        /// <summary> Initializes a new instance of KubernetesGitRepository. </summary>
         /// <param name="uri"> The URL to sync for the flux configuration git repository. </param>
         /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the cluster git repository source with the remote. </param>
         /// <param name="syncIntervalInSeconds"> The interval at which to re-reconcile the cluster git repository source with the remote. </param>
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <param name="httpsUser"> Plaintext HTTPS username used to access private git repositories over HTTPS. </param>
         /// <param name="httpsCACert"> Base64-encoded HTTPS certificate authority contents used to access git private git repositories over HTTPS. </param>
         /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
-        /// <returns> A new <see cref="Models.GitRepositoryDefinition"/> instance for mocking. </returns>
-        public static GitRepositoryDefinition GitRepositoryDefinition(Uri uri = null, long? timeoutInSeconds = null, long? syncIntervalInSeconds = null, RepositoryRefDefinition repositoryRef = null, string sshKnownHosts = null, string httpsUser = null, string httpsCACert = null, string localAuthRef = null)
+        /// <returns> A new <see cref="Models.KubernetesGitRepository"/> instance for mocking. </returns>
+        public static KubernetesGitRepository KubernetesGitRepository(Uri uri = null, long? timeoutInSeconds = null, long? syncIntervalInSeconds = null, KubernetesGitRepositoryRef repositoryRef = null, string sshKnownHosts = null, string httpsUser = null, string httpsCACert = null, string localAuthRef = null)
         {
-            return new GitRepositoryDefinition(uri, timeoutInSeconds, syncIntervalInSeconds, repositoryRef, sshKnownHosts, httpsUser, httpsCACert, localAuthRef);
+            return new KubernetesGitRepository(uri, timeoutInSeconds, syncIntervalInSeconds, repositoryRef, sshKnownHosts, httpsUser, httpsCACert, localAuthRef);
         }
 
-        /// <summary> Initializes a new instance of RepositoryRefDefinition. </summary>
+        /// <summary> Initializes a new instance of KubernetesGitRepositoryRef. </summary>
         /// <param name="branch"> The git repository branch name to checkout. </param>
         /// <param name="tag"> The git repository tag name to checkout. This takes precedence over branch. </param>
         /// <param name="semver"> The semver range used to match against git repository tags. This takes precedence over tag. </param>
         /// <param name="commit"> The commit SHA to checkout. This value must be combined with the branch name to be valid. This takes precedence over semver. </param>
-        /// <returns> A new <see cref="Models.RepositoryRefDefinition"/> instance for mocking. </returns>
-        public static RepositoryRefDefinition RepositoryRefDefinition(string branch = null, string tag = null, string semver = null, string commit = null)
+        /// <returns> A new <see cref="Models.KubernetesGitRepositoryRef"/> instance for mocking. </returns>
+        public static KubernetesGitRepositoryRef KubernetesGitRepositoryRef(string branch = null, string tag = null, string semver = null, string commit = null)
         {
-            return new RepositoryRefDefinition(branch, tag, semver, commit);
+            return new KubernetesGitRepositoryRef(branch, tag, semver, commit);
         }
 
-        /// <summary> Initializes a new instance of BucketDefinition. </summary>
+        /// <summary> Initializes a new instance of KubernetesBucket. </summary>
         /// <param name="uri"> The URL to sync for the flux configuration S3 bucket. </param>
         /// <param name="bucketName"> The bucket name to sync from the url endpoint for the flux configuration. </param>
-        /// <param name="insecure"> Specify whether to use insecure communication when puling data from the S3 bucket. </param>
+        /// <param name="useInsecureCommunication"> Specify whether to use insecure communication when puling data from the S3 bucket. </param>
         /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the cluster bucket source with the remote. </param>
         /// <param name="syncIntervalInSeconds"> The interval at which to re-reconcile the cluster bucket source with the remote. </param>
         /// <param name="accessKey"> Plaintext access key used to securely access the S3 bucket. </param>
         /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
-        /// <returns> A new <see cref="Models.BucketDefinition"/> instance for mocking. </returns>
-        public static BucketDefinition BucketDefinition(Uri uri = null, string bucketName = null, bool? insecure = null, long? timeoutInSeconds = null, long? syncIntervalInSeconds = null, string accessKey = null, string localAuthRef = null)
+        /// <returns> A new <see cref="Models.KubernetesBucket"/> instance for mocking. </returns>
+        public static KubernetesBucket KubernetesBucket(Uri uri = null, string bucketName = null, bool? useInsecureCommunication = null, long? timeoutInSeconds = null, long? syncIntervalInSeconds = null, string accessKey = null, string localAuthRef = null)
         {
-            return new BucketDefinition(uri, bucketName, insecure, timeoutInSeconds, syncIntervalInSeconds, accessKey, localAuthRef);
+            return new KubernetesBucket(uri, bucketName, useInsecureCommunication, timeoutInSeconds, syncIntervalInSeconds, accessKey, localAuthRef);
         }
 
-        /// <summary> Initializes a new instance of AzureBlobDefinition. </summary>
+        /// <summary> Initializes a new instance of KubernetesAzureBlob. </summary>
         /// <param name="uri"> The URL to sync for the flux configuration Azure Blob storage account. </param>
         /// <param name="containerName"> The Azure Blob container name to sync from the url endpoint for the flux configuration. </param>
         /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the cluster Azure Blob source with the remote. </param>
@@ -152,26 +152,26 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <param name="sasToken"> The Shared Access token to access the storage container. </param>
         /// <param name="managedIdentityClientId"> Parameters to authenticate using a Managed Identity. </param>
         /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
-        /// <returns> A new <see cref="Models.AzureBlobDefinition"/> instance for mocking. </returns>
-        public static AzureBlobDefinition AzureBlobDefinition(Uri uri = null, string containerName = null, long? timeoutInSeconds = null, long? syncIntervalInSeconds = null, ServicePrincipalDefinition servicePrincipal = null, string accountKey = null, string sasToken = null, string managedIdentityClientId = null, string localAuthRef = null)
+        /// <returns> A new <see cref="Models.KubernetesAzureBlob"/> instance for mocking. </returns>
+        public static KubernetesAzureBlob KubernetesAzureBlob(Uri uri = null, string containerName = null, long? timeoutInSeconds = null, long? syncIntervalInSeconds = null, KubernetesServicePrincipal servicePrincipal = null, string accountKey = null, string sasToken = null, Guid? managedIdentityClientId = null, string localAuthRef = null)
         {
-            return new AzureBlobDefinition(uri, containerName, timeoutInSeconds, syncIntervalInSeconds, servicePrincipal, accountKey, sasToken, new ManagedIdentityDefinition(managedIdentityClientId), localAuthRef);
+            return new KubernetesAzureBlob(uri, containerName, timeoutInSeconds, syncIntervalInSeconds, servicePrincipal, accountKey, sasToken, managedIdentityClientId != null ? new KubernetesAzureBlobManagedIdentity(managedIdentityClientId) : null, localAuthRef);
         }
 
-        /// <summary> Initializes a new instance of ServicePrincipalDefinition. </summary>
+        /// <summary> Initializes a new instance of KubernetesServicePrincipal. </summary>
         /// <param name="clientId"> The client Id for authenticating a Service Principal. </param>
         /// <param name="tenantId"> The tenant Id for authenticating a Service Principal. </param>
         /// <param name="clientSecret"> The client secret for authenticating a Service Principal. </param>
         /// <param name="clientCertificate"> Base64-encoded certificate used to authenticate a Service Principal. </param>
         /// <param name="clientCertificatePassword"> The password for the certificate used to authenticate a Service Principal. </param>
         /// <param name="clientCertificateSendChain"> Specifies whether to include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the Client Certificate. </param>
-        /// <returns> A new <see cref="Models.ServicePrincipalDefinition"/> instance for mocking. </returns>
-        public static ServicePrincipalDefinition ServicePrincipalDefinition(string clientId = null, Guid? tenantId = null, string clientSecret = null, string clientCertificate = null, string clientCertificatePassword = null, bool? clientCertificateSendChain = null)
+        /// <returns> A new <see cref="Models.KubernetesServicePrincipal"/> instance for mocking. </returns>
+        public static KubernetesServicePrincipal KubernetesServicePrincipal(Guid? clientId = null, Guid? tenantId = null, string clientSecret = null, string clientCertificate = null, string clientCertificatePassword = null, bool? clientCertificateSendChain = null)
         {
-            return new ServicePrincipalDefinition(clientId, tenantId, clientSecret, clientCertificate, clientCertificatePassword, clientCertificateSendChain);
+            return new KubernetesServicePrincipal(clientId, tenantId, clientSecret, clientCertificate, clientCertificatePassword, clientCertificateSendChain);
         }
 
-        /// <summary> Initializes a new instance of KustomizationDefinition. </summary>
+        /// <summary> Initializes a new instance of Kustomization. </summary>
         /// <param name="name"> Name of the Kustomization, matching the key in the Kustomizations object map. </param>
         /// <param name="path"> The path in the source reference to reconcile on the cluster. </param>
         /// <param name="dependsOn"> Specifies other Kustomizations that this Kustomization depends on. This Kustomization will not reconcile until all dependencies have completed their reconciliation. </param>
@@ -180,15 +180,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <param name="retryIntervalInSeconds"> The interval at which to re-reconcile the Kustomization on the cluster in the event of failure on reconciliation. </param>
         /// <param name="prune"> Enable/disable garbage collections of Kubernetes objects created by this Kustomization. </param>
         /// <param name="force"> Enable/disable re-creating Kubernetes resources on the cluster when patching fails due to an immutable field change. </param>
-        /// <returns> A new <see cref="Models.KustomizationDefinition"/> instance for mocking. </returns>
-        public static KustomizationDefinition KustomizationDefinition(string name = null, string path = null, IEnumerable<string> dependsOn = null, long? timeoutInSeconds = null, long? syncIntervalInSeconds = null, long? retryIntervalInSeconds = null, bool? prune = null, bool? force = null)
+        /// <returns> A new <see cref="Models.Kustomization"/> instance for mocking. </returns>
+        public static Kustomization Kustomization(string name = null, string path = null, IEnumerable<string> dependsOn = null, long? timeoutInSeconds = null, long? syncIntervalInSeconds = null, long? retryIntervalInSeconds = null, bool? prune = null, bool? force = null)
         {
             dependsOn ??= new List<string>();
 
-            return new KustomizationDefinition(name, path, dependsOn?.ToList(), timeoutInSeconds, syncIntervalInSeconds, retryIntervalInSeconds, prune, force);
+            return new Kustomization(name, path, dependsOn?.ToList(), timeoutInSeconds, syncIntervalInSeconds, retryIntervalInSeconds, prune, force);
         }
 
-        /// <summary> Initializes a new instance of ObjectStatusDefinition. </summary>
+        /// <summary> Initializes a new instance of KubernetesObjectStatus. </summary>
         /// <param name="name"> Name of the applied object. </param>
         /// <param name="namespace"> Namespace of the applied object. </param>
         /// <param name="kind"> Kind of the applied object. </param>
@@ -196,48 +196,48 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <param name="appliedBy"> Object reference to the Kustomization that applied this object. </param>
         /// <param name="statusConditions"> List of Kubernetes object status conditions present on the cluster. </param>
         /// <param name="helmReleaseProperties"> Additional properties that are provided from objects of the HelmRelease kind. </param>
-        /// <returns> A new <see cref="Models.ObjectStatusDefinition"/> instance for mocking. </returns>
-        public static ObjectStatusDefinition ObjectStatusDefinition(string name = null, string @namespace = null, string kind = null, FluxComplianceState? complianceState = null, ObjectReferenceDefinition appliedBy = null, IEnumerable<ObjectStatusConditionDefinition> statusConditions = null, HelmReleasePropertiesDefinition helmReleaseProperties = null)
+        /// <returns> A new <see cref="Models.KubernetesObjectStatus"/> instance for mocking. </returns>
+        public static KubernetesObjectStatus KubernetesObjectStatus(string name = null, string @namespace = null, string kind = null, KubernetesFluxComplianceState? complianceState = null, KubernetesObjectReference appliedBy = null, IEnumerable<KubernetesObjectStatusCondition> statusConditions = null, HelmReleaseProperties helmReleaseProperties = null)
         {
-            statusConditions ??= new List<ObjectStatusConditionDefinition>();
+            statusConditions ??= new List<KubernetesObjectStatusCondition>();
 
-            return new ObjectStatusDefinition(name, @namespace, kind, complianceState, appliedBy, statusConditions?.ToList(), helmReleaseProperties);
+            return new KubernetesObjectStatus(name, @namespace, kind, complianceState, appliedBy, statusConditions?.ToList(), helmReleaseProperties);
         }
 
-        /// <summary> Initializes a new instance of ObjectReferenceDefinition. </summary>
+        /// <summary> Initializes a new instance of KubernetesObjectReference. </summary>
         /// <param name="name"> Name of the object. </param>
         /// <param name="namespace"> Namespace of the object. </param>
-        /// <returns> A new <see cref="Models.ObjectReferenceDefinition"/> instance for mocking. </returns>
-        public static ObjectReferenceDefinition ObjectReferenceDefinition(string name = null, string @namespace = null)
+        /// <returns> A new <see cref="Models.KubernetesObjectReference"/> instance for mocking. </returns>
+        public static KubernetesObjectReference KubernetesObjectReference(string name = null, string @namespace = null)
         {
-            return new ObjectReferenceDefinition(name, @namespace);
+            return new KubernetesObjectReference(name, @namespace);
         }
 
-        /// <summary> Initializes a new instance of ObjectStatusConditionDefinition. </summary>
+        /// <summary> Initializes a new instance of KubernetesObjectStatusCondition. </summary>
         /// <param name="lastTransitionOn"> Last time this status condition has changed. </param>
         /// <param name="message"> A more verbose description of the object status condition. </param>
         /// <param name="reason"> Reason for the specified status condition type status. </param>
         /// <param name="status"> Status of the Kubernetes object condition type. </param>
         /// <param name="objectStatusConditionDefinitionType"> Object status condition type for this object. </param>
-        /// <returns> A new <see cref="Models.ObjectStatusConditionDefinition"/> instance for mocking. </returns>
-        public static ObjectStatusConditionDefinition ObjectStatusConditionDefinition(DateTimeOffset? lastTransitionOn = null, string message = null, string reason = null, string status = null, string objectStatusConditionDefinitionType = null)
+        /// <returns> A new <see cref="Models.KubernetesObjectStatusCondition"/> instance for mocking. </returns>
+        public static KubernetesObjectStatusCondition KubernetesObjectStatusCondition(DateTimeOffset? lastTransitionOn = null, string message = null, string reason = null, string status = null, string objectStatusConditionDefinitionType = null)
         {
-            return new ObjectStatusConditionDefinition(lastTransitionOn, message, reason, status, objectStatusConditionDefinitionType);
+            return new KubernetesObjectStatusCondition(lastTransitionOn, message, reason, status, objectStatusConditionDefinitionType);
         }
 
-        /// <summary> Initializes a new instance of HelmReleasePropertiesDefinition. </summary>
+        /// <summary> Initializes a new instance of HelmReleaseProperties. </summary>
         /// <param name="lastRevisionApplied"> The revision number of the last released object change. </param>
         /// <param name="helmChartRef"> The reference to the HelmChart object used as the source to this HelmRelease. </param>
         /// <param name="failureCount"> Total number of times that the HelmRelease failed to install or upgrade. </param>
         /// <param name="installFailureCount"> Number of times that the HelmRelease failed to install. </param>
         /// <param name="upgradeFailureCount"> Number of times that the HelmRelease failed to upgrade. </param>
-        /// <returns> A new <see cref="Models.HelmReleasePropertiesDefinition"/> instance for mocking. </returns>
-        public static HelmReleasePropertiesDefinition HelmReleasePropertiesDefinition(long? lastRevisionApplied = null, ObjectReferenceDefinition helmChartRef = null, long? failureCount = null, long? installFailureCount = null, long? upgradeFailureCount = null)
+        /// <returns> A new <see cref="Models.HelmReleaseProperties"/> instance for mocking. </returns>
+        public static HelmReleaseProperties HelmReleaseProperties(long? lastRevisionApplied = null, KubernetesObjectReference helmChartRef = null, long? failureCount = null, long? installFailureCount = null, long? upgradeFailureCount = null)
         {
-            return new HelmReleasePropertiesDefinition(lastRevisionApplied, helmChartRef, failureCount, installFailureCount, upgradeFailureCount);
+            return new HelmReleaseProperties(lastRevisionApplied, helmChartRef, failureCount, installFailureCount, upgradeFailureCount);
         }
 
-        /// <summary> Initializes a new instance of SourceControlConfigurationData. </summary>
+        /// <summary> Initializes a new instance of KubernetesSourceControlConfigurationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -251,16 +251,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <param name="operatorScope"> Scope at which the operator will be installed. </param>
         /// <param name="repositoryPublicKey"> Public Key associated with this SourceControl configuration (either generated within the cluster or provided by the user). </param>
         /// <param name="sshKnownHostsContents"> Base64-encoded known_hosts contents containing public SSH keys required to access private Git instances. </param>
-        /// <param name="enableHelmOperator"> Option to enable Helm Operator for this git configuration. </param>
+        /// <param name="isHelmOperatorEnabled"> Option to enable Helm Operator for this git configuration. </param>
         /// <param name="helmOperatorProperties"> Properties for Helm operator. </param>
         /// <param name="provisioningState"> The provisioning state of the resource provider. </param>
         /// <param name="complianceStatus"> Compliance Status of the Configuration. </param>
-        /// <returns> A new <see cref="KubernetesConfiguration.SourceControlConfigurationData"/> instance for mocking. </returns>
-        public static SourceControlConfigurationData SourceControlConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri repositoryUri = null, string operatorNamespace = null, string operatorInstanceName = null, OperatorType? operatorType = null, string operatorParams = null, IDictionary<string, string> configurationProtectedSettings = null, OperatorScopeType? operatorScope = null, string repositoryPublicKey = null, string sshKnownHostsContents = null, bool? enableHelmOperator = null, HelmOperatorProperties helmOperatorProperties = null, ProvisioningStateType? provisioningState = null, ComplianceStatus complianceStatus = null)
+        /// <returns> A new <see cref="KubernetesConfiguration.KubernetesSourceControlConfigurationData"/> instance for mocking. </returns>
+        public static KubernetesSourceControlConfigurationData KubernetesSourceControlConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri repositoryUri = null, string operatorNamespace = null, string operatorInstanceName = null, KubernetesOperator? operatorType = null, string operatorParams = null, IDictionary<string, string> configurationProtectedSettings = null, KubernetesOperatorScope? operatorScope = null, string repositoryPublicKey = null, string sshKnownHostsContents = null, bool? isHelmOperatorEnabled = null, HelmOperatorProperties helmOperatorProperties = null, KubernetesConfigurationProvisioningStateType? provisioningState = null, KubernetesConfigurationComplianceStatus complianceStatus = null)
         {
             configurationProtectedSettings ??= new Dictionary<string, string>();
 
-            return new SourceControlConfigurationData(id, name, resourceType, systemData, repositoryUri, operatorNamespace, operatorInstanceName, operatorType, operatorParams, configurationProtectedSettings, operatorScope, repositoryPublicKey, sshKnownHostsContents, enableHelmOperator, helmOperatorProperties, provisioningState, complianceStatus);
+            return new KubernetesSourceControlConfigurationData(id, name, resourceType, systemData, repositoryUri, operatorNamespace, operatorInstanceName, operatorType, operatorParams, configurationProtectedSettings, operatorScope, repositoryPublicKey, sshKnownHostsContents, isHelmOperatorEnabled, helmOperatorProperties, provisioningState, complianceStatus);
         }
 
         /// <summary> Initializes a new instance of HelmOperatorProperties. </summary>
@@ -272,15 +272,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             return new HelmOperatorProperties(chartVersion, chartValues);
         }
 
-        /// <summary> Initializes a new instance of ComplianceStatus. </summary>
+        /// <summary> Initializes a new instance of KubernetesConfigurationComplianceStatus. </summary>
         /// <param name="complianceState"> The compliance state of the configuration. </param>
-        /// <param name="lastConfigApplied"> Datetime the configuration was last applied. </param>
+        /// <param name="lastConfigAppliedOn"> Datetime the configuration was last applied. </param>
         /// <param name="message"> Message from when the configuration was applied. </param>
         /// <param name="messageLevel"> Level of the message. </param>
-        /// <returns> A new <see cref="Models.ComplianceStatus"/> instance for mocking. </returns>
-        public static ComplianceStatus ComplianceStatus(ComplianceStateType? complianceState = null, DateTimeOffset? lastConfigApplied = null, string message = null, MessageLevelType? messageLevel = null)
+        /// <returns> A new <see cref="Models.KubernetesConfigurationComplianceStatus"/> instance for mocking. </returns>
+        public static KubernetesConfigurationComplianceStatus KubernetesConfigurationComplianceStatus(KubernetesConfigurationComplianceStateType? complianceState = null, DateTimeOffset? lastConfigAppliedOn = null, string message = null, KubernetesConfigurationMesageLevel? messageLevel = null)
         {
-            return new ComplianceStatus(complianceState, lastConfigApplied, message, messageLevel);
+            return new KubernetesConfigurationComplianceStatus(complianceState, lastConfigAppliedOn, message, messageLevel);
         }
     }
 }

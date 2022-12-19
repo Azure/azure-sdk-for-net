@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PrivateDns;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
@@ -60,7 +59,39 @@ namespace Azure.ResourceManager.PrivateDns.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new VirtualNetworkLinkData(id, name, resourceType, systemData, tags, location, etag, ResourceManagerModelFactory.WritableSubResource(virtualNetworkId), registrationEnabled, virtualNetworkLinkState, privateDnsProvisioningState);
+            return new VirtualNetworkLinkData(id, name, resourceType, systemData, tags, location, etag, virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null, registrationEnabled, virtualNetworkLinkState, privateDnsProvisioningState);
+        }
+
+        /// <summary> Initializes a new instance of PrivateDnsRecordData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The ETag of the record set. </param>
+        /// <param name="metadata"> The metadata attached to the record set. </param>
+        /// <param name="ttlInSeconds"> The TTL (time-to-live) of the records in the record set. </param>
+        /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
+        /// <param name="isAutoRegistered"> Is the record set auto-registered in the Private DNS zone through a virtual network link?. </param>
+        /// <param name="aRecords"> The list of A records in the record set. </param>
+        /// <param name="aaaaRecords"> The list of AAAA records in the record set. </param>
+        /// <param name="cname"> The CNAME record in the record set. </param>
+        /// <param name="privateDnsMXRecords"> The list of MX records in the record set. </param>
+        /// <param name="ptrRecords"> The list of PTR records in the record set. </param>
+        /// <param name="privateDnsSoaRecordInfo"> The SOA record in the record set. </param>
+        /// <param name="srvRecords"> The list of SRV records in the record set. </param>
+        /// <param name="txtRecords"> The list of TXT records in the record set. </param>
+        /// <returns> A new <see cref="PrivateDns.PrivateDnsRecordData"/> instance for mocking. </returns>
+        public static PrivateDnsRecordData PrivateDnsRecordData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, IDictionary<string, string> metadata = null, long? ttlInSeconds = null, string fqdn = null, bool? isAutoRegistered = null, IEnumerable<PrivateDnsARecordInfo> aRecords = null, IEnumerable<PrivateDnsAaaaRecordInfo> aaaaRecords = null, string cname = null, IEnumerable<PrivateDnsMXRecordInfo> privateDnsMXRecords = null, IEnumerable<PrivateDnsPtrRecordInfo> ptrRecords = null, PrivateDnsSoaRecordInfo privateDnsSoaRecordInfo = null, IEnumerable<PrivateDnsSrvRecordInfo> srvRecords = null, IEnumerable<PrivateDnsTxtRecordInfo> txtRecords = null)
+        {
+            metadata ??= new Dictionary<string, string>();
+            aRecords ??= new List<PrivateDnsARecordInfo>();
+            aaaaRecords ??= new List<PrivateDnsAaaaRecordInfo>();
+            privateDnsMXRecords ??= new List<PrivateDnsMXRecordInfo>();
+            ptrRecords ??= new List<PrivateDnsPtrRecordInfo>();
+            srvRecords ??= new List<PrivateDnsSrvRecordInfo>();
+            txtRecords ??= new List<PrivateDnsTxtRecordInfo>();
+
+            return new PrivateDnsRecordData(id, name, resourceType, systemData, etag, metadata, ttlInSeconds, fqdn, isAutoRegistered, aRecords?.ToList(), aaaaRecords?.ToList(), cname != null ? new PrivateDnsCnameRecordInfo(cname) : null, privateDnsMXRecords?.ToList(), ptrRecords?.ToList(), privateDnsSoaRecordInfo, srvRecords?.ToList(), txtRecords?.ToList());
         }
 
         /// <summary> Initializes a new instance of PrivateDnsARecordInfo. </summary>

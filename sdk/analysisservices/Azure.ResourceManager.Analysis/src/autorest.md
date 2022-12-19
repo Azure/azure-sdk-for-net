@@ -32,7 +32,7 @@ rename-mapping:
   SkuEnumerationForNewResourceResult: NewResourceResultSkuEnumeration
   CheckServerNameAvailabilityContent: AnalysisServicesServerNameAvailabilityContent
 #   SkuEnumerationForExistingResourceResult.value: ExistingResources
-  AnalysisServicesServer.properties.ipV4FirewallSettings: IPv4FirewallSettings
+  AnalysisServicesServer.properties.ipV4FirewallSettings: ipv4FirewallSettings
   AnalysisServicesServer.properties.querypoolConnectionMode: QueryPoolConnectionMode
   CheckServerNameAvailabilityParameters: AnalysisServerNameAvailabilityContent
   CheckServerNameAvailabilityResult: AnalysisServerNameAvailabilityResult

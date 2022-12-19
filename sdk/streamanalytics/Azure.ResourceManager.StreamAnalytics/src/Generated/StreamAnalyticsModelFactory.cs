@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
             inputs ??= new List<StreamingJobFunctionInput>();
 
-            return new UnknownFunctionProperties(functionPropertiesType, etag, inputs?.ToList(), new StreamingJobFunctionOutput(outputDataType), binding);
+            return new UnknownFunctionProperties(functionPropertiesType, etag, inputs?.ToList(), outputDataType != null ? new StreamingJobFunctionOutput(outputDataType) : null, binding);
         }
 
         /// <summary> Initializes a new instance of StreamingJobFunctionInput. </summary>
@@ -147,11 +147,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="partitionKey"> partitionKey Describes a key in the input data which is used for partitioning the input data. </param>
         /// <param name="watermarkMode"> Settings which determine whether to read watermark events. </param>
         /// <returns> A new <see cref="Models.StreamingJobInputProperties"/> instance for mocking. </returns>
-        public static StreamingJobInputProperties StreamingJobInputProperties(string inputPropertiesType = null, StreamAnalyticsDataSerialization serialization = null, IEnumerable<StreamingJobDiagnosticCondition> diagnosticsConditions = null, ETag? etag = null, StreamingCompressionType compressionType = default, string partitionKey = null, StreamingJobInputWatermarkMode? watermarkMode = null)
+        public static StreamingJobInputProperties StreamingJobInputProperties(string inputPropertiesType = null, StreamAnalyticsDataSerialization serialization = null, IEnumerable<StreamingJobDiagnosticCondition> diagnosticsConditions = null, ETag? etag = null, StreamingCompressionType? compressionType = null, string partitionKey = null, StreamingJobInputWatermarkMode? watermarkMode = null)
         {
             diagnosticsConditions ??= new List<StreamingJobDiagnosticCondition>();
 
-            return new UnknownInputProperties(inputPropertiesType, serialization, new StreamingJobDiagnostics(diagnosticsConditions?.ToList()), etag, new StreamingCompression(compressionType), partitionKey, new StreamingJobInputWatermarkProperties(watermarkMode));
+            return new UnknownInputProperties(inputPropertiesType, serialization, diagnosticsConditions != null ? new StreamingJobDiagnostics(diagnosticsConditions?.ToList()) : null, etag, compressionType.HasValue ? new StreamingCompression(compressionType.Value) : null, partitionKey, watermarkMode != null ? new StreamingJobInputWatermarkProperties(watermarkMode) : null);
         }
 
         /// <summary> Initializes a new instance of StreamAnalyticsDataSerialization. </summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             diagnosticsConditions ??= new List<StreamingJobDiagnosticCondition>();
             lastOutputEventTimestamps ??= new List<LastOutputEventTimestamp>();
 
-            return new StreamingJobOutputData(id, name, resourceType, datasource, timeFrame, sizeWindow, serialization, new StreamingJobDiagnostics(diagnosticsConditions?.ToList()), etag, lastOutputEventTimestamps?.ToList(), watermarkSettings);
+            return new StreamingJobOutputData(id, name, resourceType, datasource, timeFrame, sizeWindow, serialization, diagnosticsConditions != null ? new StreamingJobDiagnostics(diagnosticsConditions?.ToList()) : null, etag, lastOutputEventTimestamps?.ToList(), watermarkSettings);
         }
 
         /// <summary> Initializes a new instance of StreamingJobOutputDataSource. </summary>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             outputs ??= new List<StreamingJobOutputData>();
             functions ??= new List<StreamingJobFunctionData>();
 
-            return new StreamingJobData(id, name, resourceType, systemData, tags, location, identity, new StreamAnalyticsSku(skuName), jobId, provisioningState, jobState, jobType, outputStartMode, outputStartOn, lastOutputEventOn, eventsOutOfOrderPolicy, outputErrorPolicy, eventsOutOfOrderMaxDelayInSeconds, eventsLateArrivalMaxDelayInSeconds, dataLocalion, compatibilityLevel, createdOn, inputs?.ToList(), transformation, outputs?.ToList(), functions?.ToList(), etag, jobStorageAccount, contentStoragePolicy, externals, new ClusterInfo(clusterId));
+            return new StreamingJobData(id, name, resourceType, systemData, tags, location, identity, skuName != null ? new StreamAnalyticsSku(skuName) : null, jobId, provisioningState, jobState, jobType, outputStartMode, outputStartOn, lastOutputEventOn, eventsOutOfOrderPolicy, outputErrorPolicy, eventsOutOfOrderMaxDelayInSeconds, eventsLateArrivalMaxDelayInSeconds, dataLocalion, compatibilityLevel, createdOn, inputs?.ToList(), transformation, outputs?.ToList(), functions?.ToList(), etag, jobStorageAccount, contentStoragePolicy, externals, clusterId != null ? new ClusterInfo(clusterId) : null);
         }
 
         /// <summary> Initializes a new instance of StreamingJobTransformationData. </summary>
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
             inputs ??= new List<StreamingJobFunctionInput>();
 
-            return new ScalarFunctionProperties("Scalar", etag, inputs?.ToList(), new StreamingJobFunctionOutput(outputDataType), binding);
+            return new ScalarFunctionProperties("Scalar", etag, inputs?.ToList(), outputDataType != null ? new StreamingJobFunctionOutput(outputDataType) : null, binding);
         }
 
         /// <summary> Initializes a new instance of EMachineLearningStudioFunctionBinding. </summary>
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         {
             inputs ??= new List<StreamingJobFunctionInput>();
 
-            return new AggregateFunctionProperties("Aggregate", etag, inputs?.ToList(), new StreamingJobFunctionOutput(outputDataType), binding);
+            return new AggregateFunctionProperties("Aggregate", etag, inputs?.ToList(), outputDataType != null ? new StreamingJobFunctionOutput(outputDataType) : null, binding);
         }
 
         /// <summary> Initializes a new instance of StreamInputProperties. </summary>
@@ -667,11 +667,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// The available derived classes include <see cref="GatewayMessageBusStreamInputDataSource"/>, <see cref="IoTHubStreamInputDataSource"/>, <see cref="EventGridStreamInputDataSource"/>, <see cref="EventHubV2StreamInputDataSource"/>, <see cref="EventHubStreamInputDataSource"/>, <see cref="BlobStreamInputDataSource"/> and <see cref="RawStreamInputDataSource"/>.
         /// </param>
         /// <returns> A new <see cref="Models.StreamInputProperties"/> instance for mocking. </returns>
-        public static StreamInputProperties StreamInputProperties(StreamAnalyticsDataSerialization serialization = null, IEnumerable<StreamingJobDiagnosticCondition> diagnosticsConditions = null, ETag? etag = null, StreamingCompressionType compressionType = default, string partitionKey = null, StreamingJobInputWatermarkMode? watermarkMode = null, StreamInputDataSource datasource = null)
+        public static StreamInputProperties StreamInputProperties(StreamAnalyticsDataSerialization serialization = null, IEnumerable<StreamingJobDiagnosticCondition> diagnosticsConditions = null, ETag? etag = null, StreamingCompressionType? compressionType = null, string partitionKey = null, StreamingJobInputWatermarkMode? watermarkMode = null, StreamInputDataSource datasource = null)
         {
             diagnosticsConditions ??= new List<StreamingJobDiagnosticCondition>();
 
-            return new StreamInputProperties("Stream", serialization, new StreamingJobDiagnostics(diagnosticsConditions?.ToList()), etag, new StreamingCompression(compressionType), partitionKey, new StreamingJobInputWatermarkProperties(watermarkMode), datasource);
+            return new StreamInputProperties("Stream", serialization, diagnosticsConditions != null ? new StreamingJobDiagnostics(diagnosticsConditions?.ToList()) : null, etag, compressionType.HasValue ? new StreamingCompression(compressionType.Value) : null, partitionKey, watermarkMode != null ? new StreamingJobInputWatermarkProperties(watermarkMode) : null, datasource);
         }
 
         /// <summary> Initializes a new instance of StreamInputDataSource. </summary>
@@ -699,11 +699,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// The available derived classes include <see cref="SqlReferenceInputDataSource"/>, <see cref="BlobReferenceInputDataSource"/> and <see cref="RawReferenceInputDataSource"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ReferenceInputProperties"/> instance for mocking. </returns>
-        public static ReferenceInputProperties ReferenceInputProperties(StreamAnalyticsDataSerialization serialization = null, IEnumerable<StreamingJobDiagnosticCondition> diagnosticsConditions = null, ETag? etag = null, StreamingCompressionType compressionType = default, string partitionKey = null, StreamingJobInputWatermarkMode? watermarkMode = null, ReferenceInputDataSource datasource = null)
+        public static ReferenceInputProperties ReferenceInputProperties(StreamAnalyticsDataSerialization serialization = null, IEnumerable<StreamingJobDiagnosticCondition> diagnosticsConditions = null, ETag? etag = null, StreamingCompressionType? compressionType = null, string partitionKey = null, StreamingJobInputWatermarkMode? watermarkMode = null, ReferenceInputDataSource datasource = null)
         {
             diagnosticsConditions ??= new List<StreamingJobDiagnosticCondition>();
 
-            return new ReferenceInputProperties("Reference", serialization, new StreamingJobDiagnostics(diagnosticsConditions?.ToList()), etag, new StreamingCompression(compressionType), partitionKey, new StreamingJobInputWatermarkProperties(watermarkMode), datasource);
+            return new ReferenceInputProperties("Reference", serialization, diagnosticsConditions != null ? new StreamingJobDiagnostics(diagnosticsConditions?.ToList()) : null, etag, compressionType.HasValue ? new StreamingCompression(compressionType.Value) : null, partitionKey, watermarkMode != null ? new StreamingJobInputWatermarkProperties(watermarkMode) : null, datasource);
         }
 
         /// <summary> Initializes a new instance of ReferenceInputDataSource. </summary>

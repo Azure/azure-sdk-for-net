@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             privateEndpointConnections ??= new List<MachineLearningPrivateEndpointConnectionData>();
             sharedPrivateLinkResources ??= new List<MachineLearningSharedPrivateLinkResource>();
 
-            return new MachineLearningWorkspaceData(id, name, resourceType, systemData, tags, location, identity, sku, workspaceId, description, friendlyName, keyVault, applicationInsights, containerRegistry, storageAccount, discoveryUri, provisioningState, encryption, hbiWorkspace, serviceProvisionedResourceGroup, privateLinkCount, imageBuildCompute, allowPublicAccessWhenBehindVnet, publicNetworkAccess, privateEndpointConnections?.ToList(), sharedPrivateLinkResources?.ToList(), notebookInfo, new ServiceManagedResourcesSettings(new CosmosDbSettings(cosmosDbCollectionsThroughput)), primaryUserAssignedIdentity, tenantId, isStorageHnsEnabled, mlFlowTrackingUri, isV1LegacyMode);
+            return new MachineLearningWorkspaceData(id, name, resourceType, systemData, tags, location, identity, sku, workspaceId, description, friendlyName, keyVault, applicationInsights, containerRegistry, storageAccount, discoveryUri, provisioningState, encryption, hbiWorkspace, serviceProvisionedResourceGroup, privateLinkCount, imageBuildCompute, allowPublicAccessWhenBehindVnet, publicNetworkAccess, privateEndpointConnections?.ToList(), sharedPrivateLinkResources?.ToList(), notebookInfo, cosmosDbCollectionsThroughput != null ? new ServiceManagedResourcesSettings(new CosmosDbSettings(cosmosDbCollectionsThroughput)) : null, primaryUserAssignedIdentity, tenantId, isStorageHnsEnabled, mlFlowTrackingUri, isV1LegacyMode);
         }
 
         /// <summary> Initializes a new instance of MachineLearningEncryptionSetting. </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningEncryptionSetting"/> instance for mocking. </returns>
         public static MachineLearningEncryptionSetting MachineLearningEncryptionSetting(MachineLearningEncryptionStatus status = default, ResourceIdentifier userAssignedIdentity = null, MachineLearningEncryptionKeyVaultProperties keyVaultProperties = null)
         {
-            return new MachineLearningEncryptionSetting(status, new MachineLearningCmkIdentity(userAssignedIdentity), keyVaultProperties);
+            return new MachineLearningEncryptionSetting(status, userAssignedIdentity != null ? new MachineLearningCmkIdentity(userAssignedIdentity) : null, keyVaultProperties);
         }
 
         /// <summary> Initializes a new instance of MachineLearningEncryptionKeyVaultProperties. </summary>
@@ -998,7 +998,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             properties ??= new Dictionary<string, string>();
 
-            return new MachineLearningBatchEndpointProperties(authMode, description, keys, properties, scoringUri, swaggerUri, new BatchEndpointDefaults(defaultsDeploymentName), provisioningState);
+            return new MachineLearningBatchEndpointProperties(authMode, description, keys, properties, scoringUri, swaggerUri, defaultsDeploymentName != null ? new BatchEndpointDefaults(defaultsDeploymentName) : null, provisioningState);
         }
 
         /// <summary> Initializes a new instance of MachineLearningEndpointProperties. </summary>
@@ -2981,7 +2981,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             errors ??= new List<MachineLearningError>();
 
-            return new AmlComputeProperties(osType, vmSize, vmPriority, new VirtualMachineImage(virtualMachineImageId), isolatedNetwork, scaleSettings, userAccountCredentials, new ResourceId(subnetId), remoteLoginPortPublicAccess, allocationState, allocationStateTransitionOn, errors?.ToList(), currentNodeCount, targetNodeCount, nodeStateCounts, enableNodePublicIP, propertyBag);
+            return new AmlComputeProperties(osType, vmSize, vmPriority, virtualMachineImageId != null ? new VirtualMachineImage(virtualMachineImageId) : null, isolatedNetwork, scaleSettings, userAccountCredentials, subnetId != null ? new ResourceId(subnetId) : null, remoteLoginPortPublicAccess, allocationState, allocationStateTransitionOn, errors?.ToList(), currentNodeCount, targetNodeCount, nodeStateCounts, enableNodePublicIP, propertyBag);
         }
 
         /// <summary> Initializes a new instance of MachineLearningUserAccountCredentials. </summary>
@@ -3170,7 +3170,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             dataDisks ??= new List<MachineLearningComputeInstanceDataDisk>();
             dataMounts ??= new List<MachineLearningComputeInstanceDataMount>();
 
-            return new MachineLearningComputeInstanceProperties(vmSize, new ResourceId(subnetId), applicationSharingPolicy, sshSettings, connectivityEndpoints, applications?.ToList(), createdBy, errors?.ToList(), state, computeInstanceAuthorizationType, new PersonalComputeInstanceSettings(personalComputeInstanceAssignedUser), new SetupScripts(scripts), lastOperation, new ComputeSchedules(schedulesComputeStartStop?.ToList()), enableNodePublicIP, containers?.ToList(), dataDisks?.ToList(), dataMounts?.ToList(), new ComputeInstanceVersion(versionsRuntime));
+            return new MachineLearningComputeInstanceProperties(vmSize, subnetId != null ? new ResourceId(subnetId) : null, applicationSharingPolicy, sshSettings, connectivityEndpoints, applications?.ToList(), createdBy, errors?.ToList(), state, computeInstanceAuthorizationType, personalComputeInstanceAssignedUser != null ? new PersonalComputeInstanceSettings(personalComputeInstanceAssignedUser) : null, scripts != null ? new SetupScripts(scripts) : null, lastOperation, schedulesComputeStartStop != null ? new ComputeSchedules(schedulesComputeStartStop?.ToList()) : null, enableNodePublicIP, containers?.ToList(), dataDisks?.ToList(), dataMounts?.ToList(), versionsRuntime != null ? new ComputeInstanceVersion(versionsRuntime) : null);
         }
 
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceSshSettings. </summary>
@@ -3936,7 +3936,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             provisioningErrors ??= new List<MachineLearningError>();
 
-            return new MachineLearningDataLakeAnalytics("DataLakeAnalytics", computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, new MachineLearningDataLakeAnalyticsProperties(dataLakeStoreAccountName));
+            return new MachineLearningDataLakeAnalytics("DataLakeAnalytics", computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors?.ToList(), isAttachedCompute, disableLocalAuth, dataLakeStoreAccountName != null ? new MachineLearningDataLakeAnalyticsProperties(dataLakeStoreAccountName) : null);
         }
 
         /// <summary> Initializes a new instance of MachineLearningSynapseSpark. </summary>
@@ -4119,7 +4119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningPatAuthTypeWorkspaceConnection"/> instance for mocking. </returns>
         public static MachineLearningPatAuthTypeWorkspaceConnection MachineLearningPatAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = null, string target = null, string value = null, MachineLearningValueFormat? valueFormat = null, string credentialsPat = null)
         {
-            return new MachineLearningPatAuthTypeWorkspaceConnection("PAT", category, target, value, valueFormat, new WorkspaceConnectionPersonalAccessToken(credentialsPat));
+            return new MachineLearningPatAuthTypeWorkspaceConnection("PAT", category, target, value, valueFormat, credentialsPat != null ? new WorkspaceConnectionPersonalAccessToken(credentialsPat) : null);
         }
 
         /// <summary> Initializes a new instance of MachineLearningSasAuthTypeWorkspaceConnection. </summary>
@@ -4140,7 +4140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningSasAuthTypeWorkspaceConnection"/> instance for mocking. </returns>
         public static MachineLearningSasAuthTypeWorkspaceConnection MachineLearningSasAuthTypeWorkspaceConnection(MachineLearningConnectionCategory? category = null, string target = null, string value = null, MachineLearningValueFormat? valueFormat = null, string credentialsSas = null)
         {
-            return new MachineLearningSasAuthTypeWorkspaceConnection("SAS", category, target, value, valueFormat, new WorkspaceConnectionSharedAccessSignature(credentialsSas));
+            return new MachineLearningSasAuthTypeWorkspaceConnection("SAS", category, target, value, valueFormat, credentialsSas != null ? new WorkspaceConnectionSharedAccessSignature(credentialsSas) : null);
         }
 
         /// <summary> Initializes a new instance of MachineLearningUsernamePasswordAuthTypeWorkspaceConnection. </summary>
@@ -7746,7 +7746,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.TextClassification"/> instance for mocking. </returns>
         public static TextClassification TextClassification(MachineLearningLogVerbosity? logVerbosity = null, string targetColumnName = null, MachineLearningTableJobInput trainingData = null, ClassificationPrimaryMetric? primaryMetric = null, string featurizationDatasetLanguage = null, NlpVerticalLimitSettings limitSettings = null, MachineLearningTableJobInput validationData = null)
         {
-            return new TextClassification(logVerbosity, targetColumnName, "TextClassification", trainingData, primaryMetric, new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage), limitSettings, validationData);
+            return new TextClassification(logVerbosity, targetColumnName, "TextClassification", trainingData, primaryMetric, featurizationDatasetLanguage != null ? new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage) : null, limitSettings, validationData);
         }
 
         /// <summary> Initializes a new instance of TextClassificationMultilabel. </summary>
@@ -7783,7 +7783,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.TextClassificationMultilabel"/> instance for mocking. </returns>
         public static TextClassificationMultilabel TextClassificationMultilabel(MachineLearningLogVerbosity? logVerbosity = null, string targetColumnName = null, MachineLearningTableJobInput trainingData = null, ClassificationMultilabelPrimaryMetric? primaryMetric = null, string featurizationDatasetLanguage = null, NlpVerticalLimitSettings limitSettings = null, MachineLearningTableJobInput validationData = null)
         {
-            return new TextClassificationMultilabel(logVerbosity, targetColumnName, "TextClassificationMultilabel", trainingData, primaryMetric, new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage), limitSettings, validationData);
+            return new TextClassificationMultilabel(logVerbosity, targetColumnName, "TextClassificationMultilabel", trainingData, primaryMetric, featurizationDatasetLanguage != null ? new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage) : null, limitSettings, validationData);
         }
 
         /// <summary> Initializes a new instance of TextNer. </summary>
@@ -7820,7 +7820,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.TextNer"/> instance for mocking. </returns>
         public static TextNer TextNer(MachineLearningLogVerbosity? logVerbosity = null, string targetColumnName = null, MachineLearningTableJobInput trainingData = null, ClassificationPrimaryMetric? primaryMetric = null, string featurizationDatasetLanguage = null, NlpVerticalLimitSettings limitSettings = null, MachineLearningTableJobInput validationData = null)
         {
-            return new TextNer(logVerbosity, targetColumnName, "TextNER", trainingData, primaryMetric, new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage), limitSettings, validationData);
+            return new TextNer(logVerbosity, targetColumnName, "TextNER", trainingData, primaryMetric, featurizationDatasetLanguage != null ? new NlpVerticalFeaturizationSettings(featurizationDatasetLanguage) : null, limitSettings, validationData);
         }
 
         /// <summary> Initializes a new instance of MachineLearningTritonModelJobInput. </summary>

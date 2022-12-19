@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Model factory for generated models. </summary>
-    public static partial class AzureResourceManagerResourcesModelFactory
+    public static partial class ResourcesModelFactory
     {
         /// <summary> Initializes a new instance of PolicyAssignmentData. </summary>
         /// <param name="id"> The id. </param>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Resources.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ResourceGroupData(id, name, resourceType, systemData, tags, location, new ResourceGroupProperties(resourceGroupProvisioningState), managedBy);
+            return new ResourceGroupData(id, name, resourceType, systemData, tags, location, resourceGroupProvisioningState != null ? new ResourceGroupProperties(resourceGroupProvisioningState) : null, managedBy);
         }
 
         /// <summary> Initializes a new instance of ResourceGroupExportResult. </summary>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Resources.Models
         {
             tagValues ??= new Dictionary<string, string>();
 
-            return new TagResourceData(id, name, resourceType, systemData, new Tag(tagValues));
+            return new TagResourceData(id, name, resourceType, systemData, tagValues != null ? new Tag(tagValues) : null);
         }
 
         /// <summary> Initializes a new instance of Tag. </summary>
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> A new <see cref="Resources.FeatureData"/> instance for mocking. </returns>
         public static FeatureData FeatureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string featureState = null)
         {
-            return new FeatureData(id, name, resourceType, systemData, new FeatureProperties(featureState));
+            return new FeatureData(id, name, resourceType, systemData, featureState != null ? new FeatureProperties(featureState) : null);
         }
     }
 }

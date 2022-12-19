@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.BotService;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="BotService.BotServicePrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static BotServicePrivateEndpointConnectionData BotServicePrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, BotServicePrivateLinkServiceConnectionState connectionState = null, BotServicePrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new BotServicePrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.SubResource(privateEndpointId), connectionState, provisioningState);
+            return new BotServicePrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of BotServicePrivateLinkServiceConnectionState. </summary>
@@ -243,7 +242,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.CreateEmailSignInUrlResponse"/> instance for mocking. </returns>
         public static CreateEmailSignInUrlResponse CreateEmailSignInUrlResponse(string id = null, AzureLocation? location = null, Uri createEmailSignInUrlResponseUri = null)
         {
-            return new CreateEmailSignInUrlResponse(id, location, new CreateEmailSignInUrlResponseProperties(createEmailSignInUrlResponseUri));
+            return new CreateEmailSignInUrlResponse(id, location, createEmailSignInUrlResponseUri != null ? new CreateEmailSignInUrlResponseProperties(createEmailSignInUrlResponseUri) : null);
         }
 
         /// <summary> Initializes a new instance of CheckNameAvailabilityResponseBody. </summary>
@@ -289,7 +288,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <returns> A new <see cref="Models.ServiceProviderParameter"/> instance for mocking. </returns>
         public static ServiceProviderParameter ServiceProviderParameter(string name = null, string serviceProviderParameterType = null, string displayName = null, string description = null, Uri helpUri = null, string @default = null, bool? required = null)
         {
-            return new ServiceProviderParameter(name, serviceProviderParameterType, displayName, description, helpUri, @default, new ServiceProviderParameterMetadata(new ServiceProviderParameterMetadataConstraints(required)));
+            return new ServiceProviderParameter(name, serviceProviderParameterType, displayName, description, helpUri, @default, required != null ? new ServiceProviderParameterMetadata(new ServiceProviderParameterMetadataConstraints(required)) : null);
         }
 
         /// <summary> Initializes a new instance of QnAMakerEndpointKeysResponse. </summary>

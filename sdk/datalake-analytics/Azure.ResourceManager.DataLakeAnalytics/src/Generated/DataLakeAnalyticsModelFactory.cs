@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// Serialized Name: Resource.tags
         /// </param>
         /// <returns> A new <see cref="DataLakeAnalytics.DataLakeAnalyticsAccountData"/> instance for mocking. </returns>
-        public static DataLakeAnalyticsAccountData DataLakeAnalyticsAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? accountId = null, DataLakeAnalyticsAccountStatus? provisioningState = null, DataLakeAnalyticsAccountState? state = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string endpoint = null, string defaultDataLakeStoreAccount = null, IEnumerable<DataLakeStoreAccountInformationData> dataLakeStoreAccounts = null, IEnumerable<DataLakeStoreAccountInformationData> publicDataLakeStoreAccounts = null, IEnumerable<DataLakeAnalyticsStorageAccountInformationData> storageAccounts = null, IEnumerable<DataLakeAnalyticsComputePolicyData> computePolicies = null, IEnumerable<DataLakeAnalyticsHiveMetastore> hiveMetastores = null, IEnumerable<DataLakeAnalyticsVirtualNetworkRule> virtualNetworkRules = null, IEnumerable<DataLakeAnalyticsFirewallRuleData> firewallRules = null, DataLakeAnalyticsFirewallState? firewallState = null, DataLakeAnalyticsFirewallAllowAzureIPsState? firewallAllowAzureIPs = null, CommitmentTierType? newTier = null, CommitmentTierType? currentTier = null, int? maxJobCount = null, int? maxActiveJobCountPerUser = null, int? maxQueuedJobCountPerUser = null, int? maxJobRunningTimeInMin = null, int? systemMaxJobCount = null, int? maxDegreeOfParallelism = null, int? systemMaxDegreeOfParallelism = null, int? maxDegreeOfParallelismPerJob = null, int? minPriorityPerJob = null, int? queryStoreRetention = null, DebugDataAccessLevel? debugDataAccessLevel = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null)
+        public static DataLakeAnalyticsAccountData DataLakeAnalyticsAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? accountId = null, DataLakeAnalyticsAccountStatus? provisioningState = null, DataLakeAnalyticsAccountState? state = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string endpoint = null, string defaultDataLakeStoreAccount = null, IEnumerable<DataLakeStoreAccountInformationData> dataLakeStoreAccounts = null, IEnumerable<DataLakeStoreAccountInformationData> publicDataLakeStoreAccounts = null, IEnumerable<DataLakeAnalyticsStorageAccountInformationData> storageAccounts = null, IEnumerable<DataLakeAnalyticsComputePolicyData> computePolicies = null, IEnumerable<DataLakeAnalyticsHiveMetastore> hiveMetastores = null, IEnumerable<DataLakeAnalyticsVirtualNetworkRule> virtualNetworkRules = null, IEnumerable<DataLakeAnalyticsFirewallRuleData> firewallRules = null, DataLakeAnalyticsFirewallState? firewallState = null, DataLakeAnalyticsFirewallAllowAzureIPsState? firewallAllowAzureIPs = null, DataLakeAnalyticsCommitmentTierType? newTier = null, DataLakeAnalyticsCommitmentTierType? currentTier = null, int? maxJobCount = null, int? maxActiveJobCountPerUser = null, int? maxQueuedJobCountPerUser = null, int? maxJobRunningTimeInMin = null, int? systemMaxJobCount = null, int? maxDegreeOfParallelism = null, int? systemMaxDegreeOfParallelism = null, int? maxDegreeOfParallelismPerJob = null, int? minPriorityPerJob = null, int? queryStoreRetention = null, DebugDataAccessLevel? debugDataAccessLevel = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null)
         {
             dataLakeStoreAccounts ??= new List<DataLakeStoreAccountInformationData>();
             publicDataLakeStoreAccounts ??= new List<DataLakeStoreAccountInformationData>();
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             return new DataLakeAnalyticsCapabilityInformation(subscriptionId, state, maxAccountCount, accountCount, isUnderMigrationState);
         }
 
-        /// <summary> Initializes a new instance of DataLakeAnalyticsNameAccountAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of DataLakeAnalyticsAccountNameAvailabilityResult. </summary>
         /// <param name="isNameAvailable">
         /// The Boolean value of true or false to indicate whether the Data Lake Analytics account name is available or not.
         /// Serialized Name: NameAvailabilityInformation.nameAvailable
@@ -403,10 +403,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
         /// The message describing why the Data Lake Analytics account name is not available, if nameAvailable is false.
         /// Serialized Name: NameAvailabilityInformation.message
         /// </param>
-        /// <returns> A new <see cref="Models.DataLakeAnalyticsNameAccountAvailabilityResult"/> instance for mocking. </returns>
-        public static DataLakeAnalyticsNameAccountAvailabilityResult DataLakeAnalyticsNameAccountAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
+        /// <returns> A new <see cref="Models.DataLakeAnalyticsAccountNameAvailabilityResult"/> instance for mocking. </returns>
+        public static DataLakeAnalyticsAccountNameAvailabilityResult DataLakeAnalyticsAccountNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
         {
-            return new DataLakeAnalyticsNameAccountAvailabilityResult(isNameAvailable, reason, message);
+            return new DataLakeAnalyticsAccountNameAvailabilityResult(isNameAvailable, reason, message);
         }
     }
 }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             storageSettings ??= new List<DataProtectionBackupStorageSetting>();
 
-            return new DataProtectionBackupVaultProperties(new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures)), provisioningState, resourceMoveState, resourceMoveDetails, storageSettings?.ToList(), isVaultProtectedByResourceGuard);
+            return new DataProtectionBackupVaultProperties(alertSettingsForAllJobFailures != null ? new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures)) : null, provisioningState, resourceMoveState, resourceMoveDetails, storageSettings?.ToList(), isVaultProtectedByResourceGuard);
         }
 
         /// <summary> Initializes a new instance of BackupVaultResourceMoveDetails. </summary>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             dataStoreParametersList ??= new List<DataStoreSettings>();
 
-            return new BackupInstancePolicyInfo(policyId, policyVersion, new PolicyParameters(dataStoreParametersList?.ToList()));
+            return new BackupInstancePolicyInfo(policyId, policyVersion, dataStoreParametersList != null ? new PolicyParameters(dataStoreParametersList?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of DataStoreSettings. </summary>

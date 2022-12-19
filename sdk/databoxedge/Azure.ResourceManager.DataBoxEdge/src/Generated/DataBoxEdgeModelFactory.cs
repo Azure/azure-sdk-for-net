@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             tags ??= new Dictionary<string, string>();
             configuredRoleTypes ??= new List<DataBoxEdgeRoleType>();
 
-            return new DataBoxEdgeDeviceData(id, name, resourceType, systemData, tags, location, sku, etag, identity, kind, dataBoxEdgeDeviceStatus, serialNumber, description, modelDescription, deviceType, friendlyName, culture, deviceModel, deviceSoftwareVersion, deviceLocalCapacity, timeZone, deviceHcsVersion, configuredRoleTypes?.ToList(), nodeCount, resourceMoveDetails, new EdgeProfile(edgeSubscription), new DataResidency(residencyType));
+            return new DataBoxEdgeDeviceData(id, name, resourceType, systemData, tags, location, sku, etag, identity, kind, dataBoxEdgeDeviceStatus, serialNumber, description, modelDescription, deviceType, friendlyName, culture, deviceModel, deviceSoftwareVersion, deviceLocalCapacity, timeZone, deviceHcsVersion, configuredRoleTypes?.ToList(), nodeCount, resourceMoveDetails, edgeSubscription != null ? new EdgeProfile(edgeSubscription) : null, residencyType != null ? new DataResidency(residencyType) : null);
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeSku. </summary>
@@ -986,7 +986,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <returns> A new <see cref="Models.CloudEdgeManagementRole"/> instance for mocking. </returns>
         public static CloudEdgeManagementRole CloudEdgeManagementRole(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataBoxEdgeRoleStatus? localManagementStatus = null, EdgeProfileSubscription edgeSubscription = null, DataBoxEdgeRoleStatus? roleStatus = null)
         {
-            return new CloudEdgeManagementRole(id, name, resourceType, systemData, "CloudEdgeManagement", localManagementStatus, new EdgeProfile(edgeSubscription), roleStatus);
+            return new CloudEdgeManagementRole(id, name, resourceType, systemData, "CloudEdgeManagement", localManagementStatus, edgeSubscription != null ? new EdgeProfile(edgeSubscription) : null, roleStatus);
         }
 
         /// <summary> Initializes a new instance of CniConfig. </summary>
@@ -1020,7 +1020,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <returns> A new <see cref="Models.EdgeFileEventTrigger"/> instance for mocking. </returns>
         public static EdgeFileEventTrigger EdgeFileEventTrigger(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier sourceInfoShareId = null, ResourceIdentifier sinkInfoRoleId = null, string customContextTag = null)
         {
-            return new EdgeFileEventTrigger(id, name, resourceType, systemData, "FileEvent", new EdgeFileSourceInfo(sourceInfoShareId), new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId), customContextTag);
+            return new EdgeFileEventTrigger(id, name, resourceType, systemData, "FileEvent", sourceInfoShareId != null ? new EdgeFileSourceInfo(sourceInfoShareId) : null, sinkInfoRoleId != null ? new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId) : null, customContextTag);
         }
 
         /// <summary> Initializes a new instance of ImageRepositoryCredential. </summary>
@@ -1058,7 +1058,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <returns> A new <see cref="Models.EdgeIotDeviceInfo"/> instance for mocking. </returns>
         public static EdgeIotDeviceInfo EdgeIotDeviceInfo(string deviceId = null, string iotHostHub = null, ResourceIdentifier iotHostHubId = null, AsymmetricEncryptedSecret symmetricKeyConnectionString = null)
         {
-            return new EdgeIotDeviceInfo(deviceId, iotHostHub, iotHostHubId, new Authentication(new DataBoxEdgeSymmetricKey(symmetricKeyConnectionString)));
+            return new EdgeIotDeviceInfo(deviceId, iotHostHub, iotHostHubId, symmetricKeyConnectionString != null ? new Authentication(new DataBoxEdgeSymmetricKey(symmetricKeyConnectionString)) : null);
         }
 
         /// <summary> Initializes a new instance of IotEdgeAgentInfo. </summary>
@@ -1228,7 +1228,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <returns> A new <see cref="Models.PeriodicTimerEventTrigger"/> instance for mocking. </returns>
         public static PeriodicTimerEventTrigger PeriodicTimerEventTrigger(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PeriodicTimerSourceInfo sourceInfo = null, ResourceIdentifier sinkInfoRoleId = null, string customContextTag = null)
         {
-            return new PeriodicTimerEventTrigger(id, name, resourceType, systemData, "PeriodicTimerEvent", sourceInfo, new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId), customContextTag);
+            return new PeriodicTimerEventTrigger(id, name, resourceType, systemData, "PeriodicTimerEvent", sourceInfo, sinkInfoRoleId != null ? new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId) : null, customContextTag);
         }
 
         /// <summary> Initializes a new instance of PeriodicTimerSourceInfo. </summary>

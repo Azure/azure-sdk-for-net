@@ -45,10 +45,11 @@ namespace Azure.Communication.MediaComposition
         /// <param name="kind"> Kind of layout. </param>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>
+        /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
         /// <returns> A new <see cref="Models.MediaCompositionLayout"/> instance for mocking. </returns>
-        public static MediaCompositionLayout MediaCompositionLayout(string kind = null, LayoutResolution resolution = null, string placeholderImageUri = null)
+        public static MediaCompositionLayout MediaCompositionLayout(string kind = null, LayoutResolution resolution = null, string placeholderImageUri = null, ScalingMode? scalingMode = null)
         {
-            return new UnknownLayout(kind, resolution, placeholderImageUri);
+            return new UnknownLayout(kind, resolution, placeholderImageUri, scalingMode);
         }
 
         /// <summary> Initializes a new instance of MediaInput. </summary>
@@ -90,13 +91,14 @@ namespace Azure.Communication.MediaComposition
         /// <param name="width"> The width of the input group container. Can be defined as pixels or percentage. </param>
         /// <param name="height"> The height of the input group container. Can be defined as pixels or percentage. </param>
         /// <param name="layer"> The layer this input group should appear on. </param>
+        /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
         /// <param name="inputIds"> Input and input group ids to be included in this input group. </param>
         /// <returns> A new <see cref="Communication.MediaComposition.AutoGridInputGroup"/> instance for mocking. </returns>
-        public static AutoGridInputGroup AutoGridInputGroup(InputPosition position = null, string width = null, string height = null, string layer = null, IEnumerable<string> inputIds = null)
+        public static AutoGridInputGroup AutoGridInputGroup(InputPosition position = null, string width = null, string height = null, string layer = null, ScalingMode? scalingMode = null, IEnumerable<string> inputIds = null)
         {
             inputIds ??= new List<string>();
 
-            return new AutoGridInputGroup("autoGridBased", position, width, height, layer, inputIds?.ToList());
+            return new AutoGridInputGroup("autoGridBased", position, width, height, layer, scalingMode, inputIds?.ToList());
         }
 
         /// <summary> Initializes a new instance of InputGroup. </summary>
@@ -105,28 +107,31 @@ namespace Azure.Communication.MediaComposition
         /// <param name="width"> The width of the input group container. Can be defined as pixels or percentage. </param>
         /// <param name="height"> The height of the input group container. Can be defined as pixels or percentage. </param>
         /// <param name="layer"> The layer this input group should appear on. </param>
+        /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
         /// <returns> A new <see cref="Communication.MediaComposition.InputGroup"/> instance for mocking. </returns>
-        public static InputGroup InputGroup(string kind = null, InputPosition position = null, string width = null, string height = null, string layer = null)
+        public static InputGroup InputGroup(string kind = null, InputPosition position = null, string width = null, string height = null, string layer = null, ScalingMode? scalingMode = null)
         {
-            return new UnknownInputGroup(kind, position, width, height, layer);
+            return new UnknownInputGroup(kind, position, width, height, layer, scalingMode);
         }
 
         /// <summary> Initializes a new instance of AutoGridLayout. </summary>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>
+        /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
         /// <param name="inputIds"> Input ids to be included in the layout. </param>
         /// <param name="highlightDominantSpeaker"> Toggle dominant speaker highlighting. </param>
         /// <returns> A new <see cref="Communication.MediaComposition.AutoGridLayout"/> instance for mocking. </returns>
-        public static AutoGridLayout AutoGridLayout(LayoutResolution resolution = null, string placeholderImageUri = null, IEnumerable<string> inputIds = null, bool? highlightDominantSpeaker = null)
+        public static AutoGridLayout AutoGridLayout(LayoutResolution resolution = null, string placeholderImageUri = null, ScalingMode? scalingMode = null, IEnumerable<string> inputIds = null, bool? highlightDominantSpeaker = null)
         {
             inputIds ??= new List<string>();
 
-            return new AutoGridLayout("autoGrid", resolution, placeholderImageUri, inputIds?.ToList(), highlightDominantSpeaker);
+            return new AutoGridLayout("autoGrid", resolution, placeholderImageUri, scalingMode, inputIds?.ToList(), highlightDominantSpeaker);
         }
 
         /// <summary> Initializes a new instance of CustomLayout. </summary>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>
+        /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
         /// <param name="layers"> Configure layer to control the z-position of input groups. </param>
         /// <param name="inputGroups">
         /// Configure input groups of the layout
@@ -134,12 +139,12 @@ namespace Azure.Communication.MediaComposition
         /// The available derived classes include <see cref="AutoGridInputGroup"/> and <see cref="GridInputGroup"/>.
         /// </param>
         /// <returns> A new <see cref="Communication.MediaComposition.CustomLayout"/> instance for mocking. </returns>
-        public static CustomLayout CustomLayout(LayoutResolution resolution = null, string placeholderImageUri = null, IDictionary<string, LayoutLayer> layers = null, IDictionary<string, InputGroup> inputGroups = null)
+        public static CustomLayout CustomLayout(LayoutResolution resolution = null, string placeholderImageUri = null, ScalingMode? scalingMode = null, IDictionary<string, LayoutLayer> layers = null, IDictionary<string, InputGroup> inputGroups = null)
         {
             layers ??= new Dictionary<string, LayoutLayer>();
             inputGroups ??= new Dictionary<string, InputGroup>();
 
-            return new CustomLayout("custom", resolution, placeholderImageUri, layers, inputGroups);
+            return new CustomLayout("custom", resolution, placeholderImageUri, scalingMode, layers, inputGroups);
         }
 
         /// <summary> Initializes a new instance of LayoutLayer. </summary>
@@ -165,29 +170,31 @@ namespace Azure.Communication.MediaComposition
         /// <param name="width"> The width of the input group container. Can be defined as pixels or percentage. </param>
         /// <param name="height"> The height of the input group container. Can be defined as pixels or percentage. </param>
         /// <param name="layer"> The layer this input group should appear on. </param>
+        /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
         /// <param name="inputIds"> Input and input group ids to be included in this input group. </param>
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
         /// <returns> A new <see cref="Communication.MediaComposition.GridInputGroup"/> instance for mocking. </returns>
-        public static GridInputGroup GridInputGroup(InputPosition position = null, string width = null, string height = null, string layer = null, IEnumerable<IList<string>> inputIds = null, int rows = default, int columns = default)
+        public static GridInputGroup GridInputGroup(InputPosition position = null, string width = null, string height = null, string layer = null, ScalingMode? scalingMode = null, IEnumerable<IList<string>> inputIds = null, int rows = default, int columns = default)
         {
             inputIds ??= new List<IList<string>>();
 
-            return new GridInputGroup("gridBased", position, width, height, layer, inputIds?.ToList(), rows, columns);
+            return new GridInputGroup("gridBased", position, width, height, layer, scalingMode, inputIds?.ToList(), rows, columns);
         }
 
         /// <summary> Initializes a new instance of GridLayout. </summary>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>
+        /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
         /// <param name="rows"> Number of rows. </param>
         /// <param name="columns"> Number of columns. </param>
         /// <param name="inputIds"> Input ids to be included in the layout. </param>
         /// <returns> A new <see cref="Communication.MediaComposition.GridLayout"/> instance for mocking. </returns>
-        public static GridLayout GridLayout(LayoutResolution resolution = null, string placeholderImageUri = null, int rows = default, int columns = default, IEnumerable<IList<string>> inputIds = null)
+        public static GridLayout GridLayout(LayoutResolution resolution = null, string placeholderImageUri = null, ScalingMode? scalingMode = null, int rows = default, int columns = default, IEnumerable<IList<string>> inputIds = null)
         {
             inputIds ??= new List<IList<string>>();
 
-            return new GridLayout("grid", resolution, placeholderImageUri, rows, columns, inputIds?.ToList());
+            return new GridLayout("grid", resolution, placeholderImageUri, scalingMode, rows, columns, inputIds?.ToList());
         }
 
         /// <summary> Initializes a new instance of GroupCallInput. </summary>
@@ -219,28 +226,30 @@ namespace Azure.Communication.MediaComposition
         /// <summary> Initializes a new instance of PresentationLayout. </summary>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>
+        /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
         /// <param name="presenterId"> Id of the presenter input. </param>
         /// <param name="audienceIds"> Input ids to be included in the audience of layout. </param>
         /// <param name="audiencePosition"> Position of the audience streams. </param>
         /// <returns> A new <see cref="Communication.MediaComposition.PresentationLayout"/> instance for mocking. </returns>
-        public static PresentationLayout PresentationLayout(LayoutResolution resolution = null, string placeholderImageUri = null, string presenterId = null, IEnumerable<string> audienceIds = null, AudiencePosition? audiencePosition = null)
+        public static PresentationLayout PresentationLayout(LayoutResolution resolution = null, string placeholderImageUri = null, ScalingMode? scalingMode = null, string presenterId = null, IEnumerable<string> audienceIds = null, AudiencePosition? audiencePosition = null)
         {
             audienceIds ??= new List<string>();
 
-            return new PresentationLayout("presentation", resolution, placeholderImageUri, presenterId, audienceIds?.ToList(), audiencePosition);
+            return new PresentationLayout("presentation", resolution, placeholderImageUri, scalingMode, presenterId, audienceIds?.ToList(), audiencePosition);
         }
 
         /// <summary> Initializes a new instance of PresenterLayout. </summary>
         /// <param name="resolution"> The dimensions of the scene or objects in the scene. </param>
         /// <param name="placeholderImageUri"> Set global placeholder image. </param>
+        /// <param name="scalingMode"> The scaling mode for the view of a video stream in a cell. </param>
         /// <param name="presenterId"> Id of the presenter input. </param>
         /// <param name="supportId"> Id of the support input. </param>
         /// <param name="supportPosition"> Position of the support stream. </param>
         /// <param name="supportAspectRatio"> Aspect ratio of the support stream. </param>
         /// <returns> A new <see cref="Communication.MediaComposition.PresenterLayout"/> instance for mocking. </returns>
-        public static PresenterLayout PresenterLayout(LayoutResolution resolution = null, string placeholderImageUri = null, string presenterId = null, string supportId = null, SupportPosition? supportPosition = null, double? supportAspectRatio = null)
+        public static PresenterLayout PresenterLayout(LayoutResolution resolution = null, string placeholderImageUri = null, ScalingMode? scalingMode = null, string presenterId = null, string supportId = null, SupportPosition? supportPosition = null, double? supportAspectRatio = null)
         {
-            return new PresenterLayout("presenter", resolution, placeholderImageUri, presenterId, supportId, supportPosition, supportAspectRatio);
+            return new PresenterLayout("presenter", resolution, placeholderImageUri, scalingMode, presenterId, supportId, supportPosition, supportAspectRatio);
         }
 
         /// <summary> Initializes a new instance of RoomInput. </summary>

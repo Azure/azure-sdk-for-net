@@ -11,7 +11,6 @@ using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Blueprint;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
@@ -178,7 +177,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <returns> A new <see cref="Models.SecretValueReference"/> instance for mocking. </returns>
         public static SecretValueReference SecretValueReference(ResourceIdentifier keyVaultId = null, string secretName = null, string secretVersion = null)
         {
-            return new SecretValueReference(ResourceManagerModelFactory.WritableSubResource(keyVaultId), secretName, secretVersion);
+            return new SecretValueReference(keyVaultId != null ? ResourceManagerModelFactory.WritableSubResource(keyVaultId) : null, secretName, secretVersion);
         }
 
         /// <summary> Initializes a new instance of ResourceGroupValue. </summary>

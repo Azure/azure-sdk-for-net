@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             addonProfiles ??= new Dictionary<string, AddonProfiles>();
             agentPoolProfiles ??= new List<NamedAgentPoolProfile>();
 
-            return new ProvisionedClustersResponseProperties(aadProfile, windowsProfile, httpProxyConfig, enableRbac, linuxProfile, new ProvisionedClustersCommonPropertiesFeatures(featuresArcAgentProfile), addonProfiles, controlPlane, kubernetesVersion, networkProfile, nodeResourceGroup, agentPoolProfiles?.ToList(), cloudProviderProfile, provisioningState, status);
+            return new ProvisionedClustersResponseProperties(aadProfile, windowsProfile, httpProxyConfig, enableRbac, linuxProfile, featuresArcAgentProfile != null ? new ProvisionedClustersCommonPropertiesFeatures(featuresArcAgentProfile) : null, addonProfiles, controlPlane, kubernetesVersion, networkProfile, nodeResourceGroup, agentPoolProfiles?.ToList(), cloudProviderProfile, provisioningState, status);
         }
 
         /// <summary> Initializes a new instance of ProvisionedClustersPropertiesWithoutSecrets. </summary>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         {
             sshPublicKeys ??= new List<LinuxProfilePropertiesSshPublicKeysItem>();
 
-            return new LinuxProfileProperties(adminUsername, new LinuxProfilePropertiesSsh(sshPublicKeys?.ToList()));
+            return new LinuxProfileProperties(adminUsername, sshPublicKeys != null ? new LinuxProfilePropertiesSsh(sshPublicKeys?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of LinuxProfilePropertiesSshPublicKeysItem. </summary>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             infraNetworkVnetSubnetIds ??= new List<string>();
             storageSpaceIds ??= new List<string>();
 
-            return new CloudProviderProfile(new CloudProviderProfileInfraNetworkProfile(infraNetworkVnetSubnetIds?.ToList()), new CloudProviderProfileInfraStorageProfile(storageSpaceIds?.ToList()));
+            return new CloudProviderProfile(infraNetworkVnetSubnetIds != null ? new CloudProviderProfileInfraNetworkProfile(infraNetworkVnetSubnetIds?.ToList()) : null, storageSpaceIds != null ? new CloudProviderProfileInfraStorageProfile(storageSpaceIds?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of ControlPlaneEndpointProfileControlPlaneEndpoint. </summary>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         {
             addonStatus ??= new Dictionary<string, AddonStatus>();
 
-            return new ProvisionedClustersCommonPropertiesStatus(new ProvisionedClustersCommonPropertiesStatusFeaturesStatus(arcAgentStatus), addonStatus, errorMessage, provisioningStatus);
+            return new ProvisionedClustersCommonPropertiesStatus(arcAgentStatus != null ? new ProvisionedClustersCommonPropertiesStatusFeaturesStatus(arcAgentStatus) : null, addonStatus, errorMessage, provisioningStatus);
         }
 
         /// <summary> Initializes a new instance of ArcAgentStatus. </summary>
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             addonProfiles ??= new Dictionary<string, AddonProfiles>();
             agentPoolProfiles ??= new List<NamedAgentPoolProfile>();
 
-            return new ProvisionedClustersAllProperties(aadProfile, windowsProfile, httpProxyConfig, enableRbac, linuxProfile, new ProvisionedClustersCommonPropertiesFeatures(featuresArcAgentProfile), addonProfiles, controlPlane, kubernetesVersion, networkProfile, nodeResourceGroup, agentPoolProfiles?.ToList(), cloudProviderProfile, provisioningState, status);
+            return new ProvisionedClustersAllProperties(aadProfile, windowsProfile, httpProxyConfig, enableRbac, linuxProfile, featuresArcAgentProfile != null ? new ProvisionedClustersCommonPropertiesFeatures(featuresArcAgentProfile) : null, addonProfiles, controlPlane, kubernetesVersion, networkProfile, nodeResourceGroup, agentPoolProfiles?.ToList(), cloudProviderProfile, provisioningState, status);
         }
 
         /// <summary> Initializes a new instance of ProvisionedClustersPropertiesWithSecrets. </summary>
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             dhcpServers ??= new List<string>();
             dnsServers ??= new List<string>();
 
-            return new VirtualNetworksProperties(infraVnetProfile, vipPool?.ToList(), vmipPool?.ToList(), dhcpServers?.ToList(), dnsServers?.ToList(), gateway, ipAddressPrefix, vlanId, provisioningState, new VirtualNetworksPropertiesStatus(provisioningStatus));
+            return new VirtualNetworksProperties(infraVnetProfile, vipPool?.ToList(), vmipPool?.ToList(), dhcpServers?.ToList(), dnsServers?.ToList(), gateway, ipAddressPrefix, vlanId, provisioningState, provisioningStatus != null ? new VirtualNetworksPropertiesStatus(provisioningStatus) : null);
         }
 
         /// <summary> Initializes a new instance of VirtualNetworksPropertiesInfraVnetProfile. </summary>
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <returns> A new <see cref="Models.VirtualNetworksPropertiesInfraVnetProfile"/> instance for mocking. </returns>
         public static VirtualNetworksPropertiesInfraVnetProfile VirtualNetworksPropertiesInfraVnetProfile(VirtualNetworksPropertiesInfraVnetProfileHci hci = null, string kubevirtVnetName = null, string vmwareSegmentName = null)
         {
-            return new VirtualNetworksPropertiesInfraVnetProfile(hci, new VirtualNetworksPropertiesInfraVnetProfileKubevirt(kubevirtVnetName), new VirtualNetworksPropertiesInfraVnetProfileVmware(vmwareSegmentName));
+            return new VirtualNetworksPropertiesInfraVnetProfile(hci, kubevirtVnetName != null ? new VirtualNetworksPropertiesInfraVnetProfileKubevirt(kubevirtVnetName) : null, vmwareSegmentName != null ? new VirtualNetworksPropertiesInfraVnetProfileVmware(vmwareSegmentName) : null);
         }
 
         /// <summary> Initializes a new instance of VirtualNetworksPropertiesInfraVnetProfileHci. </summary>
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <returns> A new <see cref="Models.StorageSpacesProperties"/> instance for mocking. </returns>
         public static StorageSpacesProperties StorageSpacesProperties(StorageSpacesPropertiesHciStorageProfile hciStorageProfile = null, StorageSpacesPropertiesVmwareStorageProfile vmwareStorageProfile = null, ProvisioningState? provisioningState = null, StorageSpacesPropertiesStatusProvisioningStatus provisioningStatus = null)
         {
-            return new StorageSpacesProperties(hciStorageProfile, vmwareStorageProfile, provisioningState, new StorageSpacesPropertiesStatus(provisioningStatus));
+            return new StorageSpacesProperties(hciStorageProfile, vmwareStorageProfile, provisioningState, provisioningStatus != null ? new StorageSpacesPropertiesStatus(provisioningStatus) : null);
         }
 
         /// <summary> Initializes a new instance of StorageSpacesPropertiesHciStorageProfile. </summary>

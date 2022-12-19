@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="asAdministrators"> A collection of AS server administrators. </param>
         /// <param name="backupBlobContainerUri"> The SAS container URI to the backup container. </param>
         /// <param name="gatewayDetails"> The gateway details configured for the AS server. </param>
-        /// <param name="iPv4FirewallSettings"> The firewall settings for the AS server. </param>
+        /// <param name="ipv4FirewallSettings"> The firewall settings for the AS server. </param>
         /// <param name="queryPoolConnectionMode"> How the read-write server&apos;s participation in the query pool is controlled.&lt;br/&gt;It can have the following values: &lt;ul&gt;&lt;li&gt;readOnly - indicates that the read-write server is intended not to participate in query operations&lt;/li&gt;&lt;li&gt;all - indicates that the read-write server can participate in query operations&lt;/li&gt;&lt;/ul&gt;Specifying readOnly when capacity is 1 results in error. </param>
         /// <param name="managedMode"> The managed mode of the server (0 = not managed, 1 = managed). </param>
         /// <param name="serverMonitorMode"> The server monitor mode for AS server. </param>
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="serverFullName"> The full name of the Analysis Services resource. </param>
         /// <param name="analysisServerSku"> The SKU of the Analysis Services resource. </param>
         /// <param name="analysisSku"> The SKU of the Analysis Services resource. </param>
-        internal AnalysisServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServerAdministrators asAdministrators, Uri backupBlobContainerUri, AnalysisGatewayDetails gatewayDetails, AnalysisIPv4FirewallSettings iPv4FirewallSettings, AnalysisConnectionMode? queryPoolConnectionMode, AnalysisManagedMode? managedMode, ServerMonitorMode? serverMonitorMode, AnalysisState? state, AnalysisProvisioningState? provisioningState, string serverFullName, AnalysisResourceSku analysisServerSku, AnalysisResourceSku analysisSku) : base(id, name, resourceType, systemData, tags, location)
+        internal AnalysisServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServerAdministrators asAdministrators, Uri backupBlobContainerUri, AnalysisGatewayDetails gatewayDetails, AnalysisIPv4FirewallSettings ipv4FirewallSettings, AnalysisConnectionMode? queryPoolConnectionMode, AnalysisManagedMode? managedMode, ServerMonitorMode? serverMonitorMode, AnalysisState? state, AnalysisProvisioningState? provisioningState, string serverFullName, AnalysisResourceSku analysisServerSku, AnalysisResourceSku analysisSku) : base(id, name, resourceType, systemData, tags, location)
         {
             AsAdministrators = asAdministrators;
             BackupBlobContainerUri = backupBlobContainerUri;
             GatewayDetails = gatewayDetails;
-            IPv4FirewallSettings = iPv4FirewallSettings;
+            IPv4FirewallSettings = ipv4FirewallSettings;
             QueryPoolConnectionMode = queryPoolConnectionMode;
             ManagedMode = managedMode;
             ServerMonitorMode = serverMonitorMode;

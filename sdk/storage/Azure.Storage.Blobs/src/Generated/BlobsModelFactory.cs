@@ -30,6 +30,16 @@ namespace Azure.Storage.Blobs.Models
             return new BlobServiceProperties(logging, hourMetrics, minuteMetrics, cors?.ToList(), defaultServiceVersion, deleteRetentionPolicy, staticWebsite);
         }
 
+        /// <summary> Initializes a new instance of BlobRetentionPolicy. </summary>
+        /// <param name="enabled"> Indicates whether a retention policy is enabled for the storage service. </param>
+        /// <param name="days"> Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted. </param>
+        /// <param name="allowPermanentDelete"> Indicates whether permanent delete is allowed on this storage account. </param>
+        /// <returns> A new <see cref="Models.BlobRetentionPolicy"/> instance for mocking. </returns>
+        public static BlobRetentionPolicy BlobRetentionPolicy(bool enabled = default, int? days = null, bool? allowPermanentDelete = null)
+        {
+            return new BlobRetentionPolicy(enabled, days, allowPermanentDelete);
+        }
+
         /// <summary> Initializes a new instance of BlobMetrics. </summary>
         /// <param name="version"> The version of Storage Analytics to configure. </param>
         /// <param name="enabled"> Indicates whether metrics are enabled for the Blob service. </param>

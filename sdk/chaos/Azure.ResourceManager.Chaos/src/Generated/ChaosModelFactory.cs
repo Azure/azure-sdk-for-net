@@ -33,6 +33,26 @@ namespace Azure.ResourceManager.Chaos.Models
             return new CapabilityData(id, name, resourceType, systemData, publisher, targetType, description, parametersSchema, urn);
         }
 
+        /// <summary> Initializes a new instance of CapabilityTypeData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> Location of the Capability Type resource. </param>
+        /// <param name="publisher"> String of the Publisher that this Capability Type extends. </param>
+        /// <param name="targetType"> String of the Target Type that this Capability Type extends. </param>
+        /// <param name="displayName"> Localized string of the display name. </param>
+        /// <param name="description"> Localized string of the description. </param>
+        /// <param name="parametersSchema"> URL to retrieve JSON schema of the Capability Type parameters. </param>
+        /// <param name="urn"> String of the URN for this Capability Type. </param>
+        /// <param name="kind"> String of the kind of this Capability Type. </param>
+        /// <param name="runtimeKind"> Runtime properties of this Capability Type. </param>
+        /// <returns> A new <see cref="Chaos.CapabilityTypeData"/> instance for mocking. </returns>
+        public static CapabilityTypeData CapabilityTypeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string publisher = null, string targetType = null, string displayName = null, string description = null, string parametersSchema = null, string urn = null, string kind = null, string runtimeKind = null)
+        {
+            return new CapabilityTypeData(id, name, resourceType, systemData, location, publisher, targetType, displayName, description, parametersSchema, urn, kind, runtimeKind != null ? new CapabilityTypePropertiesRuntimeProperties(runtimeKind) : null);
+        }
+
         /// <summary> Initializes a new instance of ExperimentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -63,6 +83,23 @@ namespace Azure.ResourceManager.Chaos.Models
             return new UnknownAction(actionType, name);
         }
 
+        /// <summary> Initializes a new instance of Selector. </summary>
+        /// <param name="selectorType"> Enum of the selector type. </param>
+        /// <param name="id"> String of the selector ID. </param>
+        /// <param name="targets"> List of Target references. </param>
+        /// <param name="filter">
+        /// Model that represents available filter types that can be applied to a targets list.
+        /// Please note <see cref="Filter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SimpleFilter"/>.
+        /// </param>
+        /// <returns> A new <see cref="Models.Selector"/> instance for mocking. </returns>
+        public static Selector Selector(SelectorType selectorType = default, string id = null, IEnumerable<TargetReference> targets = null, Filter filter = null)
+        {
+            targets ??= new List<TargetReference>();
+
+            return new Selector(selectorType, id, targets?.ToList(), filter);
+        }
+
         /// <summary> Initializes a new instance of TargetReference. </summary>
         /// <param name="referenceType"> Enum of the Target reference type. </param>
         /// <param name="id"> String of the resource ID of a Target resource. </param>
@@ -70,6 +107,14 @@ namespace Azure.ResourceManager.Chaos.Models
         public static TargetReference TargetReference(TargetReferenceType referenceType = default, string id = null)
         {
             return new TargetReference(referenceType, id);
+        }
+
+        /// <summary> Initializes a new instance of Filter. </summary>
+        /// <param name="filterType"> Enum that discriminates between filter types. Currently only `Simple` type is supported. </param>
+        /// <returns> A new <see cref="Models.Filter"/> instance for mocking. </returns>
+        public static Filter Filter(string filterType = null)
+        {
+            return new UnknownFilter(filterType);
         }
 
         /// <summary> Initializes a new instance of ExperimentCancelOperationResult. </summary>
@@ -122,7 +167,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             runInformationSteps ??= new List<StepStatus>();
 
-            return new ExperimentExecutionDetailData(id, name, resourceType, systemData, experimentId, status, failureReason, createdOn, lastActionOn, startOn, stopOn, new ExperimentExecutionDetailsPropertiesRunInformation(runInformationSteps?.ToList()));
+            return new ExperimentExecutionDetailData(id, name, resourceType, systemData, experimentId, status, failureReason, createdOn, lastActionOn, startOn, stopOn, runInformationSteps != null ? new ExperimentExecutionDetailsPropertiesRunInformation(runInformationSteps?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of StepStatus. </summary>
@@ -187,21 +232,6 @@ namespace Azure.ResourceManager.Chaos.Models
             return new ExperimentExecutionActionTargetDetailsError(code, message);
         }
 
-        /// <summary> Initializes a new instance of TargetData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Location of the target resource. </param>
-        /// <param name="properties"> The properties of the target resource. </param>
-        /// <returns> A new <see cref="Chaos.TargetData"/> instance for mocking. </returns>
-        public static TargetData TargetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IDictionary<string, BinaryData> properties = null)
-        {
-            properties ??= new Dictionary<string, BinaryData>();
-
-            return new TargetData(id, name, resourceType, systemData, location, properties);
-        }
-
         /// <summary> Initializes a new instance of TargetTypeData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -220,24 +250,19 @@ namespace Azure.ResourceManager.Chaos.Models
             return new TargetTypeData(id, name, resourceType, systemData, location, displayName, description, propertiesSchema, resourceTypes?.ToList());
         }
 
-        /// <summary> Initializes a new instance of CapabilityTypeData. </summary>
+        /// <summary> Initializes a new instance of TargetData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Location of the Capability Type resource. </param>
-        /// <param name="publisher"> String of the Publisher that this Capability Type extends. </param>
-        /// <param name="targetType"> String of the Target Type that this Capability Type extends. </param>
-        /// <param name="displayName"> Localized string of the display name. </param>
-        /// <param name="description"> Localized string of the description. </param>
-        /// <param name="parametersSchema"> URL to retrieve JSON schema of the Capability Type parameters. </param>
-        /// <param name="urn"> String of the URN for this Capability Type. </param>
-        /// <param name="kind"> String of the kind of this Capability Type. </param>
-        /// <param name="runtimeKind"> Runtime properties of this Capability Type. </param>
-        /// <returns> A new <see cref="Chaos.CapabilityTypeData"/> instance for mocking. </returns>
-        public static CapabilityTypeData CapabilityTypeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string publisher = null, string targetType = null, string displayName = null, string description = null, string parametersSchema = null, string urn = null, string kind = null, string runtimeKind = null)
+        /// <param name="location"> Location of the target resource. </param>
+        /// <param name="properties"> The properties of the target resource. </param>
+        /// <returns> A new <see cref="Chaos.TargetData"/> instance for mocking. </returns>
+        public static TargetData TargetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IDictionary<string, BinaryData> properties = null)
         {
-            return new CapabilityTypeData(id, name, resourceType, systemData, location, publisher, targetType, displayName, description, parametersSchema, urn, kind, new CapabilityTypePropertiesRuntimeProperties(runtimeKind));
+            properties ??= new Dictionary<string, BinaryData>();
+
+            return new TargetData(id, name, resourceType, systemData, location, properties);
         }
 
         /// <summary> Initializes a new instance of DelayAction. </summary>
@@ -272,6 +297,16 @@ namespace Azure.ResourceManager.Chaos.Models
             parameters ??= new List<KeyValuePair>();
 
             return new ContinuousAction("continuous", name, duration, parameters?.ToList(), selectorId);
+        }
+
+        /// <summary> Initializes a new instance of SimpleFilter. </summary>
+        /// <param name="parametersZones"> Model that represents the Simple filter parameters. </param>
+        /// <returns> A new <see cref="Models.SimpleFilter"/> instance for mocking. </returns>
+        public static SimpleFilter SimpleFilter(IEnumerable<string> parametersZones = null)
+        {
+            parametersZones ??= new List<string>();
+
+            return new SimpleFilter("Simple", parametersZones != null ? new SimpleFilterParameters(parametersZones?.ToList()) : null);
         }
     }
 }

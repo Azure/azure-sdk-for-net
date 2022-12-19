@@ -12,7 +12,6 @@ using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Avs;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.Avs.Models
             identitySources ??= new List<SingleSignOnIdentitySource>();
             externalCloudLinks ??= new List<ResourceIdentifier>();
 
-            return new AvsPrivateCloudData(id, name, resourceType, systemData, tags, location, new AvsSku(skuName), identity, managementCluster, internet, identitySources?.ToList(), availability, encryption, provisioningState, circuit, endpoints, networkBlock, managementNetwork, provisioningNetwork, vMotionNetwork, vCenterPassword, nsxtPassword, vCenterCertificateThumbprint, nsxtCertificateThumbprint, externalCloudLinks?.ToList(), secondaryCircuit, nsxPublicIPQuotaRaised);
+            return new AvsPrivateCloudData(id, name, resourceType, systemData, tags, location, skuName != null ? new AvsSku(skuName) : null, identity, managementCluster, internet, identitySources?.ToList(), availability, encryption, provisioningState, circuit, endpoints, networkBlock, managementNetwork, provisioningNetwork, vMotionNetwork, vCenterPassword, nsxtPassword, vCenterCertificateThumbprint, nsxtCertificateThumbprint, externalCloudLinks?.ToList(), secondaryCircuit, nsxPublicIPQuotaRaised);
         }
 
         /// <summary> Initializes a new instance of ExpressRouteCircuit. </summary>
@@ -188,7 +187,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             hosts ??= new List<string>();
 
-            return new AvsPrivateCloudClusterData(id, name, resourceType, systemData, new AvsSku(skuName), clusterSize, provisioningState, clusterId, hosts?.ToList());
+            return new AvsPrivateCloudClusterData(id, name, resourceType, systemData, skuName != null ? new AvsSku(skuName) : null, clusterSize, provisioningState, clusterId, hosts?.ToList());
         }
 
         /// <summary> Initializes a new instance of AvsClusterZone. </summary>
@@ -214,7 +213,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Avs.AvsPrivateCloudDatastoreData"/> instance for mocking. </returns>
         public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AvsPrivateCloudDatastoreProvisioningState? provisioningState = null, ResourceIdentifier netAppVolumeId = null, DiskPoolVolume diskPoolVolume = null, DatastoreStatus? status = null)
         {
-            return new AvsPrivateCloudDatastoreData(id, name, resourceType, systemData, provisioningState, ResourceManagerModelFactory.WritableSubResource(netAppVolumeId), diskPoolVolume, status);
+            return new AvsPrivateCloudDatastoreData(id, name, resourceType, systemData, provisioningState, netAppVolumeId != null ? ResourceManagerModelFactory.WritableSubResource(netAppVolumeId) : null, diskPoolVolume, status);
         }
 
         /// <summary> Initializes a new instance of DiskPoolVolume. </summary>

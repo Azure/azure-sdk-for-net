@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             tags ??= new Dictionary<string, string>();
             administrationMembers ??= new List<string>();
 
-            return new DedicatedCapacityData(id, name, resourceType, location, tags, systemData, sku, new DedicatedCapacityAdministrators(administrationMembers?.ToList()), mode, tenantId, friendlyName, state, provisioningState);
+            return new DedicatedCapacityData(id, name, resourceType, location, tags, systemData, sku, administrationMembers != null ? new DedicatedCapacityAdministrators(administrationMembers?.ToList()) : null, mode, tenantId, friendlyName, state, provisioningState);
         }
 
         /// <summary> Initializes a new instance of CapacitySku. </summary>

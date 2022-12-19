@@ -17,7 +17,7 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Model factory for generated models. </summary>
-    public static partial class AzureResourceManagerStorageModelFactory
+    public static partial class StorageModelFactory
     {
         /// <summary> Initializes a new instance of StorageSkuInformation. </summary>
         /// <param name="name"> The SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was called accountType. </param>
@@ -289,12 +289,12 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="storageAccountSkuConversionStatus"> This property is readOnly and is set by server during asynchronous storage account sku conversion operations. </param>
         /// <param name="dnsEndpointType"> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </param>
         /// <returns> A new <see cref="Storage.StorageAccountData"/> instance for mocking. </returns>
-        public static StorageAccountData StorageAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, StorageSku sku = null, StorageKind? kind = null, ManagedServiceIdentity identity = null, ExtendedLocation extendedLocation = null, StorageProvisioningState? provisioningState = null, StorageAccountEndpoints primaryEndpoints = null, AzureLocation? primaryLocation = null, StorageAccountStatus? statusOfPrimary = null, DateTimeOffset? lastGeoFailoverOn = null, AzureLocation? secondaryLocation = null, StorageAccountStatus? statusOfSecondary = null, DateTimeOffset? createdOn = null, StorageCustomDomain customDomain = null, StorageAccountSasPolicy sasPolicy = null, int keyExpirationPeriodInDays = default, StorageAccountKeyCreationTime keyCreationTime = null, StorageAccountEndpoints secondaryEndpoints = null, StorageAccountEncryption encryption = null, StorageAccountAccessTier? accessTier = null, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = null, bool? enableHttpsTrafficOnly = null, StorageAccountNetworkRuleSet networkRuleSet = null, bool? isSftpEnabled = null, bool? isLocalUserEnabled = null, bool? isHnsEnabled = null, GeoReplicationStatistics geoReplicationStats = null, bool? isFailoverInProgress = null, LargeFileSharesState? largeFileSharesState = null, IEnumerable<StoragePrivateEndpointConnectionData> privateEndpointConnections = null, StorageRoutingPreference routingPreference = null, BlobRestoreStatus blobRestoreStatus = null, bool? allowBlobPublicAccess = null, StorageMinimumTlsVersion? minimumTlsVersion = null, bool? allowSharedKeyAccess = null, bool? isNfsV3Enabled = null, bool? allowCrossTenantReplication = null, bool? isDefaultToOAuthAuthentication = null, StoragePublicNetworkAccess? publicNetworkAccess = null, ImmutableStorageAccount immutableStorageWithVersioning = null, AllowedCopyScope? allowedCopyScope = null, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus = null, StorageDnsEndpointType? dnsEndpointType = null)
+        public static StorageAccountData StorageAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, StorageSku sku = null, StorageKind? kind = null, ManagedServiceIdentity identity = null, ExtendedLocation extendedLocation = null, StorageProvisioningState? provisioningState = null, StorageAccountEndpoints primaryEndpoints = null, AzureLocation? primaryLocation = null, StorageAccountStatus? statusOfPrimary = null, DateTimeOffset? lastGeoFailoverOn = null, AzureLocation? secondaryLocation = null, StorageAccountStatus? statusOfSecondary = null, DateTimeOffset? createdOn = null, StorageCustomDomain customDomain = null, StorageAccountSasPolicy sasPolicy = null, int? keyExpirationPeriodInDays = null, StorageAccountKeyCreationTime keyCreationTime = null, StorageAccountEndpoints secondaryEndpoints = null, StorageAccountEncryption encryption = null, StorageAccountAccessTier? accessTier = null, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = null, bool? enableHttpsTrafficOnly = null, StorageAccountNetworkRuleSet networkRuleSet = null, bool? isSftpEnabled = null, bool? isLocalUserEnabled = null, bool? isHnsEnabled = null, GeoReplicationStatistics geoReplicationStats = null, bool? isFailoverInProgress = null, LargeFileSharesState? largeFileSharesState = null, IEnumerable<StoragePrivateEndpointConnectionData> privateEndpointConnections = null, StorageRoutingPreference routingPreference = null, BlobRestoreStatus blobRestoreStatus = null, bool? allowBlobPublicAccess = null, StorageMinimumTlsVersion? minimumTlsVersion = null, bool? allowSharedKeyAccess = null, bool? isNfsV3Enabled = null, bool? allowCrossTenantReplication = null, bool? isDefaultToOAuthAuthentication = null, StoragePublicNetworkAccess? publicNetworkAccess = null, ImmutableStorageAccount immutableStorageWithVersioning = null, AllowedCopyScope? allowedCopyScope = null, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus = null, StorageDnsEndpointType? dnsEndpointType = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<StoragePrivateEndpointConnectionData>();
 
-            return new StorageAccountData(id, name, resourceType, systemData, tags, location, sku, kind, identity, extendedLocation, provisioningState, primaryEndpoints, primaryLocation, statusOfPrimary, lastGeoFailoverOn, secondaryLocation, statusOfSecondary, createdOn, customDomain, sasPolicy, new StorageAccountKeyPolicy(keyExpirationPeriodInDays), keyCreationTime, secondaryEndpoints, encryption, accessTier, azureFilesIdentityBasedAuthentication, enableHttpsTrafficOnly, networkRuleSet, isSftpEnabled, isLocalUserEnabled, isHnsEnabled, geoReplicationStats, isFailoverInProgress, largeFileSharesState, privateEndpointConnections?.ToList(), routingPreference, blobRestoreStatus, allowBlobPublicAccess, minimumTlsVersion, allowSharedKeyAccess, isNfsV3Enabled, allowCrossTenantReplication, isDefaultToOAuthAuthentication, publicNetworkAccess, immutableStorageWithVersioning, allowedCopyScope, storageAccountSkuConversionStatus, dnsEndpointType);
+            return new StorageAccountData(id, name, resourceType, systemData, tags, location, sku, kind, identity, extendedLocation, provisioningState, primaryEndpoints, primaryLocation, statusOfPrimary, lastGeoFailoverOn, secondaryLocation, statusOfSecondary, createdOn, customDomain, sasPolicy, keyExpirationPeriodInDays.HasValue ? new StorageAccountKeyPolicy(keyExpirationPeriodInDays.Value) : null, keyCreationTime, secondaryEndpoints, encryption, accessTier, azureFilesIdentityBasedAuthentication, enableHttpsTrafficOnly, networkRuleSet, isSftpEnabled, isLocalUserEnabled, isHnsEnabled, geoReplicationStats, isFailoverInProgress, largeFileSharesState, privateEndpointConnections?.ToList(), routingPreference, blobRestoreStatus, allowBlobPublicAccess, minimumTlsVersion, allowSharedKeyAccess, isNfsV3Enabled, allowCrossTenantReplication, isDefaultToOAuthAuthentication, publicNetworkAccess, immutableStorageWithVersioning, allowedCopyScope, storageAccountSkuConversionStatus, dnsEndpointType);
         }
 
         /// <summary> Initializes a new instance of StorageAccountEndpoints. </summary>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Storage.StoragePrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static StoragePrivateEndpointConnectionData StoragePrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, StoragePrivateLinkServiceConnectionState connectionState = null, StoragePrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new StoragePrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.SubResource(privateEndpointId), connectionState, provisioningState);
+            return new StoragePrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of StoragePrivateLinkServiceConnectionState. </summary>
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             rules ??= new List<ManagementPolicyRule>();
 
-            return new StorageAccountManagementPolicyData(id, name, resourceType, systemData, lastModifiedOn, new ManagementPolicySchema(rules?.ToList()));
+            return new StorageAccountManagementPolicyData(id, name, resourceType, systemData, lastModifiedOn, rules != null ? new ManagementPolicySchema(rules?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of ManagementPolicyRule. </summary>
@@ -790,7 +790,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             corsRules ??= new List<StorageCorsRule>();
 
-            return new BlobServiceData(id, name, resourceType, systemData, sku, new StorageCorsRules(corsRules?.ToList()), defaultServiceVersion, deleteRetentionPolicy, isVersioningEnabled, isAutomaticSnapshotPolicyEnabled, changeFeed, restorePolicy, containerDeleteRetentionPolicy, lastAccessTimeTrackingPolicy);
+            return new BlobServiceData(id, name, resourceType, systemData, sku, corsRules != null ? new StorageCorsRules(corsRules?.ToList()) : null, defaultServiceVersion, deleteRetentionPolicy, isVersioningEnabled, isAutomaticSnapshotPolicyEnabled, changeFeed, restorePolicy, containerDeleteRetentionPolicy, lastAccessTimeTrackingPolicy);
         }
 
         /// <summary> Initializes a new instance of DeleteRetentionPolicy. </summary>
@@ -993,7 +993,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             corsRules ??= new List<StorageCorsRule>();
 
-            return new FileServiceData(id, name, resourceType, systemData, sku, new StorageCorsRules(corsRules?.ToList()), shareDeleteRetentionPolicy, new ProtocolSettings(protocolSmbSetting));
+            return new FileServiceData(id, name, resourceType, systemData, sku, corsRules != null ? new StorageCorsRules(corsRules?.ToList()) : null, shareDeleteRetentionPolicy, protocolSmbSetting != null ? new ProtocolSettings(protocolSmbSetting) : null);
         }
 
         /// <summary> Initializes a new instance of SmbSetting. </summary>
@@ -1005,7 +1005,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.SmbSetting"/> instance for mocking. </returns>
         public static SmbSetting SmbSetting(bool? isMultiChannelEnabled = null, string versions = null, string authenticationMethods = null, string kerberosTicketEncryption = null, string channelEncryption = null)
         {
-            return new SmbSetting(new Multichannel(isMultiChannelEnabled), versions, authenticationMethods, kerberosTicketEncryption, channelEncryption);
+            return new SmbSetting(isMultiChannelEnabled != null ? new Multichannel(isMultiChannelEnabled) : null, versions, authenticationMethods, kerberosTicketEncryption, channelEncryption);
         }
 
         /// <summary> Initializes a new instance of FileShareData. </summary>
@@ -1080,7 +1080,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             corsRules ??= new List<StorageCorsRule>();
 
-            return new QueueServiceData(id, name, resourceType, systemData, new StorageCorsRules(corsRules?.ToList()));
+            return new QueueServiceData(id, name, resourceType, systemData, corsRules != null ? new StorageCorsRules(corsRules?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of StorageQueueData. </summary>
@@ -1109,7 +1109,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             corsRules ??= new List<StorageCorsRule>();
 
-            return new TableServiceData(id, name, resourceType, systemData, new StorageCorsRules(corsRules?.ToList()));
+            return new TableServiceData(id, name, resourceType, systemData, corsRules != null ? new StorageCorsRules(corsRules?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of TableData. </summary>

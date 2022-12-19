@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             notificationEmailList ??= new List<string>();
             managementRPDetailsList ??= new List<ResourceProviderDetails>();
 
-            return new EdgeOrderItemDetails(productDetails, orderItemType, currentStage, orderItemStageHistory?.ToList(), preferences, forwardShippingDetails, reverseShippingDetails, notificationEmailList?.ToList(), cancellationReason, cancellationStatus, deletionStatus, returnReason, returnStatus, new ResourceProviderDetails(firstOrDefaultManagementResourceProviderNamespace), managementRPDetailsList?.ToList(), error);
+            return new EdgeOrderItemDetails(productDetails, orderItemType, currentStage, orderItemStageHistory?.ToList(), preferences, forwardShippingDetails, reverseShippingDetails, notificationEmailList?.ToList(), cancellationReason, cancellationStatus, deletionStatus, returnReason, returnStatus, firstOrDefaultManagementResourceProviderNamespace != null ? new ResourceProviderDetails(firstOrDefaultManagementResourceProviderNamespace) : null, managementRPDetailsList?.ToList(), error);
         }
 
         /// <summary> Initializes a new instance of ProductDetails. </summary>
@@ -413,11 +413,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="doubleEncryptionStatus"> Preferences related to the Encryption. </param>
         /// <param name="preferredManagementResourceId"> Preferences related to the Management resource. </param>
         /// <returns> A new <see cref="Models.OrderItemPreferences"/> instance for mocking. </returns>
-        public static OrderItemPreferences OrderItemPreferences(IEnumerable<NotificationPreference> notificationPreferences = null, TransportShipmentType transportPreferencesPreferredShipmentType = default, DoubleEncryptionStatus? doubleEncryptionStatus = null, string preferredManagementResourceId = null)
+        public static OrderItemPreferences OrderItemPreferences(IEnumerable<NotificationPreference> notificationPreferences = null, TransportShipmentType? transportPreferencesPreferredShipmentType = null, DoubleEncryptionStatus? doubleEncryptionStatus = null, string preferredManagementResourceId = null)
         {
             notificationPreferences ??= new List<NotificationPreference>();
 
-            return new OrderItemPreferences(notificationPreferences?.ToList(), new TransportPreferences(transportPreferencesPreferredShipmentType), new EncryptionPreferences(doubleEncryptionStatus), new ManagementResourcePreferences(preferredManagementResourceId));
+            return new OrderItemPreferences(notificationPreferences?.ToList(), transportPreferencesPreferredShipmentType.HasValue ? new TransportPreferences(transportPreferencesPreferredShipmentType.Value) : null, doubleEncryptionStatus != null ? new EncryptionPreferences(doubleEncryptionStatus) : null, preferredManagementResourceId != null ? new ManagementResourcePreferences(preferredManagementResourceId) : null);
         }
 
         /// <summary> Initializes a new instance of ForwardShippingDetails. </summary>

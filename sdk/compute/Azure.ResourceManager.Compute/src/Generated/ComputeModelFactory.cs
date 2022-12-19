@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
 
-            return new VirtualMachineScaleSetData(id, name, resourceType, systemData, tags, location, sku, plan, identity, zones?.ToList(), extendedLocation, upgradePolicy, automaticRepairsPolicy, virtualMachineProfile, provisioningState, overprovision, doNotRunExtensionsOnOverprovisionedVms, uniqueId, singlePlacementGroup, zoneBalance, platformFaultDomainCount, ResourceManagerModelFactory.WritableSubResource(proximityPlacementGroupId), ResourceManagerModelFactory.WritableSubResource(hostGroupId), additionalCapabilities, scaleInPolicy, orchestrationMode, spotRestorePolicy, timeCreated);
+            return new VirtualMachineScaleSetData(id, name, resourceType, systemData, tags, location, sku, plan, identity, zones?.ToList(), extendedLocation, upgradePolicy, automaticRepairsPolicy, virtualMachineProfile, provisioningState, overprovision, doNotRunExtensionsOnOverprovisionedVms, uniqueId, singlePlacementGroup, zoneBalance, platformFaultDomainCount, proximityPlacementGroupId != null ? ResourceManagerModelFactory.WritableSubResource(proximityPlacementGroupId) : null, hostGroupId != null ? ResourceManagerModelFactory.WritableSubResource(hostGroupId) : null, additionalCapabilities, scaleInPolicy, orchestrationMode, spotRestorePolicy, timeCreated);
         }
 
         /// <summary> Initializes a new instance of ComputeSku. </summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             galleryApplications ??= new List<VirtualMachineGalleryApplication>();
 
-            return new VirtualMachineScaleSetVmProfile(osProfile, storageProfile, networkProfile, securityProfile, new DiagnosticsProfile(bootDiagnostics), extensionProfile, licenseType, priority, evictionPolicy, new BillingProfile(billingMaxPrice), new ScheduledEventsProfile(scheduledEventsTerminateNotificationProfile), userData, new CapacityReservationProfile(ResourceManagerModelFactory.WritableSubResource(capacityReservationGroupId)), new ApplicationProfile(galleryApplications?.ToList()), new VirtualMachineScaleSetHardwareProfile(hardwareVmSizeProperties));
+            return new VirtualMachineScaleSetVmProfile(osProfile, storageProfile, networkProfile, securityProfile, bootDiagnostics != null ? new DiagnosticsProfile(bootDiagnostics) : null, extensionProfile, licenseType, priority, evictionPolicy, billingMaxPrice != null ? new BillingProfile(billingMaxPrice) : null, scheduledEventsTerminateNotificationProfile != null ? new ScheduledEventsProfile(scheduledEventsTerminateNotificationProfile) : null, userData, capacityReservationGroupId != null ? new CapacityReservationProfile(ResourceManagerModelFactory.WritableSubResource(capacityReservationGroupId)) : null, galleryApplications != null ? new ApplicationProfile(galleryApplications?.ToList()) : null, hardwareVmSizeProperties != null ? new VirtualMachineScaleSetHardwareProfile(hardwareVmSizeProperties) : null);
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetOSProfile. </summary>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Compute.Models
             additionalUnattendContent ??= new List<AdditionalUnattendContent>();
             winRMListeners ??= new List<WinRMListener>();
 
-            return new WindowsConfiguration(provisionVmAgent, enableAutomaticUpdates, timeZone, additionalUnattendContent?.ToList(), patchSettings, new WinRMConfiguration(winRMListeners?.ToList()));
+            return new WindowsConfiguration(provisionVmAgent, enableAutomaticUpdates, timeZone, additionalUnattendContent?.ToList(), patchSettings, winRMListeners != null ? new WinRMConfiguration(winRMListeners?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of AdditionalUnattendContent. </summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.PatchSettings"/> instance for mocking. </returns>
         public static PatchSettings PatchSettings(WindowsVmGuestPatchMode? patchMode = null, bool? enableHotpatching = null, WindowsPatchAssessmentMode? assessmentMode = null, WindowsVmGuestPatchAutomaticByPlatformRebootSetting? automaticByPlatformRebootSetting = null)
         {
-            return new PatchSettings(patchMode, enableHotpatching, assessmentMode, new WindowsVmGuestPatchAutomaticByPlatformSettings(automaticByPlatformRebootSetting));
+            return new PatchSettings(patchMode, enableHotpatching, assessmentMode, automaticByPlatformRebootSetting != null ? new WindowsVmGuestPatchAutomaticByPlatformSettings(automaticByPlatformRebootSetting) : null);
         }
 
         /// <summary> Initializes a new instance of WinRMListener. </summary>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             sshPublicKeys ??= new List<SshPublicKeyConfiguration>();
 
-            return new LinuxConfiguration(disablePasswordAuthentication, new SshConfiguration(sshPublicKeys?.ToList()), provisionVmAgent, patchSettings);
+            return new LinuxConfiguration(disablePasswordAuthentication, sshPublicKeys != null ? new SshConfiguration(sshPublicKeys?.ToList()) : null, provisionVmAgent, patchSettings);
         }
 
         /// <summary> Initializes a new instance of SshPublicKeyConfiguration. </summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.LinuxPatchSettings"/> instance for mocking. </returns>
         public static LinuxPatchSettings LinuxPatchSettings(LinuxVmGuestPatchMode? patchMode = null, LinuxPatchAssessmentMode? assessmentMode = null, LinuxVmGuestPatchAutomaticByPlatformRebootSetting? automaticByPlatformRebootSetting = null)
         {
-            return new LinuxPatchSettings(patchMode, assessmentMode, new LinuxVmGuestPatchAutomaticByPlatformSettings(automaticByPlatformRebootSetting));
+            return new LinuxPatchSettings(patchMode, assessmentMode, automaticByPlatformRebootSetting != null ? new LinuxVmGuestPatchAutomaticByPlatformSettings(automaticByPlatformRebootSetting) : null);
         }
 
         /// <summary> Initializes a new instance of VaultSecretGroup. </summary>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             vaultCertificates ??= new List<VaultCertificate>();
 
-            return new VaultSecretGroup(ResourceManagerModelFactory.WritableSubResource(sourceVaultId), vaultCertificates?.ToList());
+            return new VaultSecretGroup(sourceVaultId != null ? ResourceManagerModelFactory.WritableSubResource(sourceVaultId) : null, vaultCertificates?.ToList());
         }
 
         /// <summary> Initializes a new instance of ComputeWriteableSubResourceData. </summary>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             vhdContainers ??= new List<string>();
 
-            return new VirtualMachineScaleSetOSDisk(name, caching, writeAcceleratorEnabled, createOption, diffDiskSettings, diskSizeGB, osType, new VirtualHardDisk(imageUri), vhdContainers?.ToList(), managedDisk, deleteOption);
+            return new VirtualMachineScaleSetOSDisk(name, caching, writeAcceleratorEnabled, createOption, diffDiskSettings, diskSizeGB, osType, imageUri != null ? new VirtualHardDisk(imageUri) : null, vhdContainers?.ToList(), managedDisk, deleteOption);
         }
 
         /// <summary> Initializes a new instance of DiffDiskSettings. </summary>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetManagedDisk"/> instance for mocking. </returns>
         public static VirtualMachineScaleSetManagedDisk VirtualMachineScaleSetManagedDisk(StorageAccountType? storageAccountType = null, ResourceIdentifier diskEncryptionSetId = null, VirtualMachineDiskSecurityProfile securityProfile = null)
         {
-            return new VirtualMachineScaleSetManagedDisk(storageAccountType, ResourceManagerModelFactory.WritableSubResource(diskEncryptionSetId), securityProfile);
+            return new VirtualMachineScaleSetManagedDisk(storageAccountType, diskEncryptionSetId != null ? ResourceManagerModelFactory.WritableSubResource(diskEncryptionSetId) : null, securityProfile);
         }
 
         /// <summary> Initializes a new instance of VirtualMachineDiskSecurityProfile. </summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.VirtualMachineDiskSecurityProfile"/> instance for mocking. </returns>
         public static VirtualMachineDiskSecurityProfile VirtualMachineDiskSecurityProfile(SecurityEncryptionType? securityEncryptionType = null, ResourceIdentifier diskEncryptionSetId = null)
         {
-            return new VirtualMachineDiskSecurityProfile(securityEncryptionType, ResourceManagerModelFactory.WritableSubResource(diskEncryptionSetId));
+            return new VirtualMachineDiskSecurityProfile(securityEncryptionType, diskEncryptionSetId != null ? ResourceManagerModelFactory.WritableSubResource(diskEncryptionSetId) : null);
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetDataDisk. </summary>
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             networkInterfaceConfigurations ??= new List<VirtualMachineScaleSetNetworkConfiguration>();
 
-            return new VirtualMachineScaleSetNetworkProfile(ResourceManagerModelFactory.WritableSubResource(healthProbeId), networkInterfaceConfigurations?.ToList(), networkApiVersion);
+            return new VirtualMachineScaleSetNetworkProfile(healthProbeId != null ? ResourceManagerModelFactory.WritableSubResource(healthProbeId) : null, networkInterfaceConfigurations?.ToList(), networkApiVersion);
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetNetworkConfiguration. </summary>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Compute.Models
             dnsServers ??= new List<string>();
             ipConfigurations ??= new List<VirtualMachineScaleSetIPConfiguration>();
 
-            return new VirtualMachineScaleSetNetworkConfiguration(id, name, primary, enableAcceleratedNetworking, enableFpga, ResourceManagerModelFactory.WritableSubResource(networkSecurityGroupId), new VirtualMachineScaleSetNetworkConfigurationDnsSettings(dnsServers?.ToList()), ipConfigurations?.ToList(), enableIPForwarding, deleteOption);
+            return new VirtualMachineScaleSetNetworkConfiguration(id, name, primary, enableAcceleratedNetworking, enableFpga, networkSecurityGroupId != null ? ResourceManagerModelFactory.WritableSubResource(networkSecurityGroupId) : null, dnsServers != null ? new VirtualMachineScaleSetNetworkConfigurationDnsSettings(dnsServers?.ToList()) : null, ipConfigurations?.ToList(), enableIPForwarding, deleteOption);
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetIPConfiguration. </summary>
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Compute.Models
             loadBalancerBackendAddressPools ??= new List<WritableSubResource>();
             loadBalancerInboundNatPools ??= new List<WritableSubResource>();
 
-            return new VirtualMachineScaleSetIPConfiguration(id, name, ResourceManagerModelFactory.WritableSubResource(subnetId), primary, publicIPAddressConfiguration, privateIPAddressVersion, applicationGatewayBackendAddressPools?.ToList(), applicationSecurityGroups?.ToList(), loadBalancerBackendAddressPools?.ToList(), loadBalancerInboundNatPools?.ToList());
+            return new VirtualMachineScaleSetIPConfiguration(id, name, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, primary, publicIPAddressConfiguration, privateIPAddressVersion, applicationGatewayBackendAddressPools?.ToList(), applicationSecurityGroups?.ToList(), loadBalancerBackendAddressPools?.ToList(), loadBalancerInboundNatPools?.ToList());
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetPublicIPAddressConfiguration. </summary>
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             ipTags ??= new List<VirtualMachineScaleSetIPTag>();
 
-            return new VirtualMachineScaleSetPublicIPAddressConfiguration(name, sku, idleTimeoutInMinutes, new VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings(dnsDomainNameLabel), ipTags?.ToList(), ResourceManagerModelFactory.WritableSubResource(publicIPPrefixId), publicIPAddressVersion, deleteOption);
+            return new VirtualMachineScaleSetPublicIPAddressConfiguration(name, sku, idleTimeoutInMinutes, dnsDomainNameLabel != null ? new VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings(dnsDomainNameLabel) : null, ipTags?.ToList(), publicIPPrefixId != null ? ResourceManagerModelFactory.WritableSubResource(publicIPPrefixId) : null, publicIPAddressVersion, deleteOption);
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetIPTag. </summary>
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.Compute.Models
             dnsServers ??= new List<string>();
             ipConfigurations ??= new List<VirtualMachineScaleSetUpdateIPConfiguration>();
 
-            return new VirtualMachineScaleSetUpdateNetworkConfiguration(id, name, primary, enableAcceleratedNetworking, enableFpga, ResourceManagerModelFactory.WritableSubResource(networkSecurityGroupId), new VirtualMachineScaleSetNetworkConfigurationDnsSettings(dnsServers?.ToList()), ipConfigurations?.ToList(), enableIPForwarding, deleteOption);
+            return new VirtualMachineScaleSetUpdateNetworkConfiguration(id, name, primary, enableAcceleratedNetworking, enableFpga, networkSecurityGroupId != null ? ResourceManagerModelFactory.WritableSubResource(networkSecurityGroupId) : null, dnsServers != null ? new VirtualMachineScaleSetNetworkConfigurationDnsSettings(dnsServers?.ToList()) : null, ipConfigurations?.ToList(), enableIPForwarding, deleteOption);
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateIPConfiguration. </summary>
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.Compute.Models
             loadBalancerBackendAddressPools ??= new List<WritableSubResource>();
             loadBalancerInboundNatPools ??= new List<WritableSubResource>();
 
-            return new VirtualMachineScaleSetUpdateIPConfiguration(id, name, ResourceManagerModelFactory.WritableSubResource(subnetId), primary, publicIPAddressConfiguration, privateIPAddressVersion, applicationGatewayBackendAddressPools?.ToList(), applicationSecurityGroups?.ToList(), loadBalancerBackendAddressPools?.ToList(), loadBalancerInboundNatPools?.ToList());
+            return new VirtualMachineScaleSetUpdateIPConfiguration(id, name, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, primary, publicIPAddressConfiguration, privateIPAddressVersion, applicationGatewayBackendAddressPools?.ToList(), applicationSecurityGroups?.ToList(), loadBalancerBackendAddressPools?.ToList(), loadBalancerInboundNatPools?.ToList());
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdatePublicIPAddressConfiguration. </summary>
@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetUpdatePublicIPAddressConfiguration"/> instance for mocking. </returns>
         public static VirtualMachineScaleSetUpdatePublicIPAddressConfiguration VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(string name = null, int? idleTimeoutInMinutes = null, string dnsDomainNameLabel = null, ResourceIdentifier publicIPPrefixId = null, ComputeDeleteOption? deleteOption = null)
         {
-            return new VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(name, idleTimeoutInMinutes, new VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings(dnsDomainNameLabel), ResourceManagerModelFactory.WritableSubResource(publicIPPrefixId), deleteOption);
+            return new VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(name, idleTimeoutInMinutes, dnsDomainNameLabel != null ? new VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings(dnsDomainNameLabel) : null, publicIPPrefixId != null ? ResourceManagerModelFactory.WritableSubResource(publicIPPrefixId) : null, deleteOption);
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetInstanceView. </summary>
@@ -706,7 +706,7 @@ namespace Azure.ResourceManager.Compute.Models
             statuses ??= new List<InstanceViewStatus>();
             orchestrationServices ??= new List<OrchestrationServiceSummary>();
 
-            return new VirtualMachineScaleSetInstanceView(new VirtualMachineScaleSetInstanceViewStatusesSummary(virtualMachineStatusesSummary?.ToList()), extensions?.ToList(), statuses?.ToList(), orchestrationServices?.ToList());
+            return new VirtualMachineScaleSetInstanceView(virtualMachineStatusesSummary != null ? new VirtualMachineScaleSetInstanceViewStatusesSummary(virtualMachineStatusesSummary?.ToList()) : null, extensions?.ToList(), statuses?.ToList(), orchestrationServices?.ToList());
         }
 
         /// <summary> Initializes a new instance of VirtualMachineStatusCodeCount. </summary>
@@ -986,7 +986,7 @@ namespace Azure.ResourceManager.Compute.Models
             zones ??= new List<string>();
             networkInterfaceConfigurations ??= new List<VirtualMachineScaleSetNetworkConfiguration>();
 
-            return new VirtualMachineScaleSetVmData(id, name, resourceType, systemData, tags, location, instanceId, sku, plan, resources?.ToList(), zones?.ToList(), identity, latestModelApplied, vmId, instanceView, hardwareProfile, storageProfile, additionalCapabilities, osProfile, securityProfile, networkProfile, new VirtualMachineScaleSetVmNetworkProfileConfiguration(networkInterfaceConfigurations?.ToList()), new DiagnosticsProfile(bootDiagnostics), ResourceManagerModelFactory.WritableSubResource(availabilitySetId), provisioningState, licenseType, modelDefinitionApplied, protectionPolicy, userData);
+            return new VirtualMachineScaleSetVmData(id, name, resourceType, systemData, tags, location, instanceId, sku, plan, resources?.ToList(), zones?.ToList(), identity, latestModelApplied, vmId, instanceView, hardwareProfile, storageProfile, additionalCapabilities, osProfile, securityProfile, networkProfile, networkInterfaceConfigurations != null ? new VirtualMachineScaleSetVmNetworkProfileConfiguration(networkInterfaceConfigurations?.ToList()) : null, bootDiagnostics != null ? new DiagnosticsProfile(bootDiagnostics) : null, availabilitySetId != null ? ResourceManagerModelFactory.WritableSubResource(availabilitySetId) : null, provisioningState, licenseType, modelDefinitionApplied, protectionPolicy, userData);
         }
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetVmInstanceView. </summary>
@@ -1009,7 +1009,7 @@ namespace Azure.ResourceManager.Compute.Models
             extensions ??= new List<VirtualMachineExtensionInstanceView>();
             statuses ??= new List<InstanceViewStatus>();
 
-            return new VirtualMachineScaleSetVmInstanceView(platformUpdateDomain, platformFaultDomain, rdpThumbPrint, vmAgent, maintenanceRedeployStatus, disks?.ToList(), extensions?.ToList(), new VirtualMachineHealthStatus(vmHealthStatus), bootDiagnostics, statuses?.ToList(), assignedHost, placementGroupId);
+            return new VirtualMachineScaleSetVmInstanceView(platformUpdateDomain, platformFaultDomain, rdpThumbPrint, vmAgent, maintenanceRedeployStatus, disks?.ToList(), extensions?.ToList(), vmHealthStatus != null ? new VirtualMachineHealthStatus(vmHealthStatus) : null, bootDiagnostics, statuses?.ToList(), assignedHost, placementGroupId);
         }
 
         /// <summary> Initializes a new instance of VirtualMachineAgentInstanceView. </summary>
@@ -1119,7 +1119,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.VirtualMachineOSDisk"/> instance for mocking. </returns>
         public static VirtualMachineOSDisk VirtualMachineOSDisk(SupportedOperatingSystemType? osType = null, DiskEncryptionSettings encryptionSettings = null, string name = null, Uri vhdUri = null, Uri imageUri = null, CachingType? caching = null, bool? writeAcceleratorEnabled = null, DiffDiskSettings diffDiskSettings = null, DiskCreateOptionType createOption = default, int? diskSizeGB = null, VirtualMachineManagedDisk managedDisk = null, DiskDeleteOptionType? deleteOption = null)
         {
-            return new VirtualMachineOSDisk(osType, encryptionSettings, name, new VirtualHardDisk(vhdUri), new VirtualHardDisk(imageUri), caching, writeAcceleratorEnabled, diffDiskSettings, createOption, diskSizeGB, managedDisk, deleteOption);
+            return new VirtualMachineOSDisk(osType, encryptionSettings, name, vhdUri != null ? new VirtualHardDisk(vhdUri) : null, imageUri != null ? new VirtualHardDisk(imageUri) : null, caching, writeAcceleratorEnabled, diffDiskSettings, createOption, diskSizeGB, managedDisk, deleteOption);
         }
 
         /// <summary> Initializes a new instance of VirtualMachineManagedDisk. </summary>
@@ -1130,7 +1130,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.VirtualMachineManagedDisk"/> instance for mocking. </returns>
         public static VirtualMachineManagedDisk VirtualMachineManagedDisk(ResourceIdentifier id = null, StorageAccountType? storageAccountType = null, ResourceIdentifier diskEncryptionSetId = null, VirtualMachineDiskSecurityProfile securityProfile = null)
         {
-            return new VirtualMachineManagedDisk(id, storageAccountType, ResourceManagerModelFactory.WritableSubResource(diskEncryptionSetId), securityProfile);
+            return new VirtualMachineManagedDisk(id, storageAccountType, diskEncryptionSetId != null ? ResourceManagerModelFactory.WritableSubResource(diskEncryptionSetId) : null, securityProfile);
         }
 
         /// <summary> Initializes a new instance of VirtualMachineDataDisk. </summary>
@@ -1151,7 +1151,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.VirtualMachineDataDisk"/> instance for mocking. </returns>
         public static VirtualMachineDataDisk VirtualMachineDataDisk(int lun = default, string name = null, Uri vhdUri = null, Uri imageUri = null, CachingType? caching = null, bool? writeAcceleratorEnabled = null, DiskCreateOptionType createOption = default, int? diskSizeGB = null, VirtualMachineManagedDisk managedDisk = null, bool? toBeDetached = null, long? diskIopsReadWrite = null, long? diskMBpsReadWrite = null, DiskDetachOptionType? detachOption = null, DiskDeleteOptionType? deleteOption = null)
         {
-            return new VirtualMachineDataDisk(lun, name, new VirtualHardDisk(vhdUri), new VirtualHardDisk(imageUri), caching, writeAcceleratorEnabled, createOption, diskSizeGB, managedDisk, toBeDetached, diskIopsReadWrite, diskMBpsReadWrite, detachOption, deleteOption);
+            return new VirtualMachineDataDisk(lun, name, vhdUri != null ? new VirtualHardDisk(vhdUri) : null, imageUri != null ? new VirtualHardDisk(imageUri) : null, caching, writeAcceleratorEnabled, createOption, diskSizeGB, managedDisk, toBeDetached, diskIopsReadWrite, diskMBpsReadWrite, detachOption, deleteOption);
         }
 
         /// <summary> Initializes a new instance of VirtualMachineOSProfile. </summary>
@@ -1212,7 +1212,7 @@ namespace Azure.ResourceManager.Compute.Models
             dnsServers ??= new List<string>();
             ipConfigurations ??= new List<VirtualMachineNetworkInterfaceIPConfiguration>();
 
-            return new VirtualMachineNetworkInterfaceConfiguration(name, primary, deleteOption, enableAcceleratedNetworking, enableFpga, enableIPForwarding, ResourceManagerModelFactory.WritableSubResource(networkSecurityGroupId), new VirtualMachineNetworkInterfaceDnsSettingsConfiguration(dnsServers?.ToList()), ipConfigurations?.ToList(), ResourceManagerModelFactory.WritableSubResource(dscpConfigurationId));
+            return new VirtualMachineNetworkInterfaceConfiguration(name, primary, deleteOption, enableAcceleratedNetworking, enableFpga, enableIPForwarding, networkSecurityGroupId != null ? ResourceManagerModelFactory.WritableSubResource(networkSecurityGroupId) : null, dnsServers != null ? new VirtualMachineNetworkInterfaceDnsSettingsConfiguration(dnsServers?.ToList()) : null, ipConfigurations?.ToList(), dscpConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(dscpConfigurationId) : null);
         }
 
         /// <summary> Initializes a new instance of VirtualMachineNetworkInterfaceIPConfiguration. </summary>
@@ -1231,7 +1231,7 @@ namespace Azure.ResourceManager.Compute.Models
             applicationGatewayBackendAddressPools ??= new List<WritableSubResource>();
             loadBalancerBackendAddressPools ??= new List<WritableSubResource>();
 
-            return new VirtualMachineNetworkInterfaceIPConfiguration(name, ResourceManagerModelFactory.WritableSubResource(subnetId), primary, publicIPAddressConfiguration, privateIPAddressVersion, applicationSecurityGroups?.ToList(), applicationGatewayBackendAddressPools?.ToList(), loadBalancerBackendAddressPools?.ToList());
+            return new VirtualMachineNetworkInterfaceIPConfiguration(name, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, primary, publicIPAddressConfiguration, privateIPAddressVersion, applicationSecurityGroups?.ToList(), applicationGatewayBackendAddressPools?.ToList(), loadBalancerBackendAddressPools?.ToList());
         }
 
         /// <summary> Initializes a new instance of VirtualMachinePublicIPAddressConfiguration. </summary>
@@ -1249,7 +1249,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             ipTags ??= new List<VirtualMachineIPTag>();
 
-            return new VirtualMachinePublicIPAddressConfiguration(name, sku, idleTimeoutInMinutes, deleteOption, new VirtualMachinePublicIPAddressDnsSettingsConfiguration(dnsDomainNameLabel), ipTags?.ToList(), ResourceManagerModelFactory.WritableSubResource(publicIPPrefixId), publicIPAddressVersion, publicIPAllocationMethod);
+            return new VirtualMachinePublicIPAddressConfiguration(name, sku, idleTimeoutInMinutes, deleteOption, dnsDomainNameLabel != null ? new VirtualMachinePublicIPAddressDnsSettingsConfiguration(dnsDomainNameLabel) : null, ipTags?.ToList(), publicIPPrefixId != null ? ResourceManagerModelFactory.WritableSubResource(publicIPPrefixId) : null, publicIPAddressVersion, publicIPAllocationMethod);
         }
 
         /// <summary> Initializes a new instance of VirtualMachineIPTag. </summary>
@@ -1352,7 +1352,7 @@ namespace Azure.ResourceManager.Compute.Models
             zones ??= new List<string>();
             galleryApplications ??= new List<VirtualMachineGalleryApplication>();
 
-            return new VirtualMachineData(id, name, resourceType, systemData, tags, location, plan, resources?.ToList(), identity, zones?.ToList(), extendedLocation, hardwareProfile, storageProfile, additionalCapabilities, osProfile, networkProfile, securityProfile, new DiagnosticsProfile(bootDiagnostics), ResourceManagerModelFactory.WritableSubResource(availabilitySetId), ResourceManagerModelFactory.WritableSubResource(virtualMachineScaleSetId), ResourceManagerModelFactory.WritableSubResource(proximityPlacementGroupId), priority, evictionPolicy, new BillingProfile(billingMaxPrice), ResourceManagerModelFactory.WritableSubResource(hostId), ResourceManagerModelFactory.WritableSubResource(hostGroupId), provisioningState, instanceView, licenseType, vmId, extensionsTimeBudget, platformFaultDomain, new ScheduledEventsProfile(scheduledEventsTerminateNotificationProfile), userData, new CapacityReservationProfile(ResourceManagerModelFactory.WritableSubResource(capacityReservationGroupId)), new ApplicationProfile(galleryApplications?.ToList()), timeCreated);
+            return new VirtualMachineData(id, name, resourceType, systemData, tags, location, plan, resources?.ToList(), identity, zones?.ToList(), extendedLocation, hardwareProfile, storageProfile, additionalCapabilities, osProfile, networkProfile, securityProfile, bootDiagnostics != null ? new DiagnosticsProfile(bootDiagnostics) : null, availabilitySetId != null ? ResourceManagerModelFactory.WritableSubResource(availabilitySetId) : null, virtualMachineScaleSetId != null ? ResourceManagerModelFactory.WritableSubResource(virtualMachineScaleSetId) : null, proximityPlacementGroupId != null ? ResourceManagerModelFactory.WritableSubResource(proximityPlacementGroupId) : null, priority, evictionPolicy, billingMaxPrice != null ? new BillingProfile(billingMaxPrice) : null, hostId != null ? ResourceManagerModelFactory.WritableSubResource(hostId) : null, hostGroupId != null ? ResourceManagerModelFactory.WritableSubResource(hostGroupId) : null, provisioningState, instanceView, licenseType, vmId, extensionsTimeBudget, platformFaultDomain, scheduledEventsTerminateNotificationProfile != null ? new ScheduledEventsProfile(scheduledEventsTerminateNotificationProfile) : null, userData, capacityReservationGroupId != null ? new CapacityReservationProfile(ResourceManagerModelFactory.WritableSubResource(capacityReservationGroupId)) : null, galleryApplications != null ? new ApplicationProfile(galleryApplications?.ToList()) : null, timeCreated);
         }
 
         /// <summary> Initializes a new instance of VirtualMachineInstanceView. </summary>
@@ -1379,7 +1379,7 @@ namespace Azure.ResourceManager.Compute.Models
             extensions ??= new List<VirtualMachineExtensionInstanceView>();
             statuses ??= new List<InstanceViewStatus>();
 
-            return new VirtualMachineInstanceView(platformUpdateDomain, platformFaultDomain, computerName, osName, osVersion, hyperVGeneration, rdpThumbPrint, vmAgent, maintenanceRedeployStatus, disks?.ToList(), extensions?.ToList(), new VirtualMachineHealthStatus(vmHealthStatus), bootDiagnostics, assignedHost, statuses?.ToList(), patchStatus);
+            return new VirtualMachineInstanceView(platformUpdateDomain, platformFaultDomain, computerName, osName, osVersion, hyperVGeneration, rdpThumbPrint, vmAgent, maintenanceRedeployStatus, disks?.ToList(), extensions?.ToList(), vmHealthStatus != null ? new VirtualMachineHealthStatus(vmHealthStatus) : null, bootDiagnostics, assignedHost, statuses?.ToList(), patchStatus);
         }
 
         /// <summary> Initializes a new instance of VirtualMachinePatchStatus. </summary>
@@ -1528,13 +1528,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="features"></param>
         /// <param name="architecture"> Specifies the Architecture Type. </param>
         /// <returns> A new <see cref="Models.VirtualMachineImage"/> instance for mocking. </returns>
-        public static VirtualMachineImage VirtualMachineImage(ResourceIdentifier id = null, string name = null, AzureLocation location = default, IDictionary<string, string> tags = null, ExtendedLocation extendedLocation = null, PurchasePlan plan = null, SupportedOperatingSystemType osDiskImageOperatingSystem = default, IEnumerable<DataDiskImage> dataDiskImages = null, bool automaticOSUpgradeSupported = default, HyperVGeneration? hyperVGeneration = null, VirtualMachineDiskType? disallowedVmDiskType = null, IEnumerable<VirtualMachineImageFeature> features = null, ArchitectureType? architecture = null)
+        public static VirtualMachineImage VirtualMachineImage(ResourceIdentifier id = null, string name = null, AzureLocation location = default, IDictionary<string, string> tags = null, ExtendedLocation extendedLocation = null, PurchasePlan plan = null, SupportedOperatingSystemType? osDiskImageOperatingSystem = null, IEnumerable<DataDiskImage> dataDiskImages = null, bool? automaticOSUpgradeSupported = null, HyperVGeneration? hyperVGeneration = null, VirtualMachineDiskType? disallowedVmDiskType = null, IEnumerable<VirtualMachineImageFeature> features = null, ArchitectureType? architecture = null)
         {
             tags ??= new Dictionary<string, string>();
             dataDiskImages ??= new List<DataDiskImage>();
             features ??= new List<VirtualMachineImageFeature>();
 
-            return new VirtualMachineImage(id, name, location, tags, extendedLocation, plan, new OSDiskImage(osDiskImageOperatingSystem), dataDiskImages?.ToList(), new AutomaticOSUpgradeProperties(automaticOSUpgradeSupported), hyperVGeneration, new DisallowedConfiguration(disallowedVmDiskType), features?.ToList(), architecture);
+            return new VirtualMachineImage(id, name, location, tags, extendedLocation, plan, osDiskImageOperatingSystem.HasValue ? new OSDiskImage(osDiskImageOperatingSystem.Value) : null, dataDiskImages?.ToList(), automaticOSUpgradeSupported.HasValue ? new AutomaticOSUpgradeProperties(automaticOSUpgradeSupported.Value) : null, hyperVGeneration, disallowedVmDiskType != null ? new DisallowedConfiguration(disallowedVmDiskType) : null, features?.ToList(), architecture);
         }
 
         /// <summary> Initializes a new instance of DataDiskImage. </summary>
@@ -1608,7 +1608,7 @@ namespace Azure.ResourceManager.Compute.Models
             virtualMachines ??= new List<WritableSubResource>();
             statuses ??= new List<InstanceViewStatus>();
 
-            return new AvailabilitySetData(id, name, resourceType, systemData, tags, location, sku, platformUpdateDomainCount, platformFaultDomainCount, virtualMachines?.ToList(), ResourceManagerModelFactory.WritableSubResource(proximityPlacementGroupId), statuses?.ToList());
+            return new AvailabilitySetData(id, name, resourceType, systemData, tags, location, sku, platformUpdateDomainCount, platformFaultDomainCount, virtualMachines?.ToList(), proximityPlacementGroupId != null ? ResourceManagerModelFactory.WritableSubResource(proximityPlacementGroupId) : null, statuses?.ToList());
         }
 
         /// <summary> Initializes a new instance of ProximityPlacementGroupData. </summary>
@@ -1635,7 +1635,7 @@ namespace Azure.ResourceManager.Compute.Models
             availabilitySets ??= new List<ComputeSubResourceDataWithColocationStatus>();
             intentVmSizes ??= new List<string>();
 
-            return new ProximityPlacementGroupData(id, name, resourceType, systemData, tags, location, zones?.ToList(), proximityPlacementGroupType, virtualMachines?.ToList(), virtualMachineScaleSets?.ToList(), availabilitySets?.ToList(), colocationStatus, new ProximityPlacementGroupPropertiesIntent(intentVmSizes?.ToList()));
+            return new ProximityPlacementGroupData(id, name, resourceType, systemData, tags, location, zones?.ToList(), proximityPlacementGroupType, virtualMachines?.ToList(), virtualMachineScaleSets?.ToList(), availabilitySets?.ToList(), colocationStatus, intentVmSizes != null ? new ProximityPlacementGroupPropertiesIntent(intentVmSizes?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of ComputeSubResourceDataWithColocationStatus. </summary>
@@ -1668,7 +1668,7 @@ namespace Azure.ResourceManager.Compute.Models
             dedicatedHosts ??= new List<SubResource>();
             instanceViewHosts ??= new List<DedicatedHostInstanceViewWithName>();
 
-            return new DedicatedHostGroupData(id, name, resourceType, systemData, tags, location, zones?.ToList(), platformFaultDomainCount, dedicatedHosts?.ToList(), new DedicatedHostGroupInstanceView(instanceViewHosts?.ToList()), supportAutomaticPlacement, new DedicatedHostGroupPropertiesAdditionalCapabilities(ultraSsdEnabled));
+            return new DedicatedHostGroupData(id, name, resourceType, systemData, tags, location, zones?.ToList(), platformFaultDomainCount, dedicatedHosts?.ToList(), instanceViewHosts != null ? new DedicatedHostGroupInstanceView(instanceViewHosts?.ToList()) : null, supportAutomaticPlacement, ultraSsdEnabled != null ? new DedicatedHostGroupPropertiesAdditionalCapabilities(ultraSsdEnabled) : null);
         }
 
         /// <summary> Initializes a new instance of DedicatedHostInstanceViewWithName. </summary>
@@ -1682,7 +1682,7 @@ namespace Azure.ResourceManager.Compute.Models
             availableCapacityAllocatableVms ??= new List<DedicatedHostAllocatableVm>();
             statuses ??= new List<InstanceViewStatus>();
 
-            return new DedicatedHostInstanceViewWithName(assetId, new DedicatedHostAvailableCapacity(availableCapacityAllocatableVms?.ToList()), statuses?.ToList(), name);
+            return new DedicatedHostInstanceViewWithName(assetId, availableCapacityAllocatableVms != null ? new DedicatedHostAvailableCapacity(availableCapacityAllocatableVms?.ToList()) : null, statuses?.ToList(), name);
         }
 
         /// <summary> Initializes a new instance of DedicatedHostInstanceView. </summary>
@@ -1695,7 +1695,7 @@ namespace Azure.ResourceManager.Compute.Models
             availableCapacityAllocatableVms ??= new List<DedicatedHostAllocatableVm>();
             statuses ??= new List<InstanceViewStatus>();
 
-            return new DedicatedHostInstanceView(assetId, new DedicatedHostAvailableCapacity(availableCapacityAllocatableVms?.ToList()), statuses?.ToList());
+            return new DedicatedHostInstanceView(assetId, availableCapacityAllocatableVms != null ? new DedicatedHostAvailableCapacity(availableCapacityAllocatableVms?.ToList()) : null, statuses?.ToList());
         }
 
         /// <summary> Initializes a new instance of DedicatedHostAllocatableVm. </summary>
@@ -1790,7 +1790,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DiskImageData(id, name, resourceType, systemData, tags, location, extendedLocation, ResourceManagerModelFactory.WritableSubResource(sourceVirtualMachineId), storageProfile, provisioningState, hyperVGeneration);
+            return new DiskImageData(id, name, resourceType, systemData, tags, location, extendedLocation, sourceVirtualMachineId != null ? ResourceManagerModelFactory.WritableSubResource(sourceVirtualMachineId) : null, storageProfile, provisioningState, hyperVGeneration);
         }
 
         /// <summary> Initializes a new instance of ImageStorageProfile. </summary>
@@ -1818,7 +1818,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.ImageOSDisk"/> instance for mocking. </returns>
         public static ImageOSDisk ImageOSDisk(ResourceIdentifier snapshotId = null, ResourceIdentifier managedDiskId = null, Uri blobUri = null, CachingType? caching = null, int? diskSizeGB = null, StorageAccountType? storageAccountType = null, ResourceIdentifier diskEncryptionSetId = null, SupportedOperatingSystemType osType = default, OperatingSystemStateType osState = default)
         {
-            return new ImageOSDisk(ResourceManagerModelFactory.WritableSubResource(snapshotId), ResourceManagerModelFactory.WritableSubResource(managedDiskId), blobUri, caching, diskSizeGB, storageAccountType, ResourceManagerModelFactory.WritableSubResource(diskEncryptionSetId), osType, osState);
+            return new ImageOSDisk(snapshotId != null ? ResourceManagerModelFactory.WritableSubResource(snapshotId) : null, managedDiskId != null ? ResourceManagerModelFactory.WritableSubResource(managedDiskId) : null, blobUri, caching, diskSizeGB, storageAccountType, diskEncryptionSetId != null ? ResourceManagerModelFactory.WritableSubResource(diskEncryptionSetId) : null, osType, osState);
         }
 
         /// <summary> Initializes a new instance of ImageDisk. </summary>
@@ -1832,7 +1832,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.ImageDisk"/> instance for mocking. </returns>
         public static ImageDisk ImageDisk(ResourceIdentifier snapshotId = null, ResourceIdentifier managedDiskId = null, Uri blobUri = null, CachingType? caching = null, int? diskSizeGB = null, StorageAccountType? storageAccountType = null, ResourceIdentifier diskEncryptionSetId = null)
         {
-            return new ImageDisk(ResourceManagerModelFactory.WritableSubResource(snapshotId), ResourceManagerModelFactory.WritableSubResource(managedDiskId), blobUri, caching, diskSizeGB, storageAccountType, ResourceManagerModelFactory.WritableSubResource(diskEncryptionSetId));
+            return new ImageDisk(snapshotId != null ? ResourceManagerModelFactory.WritableSubResource(snapshotId) : null, managedDiskId != null ? ResourceManagerModelFactory.WritableSubResource(managedDiskId) : null, blobUri, caching, diskSizeGB, storageAccountType, diskEncryptionSetId != null ? ResourceManagerModelFactory.WritableSubResource(diskEncryptionSetId) : null);
         }
 
         /// <summary> Initializes a new instance of ImageDataDisk. </summary>
@@ -1847,7 +1847,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.ImageDataDisk"/> instance for mocking. </returns>
         public static ImageDataDisk ImageDataDisk(ResourceIdentifier snapshotId = null, ResourceIdentifier managedDiskId = null, Uri blobUri = null, CachingType? caching = null, int? diskSizeGB = null, StorageAccountType? storageAccountType = null, ResourceIdentifier diskEncryptionSetId = null, int lun = default)
         {
-            return new ImageDataDisk(ResourceManagerModelFactory.WritableSubResource(snapshotId), ResourceManagerModelFactory.WritableSubResource(managedDiskId), blobUri, caching, diskSizeGB, storageAccountType, ResourceManagerModelFactory.WritableSubResource(diskEncryptionSetId), lun);
+            return new ImageDataDisk(snapshotId != null ? ResourceManagerModelFactory.WritableSubResource(snapshotId) : null, managedDiskId != null ? ResourceManagerModelFactory.WritableSubResource(managedDiskId) : null, blobUri, caching, diskSizeGB, storageAccountType, diskEncryptionSetId != null ? ResourceManagerModelFactory.WritableSubResource(diskEncryptionSetId) : null, lun);
         }
 
         /// <summary> Initializes a new instance of RestorePointGroupData. </summary>
@@ -1896,7 +1896,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             excludeDisks ??= new List<WritableSubResource>();
 
-            return new RestorePointData(id, name, resourceType, systemData, excludeDisks?.ToList(), sourceMetadata, provisioningState, consistencyMode, timeCreated, ResourceManagerModelFactory.WritableSubResource(sourceRestorePointId), instanceView);
+            return new RestorePointData(id, name, resourceType, systemData, excludeDisks?.ToList(), sourceMetadata, provisioningState, consistencyMode, timeCreated, sourceRestorePointId != null ? ResourceManagerModelFactory.WritableSubResource(sourceRestorePointId) : null, instanceView);
         }
 
         /// <summary> Initializes a new instance of RestorePointSourceMetadata. </summary>
@@ -1911,7 +1911,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.RestorePointSourceMetadata"/> instance for mocking. </returns>
         public static RestorePointSourceMetadata RestorePointSourceMetadata(VirtualMachineHardwareProfile hardwareProfile = null, RestorePointSourceVmStorageProfile storageProfile = null, VirtualMachineOSProfile osProfile = null, BootDiagnostics bootDiagnostics = null, string licenseType = null, string vmId = null, SecurityProfile securityProfile = null, AzureLocation? location = null)
         {
-            return new RestorePointSourceMetadata(hardwareProfile, storageProfile, osProfile, new DiagnosticsProfile(bootDiagnostics), licenseType, vmId, securityProfile, location);
+            return new RestorePointSourceMetadata(hardwareProfile, storageProfile, osProfile, bootDiagnostics != null ? new DiagnosticsProfile(bootDiagnostics) : null, licenseType, vmId, securityProfile, location);
         }
 
         /// <summary> Initializes a new instance of RestorePointSourceVmStorageProfile. </summary>
@@ -1936,7 +1936,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.RestorePointSourceVmOSDisk"/> instance for mocking. </returns>
         public static RestorePointSourceVmOSDisk RestorePointSourceVmOSDisk(OperatingSystemType? osType = null, DiskEncryptionSettings encryptionSettings = null, string name = null, CachingType? caching = null, int? diskSizeGB = null, VirtualMachineManagedDisk managedDisk = null, ResourceIdentifier diskRestorePointId = null)
         {
-            return new RestorePointSourceVmOSDisk(osType, encryptionSettings, name, caching, diskSizeGB, managedDisk, ResourceManagerModelFactory.WritableSubResource(diskRestorePointId));
+            return new RestorePointSourceVmOSDisk(osType, encryptionSettings, name, caching, diskSizeGB, managedDisk, diskRestorePointId != null ? ResourceManagerModelFactory.WritableSubResource(diskRestorePointId) : null);
         }
 
         /// <summary> Initializes a new instance of RestorePointSourceVmDataDisk. </summary>
@@ -1949,7 +1949,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.RestorePointSourceVmDataDisk"/> instance for mocking. </returns>
         public static RestorePointSourceVmDataDisk RestorePointSourceVmDataDisk(int? lun = null, string name = null, CachingType? caching = null, int? diskSizeGB = null, VirtualMachineManagedDisk managedDisk = null, ResourceIdentifier diskRestorePointId = null)
         {
-            return new RestorePointSourceVmDataDisk(lun, name, caching, diskSizeGB, managedDisk, ResourceManagerModelFactory.WritableSubResource(diskRestorePointId));
+            return new RestorePointSourceVmDataDisk(lun, name, caching, diskSizeGB, managedDisk, diskRestorePointId != null ? ResourceManagerModelFactory.WritableSubResource(diskRestorePointId) : null);
         }
 
         /// <summary> Initializes a new instance of RestorePointInstanceView. </summary>
@@ -2002,7 +2002,7 @@ namespace Azure.ResourceManager.Compute.Models
             virtualMachinesAssociated ??= new List<SubResource>();
             instanceViewCapacityReservations ??= new List<CapacityReservationInstanceViewWithName>();
 
-            return new CapacityReservationGroupData(id, name, resourceType, systemData, tags, location, zones?.ToList(), capacityReservations?.ToList(), virtualMachinesAssociated?.ToList(), new CapacityReservationGroupInstanceView(instanceViewCapacityReservations?.ToList()));
+            return new CapacityReservationGroupData(id, name, resourceType, systemData, tags, location, zones?.ToList(), capacityReservations?.ToList(), virtualMachinesAssociated?.ToList(), instanceViewCapacityReservations != null ? new CapacityReservationGroupInstanceView(instanceViewCapacityReservations?.ToList()) : null);
         }
 
         /// <summary> Initializes a new instance of CapacityReservationInstanceViewWithName. </summary>
@@ -2015,7 +2015,7 @@ namespace Azure.ResourceManager.Compute.Models
             utilizationInfoVirtualMachinesAllocated ??= new List<SubResource>();
             statuses ??= new List<InstanceViewStatus>();
 
-            return new CapacityReservationInstanceViewWithName(new CapacityReservationUtilization(utilizationInfoVirtualMachinesAllocated?.ToList()), statuses?.ToList(), name);
+            return new CapacityReservationInstanceViewWithName(utilizationInfoVirtualMachinesAllocated != null ? new CapacityReservationUtilization(utilizationInfoVirtualMachinesAllocated?.ToList()) : null, statuses?.ToList(), name);
         }
 
         /// <summary> Initializes a new instance of CapacityReservationInstanceView. </summary>
@@ -2027,7 +2027,7 @@ namespace Azure.ResourceManager.Compute.Models
             utilizationInfoVirtualMachinesAllocated ??= new List<SubResource>();
             statuses ??= new List<InstanceViewStatus>();
 
-            return new CapacityReservationInstanceView(new CapacityReservationUtilization(utilizationInfoVirtualMachinesAllocated?.ToList()), statuses?.ToList());
+            return new CapacityReservationInstanceView(utilizationInfoVirtualMachinesAllocated != null ? new CapacityReservationUtilization(utilizationInfoVirtualMachinesAllocated?.ToList()) : null, statuses?.ToList());
         }
 
         /// <summary> Initializes a new instance of CapacityReservationData. </summary>
@@ -2060,7 +2060,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.LogAnalytics"/> instance for mocking. </returns>
         public static LogAnalytics LogAnalytics(string logAnalyticsOutput = null)
         {
-            return new LogAnalytics(new LogAnalyticsOutput(logAnalyticsOutput));
+            return new LogAnalytics(logAnalyticsOutput != null ? new LogAnalyticsOutput(logAnalyticsOutput) : null);
         }
 
         /// <summary> Initializes a new instance of RunCommandDocumentBase. </summary>
@@ -2252,7 +2252,7 @@ namespace Azure.ResourceManager.Compute.Models
             zones ??= new List<string>();
             shareInfo ??= new List<ShareInfoElement>();
 
-            return new ManagedDiskData(id, name, resourceType, systemData, tags, location, managedBy, managedByExtended?.ToList(), sku, zones?.ToList(), extendedLocation, timeCreated, osType, hyperVGeneration, purchasePlan, supportedCapabilities, creationData, diskSizeGB, diskSizeBytes, uniqueId, encryptionSettingsGroup, provisioningState, diskIopsReadWrite, diskMBpsReadWrite, diskIopsReadOnly, diskMBpsReadOnly, diskState, encryption, maxShares, shareInfo?.ToList(), networkAccessPolicy, diskAccessId, tier, burstingEnabled, new PropertyUpdatesInProgress(propertyUpdatesInProgressTargetTier), supportsHibernation, securityProfile, completionPercent, publicNetworkAccess, dataAccessAuthMode);
+            return new ManagedDiskData(id, name, resourceType, systemData, tags, location, managedBy, managedByExtended?.ToList(), sku, zones?.ToList(), extendedLocation, timeCreated, osType, hyperVGeneration, purchasePlan, supportedCapabilities, creationData, diskSizeGB, diskSizeBytes, uniqueId, encryptionSettingsGroup, provisioningState, diskIopsReadWrite, diskMBpsReadWrite, diskIopsReadOnly, diskMBpsReadOnly, diskState, encryption, maxShares, shareInfo?.ToList(), networkAccessPolicy, diskAccessId, tier, burstingEnabled, propertyUpdatesInProgressTargetTier != null ? new PropertyUpdatesInProgress(propertyUpdatesInProgressTargetTier) : null, supportsHibernation, securityProfile, completionPercent, publicNetworkAccess, dataAccessAuthMode);
         }
 
         /// <summary> Initializes a new instance of DiskSku. </summary>
@@ -2399,7 +2399,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Compute.ComputePrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static ComputePrivateEndpointConnectionData ComputePrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, ComputePrivateLinkServiceConnectionState connectionState = null, ComputePrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new ComputePrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.SubResource(privateEndpointId), connectionState, provisioningState);
+            return new ComputePrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of ComputePrivateLinkServiceConnectionState. </summary>
@@ -2460,7 +2460,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.KeyForDiskEncryptionSet"/> instance for mocking. </returns>
         public static KeyForDiskEncryptionSet KeyForDiskEncryptionSet(ResourceIdentifier sourceVaultId = null, Uri keyUri = null)
         {
-            return new KeyForDiskEncryptionSet(ResourceManagerModelFactory.WritableSubResource(sourceVaultId), keyUri);
+            return new KeyForDiskEncryptionSet(sourceVaultId != null ? ResourceManagerModelFactory.WritableSubResource(sourceVaultId) : null, keyUri);
         }
 
         /// <summary> Initializes a new instance of DiskRestorePointData. </summary>
@@ -2668,7 +2668,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new GalleryData(id, name, resourceType, systemData, tags, location, description, new GalleryIdentifier(identifierUniqueName), provisioningState, sharingProfile, new SoftDeletePolicy(isSoftDeleteEnabled), sharingStatus);
+            return new GalleryData(id, name, resourceType, systemData, tags, location, description, identifierUniqueName != null ? new GalleryIdentifier(identifierUniqueName) : null, provisioningState, sharingProfile, isSoftDeleteEnabled != null ? new SoftDeletePolicy(isSoftDeleteEnabled) : null, sharingStatus);
         }
 
         /// <summary> Initializes a new instance of SharingProfile. </summary>
@@ -2759,7 +2759,7 @@ namespace Azure.ResourceManager.Compute.Models
             disallowedDiskTypes ??= new List<string>();
             features ??= new List<GalleryImageFeature>();
 
-            return new GalleryImageData(id, name, resourceType, systemData, tags, location, description, eula, privacyStatementUri, releaseNoteUri, osType, osState, hyperVGeneration, endOfLifeOn, identifier, recommended, new Disallowed(disallowedDiskTypes?.ToList()), purchasePlan, provisioningState, features?.ToList(), architecture);
+            return new GalleryImageData(id, name, resourceType, systemData, tags, location, description, eula, privacyStatementUri, releaseNoteUri, osType, osState, hyperVGeneration, endOfLifeOn, identifier, recommended, disallowedDiskTypes != null ? new Disallowed(disallowedDiskTypes?.ToList()) : null, purchasePlan, provisioningState, features?.ToList(), architecture);
         }
 
         /// <summary> Initializes a new instance of RecommendedMachineConfiguration. </summary>
@@ -3157,7 +3157,7 @@ namespace Azure.ResourceManager.Compute.Models
             disallowedDiskTypes ??= new List<string>();
             features ??= new List<GalleryImageFeature>();
 
-            return new SharedGalleryImageData(name, location, uniqueId, osType, osState, endOfLifeOn, identifier, recommended, new Disallowed(disallowedDiskTypes?.ToList()), hyperVGeneration, features?.ToList(), purchasePlan, architecture);
+            return new SharedGalleryImageData(name, location, uniqueId, osType, osState, endOfLifeOn, identifier, recommended, disallowedDiskTypes != null ? new Disallowed(disallowedDiskTypes?.ToList()) : null, hyperVGeneration, features?.ToList(), purchasePlan, architecture);
         }
 
         /// <summary> Initializes a new instance of SharedGalleryImageVersionData. </summary>
@@ -3258,7 +3258,7 @@ namespace Azure.ResourceManager.Compute.Models
             disallowedDiskTypes ??= new List<string>();
             features ??= new List<GalleryImageFeature>();
 
-            return new CommunityGalleryImageData(name, location, resourceType, uniqueId, osType, osState, endOfLifeOn, identifier, recommended, new Disallowed(disallowedDiskTypes?.ToList()), hyperVGeneration, features?.ToList(), purchasePlan, architecture, privacyStatementUri, eula);
+            return new CommunityGalleryImageData(name, location, resourceType, uniqueId, osType, osState, endOfLifeOn, identifier, recommended, disallowedDiskTypes != null ? new Disallowed(disallowedDiskTypes?.ToList()) : null, hyperVGeneration, features?.ToList(), purchasePlan, architecture, privacyStatementUri, eula);
         }
 
         /// <summary> Initializes a new instance of CommunityGalleryImageVersionData. </summary>
@@ -3292,7 +3292,7 @@ namespace Azure.ResourceManager.Compute.Models
             tags ??= new Dictionary<string, string>();
             networkInterfaces ??= new List<WritableSubResource>();
 
-            return new CloudServiceRoleInstanceData(id, name, resourceType, systemData, location, tags, sku, new RoleInstanceNetworkProfile(networkInterfaces?.ToList()), instanceView);
+            return new CloudServiceRoleInstanceData(id, name, resourceType, systemData, location, tags, sku, networkInterfaces != null ? new RoleInstanceNetworkProfile(networkInterfaces?.ToList()) : null, instanceView);
         }
 
         /// <summary> Initializes a new instance of InstanceSku. </summary>
@@ -3396,7 +3396,7 @@ namespace Azure.ResourceManager.Compute.Models
             osSecrets ??= new List<CloudServiceVaultSecretGroup>();
             extensions ??= new List<CloudServiceExtension>();
 
-            return new CloudServiceData(id, name, resourceType, systemData, tags, location, packageUri, configuration, configurationUri, startCloudService, allowModelOverride, upgradeMode, new CloudServiceRoleProfile(roles?.ToList()), new CloudServiceOSProfile(osSecrets?.ToList()), networkProfile, new CloudServiceExtensionProfile(extensions?.ToList()), provisioningState, uniqueId);
+            return new CloudServiceData(id, name, resourceType, systemData, tags, location, packageUri, configuration, configurationUri, startCloudService, allowModelOverride, upgradeMode, roles != null ? new CloudServiceRoleProfile(roles?.ToList()) : null, osSecrets != null ? new CloudServiceOSProfile(osSecrets?.ToList()) : null, networkProfile, extensions != null ? new CloudServiceExtensionProfile(extensions?.ToList()) : null, provisioningState, uniqueId);
         }
 
         /// <summary> Initializes a new instance of CloudServiceRoleProfileProperties. </summary>
@@ -3416,7 +3416,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             vaultCertificates ??= new List<CloudServiceVaultCertificate>();
 
-            return new CloudServiceVaultSecretGroup(ResourceManagerModelFactory.WritableSubResource(sourceVaultId), vaultCertificates?.ToList());
+            return new CloudServiceVaultSecretGroup(sourceVaultId != null ? ResourceManagerModelFactory.WritableSubResource(sourceVaultId) : null, vaultCertificates?.ToList());
         }
 
         /// <summary> Initializes a new instance of CloudServiceVaultCertificate. </summary>
@@ -3440,7 +3440,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             loadBalancerConfigurations ??= new List<CloudServiceLoadBalancerConfiguration>();
 
-            return new CloudServiceNetworkProfile(loadBalancerConfigurations?.ToList(), slotType, ResourceManagerModelFactory.WritableSubResource(swappableCloudServiceId));
+            return new CloudServiceNetworkProfile(loadBalancerConfigurations?.ToList(), slotType, swappableCloudServiceId != null ? ResourceManagerModelFactory.WritableSubResource(swappableCloudServiceId) : null);
         }
 
         /// <summary> Initializes a new instance of CloudServiceLoadBalancerConfiguration. </summary>
@@ -3463,7 +3463,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.LoadBalancerFrontendIPConfiguration"/> instance for mocking. </returns>
         public static LoadBalancerFrontendIPConfiguration LoadBalancerFrontendIPConfiguration(string name = null, ResourceIdentifier publicIPAddressId = null, ResourceIdentifier subnetId = null, string privateIPAddress = null)
         {
-            return new LoadBalancerFrontendIPConfiguration(name, ResourceManagerModelFactory.WritableSubResource(publicIPAddressId), ResourceManagerModelFactory.WritableSubResource(subnetId), privateIPAddress);
+            return new LoadBalancerFrontendIPConfiguration(name, publicIPAddressId != null ? ResourceManagerModelFactory.WritableSubResource(publicIPAddressId) : null, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, privateIPAddress);
         }
 
         /// <summary> Initializes a new instance of CloudServiceExtension. </summary>
@@ -3498,7 +3498,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.CloudServiceVaultAndSecretReference"/> instance for mocking. </returns>
         public static CloudServiceVaultAndSecretReference CloudServiceVaultAndSecretReference(ResourceIdentifier sourceVaultId = null, Uri secretUri = null)
         {
-            return new CloudServiceVaultAndSecretReference(ResourceManagerModelFactory.WritableSubResource(sourceVaultId), secretUri);
+            return new CloudServiceVaultAndSecretReference(sourceVaultId != null ? ResourceManagerModelFactory.WritableSubResource(sourceVaultId) : null, secretUri);
         }
 
         /// <summary> Initializes a new instance of CloudServiceInstanceView. </summary>
@@ -3513,7 +3513,7 @@ namespace Azure.ResourceManager.Compute.Models
             privateIds ??= new List<string>();
             statuses ??= new List<ResourceInstanceViewStatus>();
 
-            return new CloudServiceInstanceView(new InstanceViewStatusesSummary(roleInstanceStatusesSummary?.ToList()), sdkVersion, privateIds?.ToList(), statuses?.ToList());
+            return new CloudServiceInstanceView(roleInstanceStatusesSummary != null ? new InstanceViewStatusesSummary(roleInstanceStatusesSummary?.ToList()) : null, sdkVersion, privateIds?.ToList(), statuses?.ToList());
         }
 
         /// <summary> Initializes a new instance of StatusCodeCount. </summary>

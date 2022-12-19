@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -422,7 +421,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             headers ??= new List<string>();
 
-            return new HttpMessageDiagnostic(headers?.ToList(), new BodyDiagnosticSettings(bodyBytes), dataMasking);
+            return new HttpMessageDiagnostic(headers?.ToList(), bodyBytes != null ? new BodyDiagnosticSettings(bodyBytes) : null, dataMasking);
         }
 
         /// <summary> Initializes a new instance of DataMasking. </summary>
@@ -695,7 +694,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiManagementBackendData"/> instance for mocking. </returns>
         public static ApiManagementBackendData ApiManagementBackendData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string title = null, string description = null, Uri resourceUri = null, BackendServiceFabricClusterProperties backendServiceFabricCluster = null, BackendCredentialsContract credentials = null, BackendProxyContract proxy = null, BackendTlsProperties tls = null, Uri uri = null, BackendProtocol? protocol = null)
         {
-            return new ApiManagementBackendData(id, name, resourceType, systemData, title, description, resourceUri, new BackendProperties(backendServiceFabricCluster), credentials, proxy, tls, uri, protocol);
+            return new ApiManagementBackendData(id, name, resourceType, systemData, title, description, resourceUri, backendServiceFabricCluster != null ? new BackendProperties(backendServiceFabricCluster) : null, credentials, proxy, tls, uri, protocol);
         }
 
         /// <summary> Initializes a new instance of BackendServiceFabricClusterProperties. </summary>
@@ -934,7 +933,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.AvailableApiManagementServiceSkuResult"/> instance for mocking. </returns>
         public static AvailableApiManagementServiceSkuResult AvailableApiManagementServiceSkuResult(ResourceType? resourceType = null, ApiManagementServiceSkuType? skuName = null, ApiManagementResourceSkuCapacity capacity = null)
         {
-            return new AvailableApiManagementServiceSkuResult(resourceType, new ResourceSku(skuName), capacity);
+            return new AvailableApiManagementServiceSkuResult(resourceType, skuName != null ? new ResourceSku(skuName) : null, capacity);
         }
 
         /// <summary> Initializes a new instance of ApiManagementResourceSkuCapacity. </summary>
@@ -1000,7 +999,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             certificates ??= new List<CertificateConfiguration>();
             privateEndpointConnections ??= new List<RemotePrivateEndpointConnectionWrapper>();
 
-            return new ApiManagementServiceData(id, name, resourceType, systemData, tags, location, sku, identity, etag, zones?.ToList(), notificationSenderEmail, provisioningState, targetProvisioningState, createdAtUtc, gatewayUri, gatewayRegionalUri, portalUri, managementApiUri, scmUri, developerPortalUri, hostnameConfigurations?.ToList(), publicIPAddresses?.ToList(), privateIPAddresses?.ToList(), publicIPAddressId, publicNetworkAccess, virtualNetworkConfiguration, additionalLocations?.ToList(), customProperties, certificates?.ToList(), enableClientCertificate, disableGateway, virtualNetworkType, new ApiVersionConstraint(minApiVersion), restore, privateEndpointConnections?.ToList(), platformVersion, publisherEmail, publisherName);
+            return new ApiManagementServiceData(id, name, resourceType, systemData, tags, location, sku, identity, etag, zones?.ToList(), notificationSenderEmail, provisioningState, targetProvisioningState, createdAtUtc, gatewayUri, gatewayRegionalUri, portalUri, managementApiUri, scmUri, developerPortalUri, hostnameConfigurations?.ToList(), publicIPAddresses?.ToList(), privateIPAddresses?.ToList(), publicIPAddressId, publicNetworkAccess, virtualNetworkConfiguration, additionalLocations?.ToList(), customProperties, certificates?.ToList(), enableClientCertificate, disableGateway, virtualNetworkType, minApiVersion != null ? new ApiVersionConstraint(minApiVersion) : null, restore, privateEndpointConnections?.ToList(), platformVersion, publisherEmail, publisherName);
         }
 
         /// <summary> Initializes a new instance of HostnameConfiguration. </summary>
@@ -1076,7 +1075,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         {
             groupIds ??= new List<string>();
 
-            return new RemotePrivateEndpointConnectionWrapper(id, name, resourceType, ResourceManagerModelFactory.SubResource(privateEndpointId), privateLinkServiceConnectionState, provisioningState, groupIds?.ToList());
+            return new RemotePrivateEndpointConnectionWrapper(id, name, resourceType, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState, provisioningState, groupIds?.ToList());
         }
 
         /// <summary> Initializes a new instance of ApiManagementPrivateLinkServiceConnectionState. </summary>
@@ -1140,7 +1139,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             privateEndpointConnections ??= new List<RemotePrivateEndpointConnectionWrapper>();
             tags ??= new Dictionary<string, string>();
 
-            return new ApiManagementServicePatch(id, name, resourceType, systemData, sku, identity, etag, zones?.ToList(), notificationSenderEmail, provisioningState, targetProvisioningState, createdAtUtc, gatewayUri, gatewayRegionalUri, portalUri, managementApiUri, scmUri, developerPortalUri, hostnameConfigurations?.ToList(), publicIPAddresses?.ToList(), privateIPAddresses?.ToList(), publicIPAddressId, publicNetworkAccess, virtualNetworkConfiguration, additionalLocations?.ToList(), customProperties, certificates?.ToList(), enableClientCertificate, disableGateway, virtualNetworkType, new ApiVersionConstraint(minApiVersion), restore, privateEndpointConnections?.ToList(), platformVersion, publisherEmail, publisherName, tags);
+            return new ApiManagementServicePatch(id, name, resourceType, systemData, sku, identity, etag, zones?.ToList(), notificationSenderEmail, provisioningState, targetProvisioningState, createdAtUtc, gatewayUri, gatewayRegionalUri, portalUri, managementApiUri, scmUri, developerPortalUri, hostnameConfigurations?.ToList(), publicIPAddresses?.ToList(), privateIPAddresses?.ToList(), publicIPAddressId, publicNetworkAccess, virtualNetworkConfiguration, additionalLocations?.ToList(), customProperties, certificates?.ToList(), enableClientCertificate, disableGateway, virtualNetworkType, minApiVersion != null ? new ApiVersionConstraint(minApiVersion) : null, restore, privateEndpointConnections?.ToList(), platformVersion, publisherEmail, publisherName, tags);
         }
 
         /// <summary> Initializes a new instance of ApiManagementServiceGetSsoTokenResult. </summary>
@@ -1702,7 +1701,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="Models.PortalSettingsContractData"/> instance for mocking. </returns>
         public static PortalSettingsContractData PortalSettingsContractData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri uri = null, string validationKey = null, bool? isSubscriptionDelegationEnabled = null, bool? isUserRegistrationDelegationEnabled = null, bool? isRedirectEnabled = null, TermsOfServiceProperties termsOfService = null)
         {
-            return new PortalSettingsContractData(id, name, resourceType, systemData, uri, validationKey, new SubscriptionDelegationSettingProperties(isSubscriptionDelegationEnabled), new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled), isRedirectEnabled, termsOfService);
+            return new PortalSettingsContractData(id, name, resourceType, systemData, uri, validationKey, isSubscriptionDelegationEnabled != null ? new SubscriptionDelegationSettingProperties(isSubscriptionDelegationEnabled) : null, isUserRegistrationDelegationEnabled != null ? new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled) : null, isRedirectEnabled, termsOfService);
         }
 
         /// <summary> Initializes a new instance of TermsOfServiceProperties. </summary>
@@ -1752,7 +1751,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiManagementPortalDelegationSettingData"/> instance for mocking. </returns>
         public static ApiManagementPortalDelegationSettingData ApiManagementPortalDelegationSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri uri = null, string validationKey = null, bool? isSubscriptionDelegationEnabled = null, bool? isUserRegistrationDelegationEnabled = null)
         {
-            return new ApiManagementPortalDelegationSettingData(id, name, resourceType, systemData, uri, validationKey, new SubscriptionDelegationSettingProperties(isSubscriptionDelegationEnabled), new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled));
+            return new ApiManagementPortalDelegationSettingData(id, name, resourceType, systemData, uri, validationKey, isSubscriptionDelegationEnabled != null ? new SubscriptionDelegationSettingProperties(isSubscriptionDelegationEnabled) : null, isUserRegistrationDelegationEnabled != null ? new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled) : null);
         }
 
         /// <summary> Initializes a new instance of PortalSettingValidationKeyContract. </summary>
@@ -1774,7 +1773,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <returns> A new <see cref="ApiManagement.ApiManagementPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static ApiManagementPrivateEndpointConnectionData ApiManagementPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, ApiManagementPrivateLinkServiceConnectionState connectionState = null, ApiManagementPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new ApiManagementPrivateEndpointConnectionData(id, name, resourceType, systemData, ResourceManagerModelFactory.SubResource(privateEndpointId), connectionState, provisioningState);
+            return new ApiManagementPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
 
         /// <summary> Initializes a new instance of ApiManagementPrivateLinkResourceData. </summary>
