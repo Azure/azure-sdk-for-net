@@ -106,6 +106,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 Tier = CapacitySkuTier.PbieAzure,
             })
             {
+                AdministrationMembers =
+{
+"azsdktest@microsoft.com","azsdktest2@microsoft.com"
+},
                 Tags =
 {
 ["testKey"] = "testValue",
