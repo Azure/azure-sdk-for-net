@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static ContainerAppData DeserializeContainerAppData(JsonElement element)
         {
-            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<ContainerAppExtendedLocation> extendedLocation = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -88,6 +88,7 @@ namespace Azure.ResourceManager.AppContainers
             Optional<string> environmentId = default;
             Optional<string> workloadProfileType = default;
             Optional<string> latestRevisionName = default;
+            Optional<string> latestReadyRevisionName = default;
             Optional<string> latestRevisionFqdn = default;
             Optional<string> customDomainVerificationId = default;
             Optional<ContainerAppConfiguration> configuration = default;
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = ContainerAppExtendedLocation.DeserializeContainerAppExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -201,6 +202,11 @@ namespace Azure.ResourceManager.AppContainers
                             latestRevisionName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("latestReadyRevisionName"))
+                        {
+                            latestReadyRevisionName = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("latestRevisionFqdn"))
                         {
                             latestRevisionFqdn = property0.Value.GetString();
@@ -255,7 +261,7 @@ namespace Azure.ResourceManager.AppContainers
                     continue;
                 }
             }
-            return new ContainerAppData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, identity, Optional.ToNullable(provisioningState), managedEnvironmentId.Value, environmentId.Value, workloadProfileType.Value, latestRevisionName.Value, latestRevisionFqdn.Value, customDomainVerificationId.Value, configuration.Value, template.Value, Optional.ToList(outboundIPAddresses), eventStreamEndpoint.Value);
+            return new ContainerAppData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, identity, Optional.ToNullable(provisioningState), managedEnvironmentId.Value, environmentId.Value, workloadProfileType.Value, latestRevisionName.Value, latestReadyRevisionName.Value, latestRevisionFqdn.Value, customDomainVerificationId.Value, configuration.Value, template.Value, Optional.ToList(outboundIPAddresses), eventStreamEndpoint.Value);
         }
     }
 }
