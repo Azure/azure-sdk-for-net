@@ -20,8 +20,15 @@ namespace Azure.ResourceManager.LoadTesting.Models
             }
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
-                writer.WriteStringValue(ResourceId);
+                if (ResourceId != null)
+                {
+                    writer.WritePropertyName("resourceId");
+                    writer.WriteStringValue(ResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("resourceId");
+                }
             }
             else
             {

@@ -122,12 +122,11 @@ namespace Azure.ResourceManager.LoadTesting.Tests.ScenarioTests
                 quotaResource.Data.Limit,
                 dimensions);
 
-            Response<LoadTestingQuotaAvailabilityResponse> checkAvailabilityResponse = await quotaResponse.Value.CheckAvailabilityAsync(quotaAvailabilityPayload);
-            Assert.IsNotNull(checkAvailabilityResponse);
-            Assert.IsNotNull(checkAvailabilityResponse.Value);
-            Assert.AreEqual("maxConcurrentTestRuns", checkAvailabilityResponse.Value.Name);
-            Assert.True(checkAvailabilityResponse.Value.IsAvailable.Value == true || checkAvailabilityResponse.Value.IsAvailable.Value == false);
-            Assert.NotNull(checkAvailabilityResponse.Value.AvailabilityStatus);
+            Response<LoadTestingQuotaAvailabilityResult> checkAvailabilityResult = await quotaResponse.Value.CheckLoadTestingQuotaAvailabilityAsync(quotaAvailabilityPayload);
+            Assert.IsNotNull(checkAvailabilityResult);
+            Assert.IsNotNull(checkAvailabilityResult.Value);
+            Assert.AreEqual("maxConcurrentTestRuns", checkAvailabilityResult.Value.Name);
+            Assert.True(checkAvailabilityResult.Value.IsAvailable.Value == true || checkAvailabilityResult.Value.IsAvailable.Value == false);
         }
     }
 }

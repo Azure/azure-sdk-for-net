@@ -19,11 +19,14 @@ modelerfour:
 irregular-plural-words:
   quota: quota
 
+override-operation-name:
+  Quotas_CheckAvailability: CheckLoadTestingQuotaAvailability
+
 rename-mapping:
   Resource: LoadTestingBaseResource
   LoadTestResource: LoadTestingResource
   QuotaResource: LoadTestingQuota
-  CheckQuotaAvailabilityResponse: LoadTestingQuotaAvailabilityResponse
+  CheckQuotaAvailabilityResponse: LoadTestingQuotaAvailabilityResult
   EncryptionProperties: CustomerManagedKeyEncryptionProperties
   EncryptionPropertiesIdentity: CustomerManagedKeyIdentity
   EndpointDependency: LoadTestingEndpointDependency
