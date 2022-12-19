@@ -44,18 +44,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
             return new KeyVaultSecretReference(secretUrl, sourceVault);
         }
-        
-        private class KeyVaultSecretReferenceConverter : JsonConverter<KeyVaultSecretReference>
+
+        internal partial class KeyVaultSecretReferenceConverter : JsonConverter<KeyVaultSecretReference>
         {
+            public override void Write(Utf8JsonWriter writer, KeyVaultSecretReference model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
             public override KeyVaultSecretReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return KeyVaultSecretReference.DeserializeKeyVaultSecretReference(document.RootElement);
-            }
-
-            public override void Write(Utf8JsonWriter writer, KeyVaultSecretReference value, JsonSerializerOptions options)
-            {
-                ((IUtf8JsonSerializable)value).Write(writer);
+                return DeserializeKeyVaultSecretReference(document.RootElement);
             }
         }
     }
