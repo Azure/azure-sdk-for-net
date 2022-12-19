@@ -13,7 +13,7 @@ parameters:
   default: 'azsdk-pool-mms-win-2019-perf'
 - name: WindowsVmImage
   type: string
-  default: 'MMS2022'
+  default: 'MMS2019'
 - name: Language
   type: string
   default: ''
