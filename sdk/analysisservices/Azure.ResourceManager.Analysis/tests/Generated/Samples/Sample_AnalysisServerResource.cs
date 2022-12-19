@@ -103,6 +103,10 @@ namespace Azure.ResourceManager.Analysis
 {
 ["testKey"] = "testValue",
 },
+                AsAdministratorIdentities =
+{
+"azsdktest@microsoft.com","azsdktest2@microsoft.com"
+},
             };
             ArmOperation<AnalysisServerResource> lro = await analysisServer.UpdateAsync(WaitUntil.Completed, patch);
             AnalysisServerResource result = lro.Value;

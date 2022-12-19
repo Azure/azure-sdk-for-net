@@ -137,6 +137,16 @@ namespace Azure.ResourceManager.Search
                 ReplicaCount = 1,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
+                IPRules =
+{
+new SearchServiceIPRule()
+{
+Value = "123.4.5.6",
+},new SearchServiceIPRule()
+{
+Value = "123.4.6.0/18",
+}
+},
                 Tags =
 {
 ["app-name"] = "My e-commerce app",
