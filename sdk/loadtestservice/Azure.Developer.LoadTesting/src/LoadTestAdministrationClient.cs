@@ -346,8 +346,8 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         public FileUploadOperation UploadTestFile(WaitUntil waitUntil, string testId, string fileName, RequestContent content, string fileType = null, RequestContext context = null)
         {
-            UploadTestFile(testId, fileName, content, fileType, context);
-            FileUploadOperation operation = new(testId, fileName, this);
+            Response initialResponse = UploadTestFile(testId, fileName, content, fileType, context);
+            FileUploadOperation operation = new(testId, fileName, this, initialResponse);
             if (waitUntil == WaitUntil.Completed)
             {
                 operation.WaitForCompletion();

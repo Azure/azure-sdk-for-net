@@ -59,11 +59,17 @@ namespace Azure.Developer.LoadTesting
         /// <summary>
         /// FileUploadOperation.
         /// </summary>
-        public TestRunOperation(string testRunId, LoadTestRunClient client)
+        public TestRunOperation(string testRunId, LoadTestRunClient client, Response initialResponse = null)
         {
             _testRunId = Id = testRunId;
             _client = client;
             _completed = false;
+            if (initialResponse != null)
+            {
+                _response = initialResponse;
+                _value = _response.Content;
+                GetCompletionResponse();
+            }
         }
 
         /// <summary>

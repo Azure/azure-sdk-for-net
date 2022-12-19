@@ -38,8 +38,8 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         public TestRunOperation beginTestRun(WaitUntil waitUntil, string testRunId, RequestContent content, string oldTestRunId, string fileType = null, RequestContext context = null)
         {
-            CreateOrUpdateTestRun(testRunId, content, oldTestRunId, context);
-            TestRunOperation operation = new(testRunId, this);
+            Response initialResponse = CreateOrUpdateTestRun(testRunId, content, oldTestRunId, context);
+            TestRunOperation operation = new(testRunId, this, initialResponse);
             if (waitUntil == WaitUntil.Completed)
             {
                 operation.WaitForCompletion();

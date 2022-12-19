@@ -60,13 +60,19 @@ namespace Azure.Developer.LoadTesting
         /// <summary>
         /// FileUploadOperation.
         /// </summary>
-        public FileUploadOperation(string testId, string fileName, LoadTestAdministrationClient client)
+        public FileUploadOperation(string testId, string fileName, LoadTestAdministrationClient client, Response initialResponse)
         {
             _testId = testId;
             _fileName = fileName;
             _client = client;
-            Id = $"{_testId}_{_fileName}";
+            Id = $"{_testId}/{_fileName}";
             _completed = false;
+            if (initialResponse != null)
+            {
+                _response = initialResponse;
+                _value = _response.Content;
+                GetCompletionResponse();
+            }
         }
 
         /// <summary>
