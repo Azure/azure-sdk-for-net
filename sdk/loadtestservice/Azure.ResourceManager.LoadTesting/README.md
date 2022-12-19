@@ -160,7 +160,6 @@ LoadTestingResource resource = loadTestingLro.Value;
 
 ### Delete an Azure Load Testing resource
 
-Update an Azure Load Testing resource to configure CMK encryption using system-assigned managed identity.
 ```C#
 LoadTestingCollection loadTestingCollection = resourceGroup.GetLoadTestingResources();
 string loadTestResourceName = "sample-loadtest";
