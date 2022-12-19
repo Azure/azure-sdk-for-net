@@ -82,4 +82,8 @@ directive:
     where: $.definitions
     transform: >
       $.NWRuleSetIpRules['x-ms-client-name'] = 'RelayNetworkRuleSetIPRule';
+  - from: Namespaces.json
+    where: $.definitions
+    transform: >
+      $.RelayNamespaceProperties.properties.publicNetworkAccess['description'] = 'DO NOT USE PublicNetworkAccess on this API. Please use the NetworkRuleSet api to enable or disable publicNetworkAccess.';
 ```
