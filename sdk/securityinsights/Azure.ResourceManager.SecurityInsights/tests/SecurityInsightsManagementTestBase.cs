@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.SecurityInsights.Tests
         protected ArmClient Client { get; private set; }
         protected AzureLocation DefaultLocation => AzureLocation.EastUS;
         protected string groupName;
-        protected string workspaceName = "wait to change";
         protected SubscriptionResource DefaultSubscription { get; private set; }
 
         protected SecurityInsightsManagementTestBase(bool isAsync, RecordedTestMode mode)

@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The kind of the entity. </summary>
-    public readonly partial struct EntityKind : IEquatable<EntityKind>
+    public readonly partial struct SecurityInsightsEntityKind : IEquatable<SecurityInsightsEntityKind>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="EntityKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsEntityKind"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EntityKind(string value)
+        public SecurityInsightsEntityKind(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -45,59 +45,59 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string SubmissionMailValue = "SubmissionMail";
 
         /// <summary> Entity represents account in the system. </summary>
-        public static EntityKind Account { get; } = new EntityKind(AccountValue);
+        public static SecurityInsightsEntityKind Account { get; } = new SecurityInsightsEntityKind(AccountValue);
         /// <summary> Entity represents host in the system. </summary>
-        public static EntityKind Host { get; } = new EntityKind(HostValue);
+        public static SecurityInsightsEntityKind Host { get; } = new SecurityInsightsEntityKind(HostValue);
         /// <summary> Entity represents file in the system. </summary>
-        public static EntityKind File { get; } = new EntityKind(FileValue);
+        public static SecurityInsightsEntityKind File { get; } = new SecurityInsightsEntityKind(FileValue);
         /// <summary> Entity represents azure resource in the system. </summary>
-        public static EntityKind AzureResource { get; } = new EntityKind(AzureResourceValue);
+        public static SecurityInsightsEntityKind AzureResource { get; } = new SecurityInsightsEntityKind(AzureResourceValue);
         /// <summary> Entity represents cloud application in the system. </summary>
-        public static EntityKind CloudApplication { get; } = new EntityKind(CloudApplicationValue);
+        public static SecurityInsightsEntityKind CloudApplication { get; } = new SecurityInsightsEntityKind(CloudApplicationValue);
         /// <summary> Entity represents dns resolution in the system. </summary>
-        public static EntityKind DnsResolution { get; } = new EntityKind(DnsResolutionValue);
+        public static SecurityInsightsEntityKind DnsResolution { get; } = new SecurityInsightsEntityKind(DnsResolutionValue);
         /// <summary> Entity represents file hash in the system. </summary>
-        public static EntityKind FileHash { get; } = new EntityKind(FileHashValue);
+        public static SecurityInsightsEntityKind FileHash { get; } = new SecurityInsightsEntityKind(FileHashValue);
         /// <summary> Entity represents ip in the system. </summary>
-        public static EntityKind IP { get; } = new EntityKind(IPValue);
+        public static SecurityInsightsEntityKind IP { get; } = new SecurityInsightsEntityKind(IPValue);
         /// <summary> Entity represents malware in the system. </summary>
-        public static EntityKind Malware { get; } = new EntityKind(MalwareValue);
+        public static SecurityInsightsEntityKind Malware { get; } = new SecurityInsightsEntityKind(MalwareValue);
         /// <summary> Entity represents process in the system. </summary>
-        public static EntityKind Process { get; } = new EntityKind(ProcessValue);
+        public static SecurityInsightsEntityKind Process { get; } = new SecurityInsightsEntityKind(ProcessValue);
         /// <summary> Entity represents registry key in the system. </summary>
-        public static EntityKind RegistryKey { get; } = new EntityKind(RegistryKeyValue);
+        public static SecurityInsightsEntityKind RegistryKey { get; } = new SecurityInsightsEntityKind(RegistryKeyValue);
         /// <summary> Entity represents registry value in the system. </summary>
-        public static EntityKind RegistryValue { get; } = new EntityKind(RegistryValueValue);
+        public static SecurityInsightsEntityKind RegistryValue { get; } = new SecurityInsightsEntityKind(RegistryValueValue);
         /// <summary> Entity represents security group in the system. </summary>
-        public static EntityKind SecurityGroup { get; } = new EntityKind(SecurityGroupValue);
+        public static SecurityInsightsEntityKind SecurityGroup { get; } = new SecurityInsightsEntityKind(SecurityGroupValue);
         /// <summary> Entity represents url in the system. </summary>
-        public static EntityKind Url { get; } = new EntityKind(UrlValue);
+        public static SecurityInsightsEntityKind Url { get; } = new SecurityInsightsEntityKind(UrlValue);
         /// <summary> Entity represents IoT device in the system. </summary>
-        public static EntityKind IoTDevice { get; } = new EntityKind(IoTDeviceValue);
+        public static SecurityInsightsEntityKind IoTDevice { get; } = new SecurityInsightsEntityKind(IoTDeviceValue);
         /// <summary> Entity represents security alert in the system. </summary>
-        public static EntityKind SecurityAlert { get; } = new EntityKind(SecurityAlertValue);
+        public static SecurityInsightsEntityKind SecurityAlert { get; } = new SecurityInsightsEntityKind(SecurityAlertValue);
         /// <summary> Entity represents bookmark in the system. </summary>
-        public static EntityKind Bookmark { get; } = new EntityKind(BookmarkValue);
+        public static SecurityInsightsEntityKind Bookmark { get; } = new SecurityInsightsEntityKind(BookmarkValue);
         /// <summary> Entity represents mail cluster in the system. </summary>
-        public static EntityKind MailCluster { get; } = new EntityKind(MailClusterValue);
+        public static SecurityInsightsEntityKind MailCluster { get; } = new SecurityInsightsEntityKind(MailClusterValue);
         /// <summary> Entity represents mail message in the system. </summary>
-        public static EntityKind MailMessage { get; } = new EntityKind(MailMessageValue);
+        public static SecurityInsightsEntityKind MailMessage { get; } = new SecurityInsightsEntityKind(MailMessageValue);
         /// <summary> Entity represents mailbox in the system. </summary>
-        public static EntityKind Mailbox { get; } = new EntityKind(MailboxValue);
+        public static SecurityInsightsEntityKind Mailbox { get; } = new SecurityInsightsEntityKind(MailboxValue);
         /// <summary> Entity represents submission mail in the system. </summary>
-        public static EntityKind SubmissionMail { get; } = new EntityKind(SubmissionMailValue);
-        /// <summary> Determines if two <see cref="EntityKind"/> values are the same. </summary>
-        public static bool operator ==(EntityKind left, EntityKind right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="EntityKind"/> values are not the same. </summary>
-        public static bool operator !=(EntityKind left, EntityKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EntityKind"/>. </summary>
-        public static implicit operator EntityKind(string value) => new EntityKind(value);
+        public static SecurityInsightsEntityKind SubmissionMail { get; } = new SecurityInsightsEntityKind(SubmissionMailValue);
+        /// <summary> Determines if two <see cref="SecurityInsightsEntityKind"/> values are the same. </summary>
+        public static bool operator ==(SecurityInsightsEntityKind left, SecurityInsightsEntityKind right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="SecurityInsightsEntityKind"/> values are not the same. </summary>
+        public static bool operator !=(SecurityInsightsEntityKind left, SecurityInsightsEntityKind right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="SecurityInsightsEntityKind"/>. </summary>
+        public static implicit operator SecurityInsightsEntityKind(string value) => new SecurityInsightsEntityKind(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EntityKind other && Equals(other);
+        public override bool Equals(object obj) => obj is SecurityInsightsEntityKind other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(EntityKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SecurityInsightsEntityKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

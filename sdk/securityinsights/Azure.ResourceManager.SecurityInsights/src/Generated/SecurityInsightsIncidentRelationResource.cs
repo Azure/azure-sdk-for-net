@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A Class representing an IncidentRelation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="IncidentRelationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetIncidentRelationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IncidentResource" /> using the GetIncidentRelation method.
+    /// A Class representing a SecurityInsightsIncidentRelation along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityInsightsIncidentRelationResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSecurityInsightsIncidentRelationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IncidentResource" /> using the GetSecurityInsightsIncidentRelation method.
     /// </summary>
-    public partial class IncidentRelationResource : ArmResource
+    public partial class SecurityInsightsIncidentRelationResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="IncidentRelationResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsIncidentRelationResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string relationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/relations/{relationName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _incidentRelationClientDiagnostics;
-        private readonly IncidentRelationsRestOperations _incidentRelationRestClient;
-        private readonly IncidentRelationData _data;
+        private readonly ClientDiagnostics _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics;
+        private readonly IncidentRelationsRestOperations _securityInsightsIncidentRelationIncidentRelationsRestClient;
+        private readonly SecurityInsightsIncidentRelationData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="IncidentRelationResource"/> class for mocking. </summary>
-        protected IncidentRelationResource()
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsIncidentRelationResource"/> class for mocking. </summary>
+        protected SecurityInsightsIncidentRelationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "IncidentRelationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SecurityInsightsIncidentRelationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal IncidentRelationResource(ArmClient client, IncidentRelationData data) : this(client, data.Id)
+        internal SecurityInsightsIncidentRelationResource(ArmClient client, SecurityInsightsIncidentRelationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="IncidentRelationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsIncidentRelationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal IncidentRelationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SecurityInsightsIncidentRelationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _incidentRelationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string incidentRelationApiVersion);
-            _incidentRelationRestClient = new IncidentRelationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, incidentRelationApiVersion);
+            _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string securityInsightsIncidentRelationIncidentRelationsApiVersion);
+            _securityInsightsIncidentRelationIncidentRelationsRestClient = new IncidentRelationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsIncidentRelationIncidentRelationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual IncidentRelationData Data
+        public virtual SecurityInsightsIncidentRelationData Data
         {
             get
             {
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Operation Id: IncidentRelations_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IncidentRelationResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsIncidentRelationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _incidentRelationClientDiagnostics.CreateScope("IncidentRelationResource.Get");
+            using var scope = _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics.CreateScope("SecurityInsightsIncidentRelationResource.Get");
             scope.Start();
             try
             {
-                var response = await _incidentRelationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsIncidentRelationIncidentRelationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IncidentRelationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsIncidentRelationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Operation Id: IncidentRelations_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IncidentRelationResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsIncidentRelationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _incidentRelationClientDiagnostics.CreateScope("IncidentRelationResource.Get");
+            using var scope = _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics.CreateScope("SecurityInsightsIncidentRelationResource.Get");
             scope.Start();
             try
             {
-                var response = _incidentRelationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _securityInsightsIncidentRelationIncidentRelationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IncidentRelationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsIncidentRelationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,11 +143,11 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _incidentRelationClientDiagnostics.CreateScope("IncidentRelationResource.Delete");
+            using var scope = _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics.CreateScope("SecurityInsightsIncidentRelationResource.Delete");
             scope.Start();
             try
             {
-                var response = await _incidentRelationRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsIncidentRelationIncidentRelationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new SecurityInsightsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _incidentRelationClientDiagnostics.CreateScope("IncidentRelationResource.Delete");
+            using var scope = _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics.CreateScope("SecurityInsightsIncidentRelationResource.Delete");
             scope.Start();
             try
             {
-                var response = _incidentRelationRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _securityInsightsIncidentRelationIncidentRelationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new SecurityInsightsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -195,16 +195,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="data"> The relation model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<IncidentRelationResource>> UpdateAsync(WaitUntil waitUntil, IncidentRelationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SecurityInsightsIncidentRelationResource>> UpdateAsync(WaitUntil waitUntil, SecurityInsightsIncidentRelationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _incidentRelationClientDiagnostics.CreateScope("IncidentRelationResource.Update");
+            using var scope = _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics.CreateScope("SecurityInsightsIncidentRelationResource.Update");
             scope.Start();
             try
             {
-                var response = await _incidentRelationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityInsightsArmOperation<IncidentRelationResource>(Response.FromValue(new IncidentRelationResource(Client, response), response.GetRawResponse()));
+                var response = await _securityInsightsIncidentRelationIncidentRelationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentRelationResource>(Response.FromValue(new SecurityInsightsIncidentRelationResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -225,16 +225,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="data"> The relation model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<IncidentRelationResource> Update(WaitUntil waitUntil, IncidentRelationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SecurityInsightsIncidentRelationResource> Update(WaitUntil waitUntil, SecurityInsightsIncidentRelationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _incidentRelationClientDiagnostics.CreateScope("IncidentRelationResource.Update");
+            using var scope = _securityInsightsIncidentRelationIncidentRelationsClientDiagnostics.CreateScope("SecurityInsightsIncidentRelationResource.Update");
             scope.Start();
             try
             {
-                var response = _incidentRelationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SecurityInsightsArmOperation<IncidentRelationResource>(Response.FromValue(new IncidentRelationResource(Client, response), response.GetRawResponse()));
+                var response = _securityInsightsIncidentRelationIncidentRelationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsIncidentRelationResource>(Response.FromValue(new SecurityInsightsIncidentRelationResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

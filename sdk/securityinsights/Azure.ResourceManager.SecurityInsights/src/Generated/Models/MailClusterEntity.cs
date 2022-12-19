@@ -9,12 +9,11 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a mail cluster entity. </summary>
-    public partial class MailClusterEntity : EntityData
+    public partial class MailClusterEntity : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of MailClusterEntity. </summary>
         public MailClusterEntity()
@@ -22,7 +21,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             NetworkMessageIds = new ChangeTrackingList<string>();
             Threats = new ChangeTrackingList<string>();
-            Kind = EntityKind.MailCluster;
+            Kind = SecurityInsightsEntityKind.MailCluster;
         }
 
         /// <summary> Initializes a new instance of MailClusterEntity. </summary>
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="clusterQueryStartOn"> The cluster query start time. </param>
         /// <param name="clusterQueryEndOn"> The cluster query end time. </param>
         /// <param name="clusterGroup"> The cluster group. </param>
-        internal MailClusterEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IReadOnlyList<string> networkMessageIds, BinaryData countByDeliveryStatus, BinaryData countByThreatType, BinaryData countByProtectionStatus, IReadOnlyList<string> threats, string query, DateTimeOffset? queryOn, int? mailCount, bool? isVolumeAnomaly, string source, string clusterSourceIdentifier, string clusterSourceType, DateTimeOffset? clusterQueryStartOn, DateTimeOffset? clusterQueryEndOn, string clusterGroup) : base(id, name, resourceType, systemData, kind)
+        internal MailClusterEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IReadOnlyList<string> networkMessageIds, BinaryData countByDeliveryStatus, BinaryData countByThreatType, BinaryData countByProtectionStatus, IReadOnlyList<string> threats, string query, DateTimeOffset? queryOn, int? mailCount, bool? isVolumeAnomaly, string source, string clusterSourceIdentifier, string clusterSourceType, DateTimeOffset? clusterQueryStartOn, DateTimeOffset? clusterQueryEndOn, string clusterGroup) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

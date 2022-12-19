@@ -9,18 +9,17 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a registry value entity. </summary>
-    public partial class RegistryValueEntity : EntityData
+    public partial class RegistryValueEntity : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of RegistryValueEntity. </summary>
         public RegistryValueEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            Kind = EntityKind.RegistryValue;
+            Kind = SecurityInsightsEntityKind.RegistryValue;
         }
 
         /// <summary> Initializes a new instance of RegistryValueEntity. </summary>
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="valueData"> String formatted representation of the value data. </param>
         /// <param name="valueName"> The registry value name. </param>
         /// <param name="valueType"> Specifies the data types to use when storing values in the registry, or identifies the data type of a value in the registry. </param>
-        internal RegistryValueEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string keyEntityId, string valueData, string valueName, RegistryValueKind? valueType) : base(id, name, resourceType, systemData, kind)
+        internal RegistryValueEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string keyEntityId, string valueData, string valueName, RegistryValueKind? valueType) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

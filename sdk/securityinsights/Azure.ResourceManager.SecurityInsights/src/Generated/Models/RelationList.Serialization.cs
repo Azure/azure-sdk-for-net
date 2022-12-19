@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         internal static RelationList DeserializeRelationList(JsonElement element)
         {
             Optional<string> nextLink = default;
-            IReadOnlyList<IncidentRelationData> value = default;
+            IReadOnlyList<SecurityInsightsIncidentRelationData> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("value"))
                 {
-                    List<IncidentRelationData> array = new List<IncidentRelationData>();
+                    List<SecurityInsightsIncidentRelationData> array = new List<SecurityInsightsIncidentRelationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IncidentRelationData.DeserializeIncidentRelationData(item));
+                        array.Add(SecurityInsightsIncidentRelationData.DeserializeSecurityInsightsIncidentRelationData(item));
                     }
                     value = array;
                     continue;

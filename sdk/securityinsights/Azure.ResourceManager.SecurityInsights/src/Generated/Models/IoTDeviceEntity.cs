@@ -9,12 +9,11 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents an IoT device entity. </summary>
-    public partial class IoTDeviceEntity : EntityData
+    public partial class IoTDeviceEntity : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of IoTDeviceEntity. </summary>
         public IoTDeviceEntity()
@@ -22,7 +21,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             ThreatIntelligence = new ChangeTrackingList<ThreatIntelligence>();
             Protocols = new ChangeTrackingList<string>();
-            Kind = EntityKind.IoTDevice;
+            Kind = SecurityInsightsEntityKind.IoTDevice;
         }
 
         /// <summary> Initializes a new instance of IoTDeviceEntity. </summary>
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="ipAddressEntityId"> The IP entity if of this device. </param>
         /// <param name="threatIntelligence"> A list of TI contexts attached to the IoTDevice entity. </param>
         /// <param name="protocols"> A list of protocols of the IoTDevice entity. </param>
-        internal IoTDeviceEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string deviceId, string deviceName, string source, Guid? iotSecurityAgentId, string deviceType, string vendor, string edgeId, string macAddress, string model, string serialNumber, string firmwareVersion, string operatingSystem, string iotHubEntityId, string hostEntityId, string ipAddressEntityId, IReadOnlyList<ThreatIntelligence> threatIntelligence, IReadOnlyList<string> protocols) : base(id, name, resourceType, systemData, kind)
+        internal IoTDeviceEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string deviceId, string deviceName, string source, Guid? iotSecurityAgentId, string deviceType, string vendor, string edgeId, string macAddress, string model, string serialNumber, string firmwareVersion, string operatingSystem, string iotHubEntityId, string hostEntityId, string ipAddressEntityId, IReadOnlyList<ThreatIntelligence> threatIntelligence, IReadOnlyList<string> protocols) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

@@ -9,18 +9,17 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents an account entity. </summary>
-    public partial class AccountEntity : EntityData
+    public partial class AccountEntity : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of AccountEntity. </summary>
         public AccountEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            Kind = EntityKind.Account;
+            Kind = SecurityInsightsEntityKind.Account;
         }
 
         /// <summary> Initializes a new instance of AccountEntity. </summary>
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="sid"> The account security identifier, e.g. S-1-5-18. </param>
         /// <param name="upnSuffix"> The user principal name suffix for the account, in some cases it is also the domain name. Examples: contoso.com. </param>
         /// <param name="dnsDomain"> The fully qualified domain DNS name. </param>
-        internal AccountEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string aadTenantId, string aadUserId, string accountName, string displayName, string hostEntityId, bool? isDomainJoined, string ntDomain, Guid? objectGuid, string puid, string sid, string upnSuffix, string dnsDomain) : base(id, name, resourceType, systemData, kind)
+        internal AccountEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string aadTenantId, string aadUserId, string accountName, string displayName, string hostEntityId, bool? isDomainJoined, string ntDomain, Guid? objectGuid, string puid, string sid, string upnSuffix, string dnsDomain) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

@@ -712,20 +712,20 @@ namespace Azure.ResourceManager.SecurityInsights
         }
         #endregion
 
-        #region IncidentRelationResource
+        #region SecurityInsightsIncidentRelationResource
         /// <summary>
-        /// Gets an object representing an <see cref="IncidentRelationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IncidentRelationResource.CreateResourceIdentifier" /> to create an <see cref="IncidentRelationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SecurityInsightsIncidentRelationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsIncidentRelationResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsIncidentRelationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IncidentRelationResource" /> object. </returns>
-        public static IncidentRelationResource GetIncidentRelationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityInsightsIncidentRelationResource" /> object. </returns>
+        public static SecurityInsightsIncidentRelationResource GetSecurityInsightsIncidentRelationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                IncidentRelationResource.ValidateResourceId(id);
-                return new IncidentRelationResource(client, id);
+                SecurityInsightsIncidentRelationResource.ValidateResourceId(id);
+                return new SecurityInsightsIncidentRelationResource(client, id);
             }
             );
         }

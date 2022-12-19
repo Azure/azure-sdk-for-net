@@ -9,18 +9,17 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a url entity. </summary>
-    public partial class UrlEntity : EntityData
+    public partial class UrlEntity : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of UrlEntity. </summary>
         public UrlEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            Kind = EntityKind.Url;
+            Kind = SecurityInsightsEntityKind.Url;
         }
 
         /// <summary> Initializes a new instance of UrlEntity. </summary>
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
         /// <param name="uri"> A full URL the entity points to. </param>
-        internal UrlEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, Uri uri) : base(id, name, resourceType, systemData, kind)
+        internal UrlEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, Uri uri) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

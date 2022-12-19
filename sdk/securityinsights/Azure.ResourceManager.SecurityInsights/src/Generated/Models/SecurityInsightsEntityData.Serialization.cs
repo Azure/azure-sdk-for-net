@@ -8,11 +8,10 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights.Models;
 
-namespace Azure.ResourceManager.SecurityInsights
+namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class EntityData : IUtf8JsonSerializable
+    public partial class SecurityInsightsEntityData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,7 +21,7 @@ namespace Azure.ResourceManager.SecurityInsights
             writer.WriteEndObject();
         }
 
-        internal static EntityData DeserializeEntityData(JsonElement element)
+        internal static SecurityInsightsEntityData DeserializeSecurityInsightsEntityData(JsonElement element)
         {
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     case "Url": return UrlEntity.DeserializeUrlEntity(element);
                 }
             }
-            EntityKind kind = default;
+            SecurityInsightsEntityKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 if (property.NameEquals("kind"))
                 {
-                    kind = new EntityKind(property.Value.GetString());
+                    kind = new SecurityInsightsEntityKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new EntityData(id, name, type, systemData.Value, kind);
+            return new SecurityInsightsEntityData(id, name, type, systemData.Value, kind);
         }
     }
 }

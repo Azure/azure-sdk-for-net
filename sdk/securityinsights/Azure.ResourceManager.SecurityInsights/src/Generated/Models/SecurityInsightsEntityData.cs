@@ -7,31 +7,28 @@
 
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights.Models;
-using SystemData = Azure.ResourceManager.Models.SystemData;
 
-namespace Azure.ResourceManager.SecurityInsights
+namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
-    /// A class representing the Entity data model.
-    /// Please note <see cref="EntityData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Specific entity.
+    /// Please note <see cref="SecurityInsightsEntityData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AccountEntity"/>, <see cref="AzureResourceEntity"/>, <see cref="HuntingBookmark"/>, <see cref="CloudApplicationEntity"/>, <see cref="DnsEntity"/>, <see cref="FileEntity"/>, <see cref="FileHashEntity"/>, <see cref="HostEntity"/>, <see cref="IoTDeviceEntity"/>, <see cref="IPEntity"/>, <see cref="MailClusterEntity"/>, <see cref="MailMessageEntity"/>, <see cref="MailboxEntity"/>, <see cref="MalwareEntity"/>, <see cref="ProcessEntity"/>, <see cref="RegistryKeyEntity"/>, <see cref="RegistryValueEntity"/>, <see cref="SecurityAlert"/>, <see cref="SecurityGroupEntity"/>, <see cref="SubmissionMailEntity"/> and <see cref="UrlEntity"/>.
     /// </summary>
-    [CodeGenModel("EntityData")]
-    public partial class EntityData : ResourceData
+    public partial class SecurityInsightsEntityData : ResourceData
     {
-        /// <summary> Initializes a new instance of EntityData. </summary>
-        public EntityData()
+        /// <summary> Initializes a new instance of SecurityInsightsEntityData. </summary>
+        public SecurityInsightsEntityData()
         {
         }
 
-        /// <summary> Initializes a new instance of EntityData. </summary>
+        /// <summary> Initializes a new instance of SecurityInsightsEntityData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity. </param>
-        internal EntityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind) : base(id, name, resourceType, systemData)
+        internal SecurityInsightsEntityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
         }

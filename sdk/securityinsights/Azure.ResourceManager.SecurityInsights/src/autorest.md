@@ -35,9 +35,9 @@ rename-mapping:
   WatchlistItem.properties.updated: UpdatedOn
   AlertRule: SecurityInsightsAlertRule
   ThreatIntelligenceIndicatorModel: ThreatIntelligenceIndicator
-  EntityKindEnum: EntityKind
-  Entity: EntityData
-  Relation: IncidentRelation
+  EntityKindEnum: SecurityInsightsEntityKind
+  Entity: SecurityInsightsEntityData
+  Relation: SecurityInsightsIncidentRelation
 
 override-operation-name:
   DomainWhois_Get: GetDomainWhoisInformation

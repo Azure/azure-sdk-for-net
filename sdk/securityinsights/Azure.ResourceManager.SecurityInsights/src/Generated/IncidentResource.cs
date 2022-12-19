@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetIncidentComments().Get(incidentCommentId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of IncidentRelationResources in the Incident. </summary>
-        /// <returns> An object representing collection of IncidentRelationResources and their operations over a IncidentRelationResource. </returns>
-        public virtual IncidentRelationCollection GetIncidentRelations()
+        /// <summary> Gets a collection of SecurityInsightsIncidentRelationResources in the Incident. </summary>
+        /// <returns> An object representing collection of SecurityInsightsIncidentRelationResources and their operations over a SecurityInsightsIncidentRelationResource. </returns>
+        public virtual SecurityInsightsIncidentRelationCollection GetSecurityInsightsIncidentRelations()
         {
-            return GetCachedClient(Client => new IncidentRelationCollection(Client, Id));
+            return GetCachedClient(Client => new SecurityInsightsIncidentRelationCollection(Client, Id));
         }
 
         /// <summary>
@@ -142,9 +142,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IncidentRelationResource>> GetIncidentRelationAsync(string relationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsIncidentRelationResource>> GetSecurityInsightsIncidentRelationAsync(string relationName, CancellationToken cancellationToken = default)
         {
-            return await GetIncidentRelations().GetAsync(relationName, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityInsightsIncidentRelations().GetAsync(relationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -157,9 +157,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<IncidentRelationResource> GetIncidentRelation(string relationName, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsIncidentRelationResource> GetSecurityInsightsIncidentRelation(string relationName, CancellationToken cancellationToken = default)
         {
-            return GetIncidentRelations().Get(relationName, cancellationToken);
+            return GetSecurityInsightsIncidentRelations().Get(relationName, cancellationToken);
         }
 
         /// <summary>

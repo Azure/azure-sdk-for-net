@@ -9,19 +9,18 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents an ip entity. </summary>
-    public partial class IPEntity : EntityData
+    public partial class IPEntity : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of IPEntity. </summary>
         public IPEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             ThreatIntelligence = new ChangeTrackingList<ThreatIntelligence>();
-            Kind = EntityKind.IP;
+            Kind = SecurityInsightsEntityKind.IP;
         }
 
         /// <summary> Initializes a new instance of IPEntity. </summary>
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="address"> The IP address as string, e.g. 127.0.0.1 (either in Ipv4 or Ipv6). </param>
         /// <param name="location"> The geo-location context attached to the ip entity. </param>
         /// <param name="threatIntelligence"> A list of TI contexts attached to the ip entity. </param>
-        internal IPEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string address, GeoLocation location, IReadOnlyList<ThreatIntelligence> threatIntelligence) : base(id, name, resourceType, systemData, kind)
+        internal IPEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string address, GeoLocation location, IReadOnlyList<ThreatIntelligence> threatIntelligence) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;
