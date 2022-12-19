@@ -30,9 +30,8 @@
           }
         },
         "TestMode": {
-          "netcoreapp31_Coverage_Record": {
-            "SupportsRecording": true,
-            "CollectCoverage": true
+          "netcoreapp31_Test_Record": {
+            "SupportsRecording": true
           }
         }
       },
@@ -45,9 +44,8 @@
           }
         },
         "TestMode": {
-          "netcoreapp31_Coverage_Record": {
-            "SupportsRecording": true,
-            "CollectCoverage": true
+          "netcoreapp31_Test_Record": {
+            "SupportsRecording": true
           }
         }
       }

@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             frontendEndpoints = array;
                             continue;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            rulesEngine = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            rulesEngine = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("webApplicationFirewallPolicyLink"))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            webApplicationFirewallPolicyLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            webApplicationFirewallPolicyLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("resourceState"))

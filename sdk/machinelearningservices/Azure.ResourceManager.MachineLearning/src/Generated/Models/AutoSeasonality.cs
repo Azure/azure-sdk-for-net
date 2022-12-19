@@ -7,8 +7,11 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The AutoSeasonality. </summary>
-    public partial class AutoSeasonality : Seasonality
+    /// <summary>
+    /// The AutoSeasonality.
+    /// Serialized Name: AutoSeasonality
+    /// </summary>
+    public partial class AutoSeasonality : ForecastingSeasonality
     {
         /// <summary> Initializes a new instance of AutoSeasonality. </summary>
         public AutoSeasonality()
@@ -17,7 +20,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of AutoSeasonality. </summary>
-        /// <param name="mode"> [Required] Seasonality mode. </param>
+        /// <param name="mode">
+        /// [Required] Seasonality mode.
+        /// Serialized Name: Seasonality.mode
+        /// </param>
         internal AutoSeasonality(SeasonalityMode mode) : base(mode)
         {
             Mode = mode;

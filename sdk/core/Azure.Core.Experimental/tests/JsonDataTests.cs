@@ -2,10 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using System.Text.Json.Serialization;
+using Azure.Core.Dynamic;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -13,17 +12,9 @@ namespace Azure.Core.Tests
     public class JsonDataTests
     {
         [Test]
-        public void DefaultConstructorMakesEmptyObject()
-        {
-            var jsonData = new JsonData();
-
-            Assert.AreEqual(0, jsonData.Properties.Count());
-        }
-
-        [Test]
         public void CanCreateFromJson()
         {
-            var jsonData = JsonData.FromString("\"string\"");
+            var jsonData = JsonData.Parse("\"string\"");
 
             Assert.AreEqual("\"string\"", jsonData.ToJsonString());
         }
@@ -62,7 +53,7 @@ namespace Azure.Core.Tests
         [Test]
         public void DynamicCanConvertToIEnumerableDynamic()
         {
-            dynamic jsonData = JsonData.FromString("[1, null, \"s\"]");
+            dynamic jsonData = JsonData.Parse("[1, null, \"s\"]");
             int i = 0;
             foreach (var dynamicItem in jsonData)
             {
@@ -90,7 +81,7 @@ namespace Azure.Core.Tests
         [Test]
         public void DynamicCanConvertToIEnumerableInt()
         {
-            dynamic jsonData = JsonData.FromString("[0, 1, 2, 3]");
+            dynamic jsonData = JsonData.Parse("[0, 1, 2, 3]");
             int i = 0;
             foreach (int dynamicItem in jsonData)
             {
@@ -104,14 +95,14 @@ namespace Azure.Core.Tests
         [Test]
         public void DynamicArrayHasLength()
         {
-            dynamic jsonData = JsonData.FromString("[0, 1, 2, 3]");
+            dynamic jsonData = JsonData.Parse("[0, 1, 2, 3]");
             Assert.AreEqual(4, jsonData.Length);
         }
 
         [Test]
         public void DynamicArrayFor()
         {
-            dynamic jsonData = JsonData.FromString("[0, 1, 2, 3]");
+            dynamic jsonData = JsonData.Parse("[0, 1, 2, 3]");
             for (int i = 0; i < jsonData.Length; i++)
             {
                 Assert.AreEqual(i, (int)jsonData[i]);
@@ -121,7 +112,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanAccessProperties()
         {
-            dynamic jsonData = JsonData.FromString("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } }");
+            dynamic jsonData = JsonData.Parse("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } }");
 
             Assert.AreEqual("Hello", (string)jsonData.primitive);
             Assert.AreEqual(true, (bool)jsonData.nested.nestedPrimitive);
@@ -130,7 +121,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanReadIntsAsFloatingPoints()
         {
-            var json = JsonData.FromString("5");
+            var json = JsonData.Parse("5");
             dynamic jsonData = json;
 
             Assert.AreEqual(5, (float)jsonData);
@@ -146,7 +137,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ReadingFloatingPointAsIntThrows()
         {
-            var json = JsonData.FromString("5.5");
+            var json = JsonData.Parse("5.5");
             dynamic jsonData = json;
             Assert.Throws<FormatException>(() => _ = (int)json);
             Assert.Throws<FormatException>(() => _ = (int)jsonData);
@@ -157,7 +148,7 @@ namespace Azure.Core.Tests
         [Test]
         public void FloatOverflowThrows()
         {
-            var json = JsonData.FromString("34028234663852885981170418348451692544000");
+            var json = JsonData.Parse("34028234663852885981170418348451692544000");
             dynamic jsonData = json;
             Assert.Throws<OverflowException>(() => _ = (float)json);
             Assert.Throws<OverflowException>(() => _ = (float)jsonData);
@@ -168,7 +159,7 @@ namespace Azure.Core.Tests
         [Test]
         public void FloatUnderflowThrows()
         {
-            var json = JsonData.FromString("-34028234663852885981170418348451692544000");
+            var json = JsonData.Parse("-34028234663852885981170418348451692544000");
             dynamic jsonData = json;
             Assert.Throws<OverflowException>(() => _ = (float)json);
             Assert.Throws<OverflowException>(() => _ = (float)jsonData);
@@ -179,7 +170,7 @@ namespace Azure.Core.Tests
         [Test]
         public void IntOverflowThrows()
         {
-            var json = JsonData.FromString("3402823466385288598");
+            var json = JsonData.Parse("3402823466385288598");
             dynamic jsonData = json;
             Assert.Throws<OverflowException>(() => _ = (int)json);
             Assert.Throws<OverflowException>(() => _ = (int)jsonData);
@@ -194,7 +185,7 @@ namespace Azure.Core.Tests
         [Test]
         public void IntUnderflowThrows()
         {
-            var json = JsonData.FromString("-3402823466385288598");
+            var json = JsonData.Parse("-3402823466385288598");
             dynamic jsonData = json;
             Assert.Throws<OverflowException>(() => _ = (int)json);
             Assert.Throws<OverflowException>(() => _ = (int)jsonData);
@@ -209,7 +200,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ReadingArrayAsValueThrows()
         {
-            var json = JsonData.FromString("[1,3]");
+            var json = JsonData.Parse("[1,3]");
             dynamic jsonData = json;
             Assert.Throws<InvalidOperationException>(() => _ = (int)json);
             Assert.Throws<InvalidOperationException>(() => _ = (int)jsonData);
@@ -291,7 +282,7 @@ namespace Azure.Core.Tests
             {
                 Assert.AreEqual(JsonValueKind.Object, d.Kind);
                 Assert.AreEqual(d.Properties.Count(), 1);
-                Assert.AreEqual(d["property"], "hello");
+                Assert.AreEqual(d.Get("property"), "hello");
             }
 
             validate(orig);
@@ -301,17 +292,9 @@ namespace Azure.Core.Tests
             validate(roundTrip);
         }
 
-        [Test]
-        public void GetOfTWithStringWorks()
-        {
-            JsonData d = new JsonData();
-            d.Set("property", "Hello");
-            Assert.AreEqual("Hello", d.Get<string>("property"));
-        }
-
         private T JsonAsType<T>(string json)
         {
-            dynamic jsonData = JsonData.FromString(json);
+            dynamic jsonData = JsonData.Parse(json);
             return (T) jsonData;
         }
 

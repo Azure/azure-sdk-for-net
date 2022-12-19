@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Enum to determine the type of job. </summary>
+    /// <summary>
+    /// Enum to determine the type of job.
+    /// Serialized Name: JobType
+    /// </summary>
     internal readonly partial struct JobType : IEquatable<JobType>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string SweepValue = "Sweep";
         private const string PipelineValue = "Pipeline";
 
-        /// <summary> AutoML. </summary>
+        /// <summary>
+        /// AutoML
+        /// Serialized Name: JobType.AutoML
+        /// </summary>
         public static JobType AutoML { get; } = new JobType(AutoMLValue);
-        /// <summary> Command. </summary>
+        /// <summary>
+        /// Command
+        /// Serialized Name: JobType.Command
+        /// </summary>
         public static JobType Command { get; } = new JobType(CommandValue);
-        /// <summary> Sweep. </summary>
+        /// <summary>
+        /// Sweep
+        /// Serialized Name: JobType.Sweep
+        /// </summary>
         public static JobType Sweep { get; } = new JobType(SweepValue);
-        /// <summary> Pipeline. </summary>
+        /// <summary>
+        /// Pipeline
+        /// Serialized Name: JobType.Pipeline
+        /// </summary>
         public static JobType Pipeline { get; } = new JobType(PipelineValue);
         /// <summary> Determines if two <see cref="JobType"/> values are the same. </summary>
         public static bool operator ==(JobType left, JobType right) => left.Equals(right);

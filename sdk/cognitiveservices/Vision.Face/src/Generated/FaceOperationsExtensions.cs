@@ -293,7 +293,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// </param>
             /// <param name='returnFaceId'>
             /// A value indicating whether the operation should return faceIds of detected
-            /// faces.
+            /// faces. Detecting with this value set to true requires additional
+            /// access approvals at https://aka.ms/facerecognition.
             /// </param>
             /// <param name='returnFaceLandmarks'>
             /// A value indicating whether the operation should return landmarks of the
@@ -340,7 +341,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<DetectedFace>> DetectWithUrlAsync(this IFaceOperations operations, string url, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), string recognitionModel = default(string), bool? returnRecognitionModel = false, string detectionModel = default(string), int? faceIdTimeToLive = 86400, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<DetectedFace>> DetectWithUrlAsync(this IFaceOperations operations, string url, bool? returnFaceId = default(bool?), bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), string recognitionModel = default(string), bool? returnRecognitionModel = false, string detectionModel = default(string), int? faceIdTimeToLive = 86400, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DetectWithUrlWithHttpMessagesAsync(url, returnFaceId, returnFaceLandmarks, returnFaceAttributes, recognitionModel, returnRecognitionModel, detectionModel, faceIdTimeToLive, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -439,7 +440,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// </param>
             /// <param name='returnFaceId'>
             /// A value indicating whether the operation should return faceIds of detected
-            /// faces.
+            /// faces. Detecting with this value set to true requires additional
+            /// access approvals at https://aka.ms/facerecognition.
             /// </param>
             /// <param name='returnFaceLandmarks'>
             /// A value indicating whether the operation should return landmarks of the
@@ -486,7 +488,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<DetectedFace>> DetectWithStreamAsync(this IFaceOperations operations, Stream image, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), string recognitionModel = default(string), bool? returnRecognitionModel = false, string detectionModel = default(string), int? faceIdTimeToLive = 86400, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<DetectedFace>> DetectWithStreamAsync(this IFaceOperations operations, Stream image, bool? returnFaceId = default(bool?), bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), string recognitionModel = default(string), bool? returnRecognitionModel = false, string detectionModel = default(string), int? faceIdTimeToLive = 86400, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DetectWithStreamWithHttpMessagesAsync(image, returnFaceId, returnFaceLandmarks, returnFaceAttributes, recognitionModel, returnRecognitionModel, detectionModel, faceIdTimeToLive, null, cancellationToken).ConfigureAwait(false))
                 {
