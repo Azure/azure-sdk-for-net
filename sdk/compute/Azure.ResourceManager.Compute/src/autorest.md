@@ -351,6 +351,7 @@ directive:
   - from: virtualMachineScaleSet.json
     where: $.definitions.VirtualMachineScaleSetExtension.properties.name
     transform: $["readOnly"] = true;
+  # add a json converter to this model
   - from: swagger-document
     where: $.definitions.KeyVaultSecretReference
     transform: $["x-csharp-usage"] = "converter";
