@@ -18,18 +18,12 @@ using Azure.ResourceManager.Relay;
 
 namespace Azure.ResourceManager.Relay.Tests.Helpers
 {
-    [ClientTestFixture]
     public class RelayTestBase : ManagementRecordedTestBase<RelayManagementTestEnvironment>
     {
         public static AzureLocation DefaultLocation => AzureLocation.EastUS2;
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
         protected SubscriptionResource DefaultSubscription;
         protected ArmClient Client { get; private set; }
-
-        protected const string VaultName = "ps-testing-keyvault";
-        protected const string Key1 = "key1";
-        protected const string Key2 = "key2";
-        protected const string Key3 = "key3";
 
         public RelayTestBase(bool isAsync, RecordedTestMode? mode = default) : base(isAsync, mode)
         {
