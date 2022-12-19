@@ -11,7 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LoadTesting.Models
 {
-    public partial class LoadTestingQuotaAvailabilityResponse : IUtf8JsonSerializable
+    public partial class LoadTestingQuotaAvailabilityResult : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             writer.WriteEndObject();
         }
 
-        internal static LoadTestingQuotaAvailabilityResponse DeserializeLoadTestingQuotaAvailabilityResponse(JsonElement element)
+        internal static LoadTestingQuotaAvailabilityResult DeserializeLoadTestingQuotaAvailabilityResult(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     continue;
                 }
             }
-            return new LoadTestingQuotaAvailabilityResponse(id, name, type, systemData.Value, Optional.ToNullable(isAvailable), availabilityStatus.Value);
+            return new LoadTestingQuotaAvailabilityResult(id, name, type, systemData.Value, Optional.ToNullable(isAvailable), availabilityStatus.Value);
         }
     }
 }
