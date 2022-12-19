@@ -1,8 +1,8 @@
-# Microsoft Azure Load Testing management client library for .NET
+# Azure Load Testing management client library for .NET
 
-Microsoft Azure Load Testing is a fully managed load-testing service that enables you to generate high-scale load. The service simulates traffic for your applications, regardless of where they're hosted. Developers, testers, and quality assurance (QA) engineers can use it to optimize application performance, scalability, or capacity.
+Azure Load Testing is a fully managed load-testing service that enables you to generate high-scale load. The service simulates traffic for your applications, regardless of where they're hosted. Developers, testers, and quality assurance (QA) engineers can use it to optimize application performance, scalability, or capacity.
 
-This library supports managing Microsoft Azure Load Testing resources.
+This library supports managing Azure Load Testing resources.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -16,7 +16,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Microsoft Azure Load Testing management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Azure Load Testing management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.LoadTesting --prerelease
@@ -30,7 +30,7 @@ dotnet add package Azure.ResourceManager.LoadTesting --prerelease
 
 To create an authenticated client and start interacting with Microsoft Azure resources, see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
 
-```C# Snippet:Readme_AuthClient
+```C#
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
@@ -58,7 +58,7 @@ Documentation is available to help you learn how to use this package:
 
 Before creating an Azure Load Testing resource, we need to have a resource group.
 
-```C# Snippet:Readme_GetResourceGroupCollection
+```C#
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
 ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
@@ -71,7 +71,7 @@ ResourceGroupResource resourceGroup = lro.Value;
 
 Create an Azure Load Testing resource.
 
-```C# Snippet:Readme_CreateAzureLoadTestingResource_Simple
+```C#
 LoadTestingCollection loadTestingCollection = resourceGroup.GetLoadTestingResources();
 string loadTestResourceName = "sample-loadtest";
 LoadTestingResourceData inputPayload = new LoadTestingResourceData(AzureLocation.WestUS2);
@@ -81,7 +81,7 @@ LoadTestingResource resource = loadTestingLro.Value;
 
 Create an Azure Load Testing resource configured with CMK encryption.
 
-```C# Snippet:Readme_CreateAzureLoadTestingResource_With_CMKEncryption
+```C#
 LoadTestingCollection loadTestingCollection = resourceGroup.GetLoadTestingResources();
 
 string loadTestResourceName = "sample-loadtest";
@@ -105,7 +105,7 @@ LoadTestingResource resource = loadTestingLro.Value;
 
 ### Get details of an Azure Load Testing resource
 
-```C# Snippet:Readme_GetAzureLoadTestingResource
+```C#
 LoadTestingCollection loadTestingCollection = resourceGroup.GetLoadTestingResources();
 string loadTestResourceName = "sample-loadtest";
 Response<LoadTestingResource> loadTestingResponse = await loadTestingCollection.GetAsync(loadTestResourceName);
@@ -115,7 +115,7 @@ LoadTestingResource resource = loadTestingResponse.Value;
 ### Update an Azure Load Testing resource
 
 Update an Azure Load Testing resource to configure CMK encryption using system-assigned managed identity.
-```C# Snippet:Readme_UpdateAzureLoadTestingResource_Encryption
+```C#
 LoadTestingCollection loadTestingCollection = resourceGroup.GetLoadTestingResources();
 string loadTestResourceName = "sample-loadtest";
 Response<LoadTestingResource> loadTestingResponse = await loadTestingCollection.GetAsync(loadTestResourceName);
@@ -138,8 +138,8 @@ ArmOperation<LoadTestingResource> loadTestingLro = await resource.UpdateAsync(Wa
 LoadTestingResource resource = loadTestingLro.Value;
 ```
 
-Update an Azure Load Testing resource to update user-assigned managed identities
-```C# Snippet:Readme_UpdateAzureLoadTestingResource_ManagedIdentity
+Update an Azure Load Testing resource to update user-assigned managed identities.
+```C#
 LoadTestingCollection loadTestingCollection = resourceGroup.GetLoadTestingResources();
 string loadTestResourceName = "sample-loadtest";
 Response<LoadTestingResource> loadTestingResponse = await loadTestingCollection.GetAsync(loadTestResourceName);
@@ -161,7 +161,7 @@ LoadTestingResource resource = loadTestingLro.Value;
 ### Delete an Azure Load Testing resource
 
 Update an Azure Load Testing resource to configure CMK encryption using system-assigned managed identity.
-```C# Snippet:Readme_DeleteAzureLoadTestingResource
+```C#
 LoadTestingCollection loadTestingCollection = resourceGroup.GetLoadTestingResources();
 string loadTestResourceName = "sample-loadtest";
 Response<LoadTestingResource> loadTestingResponse = await loadTestingCollection.GetAsync(loadTestResourceName);
