@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -12,6 +13,11 @@ namespace Azure.Storage.Blobs.Models
     /// </summary>
     public class BlobItem
     {
+        /// <summary>
+        /// Holds the Container Client which made the original listing call. This will be used to create the a child blob client
+        /// </summary>
+        internal BlobContainerClient _containerClient;
+
         internal BlobItem() { }
 
         /// <summary>

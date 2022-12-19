@@ -65,7 +65,7 @@ namespace Azure.Storage.Blobs.Models
             }
 
             return Page<BlobItem>.FromValues(
-                response.Value.Segment.BlobItems.ToBlobItems().ToArray(),
+                response.Value.Segment.BlobItems.ToBlobItems(_client).ToArray(),
                 response.Value.NextMarker,
                 response.GetRawResponse());
         }

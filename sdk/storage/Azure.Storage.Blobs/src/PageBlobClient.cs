@@ -239,6 +239,31 @@ namespace Azure.Storage.Blobs.Specialized
             _pageBlobRestClient = BuildPageBlobRestClient(blobUri);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageBlobClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobUri">
+        /// A <see cref="Uri"/> referencing the blob that includes the
+        /// name of the account, the name of the container, and the name of
+        /// the blob.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}".
+        /// </param>
+        /// <param name="clientConfiguration">
+        /// <see cref="BlobClientConfiguration"/>.
+        /// </param>
+        /// <param name="clientSideEncryption">
+        /// Client-side encryption options.
+        /// </param>
+        internal PageBlobClient(
+            Uri blobUri,
+            BlobClientConfiguration clientConfiguration,
+            ClientSideEncryptionOptions clientSideEncryption)
+            : base(blobUri, clientConfiguration, clientSideEncryption)
+        {
+            _pageBlobRestClient = BuildPageBlobRestClient(blobUri);
+        }
+
         private static void AssertNoClientSideEncryption(BlobClientOptions options)
         {
             if (options?._clientSideEncryptionOptions != default)

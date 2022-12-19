@@ -460,6 +460,99 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
+        /// Create a new <see cref="BlobBaseClient"/> object based on the properties
+        /// of the <paramref name="blobItem"/>.  The
+        /// new <see cref="BlobBaseClient"/> uses the same request policy
+        /// pipeline as the <see cref="BlobContainerClient"/>.
+        /// </summary>
+        /// <param name="blobItem">
+        /// The blob item containing properties (from a list call) of the blob.
+        /// </param>
+        /// <param name="withSnapshot">
+        /// Creates the returning <see cref="BlobBaseClient"/> with the <paramref name="blobItem"/>'s
+        /// <see cref="BlobItem.Snapshot"/>.
+        /// </param>
+        /// <param name="withVersion">
+        /// Creates the returning <see cref="BlobBaseClient"/> with the <paramref name="blobItem"/>'s
+        /// <see cref="BlobItem.VersionId"/>.
+        /// </param>
+        /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
+        protected internal virtual BlobBaseClient GetBlobBaseClientCore(
+            BlobItem blobItem,
+            bool withVersion,
+            bool withSnapshot)
+        {
+            if ((withVersion && string.IsNullOrEmpty(blobItem.VersionId)) &&
+                (withSnapshot && string.IsNullOrEmpty(blobItem.Snapshot)))
+            {
+                throw new ArgumentException("Snapshot and VersionId cannot both be set.");
+            }
+
+            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes)
+            {
+                BlobName = blobItem.Name,
+                VersionId = withVersion ? blobItem.VersionId : default,
+                Snapshot = withSnapshot ? blobItem.Snapshot : default,
+            };
+
+            return new BlobBaseClient(
+                blobUriBuilder.ToUri(),
+                ClientConfiguration,
+                ClientSideEncryption);
+        }
+
+        /// <summary>
+        /// Create a new <see cref="BlobBaseClient"/> object based on the properties
+        /// of the <paramref name="blobItem"/>.  The
+        /// new <see cref="BlobBaseClient"/> uses the same request policy
+        /// pipeline as the <see cref="BlobContainerClient"/>.
+        /// </summary>
+        /// <param name="blobItem">
+        /// The blob item containing properties (from a list call) of the blob.
+        /// </param>
+        /// <param name="withSnapshot">
+        /// Creates the returning <see cref="BlobBaseClient"/> with the <paramref name="blobItem"/>'s
+        /// <see cref="BlobItem.Snapshot"/>.
+        /// </param>
+        /// <param name="withVersion">
+        /// Creates the returning <see cref="BlobBaseClient"/> with the <paramref name="blobItem"/>'s
+        /// <see cref="BlobItem.VersionId"/>.
+        /// </param>
+        /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
+        protected internal virtual PageBlobClient GetPageBlobClientCore(
+            BlobItem blobItem,
+            bool withVersion,
+            bool withSnapshot)
+        {
+            if (blobItem.Properties.BlobType.HasValue &&
+                blobItem.Properties.BlobType.Value == BlobType.Page)
+            {
+                if ((withVersion && string.IsNullOrEmpty(blobItem.VersionId)) &&
+                (withSnapshot && string.IsNullOrEmpty(blobItem.Snapshot)))
+                {
+                    throw new ArgumentException("Snapshot and VersionId cannot both be set.");
+                }
+
+                BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri, ClientConfiguration.TrimBlobNameSlashes)
+                {
+                    BlobName = blobItem.Name,
+                    VersionId = withVersion ? blobItem.VersionId : default,
+                    Snapshot = withSnapshot ? blobItem.Snapshot : default,
+                };
+
+                return new PageBlobClient(
+                    blobUriBuilder.ToUri(),
+                    ClientConfiguration,
+                    ClientSideEncryption);
+            }
+            else
+            {
+                throw new ArgumentException($"{nameof(BlobItem)} cannot be converted to a {nameof(PageBlobClient)}."
+                    + $"{nameof(BlobItem.Properties.BlobType)} is a {blobItem.Properties.BlobType}");
+            }
+        }
+
+        /// <summary>
         /// Create a new <see cref="BlobClient"/> object by appending
         /// <paramref name="blobName"/> to the end of <see cref="Uri"/>.  The
         /// new <see cref="BlobClient"/> uses the same request policy

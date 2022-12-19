@@ -11,6 +11,7 @@ using Tags = System.Collections.Generic.IDictionary<string, string>;
 using Azure.Core;
 using System.IO;
 using System.Globalization;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Azure.Storage.Blobs
 {
@@ -1135,17 +1136,21 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ToBlobItem
-        internal static BlobItem[] ToBlobItems(this IReadOnlyList<BlobItemInternal> blobItemInternals)
+        internal static BlobItem[] ToBlobItems(
+            this IReadOnlyList<BlobItemInternal> blobItemInternals,
+            BlobContainerClient client)
         {
             if (blobItemInternals == null)
             {
                 return null;
             }
 
-            return blobItemInternals.Select(r => r.ToBlobItem()).ToArray();
+            return blobItemInternals.Select(r => r.ToBlobItem(client)).ToArray();
         }
 
-        internal static BlobItem ToBlobItem(this BlobItemInternal blobItemInternal)
+        internal static BlobItem ToBlobItem(
+            this BlobItemInternal blobItemInternal,
+            BlobContainerClient client)
         {
             if (blobItemInternal == null)
             {
@@ -1154,6 +1159,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobItem
             {
+                _containerClient = client,
                 Name = blobItemInternal.Name.ToBlobNameString(),
                 Deleted = blobItemInternal.Deleted,
                 Snapshot = blobItemInternal.Snapshot,
@@ -1167,7 +1173,7 @@ namespace Azure.Storage.Blobs
                 ObjectReplicationSourceProperties = blobItemInternal.OrMetadata?.Count > 0
                     ? ParseObjectReplicationMetadata(blobItemInternal.OrMetadata)
                     : null,
-                HasVersionsOnly = blobItemInternal.HasVersionsOnly
+                HasVersionsOnly = blobItemInternal.HasVersionsOnly,
             };
         }
 

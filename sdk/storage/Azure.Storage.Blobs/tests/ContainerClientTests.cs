@@ -2527,6 +2527,33 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task ListBlobsFlatSegmentAsync_BlobItemToClient()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            await SetUpContainerForListing(test.Container);
+
+            // Act
+            List<BlobItem> blobs = new List<BlobItem>();
+            await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync().AsPages())
+            {
+                blobs.AddRange(page.Values);
+            }
+            foreach (BlobItem item in blobs)
+            {
+                Assert.IsTrue(await item.ToBlobBaseClient().ExistsAsync());
+            }
+
+            // Assert
+            Assert.AreEqual(BlobNames.Length, blobs.Count);
+
+            var foundBlobNames = blobs.Select(blob => blob.Name).ToArray();
+
+            Assert.IsTrue(BlobNames.All(blobName => foundBlobNames.Contains(blobName)));
+        }
+
+        [RecordedTest]
         [PlaybackOnly("Service bug - https://github.com/Azure/azure-sdk-for-net/issues/16516")]
         public async Task ListBlobsHierarchySegmentAsync()
         {
