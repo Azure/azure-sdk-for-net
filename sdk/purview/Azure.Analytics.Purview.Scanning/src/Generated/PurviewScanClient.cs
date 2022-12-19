@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Scanning
 {
-    // Data plane generated client. The PurviewScan service client.
+    // Data plane generated client.
     /// <summary> The PurviewScan service client. </summary>
     public partial class PurviewScanClient
     {

@@ -149,11 +149,6 @@ namespace Azure.Storage.DataMovement.Blobs
             CancellationToken cancellationToken = default)
         {
             // Create the blob first before uploading the pages
-            PageBlobRequestConditions conditions = new PageBlobRequestConditions
-            {
-                // TODO: copy over the other conditions from the uploadOptions
-                IfNoneMatch = overwrite ? null : new ETag(Constants.Wildcard),
-            };
             if (position == 0)
             {
                 await _blobClient.CreateAsync(
@@ -179,6 +174,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if it currently exists.
         /// </param>
+        /// <param name="completeLength">
+        /// The expected complete length of the blob.
+        /// </param>
         /// <param name="options">Options for the storage resource. See <see cref="StorageResourceCopyFromUriOptions"/>.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -188,6 +186,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public override async Task CopyFromUriAsync(
             StorageResource sourceResource,
             bool overwrite,
+            long completeLength,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
@@ -200,6 +199,11 @@ namespace Azure.Storage.DataMovement.Blobs
             }
             else //(ServiceCopyMethod == TransferCopyMethod.SyncCopy)
             {
+                await _blobClient.CreateAsync(
+                    size: completeLength,
+                    options: _options.ToCreateOptions(overwrite),
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+
                 // TODO: subject to change as we scale to suppport resource types outside of blobs.
                 await _blobClient.SyncCopyFromUriAsync(
                     sourceResource.Uri,

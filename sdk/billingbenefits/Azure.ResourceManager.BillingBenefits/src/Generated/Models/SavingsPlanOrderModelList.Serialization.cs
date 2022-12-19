@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     {
         internal static SavingsPlanOrderModelList DeserializeSavingsPlanOrderModelList(JsonElement element)
         {
-            Optional<IReadOnlyList<SavingsPlanOrderModelData>> value = default;
+            Optional<IReadOnlyList<BillingBenefitsSavingsPlanOrderData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SavingsPlanOrderModelData> array = new List<SavingsPlanOrderModelData>();
+                    List<BillingBenefitsSavingsPlanOrderData> array = new List<BillingBenefitsSavingsPlanOrderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SavingsPlanOrderModelData.DeserializeSavingsPlanOrderModelData(item));
+                        array.Add(BillingBenefitsSavingsPlanOrderData.DeserializeBillingBenefitsSavingsPlanOrderData(item));
                     }
                     value = array;
                     continue;
