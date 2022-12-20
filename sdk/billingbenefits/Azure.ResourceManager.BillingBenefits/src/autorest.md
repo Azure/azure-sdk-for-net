@@ -16,9 +16,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-request-path-to-singleton-resource:
-  /providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}: savingsPlanOrderAliases
-  /providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}: reservationOrderAliases
+list-exception:
+- /providers/Microsoft.BillingBenefits/savingsPlanOrderAliases/{savingsPlanOrderAliasName}
+- /providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -49,16 +49,80 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  AVS: Avs
+  Db: DB
 
 rename-mapping:
-  ReservationOrderAliasResponse: ReservationOrderAliasModel
-  ReservationOrderAliasRequestPropertiesReservedResourceProperties: ReservationOrderAliasRequestReservedResourceProperties
-  ReservationOrderAliasResponsePropertiesReservedResourceProperties: ReservationOrderAliasResponseReservedResourceProperties
+  ReservationOrderAliasResponse: BillingBenefitsReservationOrderAlias
+  ReservationOrderAliasResponse.properties.billingScopeId: -|arm-id
+  ReservationOrderAliasResponse.properties.reservationOrderId: -|arm-id
+  ReservationOrderAliasResponse.properties.renew: IsRenewed
+  ReservationOrderAliasRequest.properties.billingScopeId: -|arm-id
+  ReservationOrderAliasRequest.properties.renew: IsRenewed
+  AppliedScopeProperties: BillingBenefitsAppliedScopeProperties
+  AppliedScopeProperties.managementGroupId: -|arm-id
+  AppliedScopeProperties.subscriptionId: -|arm-id
+  AppliedScopeProperties.resourceGroupId: -|arm-id
+  AppliedScopeType: BillingBenefitsAppliedScopeType
+  BillingPlan: BillingBenefitsBillingPlan
+  ProvisioningState: BillingBenefitsProvisioningState
+  InstanceFlexibility: BillingBenefitsInstanceFlexibility
+  ReservedResourceType: BillingBenefitsReservedResourceType
+  Term: BillingBenefitsTerm
+  SavingsPlanModel: BillingBenefitsSavingsPlan
+  SavingsPlanModel.properties.billingAccountId: -|arm-id
+  SavingsPlanModel.properties.billingProfileId: -|arm-id
+  SavingsPlanModel.properties.billingScopeId: -|arm-id
+  SavingsPlanModel.properties.effectiveDateTime: EffectOn
+  SavingsPlanModel.properties.expiryDateTime: ExpireOn
+  SavingsPlanModel.properties.renew: IsRenewed
+  Commitment: BillingBenefitsCommitment
+  CommitmentGrain: BillingBenefitsCommitmentGrain
+  ExtendedStatusInfo: BillingBenefitsExtendedStatusInfo
+  Utilization: BillingBenefitsSavingsPlanUtilization
+  UtilizationAggregates: BillingBenefitsSavingsPlanUtilizationAggregate
+  PurchaseRequest: BillingBenefitsPurchaseContent
+  PurchaseRequest.properties.billingScopeId: -|arm-id
+  PurchaseRequest.properties.effectiveDateTime: EffectOn
+  PurchaseRequest.properties.renew: IsRenewed
+  SavingsPlanValidResponseProperty: SavingsPlanValidateResult
+  SavingsPlanValidResponseProperty.valid: IsValid
+  SavingsPlanOrderAliasModel: BillingBenefitsSavingsPlanOrderAlias
+  SavingsPlanOrderAliasModel.properties.billingScopeId: -|arm-id
+  SavingsPlanOrderAliasModel.properties.savingsPlanOrderId: -|arm-id
+  SavingsPlanOrderModel: BillingBenefitsSavingsPlanOrder
+  SavingsPlanOrderModel.properties.BillingAccountId: -|arm-id
+  SavingsPlanOrderModel.properties.billingProfileId: -|arm-id
+  SavingsPlanOrderModel.properties.expiryDateTime: ExpireOn
+  RoleAssignmentEntity: BillingBenefitsRoleAssignmentEntity
+  RoleAssignmentEntity.id: -|arm-id
+  RoleAssignmentEntity.properties.roleDefinitionId: -|arm-id
+  RoleAssignmentEntity.properties.scope: -|arm-id
+  Price: BillingBenefitsPrice
+  PaymentDetail: SavingsPlanOrderPaymentDetail
+  PaymentDetail.paymentDate: PayOn
+  PaymentStatus: BillingBenefitsPaymentStatus
+  SavingsPlanUpdateRequestProperties: BillingBenefitsSavingsPlanPatchProperties
+  SavingsPlanUpdateRequestProperties.renew: IsRenewed
+
 directive:
   - from: billingbenefits.json
     where: $.parameters
     transform: >
       $.ExpandParameter['x-ms-parameter-location'] = 'method';
+  - from: billingbenefits.json
+    where: $.paths
+    transform: >
+      $['/providers/Microsoft.BillingBenefits/savingsPlanOrders/{savingsPlanOrderId}/savingsPlans/{savingsPlanId}/validate'].post['x-ms-pageable'] = {
+          'nextLinkName': 'nextLink',
+          'itemName': 'benefits'
+      };
+      $['/providers/Microsoft.BillingBenefits/validate'].post['x-ms-pageable'] = {
+          'nextLinkName': 'nextLink',
+          'itemName': 'benefits'
+      };
+      $['/providers/Microsoft.BillingBenefits/savingsPlans'].get.parameters[2]['x-ms-client-name'] = 'orderBy';
+      $['/providers/Microsoft.BillingBenefits/savingsPlans'].get.parameters[4]['x-ms-client-name'] = 'skipToken';
   - remove-operation: Operation_List
 
 ```

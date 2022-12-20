@@ -163,6 +163,10 @@ namespace Azure.ResourceManager.SecurityDevOps
 {
 ActionableRemediationRuleCategory.Secrets
 },
+                        BranchNames =
+{
+"main"
+},
                     },
                 },
             };

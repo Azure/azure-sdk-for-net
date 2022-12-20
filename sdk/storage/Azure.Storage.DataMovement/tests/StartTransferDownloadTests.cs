@@ -296,7 +296,9 @@ namespace Azure.Storage.DataMovement.Tests
                 options: optionsList).ConfigureAwait(false);
         }
 
-        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33086")]
+        [Test]
+        [LiveOnly]
         public async Task BlockBlobToLocal_Skip_Exists()
         {
             // Arrange
@@ -809,7 +811,9 @@ namespace Azure.Storage.DataMovement.Tests
                 options: optionsList).ConfigureAwait(false);
         }
 
-        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33086")]
+        [Test]
+        [LiveOnly]
         public async Task AppendBlobToLocal_Skip_Exists()
         {
             // Arrange
@@ -1392,7 +1396,9 @@ namespace Azure.Storage.DataMovement.Tests
                 options: optionsList).ConfigureAwait(false);
         }
 
-        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33086")]
+        [Test]
+        [LiveOnly]
         public async Task PageBlobToLocal_Skip_Exists()
         {
             // Arrange

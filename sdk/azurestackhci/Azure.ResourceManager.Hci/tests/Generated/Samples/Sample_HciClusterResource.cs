@@ -165,7 +165,13 @@ namespace Azure.ResourceManager.Hci
             HciClusterResource hciCluster = client.GetHciClusterResource(hciClusterResourceId);
 
             // invoke the operation
-            HciClusterCertificateContent content = new HciClusterCertificateContent();
+            HciClusterCertificateContent content = new HciClusterCertificateContent()
+            {
+                Certificates =
+{
+"base64cert","base64cert"
+},
+            };
             await hciCluster.UploadCertificateAsync(WaitUntil.Completed, content);
 
             Console.WriteLine($"Succeeded");

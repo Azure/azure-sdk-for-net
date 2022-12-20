@@ -46,6 +46,13 @@ namespace Azure.ResourceManager.ElasticSan
 },
                 ProtocolType = StorageTargetType.Iscsi,
                 Encryption = ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey,
+                VirtualNetworkRules =
+{
+new ElasticSanVirtualNetworkRule(new ResourceIdentifier("aaaaaaaaaaaaaaaa"))
+{
+Action = ElasticSanVirtualNetworkRuleAction.Allow,
+}
+},
             };
             ArmOperation<ElasticSanVolumeGroupResource> lro = await elasticSanVolumeGroup.UpdateAsync(WaitUntil.Completed, patch);
             ElasticSanVolumeGroupResource result = lro.Value;

@@ -16,14 +16,23 @@ namespace Azure.ResourceManager.LoadTesting.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Tags);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Tags.ToString()).RootElement);
-#endif
+                if (Tags != null)
+                {
+                    writer.WritePropertyName("tags");
+                    writer.WriteStartObject();
+                    foreach (var item in Tags)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("tags");
+                }
             }
             if (Optional.IsDefined(Identity))
             {

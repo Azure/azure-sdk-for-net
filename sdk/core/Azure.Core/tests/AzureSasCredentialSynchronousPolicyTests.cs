@@ -108,8 +108,8 @@ namespace Azure.Core.Tests
                 if (callCount++ == 0)
                 {
                     Assert.AreEqual("?foo=bar&sig=first_signature_value", req.Uri.Query);
-                    azureSasCredential.Update(SECOND_SIGNATURE_VALUE);
                     Thread.Sleep(100);
+                    azureSasCredential.Update(SECOND_SIGNATURE_VALUE);
                     return new MockResponse(429);
                 }
                 else
