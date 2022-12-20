@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.ResourceManager.LoadTesting.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
@@ -76,6 +77,14 @@ namespace Azure.ResourceManager.LoadTesting.Tests.Samples
             // IsAvailable property indicates whether the requested quota is available.
             Console.WriteLine(checkAvailabilityResult.Value.IsAvailable);
             #endregion Snippet:LoadTesting_CheckQuotaAvailability
+        }
+
+        [SetUp]
+        [Ignore("Only verifying that the sample builds")]
+        protected async Task initialize()
+        {
+            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+            SubscriptionResource _subscription = await armClient.GetDefaultSubscriptionAsync();
         }
     }
 }

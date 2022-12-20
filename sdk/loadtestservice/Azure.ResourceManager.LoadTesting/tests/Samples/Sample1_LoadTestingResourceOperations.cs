@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Identity;
 using Azure.ResourceManager.LoadTesting.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
@@ -134,6 +135,22 @@ namespace Azure.ResourceManager.LoadTesting.Tests.Samples
 
             ArmOperation loadTestDeleteResponse = await resource.DeleteAsync(WaitUntil.Completed);
             #endregion Snippet:LoadTesting_DeleteLoadTestResource
+        }
+
+        [SetUp]
+        [Ignore("Only verifying that the sample builds")]
+        protected async Task initialize()
+        {
+            ArmClient armClient = new ArmClient(new DefaultAzureCredential());
+            SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
+
+            ResourceGroupCollection rgCollection = subscription.GetResourceGroups();
+            // With the collection, we can create a new resource group with a specific name
+            string rgName = "sample-rg";
+            AzureLocation location = AzureLocation.WestUS2;
+            ArmOperation<ResourceGroupResource> lro = await rgCollection.CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(location));
+            ResourceGroupResource resourceGroup = lro.Value;
+            this._resourceGroup = resourceGroup;
         }
     }
 }
