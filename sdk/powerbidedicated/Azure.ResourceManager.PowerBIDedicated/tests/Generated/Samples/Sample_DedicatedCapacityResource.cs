@@ -102,6 +102,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
 {
 ["testKey"] = "testValue",
 },
+                AdministrationMembers =
+{
+"azsdktest@microsoft.com","azsdktest2@microsoft.com"
+},
             };
             ArmOperation<DedicatedCapacityResource> lro = await dedicatedCapacity.UpdateAsync(WaitUntil.Completed, patch);
             DedicatedCapacityResource result = lro.Value;

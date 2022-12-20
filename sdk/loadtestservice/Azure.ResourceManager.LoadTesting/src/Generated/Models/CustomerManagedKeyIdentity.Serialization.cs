@@ -22,8 +22,15 @@ namespace Azure.ResourceManager.LoadTesting.Models
             }
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
-                writer.WriteStringValue(ResourceId);
+                if (ResourceId != null)
+                {
+                    writer.WritePropertyName("resourceId");
+                    writer.WriteStringValue(ResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("resourceId");
+                }
             }
             writer.WriteEndObject();
         }
@@ -48,7 +55,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        resourceId = null;
                         continue;
                     }
                     resourceId = new ResourceIdentifier(property.Value.GetString());

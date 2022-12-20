@@ -873,6 +873,17 @@ EnableIPForwarding = true,
 }
 },
                     },
+                    GalleryApplications =
+{
+new VirtualMachineGalleryApplication("/subscriptions/32c17a9e-aa7b-4ba5-a45b-e324116b6fdb/resourceGroups/myresourceGroupName2/providers/Microsoft.Compute/galleries/myGallery1/applications/MyApplication1/versions/1.0")
+{
+Tags = "myTag1",
+Order = 1,
+ConfigurationReference = "https://mystorageaccount.blob.core.windows.net/configurations/settings.config",
+TreatFailureAsDeploymentFailure = true,
+EnableAutomaticUpgrade = false,
+},new VirtualMachineGalleryApplication("/subscriptions/32c17a9e-aa7b-4ba5-a45b-e324116b6fdg/resourceGroups/myresourceGroupName3/providers/Microsoft.Compute/galleries/myGallery2/applications/MyApplication2/versions/1.1")
+},
                 },
                 Overprovision = true,
             };
@@ -3044,6 +3055,14 @@ EnableIPForwarding = true,
                         LinuxConfiguration = new LinuxConfiguration()
                         {
                             IsPasswordAuthenticationDisabled = true,
+                            SshPublicKeys =
+{
+new SshPublicKeyConfiguration()
+{
+Path = "/home/{your-username}/.ssh/authorized_keys",
+KeyData = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCeClRAk2ipUs/l5voIsDC5q9RI+YSRd1Bvd/O+axgY4WiBzG+4FwJWZm/mLLe5DoOdHQwmU2FrKXZSW4w2sYE70KeWnrFViCOX5MTVvJgPE8ClugNl8RWth/tU849DvM9sT7vFgfVSHcAS2yDRyDlueii+8nF2ym8XWAPltFVCyLHRsyBp5YPqK8JFYIa1eybKsY3hEAxRCA+/7bq8et+Gj3coOsuRmrehav7rE6N12Pb80I6ofa6SM5XNYq4Xk0iYNx7R3kdz0Jj9XgZYWjAHjJmT0gTRoOnt6upOuxK7xI/ykWrllgpXrCPu3Ymz+c+ujaqcxDopnAl2lmf69/J1",
+}
+},
                         },
                     },
                     StorageProfile = new VirtualMachineScaleSetStorageProfile()
