@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of ContainerAppAzureActiveDirectoryConfiguration. </summary>
-        /// <param name="enabled"> &lt;code&gt;false&lt;/code&gt; if the Azure Active Directory provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
+        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Azure Active Directory provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="registration"> The configuration settings of the Azure Active Directory app registration. </param>
         /// <param name="login"> The configuration settings of the Azure Active Directory login flow. </param>
         /// <param name="validation"> The configuration settings of the Azure Active Directory token validation flow. </param>
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// This is an internal flag primarily intended to support the Azure Management Portal. Users should not
         /// read or write to this property.
         /// </param>
-        internal ContainerAppAzureActiveDirectoryConfiguration(bool? enabled, ContainerAppAzureActiveDirectoryRegistrationConfiguration registration, ContainerAppAzureActiveDirectoryLoginConfiguration login, ContainerAppAzureActiveDirectoryValidationConfiguration validation, bool? isAutoProvisioned)
+        internal ContainerAppAzureActiveDirectoryConfiguration(bool? isEnabled, ContainerAppAzureActiveDirectoryRegistrationConfiguration registration, ContainerAppAzureActiveDirectoryLoginConfiguration login, ContainerAppAzureActiveDirectoryValidationConfiguration validation, bool? isAutoProvisioned)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Registration = registration;
             Login = login;
             Validation = validation;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the Azure Active Directory provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> The configuration settings of the Azure Active Directory app registration. </summary>
         public ContainerAppAzureActiveDirectoryRegistrationConfiguration Registration { get; set; }
         /// <summary> The configuration settings of the Azure Active Directory login flow. </summary>

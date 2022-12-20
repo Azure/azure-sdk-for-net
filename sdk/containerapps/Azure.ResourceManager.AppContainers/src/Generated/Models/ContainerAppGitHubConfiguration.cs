@@ -10,26 +10,26 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the GitHub provider. </summary>
-    public partial class ContainerAppGitHubProviderConfiguration
+    public partial class ContainerAppGitHubConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppGitHubProviderConfiguration. </summary>
-        public ContainerAppGitHubProviderConfiguration()
+        /// <summary> Initializes a new instance of ContainerAppGitHubConfiguration. </summary>
+        public ContainerAppGitHubConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppGitHubProviderConfiguration. </summary>
-        /// <param name="enabled"> &lt;code&gt;false&lt;/code&gt; if the GitHub provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
+        /// <summary> Initializes a new instance of ContainerAppGitHubConfiguration. </summary>
+        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the GitHub provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="registration"> The configuration settings of the app registration for the GitHub provider. </param>
         /// <param name="login"> The configuration settings of the login flow. </param>
-        internal ContainerAppGitHubProviderConfiguration(bool? enabled, ContainerAppClientRegistration registration, LoginScopes login)
+        internal ContainerAppGitHubConfiguration(bool? isEnabled, ContainerAppClientRegistration registration, LoginScopes login)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Registration = registration;
             Login = login;
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the GitHub provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> The configuration settings of the app registration for the GitHub provider. </summary>
         public ContainerAppClientRegistration Registration { get; set; }
         /// <summary> The configuration settings of the login flow. </summary>

@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="billingMeterCategory"> Used to map workload profile types to billing meter. </param>
         /// <param name="applicability"> indicates whether the profile is default for the location. </param>
         /// <param name="cores"> Number of cores in CPU. </param>
-        /// <param name="memoryGiB"> Memory in GiB. </param>
+        /// <param name="memoryInGiB"> Memory in GiB. </param>
         /// <param name="displayName"> The everyday name of the workload profile. </param>
-        internal ContainerAppAvailableWorkloadProfileProperties(ContainerAppBillingMeterCategory? billingMeterCategory, ContainerAppAvailableWorkloadProfileApplicability? applicability, int? cores, int? memoryGiB, string displayName)
+        internal ContainerAppAvailableWorkloadProfileProperties(ContainerAppBillingMeterCategory? billingMeterCategory, ContainerAppAvailableWorkloadProfileApplicability? applicability, int? cores, int? memoryInGiB, string displayName)
         {
             BillingMeterCategory = billingMeterCategory;
             Applicability = applicability;
             Cores = cores;
-            MemoryGiB = memoryGiB;
+            MemoryInGiB = memoryInGiB;
             DisplayName = displayName;
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Number of cores in CPU. </summary>
         public int? Cores { get; set; }
         /// <summary> Memory in GiB. </summary>
-        public int? MemoryGiB { get; set; }
+        public int? MemoryInGiB { get; set; }
         /// <summary> The everyday name of the workload profile. </summary>
         public string DisplayName { get; set; }
     }

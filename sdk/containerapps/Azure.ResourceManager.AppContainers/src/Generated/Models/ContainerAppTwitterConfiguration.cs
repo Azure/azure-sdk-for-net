@@ -8,24 +8,24 @@
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the Twitter provider. </summary>
-    public partial class ContainerAppTwitterProviderConfiguration
+    public partial class ContainerAppTwitterConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppTwitterProviderConfiguration. </summary>
-        public ContainerAppTwitterProviderConfiguration()
+        /// <summary> Initializes a new instance of ContainerAppTwitterConfiguration. </summary>
+        public ContainerAppTwitterConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppTwitterProviderConfiguration. </summary>
-        /// <param name="enabled"> &lt;code&gt;false&lt;/code&gt; if the Twitter provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
+        /// <summary> Initializes a new instance of ContainerAppTwitterConfiguration. </summary>
+        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Twitter provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="registration"> The configuration settings of the app registration for the Twitter provider. </param>
-        internal ContainerAppTwitterProviderConfiguration(bool? enabled, ContainerAppTwitterRegistration registration)
+        internal ContainerAppTwitterConfiguration(bool? isEnabled, ContainerAppTwitterRegistration registration)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Registration = registration;
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the Twitter provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> The configuration settings of the app registration for the Twitter provider. </summary>
         public ContainerAppTwitterRegistration Registration { get; set; }
     }

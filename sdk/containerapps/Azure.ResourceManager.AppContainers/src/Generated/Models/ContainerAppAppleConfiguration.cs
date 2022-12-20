@@ -10,26 +10,26 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the Apple provider. </summary>
-    public partial class ContainerAppAppleProviderConfiguration
+    public partial class ContainerAppAppleConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppAppleProviderConfiguration. </summary>
-        public ContainerAppAppleProviderConfiguration()
+        /// <summary> Initializes a new instance of ContainerAppAppleConfiguration. </summary>
+        public ContainerAppAppleConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppAppleProviderConfiguration. </summary>
-        /// <param name="enabled"> &lt;code&gt;false&lt;/code&gt; if the Apple provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
+        /// <summary> Initializes a new instance of ContainerAppAppleConfiguration. </summary>
+        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Apple provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="registration"> The configuration settings of the Apple registration. </param>
         /// <param name="login"> The configuration settings of the login flow. </param>
-        internal ContainerAppAppleProviderConfiguration(bool? enabled, ContainerAppAppleRegistrationConfiguration registration, LoginScopes login)
+        internal ContainerAppAppleConfiguration(bool? isEnabled, ContainerAppAppleRegistrationConfiguration registration, LoginScopes login)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Registration = registration;
             Login = login;
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the Apple provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> The configuration settings of the Apple registration. </summary>
         public ContainerAppAppleRegistrationConfiguration Registration { get; set; }
         /// <summary> The configuration settings of the login flow. </summary>

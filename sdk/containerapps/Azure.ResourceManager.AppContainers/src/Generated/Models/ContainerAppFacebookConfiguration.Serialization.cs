@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppFacebookProviderConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppFacebookConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(Registration))
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppFacebookProviderConfiguration DeserializeContainerAppFacebookProviderConfiguration(JsonElement element)
+        internal static ContainerAppFacebookConfiguration DeserializeContainerAppFacebookConfiguration(JsonElement element)
         {
             Optional<bool> enabled = default;
             Optional<ContainerAppRegistration> registration = default;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppFacebookProviderConfiguration(Optional.ToNullable(enabled), registration.Value, graphApiVersion.Value, login.Value);
+            return new ContainerAppFacebookConfiguration(Optional.ToNullable(enabled), registration.Value, graphApiVersion.Value, login.Value);
         }
     }
 }

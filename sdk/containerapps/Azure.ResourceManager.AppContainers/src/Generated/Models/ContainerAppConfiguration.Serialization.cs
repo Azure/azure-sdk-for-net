@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             Optional<IList<ContainerAppWritableSecret>> secrets = default;
             Optional<ContainerAppActiveRevisionsMode> activeRevisionsMode = default;
-            Optional<ContainerAppIngressProviderConfiguration> ingress = default;
+            Optional<ContainerAppIngressConfiguration> ingress = default;
             Optional<IList<ContainerAppRegistryCredentials>> registries = default;
-            Optional<ContainerAppDaprProviderConfiguration> dapr = default;
+            Optional<ContainerAppDaprConfiguration> dapr = default;
             Optional<int> maxInactiveRevisions = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ingress = ContainerAppIngressProviderConfiguration.DeserializeContainerAppIngressProviderConfiguration(property.Value);
+                    ingress = ContainerAppIngressConfiguration.DeserializeContainerAppIngressConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("registries"))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dapr = ContainerAppDaprProviderConfiguration.DeserializeContainerAppDaprProviderConfiguration(property.Value);
+                    dapr = ContainerAppDaprConfiguration.DeserializeContainerAppDaprConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("maxInactiveRevisions"))

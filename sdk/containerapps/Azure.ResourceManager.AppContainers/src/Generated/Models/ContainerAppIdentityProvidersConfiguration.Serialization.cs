@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.AppContainers.Models
         internal static ContainerAppIdentityProvidersConfiguration DeserializeContainerAppIdentityProvidersConfiguration(JsonElement element)
         {
             Optional<ContainerAppAzureActiveDirectoryConfiguration> azureActiveDirectory = default;
-            Optional<ContainerAppFacebookProviderConfiguration> facebook = default;
-            Optional<ContainerAppGitHubProviderConfiguration> gitHub = default;
-            Optional<ContainerAppGoogleProviderConfiguration> google = default;
-            Optional<ContainerAppTwitterProviderConfiguration> twitter = default;
-            Optional<ContainerAppAppleProviderConfiguration> apple = default;
+            Optional<ContainerAppFacebookConfiguration> facebook = default;
+            Optional<ContainerAppGitHubConfiguration> gitHub = default;
+            Optional<ContainerAppGoogleConfiguration> google = default;
+            Optional<ContainerAppTwitterConfiguration> twitter = default;
+            Optional<ContainerAppAppleConfiguration> apple = default;
             Optional<ContainerAppAzureStaticWebAppsConfiguration> azureStaticWebApps = default;
             Optional<IDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration>> customOpenIdConnectProviders = default;
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    facebook = ContainerAppFacebookProviderConfiguration.DeserializeContainerAppFacebookProviderConfiguration(property.Value);
+                    facebook = ContainerAppFacebookConfiguration.DeserializeContainerAppFacebookConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("gitHub"))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    gitHub = ContainerAppGitHubProviderConfiguration.DeserializeContainerAppGitHubProviderConfiguration(property.Value);
+                    gitHub = ContainerAppGitHubConfiguration.DeserializeContainerAppGitHubConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("google"))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    google = ContainerAppGoogleProviderConfiguration.DeserializeContainerAppGoogleProviderConfiguration(property.Value);
+                    google = ContainerAppGoogleConfiguration.DeserializeContainerAppGoogleConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("twitter"))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    twitter = ContainerAppTwitterProviderConfiguration.DeserializeContainerAppTwitterProviderConfiguration(property.Value);
+                    twitter = ContainerAppTwitterConfiguration.DeserializeContainerAppTwitterConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("apple"))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    apple = ContainerAppAppleProviderConfiguration.DeserializeContainerAppAppleProviderConfiguration(property.Value);
+                    apple = ContainerAppAppleConfiguration.DeserializeContainerAppAppleConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureStaticWebApps"))

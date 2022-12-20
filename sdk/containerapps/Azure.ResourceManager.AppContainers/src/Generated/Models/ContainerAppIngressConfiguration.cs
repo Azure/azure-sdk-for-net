@@ -11,17 +11,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container App Ingress configuration. </summary>
-    public partial class ContainerAppIngressProviderConfiguration
+    public partial class ContainerAppIngressConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppIngressProviderConfiguration. </summary>
-        public ContainerAppIngressProviderConfiguration()
+        /// <summary> Initializes a new instance of ContainerAppIngressConfiguration. </summary>
+        public ContainerAppIngressConfiguration()
         {
             Traffic = new ChangeTrackingList<ContainerAppRevisionTrafficWeight>();
             CustomDomains = new ChangeTrackingList<ContainerAppCustomDomain>();
             IPSecurityRestrictions = new ChangeTrackingList<ContainerAppIPSecurityRestrictionRule>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppIngressProviderConfiguration. </summary>
+        /// <summary> Initializes a new instance of ContainerAppIngressConfiguration. </summary>
         /// <param name="fqdn"> Hostname. </param>
         /// <param name="external"> Bool indicating if app exposes an external http endpoint. </param>
         /// <param name="targetPort"> Target Port in containers for traffic from ingress. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="ipSecurityRestrictions"> Rules to restrict incoming IP address. </param>
         /// <param name="clientCertificateMode"> Client certificate mode for mTLS authentication. Ignore indicates server drops client certificate on forwarding. Accept indicates server forwards client certificate but does not require a client certificate. Require indicates server requires a client certificate. </param>
         /// <param name="corsPolicy"> CORS policy for container app. </param>
-        internal ContainerAppIngressProviderConfiguration(string fqdn, bool? external, int? targetPort, int? exposedPort, ContainerAppIngressTransportMethod? transport, IList<ContainerAppRevisionTrafficWeight> traffic, IList<ContainerAppCustomDomain> customDomains, bool? allowInsecure, IList<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions, ContainerAppIngressClientCertificateMode? clientCertificateMode, ContainerAppCorsPolicy corsPolicy)
+        internal ContainerAppIngressConfiguration(string fqdn, bool? external, int? targetPort, int? exposedPort, ContainerAppIngressTransportMethod? transport, IList<ContainerAppRevisionTrafficWeight> traffic, IList<ContainerAppCustomDomain> customDomains, bool? allowInsecure, IList<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions, ContainerAppIngressClientCertificateMode? clientCertificateMode, ContainerAppCorsPolicy corsPolicy)
         {
             Fqdn = fqdn;
             External = external;

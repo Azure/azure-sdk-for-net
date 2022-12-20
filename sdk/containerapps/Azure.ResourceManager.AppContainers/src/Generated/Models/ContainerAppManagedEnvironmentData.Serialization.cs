@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppContainers.Models;
@@ -63,10 +64,10 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("appLogsConfiguration");
                 writer.WriteObjectValue(AppLogsConfiguration);
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant");
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (Optional.IsDefined(CustomDomainConfiguration))
             {
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers
             Optional<ContainerAppVnetConfiguration> vnetConfiguration = default;
             Optional<string> deploymentErrors = default;
             Optional<string> defaultDomain = default;
-            Optional<string> staticIP = default;
+            Optional<IPAddress> staticIP = default;
             Optional<ContainerAppLogsConfiguration> appLogsConfiguration = default;
             Optional<bool> zoneRedundant = default;
             Optional<ContainerAppCustomDomainConfiguration> customDomainConfiguration = default;
@@ -222,7 +223,12 @@ namespace Azure.ResourceManager.AppContainers
                         }
                         if (property0.NameEquals("staticIp"))
                         {
-                            staticIP = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            staticIP = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("appLogsConfiguration"))

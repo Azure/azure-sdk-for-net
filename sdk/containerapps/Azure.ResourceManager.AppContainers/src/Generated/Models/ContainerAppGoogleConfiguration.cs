@@ -10,28 +10,28 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the Google provider. </summary>
-    public partial class ContainerAppGoogleProviderConfiguration
+    public partial class ContainerAppGoogleConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppGoogleProviderConfiguration. </summary>
-        public ContainerAppGoogleProviderConfiguration()
+        /// <summary> Initializes a new instance of ContainerAppGoogleConfiguration. </summary>
+        public ContainerAppGoogleConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppGoogleProviderConfiguration. </summary>
-        /// <param name="enabled"> &lt;code&gt;false&lt;/code&gt; if the Google provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
+        /// <summary> Initializes a new instance of ContainerAppGoogleConfiguration. </summary>
+        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Google provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="registration"> The configuration settings of the app registration for the Google provider. </param>
         /// <param name="login"> The configuration settings of the login flow. </param>
         /// <param name="validation"> The configuration settings of the Azure Active Directory token validation flow. </param>
-        internal ContainerAppGoogleProviderConfiguration(bool? enabled, ContainerAppClientRegistration registration, LoginScopes login, AllowedAudiencesValidation validation)
+        internal ContainerAppGoogleConfiguration(bool? isEnabled, ContainerAppClientRegistration registration, LoginScopes login, AllowedAudiencesValidation validation)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Registration = registration;
             Login = login;
             Validation = validation;
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the Google provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> The configuration settings of the app registration for the Google provider. </summary>
         public ContainerAppClientRegistration Registration { get; set; }
         /// <summary> The configuration settings of the login flow. </summary>

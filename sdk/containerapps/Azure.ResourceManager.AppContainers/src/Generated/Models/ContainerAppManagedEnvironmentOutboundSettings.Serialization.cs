@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(VirtualNetworkApplianceIP))
             {
                 writer.WritePropertyName("virtualNetworkApplianceIp");
-                writer.WriteStringValue(VirtualNetworkApplianceIP);
+                writer.WriteStringValue(VirtualNetworkApplianceIP.ToString());
             }
             writer.WriteEndObject();
         }
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         internal static ContainerAppManagedEnvironmentOutboundSettings DeserializeContainerAppManagedEnvironmentOutboundSettings(JsonElement element)
         {
             Optional<ContainerAppManagedEnvironmentOutBoundType> outBoundType = default;
-            Optional<string> virtualNetworkApplianceIP = default;
+            Optional<IPAddress> virtualNetworkApplianceIP = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("outBoundType"))
@@ -46,7 +47,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (property.NameEquals("virtualNetworkApplianceIp"))
                 {
-                    virtualNetworkApplianceIP = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    virtualNetworkApplianceIP = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
             }

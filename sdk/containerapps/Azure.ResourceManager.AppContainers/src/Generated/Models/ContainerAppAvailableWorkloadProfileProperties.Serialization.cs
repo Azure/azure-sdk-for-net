@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("cores");
                 writer.WriteNumberValue(Cores.Value);
             }
-            if (Optional.IsDefined(MemoryGiB))
+            if (Optional.IsDefined(MemoryInGiB))
             {
                 writer.WritePropertyName("memoryGiB");
-                writer.WriteNumberValue(MemoryGiB.Value);
+                writer.WriteNumberValue(MemoryInGiB.Value);
             }
             if (Optional.IsDefined(DisplayName))
             {

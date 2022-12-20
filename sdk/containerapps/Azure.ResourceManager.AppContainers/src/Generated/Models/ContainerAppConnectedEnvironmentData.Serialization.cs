@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppContainers.Models;
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(StaticIP))
             {
                 writer.WritePropertyName("staticIp");
-                writer.WriteStringValue(StaticIP);
+                writer.WriteStringValue(StaticIP.ToString());
             }
             if (Optional.IsDefined(DaprAIConnectionString))
             {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.AppContainers
             Optional<ContainerAppConnectedEnvironmentProvisioningState> provisioningState = default;
             Optional<string> deploymentErrors = default;
             Optional<string> defaultDomain = default;
-            Optional<string> staticIP = default;
+            Optional<IPAddress> staticIP = default;
             Optional<string> daprAIConnectionString = default;
             Optional<ContainerAppCustomDomainConfiguration> customDomainConfiguration = default;
             foreach (var property in element.EnumerateObject())
@@ -160,7 +161,12 @@ namespace Azure.ResourceManager.AppContainers
                         }
                         if (property0.NameEquals("staticIp"))
                         {
-                            staticIP = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            staticIP = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("daprAIConnectionString"))

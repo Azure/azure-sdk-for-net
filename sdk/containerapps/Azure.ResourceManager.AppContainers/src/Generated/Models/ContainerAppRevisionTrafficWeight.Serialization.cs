@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("weight");
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (Optional.IsDefined(LatestRevision))
+            if (Optional.IsDefined(IsLatestRevision))
             {
                 writer.WritePropertyName("latestRevision");
-                writer.WriteBooleanValue(LatestRevision.Value);
+                writer.WriteBooleanValue(IsLatestRevision.Value);
             }
             if (Optional.IsDefined(Label))
             {

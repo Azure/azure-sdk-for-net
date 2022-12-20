@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Models;
@@ -43,11 +44,11 @@ namespace Azure.ResourceManager.AppContainers
         /// app logs to a destination. Currently only &quot;log-analytics&quot; is
         /// supported
         /// </param>
-        /// <param name="zoneRedundant"> Whether or not this Managed Environment is zone-redundant. </param>
+        /// <param name="isZoneRedundant"> Whether or not this Managed Environment is zone-redundant. </param>
         /// <param name="customDomainConfiguration"> Custom domain configuration for the environment. </param>
         /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the Environment. </param>
         /// <param name="workloadProfiles"> Workload profiles configured for the Managed Environment. </param>
-        internal ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, EnvironmentSkuProperties sku, ContainerAppEnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, ContainerAppVnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, string staticIP, ContainerAppLogsConfiguration appLogsConfiguration, bool? zoneRedundant, ContainerAppCustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IList<ContainerAppWorkloadProfile> workloadProfiles) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, EnvironmentSkuProperties sku, ContainerAppEnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, ContainerAppVnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, IPAddress staticIP, ContainerAppLogsConfiguration appLogsConfiguration, bool? isZoneRedundant, ContainerAppCustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IList<ContainerAppWorkloadProfile> workloadProfiles) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             Sku = sku;
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.AppContainers
             DefaultDomain = defaultDomain;
             StaticIP = staticIP;
             AppLogsConfiguration = appLogsConfiguration;
-            ZoneRedundant = zoneRedundant;
+            IsZoneRedundant = isZoneRedundant;
             CustomDomainConfiguration = customDomainConfiguration;
             EventStreamEndpoint = eventStreamEndpoint;
             WorkloadProfiles = workloadProfiles;
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Default Domain Name for the cluster. </summary>
         public string DefaultDomain { get; }
         /// <summary> Static IP of the Environment. </summary>
-        public string StaticIP { get; }
+        public IPAddress StaticIP { get; }
         /// <summary>
         /// Cluster configuration which enables the log daemon to export
         /// app logs to a destination. Currently only &quot;log-analytics&quot; is
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         public ContainerAppLogsConfiguration AppLogsConfiguration { get; set; }
         /// <summary> Whether or not this Managed Environment is zone-redundant. </summary>
-        public bool? ZoneRedundant { get; set; }
+        public bool? IsZoneRedundant { get; set; }
         /// <summary> Custom domain configuration for the environment. </summary>
         public ContainerAppCustomDomainConfiguration CustomDomainConfiguration { get; set; }
         /// <summary> The endpoint of the eventstream of the Environment. </summary>

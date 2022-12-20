@@ -10,34 +10,28 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppGitHubProviderConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppTwitterConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration");
                 writer.WriteObjectValue(Registration);
             }
-            if (Optional.IsDefined(Login))
-            {
-                writer.WritePropertyName("login");
-                writer.WriteObjectValue(Login);
-            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppGitHubProviderConfiguration DeserializeContainerAppGitHubProviderConfiguration(JsonElement element)
+        internal static ContainerAppTwitterConfiguration DeserializeContainerAppTwitterConfiguration(JsonElement element)
         {
             Optional<bool> enabled = default;
-            Optional<ContainerAppClientRegistration> registration = default;
-            Optional<LoginScopes> login = default;
+            Optional<ContainerAppTwitterRegistration> registration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
@@ -57,21 +51,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    registration = ContainerAppClientRegistration.DeserializeContainerAppClientRegistration(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("login"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    login = Models.LoginScopes.DeserializeLoginScopes(property.Value);
+                    registration = ContainerAppTwitterRegistration.DeserializeContainerAppTwitterRegistration(property.Value);
                     continue;
                 }
             }
-            return new ContainerAppGitHubProviderConfiguration(Optional.ToNullable(enabled), registration.Value, login.Value);
+            return new ContainerAppTwitterConfiguration(Optional.ToNullable(enabled), registration.Value);
         }
     }
 }

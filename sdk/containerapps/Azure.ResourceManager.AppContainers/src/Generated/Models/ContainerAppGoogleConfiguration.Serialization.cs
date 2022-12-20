@@ -10,15 +10,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppAppleProviderConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppGoogleConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(Registration))
             {
@@ -30,14 +30,20 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("login");
                 writer.WriteObjectValue(Login);
             }
+            if (Optional.IsDefined(Validation))
+            {
+                writer.WritePropertyName("validation");
+                writer.WriteObjectValue(Validation);
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppAppleProviderConfiguration DeserializeContainerAppAppleProviderConfiguration(JsonElement element)
+        internal static ContainerAppGoogleConfiguration DeserializeContainerAppGoogleConfiguration(JsonElement element)
         {
             Optional<bool> enabled = default;
-            Optional<ContainerAppAppleRegistrationConfiguration> registration = default;
+            Optional<ContainerAppClientRegistration> registration = default;
             Optional<LoginScopes> login = default;
+            Optional<AllowedAudiencesValidation> validation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"))
@@ -57,7 +63,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    registration = ContainerAppAppleRegistrationConfiguration.DeserializeContainerAppAppleRegistrationConfiguration(property.Value);
+                    registration = ContainerAppClientRegistration.DeserializeContainerAppClientRegistration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("login"))
@@ -70,8 +76,18 @@ namespace Azure.ResourceManager.AppContainers.Models
                     login = Models.LoginScopes.DeserializeLoginScopes(property.Value);
                     continue;
                 }
+                if (property.NameEquals("validation"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    validation = AllowedAudiencesValidation.DeserializeAllowedAudiencesValidation(property.Value);
+                    continue;
+                }
             }
-            return new ContainerAppAppleProviderConfiguration(Optional.ToNullable(enabled), registration.Value, login.Value);
+            return new ContainerAppGoogleConfiguration(Optional.ToNullable(enabled), registration.Value, login.Value, validation.Value);
         }
     }
 }

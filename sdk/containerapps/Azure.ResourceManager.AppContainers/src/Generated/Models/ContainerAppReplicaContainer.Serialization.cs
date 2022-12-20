@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("containerId");
                 writer.WriteStringValue(ContainerId);
             }
-            if (Optional.IsDefined(Ready))
+            if (Optional.IsDefined(IsReady))
             {
                 writer.WritePropertyName("ready");
-                writer.WriteBooleanValue(Ready.Value);
+                writer.WriteBooleanValue(IsReady.Value);
             }
-            if (Optional.IsDefined(Started))
+            if (Optional.IsDefined(IsStarted))
             {
                 writer.WritePropertyName("started");
-                writer.WriteBooleanValue(Started.Value);
+                writer.WriteBooleanValue(IsStarted.Value);
             }
             if (Optional.IsDefined(RestartCount))
             {

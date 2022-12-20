@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.AppContainers
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<ContainerAppProvisioningState> provisioningState = default;
-            Optional<string> managedEnvironmentId = default;
-            Optional<string> environmentId = default;
+            Optional<ResourceIdentifier> managedEnvironmentId = default;
+            Optional<ResourceIdentifier> environmentId = default;
             Optional<string> workloadProfileType = default;
             Optional<string> latestRevisionName = default;
             Optional<string> latestReadyRevisionName = default;
@@ -184,12 +184,22 @@ namespace Azure.ResourceManager.AppContainers
                         }
                         if (property0.NameEquals("managedEnvironmentId"))
                         {
-                            managedEnvironmentId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            managedEnvironmentId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("environmentId"))
                         {
-                            environmentId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            environmentId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("workloadProfileType"))

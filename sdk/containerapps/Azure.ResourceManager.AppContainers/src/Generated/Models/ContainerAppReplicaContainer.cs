@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppReplicaContainer. </summary>
         /// <param name="name"> The Name of the Container. </param>
         /// <param name="containerId"> The Id of the Container. </param>
-        /// <param name="ready"> The container ready status. </param>
-        /// <param name="started"> The container start status. </param>
+        /// <param name="isReady"> The container ready status. </param>
+        /// <param name="isStarted"> The container start status. </param>
         /// <param name="restartCount"> The container restart count. </param>
         /// <param name="logStreamEndpoint"> Log Stream endpoint. </param>
         /// <param name="execEndpoint"> Container exec endpoint. </param>
-        internal ContainerAppReplicaContainer(string name, string containerId, bool? ready, bool? started, int? restartCount, string logStreamEndpoint, string execEndpoint)
+        internal ContainerAppReplicaContainer(string name, string containerId, bool? isReady, bool? isStarted, int? restartCount, string logStreamEndpoint, string execEndpoint)
         {
             Name = name;
             ContainerId = containerId;
-            Ready = ready;
-            Started = started;
+            IsReady = isReady;
+            IsStarted = isStarted;
             RestartCount = restartCount;
             LogStreamEndpoint = logStreamEndpoint;
             ExecEndpoint = execEndpoint;
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> The Id of the Container. </summary>
         public string ContainerId { get; set; }
         /// <summary> The container ready status. </summary>
-        public bool? Ready { get; set; }
+        public bool? IsReady { get; set; }
         /// <summary> The container start status. </summary>
-        public bool? Started { get; set; }
+        public bool? IsStarted { get; set; }
         /// <summary> The container restart count. </summary>
         public int? RestartCount { get; set; }
         /// <summary> Log Stream endpoint. </summary>

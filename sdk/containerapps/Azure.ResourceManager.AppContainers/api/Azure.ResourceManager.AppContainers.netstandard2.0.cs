@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppContainers
         public string DeploymentErrors { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppConnectedEnvironmentProvisioningState? ProvisioningState { get { throw null; } }
-        public string StaticIP { get { throw null; } set { } }
+        public System.Net.IPAddress StaticIP { get { throw null; } set { } }
     }
     public partial class ContainerAppConnectedEnvironmentResource : Azure.ResourceManager.ArmResource
     {
@@ -266,14 +266,14 @@ namespace Azure.ResourceManager.AppContainers
         public ContainerAppData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppConfiguration Configuration { get { throw null; } set { } }
         public string CustomDomainVerificationId { get { throw null; } }
-        public string EnvironmentId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier EnvironmentId { get { throw null; } set { } }
         public string EventStreamEndpoint { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string LatestReadyRevisionName { get { throw null; } }
         public string LatestRevisionFqdn { get { throw null; } }
         public string LatestRevisionName { get { throw null; } }
-        public string ManagedEnvironmentId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ManagedEnvironmentId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> OutboundIPAddresses { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppTemplate Template { get { throw null; } set { } }
@@ -431,13 +431,13 @@ namespace Azure.ResourceManager.AppContainers
         public string DefaultDomain { get { throw null; } }
         public string DeploymentErrors { get { throw null; } }
         public string EventStreamEndpoint { get { throw null; } }
+        public bool? IsZoneRedundant { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppEnvironmentProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.AppContainersSkuName? SkuName { get { throw null; } set { } }
-        public string StaticIP { get { throw null; } }
+        public System.Net.IPAddress StaticIP { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppVnetConfiguration VnetConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.ContainerAppWorkloadProfile> WorkloadProfiles { get { throw null; } }
-        public bool? ZoneRedundant { get { throw null; } set { } }
     }
     public partial class ContainerAppManagedEnvironmentDetectorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentDetectorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentDetectorResource>, System.Collections.IEnumerable
     {
@@ -632,10 +632,10 @@ namespace Azure.ResourceManager.AppContainers
     public partial class ContainerAppRevisionData : Azure.ResourceManager.Models.ResourceData
     {
         public ContainerAppRevisionData() { }
-        public bool? Active { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Fqdn { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppRevisionHealthState? HealthState { get { throw null; } }
+        public bool? IsActive { get { throw null; } }
         public System.DateTimeOffset? LastActiveOn { get { throw null; } }
         public string ProvisioningError { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppRevisionProvisioningState? ProvisioningState { get { throw null; } }
@@ -769,10 +769,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         public System.Collections.Generic.IList<string> Groups { get { throw null; } }
         public System.Collections.Generic.IList<string> Identities { get { throw null; } }
     }
-    public partial class ContainerAppAppleProviderConfiguration
+    public partial class ContainerAppAppleConfiguration
     {
-        public ContainerAppAppleProviderConfiguration() { }
-        public bool? Enabled { get { throw null; } set { } }
+        public ContainerAppAppleConfiguration() { }
+        public bool? IsEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> LoginScopes { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppAppleRegistrationConfiguration Registration { get { throw null; } set { } }
     }
@@ -785,13 +785,13 @@ namespace Azure.ResourceManager.AppContainers.Models
     public partial class ContainerAppAuthPlatform
     {
         public ContainerAppAuthPlatform() { }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public string RuntimeVersion { get { throw null; } set { } }
     }
     public partial class ContainerAppAuthToken : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ContainerAppAuthToken(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public System.DateTimeOffset? Expires { get { throw null; } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public string Token { get { throw null; } }
     }
     public partial class ContainerAppAvailableWorkloadProfile : Azure.ResourceManager.Models.ResourceData
@@ -825,13 +825,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         public Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeterCategory? BillingMeterCategory { get { throw null; } set { } }
         public int? Cores { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
-        public int? MemoryGiB { get { throw null; } set { } }
+        public int? MemoryInGiB { get { throw null; } set { } }
     }
     public partial class ContainerAppAzureActiveDirectoryConfiguration
     {
         public ContainerAppAzureActiveDirectoryConfiguration() { }
-        public bool? Enabled { get { throw null; } set { } }
         public bool? IsAutoProvisioned { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppAzureActiveDirectoryLoginConfiguration Login { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppAzureActiveDirectoryRegistrationConfiguration Registration { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppAzureActiveDirectoryValidationConfiguration Validation { get { throw null; } set { } }
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     public partial class ContainerAppAzureActiveDirectoryLoginConfiguration
     {
         public ContainerAppAzureActiveDirectoryLoginConfiguration() { }
-        public bool? DisableWWWAuthenticate { get { throw null; } set { } }
+        public bool? IsWwwAuthenticationDisabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> LoginParameters { get { throw null; } }
     }
     public partial class ContainerAppAzureActiveDirectoryRegistrationConfiguration
@@ -870,7 +870,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     public partial class ContainerAppAzureStaticWebAppsConfiguration
     {
         public ContainerAppAzureStaticWebAppsConfiguration() { }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public string RegistrationClientId { get { throw null; } set { } }
     }
     public partial class ContainerAppBaseContainer
@@ -927,13 +927,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public System.DateTimeOffset? IssueOn { get { throw null; } }
         public string Issuer { get { throw null; } }
+        public bool? IsValid { get { throw null; } }
         public string Password { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateProvisioningState? ProvisioningState { get { throw null; } }
         public string PublicKeyHash { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SubjectAlternativeNames { get { throw null; } }
         public string SubjectName { get { throw null; } }
         public string Thumbprint { get { throw null; } }
-        public bool? Valid { get { throw null; } }
         public byte[] Value { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -967,8 +967,8 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         public ContainerAppConfiguration() { }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppActiveRevisionsMode? ActiveRevisionsMode { get { throw null; } set { } }
-        public Azure.ResourceManager.AppContainers.Models.ContainerAppDaprProviderConfiguration Dapr { get { throw null; } set { } }
-        public Azure.ResourceManager.AppContainers.Models.ContainerAppIngressProviderConfiguration Ingress { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppDaprConfiguration Dapr { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppIngressConfiguration Ingress { get { throw null; } set { } }
         public int? MaxInactiveRevisions { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.ContainerAppRegistryCredentials> Registries { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.ContainerAppWritableSecret> Secrets { get { throw null; } }
@@ -1033,9 +1033,9 @@ namespace Azure.ResourceManager.AppContainers.Models
     }
     public partial class ContainerAppCustomDomain
     {
-        public ContainerAppCustomDomain(string name, string certificateId) { }
+        public ContainerAppCustomDomain(string name, Azure.Core.ResourceIdentifier certificateId) { }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppCustomDomainBindingType? BindingType { get { throw null; } set { } }
-        public string CertificateId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CertificateId { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1101,7 +1101,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     public partial class ContainerAppCustomOpenIdConnectProviderConfiguration
     {
         public ContainerAppCustomOpenIdConnectProviderConfiguration() { }
-        public bool? Enabled { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppOpenIdConnectLogin Login { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppOpenIdConnectRegistration Registration { get { throw null; } set { } }
     }
@@ -1111,6 +1111,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.ContainerAppScaleRuleAuth> Auth { get { throw null; } }
         public string CustomScaleRuleType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+    }
+    public partial class ContainerAppDaprConfiguration
+    {
+        public ContainerAppDaprConfiguration() { }
+        public string AppId { get { throw null; } set { } }
+        public int? AppPort { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppProtocol? AppProtocol { get { throw null; } set { } }
+        public int? HttpMaxRequestSize { get { throw null; } set { } }
+        public int? HttpReadBufferSize { get { throw null; } set { } }
+        public bool? IsApiLoggingEnabled { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppDaprLogLevel? LogLevel { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerAppDaprLogLevel : System.IEquatable<Azure.ResourceManager.AppContainers.Models.ContainerAppDaprLogLevel>
@@ -1138,18 +1150,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         public string Name { get { throw null; } set { } }
         public string SecretRef { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
-    }
-    public partial class ContainerAppDaprProviderConfiguration
-    {
-        public ContainerAppDaprProviderConfiguration() { }
-        public string AppId { get { throw null; } set { } }
-        public int? AppPort { get { throw null; } set { } }
-        public Azure.ResourceManager.AppContainers.Models.ContainerAppProtocol? AppProtocol { get { throw null; } set { } }
-        public bool? EnableApiLogging { get { throw null; } set { } }
-        public bool? Enabled { get { throw null; } set { } }
-        public int? HttpMaxRequestSize { get { throw null; } set { } }
-        public int? HttpReadBufferSize { get { throw null; } set { } }
-        public Azure.ResourceManager.AppContainers.Models.ContainerAppDaprLogLevel? LogLevel { get { throw null; } set { } }
     }
     public partial class ContainerAppDaprSecret
     {
@@ -1242,7 +1242,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     public partial class ContainerAppEnvironmentAuthToken : Azure.ResourceManager.Models.TrackedResourceData
     {
         public ContainerAppEnvironmentAuthToken(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public System.DateTimeOffset? Expires { get { throw null; } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public string Token { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1284,11 +1284,11 @@ namespace Azure.ResourceManager.AppContainers.Models
         public Azure.ResourceManager.AppContainers.Models.ExtendedLocationType? ExtendedLocationType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
     }
-    public partial class ContainerAppFacebookProviderConfiguration
+    public partial class ContainerAppFacebookConfiguration
     {
-        public ContainerAppFacebookProviderConfiguration() { }
-        public bool? Enabled { get { throw null; } set { } }
+        public ContainerAppFacebookConfiguration() { }
         public string GraphApiVersion { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> LoginScopes { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppRegistration Registration { get { throw null; } set { } }
     }
@@ -1317,10 +1317,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         public string RuntimeStack { get { throw null; } set { } }
         public string RuntimeVersion { get { throw null; } set { } }
     }
-    public partial class ContainerAppGitHubProviderConfiguration
+    public partial class ContainerAppGitHubConfiguration
     {
-        public ContainerAppGitHubProviderConfiguration() { }
-        public bool? Enabled { get { throw null; } set { } }
+        public ContainerAppGitHubConfiguration() { }
+        public bool? IsEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> LoginScopes { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppClientRegistration Registration { get { throw null; } set { } }
     }
@@ -1331,10 +1331,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         public string RedirectToProvider { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppUnauthenticatedClientActionV2? UnauthenticatedClientAction { get { throw null; } set { } }
     }
-    public partial class ContainerAppGoogleProviderConfiguration
+    public partial class ContainerAppGoogleConfiguration
     {
-        public ContainerAppGoogleProviderConfiguration() { }
-        public bool? Enabled { get { throw null; } set { } }
+        public ContainerAppGoogleConfiguration() { }
+        public bool? IsEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> LoginScopes { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppClientRegistration Registration { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ValidationAllowedAudiences { get { throw null; } }
@@ -1388,14 +1388,14 @@ namespace Azure.ResourceManager.AppContainers.Models
     public partial class ContainerAppIdentityProvidersConfiguration
     {
         public ContainerAppIdentityProvidersConfiguration() { }
-        public Azure.ResourceManager.AppContainers.Models.ContainerAppAppleProviderConfiguration Apple { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppAppleConfiguration Apple { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppAzureActiveDirectoryConfiguration AzureActiveDirectory { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppAzureStaticWebAppsConfiguration AzureStaticWebApps { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppContainers.Models.ContainerAppCustomOpenIdConnectProviderConfiguration> CustomOpenIdConnectProviders { get { throw null; } }
-        public Azure.ResourceManager.AppContainers.Models.ContainerAppFacebookProviderConfiguration Facebook { get { throw null; } set { } }
-        public Azure.ResourceManager.AppContainers.Models.ContainerAppGitHubProviderConfiguration GitHub { get { throw null; } set { } }
-        public Azure.ResourceManager.AppContainers.Models.ContainerAppGoogleProviderConfiguration Google { get { throw null; } set { } }
-        public Azure.ResourceManager.AppContainers.Models.ContainerAppTwitterProviderConfiguration Twitter { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppFacebookConfiguration Facebook { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppGitHubConfiguration GitHub { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppGoogleConfiguration Google { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppTwitterConfiguration Twitter { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerAppIngressClientCertificateMode : System.IEquatable<Azure.ResourceManager.AppContainers.Models.ContainerAppIngressClientCertificateMode>
@@ -1416,9 +1416,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static bool operator !=(Azure.ResourceManager.AppContainers.Models.ContainerAppIngressClientCertificateMode left, Azure.ResourceManager.AppContainers.Models.ContainerAppIngressClientCertificateMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ContainerAppIngressProviderConfiguration
+    public partial class ContainerAppIngressConfiguration
     {
-        public ContainerAppIngressProviderConfiguration() { }
+        public ContainerAppIngressConfiguration() { }
         public bool? AllowInsecure { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppIngressClientCertificateMode? ClientCertificateMode { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppCorsPolicy CorsPolicy { get { throw null; } set { } }
@@ -1518,7 +1518,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         public ContainerAppManagedEnvironmentOutboundSettings() { }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppManagedEnvironmentOutBoundType? OutBoundType { get { throw null; } set { } }
-        public string VirtualNetworkApplianceIP { get { throw null; } set { } }
+        public System.Net.IPAddress VirtualNetworkApplianceIP { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerAppManagedEnvironmentOutBoundType : System.IEquatable<Azure.ResourceManager.AppContainers.Models.ContainerAppManagedEnvironmentOutBoundType>
@@ -1542,13 +1542,13 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         public ContainerAppNameAvailabilityContent() { }
         public string Name { get { throw null; } set { } }
-        public string ResourceType { get { throw null; } set { } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
     }
     public partial class ContainerAppNameAvailabilityResult
     {
         internal ContainerAppNameAvailabilityResult() { }
+        public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
-        public bool? NameAvailable { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppNameUnavailableReason? Reason { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1718,11 +1718,11 @@ namespace Azure.ResourceManager.AppContainers.Models
         public ContainerAppReplicaContainer() { }
         public string ContainerId { get { throw null; } set { } }
         public string ExecEndpoint { get { throw null; } }
+        public bool? IsReady { get { throw null; } set { } }
+        public bool? IsStarted { get { throw null; } set { } }
         public string LogStreamEndpoint { get { throw null; } }
         public string Name { get { throw null; } set { } }
-        public bool? Ready { get { throw null; } set { } }
         public int? RestartCount { get { throw null; } set { } }
-        public bool? Started { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerAppRevisionHealthState : System.IEquatable<Azure.ResourceManager.AppContainers.Models.ContainerAppRevisionHealthState>
@@ -1767,8 +1767,8 @@ namespace Azure.ResourceManager.AppContainers.Models
     public partial class ContainerAppRevisionTrafficWeight
     {
         public ContainerAppRevisionTrafficWeight() { }
+        public bool? IsLatestRevision { get { throw null; } set { } }
         public string Label { get { throw null; } set { } }
-        public bool? LatestRevision { get { throw null; } set { } }
         public string RevisionName { get { throw null; } set { } }
         public int? Weight { get { throw null; } set { } }
     }
@@ -1859,10 +1859,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         public Azure.ResourceManager.AppContainers.Models.ContainerAppScale Scale { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.ContainerAppVolume> Volumes { get { throw null; } }
     }
-    public partial class ContainerAppTwitterProviderConfiguration
+    public partial class ContainerAppTwitterConfiguration
     {
-        public ContainerAppTwitterProviderConfiguration() { }
-        public bool? Enabled { get { throw null; } set { } }
+        public ContainerAppTwitterConfiguration() { }
+        public bool? IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppTwitterRegistration Registration { get { throw null; } set { } }
     }
     public partial class ContainerAppTwitterRegistration
@@ -1882,8 +1882,8 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         public ContainerAppVnetConfiguration() { }
         public string DockerBridgeCidr { get { throw null; } set { } }
-        public string InfrastructureSubnetId { get { throw null; } set { } }
-        public bool? Internal { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier InfrastructureSubnetId { get { throw null; } set { } }
+        public bool? IsInternal { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppManagedEnvironmentOutboundSettings OutboundSettings { get { throw null; } set { } }
         public string PlatformReservedCidr { get { throw null; } set { } }
         public string PlatformReservedDnsIP { get { throw null; } set { } }

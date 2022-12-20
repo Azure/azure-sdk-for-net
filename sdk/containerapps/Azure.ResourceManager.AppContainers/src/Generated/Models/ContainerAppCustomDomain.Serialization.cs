@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         {
             string name = default;
             Optional<ContainerAppCustomDomainBindingType> bindingType = default;
-            string certificateId = default;
+            ResourceIdentifier certificateId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (property.NameEquals("certificateId"))
                 {
-                    certificateId = property.Value.GetString();
+                    certificateId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

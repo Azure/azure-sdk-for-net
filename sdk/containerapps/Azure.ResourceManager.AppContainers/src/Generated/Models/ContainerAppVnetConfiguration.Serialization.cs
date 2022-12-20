@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Internal))
+            if (Optional.IsDefined(IsInternal))
             {
                 writer.WritePropertyName("internal");
-                writer.WriteBooleanValue(Internal.Value);
+                writer.WriteBooleanValue(IsInternal.Value);
             }
             if (Optional.IsDefined(InfrastructureSubnetId))
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         internal static ContainerAppVnetConfiguration DeserializeContainerAppVnetConfiguration(JsonElement element)
         {
             Optional<bool> @internal = default;
-            Optional<string> infrastructureSubnetId = default;
+            Optional<ResourceIdentifier> infrastructureSubnetId = default;
             Optional<string> runtimeSubnetId = default;
             Optional<string> dockerBridgeCidr = default;
             Optional<string> platformReservedCidr = default;
@@ -76,7 +76,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (property.NameEquals("infrastructureSubnetId"))
                 {
-                    infrastructureSubnetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    infrastructureSubnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("runtimeSubnetId"))

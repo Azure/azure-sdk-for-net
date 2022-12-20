@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// The map of the name of the alias of each custom Open ID Connect provider to the
         /// configuration settings of the custom Open ID Connect provider.
         /// </param>
-        internal ContainerAppIdentityProvidersConfiguration(ContainerAppAzureActiveDirectoryConfiguration azureActiveDirectory, ContainerAppFacebookProviderConfiguration facebook, ContainerAppGitHubProviderConfiguration gitHub, ContainerAppGoogleProviderConfiguration google, ContainerAppTwitterProviderConfiguration twitter, ContainerAppAppleProviderConfiguration apple, ContainerAppAzureStaticWebAppsConfiguration azureStaticWebApps, IDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration> customOpenIdConnectProviders)
+        internal ContainerAppIdentityProvidersConfiguration(ContainerAppAzureActiveDirectoryConfiguration azureActiveDirectory, ContainerAppFacebookConfiguration facebook, ContainerAppGitHubConfiguration gitHub, ContainerAppGoogleConfiguration google, ContainerAppTwitterConfiguration twitter, ContainerAppAppleConfiguration apple, ContainerAppAzureStaticWebAppsConfiguration azureStaticWebApps, IDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration> customOpenIdConnectProviders)
         {
             AzureActiveDirectory = azureActiveDirectory;
             Facebook = facebook;
@@ -46,15 +46,15 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> The configuration settings of the Azure Active directory provider. </summary>
         public ContainerAppAzureActiveDirectoryConfiguration AzureActiveDirectory { get; set; }
         /// <summary> The configuration settings of the Facebook provider. </summary>
-        public ContainerAppFacebookProviderConfiguration Facebook { get; set; }
+        public ContainerAppFacebookConfiguration Facebook { get; set; }
         /// <summary> The configuration settings of the GitHub provider. </summary>
-        public ContainerAppGitHubProviderConfiguration GitHub { get; set; }
+        public ContainerAppGitHubConfiguration GitHub { get; set; }
         /// <summary> The configuration settings of the Google provider. </summary>
-        public ContainerAppGoogleProviderConfiguration Google { get; set; }
+        public ContainerAppGoogleConfiguration Google { get; set; }
         /// <summary> The configuration settings of the Twitter provider. </summary>
-        public ContainerAppTwitterProviderConfiguration Twitter { get; set; }
+        public ContainerAppTwitterConfiguration Twitter { get; set; }
         /// <summary> The configuration settings of the Apple provider. </summary>
-        public ContainerAppAppleProviderConfiguration Apple { get; set; }
+        public ContainerAppAppleConfiguration Apple { get; set; }
         /// <summary> The configuration settings of the Azure Static Web Apps provider. </summary>
         public ContainerAppAzureStaticWebAppsConfiguration AzureStaticWebApps { get; set; }
         /// <summary>

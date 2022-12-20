@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="registries"> Collection of private container registry credentials for containers used by the Container app. </param>
         /// <param name="dapr"> Dapr configuration for the Container App. </param>
         /// <param name="maxInactiveRevisions"> Optional. Max inactive revisions a Container App can have. </param>
-        internal ContainerAppConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppActiveRevisionsMode? activeRevisionsMode, ContainerAppIngressProviderConfiguration ingress, IList<ContainerAppRegistryCredentials> registries, ContainerAppDaprProviderConfiguration dapr, int? maxInactiveRevisions)
+        internal ContainerAppConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppActiveRevisionsMode? activeRevisionsMode, ContainerAppIngressConfiguration ingress, IList<ContainerAppRegistryCredentials> registries, ContainerAppDaprConfiguration dapr, int? maxInactiveRevisions)
         {
             Secrets = secrets;
             ActiveRevisionsMode = activeRevisionsMode;
@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </summary>
         public ContainerAppActiveRevisionsMode? ActiveRevisionsMode { get; set; }
         /// <summary> Ingress configurations. </summary>
-        public ContainerAppIngressProviderConfiguration Ingress { get; set; }
+        public ContainerAppIngressConfiguration Ingress { get; set; }
         /// <summary> Collection of private container registry credentials for containers used by the Container app. </summary>
         public IList<ContainerAppRegistryCredentials> Registries { get; }
         /// <summary> Dapr configuration for the Container App. </summary>
-        public ContainerAppDaprProviderConfiguration Dapr { get; set; }
+        public ContainerAppDaprConfiguration Dapr { get; set; }
         /// <summary> Optional. Max inactive revisions a Container App can have. </summary>
         public int? MaxInactiveRevisions { get; set; }
     }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Models;
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="staticIP"> Static IP of the connectedEnvironment. </param>
         /// <param name="daprAIConnectionString"> Application Insights connection string used by Dapr to export Service to Service communication telemetry. </param>
         /// <param name="customDomainConfiguration"> Custom domain configuration for the environment. </param>
-        internal ContainerAppConnectedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ContainerAppConnectedEnvironmentProvisioningState? provisioningState, string deploymentErrors, string defaultDomain, string staticIP, string daprAIConnectionString, ContainerAppCustomDomainConfiguration customDomainConfiguration) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppConnectedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ContainerAppConnectedEnvironmentProvisioningState? provisioningState, string deploymentErrors, string defaultDomain, IPAddress staticIP, string daprAIConnectionString, ContainerAppCustomDomainConfiguration customDomainConfiguration) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             ProvisioningState = provisioningState;
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Default Domain Name for the cluster. </summary>
         public string DefaultDomain { get; }
         /// <summary> Static IP of the connectedEnvironment. </summary>
-        public string StaticIP { get; set; }
+        public IPAddress StaticIP { get; set; }
         /// <summary> Application Insights connection string used by Dapr to export Service to Service communication telemetry. </summary>
         public string DaprAIConnectionString { get; set; }
         /// <summary> Custom domain configuration for the environment. </summary>

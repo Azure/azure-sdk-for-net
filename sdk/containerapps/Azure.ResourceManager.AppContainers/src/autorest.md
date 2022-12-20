@@ -3,7 +3,6 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
-
 azure-arm: true
 csharp: true
 library-name: AppContainers
@@ -63,11 +62,11 @@ rename-mapping:
   AllowedPrincipals: ContainerAppAllowedPrincipals
   IdentityProviders: ContainerAppIdentityProvidersConfiguration
   AzureActiveDirectory: ContainerAppAzureActiveDirectoryConfiguration
-  Facebook: ContainerAppFacebookProviderConfiguration
-  GitHub: ContainerAppGitHubProviderConfiguration
-  Google: ContainerAppGoogleProviderConfiguration
-  Twitter: ContainerAppTwitterProviderConfiguration
-  Apple: ContainerAppAppleProviderConfiguration
+  Facebook: ContainerAppFacebookConfiguration
+  GitHub: ContainerAppGitHubConfiguration
+  Google: ContainerAppGoogleConfiguration
+  Twitter: ContainerAppTwitterConfiguration
+  Apple: ContainerAppAppleConfiguration
   AzureStaticWebApps: ContainerAppAzureStaticWebAppsConfiguration
   CustomOpenIdConnectProvider: ContainerAppCustomOpenIdConnectProviderConfiguration
   AppleRegistration: ContainerAppAppleRegistrationConfiguration
@@ -166,8 +165,9 @@ rename-mapping:
   Revision: ContainerAppRevision
   Replica: ContainerAppReplica
   Configuration: ContainerAppConfiguration
-  Dapr: ContainerAppDaprProviderConfiguration
-  Ingress: ContainerAppIngressProviderConfiguration
+  Dapr: ContainerAppDaprConfiguration
+  Dapr.enableApiLogging: IsApiLoggingEnabled
+  Ingress: ContainerAppIngressConfiguration
   Container: ContainerAppContainer
   Scale: ContainerAppScale
   ScaleRule: ContainerAppScaleRule
@@ -176,6 +176,26 @@ rename-mapping:
   Template: ContainerAppTemplate
   Volume: ContainerAppVolume
   VolumeMount: ContainerAppVolumeMount
+  ContainerApp.properties.environmentId: -|arm-id
+  ContainerApp.properties.managedEnvironmentId: -|arm-id
+  Revision.properties.active: IsActive
+  ManagedEnvironment.properties.zoneRedundant: IsZoneRedundant
+  AvailableWorkloadProfileProperties.memoryGiB: MemoryInGiB
+  AzureActiveDirectoryLogin.disableWWWAuthenticate: IsWwwAuthenticationDisabled
+  CertificateProperties.valid: IsValid
+  CheckNameAvailabilityRequest.type: ResourceType|resource-type
+  CheckNameAvailabilityResponse.nameAvailable: IsNameAvailable
+  ContainerAppAuthToken.properties.expires: ExpireOn
+  EnvironmentAuthToken.properties.expires: ExpireOn
+  CustomDomain.certificateId: -|arm-id
+  ManagedEnvironmentOutboundSettings.virtualNetworkApplianceIp: -|ip-address
+  ConnectedEnvironment.properties.staticIp: -|ip-address
+  ManagedEnvironment.properties.staticIp: -|ip-address
+  ReplicaContainer.ready: IsReady
+  ReplicaContainer.started: IsStarted
+  TrafficWeight.latestRevision: IsLatestRevision
+  VnetConfiguration.infrastructureSubnetId: -|arm-id
+  VnetConfiguration.internal: IsInternal
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}: ContainerAppConnectedEnvironmentCertificate
@@ -197,5 +217,10 @@ directive:
       $.ContainerAppProbe.properties.httpGet.properties.scheme['x-ms-enum']['name'] = 'ContainerAppHttpScheme';
       $.ContainerAppProbe.properties.httpGet.properties.httpHeaders.items['x-ms-client-name'] = 'ContainerAppHttpHeaderInfo';
       $.DefaultErrorResponse.properties.error.properties.innererror['x-ms-client-name'] = 'InnerError';
+  - from: swagger-document
+    where: $.definitions..enabled
+    transform: >
+      if ($['type'] === 'boolean')
+        $['x-ms-client-name'] = 'IsEnabled'
 
 ```

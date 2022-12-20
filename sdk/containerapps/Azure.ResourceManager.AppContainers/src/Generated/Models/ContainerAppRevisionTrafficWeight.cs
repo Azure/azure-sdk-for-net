@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppRevisionTrafficWeight. </summary>
         /// <param name="revisionName"> Name of a revision. </param>
         /// <param name="weight"> Traffic weight assigned to a revision. </param>
-        /// <param name="latestRevision"> Indicates that the traffic weight belongs to a latest stable revision. </param>
+        /// <param name="isLatestRevision"> Indicates that the traffic weight belongs to a latest stable revision. </param>
         /// <param name="label"> Associates a traffic label with a revision. </param>
-        internal ContainerAppRevisionTrafficWeight(string revisionName, int? weight, bool? latestRevision, string label)
+        internal ContainerAppRevisionTrafficWeight(string revisionName, int? weight, bool? isLatestRevision, string label)
         {
             RevisionName = revisionName;
             Weight = weight;
-            LatestRevision = latestRevision;
+            IsLatestRevision = isLatestRevision;
             Label = label;
         }
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Traffic weight assigned to a revision. </summary>
         public int? Weight { get; set; }
         /// <summary> Indicates that the traffic weight belongs to a latest stable revision. </summary>
-        public bool? LatestRevision { get; set; }
+        public bool? IsLatestRevision { get; set; }
         /// <summary> Associates a traffic label with a revision. </summary>
         public string Label { get; set; }
     }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="name"> Hostname. </param>
         /// <param name="certificateId"> Resource Id of the Certificate to be bound to this hostname. Must exist in the Managed Environment. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="certificateId"/> is null. </exception>
-        public ContainerAppCustomDomain(string name, string certificateId)
+        public ContainerAppCustomDomain(string name, ResourceIdentifier certificateId)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(certificateId, nameof(certificateId));
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="name"> Hostname. </param>
         /// <param name="bindingType"> Custom Domain binding type. </param>
         /// <param name="certificateId"> Resource Id of the Certificate to be bound to this hostname. Must exist in the Managed Environment. </param>
-        internal ContainerAppCustomDomain(string name, ContainerAppCustomDomainBindingType? bindingType, string certificateId)
+        internal ContainerAppCustomDomain(string name, ContainerAppCustomDomainBindingType? bindingType, ResourceIdentifier certificateId)
         {
             Name = name;
             BindingType = bindingType;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Custom Domain binding type. </summary>
         public ContainerAppCustomDomainBindingType? BindingType { get; set; }
         /// <summary> Resource Id of the Certificate to be bound to this hostname. Must exist in the Managed Environment. </summary>
-        public string CertificateId { get; set; }
+        public ResourceIdentifier CertificateId { get; set; }
     }
 }

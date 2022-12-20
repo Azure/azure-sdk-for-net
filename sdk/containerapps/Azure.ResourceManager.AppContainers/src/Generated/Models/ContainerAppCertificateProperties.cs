@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="issueOn"> Certificate issue Date. </param>
         /// <param name="expireOn"> Certificate expiration date. </param>
         /// <param name="thumbprint"> Certificate thumbprint. </param>
-        /// <param name="valid"> Is the certificate valid?. </param>
+        /// <param name="isValid"> Is the certificate valid?. </param>
         /// <param name="publicKeyHash"> Public key hash. </param>
-        internal ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState, string password, string subjectName, IReadOnlyList<string> subjectAlternativeNames, byte[] value, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprint, bool? valid, string publicKeyHash)
+        internal ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState, string password, string subjectName, IReadOnlyList<string> subjectAlternativeNames, byte[] value, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprint, bool? isValid, string publicKeyHash)
         {
             ProvisioningState = provisioningState;
             Password = password;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             IssueOn = issueOn;
             ExpireOn = expireOn;
             Thumbprint = thumbprint;
-            Valid = valid;
+            IsValid = isValid;
             PublicKeyHash = publicKeyHash;
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Certificate thumbprint. </summary>
         public string Thumbprint { get; }
         /// <summary> Is the certificate valid?. </summary>
-        public bool? Valid { get; }
+        public bool? IsValid { get; }
         /// <summary> Public key hash. </summary>
         public string PublicKeyHash { get; }
     }

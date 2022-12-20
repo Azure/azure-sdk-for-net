@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="template"> Container App versioned application definition. </param>
         /// <param name="outboundIPAddresses"> Outbound IP Addresses for container app. </param>
         /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the container app. </param>
-        internal ContainerAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, ContainerAppProvisioningState? provisioningState, string managedEnvironmentId, string environmentId, string workloadProfileType, string latestRevisionName, string latestReadyRevisionName, string latestRevisionFqdn, string customDomainVerificationId, ContainerAppConfiguration configuration, ContainerAppTemplate template, IReadOnlyList<string> outboundIPAddresses, string eventStreamEndpoint) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, ContainerAppProvisioningState? provisioningState, ResourceIdentifier managedEnvironmentId, ResourceIdentifier environmentId, string workloadProfileType, string latestRevisionName, string latestReadyRevisionName, string latestRevisionFqdn, string customDomainVerificationId, ContainerAppConfiguration configuration, ContainerAppTemplate template, IReadOnlyList<string> outboundIPAddresses, string eventStreamEndpoint) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Identity = identity;
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Provisioning state of the Container App. </summary>
         public ContainerAppProvisioningState? ProvisioningState { get; }
         /// <summary> Deprecated. Resource ID of the Container App&apos;s environment. </summary>
-        public string ManagedEnvironmentId { get; set; }
+        public ResourceIdentifier ManagedEnvironmentId { get; set; }
         /// <summary> Resource ID of environment. </summary>
-        public string EnvironmentId { get; set; }
+        public ResourceIdentifier EnvironmentId { get; set; }
         /// <summary> Workload profile type to pin for container app execution. </summary>
         public string WorkloadProfileType { get; set; }
         /// <summary> Name of the latest revision of the Container App. </summary>

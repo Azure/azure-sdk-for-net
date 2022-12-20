@@ -10,28 +10,28 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the Facebook provider. </summary>
-    public partial class ContainerAppFacebookProviderConfiguration
+    public partial class ContainerAppFacebookConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppFacebookProviderConfiguration. </summary>
-        public ContainerAppFacebookProviderConfiguration()
+        /// <summary> Initializes a new instance of ContainerAppFacebookConfiguration. </summary>
+        public ContainerAppFacebookConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppFacebookProviderConfiguration. </summary>
-        /// <param name="enabled"> &lt;code&gt;false&lt;/code&gt; if the Facebook provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
+        /// <summary> Initializes a new instance of ContainerAppFacebookConfiguration. </summary>
+        /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Facebook provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="registration"> The configuration settings of the app registration for the Facebook provider. </param>
         /// <param name="graphApiVersion"> The version of the Facebook api to be used while logging in. </param>
         /// <param name="login"> The configuration settings of the login flow. </param>
-        internal ContainerAppFacebookProviderConfiguration(bool? enabled, ContainerAppRegistration registration, string graphApiVersion, LoginScopes login)
+        internal ContainerAppFacebookConfiguration(bool? isEnabled, ContainerAppRegistration registration, string graphApiVersion, LoginScopes login)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Registration = registration;
             GraphApiVersion = graphApiVersion;
             Login = login;
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the Facebook provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> The configuration settings of the app registration for the Facebook provider. </summary>
         public ContainerAppRegistration Registration { get; set; }
         /// <summary> The version of the Facebook api to be used while logging in. </summary>
