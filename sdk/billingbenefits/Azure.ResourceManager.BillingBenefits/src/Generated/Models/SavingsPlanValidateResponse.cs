@@ -11,25 +11,25 @@ using Azure.Core;
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     /// <summary> The SavingsPlanValidateResponse. </summary>
-    public partial class SavingsPlanValidateResponse
+    internal partial class SavingsPlanValidateResponse
     {
         /// <summary> Initializes a new instance of SavingsPlanValidateResponse. </summary>
         internal SavingsPlanValidateResponse()
         {
-            Benefits = new ChangeTrackingList<SavingsPlanValidResponseProperty>();
+            Benefits = new ChangeTrackingList<SavingsPlanValidateResult>();
         }
 
         /// <summary> Initializes a new instance of SavingsPlanValidateResponse. </summary>
         /// <param name="benefits"></param>
         /// <param name="nextLink"> Url to get the next page. </param>
-        internal SavingsPlanValidateResponse(IReadOnlyList<SavingsPlanValidResponseProperty> benefits, string nextLink)
+        internal SavingsPlanValidateResponse(IReadOnlyList<SavingsPlanValidateResult> benefits, string nextLink)
         {
             Benefits = benefits;
             NextLink = nextLink;
         }
 
         /// <summary> Gets the benefits. </summary>
-        public IReadOnlyList<SavingsPlanValidResponseProperty> Benefits { get; }
+        public IReadOnlyList<SavingsPlanValidateResult> Benefits { get; }
         /// <summary> Url to get the next page. </summary>
         public string NextLink { get; }
     }

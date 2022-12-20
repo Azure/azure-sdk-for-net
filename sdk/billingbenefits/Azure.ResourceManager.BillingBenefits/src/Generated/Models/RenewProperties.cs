@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Initializes a new instance of RenewProperties. </summary>
         /// <param name="purchaseProperties"></param>
-        internal RenewProperties(PurchaseRequest purchaseProperties)
+        internal RenewProperties(BillingBenefitsPurchaseContent purchaseProperties)
         {
             PurchaseProperties = purchaseProperties;
         }
 
         /// <summary> Gets or sets the purchase properties. </summary>
-        public PurchaseRequest PurchaseProperties { get; set; }
+        public BillingBenefitsPurchaseContent PurchaseProperties { get; set; }
     }
 }

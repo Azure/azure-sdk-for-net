@@ -282,6 +282,16 @@ namespace Azure.ResourceManager.Search
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 PublicNetworkAccess = SearchServicePublicNetworkAccess.Enabled,
+                IPRules =
+{
+new SearchServiceIPRule()
+{
+Value = "123.4.5.6",
+},new SearchServiceIPRule()
+{
+Value = "123.4.6.0/18",
+}
+},
             };
             SearchServiceResource result = await searchService.UpdateAsync(patch);
 

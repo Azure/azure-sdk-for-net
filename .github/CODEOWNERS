@@ -21,7 +21,7 @@
 /sdk/core/                                      @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina
 
 # PRLabel: %Azure.Identity
-/sdk/identity/                                  @schaabs @christothes @ShivangiReja
+/sdk/identity/                                  @schaabs @christothes
 
 # Extensions
 /sdk/extensions/                                @jsquire

@@ -46,6 +46,28 @@ namespace Azure.ResourceManager.Compute
                 PackageUri = new Uri("{PackageUrl}"),
                 Configuration = "{ServiceConfiguration}",
                 UpgradeMode = CloudServiceUpgradeMode.Auto,
+                Roles =
+{
+new CloudServiceRoleProfileProperties()
+{
+Name = "ContosoFrontend",
+Sku = new CloudServiceRoleSku()
+{
+Name = "Standard_D1_v2",
+Tier = "Standard",
+Capacity = 1,
+},
+},new CloudServiceRoleProfileProperties()
+{
+Name = "ContosoBackend",
+Sku = new CloudServiceRoleSku()
+{
+Name = "Standard_D1_v2",
+Tier = "Standard",
+Capacity = 1,
+},
+}
+},
                 NetworkProfile = new CloudServiceNetworkProfile()
                 {
                     LoadBalancerConfigurations =
@@ -94,6 +116,19 @@ new CloudServiceLoadBalancerConfiguration("contosolb",new LoadBalancerFrontendIP
                 PackageUri = new Uri("{PackageUrl}"),
                 Configuration = "{ServiceConfiguration}",
                 UpgradeMode = CloudServiceUpgradeMode.Auto,
+                Roles =
+{
+new CloudServiceRoleProfileProperties()
+{
+Name = "ContosoFrontend",
+Sku = new CloudServiceRoleSku()
+{
+Name = "Standard_D1_v2",
+Tier = "Standard",
+Capacity = 1,
+},
+}
+},
                 NetworkProfile = new CloudServiceNetworkProfile()
                 {
                     LoadBalancerConfigurations =
@@ -142,6 +177,33 @@ new CloudServiceLoadBalancerConfiguration("myLoadBalancer",new LoadBalancerFront
                 PackageUri = new Uri("{PackageUrl}"),
                 Configuration = "{ServiceConfiguration}",
                 UpgradeMode = CloudServiceUpgradeMode.Auto,
+                Roles =
+{
+new CloudServiceRoleProfileProperties()
+{
+Name = "ContosoFrontend",
+Sku = new CloudServiceRoleSku()
+{
+Name = "Standard_D1_v2",
+Tier = "Standard",
+Capacity = 1,
+},
+}
+},
+                OSSecrets =
+{
+new CloudServiceVaultSecretGroup()
+{
+SourceVaultId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/ConstosoRG/providers/Microsoft.KeyVault/vaults/{keyvault-name}"),
+VaultCertificates =
+{
+new CloudServiceVaultCertificate()
+{
+CertificateUri = new Uri("https://{keyvault-name}.vault.azure.net:443/secrets/ContosoCertificate/{secret-id}"),
+}
+},
+}
+},
                 NetworkProfile = new CloudServiceNetworkProfile()
                 {
                     LoadBalancerConfigurations =
@@ -190,6 +252,19 @@ new CloudServiceLoadBalancerConfiguration("contosolb",new LoadBalancerFrontendIP
                 PackageUri = new Uri("{PackageUrl}"),
                 Configuration = "{ServiceConfiguration}",
                 UpgradeMode = CloudServiceUpgradeMode.Auto,
+                Roles =
+{
+new CloudServiceRoleProfileProperties()
+{
+Name = "ContosoFrontend",
+Sku = new CloudServiceRoleSku()
+{
+Name = "Standard_D1_v2",
+Tier = "Standard",
+Capacity = 1,
+},
+}
+},
                 NetworkProfile = new CloudServiceNetworkProfile()
                 {
                     LoadBalancerConfigurations =
@@ -199,6 +274,19 @@ new CloudServiceLoadBalancerConfiguration("contosolb",new LoadBalancerFrontendIP
 })
 },
                 },
+                Extensions =
+{
+new CloudServiceExtension()
+{
+Name = "RDPExtension",
+Publisher = "Microsoft.Windows.Azure.Extensions",
+CloudServiceExtensionPropertiesType = "RDP",
+TypeHandlerVersion = "1.2",
+AutoUpgradeMinorVersion = false,
+Settings = BinaryData.FromString("<PublicConfig><UserName>UserAzure</UserName><Expiration>10/22/2021 15:05:45</Expiration></PublicConfig>"),
+ProtectedSettings = BinaryData.FromString("<PrivateConfig><Password>{password}</Password></PrivateConfig>"),
+}
+},
             };
             ArmOperation<CloudServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, cloudServiceName, data);
             CloudServiceResource result = lro.Value;
