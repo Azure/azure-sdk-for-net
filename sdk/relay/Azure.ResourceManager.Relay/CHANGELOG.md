@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added support for PublicNetworkAccess in NetworkRuleSet API as PublicNetworkAccess at Namespace API is not currently available.
+
 ### Breaking Changes
 
 ### Bugs Fixed
