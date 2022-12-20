@@ -190,7 +190,7 @@ LoadTestingQuotaCollection QuotaCollection = _subscription.GetAllLoadTestingQuot
 List<LoadTestingQuotaResource> quotaBuckets = await QuotaCollection.GetAllAsync().ToEnumerableAsync();
 ```
 
-Check quota availability for quota increase.
+Check quota availability.
 
 ```C# Snippet:LoadTesting_CheckQuotaAvailability
 LoadTestingQuotaCollection QuotaCollection = _subscription.GetAllLoadTestingQuota(AzureLocation.WestUS2);
