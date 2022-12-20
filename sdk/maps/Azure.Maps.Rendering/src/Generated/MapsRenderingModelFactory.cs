@@ -13,34 +13,6 @@ namespace Azure.Maps.Rendering
     /// <summary> Model factory for generated models. </summary>
     public static partial class MapsRenderingModelFactory
     {
-        /// <summary> Initializes a new instance of MapTileSet. </summary>
-        /// <param name="tileJsonVersion"> Describes the version of the TileJSON spec that is implemented by this JSON object. </param>
-        /// <param name="tileSetName"> A name describing the tileset. The name can contain any legal character. Implementations SHOULD NOT interpret the name as HTML. </param>
-        /// <param name="tileSetDescription"> Text description of the tileset. The description can contain any legal character. Implementations SHOULD NOT interpret the description as HTML. </param>
-        /// <param name="tileSetVersion"> A semver.org style version number for the tiles contained within the tileset. When changes across tiles are introduced, the minor version MUST change. </param>
-        /// <param name="copyrightAttribution"> Copyright attribution to be displayed on the map. Implementations MAY decide to treat this as HTML or literal text. For security reasons, make absolutely sure that this field can&apos;t be abused as a vector for XSS or beacon tracking. </param>
-        /// <param name="template"> A mustache template to be used to format data from grids for interaction. </param>
-        /// <param name="mapTileLegend"> A legend to be displayed with the map. Implementations MAY decide to treat this as HTML or literal text. For security reasons, make absolutely sure that this field can&apos;t be abused as a vector for XSS or beacon tracking. </param>
-        /// <param name="schemeInternal"> Default: &quot;xyz&quot;. Either &quot;xyz&quot; or &quot;tms&quot;. Influences the y direction of the tile coordinates. The global-mercator (aka Spherical Mercator) profile is assumed. </param>
-        /// <param name="tileEndpoints"> An array of tile endpoints. If multiple endpoints are specified, clients may use any combination of endpoints. All endpoints MUST return the same content for the same URL. The array MUST contain at least one endpoint. </param>
-        /// <param name="grids"> An array of interactivity endpoints. </param>
-        /// <param name="geoJsonDataFiles"> An array of data files in GeoJSON format. </param>
-        /// <param name="minZoomLevel"> The minimum zoom level. </param>
-        /// <param name="maxZoomLevel"> The maximum zoom level. </param>
-        /// <param name="boundsInternal"> The maximum extent of available map tiles. Bounds MUST define an area covered by all zoom levels. The bounds are represented in WGS:84 latitude and longitude values, in the order left, bottom, right, top. Values may be integers or floating point numbers. </param>
-        /// <param name="centerInternal"> The default location of the tileset in the form [longitude, latitude, zoom]. The zoom level MUST be between minzoom and maxzoom. Implementations can use this value to set the default location. </param>
-        /// <returns> A new <see cref="Rendering.MapTileSet"/> instance for mocking. </returns>
-        public static MapTileSet MapTileSet(string tileJsonVersion = null, string tileSetName = null, string tileSetDescription = null, string tileSetVersion = null, string copyrightAttribution = null, string template = null, string mapTileLegend = null, string schemeInternal = null, IEnumerable<string> tileEndpoints = null, IEnumerable<string> grids = null, IEnumerable<string> geoJsonDataFiles = null, int? minZoomLevel = null, int? maxZoomLevel = null, IEnumerable<float> boundsInternal = null, IEnumerable<float> centerInternal = null)
-        {
-            tileEndpoints ??= new List<string>();
-            grids ??= new List<string>();
-            geoJsonDataFiles ??= new List<string>();
-            boundsInternal ??= new List<float>();
-            centerInternal ??= new List<float>();
-
-            return new MapTileSet(tileJsonVersion, tileSetName, tileSetDescription, tileSetVersion, copyrightAttribution, template, mapTileLegend, schemeInternal, tileEndpoints?.ToList(), grids?.ToList(), geoJsonDataFiles?.ToList(), minZoomLevel, maxZoomLevel, boundsInternal?.ToList(), centerInternal?.ToList());
-        }
-
         /// <summary> Initializes a new instance of CopyrightCaption. </summary>
         /// <param name="formatVersion"> Format Version property. </param>
         /// <param name="copyright"> Copyrights Caption property. </param>

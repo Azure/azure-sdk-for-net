@@ -6,6 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/080b332b7572514a2e100dd2fa1fb86cb8edcb08/specification/storage/data-plane/Azure.Storage.Files.DataLake/preview/2021-06-08/DataLakeStorage.json
 generation1-convenience-client: true
+model-factory-only-includes-readonly-models: true
 modelerfour:
     seal-single-value-enum-by-default: true
 ```
@@ -21,7 +22,7 @@ directive:
         if (property.includes('/{filesystem}/{path}'))
         {
             $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/FileSystem") && false == param['$ref'].endsWith("#/parameters/Path"))});
-        } 
+        }
         else if (property.includes('/{filesystem}'))
         {
             $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/FileSystem"))});
@@ -125,7 +126,7 @@ directive:
             }
             $[newName] = $[oldName];
             delete $[oldName];
-        } 
+        }
         else if (property.includes('/{filesystem}'))
         {
             var oldName = property;

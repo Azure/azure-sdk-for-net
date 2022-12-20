@@ -4,7 +4,7 @@ When a new version of the swagger needs to be updated:
 2. Upload the Azure.Communication.Chat.dll to the apiview.dev tool.
 If any of the new objects needs to be overwritten, add the required changes to the 'Models' folder.
 
-3. Repeat 2 and 3 until the desided interface is reflected in the apiview.dev 
+3. Repeat 2 and 3 until the desided interface is reflected in the apiview.dev
 
 ### AutoRest Configuration
 > see https://aka.ms/autorest
@@ -17,3 +17,5 @@ require:
     -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d0d60267975bf5823a9173ce0c926659bc9775bb/specification/communication/data-plane/Chat/readme.md
 payload-flattening-threshold: 10
 generation1-convenience-client: true
+model-factory-only-includes-readonly-models: true
+```

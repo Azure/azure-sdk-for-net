@@ -9,6 +9,7 @@ Run `./generateCode.ps1` in this directory to generate the code.
 input-file:
     -  $(this-folder)/swagger/iothubservice.json
 generation1-convenience-client: true
+model-factory-only-includes-readonly-models: true
 modelerfour:
     seal-single-value-enum-by-default: true
 ```

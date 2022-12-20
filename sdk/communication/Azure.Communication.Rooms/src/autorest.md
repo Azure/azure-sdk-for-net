@@ -19,4 +19,5 @@ require:
 payload-flattening-threshold: 10
 clear-output-folder: true
 generation1-convenience-client: true
+model-factory-only-includes-readonly-models: true
 ```

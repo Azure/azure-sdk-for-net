@@ -6,6 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/080b332b7572514a2e100dd2fa1fb86cb8edcb08/specification/storage/data-plane/Microsoft.FileStorage/preview/2021-12-02/file.json
 generation1-convenience-client: true
+model-factory-only-includes-readonly-models: true
 # https://github.com/Azure/autorest/issues/4075
 skip-semantics-validation: true
 modelerfour:
@@ -23,7 +24,7 @@ directive:
         if (property.includes('/{shareName}/{directory}/{fileName}'))
         {
             $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/ShareName") && false == param['$ref'].endsWith("#/parameters/DirectoryPath") && false == param['$ref'].endsWith("#/parameters/FilePath"))});
-        } 
+        }
         else if (property.includes('/{shareName}/{directory}'))
         {
             $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/ShareName") && false == param['$ref'].endsWith("#/parameters/DirectoryPath"))});
@@ -45,7 +46,7 @@ directive:
 ```
 
 <<<<<<< HEAD
-### Times aren't required 
+### Times aren't required
 =======
 ### Formats aren't required
 >>>>>>> feature/storage/stg82base

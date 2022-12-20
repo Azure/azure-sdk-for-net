@@ -13,22 +13,6 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary> Model factory for generated models. </summary>
     public static partial class KeyVaultAdministrationModelFactory
     {
-        /// <summary> Initializes a new instance of KeyVaultPermission. </summary>
-        /// <param name="actions"> Action permissions that are granted. </param>
-        /// <param name="notActions"> Action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </param>
-        /// <param name="dataActions"> Data action permissions that are granted. </param>
-        /// <param name="notDataActions"> Data action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </param>
-        /// <returns> A new <see cref="Administration.KeyVaultPermission"/> instance for mocking. </returns>
-        public static KeyVaultPermission KeyVaultPermission(IEnumerable<string> actions = null, IEnumerable<string> notActions = null, IEnumerable<KeyVaultDataAction> dataActions = null, IEnumerable<KeyVaultDataAction> notDataActions = null)
-        {
-            actions ??= new List<string>();
-            notActions ??= new List<string>();
-            dataActions ??= new List<KeyVaultDataAction>();
-            notDataActions ??= new List<KeyVaultDataAction>();
-
-            return new KeyVaultPermission(actions?.ToList(), notActions?.ToList(), dataActions?.ToList(), notDataActions?.ToList());
-        }
-
         /// <summary> Initializes a new instance of KeyVaultRoleDefinition. </summary>
         /// <param name="id"> The role definition ID. </param>
         /// <param name="name"> The role definition name. </param>
@@ -66,16 +50,6 @@ namespace Azure.Security.KeyVault.Administration
         public static KeyVaultRoleAssignmentProperties KeyVaultRoleAssignmentProperties(KeyVaultRoleScope? scope = null, string roleDefinitionId = null, string principalId = null)
         {
             return new KeyVaultRoleAssignmentProperties(scope, roleDefinitionId, principalId);
-        }
-
-        /// <summary> Initializes a new instance of KeyVaultSetting. </summary>
-        /// <param name="name"> The account setting to be updated. </param>
-        /// <param name="value"> The value of the pool setting. </param>
-        /// <param name="type"> The type specifier of the value. </param>
-        /// <returns> A new <see cref="Administration.KeyVaultSetting"/> instance for mocking. </returns>
-        public static KeyVaultSetting KeyVaultSetting(string name = null, string value = null, SettingType? type = null)
-        {
-            return new KeyVaultSetting(name, value, type);
         }
 
         /// <summary> Initializes a new instance of GetSettingsResult. </summary>

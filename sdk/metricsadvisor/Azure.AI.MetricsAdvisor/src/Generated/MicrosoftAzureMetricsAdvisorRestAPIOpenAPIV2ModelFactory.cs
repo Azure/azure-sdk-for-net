@@ -8,8 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.MetricsAdvisor;
-using Azure.AI.MetricsAdvisor.Administration;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -36,46 +34,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             metricAlertConfigurations ??= new List<MetricAlertConfiguration>();
 
             return new AnomalyAlertConfiguration(id, name, description, crossMetricsOperator, dimensionsToSplitAlert?.ToList(), idsOfHooksToAlert?.ToList(), metricAlertConfigurations?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of MetricAlertConfiguration. </summary>
-        /// <param name="detectionConfigurationId"> Anomaly detection configuration unique id. </param>
-        /// <param name="anomalyScopeType"> Anomaly scope. </param>
-        /// <param name="useDetectionResultToFilterAnomalies"> Negation operation. </param>
-        /// <param name="dimensionAnomalyScope"></param>
-        /// <param name="topNAnomalyScope"></param>
-        /// <param name="severityFilter"></param>
-        /// <param name="alertSnoozeCondition"></param>
-        /// <param name="valueFilter"></param>
-        /// <returns> A new <see cref="Models.MetricAlertConfiguration"/> instance for mocking. </returns>
-        public static MetricAlertConfiguration MetricAlertConfiguration(string detectionConfigurationId = null, MetricAnomalyAlertScopeType anomalyScopeType = default, bool? useDetectionResultToFilterAnomalies = null, DimensionKey dimensionAnomalyScope = null, TopNGroupScope topNAnomalyScope = null, SeverityCondition severityFilter = null, MetricAnomalyAlertSnoozeCondition alertSnoozeCondition = null, MetricBoundaryCondition valueFilter = null)
-        {
-            return new MetricAlertConfiguration(detectionConfigurationId, anomalyScopeType, useDetectionResultToFilterAnomalies, dimensionAnomalyScope, topNAnomalyScope, severityFilter, alertSnoozeCondition, valueFilter);
-        }
-
-        /// <summary> Initializes a new instance of MetricBoundaryCondition. </summary>
-        /// <param name="lowerBound">
-        /// lower bound
-        /// 
-        /// should be specified when direction is Both or Down
-        /// </param>
-        /// <param name="upperBound">
-        /// upper bound
-        /// 
-        /// should be specified when direction is Both or Up
-        /// </param>
-        /// <param name="direction"> value filter direction. </param>
-        /// <param name="measureType"> data used to implement value filter. </param>
-        /// <param name="companionMetricId"> the other metric unique id used for value filter. </param>
-        /// <param name="shouldAlertIfDataPointMissing">
-        /// trigger alert when the corresponding point is missing in the other metric
-        /// 
-        /// should be specified only when using other metric to filter
-        /// </param>
-        /// <returns> A new <see cref="Models.MetricBoundaryCondition"/> instance for mocking. </returns>
-        public static MetricBoundaryCondition MetricBoundaryCondition(double? lowerBound = null, double? upperBound = null, BoundaryDirection direction = default, BoundaryMeasureType? measureType = null, string companionMetricId = null, bool? shouldAlertIfDataPointMissing = null)
-        {
-            return new MetricBoundaryCondition(lowerBound, upperBound, direction, measureType, companionMetricId, shouldAlertIfDataPointMissing);
         }
 
         /// <summary> Initializes a new instance of AnomalyAlert. </summary>
@@ -112,56 +70,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             return new AnomalyDetectionConfiguration(id, name, description, metricId, wholeSeriesDetectionConditions, seriesGroupDetectionConditions?.ToList(), seriesDetectionConditions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MetricWholeSeriesDetectionCondition. </summary>
-        /// <param name="conditionOperator">
-        /// condition operator
-        /// 
-        /// should be specified when combining multiple detection conditions
-        /// </param>
-        /// <param name="smartDetectionCondition"></param>
-        /// <param name="hardThresholdCondition"></param>
-        /// <param name="changeThresholdCondition"></param>
-        /// <returns> A new <see cref="Models.MetricWholeSeriesDetectionCondition"/> instance for mocking. </returns>
-        public static MetricWholeSeriesDetectionCondition MetricWholeSeriesDetectionCondition(DetectionConditionOperator? conditionOperator = null, SmartDetectionCondition smartDetectionCondition = null, HardThresholdCondition hardThresholdCondition = null, ChangeThresholdCondition changeThresholdCondition = null)
-        {
-            return new MetricWholeSeriesDetectionCondition(conditionOperator, smartDetectionCondition, hardThresholdCondition, changeThresholdCondition);
-        }
-
-        /// <summary> Initializes a new instance of HardThresholdCondition. </summary>
-        /// <param name="lowerBound">
-        /// lower bound
-        /// 
-        /// should be specified when anomalyDetectorDirection is Both or Down
-        /// </param>
-        /// <param name="upperBound">
-        /// upper bound
-        /// 
-        /// should be specified when anomalyDetectorDirection is Both or Up
-        /// </param>
-        /// <param name="anomalyDetectorDirection"> detection direction. </param>
-        /// <param name="suppressCondition"></param>
-        /// <returns> A new <see cref="Models.HardThresholdCondition"/> instance for mocking. </returns>
-        public static HardThresholdCondition HardThresholdCondition(double? lowerBound = null, double? upperBound = null, AnomalyDetectorDirection anomalyDetectorDirection = default, SuppressCondition suppressCondition = null)
-        {
-            return new HardThresholdCondition(lowerBound, upperBound, anomalyDetectorDirection, suppressCondition);
-        }
-
-        /// <summary> Initializes a new instance of MetricSeriesGroupDetectionCondition. </summary>
-        /// <param name="conditionOperator">
-        /// condition operator
-        /// 
-        /// should be specified when combining multiple detection conditions
-        /// </param>
-        /// <param name="smartDetectionCondition"></param>
-        /// <param name="hardThresholdCondition"></param>
-        /// <param name="changeThresholdCondition"></param>
-        /// <param name="seriesGroupKey"></param>
-        /// <returns> A new <see cref="Models.MetricSeriesGroupDetectionCondition"/> instance for mocking. </returns>
-        public static MetricSeriesGroupDetectionCondition MetricSeriesGroupDetectionCondition(DetectionConditionOperator? conditionOperator = null, SmartDetectionCondition smartDetectionCondition = null, HardThresholdCondition hardThresholdCondition = null, ChangeThresholdCondition changeThresholdCondition = null, DimensionKey seriesGroupKey = null)
-        {
-            return new MetricSeriesGroupDetectionCondition(conditionOperator, smartDetectionCondition, hardThresholdCondition, changeThresholdCondition, seriesGroupKey);
-        }
-
         /// <summary> Initializes a new instance of IncidentRootCause. </summary>
         /// <param name="seriesKey"></param>
         /// <param name="paths"> drilling down path from query anomaly to root cause. </param>
@@ -175,17 +83,6 @@ namespace Azure.AI.MetricsAdvisor.Models
             return new IncidentRootCause(seriesKey, paths?.ToList(), contributionScore, description);
         }
 
-        /// <summary> Initializes a new instance of DataSourceCredentialEntity. </summary>
-        /// <param name="credentialKind"> Type of data source credential. </param>
-        /// <param name="id"> Unique id of data source credential. </param>
-        /// <param name="name"> Name of data source credential. </param>
-        /// <param name="description"> Description of data source credential. </param>
-        /// <returns> A new <see cref="Administration.DataSourceCredentialEntity"/> instance for mocking. </returns>
-        public static DataSourceCredentialEntity DataSourceCredentialEntity(string credentialKind = null, string id = null, string name = null, string description = null)
-        {
-            return new UnknownDataSourceCredential(credentialKind, id, name, description);
-        }
-
         /// <summary> Initializes a new instance of DataFeedMetric. </summary>
         /// <param name="id"> metric id. </param>
         /// <param name="name"> metric name. </param>
@@ -195,43 +92,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static DataFeedMetric DataFeedMetric(string id = null, string name = null, string displayName = null, string description = null)
         {
             return new DataFeedMetric(id, name, displayName, description);
-        }
-
-        /// <summary> Initializes a new instance of DataFeedDimension. </summary>
-        /// <param name="name"> dimension name. </param>
-        /// <param name="displayName"> dimension display name. </param>
-        /// <returns> A new <see cref="Models.DataFeedDimension"/> instance for mocking. </returns>
-        public static DataFeedDimension DataFeedDimension(string name = null, string displayName = null)
-        {
-            return new DataFeedDimension(name, displayName);
-        }
-
-        /// <summary> Initializes a new instance of MetricFeedback. </summary>
-        /// <param name="feedbackKind"> feedback type. </param>
-        /// <param name="id"> feedback unique id. </param>
-        /// <param name="createdOn"> feedback created time. </param>
-        /// <param name="userPrincipal"> user who gives this feedback. </param>
-        /// <param name="metricId"> metric unique id. </param>
-        /// <param name="dimensionFilter"></param>
-        /// <returns> A new <see cref="MetricsAdvisor.MetricFeedback"/> instance for mocking. </returns>
-        public static MetricFeedback MetricFeedback(string feedbackKind = null, string id = null, DateTimeOffset? createdOn = null, string userPrincipal = null, string metricId = null, FeedbackFilter dimensionFilter = null)
-        {
-            return new UnknownMetricFeedback(feedbackKind, id, createdOn, userPrincipal, metricId, dimensionFilter);
-        }
-
-        /// <summary> Initializes a new instance of NotificationHook. </summary>
-        /// <param name="hookKind"> hook type. </param>
-        /// <param name="id"> Hook unique id. </param>
-        /// <param name="name"> hook unique name. </param>
-        /// <param name="description"> hook description. </param>
-        /// <param name="internalExternalLink"> hook external link. </param>
-        /// <param name="administrators"> hook administrators. </param>
-        /// <returns> A new <see cref="Administration.NotificationHook"/> instance for mocking. </returns>
-        public static NotificationHook NotificationHook(string hookKind = null, string id = null, string name = null, string description = null, string internalExternalLink = null, IEnumerable<string> administrators = null)
-        {
-            administrators ??= new List<string>();
-
-            return new UnknownHookInfo(hookKind, id, name, description, internalExternalLink, administrators?.ToList());
         }
 
         /// <summary> Initializes a new instance of DataFeedIngestionStatus. </summary>
@@ -263,35 +123,6 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static DataFeedIngestionProgress DataFeedIngestionProgress(DateTimeOffset? latestSuccessTimestamp = null, DateTimeOffset? latestActiveTimestamp = null)
         {
             return new DataFeedIngestionProgress(latestSuccessTimestamp, latestActiveTimestamp);
-        }
-
-        /// <summary> Initializes a new instance of MetricSeriesData. </summary>
-        /// <param name="definition"></param>
-        /// <param name="timestamps"> timestamps of the data related to this time series. </param>
-        /// <param name="metricValues"> values of the data related to this time series. </param>
-        /// <returns> A new <see cref="Models.MetricSeriesData"/> instance for mocking. </returns>
-        public static MetricSeriesData MetricSeriesData(MetricSeriesDefinition definition = null, IEnumerable<DateTimeOffset> timestamps = null, IEnumerable<double> metricValues = null)
-        {
-            timestamps ??= new List<DateTimeOffset>();
-            metricValues ??= new List<double>();
-
-            return new MetricSeriesData(definition, timestamps?.ToList(), metricValues?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of MetricSeriesDefinition. </summary>
-        /// <param name="metricId"> metric unique id. </param>
-        /// <param name="dimension"> dimension name and value pair. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metricId"/> or <paramref name="dimension"/> is null. </exception>
-        /// <returns> A new <see cref="Models.MetricSeriesDefinition"/> instance for mocking. </returns>
-        public static MetricSeriesDefinition MetricSeriesDefinition(string metricId = null, IReadOnlyDictionary<string, string> dimension = null)
-        {
-            if (metricId == null)
-            {
-                throw new ArgumentNullException(nameof(metricId));
-            }
-            dimension ??= new Dictionary<string, string>();
-
-            return new MetricSeriesDefinition(metricId, dimension);
         }
 
         /// <summary> Initializes a new instance of EnrichmentStatus. </summary>

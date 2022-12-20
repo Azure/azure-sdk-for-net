@@ -11,6 +11,7 @@ require:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/45c7ae94a46920c94b5e03e6a7d128d6cb7a364e/specification/attestation/data-plane/readme.md
 namespace: Azure.Security.Attestation
 generation1-convenience-client: true
+model-factory-only-includes-readonly-models: true
 tag: package-2020-10-01
 azure-arm: false
 

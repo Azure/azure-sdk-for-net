@@ -18,25 +18,6 @@ namespace Azure.AI.FormRecognizer.Models
     public static partial class FormRecognizerModelFactory
     {
 
-        /// <summary> Initializes a new instance of OperationDetails. </summary>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="percentCompleted"> Operation progress (0-100). </param>
-        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
-        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
-        /// <param name="kind"> Type of operation. </param>
-        /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
-        /// <param name="apiVersion"> API version used to create this operation. </param>
-        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        /// <param name="jsonError"> Encountered error. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.OperationDetails"/> instance for mocking. </returns>
-        public static OperationDetails OperationDetails(string operationId = null, DocumentOperationStatus status = default, int? percentCompleted = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, string kind = null, Uri resourceLocation = null, string apiVersion = null, IReadOnlyDictionary<string, string> tags = null, JsonElement jsonError = default)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new OperationDetails(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags, jsonError);
-        }
-
         /// <summary> Initializes a new instance of DocumentModelBuildOperationDetails. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>

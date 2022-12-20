@@ -11,6 +11,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 input-file:
 - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/1646226d874de6e8d36ebd3ad088c6c5f6cc6ed0/specification/cognitiveservices/data-plane/TextAnalytics/stable/v3.1/TextAnalytics.json
 generation1-convenience-client: true
+model-factory-only-includes-readonly-models: true
 namespace: Azure.AI.TextAnalytics.Legacy
 title: TextAnalyticsClient
 modelerfour:

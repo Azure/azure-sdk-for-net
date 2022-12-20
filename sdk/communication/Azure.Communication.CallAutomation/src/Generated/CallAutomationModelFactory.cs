@@ -22,18 +22,6 @@ namespace Azure.Communication.CallAutomation
             return new TransferCallToParticipantResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of RecognizeChoice. </summary>
-        /// <param name="label"> Identifier for a given choice. </param>
-        /// <param name="phrases"> List of phrases to recognize. </param>
-        /// <param name="tone"></param>
-        /// <returns> A new <see cref="CallAutomation.RecognizeChoice"/> instance for mocking. </returns>
-        public static RecognizeChoice RecognizeChoice(string label = null, IEnumerable<string> phrases = null, DtmfTone? tone = null)
-        {
-            phrases ??= new List<string>();
-
-            return new RecognizeChoice(label, phrases?.ToList(), tone);
-        }
-
         /// <summary> Initializes a new instance of RemoveParticipantsResult. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <returns> A new <see cref="CallAutomation.RemoveParticipantsResult"/> instance for mocking. </returns>

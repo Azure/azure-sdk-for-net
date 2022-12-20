@@ -17,6 +17,7 @@ add-credentials: true
 credential-default-policy-type: BearerTokenCredentialPolicy
 credential-scopes: https://atlas.microsoft.com/.default
 generation1-convenience-client: true
+model-factory-only-includes-readonly-models: true
 model-namespace: false
 sync-methods: None
 license-header: MICROSOFT_MIT_NO_VERSION
