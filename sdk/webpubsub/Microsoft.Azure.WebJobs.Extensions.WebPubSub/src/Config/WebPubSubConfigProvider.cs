@@ -158,11 +158,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 Converters = new List<JsonConverter>
                 {
-                    new StringEnumConverter(),
                     new BinaryDataJsonConverter(),
                     new ConnectionStatesNewtonsoftConverter(),
+                    new WebPubSubDataTypeJsonConverter(),
+                    new WebPubSubEventTypeJsonConverter(),
                 },
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
             };
         }
 
