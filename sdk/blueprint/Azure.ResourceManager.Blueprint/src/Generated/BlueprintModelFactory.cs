@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <returns> A new <see cref="Blueprint.ArtifactData"/> instance for mocking. </returns>
         public static ArtifactData ArtifactData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
         {
-            return new Models.UnknownArtifact(id, name, resourceType, systemData, kind);
+            return new ArtifactData(id, name, resourceType, systemData, kind);
         }
 
         /// <summary> Initializes a new instance of PublishedBlueprintData. </summary>

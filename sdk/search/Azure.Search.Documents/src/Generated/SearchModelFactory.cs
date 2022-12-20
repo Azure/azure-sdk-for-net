@@ -276,7 +276,7 @@ namespace Azure.Search.Documents.Models
             inputs ??= new List<InputFieldMappingEntry>();
             outputs ??= new List<OutputFieldMappingEntry>();
 
-            return new UnknownSearchIndexerSkill(oDataType, name, description, context, inputs?.ToList(), outputs?.ToList());
+            return new SearchIndexerSkill(oDataType, name, description, context, inputs?.ToList(), outputs?.ToList());
         }
 
         /// <summary> Initializes a new instance of InputFieldMappingEntry. </summary>
@@ -497,7 +497,7 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Indexes.Models.LexicalNormalizer"/> instance for mocking. </returns>
         public static LexicalNormalizer LexicalNormalizer(string oDataType = null, string name = null)
         {
-            return new UnknownLexicalNormalizer(oDataType, name);
+            return new LexicalNormalizer(oDataType, name);
         }
 
         /// <summary> Initializes a new instance of SemanticSettings. </summary>

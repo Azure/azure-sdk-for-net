@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="DataShare.ShareDataSetData"/> instance for mocking. </returns>
         public static ShareDataSetData ShareDataSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
         {
-            return new Models.UnknownDataSet(id, name, resourceType, systemData, kind);
+            return new ShareDataSetData(id, name, resourceType, systemData, kind);
         }
 
         /// <summary> Initializes a new instance of ShareDataSetMappingData. </summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="DataShare.ShareDataSetMappingData"/> instance for mocking. </returns>
         public static ShareDataSetMappingData ShareDataSetMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
         {
-            return new Models.UnknownDataSetMapping(id, name, resourceType, systemData, kind);
+            return new ShareDataSetMappingData(id, name, resourceType, systemData, kind);
         }
 
         /// <summary> Initializes a new instance of DataShareEmailRegistration. </summary>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="DataShare.DataShareSynchronizationSettingData"/> instance for mocking. </returns>
         public static DataShareSynchronizationSettingData DataShareSynchronizationSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
         {
-            return new Models.UnknownSynchronizationSetting(id, name, resourceType, systemData, kind);
+            return new DataShareSynchronizationSettingData(id, name, resourceType, systemData, kind);
         }
 
         /// <summary> Initializes a new instance of DataShareTriggerData. </summary>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="DataShare.DataShareTriggerData"/> instance for mocking. </returns>
         public static DataShareTriggerData DataShareTriggerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
         {
-            return new Models.UnknownTrigger(id, name, resourceType, systemData, kind);
+            return new DataShareTriggerData(id, name, resourceType, systemData, kind);
         }
 
         /// <summary> Initializes a new instance of AdlsGen1FileDataSet. </summary>

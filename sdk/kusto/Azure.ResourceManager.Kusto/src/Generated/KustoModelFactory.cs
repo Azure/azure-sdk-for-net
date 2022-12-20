@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <returns> A new <see cref="Kusto.KustoDatabaseData"/> instance for mocking. </returns>
         public static KustoDatabaseData KustoDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = null)
         {
-            return new Models.UnknownDatabase(id, name, resourceType, systemData, location, kind);
+            return new KustoDatabaseData(id, name, resourceType, systemData, location, kind);
         }
 
         /// <summary> Initializes a new instance of KustoDatabasePrincipalAssignmentData. </summary>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <returns> A new <see cref="Kusto.KustoDataConnectionData"/> instance for mocking. </returns>
         public static KustoDataConnectionData KustoDataConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = null)
         {
-            return new Models.UnknownDataConnection(id, name, resourceType, systemData, location, kind);
+            return new KustoDataConnectionData(id, name, resourceType, systemData, location, kind);
         }
 
         /// <summary> Initializes a new instance of DataConnectionValidationResults. </summary>

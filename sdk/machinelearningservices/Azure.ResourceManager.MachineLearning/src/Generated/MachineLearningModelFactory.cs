@@ -1666,7 +1666,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new Models.UnknownDataVersionBase(description, properties, tags, isAnonymous, isArchived, dataType, dataUri);
+            return new MachineLearningDataVersionProperties(description, properties, tags, isAnonymous, isArchived, dataType, dataUri);
         }
 
         /// <summary> Initializes a new instance of MachineLearningDatastoreData. </summary>
@@ -1719,7 +1719,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
 
-            return new Models.UnknownDatastore(description, properties, tags, credentials, datastoreType, isDefault);
+            return new MachineLearningDatastoreProperties(description, properties, tags, credentials, datastoreType, isDefault);
         }
 
         /// <summary> Initializes a new instance of MachineLearningDatastoreCredentials. </summary>
@@ -1982,7 +1982,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             tags ??= new Dictionary<string, string>();
             services ??= new Dictionary<string, MachineLearningJobService>();
 
-            return new Models.UnknownJobBase(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, services, status);
+            return new MachineLearningJobProperties(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, services, status);
         }
 
         /// <summary> Initializes a new instance of MachineLearningIdentityConfiguration. </summary>
@@ -2345,7 +2345,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             environmentVariables ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, string>();
 
-            return new Models.UnknownOnlineDeployment(codeConfiguration, description, environmentId, environmentVariables, properties, appInsightsEnabled, egressPublicNetworkAccess, endpointComputeType, instanceType, livenessProbe, model, modelMountPath, provisioningState, readinessProbe, requestSettings, scaleSettings);
+            return new MachineLearningOnlineDeploymentProperties(codeConfiguration, description, environmentId, environmentVariables, properties, appInsightsEnabled, egressPublicNetworkAccess, endpointComputeType, instanceType, livenessProbe, model, modelMountPath, provisioningState, readinessProbe, requestSettings, scaleSettings);
         }
 
         /// <summary> Initializes a new instance of MachineLearningProbeSettings. </summary>

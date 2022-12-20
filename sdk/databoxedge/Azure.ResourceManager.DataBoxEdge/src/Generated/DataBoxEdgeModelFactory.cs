@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeRoleData"/> instance for mocking. </returns>
         public static DataBoxEdgeRoleData DataBoxEdgeRoleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
         {
-            return new Models.UnknownRole(id, name, resourceType, systemData, kind);
+            return new DataBoxEdgeRoleData(id, name, resourceType, systemData, kind);
         }
 
         /// <summary> Initializes a new instance of DataBoxEdgeRoleAddonData. </summary>
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeRoleAddonData"/> instance for mocking. </returns>
         public static DataBoxEdgeRoleAddonData DataBoxEdgeRoleAddonData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
         {
-            return new Models.UnknownAddon(id, name, resourceType, systemData, kind);
+            return new DataBoxEdgeRoleAddonData(id, name, resourceType, systemData, kind);
         }
 
         /// <summary> Initializes a new instance of MonitoringMetricConfigurationData. </summary>
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeTriggerData"/> instance for mocking. </returns>
         public static DataBoxEdgeTriggerData DataBoxEdgeTriggerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
         {
-            return new Models.UnknownTrigger(id, name, resourceType, systemData, kind);
+            return new DataBoxEdgeTriggerData(id, name, resourceType, systemData, kind);
         }
 
         /// <summary> Initializes a new instance of TriggerSupportPackageContent. </summary>

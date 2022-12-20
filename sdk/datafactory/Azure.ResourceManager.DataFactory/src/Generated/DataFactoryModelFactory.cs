@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownIntegrationRuntime(runtimeType, description, additionalProperties);
+            return new IntegrationRuntimeDefinition(runtimeType, description, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeStatusResult. </summary>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownIntegrationRuntimeStatus(runtimeType, dataFactoryName, state, additionalProperties);
+            return new IntegrationRuntimeStatus(runtimeType, dataFactoryName, state, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint. </summary>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownLinkedService(linkedServiceType, connectVia, description, parameters, annotations?.ToList(), additionalProperties);
+            return new FactoryLinkedServiceDefinition(linkedServiceType, connectVia, description, parameters, annotations?.ToList(), additionalProperties);
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeReference. </summary>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownDataset(datasetType, description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties);
+            return new FactoryDatasetDefinition(datasetType, description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folderName != null ? new DatasetFolder(folderName) : null, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of FactoryLinkedServiceReference. </summary>
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             userProperties ??= new List<ActivityUserProperty>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownActivity(name, activityType, description, dependsOn?.ToList(), userProperties?.ToList(), additionalProperties);
+            return new PipelineActivity(name, activityType, description, dependsOn?.ToList(), userProperties?.ToList(), additionalProperties);
         }
 
         /// <summary> Initializes a new instance of ActivityDependency. </summary>
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             annotations ??= new List<BinaryData>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownTrigger(triggerType, description, runtimeState, annotations?.ToList(), additionalProperties);
+            return new FactoryTriggerDefinition(triggerType, description, runtimeState, annotations?.ToList(), additionalProperties);
         }
 
         /// <summary> Initializes a new instance of FactoryTriggerSubscriptionOperationResult. </summary>
@@ -1136,7 +1136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownDatasetLocation(datasetLocationType, folderPath, fileName, additionalProperties);
+            return new DatasetLocation(datasetLocationType, folderPath, fileName, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of AzureBlobStorageLocation. </summary>
@@ -1316,7 +1316,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownDatasetStorageFormat(datasetStorageFormatType, serializer, deserializer, additionalProperties);
+            return new DatasetStorageFormat(datasetStorageFormatType, serializer, deserializer, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of DatasetTextFormat. </summary>
@@ -7146,7 +7146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownStoreReadSettings(storeReadSettingsType, maxConcurrentConnections, disableMetricsCollection, additionalProperties);
+            return new StoreReadSettings(storeReadSettingsType, maxConcurrentConnections, disableMetricsCollection, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of AzureBlobStorageReadSettings. </summary>
@@ -7307,7 +7307,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownStoreWriteSettings(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, additionalProperties);
+            return new StoreWriteSettings(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of AmazonS3CompatibleReadSettings. </summary>
@@ -7545,7 +7545,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownFormatReadSettings(formatReadSettingsType, additionalProperties);
+            return new FormatReadSettings(formatReadSettingsType, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of CompressionReadSettings. </summary>
@@ -7556,7 +7556,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownCompressionReadSettings(compressionReadSettingsType, additionalProperties);
+            return new CompressionReadSettings(compressionReadSettingsType, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of ZipDeflateReadSettings. </summary>
@@ -7665,7 +7665,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownFormatWriteSettings(formatWriteSettingsType, additionalProperties);
+            return new FormatWriteSettings(formatWriteSettingsType, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of AvroWriteSettings. </summary>
@@ -7763,7 +7763,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownCopySource(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties);
+            return new CopyActivitySource(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of ExcelSource. </summary>
@@ -7925,7 +7925,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownCopySink(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties);
+            return new CopySink(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of JsonSink. </summary>
@@ -9807,7 +9807,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownExportSettings(exportSettingsType, additionalProperties);
+            return new ExportSettings(exportSettingsType, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeSource. </summary>
@@ -9876,7 +9876,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownImportSettings(importSettingsType, additionalProperties);
+            return new ImportSettings(importSettingsType, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of SapCloudForCustomerSink. </summary>

@@ -110,7 +110,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.SecretBase"/> instance for mocking. </returns>
         public static SecretBase SecretBase(string type = null)
         {
-            return new UnknownSecretBase(type);
+            return new SecretBase(type);
         }
 
         /// <summary> Initializes a new instance of LinkConnectionCompute. </summary>
@@ -538,7 +538,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             annotations ??= new List<object>();
 
-            return new UnknownDataFlow(type, description, annotations?.ToList(), folder);
+            return new DataFlow(type, description, annotations?.ToList(), folder);
         }
 
         /// <summary> Initializes a new instance of DataFlowFolder. </summary>
@@ -582,7 +582,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new UnknownIntegrationRuntime(type, description, additionalProperties);
+            return new IntegrationRuntime(type, description, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of SubResourceDebugResource. </summary>
@@ -683,7 +683,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             annotations ??= new List<object>();
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new UnknownDataset(type, description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folder, additionalProperties);
+            return new Dataset(type, description, structure, schema, linkedServiceName, parameters, annotations?.ToList(), folder, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of ParameterSpecification. </summary>
@@ -730,7 +730,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             annotations ??= new List<object>();
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new UnknownLinkedService(type, connectVia, description, parameters, annotations?.ToList(), additionalProperties);
+            return new LinkedService(type, connectVia, description, parameters, annotations?.ToList(), additionalProperties);
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeReference. </summary>
@@ -1069,7 +1069,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             userProperties ??= new List<UserProperty>();
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new UnknownActivity(name, type, description, dependsOn?.ToList(), userProperties?.ToList(), additionalProperties);
+            return new Activity(name, type, description, dependsOn?.ToList(), userProperties?.ToList(), additionalProperties);
         }
 
         /// <summary> Initializes a new instance of ActivityDependency. </summary>
@@ -1522,7 +1522,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             annotations ??= new List<object>();
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new UnknownTrigger(type, description, runtimeState, annotations?.ToList(), additionalProperties);
+            return new Trigger(type, description, runtimeState, annotations?.ToList(), additionalProperties);
         }
 
         /// <summary> Initializes a new instance of TriggerSubscriptionOperationStatus. </summary>
@@ -2069,7 +2069,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new UnknownDatasetLocation(type, folderPath, fileName, additionalProperties);
+            return new DatasetLocation(type, folderPath, fileName, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of AzureBlobStorageLocation. </summary>
@@ -2242,7 +2242,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new UnknownDatasetStorageFormat(type, serializer, deserializer, additionalProperties);
+            return new DatasetStorageFormat(type, serializer, deserializer, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of TextFormat. </summary>
@@ -5330,7 +5330,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.WebLinkedServiceTypeProperties"/> instance for mocking. </returns>
         public static WebLinkedServiceTypeProperties WebLinkedServiceTypeProperties(object url = null, string authenticationType = null)
         {
-            return new UnknownWebLinkedServiceTypeProperties(url, authenticationType);
+            return new WebLinkedServiceTypeProperties(url, authenticationType);
         }
 
         /// <summary> Initializes a new instance of WebAnonymousAuthentication. </summary>
@@ -7579,7 +7579,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new UnknownStoreReadSettings(type, maxConcurrentConnections, additionalProperties);
+            return new StoreReadSettings(type, maxConcurrentConnections, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of AzureBlobStorageReadSettings. </summary>
@@ -7732,7 +7732,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new UnknownStoreWriteSettings(type, maxConcurrentConnections, copyBehavior, additionalProperties);
+            return new StoreWriteSettings(type, maxConcurrentConnections, copyBehavior, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of GoogleCloudStorageReadSettings. </summary>
@@ -7916,7 +7916,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new UnknownFormatReadSettings(type, additionalProperties);
+            return new FormatReadSettings(type, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of CompressionReadSettings. </summary>
@@ -7927,7 +7927,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new UnknownCompressionReadSettings(type, additionalProperties);
+            return new CompressionReadSettings(type, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of ZipDeflateReadSettings. </summary>
@@ -8036,7 +8036,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new UnknownFormatWriteSettings(type, additionalProperties);
+            return new FormatWriteSettings(type, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of AvroWriteSettings. </summary>
@@ -8132,7 +8132,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new UnknownCopySource(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties);
+            return new CopySource(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of ExcelSource. </summary>
@@ -8286,7 +8286,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new UnknownCopySink(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties);
+            return new CopySink(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of JsonSink. </summary>
@@ -10084,7 +10084,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new UnknownExportSettings(type, additionalProperties);
+            return new ExportSettings(type, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeSource. </summary>
@@ -10151,7 +10151,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new UnknownImportSettings(type, additionalProperties);
+            return new ImportSettings(type, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of NotebookParameter. </summary>
@@ -10764,7 +10764,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new UnknownCopyTranslator(type, additionalProperties);
+            return new CopyTranslator(type, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of TabularTranslator. </summary>
@@ -12066,7 +12066,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.DependencyReference"/> instance for mocking. </returns>
         public static DependencyReference DependencyReference(string type = null)
         {
-            return new UnknownDependencyReference(type);
+            return new DependencyReference(type);
         }
 
         /// <summary> Initializes a new instance of TriggerDependencyReference. </summary>
@@ -12237,7 +12237,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.CustomSetupBase"/> instance for mocking. </returns>
         public static CustomSetupBase CustomSetupBase(string type = null)
         {
-            return new UnknownCustomSetupBase(type);
+            return new CustomSetupBase(type);
         }
 
         /// <summary> Initializes a new instance of ManagedVirtualNetworkReference. </summary>
@@ -12270,7 +12270,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.LinkedIntegrationRuntimeType"/> instance for mocking. </returns>
         public static LinkedIntegrationRuntimeType LinkedIntegrationRuntimeType(string authorizationType = null)
         {
-            return new UnknownLinkedIntegrationRuntimeType(authorizationType);
+            return new LinkedIntegrationRuntimeType(authorizationType);
         }
 
         /// <summary> Initializes a new instance of LinkedIntegrationRuntimeKeyAuthorization. </summary>

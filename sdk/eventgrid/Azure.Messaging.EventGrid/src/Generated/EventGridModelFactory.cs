@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using Azure.Messaging.EventGrid.Models;
 using Azure.Messaging.EventGrid.SystemEvents;
 
 namespace Azure.Messaging.EventGrid
@@ -797,7 +796,7 @@ namespace Azure.Messaging.EventGrid
         /// <returns> A new <see cref="SystemEvents.MediaJobOutput"/> instance for mocking. </returns>
         public static MediaJobOutput MediaJobOutput(string odataType = null, MediaJobError error = null, string label = null, long progress = default, MediaJobState state = default)
         {
-            return new UnknownMediaJobOutput(odataType, error, label, progress, state);
+            return new MediaJobOutput(odataType, error, label, progress, state);
         }
 
         /// <summary> Initializes a new instance of MediaJobOutputAsset. </summary>

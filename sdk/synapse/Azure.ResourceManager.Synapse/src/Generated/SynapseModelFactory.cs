@@ -1519,7 +1519,7 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownIntegrationRuntime(runtimeType, description, additionalProperties);
+            return new IntegrationRuntime(runtimeType, description, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeNodeIPAddress. </summary>
@@ -1609,7 +1609,7 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownIntegrationRuntimeStatus(runtimeType, dataFactoryName, state, additionalProperties);
+            return new IntegrationRuntimeStatus(runtimeType, dataFactoryName, state, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeAuthKeys. </summary>
@@ -1938,7 +1938,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.DatabaseData"/> instance for mocking. </returns>
         public static DatabaseData DatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = null)
         {
-            return new Models.UnknownDatabase(id, name, resourceType, systemData, location, kind);
+            return new DatabaseData(id, name, resourceType, systemData, location, kind);
         }
 
         /// <summary> Initializes a new instance of DataConnectionData. </summary>
@@ -1951,7 +1951,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.DataConnectionData"/> instance for mocking. </returns>
         public static DataConnectionData DataConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = null)
         {
-            return new Models.UnknownDataConnection(id, name, resourceType, systemData, location, kind);
+            return new DataConnectionData(id, name, resourceType, systemData, location, kind);
         }
 
         /// <summary> Initializes a new instance of DataConnectionValidationListResult. </summary>

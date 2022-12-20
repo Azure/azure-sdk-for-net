@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownMetricAlertCriteria(odataType, additionalProperties);
+            return new MetricAlertCriteria(odataType, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of MetricAlertAction. </summary>
@@ -1400,7 +1400,7 @@ namespace Azure.ResourceManager.Monitor.Models
             dimensions ??= new List<MetricDimension>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownMultiMetricCriteria(criterionType, name, metricName, metricNamespace, timeAggregation, dimensions?.ToList(), skipMetricValidation, additionalProperties);
+            return new MultiMetricCriteria(criterionType, name, metricName, metricNamespace, timeAggregation, dimensions?.ToList(), skipMetricValidation, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of WebtestLocationAvailabilityCriteria. </summary>

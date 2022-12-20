@@ -2044,7 +2044,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new UnknownServiceResourceProperties(createdOn, instanceSize, instanceCount, serviceType, status, additionalProperties);
+            return new CosmosDBServiceProperties(createdOn, instanceSize, instanceCount, serviceType, status, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of PeriodicModeBackupPolicy. </summary>

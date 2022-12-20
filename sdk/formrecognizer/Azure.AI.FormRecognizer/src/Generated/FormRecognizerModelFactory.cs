@@ -34,7 +34,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new UnknownOperationDetails(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags, jsonError);
+            return new OperationDetails(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags, jsonError);
         }
 
         /// <summary> Initializes a new instance of DocumentModelBuildOperationDetails. </summary>
