@@ -321,7 +321,7 @@ Describe "Platform Matrix Generation" -Tag "generate" {
         $element.name | Should -Be "ubuntu1804_netcoreapp21_withFoo"
 
         $element = GetNdMatrixElement @(2, 1, 1) $matrix $dimensions
-        $element.name | Should -Be "macOS1015_netcoreapp21_withFoo"
+        $element.name | Should -Be "macOS11_netcoreapp21_withFoo"
     }
 
     It "Should initialize an N-dimensional matrix from all parameter permutations" {
