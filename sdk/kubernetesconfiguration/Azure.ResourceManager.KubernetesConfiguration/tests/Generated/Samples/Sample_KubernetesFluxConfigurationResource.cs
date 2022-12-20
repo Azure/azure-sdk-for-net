@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetFluxConfiguration()
         {
-            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-07-01/examples/GetFluxConfiguration.json
+            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-11-01/examples/GetFluxConfiguration.json
             // this example is just showing the usage of "FluxConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_PatchFluxConfiguration()
         {
-            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-07-01/examples/PatchFluxConfiguration.json
+            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-11-01/examples/PatchFluxConfiguration.json
             // this example is just showing the usage of "FluxConfigurations_Update" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -112,7 +112,7 @@ SyncIntervalInSeconds = 300,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteFluxConfiguration()
         {
-            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-07-01/examples/DeleteFluxConfiguration.json
+            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-11-01/examples/DeleteFluxConfiguration.json
             // this example is just showing the usage of "FluxConfigurations_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
