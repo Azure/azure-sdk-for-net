@@ -11,7 +11,7 @@ using Azure.ResourceManager.Relay.Tests.Helpers;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Relay.Tests.Tests
+namespace Azure.ResourceManager.Relay.Tests
 {
     public class RelayNamespaceTests: RelayTestBase
     {
@@ -47,9 +47,12 @@ namespace Azure.ResourceManager.Relay.Tests.Tests
             _relayNamespace = (await _relayNamespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, relayNamespaceData)).Value;
             Assert.AreEqual(RelaySkuName.Standard, _relayNamespace.Data.Sku.Name);
 
-            await _relayNamespace.DeleteAsync(WaitUntil.Completed);
+            var listOfRelayNamespaces = await _relayNamespaceCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.AreEqual(1, listOfRelayNamespaces.Count);
+
+            /*await _relayNamespace.DeleteAsync(WaitUntil.Completed);
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _relayNamespace.GetAsync(); });
-            Assert.AreEqual(404, exception.Status);
+            Assert.AreEqual(404, exception.Status);*/
         }
     }
 }

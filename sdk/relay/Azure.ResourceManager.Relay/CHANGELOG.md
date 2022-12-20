@@ -10,9 +10,8 @@
 
 ### Other Changes
 
-## 1.1.0 (2022-12-19)
-
-Hiding PublicNetworkAccess at namespace API as it is not currently supported.
+### Features Added
+- Added support for PublicNetworkAccess in NetworkRuleSet API as PublicNetworkAccess at Namespace API is not currently available.
 
 ## 1.0.0 (2022-09-13)
 
