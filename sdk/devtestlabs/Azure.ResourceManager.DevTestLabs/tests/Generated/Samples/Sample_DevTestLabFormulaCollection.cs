@@ -169,7 +169,17 @@ Parameters =
                         OSType = "Linux",
                         Version = "latest",
                     },
-                    NetworkInterface = new DevTestLabNetworkInterface(),
+                    NetworkInterface = new DevTestLabNetworkInterface()
+                    {
+                        SharedPublicIPAddressInboundNatRules =
+{
+new DevTestLabInboundNatRule()
+{
+TransportProtocol = DevTestLabTransportProtocol.Tcp,
+BackendPort = 22,
+}
+},
+                    },
                     AllowClaim = false,
                     StorageType = "Standard",
                 },

@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="quotaBucketName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="quotaBucketName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LoadTestingQuotaAvailabilityResponse>> CheckAvailabilityAsync(string subscriptionId, AzureLocation location, string quotaBucketName, LoadTestingQuotaBucketContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<LoadTestingQuotaAvailabilityResult>> CheckAvailabilityAsync(string subscriptionId, AzureLocation location, string quotaBucketName, LoadTestingQuotaBucketContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
@@ -233,9 +233,9 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 case 200:
                     {
-                        LoadTestingQuotaAvailabilityResponse value = default;
+                        LoadTestingQuotaAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LoadTestingQuotaAvailabilityResponse.DeserializeLoadTestingQuotaAvailabilityResponse(document.RootElement);
+                        value = LoadTestingQuotaAvailabilityResult.DeserializeLoadTestingQuotaAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="quotaBucketName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="quotaBucketName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LoadTestingQuotaAvailabilityResponse> CheckAvailability(string subscriptionId, AzureLocation location, string quotaBucketName, LoadTestingQuotaBucketContent content, CancellationToken cancellationToken = default)
+        public Response<LoadTestingQuotaAvailabilityResult> CheckAvailability(string subscriptionId, AzureLocation location, string quotaBucketName, LoadTestingQuotaBucketContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
@@ -263,9 +263,9 @@ namespace Azure.ResourceManager.LoadTesting
             {
                 case 200:
                     {
-                        LoadTestingQuotaAvailabilityResponse value = default;
+                        LoadTestingQuotaAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LoadTestingQuotaAvailabilityResponse.DeserializeLoadTestingQuotaAvailabilityResponse(document.RootElement);
+                        value = LoadTestingQuotaAvailabilityResult.DeserializeLoadTestingQuotaAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

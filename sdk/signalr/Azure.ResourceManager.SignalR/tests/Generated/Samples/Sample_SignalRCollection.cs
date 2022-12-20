@@ -182,6 +182,24 @@ Enabled = "true",
 }
 },
                 },
+                CorsAllowedOrigins =
+{
+"https://foo.com","https://bar.com"
+},
+                UpstreamTemplates =
+{
+new UpstreamTemplate("https://example.com/chat/api/connect")
+{
+HubPattern = "*",
+EventPattern = "connect,disconnect",
+CategoryPattern = "*",
+Auth = new UpstreamAuthSettings()
+{
+AuthType = UpstreamAuthType.ManagedIdentity,
+ManagedIdentityResource = "api://example",
+},
+}
+},
                 NetworkACLs = new SignalRNetworkACLs()
                 {
                     DefaultAction = ACLAction.Deny,

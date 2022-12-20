@@ -101,6 +101,24 @@ namespace Azure.ResourceManager.ArcScVmm
                         MemoryMB = 4096,
                         CpuCount = 4,
                     },
+                    StorageDisks =
+{
+new VirtualDiskUpdate()
+{
+Name = "test",
+DiskSizeGB = 10,
+}
+},
+                    NetworkInterfaces =
+{
+new NetworkInterfacesUpdate()
+{
+Name = "test",
+IPv4AddressType = AllocationMethod.Dynamic,
+IPv6AddressType = AllocationMethod.Dynamic,
+MacAddressType = AllocationMethod.Static,
+}
+},
                 },
                 Tags =
 {
