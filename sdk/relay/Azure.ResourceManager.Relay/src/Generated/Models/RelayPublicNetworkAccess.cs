@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Relay.Models
 {
-    /// <summary> DO NOT USE PublicNetworkAccess on this API. Please use the NetworkRuleSet api to enable or disable publicNetworkAccess. </summary>
+    /// <summary> This determines if traffic is allowed over public network. By default it is enabled. DO NOT USE PublicNetworkAccess on Namespace API. Please use the NetworkRuleSet API to enable or disable PublicNetworkAccess. </summary>
     public readonly partial struct RelayPublicNetworkAccess : IEquatable<RelayPublicNetworkAccess>
     {
         private readonly string _value;

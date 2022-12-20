@@ -85,5 +85,5 @@ directive:
   - from: Namespaces.json
     where: $.definitions
     transform: >
-      $.RelayNamespaceProperties.properties.publicNetworkAccess['description'] = 'DO NOT USE PublicNetworkAccess on this API. Please use the NetworkRuleSet api to enable or disable publicNetworkAccess.';
+      $.RelayNamespaceProperties.properties.publicNetworkAccess['description'] = 'This determines if traffic is allowed over public network. By default it is enabled. DO NOT USE PublicNetworkAccess on Namespace API. Please use the NetworkRuleSet API to enable or disable PublicNetworkAccess.';
 ```

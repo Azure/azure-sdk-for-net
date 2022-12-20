@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Relay
     /// <summary> A class representing the RelayNamespace data model. </summary>
     public partial class RelayNamespaceData : TrackedResourceData
     {
-        /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
+        /// <summary> This determines if traffic is allowed over public network. By default it is enabled. DO NOT USE PublicNetworkAccess on Namespace API. Please use the NetworkRuleSet API to enable or disable PublicNetworkAccess. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public RelayPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
