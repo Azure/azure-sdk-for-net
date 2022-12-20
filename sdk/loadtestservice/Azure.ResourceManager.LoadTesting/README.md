@@ -30,16 +30,6 @@ dotnet add package Azure.ResourceManager.LoadTesting --prerelease
 
 To create an authenticated client and start interacting with Microsoft Azure resources, see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
 
-```C#
-using Azure.Core;
-using Azure.Identity;
-using Azure.ResourceManager;
-
-// Code omitted for brevity
-
-ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-```
-
 ## Key concepts
 
 Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html)..
@@ -71,19 +61,19 @@ ResourceGroupResource resourceGroup = lro.Value;
 
 Create an Azure Load Testing resource.
 
-```C#
-LoadTestingCollection loadTestingCollection = resourceGroup.GetLoadTestingResources();
+```C# Snippet:LoadTesting_CreateLoadTestResource_Basic
+LoadTestingResourceCollection loadTestingCollection = _resourceGroup.GetLoadTestingResources();
 string loadTestResourceName = "sample-loadtest";
 LoadTestingResourceData inputPayload = new LoadTestingResourceData(AzureLocation.WestUS2);
 ArmOperation<LoadTestingResource> loadTestingLro = await loadTestingCollection.CreateOrUpdateAsync(WaitUntil.Completed, loadTestResourceName, inputPayload);
+
 LoadTestingResource resource = loadTestingLro.Value;
 ```
 
 Create an Azure Load Testing resource configured with CMK encryption.
 
-```C#
-LoadTestingCollection loadTestingCollection = resourceGroup.GetLoadTestingResources();
-
+```C# Snippet:LoadTesting_CreateLoadTestResource_WithEncryption
+LoadTestingResourceCollection loadTestingCollection = _resourceGroup.GetLoadTestingResources();
 string loadTestResourceName = "sample-loadtest";
 LoadTestingResourceData inputPayload = new LoadTestingResourceData(AzureLocation.WestUS2);
 
@@ -100,47 +90,50 @@ inputPayload.Encryption.Identity.IdentityType = CustomerManagedKeyIdentityType.U
 inputPayload.Encryption.Identity.ResourceId = identityId;
 
 ArmOperation<LoadTestingResource> loadTestingLro = await loadTestingCollection.CreateOrUpdateAsync(WaitUntil.Completed, loadTestResourceName, inputPayload);
+
 LoadTestingResource resource = loadTestingLro.Value;
 ```
 
 ### Get details of an Azure Load Testing resource
 
-```C#
-LoadTestingCollection loadTestingCollection = resourceGroup.GetLoadTestingResources();
+```C# Snippet:LoadTesting_GetLoadTestResource
+LoadTestingResourceCollection loadTestingCollection = _resourceGroup.GetLoadTestingResources();
+
 string loadTestResourceName = "sample-loadtest";
 Response<LoadTestingResource> loadTestingResponse = await loadTestingCollection.GetAsync(loadTestResourceName);
+
 LoadTestingResource resource = loadTestingResponse.Value;
 ```
 
 ### Update an Azure Load Testing resource
 
 Update an Azure Load Testing resource to configure CMK encryption using system-assigned managed identity.
-```C#
-LoadTestingCollection loadTestingCollection = resourceGroup.GetLoadTestingResources();
+```C# Snippet:LoadTesting_UpdateLoadTestResource_WithEncryption
+LoadTestingResourceCollection loadTestingCollection = _resourceGroup.GetLoadTestingResources();
 string loadTestResourceName = "sample-loadtest";
 Response<LoadTestingResource> loadTestingResponse = await loadTestingCollection.GetAsync(loadTestResourceName);
 LoadTestingResource resource = loadTestingResponse.Value;
 
 ResourceIdentifier identityId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/sample-rg/providers/microsoft.managedidentity/userassignedidentities/identity1");
 LoadTestingResourcePatch resourcePatchPayload = new LoadTestingResourcePatch {
-  Encryption = new CustomerManagedKeyEncryptionProperties {
-    Identity = new CustomerManagedKeyIdentity
-    {
-      // make sure that system-assigned managed identity is enabled on this resource and the identity has been granted required permissions to access the key.
-      IdentityType = CustomerManagedKeyIdentityType.SystemAssigned,
-      ResourceId = null
-    },
-    KeyUri = new Uri("https://sample-kv.vault.azure.net/keys/cmkkey/2d1ccd5c50234ea2a0858fe148b69cde")
-  }
+    Encryption = new CustomerManagedKeyEncryptionProperties {
+        Identity = new CustomerManagedKeyIdentity {
+            // make sure that system-assigned managed identity is enabled on this resource and the identity has been granted required permissions to access the key.
+            IdentityType = CustomerManagedKeyIdentityType.SystemAssigned,
+            ResourceId = null
+        },
+        KeyUri = new Uri("https://sample-kv.vault.azure.net/keys/cmkkey/2d1ccd5c50234ea2a0858fe148b69cde")
+    }
 };
 
 ArmOperation<LoadTestingResource> loadTestingLro = await resource.UpdateAsync(WaitUntil.Completed, resourcePatchPayload);
-LoadTestingResource resource = loadTestingLro.Value;
+
+LoadTestingResource updatedResource = loadTestingLro.Value;
 ```
 
 Update an Azure Load Testing resource to update user-assigned managed identities.
-```C#
-LoadTestingCollection loadTestingCollection = resourceGroup.GetLoadTestingResources();
+```C# Snippet:LoadTesting_UpdateLoadTestResource_WithManagedIdentity
+LoadTestingResourceCollection loadTestingCollection = _resourceGroup.GetLoadTestingResources();
 string loadTestResourceName = "sample-loadtest";
 Response<LoadTestingResource> loadTestingResponse = await loadTestingCollection.GetAsync(loadTestResourceName);
 LoadTestingResource resource = loadTestingResponse.Value;
@@ -155,18 +148,70 @@ resourcePatchPayload.Identity.UserAssignedIdentities.Add(identityId1, null);
 resourcePatchPayload.Identity.UserAssignedIdentities.Add(identityId2, new UserAssignedIdentity());
 
 ArmOperation<LoadTestingResource> loadTestingLro = await resource.UpdateAsync(WaitUntil.Completed, resourcePatchPayload);
-LoadTestingResource resource = loadTestingLro.Value;
+LoadTestingResource updatedResource = loadTestingLro.Value;
 ```
 
 ### Delete an Azure Load Testing resource
 
-```C#
-LoadTestingCollection loadTestingCollection = resourceGroup.GetLoadTestingResources();
+```C# Snippet:LoadTesting_DeleteLoadTestResource
+LoadTestingResourceCollection loadTestingCollection = _resourceGroup.GetLoadTestingResources();
 string loadTestResourceName = "sample-loadtest";
 Response<LoadTestingResource> loadTestingResponse = await loadTestingCollection.GetAsync(loadTestResourceName);
 LoadTestingResource resource = loadTestingResponse.Value;
 
 ArmOperation loadTestDeleteResponse = await resource.DeleteAsync(WaitUntil.Completed);
+```
+
+### Quota Operations
+
+Get Load Testing quota collection.
+
+```C# Snippet:LoadTesting_GetQuotaCollection
+LoadTestingQuotaCollection QuotaCollection = _subscription.GetAllLoadTestingQuota(AzureLocation.WestUS2);
+// Use the quotaCollection for all the quota operations.
+```
+
+Get quota values for a particular quota bucket.
+
+```C# Snippet:LoadTesting_GetQuotaBucket
+LoadTestingQuotaCollection QuotaCollection = _subscription.GetAllLoadTestingQuota(AzureLocation.WestUS2);
+
+// Get the quota values for a particular quota bucket
+Response<LoadTestingQuotaResource> quotaResponse = await QuotaCollection.GetAsync("maxConcurrentTestRuns");
+LoadTestingQuotaResource quotaBucket = quotaResponse.Value;
+```
+
+Get quota values for all quota buckets.
+
+```C# Snippet:LoadTesting_GetAllQuotaBuckets
+LoadTestingQuotaCollection QuotaCollection = _subscription.GetAllLoadTestingQuota(AzureLocation.WestUS2);
+
+// Get the quota values for a all quota buckets
+List<LoadTestingQuotaResource> quotaBuckets = await QuotaCollection.GetAllAsync().ToEnumerableAsync();
+```
+
+Check quota availability for quota increase.
+
+```C# Snippet:LoadTesting_CheckQuotaAvailability
+LoadTestingQuotaCollection QuotaCollection = _subscription.GetAllLoadTestingQuota(AzureLocation.WestUS2);
+
+Response<LoadTestingQuotaResource> quotaResponse = await QuotaCollection.GetAsync("maxConcurrentTestRuns");
+LoadTestingQuotaResource quotaResource = quotaResponse.Value;
+
+LoadTestingQuotaBucketDimensions dimensions = new LoadTestingQuotaBucketDimensions("<subscription-id>", AzureLocation.WestUS2);
+LoadTestingQuotaBucketContent quotaAvailabilityPayload = new LoadTestingQuotaBucketContent(
+    quotaResponse.Value.Data.Id,
+    quotaResource.Data.Name,
+    quotaResource.Data.ResourceType,
+    null,
+    quotaResource.Data.Usage,
+    quotaResource.Data.Limit,
+    50, // new quota value
+    dimensions);
+
+Response<LoadTestingQuotaAvailabilityResult> checkAvailabilityResult = await quotaResponse.Value.CheckLoadTestingQuotaAvailabilityAsync(quotaAvailabilityPayload);
+// IsAvailable property indicates whether the requested quota is available.
+Console.WriteLine(checkAvailabilityResult.Value.IsAvailable);
 ```
 
 Code samples for using the management library for .NET can be found in the following locations
