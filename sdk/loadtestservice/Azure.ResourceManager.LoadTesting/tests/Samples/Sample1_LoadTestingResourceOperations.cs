@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.LoadTesting.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task CreateLoadTestResource_Basic()
+        public async Task createLoadTestResource_Basic()
         {
             #region Snippet:LoadTesting_CreateLoadTestResource_Basic
             LoadTestingResourceCollection loadTestingCollection = _resourceGroup.GetLoadTestingResources();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.LoadTesting.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task CreateLoadTestResource_WithEncryption()
+        public async Task createLoadTestResource_WithEncryption()
         {
             #region Snippet:LoadTesting_CreateLoadTestResource_WithEncryption
             LoadTestingResourceCollection loadTestingCollection = _resourceGroup.GetLoadTestingResources();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.LoadTesting.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task GetLoadTestResource()
+        public async Task getLoadTestResource()
         {
             #region Snippet:LoadTesting_GetLoadTestResource
             LoadTestingResourceCollection loadTestingCollection = _resourceGroup.GetLoadTestingResources();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.LoadTesting.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task UpdateLoadTestResource_WithEncryption()
+        public async Task updateLoadTestResource_WithEncryption()
         {
             #region Snippet:LoadTesting_UpdateLoadTestResource_WithEncryption
             LoadTestingResourceCollection loadTestingCollection = _resourceGroup.GetLoadTestingResources();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.LoadTesting.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task UpdateLoadTestResource_WithManagedIdentity()
+        public async Task updateLoadTestResource_WithManagedIdentity()
         {
             #region Snippet:LoadTesting_UpdateLoadTestResource_WithManagedIdentity
             LoadTestingResourceCollection loadTestingCollection = _resourceGroup.GetLoadTestingResources();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.LoadTesting.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task DeleteLoadTestResource()
+        public async Task deleteLoadTestResource()
         {
             #region Snippet:LoadTesting_DeleteLoadTestResource
             LoadTestingResourceCollection loadTestingCollection = _resourceGroup.GetLoadTestingResources();

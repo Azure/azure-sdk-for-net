@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.LoadTesting.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public void GetLoadTestingQuotaCollection()
+        public void getLoadTestingQuotaCollection()
         {
             #region Snippet:LoadTesting_GetQuotaCollection
             LoadTestingQuotaCollection QuotaCollection = _subscription.GetAllLoadTestingQuota(AzureLocation.WestUS2);
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.LoadTesting.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task GetLoadTestingQuotaBucket()
+        public async Task getLoadTestingQuotaBucket()
         {
             #region Snippet:LoadTesting_GetQuotaBucket
             LoadTestingQuotaCollection QuotaCollection = _subscription.GetAllLoadTestingQuota(AzureLocation.WestUS2);
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.LoadTesting.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task GetAllLoadTestingQuotaBuckets()
+        public async Task getAllLoadTestingQuotaBuckets()
         {
             #region Snippet:LoadTesting_GetAllQuotaBuckets
             LoadTestingQuotaCollection QuotaCollection = _subscription.GetAllLoadTestingQuota(AzureLocation.WestUS2);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.LoadTesting.Tests.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public async Task CheckQuotaAvailability()
+        public async Task checkQuotaAvailability()
         {
             #region Snippet:LoadTesting_CheckQuotaAvailability
             LoadTestingQuotaCollection QuotaCollection = _subscription.GetAllLoadTestingQuota(AzureLocation.WestUS2);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.LoadTesting.Tests.Samples
         protected async Task initialize()
         {
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
-            SubscriptionResource _subscription = await armClient.GetDefaultSubscriptionAsync();
+            this._subscription = await armClient.GetDefaultSubscriptionAsync();
         }
     }
 }
