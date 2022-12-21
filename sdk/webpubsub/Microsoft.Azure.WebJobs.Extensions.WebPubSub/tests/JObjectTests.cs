@@ -183,10 +183,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.AreEqual("aaa", message.UserId);
         }
 
-        [TestCase]
-        public async Task ParseMessageResponse()
+        [TestCase(@"""binary""", Constants.ContentTypes.BinaryContentType)]
+        [TestCase("0", Constants.ContentTypes.BinaryContentType)]
+        [TestCase(@"""Json""", Constants.ContentTypes.JsonContentType)]
+        [TestCase("1", Constants.ContentTypes.JsonContentType)]
+        [TestCase(@"""text""", Constants.ContentTypes.PlainTextContentType)]
+        [TestCase("2", Constants.ContentTypes.PlainTextContentType)]
+        public async Task ParseMessageResponse(string dataType, string expectContentType)
         {
-            var test = @"{""data"":""test"", ""dataType"":""text""}";
+            var test = @"{""data"":""test"", ""dataType"":{0}}";
+            test = test.Replace("{0}", dataType);
 
             var result = BuildResponse(test, RequestType.User);
 
@@ -195,7 +201,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var message = await result.Content.ReadAsStringAsync();
             Assert.AreEqual("test", message);
-            Assert.AreEqual(Constants.ContentTypes.PlainTextContentType, result.Content.Headers.ContentType.MediaType);
+            Assert.AreEqual(expectContentType, result.Content.Headers.ContentType.MediaType);
         }
 
         [TestCase]
