@@ -10,7 +10,7 @@ This tutorial has following sections:
 
 - [Azure SDK Code Generation Quickstart Tutorial (Data Plane)](#azure-sdk-code-generation-quickstart-tutorial-data-plane)
   - [Prerequisites](#prerequisites)
-  - [Setup your repo](#setup-your-repo)
+  - [Setup your repository](#setup-your-repository)
   - [Create starter package](#create-starter-package)
     - [Use Cadl as Input](#use-cadl-as-input)
       - [Create Cadl project](#create-cadl-project)
@@ -37,7 +37,7 @@ This tutorial has following sections:
 - Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 7 or higher.
 - Install [NodeJS](https://nodejs.org/) (16.x.x or above).
 
-## Setup your repo
+## Setup your repository
 
 - Fork and clone an [azure-sdk-for-net](https://github.com/Azure/azure-sdk-for-net) repo. Follow the instructions in the [.NET CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/issues/12903) to fork and clone the `azure-sdk-for-net` repo.
 - Create a branch to work in.
