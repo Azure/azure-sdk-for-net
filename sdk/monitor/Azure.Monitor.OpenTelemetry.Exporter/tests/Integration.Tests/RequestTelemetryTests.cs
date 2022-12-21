@@ -12,7 +12,6 @@ using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.DependencyInjection;
 
 using OpenTelemetry;
 using OpenTelemetry.Trace;
@@ -28,6 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
         {
         }
 
+#if !NET461
         /// <summary>
         /// This test validates that when an app instrumented with the AzureMonitorExporter receives an HTTP request,
         /// A TelemetryItem is created matching that request.
@@ -44,9 +44,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
                 .WithWebHostBuilder(builder =>
                     builder.ConfigureTestServices(services =>
                     {
-                        services.AddOpenTelemetryTracing((builder) => builder
+                        services.AddOpenTelemetry().WithTracing(builder => builder
                             .AddAspNetCoreInstrumentation()
-                            .AddAzureMonitorTraceExporterForTest(out telemetryItems));
+                            .AddAzureMonitorTraceExporterForTest(out telemetryItems))
+                            .StartWithHost();
                     }))
                 .CreateClient();
 
@@ -68,5 +69,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
                 expectedResponseCode: "200",
                 expectedUrl: request.AbsoluteUri);
         }
+#endif
     }
 }
