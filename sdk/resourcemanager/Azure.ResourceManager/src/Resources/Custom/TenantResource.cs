@@ -4,9 +4,11 @@
 using System;
 using System.ComponentModel;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.Resources.Models;
 
 [assembly: CodeGenSuppressType("TenantExtensions")]
 namespace Azure.ResourceManager.Resources
@@ -37,6 +39,98 @@ namespace Azure.ResourceManager.Resources
         {
             HasData = true;
             _data = data;
+        }
+
+        /// <summary>
+        /// Gets all resource providers for the tenant.
+        /// Request Path: /providers
+        /// Operation Id: Providers_ListAtTenantScope
+        /// </summary>
+        /// <param name="top"> [Deprecated]The number of results to return. </param>
+        /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="TenantResourceProvider" /> that may take multiple service requests to iterate over. </returns>
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete as the `top` parameter is no longer supported in new service versions and will be removed in a future release.", false)]
+        public virtual AsyncPageable<TenantResourceProvider> GetTenantResourceProvidersAsync(int top, string expand = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<TenantResourceProvider>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
+                scope.Start();
+                try
+                {
+                    var response = await _resourceProviderProvidersRestClient.ListAtTenantScopeAsync(top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<TenantResourceProvider>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
+                scope.Start();
+                try
+                {
+                    var response = await _resourceProviderProvidersRestClient.ListAtTenantScopeNextPageAsync(nextLink, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets all resource providers for the tenant.
+        /// Request Path: /providers
+        /// Operation Id: Providers_ListAtTenantScope
+        /// </summary>
+        /// <param name="top"> [Deprecated]The number of results to return. </param>
+        /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="TenantResourceProvider" /> that may take multiple service requests to iterate over. </returns>
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete as the `top` parameter is no longer supported in new service versions and will be removed in a future release.", false)]
+        public virtual Pageable<TenantResourceProvider> GetTenantResourceProviders(int top, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Page<TenantResourceProvider> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
+                scope.Start();
+                try
+                {
+                    var response = _resourceProviderProvidersRestClient.ListAtTenantScope(top, expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<TenantResourceProvider> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("TenantResource.GetTenantResourceProviders");
+                scope.Start();
+                try
+                {
+                    var response = _resourceProviderProvidersRestClient.ListAtTenantScopeNextPage(nextLink, expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
     }
 }

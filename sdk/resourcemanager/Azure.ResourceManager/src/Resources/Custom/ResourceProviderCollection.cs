@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -93,6 +94,97 @@ namespace Azure.ResourceManager.Resources
                 resourceVersions[type.ResourceType] = type.ApiVersions[0];
             }
             return resourceVersions;
+        }
+        /// <summary>
+        /// Gets all resource providers for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers
+        /// Operation Id: Providers_List
+        /// </summary>
+        /// <param name="top"> [Deprecated]The number of results to return. </param>
+        /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ResourceProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete as the `top` parameter is no longer supported in new service versions and will be removed in a future release.", false)]
+        public virtual AsyncPageable<ResourceProviderResource> GetAllAsync(int top, string expand = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ResourceProviderResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _resourceProviderProvidersRestClient.ListAsync(Id.SubscriptionId, top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ResourceProviderResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _resourceProviderProvidersRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets all resource providers for a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers
+        /// Operation Id: Providers_List
+        /// </summary>
+        /// <param name="top"> [Deprecated]The number of results to return. </param>
+        /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ResourceProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete as the `top` parameter is no longer supported in new service versions and will be removed in a future release.", false)]
+        public virtual Pageable<ResourceProviderResource> GetAll(int top, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Page<ResourceProviderResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _resourceProviderProvidersRestClient.List(Id.SubscriptionId, top, expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ResourceProviderResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _resourceProviderProvidersRestClient.ListNextPage(nextLink, Id.SubscriptionId, expand, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ResourceProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
     }
 }
