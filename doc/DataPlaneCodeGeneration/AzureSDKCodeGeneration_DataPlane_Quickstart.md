@@ -126,7 +126,7 @@ We will use dotnet project template [Azure.Template](https://github.com/Azure/az
 You can run `eng\scripts\automation\Invoke-CadlDataPlaneGenerateSDKPackage.ps1` to generate the starting SDK client library package directly as following:
 
 ```powershell
-eng/scripts/automation/Invoke-CadlDataPlaneGenerateSDKPackage.ps1 -service <servicename> -namespace Azure.<group>.<service> -sdkPath <sdkrepoRootPath> [-commit <commitId>] [-repo <specRepo>] [-specRoot <specRepoRootPath>]
+eng/scripts/automation/Invoke-CadlDataPlaneGenerateSDKPackage.ps1 -service <servicename> -namespace Azure.<group>.<service> -sdkPath <sdkrepoRootPath> -cadlRelativeFolder <relativeCadlProjectFolderPath> [-commit <commitId>] [-repo <specRepo>] [-specRoot <specRepoRootPath>] [-additionalSubDirectories <relativeFolders>]
 ```
 
 e.g. 
@@ -147,6 +147,7 @@ pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-CadlDataPlaneGenerate
 - For `- namespace`, please use one of the pre-approved namespace groups on the [.NET Azure SDK Guidelines Approved Namespaces list](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-namespaces-approved-list). This value will also provide the name for the shipped package, and should be of the form `Azure.<group>.<service>`.
 - `-sdkPath` takes the address of the root directory of sdk repo. e.g. /home/azure-sdk-for-net
 - `cadlRelativeFolder` takes the relative path of the cadl project folder in spec repo. e.g. specification/cognitiveservices/AnomalyDetector
+- `-additionalSubDirectories` takes the relative paths of the additional directories needed by the cadl project, such as share library folder, separated by semicolon if there is more than one folder.
 - `-commit` takes the commit of the github hash, e.g. ac8e06a2ed0fc1c54663c98f12c8a073f8026b90
 - `-repo` takes the `<owner>/<repo>` of the spec repo. e.g. Azure/azure-rest-api-specs
 - `-specRoot` takes the file system path of the spec repo. e.g. /home/azure-rest-api-specs

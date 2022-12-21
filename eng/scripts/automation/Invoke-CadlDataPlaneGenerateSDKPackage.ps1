@@ -44,7 +44,8 @@ param (
   [string]$cadlRelativeFolder,
   [string]$specRoot = "",
   [string]$repo="",
-  [string]$commit=""
+  [string]$commit="",
+  [string]$additionalSubDirectories="" #additional directories needed, separated by semicolon if more than one
 )
 . (Join-Path $PSScriptRoot GenerateAndBuildLib.ps1)
 $sdkPath = Resolve-Path $sdkPath
@@ -58,6 +59,7 @@ New-CADLPackageFolder `
   -specRoot $specRoot `
   -commit $commit `
   -repo $repo `
+  -additionalSubDirectories $additionalSubDirectories `
   -outputJsonFile $outputJsonFile
 
 if ( $? -ne $True) {
