@@ -15,36 +15,36 @@ using Azure.ResourceManager.EventHubs.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class Sample_EventHubsSchemaGroupCollection
+    public partial class Sample_ApplicationGroupCollection
     {
-        // SchemaRegistryListAll
+        // ListApplicationGroups
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_SchemaRegistryListAll()
+        public async Task GetAll_ListApplicationGroups()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/SchemaRegistry/SchemaRegistryListByNamespace.json
-            // this example is just showing the usage of "SchemaRegistry_ListByNamespace" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/ApplicationGroup/ApplicationGroupListByNamespace.json
+            // this example is just showing the usage of "ApplicationGroup_ListByNamespace" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
             // this example assumes you already have this EventHubsNamespaceResource created on azure
             // for more information of creating EventHubsNamespaceResource, please refer to the document of EventHubsNamespaceResource
-            string subscriptionId = "e8baea74-64ce-459b-bee3-5aa4c47b3ae3";
-            string resourceGroupName = "alitest";
-            string namespaceName = "ali-ua-test-eh-system-1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "contosotest";
+            string namespaceName = "contoso-ua-test-eh-system-1";
             ResourceIdentifier eventHubsNamespaceResourceId = EventHubsNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
             EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
 
-            // get the collection of this EventHubsSchemaGroupResource
-            EventHubsSchemaGroupCollection collection = eventHubsNamespace.GetEventHubsSchemaGroups();
+            // get the collection of this ApplicationGroupResource
+            ApplicationGroupCollection collection = eventHubsNamespace.GetApplicationGroups();
 
             // invoke the operation and iterate over the result
-            await foreach (EventHubsSchemaGroupResource item in collection.GetAllAsync())
+            await foreach (ApplicationGroupResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                EventHubsSchemaGroupData resourceData = item.Data;
+                ApplicationGroupData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -52,106 +52,107 @@ namespace Azure.ResourceManager.EventHubs
             Console.WriteLine($"Succeeded");
         }
 
-        // SchemaRegistryCreate
+        // ApplicationGroupCreate
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_SchemaRegistryCreate()
+        public async Task CreateOrUpdate_ApplicationGroupCreate()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/SchemaRegistry/SchemaRegistryCreate.json
-            // this example is just showing the usage of "SchemaRegistry_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/ApplicationGroup/ApplicationGroupCreate.json
+            // this example is just showing the usage of "ApplicationGroup_CreateOrUpdateApplicationGroup" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
             // this example assumes you already have this EventHubsNamespaceResource created on azure
             // for more information of creating EventHubsNamespaceResource, please refer to the document of EventHubsNamespaceResource
-            string subscriptionId = "e8baea74-64ce-459b-bee3-5aa4c47b3ae3";
-            string resourceGroupName = "alitest";
-            string namespaceName = "ali-ua-test-eh-system-1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "contosotest";
+            string namespaceName = "contoso-ua-test-eh-system-1";
             ResourceIdentifier eventHubsNamespaceResourceId = EventHubsNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
             EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
 
-            // get the collection of this EventHubsSchemaGroupResource
-            EventHubsSchemaGroupCollection collection = eventHubsNamespace.GetEventHubsSchemaGroups();
+            // get the collection of this ApplicationGroupResource
+            ApplicationGroupCollection collection = eventHubsNamespace.GetApplicationGroups();
 
             // invoke the operation
-            string schemaGroupName = "testSchemaGroup1";
-            EventHubsSchemaGroupData data = new EventHubsSchemaGroupData()
+            string applicationGroupName = "appGroup1";
+            ApplicationGroupData data = new ApplicationGroupData()
             {
-                GroupProperties =
+                IsEnabled = true,
+                ClientAppGroupIdentifier = "SASKeyName=KeyName",
+                Policies =
 {
+new ThrottlingPolicy("ThrottlingPolicy1",7912,MetricId.IncomingMessages),new ThrottlingPolicy("ThrottlingPolicy2",3951729,MetricId.IncomingBytes),new ThrottlingPolicy("ThrottlingPolicy3",245175,MetricId.OutgoingBytes)
 },
-                SchemaCompatibility = EventHubsSchemaCompatibility.Forward,
-                SchemaType = EventHubsSchemaType.Avro,
             };
-            ArmOperation<EventHubsSchemaGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, schemaGroupName, data);
-            EventHubsSchemaGroupResource result = lro.Value;
+            ArmOperation<ApplicationGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, applicationGroupName, data);
+            ApplicationGroupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            EventHubsSchemaGroupData resourceData = result.Data;
+            ApplicationGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SchemaRegistryGet
+        // ApplicationGroupGet
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_SchemaRegistryGet()
+        public async Task Get_ApplicationGroupGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/SchemaRegistry/SchemaRegistryGet.json
-            // this example is just showing the usage of "SchemaRegistry_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/ApplicationGroup/ApplicationGroupGet.json
+            // this example is just showing the usage of "ApplicationGroup_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
             // this example assumes you already have this EventHubsNamespaceResource created on azure
             // for more information of creating EventHubsNamespaceResource, please refer to the document of EventHubsNamespaceResource
-            string subscriptionId = "e8baea74-64ce-459b-bee3-5aa4c47b3ae3";
-            string resourceGroupName = "alitest";
-            string namespaceName = "ali-ua-test-eh-system-1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "contosotest";
+            string namespaceName = "contoso-ua-test-eh-system-1";
             ResourceIdentifier eventHubsNamespaceResourceId = EventHubsNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
             EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
 
-            // get the collection of this EventHubsSchemaGroupResource
-            EventHubsSchemaGroupCollection collection = eventHubsNamespace.GetEventHubsSchemaGroups();
+            // get the collection of this ApplicationGroupResource
+            ApplicationGroupCollection collection = eventHubsNamespace.GetApplicationGroups();
 
             // invoke the operation
-            string schemaGroupName = "testSchemaGroup1";
-            EventHubsSchemaGroupResource result = await collection.GetAsync(schemaGroupName);
+            string applicationGroupName = "appGroup1";
+            ApplicationGroupResource result = await collection.GetAsync(applicationGroupName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            EventHubsSchemaGroupData resourceData = result.Data;
+            ApplicationGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SchemaRegistryGet
+        // ApplicationGroupGet
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_SchemaRegistryGet()
+        public async Task Exists_ApplicationGroupGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/SchemaRegistry/SchemaRegistryGet.json
-            // this example is just showing the usage of "SchemaRegistry_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/ApplicationGroup/ApplicationGroupGet.json
+            // this example is just showing the usage of "ApplicationGroup_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
             ArmClient client = new ArmClient(new DefaultAzureCredential());
 
             // this example assumes you already have this EventHubsNamespaceResource created on azure
             // for more information of creating EventHubsNamespaceResource, please refer to the document of EventHubsNamespaceResource
-            string subscriptionId = "e8baea74-64ce-459b-bee3-5aa4c47b3ae3";
-            string resourceGroupName = "alitest";
-            string namespaceName = "ali-ua-test-eh-system-1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "contosotest";
+            string namespaceName = "contoso-ua-test-eh-system-1";
             ResourceIdentifier eventHubsNamespaceResourceId = EventHubsNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
             EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
 
-            // get the collection of this EventHubsSchemaGroupResource
-            EventHubsSchemaGroupCollection collection = eventHubsNamespace.GetEventHubsSchemaGroups();
+            // get the collection of this ApplicationGroupResource
+            ApplicationGroupCollection collection = eventHubsNamespace.GetApplicationGroups();
 
             // invoke the operation
-            string schemaGroupName = "testSchemaGroup1";
-            bool result = await collection.ExistsAsync(schemaGroupName);
+            string applicationGroupName = "appGroup1";
+            bool result = await collection.ExistsAsync(applicationGroupName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
