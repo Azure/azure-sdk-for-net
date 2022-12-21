@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.AreEqual(eventHubNamespace.Data.Tags.Count, 1);
             if (Mode != RecordedTestMode.Playback)
             {
-                Assert.AreEqual(eventHubNamespace.Data.Tags["key"], "value");
+                Assert.AreEqual(eventHubNamespace.Data.Tags["key1"], "value1");
             }
 
             //set the tag
