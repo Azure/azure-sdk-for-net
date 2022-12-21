@@ -62,7 +62,10 @@ namespace Azure.ResourceManager.Resources
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release.", false)]
         public System.Collections.Generic.IList<string> LockingAllowedActions { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ArmApplicationPackageLockingPolicy LockingPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationLockLevel LockLevel { get { throw null; } set { } }
         public System.BinaryData MainTemplate { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationManagementMode? ManagementMode { get { throw null; } set { } }
@@ -571,6 +574,12 @@ namespace Azure.ResourceManager.Resources.Models
         public string ContactName { get { throw null; } }
         public string Email { get { throw null; } }
         public string Phone { get { throw null; } }
+    }
+    public partial class ArmApplicationPackageLockingPolicy
+    {
+        public ArmApplicationPackageLockingPolicy() { }
+        public System.Collections.Generic.IList<string> AllowedActions { get { throw null; } }
+        public System.Collections.Generic.IList<string> AllowedDataActions { get { throw null; } }
     }
     public partial class ArmApplicationPackageSupportUris
     {

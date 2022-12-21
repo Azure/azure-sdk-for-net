@@ -317,6 +317,8 @@ namespace Azure.ResourceManager.Resources
                         value = ArmApplicationData.DeserializeArmApplicationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 202:
+                    return Response.FromValue((ArmApplicationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -348,6 +350,8 @@ namespace Azure.ResourceManager.Resources
                         value = ArmApplicationData.DeserializeArmApplicationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 202:
+                    return Response.FromValue((ArmApplicationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
