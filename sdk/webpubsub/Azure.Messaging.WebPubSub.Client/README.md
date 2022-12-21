@@ -36,13 +36,23 @@ dotnet add package Azure.Messaging.WebPubSub.Client
 
 ### Authenticate the client
 
-In order to interact with the service, you'll need to create an instance of the `WebPubSubClient` class. To make this possible, you'll need an access token. You can copy and paste an access token from Azure portal.
+Client uses a Client Access URL to connect and authenticate with the service. The Uri follow the patten as `wss://<service_name>.webpubsub.azure.com/client/hubs/<hub_name>?access_token=<token>`. The client has some different ways to get Client Access URL. As a quick start, you can copy and paste from Azure Portal, and for production, you usually need a negotiation server to generate the Uri.
+
+#### Use Client Access URL from Azure Portal
+
+As a quick start, you can go to the Portal and copy the **Client Access URL** from **Key** blade.
+
+![get_client_url](https://learn.microsoft.com/azure/azure-web-pubsub/media/howto-websocket-connect/generate-client-url.png)
+
+As shown in the diagram, the client will be granted the permission of sending message to the specific group and joining the specific group. Learn more about client permission, see [permissions](https://learn.microsoft.com/azure/azure-web-pubsub/reference-json-reliable-webpubsub-subprotocol#permissions)
 
 ```C# Snippet:WebPubSubClient_Construct
 var client = new WebPubSubClient(new Uri("<client-access-uri>"));
 ```
 
-And in production, you usually get `ClientAccessUri` from a negotiate server.
+#### Use negotiation server to generate Client Access URL
+
+In production, client usually fetch Client Access URL from a negotiation server. The server holds the connection string and generates Client Access URL through `WebPubSubServiceClient`. As an sample, the code snippet below just demostrate the how to generate the Client Access URL inside single process.
 
 ```C# Snippet:WebPubSubClient_Construct2
 var client = new WebPubSubClient(new WebPubSubClientCredential(token =>
@@ -52,11 +62,12 @@ var client = new WebPubSubClient(new WebPubSubClientCredential(token =>
 }));
 ```
 
-The `FetchClientAccessTokenFromServerAsync` usually fetch the token from server via Http request. And in the server side, you can use `WebPubSubServiceClient` to generate token and response to the fetch request.
-
 ```C# Snippet:WebPubSubClient_GenerateClientAccessUri
-var serviceClient = new WebPubSubServiceClient("<< Connection String >>", "hub");
-return await serviceClient.GetClientAccessUriAsync();
+public async ValueTask<Uri> FetchClientAccessTokenFromServerAsync(CancellationToken token)
+{
+    var serviceClient = new WebPubSubServiceClient("<< Connection String >>", "hub");
+    return await serviceClient.GetClientAccessUriAsync();
+}
 ```
 
 ## Key concepts
@@ -67,7 +78,11 @@ A connection, also known as a client connection, represents an individual WebSoc
 
 ### Recovery
 
-If using reliable protocols, a new WebSocket will try to reconnect using the connection ID of the lost connection. If the WebSocket connection is successfully connected, the connection is recovered. And all group contexts will be recovered, and unreceived messages will be resent.
+If using reliable protocols, a new WebSocket tries to establish using the connection ID of the lost connection. If the new WebSocket connection is successfully connected, the connection is recovered. And all group contexts will be recovered, and unreceived messages will be resent. If the service returns WebSocket error code `1008` or the recovery attemption lasts more than 30 seconds, the recovery fails.
+
+### Reconnect
+
+Reconnection happens when client connection drops and fails to recover. Reconnection just like a new connection which has a new connection ID. After reconnection, the group context or unreceived messages are lost. Client connection needs to rejoin groups. By default, client library rejoin group after reconnection.
 
 ### Hub
 
@@ -81,65 +96,33 @@ A group is a subset of connections to the hub. You can add and remove connection
 
 Connections to Web PubSub can belong to one user. A user might have multiple connections, for example when a single user is connected across multiple devices or browser tabs.
 
-### Message
+## Client Lifetime
 
-When a client is connected, it can send messages to the upstream application, or receive messages from the upstream application, through the WebSocket connection. Also, it can send messages to groups and receive message from joined groups.
+Each of the Web PubSub client is safe to cache and use as a singleton for the lifetime of the application. The registered event callbacks share the same lifetime with the client. Which means you can add or remove callbacks at anytime and the registration status won't change after reconnection or even stopping the client.
 
 ## Examples
 
-### Send to groups
+### Specify subprotocol
 
-```C# Snippet:WebPubSubClient_SendToGroup
-// Send message to group "testGroup"
-await client.SendToGroupAsync("testGroup", BinaryData.FromString("hello world"), WebPubSubDataType.Text);
-```
+You can change the subprotocol to be used in client. By default, the client uses `json.reliable.webpubsub.azure.v1`. In library, you can choose to use `json.reliable.webpubsub.azure.v1` or `json.webpubsub.azure.v1`.
 
-### Send events to event handler
-
-```C# Snippet:WebPubSubClient_SendEvent
-// Send custom event to server
-await client.SendEventAsync("testEvent", BinaryData.FromString("hello world"), WebPubSubDataType.Text);
-```
-
-### Handle the Connected event
-
-The `Connected` event is called after the client receives connected message. The event will be triggered every reconnection.
-
-```C# Snippet:WebPubSubClient_Subscribe_Connected
-client.Connected += eventArgs =>
+```C# Snippet:WebPubSubClient_JsonProtocol
+var client = new WebPubSubClient(new Uri("<client-access-uri>"), new WebPubSubClientOptions
 {
-    Console.WriteLine($"Connection {eventArgs.ConnectionId} is connected");
-    return Task.CompletedTask;
-};
+    Protocol = new WebPubSubJsonProtocol()
+});
 ```
 
-### Handle the Disconnected event
-
-The `Disconnected` event is triggered every time the connection closed and could not be recovered
-
-```C# Snippet:WebPubSubClient_Subscribe_Disconnected
-client.Disconnected += eventArgs =>
+```C# Snippet:WebPubSubClient_JsonReliableProtocol
+var client = new WebPubSubClient(new Uri("<client-access-uri>"), new WebPubSubClientOptions
 {
-    Console.WriteLine($"Connection is disconnected");
-    return Task.CompletedTask;
-};
+    Protocol = new WebPubSubJsonReliableProtocol()
+});
 ```
 
-### Handle the Stopped event
+### Consume messages from server and from groups
 
-The `Stopped` event is triggered when the client is stopped. The client won't try to reconnect after being stopped. This event is typically the result of calling `StopAsync` or disabling the `AutoReconnect`
-
-```C# Snippet:WebPubSubClient_Subscribe_Stopped
-client.Stopped += eventArgs =>
-{
-    Console.WriteLine($"Client is stopped");
-    return Task.CompletedTask;
-};
-```
-
-### Handle the Server message event
-
-The `ServerMessageReceived` event is triggered when there's a message from server.
+Client can add callbacks to consume messages from server and from groups. Please note, client can only receive group messages that it has joined.
 
 ```C# Snippet:WebPubSubClient_Subscribe_ServerMessage
 client.ServerMessageReceived += eventArgs =>
@@ -149,10 +132,6 @@ client.ServerMessageReceived += eventArgs =>
 };
 ```
 
-### Handle the Group message event
-
-The `GroupMessageReceived` event is triggered when there's a message from a group. You must join a group before you can receive messages from it.
-
 ```C# Snippet:WebPubSubClient_Subscribe_GroupMessage
 client.GroupMessageReceived += eventArgs =>
 {
@@ -161,9 +140,41 @@ client.GroupMessageReceived += eventArgs =>
 };
 ```
 
-### Handle the restore failure event
+### Add callbacks for connected, disconnected and stopped events
 
-The `RestoreGroupFailed` event is triggered when the `AutoRejoinGroups` is enabled and rejoining a group fails after reconnection.
+When a client connection is connected to the service, the `Connected` event is triggered once it received the connected message from the service.
+
+```C# Snippet:WebPubSubClient_Subscribe_Connected
+client.Connected += eventArgs =>
+{
+    Console.WriteLine($"Connection {eventArgs.ConnectionId} is connected");
+    return Task.CompletedTask;
+};
+```
+
+When a client connection is disconnected and fails to recover, the `Disconnected` event is triggered.
+
+```C# Snippet:WebPubSubClient_Subscribe_Disconnected
+client.Disconnected += eventArgs =>
+{
+    Console.WriteLine($"Connection is disconnected");
+    return Task.CompletedTask;
+};
+```
+
+When a client is stopped, which means the client connection is disconnected and the client stops try to reconnect, the `Stopped` event will be triggered. This usually happens after the `client.StopAsync()` is called, or disabled `AutoReconnect`. If you want to restart the client, you can call `client.StartAsync()` in the `Stopped` event.
+
+```C# Snippet:WebPubSubClient_Subscribe_Stopped
+client.Stopped += eventArgs =>
+{
+    Console.WriteLine($"Client is stopped");
+    return Task.CompletedTask;
+};
+```
+
+### Auto rejoin group and handle rejoin failure
+
+When a client connection has dropped and fails to recover, all group context will be clean up in the service side. That means when the client reconnects, it needs to rejoin groups. By default, the client enabled `AutoRejoinGroups` options. However, this feature has limitation. The client can only rejoin groups that it's originally joined by then client rather than joined by server side. And rejoin group operations may fail due to various reason, e.g. the client don't have the permission to join group. In such case, uses need to add a callback to handle the failure.
 
 ```C# Snippet:WebPubSubClient_Subscribe_RestoreFailed
 client.RejoinGroupFailed += eventArgs =>
@@ -171,6 +182,25 @@ client.RejoinGroupFailed += eventArgs =>
     Console.WriteLine($"Restore group failed");
     return Task.CompletedTask;
 };
+```
+
+### Operation and retry
+
+By default, the operation like `client.JoinGroupAsync()`, `client.LeaveGroupAsync()`, `client.SendToGroupAsync()`, `client.SendEventAsync()` has three reties. You can use `WebPubSubClientOptions.MessageRetryOptions` to change. If all retries have failed, an error will be thrown. You can keep retry by pass in the same `ackId` as previous retries, thus the service can help to deduplicate the operation with the same `ackId`
+
+```C# Snippet:WebPubSubClient_JoinGroupAndRetry
+// Send message to group "testGroup"
+try
+{
+    await client.JoinGroupAsync("testGroup");
+}
+catch (SendMessageFailedException ex)
+{
+    if (ex.AckId == null)
+    {
+        await client.JoinGroupAsync("testGroup", ackId: ex.AckId);
+    }
+}
 ```
 
 ## Troubleshooting
