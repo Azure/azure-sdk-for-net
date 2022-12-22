@@ -6,33 +6,33 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-d0b33795b8beca44a17f195999f9c1cc-1b6c44d9e9cb1742-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "fcaea10cad603e734e565d12417c2bfb",
+        "traceparent": "00-30fb3994b59ca21035a30bbf4b721660-be553676bc720b3d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0-alpha.20221222.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5e96cca15f95774a8373011f123e4774",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "747",
+        "Content-Length": "748",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 05:08:18 GMT",
+        "Date": "Thu, 22 Dec 2022 06:07:24 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "9617571f-d7e9-4ddf-bc7e-9aeedc297586",
-        "x-ms-ratelimit-remaining-subscription-reads": "11722",
-        "x-ms-request-id": "9617571f-d7e9-4ddf-bc7e-9aeedc297586",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T050819Z:9617571f-d7e9-4ddf-bc7e-9aeedc297586"
+        "x-ms-correlation-request-id": "e46ce7c9-b73e-431b-a0f8-ba39e9edd8f3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11955",
+        "x-ms-request-id": "e46ce7c9-b73e-431b-a0f8-ba39e9edd8f3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221222T060725Z:e46ce7c9-b73e-431b-a0f8-ba39e9edd8f3"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
         "tags": {
-          "TagKey-9823": "TagValue-566",
+          "TagKey-9823": "TagValue-1254",
           "TagKey-3481": "TagValue-320",
           "TagKey-4926": "TagValue-1187",
           "TagKey-751": "TagValue-3921",
@@ -57,8 +57,9 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1322847732",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "823010726",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

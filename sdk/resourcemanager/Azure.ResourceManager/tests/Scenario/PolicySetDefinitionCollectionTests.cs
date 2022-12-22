@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Tests
             await foreach (var tenant in Client.GetTenants().GetAllAsync())
             {
                 TenantPolicySetDefinitionResource getBuiltInPolicySetDefinition = await tenant.GetTenantPolicySetDefinitions().GetAsync("75714362-cae7-409e-9b99-a8e5075b7fad");
-                Assert.AreEqual(getBuiltInPolicySetDefinition.Data.DisplayName, "Enable Azure Monitor for Virtual Machine Scale Sets");
+                Assert.AreEqual(getBuiltInPolicySetDefinition.Data.DisplayName, "Legacy - Enable Azure Monitor for Virtual Machine Scale Sets");
             }
         }
 

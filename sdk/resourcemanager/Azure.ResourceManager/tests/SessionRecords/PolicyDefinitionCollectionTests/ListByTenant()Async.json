@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-b9cc06a588c2224d95effe885734444b-591d32f3013ffb4d-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "746a84a57dfa846c849f461af86b012c",
+        "traceparent": "00-ffda388b2b5b09beb0d47cf02b7c2759-91abb64b8a58449d-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0-alpha.20221222.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f32d7fc4162db35d05fad40632687406",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "140",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 03:47:50 GMT",
+        "Date": "Thu, 22 Dec 2022 02:42:02 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "022f7d77-0906-43c5-a4aa-f0eedc4fed9d",
+        "x-ms-correlation-request-id": "0183b308-f86c-4165-b76a-2649fb15a208",
         "x-ms-ratelimit-remaining-tenant-reads": "11997",
-        "x-ms-request-id": "022f7d77-0906-43c5-a4aa-f0eedc4fed9d",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T034751Z:022f7d77-0906-43c5-a4aa-f0eedc4fed9d"
+        "x-ms-request-id": "0183b308-f86c-4165-b76a-2649fb15a208",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221222T024203Z:0183b308-f86c-4165-b76a-2649fb15a208"
       },
       "ResponseBody": {
         "value": [
@@ -43,27 +43,27 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-1d305ad3e9f30e4eb4a4808b22f3780d-216db550ad36464a-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "8d08076fdc3e6934b4ffb2981793e149",
+        "traceparent": "00-c85e14aeed7a5a02a3a048c1ab8952e7-c89421e783e3aab3-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0-alpha.20221222.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b994da49f028b86ca319612cb10bf53e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "58530",
+        "Content-Length": "58790",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 03:47:50 GMT",
+        "Date": "Thu, 22 Dec 2022 02:42:02 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f9e9a76c-6356-45df-9c5d-005135cc5187",
+        "x-ms-correlation-request-id": "7a747043-9c97-4742-ad44-0b8199ab2eef",
         "x-ms-ratelimit-remaining-tenant-reads": "11996",
-        "x-ms-request-id": "f9e9a76c-6356-45df-9c5d-005135cc5187",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T034751Z:f9e9a76c-6356-45df-9c5d-005135cc5187"
+        "x-ms-request-id": "7a747043-9c97-4742-ad44-0b8199ab2eef",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221222T024203Z:7a747043-9c97-4742-ad44-0b8199ab2eef"
       },
       "ResponseBody": {
         "value": [
@@ -1085,7 +1085,7 @@
               "mode": "Indexed",
               "description": "Disabling public network access improves security by ensuring that a managed disk isn\u0027t exposed on the public internet. Creating private endpoints can limit exposure of managed disks. Learn more at: https://aka.ms/disksprivatelinksdoc.",
               "metadata": {
-                "version": "1.0.0",
+                "version": "2.0.0",
                 "category": "Compute"
               },
               "parameters": {
@@ -1115,6 +1115,10 @@
                         "DenyAll",
                         "AllowPrivate"
                       ]
+                    },
+                    {
+                      "field": "Microsoft.Compute/disks/publicNetworkAccess",
+                      "notEquals": "Disabled"
                     }
                   ]
                 },
@@ -1134,7 +1138,7 @@
               "mode": "Indexed",
               "description": "Disable public network access for your managed disk resource so that it\u0027s not accessible over the public internet. This can reduce data leakage risks. Learn more at: https://aka.ms/disksprivatelinksdoc.",
               "metadata": {
-                "version": "1.0.0",
+                "version": "2.0.0",
                 "category": "Compute"
               },
               "parameters": {
@@ -1184,6 +1188,10 @@
                         "AllowPrivate",
                         "DenyAll"
                       ]
+                    },
+                    {
+                      "field": "Microsoft.Compute/disks/publicNetworkAccess",
+                      "notEquals": "Disabled"
                     }
                   ]
                 },
@@ -1204,6 +1212,11 @@
                         "operation": "addOrReplace",
                         "field": "Microsoft.Compute/disks/networkAccessPolicy",
                         "value": "AllowPrivate"
+                      },
+                      {
+                        "operation": "addOrReplace",
+                        "field": "Microsoft.Compute/disks/publicNetworkAccess",
+                        "value": "Disabled"
                       }
                     ]
                   }
@@ -2485,8 +2498,9 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1347828861",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "2044567351",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

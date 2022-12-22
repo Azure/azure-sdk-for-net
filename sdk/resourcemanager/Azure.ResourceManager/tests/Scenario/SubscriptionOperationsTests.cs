@@ -199,6 +199,8 @@ namespace Azure.ResourceManager.Tests
                 "Microsoft.ServicesHub",
                 "Microsoft.SoftwarePlan",
                 "Microsoft.TimeSeriesInsights",
+                "Microsoft.Chaos",
+                "Microsoft.VMwareCloudSimple"
             };
             var subscription = await Client.GetDefaultSubscriptionAsync();
             await foreach (var provider in subscription.GetResourceProviders())

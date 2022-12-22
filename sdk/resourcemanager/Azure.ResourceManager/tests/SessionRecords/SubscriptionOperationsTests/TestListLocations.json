@@ -6,33 +6,33 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-34740bf5da8ff24ab01f0e8b77976bcb-14a5f1d47f7c8a49-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "ddc5b212e6133c8cc227bb0c98df7ddd",
+        "traceparent": "00-543c68fc810d81be68aa727750af347b-bbdd98961fd28cfe-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0-alpha.20221222.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ef56bc6db3faa0d2c93e7141db5f1a39",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "747",
+        "Content-Length": "748",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 05:05:23 GMT",
+        "Date": "Thu, 22 Dec 2022 06:07:32 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "db995bf2-a9ee-458d-bc02-f845b5501f28",
-        "x-ms-ratelimit-remaining-subscription-reads": "11921",
-        "x-ms-request-id": "db995bf2-a9ee-458d-bc02-f845b5501f28",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T050524Z:db995bf2-a9ee-458d-bc02-f845b5501f28"
+        "x-ms-correlation-request-id": "db28ff73-a809-4897-8ca2-3662ad5f8315",
+        "x-ms-ratelimit-remaining-subscription-reads": "11936",
+        "x-ms-request-id": "db28ff73-a809-4897-8ca2-3662ad5f8315",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221222T060733Z:db28ff73-a809-4897-8ca2-3662ad5f8315"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
         "tags": {
-          "TagKey-9823": "TagValue-566",
+          "TagKey-9823": "TagValue-1254",
           "TagKey-3481": "TagValue-320",
           "TagKey-4926": "TagValue-1187",
           "TagKey-751": "TagValue-3921",
@@ -61,26 +61,26 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-d77e7018b9e9144b8dd55eb2d91cc8b1-4efdce308681c646-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "d2143fb45addbfc13c62f6e7e9287ba3",
+        "traceparent": "00-9475a529d6e39ce2b1839381eb7733bb-27d0fdf6cd34b82c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0-alpha.20221222.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "18a97f3c8a7b7a093e47842be91890e1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "30202",
+        "Content-Length": "31179",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 05:05:24 GMT",
+        "Date": "Thu, 22 Dec 2022 06:07:33 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "deb8a9bc-73bd-4b2f-bff3-8d35a3697a15",
-        "x-ms-ratelimit-remaining-subscription-reads": "11920",
-        "x-ms-request-id": "deb8a9bc-73bd-4b2f-bff3-8d35a3697a15",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T050524Z:deb8a9bc-73bd-4b2f-bff3-8d35a3697a15"
+        "x-ms-correlation-request-id": "d1088eec-402b-4c91-9d1a-3f56a43fa84a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11935",
+        "x-ms-request-id": "d1088eec-402b-4c91-9d1a-3f56a43fa84a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221222T060734Z:d1088eec-402b-4c91-9d1a-3f56a43fa84a"
       },
       "ResponseBody": {
         "value": [
@@ -547,6 +547,27 @@
             }
           },
           {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/uaenorth",
+            "name": "uaenorth",
+            "type": "Region",
+            "displayName": "UAE North",
+            "regionalDisplayName": "(Middle East) UAE North",
+            "metadata": {
+              "regionType": "Physical",
+              "regionCategory": "Recommended",
+              "geographyGroup": "Middle East",
+              "longitude": "55.316666",
+              "latitude": "25.266666",
+              "physicalLocation": "Dubai",
+              "pairedRegion": [
+                {
+                  "name": "uaecentral",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/uaecentral"
+                }
+              ]
+            }
+          },
+          {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/brazilsouth",
             "name": "brazilsouth",
             "type": "Region",
@@ -583,6 +604,27 @@
                 {
                   "name": "centraluseuap",
                   "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/centraluseuap"
+                }
+              ]
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/qatarcentral",
+            "name": "qatarcentral",
+            "type": "Region",
+            "displayName": "Qatar Central",
+            "regionalDisplayName": "(Middle East) Qatar Central",
+            "metadata": {
+              "regionType": "Physical",
+              "regionCategory": "Recommended",
+              "geographyGroup": "Middle East",
+              "longitude": "51.439327",
+              "latitude": "25.551462",
+              "physicalLocation": "Doha",
+              "pairedRegion": [
+                {
+                  "name": "westeurope",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/westeurope"
                 }
               ]
             }
@@ -916,6 +958,27 @@
             }
           },
           {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/eastusstg",
+            "name": "eastusstg",
+            "type": "Region",
+            "displayName": "East US STG",
+            "regionalDisplayName": "(US) East US STG",
+            "metadata": {
+              "regionType": "Physical",
+              "regionCategory": "Other",
+              "geographyGroup": "US",
+              "longitude": "-79.8164",
+              "latitude": "37.3719",
+              "physicalLocation": "Virginia",
+              "pairedRegion": [
+                {
+                  "name": "southcentralusstg",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/southcentralusstg"
+                }
+              ]
+            }
+          },
+          {
             "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/northcentralus",
             "name": "northcentralus",
             "type": "Region",
@@ -974,27 +1037,6 @@
                 {
                   "name": "jioindiacentral",
                   "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/jioindiacentral"
-                }
-              ]
-            }
-          },
-          {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/uaenorth",
-            "name": "uaenorth",
-            "type": "Region",
-            "displayName": "UAE North",
-            "regionalDisplayName": "(Middle East) UAE North",
-            "metadata": {
-              "regionType": "Physical",
-              "regionCategory": "Other",
-              "geographyGroup": "Middle East",
-              "longitude": "55.316666",
-              "latitude": "25.266666",
-              "physicalLocation": "Dubai",
-              "pairedRegion": [
-                {
-                  "name": "uaecentral",
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/locations/uaecentral"
                 }
               ]
             }
@@ -1402,8 +1444,9 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1020075717",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "535733205",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

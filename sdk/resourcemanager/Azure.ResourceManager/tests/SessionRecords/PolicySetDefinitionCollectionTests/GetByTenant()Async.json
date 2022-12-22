@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-30be98a4c171404ba045b52f154e3308-c9ff128b251b724a-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "cc36097455da860dbf96c5bb317aa8e7",
+        "traceparent": "00-6813012b4967cd8655e1f85e0dc8470a-56659f3a0b27b296-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0-alpha.20221222.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b15eec8dcdc5d7d5f7c1b931cfac921a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "140",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 03:48:15 GMT",
+        "Date": "Thu, 22 Dec 2022 07:19:23 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "e14d96ce-2045-48e0-ae4c-4ecb3861ed25",
+        "x-ms-correlation-request-id": "0c260eeb-85e3-428a-80e9-fcae9007c47b",
         "x-ms-ratelimit-remaining-tenant-reads": "11999",
-        "x-ms-request-id": "e14d96ce-2045-48e0-ae4c-4ecb3861ed25",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T034816Z:e14d96ce-2045-48e0-ae4c-4ecb3861ed25"
+        "x-ms-request-id": "0c260eeb-85e3-428a-80e9-fcae9007c47b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221222T071923Z:0c260eeb-85e3-428a-80e9-fcae9007c47b"
       },
       "ResponseBody": {
         "value": [
@@ -43,35 +43,35 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-efe27955901cb84c9b95b23a9161f02a-1fbf5275acde3842-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "6c4bce8deef9cfd1e8c291de74b59871",
+        "traceparent": "00-a242a0dd72e6382387537a3f8e504965-94267ca12c4bdde4-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0-alpha.20221222.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "518b297e62c4360a4c25b6d5cf5729b5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "3795",
+        "Content-Length": "3907",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 03:48:16 GMT",
+        "Date": "Thu, 22 Dec 2022 07:19:23 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "269d9022-9ff2-4763-8a4d-23acf6326a78",
+        "x-ms-correlation-request-id": "11903ac5-a971-4073-aba5-53ed85cc30f0",
         "x-ms-ratelimit-remaining-tenant-reads": "11998",
-        "x-ms-request-id": "269d9022-9ff2-4763-8a4d-23acf6326a78",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T034816Z:269d9022-9ff2-4763-8a4d-23acf6326a78"
+        "x-ms-request-id": "11903ac5-a971-4073-aba5-53ed85cc30f0",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221222T071924Z:11903ac5-a971-4073-aba5-53ed85cc30f0"
       },
       "ResponseBody": {
         "properties": {
-          "displayName": "Enable Azure Monitor for Virtual Machine Scale Sets",
+          "displayName": "Legacy - Enable Azure Monitor for Virtual Machine Scale Sets",
           "policyType": "BuiltIn",
-          "description": "Enable Azure Monitor for the Virtual Machine Scale Sets in the specified scope (Management group, Subscription or resource group). Takes Log Analytics workspace as parameter. Note: if your scale set upgradePolicy is set to Manual, you need to apply the extension to the all VMs in the set by calling upgrade on them. In CLI this would be az vmss update-instances.",
+          "description": "Legacy - Enable Azure Monitor for the Virtual Machine Scale Sets in the specified scope (Management group, Subscription or resource group). Takes Log Analytics workspace as parameter. Use the new initiative named: Enable Azure Monitor for VMSS with Azure Monitoring Agent(AMA). Note: if your scale set upgradePolicy is set to Manual, you need to apply the extension to the all VMs in the set by calling upgrade on them. In CLI this would be az vmss update-instances.",
           "metadata": {
-            "version": "1.0.1",
+            "version": "1.0.2",
             "category": "Monitoring"
           },
           "parameters": {
@@ -176,8 +176,9 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1786595955",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "682263728",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

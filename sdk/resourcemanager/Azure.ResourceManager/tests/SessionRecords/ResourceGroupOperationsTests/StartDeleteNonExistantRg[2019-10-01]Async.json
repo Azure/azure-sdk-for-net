@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-facd0a58b9e01a4f9469e472a03d51a5-36870c2b43117b4a-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.1.1-alpha.20220623.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "0825c84d6f401298a265e6460f641c1a",
+        "traceparent": "00-38aaa0e99f78627024a7de4f04e5a6f5-ea126333659050b8-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.4.0-alpha.20221222.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e0d2d6877ed87b643877199219232585",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,16 +17,16 @@
         "Cache-Control": "no-cache",
         "Content-Length": "96",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 23 Jun 2022 04:32:33 GMT",
+        "Date": "Thu, 22 Dec 2022 06:30:24 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d6cc16ad-c4c9-41c7-bcac-d4cec12fbf90",
+        "x-ms-correlation-request-id": "6abebcb1-d0fc-4147-b532-db1911f09e36",
         "x-ms-failure-cause": "gateway",
         "x-ms-ratelimit-remaining-subscription-deletes": "14993",
-        "x-ms-request-id": "d6cc16ad-c4c9-41c7-bcac-d4cec12fbf90",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220623T043233Z:d6cc16ad-c4c9-41c7-bcac-d4cec12fbf90"
+        "x-ms-request-id": "6abebcb1-d0fc-4147-b532-db1911f09e36",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20221222T063025Z:6abebcb1-d0fc-4147-b532-db1911f09e36"
       },
       "ResponseBody": {
         "error": {
@@ -37,8 +37,9 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "2071857698",
-    "RESOURCE_MANAGER_URL": "https://management.azure.com/",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "350253948",
+    "RESOURCE_MANAGER_URL": "https://management.azure.com",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }
