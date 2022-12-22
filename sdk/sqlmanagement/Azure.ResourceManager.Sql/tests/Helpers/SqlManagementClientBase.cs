@@ -165,9 +165,8 @@ namespace Azure.ResourceManager.Sql.Tests
                 AdministratorLogin = $"admin-{serverName}",
                 AdministratorLoginPassword = CreateGeneralPassword(),
             };
-            var sqlServerLro = await resourceGroup.GetSqlServers().CreateOrUpdateAsync(WaitUntil.Completed, serverName, data);
-            var sqlServer = sqlServerLro.Value;
-            return sqlServer;
+            var sqlServerResponse = await resourceGroup.GetSqlServers().CreateOrUpdateAsync(WaitUntil.Completed, serverName, data);
+            return sqlServerResponse.Value;
         }
     }
 }
