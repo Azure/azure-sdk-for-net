@@ -136,7 +136,7 @@ Use git url
 pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-CadlDataPlaneGenerateSDKPackage.ps1 -service anomalydetector -namespace Azure.AI.AnomalyDetector -sdkPath /home/azure-sdk-for-net -cadlRelativeFolder specification/cognitiveservices/AnomalyDetector -commit ac8e06a2ed0fc1c54663c98f12c8a073f8026b90 -repo Azure/azure-rest-api-specs
 ```
 or 
-Use local cald project
+Use local Cadl project
 
 ```powershell
 pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-CadlDataPlaneGenerateSDKPackage.ps1 -service anomalydetector -namespace Azure.AI.AnomalyDetector -sdkPath /home/azure-sdk-for-net -cadlRelativeFolder specification/cognitiveservices/AnomalyDetector -specRoot /home/azure-rest-api-specs
