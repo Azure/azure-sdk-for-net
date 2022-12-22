@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Developer.LoadTesting
 {
-    // Data plane generated client. The LoadTestRun service client.
+    // Data plane generated client.
     /// <summary> The LoadTestRun service client. </summary>
     public partial class LoadTestRunClient
     {
@@ -41,7 +41,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="endpoint"> URL to perform data plane API operations on the resource. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public LoadTestRunClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new AzureLoadTestingClientOptions())
+        public LoadTestRunClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new LoadTestingClientOptions())
         {
         }
 
@@ -50,11 +50,11 @@ namespace Azure.Developer.LoadTesting
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public LoadTestRunClient(string endpoint, TokenCredential credential, AzureLoadTestingClientOptions options)
+        public LoadTestRunClient(string endpoint, TokenCredential credential, LoadTestingClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzureLoadTestingClientOptions();
+            options ??= new LoadTestingClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;

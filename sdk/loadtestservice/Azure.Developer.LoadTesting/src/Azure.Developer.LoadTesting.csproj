@@ -16,7 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" VersionOverride="6.0.6" />
+    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
 </Project>
