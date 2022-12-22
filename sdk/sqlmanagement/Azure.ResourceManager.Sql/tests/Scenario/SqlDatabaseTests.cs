@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
     {
         private ResourceGroupResource _resourceGroup;
         private ResourceIdentifier _resourceGroupIdentifier;
-        private static AzureLocation Location = AzureLocation.EastUS;
+        private static AzureLocation Location = new AzureLocation("eastus2euap", "East US 2 EUAP");
 
         public SqlDatabaseTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
         public async Task TestSetUp()
         {
             ArmClientOptions options = new ArmClientOptions();
-            options.SetApiVersion(ResourceGroupResource.ResourceType, "2022-05-01");
+            //options.SetApiVersion(ResourceGroupResource.ResourceType, "2022-05-01");
             var client = GetArmClient(options);
             _resourceGroup = await client.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
         }
@@ -95,16 +95,16 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Not able to run on 2022-05-01-preview API version")]
         public async Task SqlDatabaseApiTestsWithEnclaves()
         {
             // create Sql Server
             string serverName = Recording.GenerateAssetName("sql-server-");
             var sqlServer = await CreateDefaultSqlServer(serverName, Location, _resourceGroup);
-            string[] enclaveTypes = { AlwaysEncryptedEnclaveType.Default.ToString()/*, AlwaysEncryptedEnclaveType.VBS.ToString() */};
+            AlwaysEncryptedEnclaveType[] enclaveTypes = { AlwaysEncryptedEnclaveType.Default, AlwaysEncryptedEnclaveType.VBS };
 
-            foreach (string preferredEnclaveType in enclaveTypes)
+            foreach (AlwaysEncryptedEnclaveType enclaveType in enclaveTypes)
             {
+                string preferredEnclaveType = enclaveType.ToString();
                 string databaseName = Recording.GenerateAssetName($"sql-database-{preferredEnclaveType}-");
                 var collection = sqlServer.GetSqlDatabases();
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 var database = await collection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, data);
                 Assert.IsNotNull(database.Value.Data);
                 Assert.AreEqual(databaseName, database.Value.Data.Name);
-                Assert.AreEqual(preferredEnclaveType, database.Value.Data.PreferredEnclaveType);
+                Assert.AreEqual(enclaveType, database.Value.Data.PreferredEnclaveType);
 
                 // 2.CheckIfExist
                 Assert.IsTrue(await collection.ExistsAsync(databaseName));
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql.Tests.Scenario
                 var getDatabase = await collection.GetAsync(databaseName);
                 Assert.IsNotNull(getDatabase.Value.Data);
                 Assert.AreEqual(databaseName, getDatabase.Value.Data.Name);
-                Assert.AreEqual(preferredEnclaveType, database.Value.Data.PreferredEnclaveType);
+                Assert.AreEqual(enclaveType, database.Value.Data.PreferredEnclaveType);
 
                 // 4.GetAll
                 var list = await collection.GetAllAsync().ToEnumerableAsync();

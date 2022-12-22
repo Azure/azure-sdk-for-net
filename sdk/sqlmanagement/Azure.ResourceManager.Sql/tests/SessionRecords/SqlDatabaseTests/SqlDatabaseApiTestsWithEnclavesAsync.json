@@ -1,0 +1,2106 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourcegroups/Sql-ViditGupta-RG-5736?api-version=2021-04-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2483e71e717732affc9b0b8599f0f0af-e9cabdcf04731a88-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3912f012aafc24d59e636bfaa0656f86",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "246",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:57:40 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5c8968a2-c4a8-4a3e-88b7-820a049b936f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11971",
+        "x-ms-request-id": "5c8968a2-c4a8-4a3e-88b7-820a049b936f",
+        "x-ms-routing-request-id": "WESTUS:20221222T055740Z:5c8968a2-c4a8-4a3e-88b7-820a049b936f"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736",
+        "name": "Sql-ViditGupta-RG-5736",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus2euap",
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007?api-version=2021-02-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "144",
+        "Content-Type": "application/json",
+        "traceparent": "00-ead56213968472804e87e8d48460cd50-19666f7ebdfcf90f-00",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.2.0-alpha.20221221.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "85fdf9e5786589c57549de889d38e086",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "eastus2euap",
+        "properties": {
+          "administratorLogin": "admin-sql-server-3007",
+          "administratorLoginPassword": "HvVJ%paVC@%GBKmi"
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/serverAzureAsyncOperation/7f41cd9d-fec1-4e88-9a08-2cd938d3a560?api-version=2021-02-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "74",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:57:42 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/serverOperationResults/7f41cd9d-fec1-4e88-9a08-2cd938d3a560?api-version=2021-02-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "1",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f3d4940f-2b79-4dd6-9db0-f6c5de71a660",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "7f41cd9d-fec1-4e88-9a08-2cd938d3a560",
+        "x-ms-routing-request-id": "WESTUS:20221222T055742Z:f3d4940f-2b79-4dd6-9db0-f6c5de71a660"
+      },
+      "ResponseBody": {
+        "operation": "UpsertLogicalServer",
+        "startTime": "2022-12-22T05:57:42.337Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/serverAzureAsyncOperation/7f41cd9d-fec1-4e88-9a08-2cd938d3a560?api-version=2021-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-ead56213968472804e87e8d48460cd50-8d4457aa436acd12-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "89600da3121977ac4cb08760f69c002b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "108",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:57:42 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "1",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c5cbcc7a-59f7-44cf-a91c-003e809b3d96",
+        "x-ms-ratelimit-remaining-subscription-reads": "11970",
+        "x-ms-request-id": "d5b40370-f316-4f7a-9786-557ac85c863c",
+        "x-ms-routing-request-id": "WESTUS:20221222T055742Z:c5cbcc7a-59f7-44cf-a91c-003e809b3d96"
+      },
+      "ResponseBody": {
+        "name": "7f41cd9d-fec1-4e88-9a08-2cd938d3a560",
+        "status": "InProgress",
+        "startTime": "2022-12-22T05:57:42.337Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/serverAzureAsyncOperation/7f41cd9d-fec1-4e88-9a08-2cd938d3a560?api-version=2021-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-ead56213968472804e87e8d48460cd50-aa963a2d46af5f01-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1ed5738a85b7f0672a0b3ca0d2368bda",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "108",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:57:43 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "1",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "4e04a462-bd2e-45cf-969f-b64c603170d0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11969",
+        "x-ms-request-id": "aa5d7b99-1941-4f6a-88fa-c5b16a6e778b",
+        "x-ms-routing-request-id": "WESTUS:20221222T055743Z:4e04a462-bd2e-45cf-969f-b64c603170d0"
+      },
+      "ResponseBody": {
+        "name": "7f41cd9d-fec1-4e88-9a08-2cd938d3a560",
+        "status": "InProgress",
+        "startTime": "2022-12-22T05:57:42.337Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/serverAzureAsyncOperation/7f41cd9d-fec1-4e88-9a08-2cd938d3a560?api-version=2021-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-ead56213968472804e87e8d48460cd50-fc8768f08d5c3b8c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8fe44be157d7b86d9a40b48e6c6efbab",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "108",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:57:44 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "1",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "1551b4bd-678a-4b5f-b400-3817ee3219a0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11968",
+        "x-ms-request-id": "77d657b1-812f-42f0-8e7f-24807b3d3bff",
+        "x-ms-routing-request-id": "WESTUS:20221222T055744Z:1551b4bd-678a-4b5f-b400-3817ee3219a0"
+      },
+      "ResponseBody": {
+        "name": "7f41cd9d-fec1-4e88-9a08-2cd938d3a560",
+        "status": "InProgress",
+        "startTime": "2022-12-22T05:57:42.337Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/serverAzureAsyncOperation/7f41cd9d-fec1-4e88-9a08-2cd938d3a560?api-version=2021-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-ead56213968472804e87e8d48460cd50-a0e228fb893cca70-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "89047ac448c51ddba66f5e0ed50ba416",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "108",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:57:45 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "1",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9037f38a-64d5-4946-9303-49925da09e94",
+        "x-ms-ratelimit-remaining-subscription-reads": "11967",
+        "x-ms-request-id": "dd66a4dc-edf2-4a63-9aa6-1fc3422d99ff",
+        "x-ms-routing-request-id": "WESTUS:20221222T055745Z:9037f38a-64d5-4946-9303-49925da09e94"
+      },
+      "ResponseBody": {
+        "name": "7f41cd9d-fec1-4e88-9a08-2cd938d3a560",
+        "status": "InProgress",
+        "startTime": "2022-12-22T05:57:42.337Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/serverAzureAsyncOperation/7f41cd9d-fec1-4e88-9a08-2cd938d3a560?api-version=2021-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-ead56213968472804e87e8d48460cd50-5457e01c662dc09f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ab7ead2571b73254061c8476d1d984bb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "108",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:57:47 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "20",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "dbfde353-0dcc-4d72-a825-95e6ca6b40ab",
+        "x-ms-ratelimit-remaining-subscription-reads": "11966",
+        "x-ms-request-id": "5a74c3dd-4394-471b-87a0-e8960649217d",
+        "x-ms-routing-request-id": "WESTUS:20221222T055748Z:dbfde353-0dcc-4d72-a825-95e6ca6b40ab"
+      },
+      "ResponseBody": {
+        "name": "7f41cd9d-fec1-4e88-9a08-2cd938d3a560",
+        "status": "InProgress",
+        "startTime": "2022-12-22T05:57:42.337Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/serverAzureAsyncOperation/7f41cd9d-fec1-4e88-9a08-2cd938d3a560?api-version=2021-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-ead56213968472804e87e8d48460cd50-ac9220b0ece9a5f8-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "58dc910f013199146fc7e867f95ee28e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "108",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:58:07 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "20",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9da88256-5341-40be-808a-adad92381b87",
+        "x-ms-ratelimit-remaining-subscription-reads": "11965",
+        "x-ms-request-id": "ac81c708-cde3-44be-83b2-e4bcee7df020",
+        "x-ms-routing-request-id": "WESTUS:20221222T055808Z:9da88256-5341-40be-808a-adad92381b87"
+      },
+      "ResponseBody": {
+        "name": "7f41cd9d-fec1-4e88-9a08-2cd938d3a560",
+        "status": "InProgress",
+        "startTime": "2022-12-22T05:57:42.337Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/serverAzureAsyncOperation/7f41cd9d-fec1-4e88-9a08-2cd938d3a560?api-version=2021-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-ead56213968472804e87e8d48460cd50-5d344af9146f420f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "bf689e9c50ef53f325d283a8c4654ccd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "108",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:58:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "20",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ec9b009e-4dc7-42c8-97fd-3c3415928576",
+        "x-ms-ratelimit-remaining-subscription-reads": "11964",
+        "x-ms-request-id": "c1694b84-cb75-4dd6-83b6-bed3945f3706",
+        "x-ms-routing-request-id": "WESTUS:20221222T055828Z:ec9b009e-4dc7-42c8-97fd-3c3415928576"
+      },
+      "ResponseBody": {
+        "name": "7f41cd9d-fec1-4e88-9a08-2cd938d3a560",
+        "status": "InProgress",
+        "startTime": "2022-12-22T05:57:42.337Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/serverAzureAsyncOperation/7f41cd9d-fec1-4e88-9a08-2cd938d3a560?api-version=2021-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-ead56213968472804e87e8d48460cd50-b0c20ae83a144242-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "44ffa3eb4b2f23e498e53cf088ec39a7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "107",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:58:47 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e3375ee1-ed7e-4588-bb94-1717a45e011d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11963",
+        "x-ms-request-id": "a5ce8fe4-70e7-4901-9494-f4fd3cb17fcb",
+        "x-ms-routing-request-id": "WESTUS:20221222T055848Z:e3375ee1-ed7e-4588-bb94-1717a45e011d"
+      },
+      "ResponseBody": {
+        "name": "7f41cd9d-fec1-4e88-9a08-2cd938d3a560",
+        "status": "Succeeded",
+        "startTime": "2022-12-22T05:57:42.337Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007?api-version=2021-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-ead56213968472804e87e8d48460cd50-2275af684e1f7ab9-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "32daf53ac470becb9e89335f7e6bd40a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "518",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:58:47 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "1b0692e4-7035-4cb3-80ef-96f61f43c116",
+        "x-ms-ratelimit-remaining-subscription-reads": "11962",
+        "x-ms-request-id": "cdbe9095-e5ab-4e63-a6b5-ca4caab5fa04",
+        "x-ms-routing-request-id": "WESTUS:20221222T055848Z:1b0692e4-7035-4cb3-80ef-96f61f43c116"
+      },
+      "ResponseBody": {
+        "kind": "v12.0",
+        "properties": {
+          "administratorLogin": "admin-sql-server-3007",
+          "version": "12.0",
+          "state": "Ready",
+          "fullyQualifiedDomainName": "sql-server-3007.database.windows.net",
+          "privateEndpointConnections": [],
+          "publicNetworkAccess": "Enabled",
+          "restrictOutboundNetworkAccess": "Disabled"
+        },
+        "location": "eastus2euap",
+        "tags": {},
+        "id": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007",
+        "name": "sql-server-3007",
+        "type": "Microsoft.Sql/servers"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-Default-1062?api-version=2022-05-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "84",
+        "Content-Type": "application/json",
+        "traceparent": "00-c276c49659efe1819deffa629573b038-07465c7702f3fa83-00",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.2.0-alpha.20221221.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5f557c1b5f9eb95044270a1402ca3898",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "eastus2euap",
+        "properties": {
+          "preferredEnclaveType": "Default"
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/databaseAzureAsyncOperation/1578a7a8-15dc-40c8-b00a-d7222c67182d?api-version=2022-05-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "74",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:58:48 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/databaseOperationResults/1578a7a8-15dc-40c8-b00a-d7222c67182d?api-version=2022-05-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3a62670b-b6cc-4d54-b504-bf7bea88a8f9",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "1578a7a8-15dc-40c8-b00a-d7222c67182d",
+        "x-ms-routing-request-id": "WESTUS:20221222T055849Z:3a62670b-b6cc-4d54-b504-bf7bea88a8f9"
+      },
+      "ResponseBody": {
+        "operation": "CreateLogicalDatabase",
+        "startTime": "2022-12-22T05:58:49.7Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/databaseAzureAsyncOperation/1578a7a8-15dc-40c8-b00a-d7222c67182d?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c276c49659efe1819deffa629573b038-c050ff54b85e8af1-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "706d753247e3969b89792b9dc1a99bbe",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:58:48 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3fa6a960-84ba-417e-8334-be93fbf00cdf",
+        "x-ms-ratelimit-remaining-subscription-reads": "11961",
+        "x-ms-request-id": "4973630f-67a1-4b06-b418-953cd12f85ae",
+        "x-ms-routing-request-id": "WESTUS:20221222T055849Z:3fa6a960-84ba-417e-8334-be93fbf00cdf"
+      },
+      "ResponseBody": {
+        "name": "1578a7a8-15dc-40c8-b00a-d7222c67182d",
+        "status": "InProgress",
+        "startTime": "2022-12-22T05:58:49.7Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/databaseAzureAsyncOperation/1578a7a8-15dc-40c8-b00a-d7222c67182d?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c276c49659efe1819deffa629573b038-f6074f7f93524b69-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "fda2c6fa7e05bd61547e1ff8b938339f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:59:04 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "1cf4b4e1-6c41-4f03-9b58-fa93213cd357",
+        "x-ms-ratelimit-remaining-subscription-reads": "11960",
+        "x-ms-request-id": "003b7528-6846-47ee-b764-f7043beaf670",
+        "x-ms-routing-request-id": "WESTUS:20221222T055905Z:1cf4b4e1-6c41-4f03-9b58-fa93213cd357"
+      },
+      "ResponseBody": {
+        "name": "1578a7a8-15dc-40c8-b00a-d7222c67182d",
+        "status": "InProgress",
+        "startTime": "2022-12-22T05:58:49.7Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/databaseAzureAsyncOperation/1578a7a8-15dc-40c8-b00a-d7222c67182d?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c276c49659efe1819deffa629573b038-38d0b0a3f0019806-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8de2f9fac75d94b4d33801a031891596",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:59:20 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5daa284a-e85b-46fa-a1c4-e744078efc89",
+        "x-ms-ratelimit-remaining-subscription-reads": "11959",
+        "x-ms-request-id": "2a41833c-5ab3-47ba-b20a-2f14a542fa2e",
+        "x-ms-routing-request-id": "WESTUS:20221222T055920Z:5daa284a-e85b-46fa-a1c4-e744078efc89"
+      },
+      "ResponseBody": {
+        "name": "1578a7a8-15dc-40c8-b00a-d7222c67182d",
+        "status": "InProgress",
+        "startTime": "2022-12-22T05:58:49.7Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/databaseAzureAsyncOperation/1578a7a8-15dc-40c8-b00a-d7222c67182d?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c276c49659efe1819deffa629573b038-611f5eaa016b0f19-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "bf1de70b2f03b30b13af1b6528a3dc50",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:59:35 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "1a87bb50-5638-4987-af30-a8d419960735",
+        "x-ms-ratelimit-remaining-subscription-reads": "11958",
+        "x-ms-request-id": "5c565455-9c58-43f1-bdbb-1d4063f29b63",
+        "x-ms-routing-request-id": "WESTUS:20221222T055935Z:1a87bb50-5638-4987-af30-a8d419960735"
+      },
+      "ResponseBody": {
+        "name": "1578a7a8-15dc-40c8-b00a-d7222c67182d",
+        "status": "InProgress",
+        "startTime": "2022-12-22T05:58:49.7Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/databaseAzureAsyncOperation/1578a7a8-15dc-40c8-b00a-d7222c67182d?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c276c49659efe1819deffa629573b038-a6cbbeea3f7d08fc-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c8a38c450dc73361110e29cc7cc18ccb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "105",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:59:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "65cf2c2b-5d5a-44af-be4e-1a96e342c518",
+        "x-ms-ratelimit-remaining-subscription-reads": "11957",
+        "x-ms-request-id": "e818d060-97f9-4097-94f9-7f96091384ff",
+        "x-ms-routing-request-id": "WESTUS:20221222T055950Z:65cf2c2b-5d5a-44af-be4e-1a96e342c518"
+      },
+      "ResponseBody": {
+        "name": "1578a7a8-15dc-40c8-b00a-d7222c67182d",
+        "status": "Succeeded",
+        "startTime": "2022-12-22T05:58:49.7Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-Default-1062?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c276c49659efe1819deffa629573b038-142b569f5cb06226-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d2ed8868741bca9cee2f79adac4f6b2f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1168",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:59:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "28b2c545-346f-48a2-8c1c-a0bf0dbe020b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11956",
+        "x-ms-request-id": "4af8156e-1a9e-4732-82c3-1ccfb63eac30",
+        "x-ms-routing-request-id": "WESTUS:20221222T055950Z:28b2c545-346f-48a2-8c1c-a0bf0dbe020b"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 10
+        },
+        "kind": "v12.0,user",
+        "properties": {
+          "collation": "SQL_Latin1_General_CP1_CI_AS",
+          "maxSizeBytes": 268435456000,
+          "status": "Online",
+          "databaseId": "0bd11d40-bd05-4370-8ad4-0cd54094ce72",
+          "creationDate": "2022-12-22T05:59:42.213Z",
+          "currentServiceObjectiveName": "S0",
+          "requestedServiceObjectiveName": "S0",
+          "defaultSecondaryLocation": "centraluseuap",
+          "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+          "zoneRedundant": false,
+          "readScale": "Disabled",
+          "currentSku": {
+            "name": "Standard",
+            "tier": "Standard",
+            "capacity": 10
+          },
+          "currentBackupStorageRedundancy": "Geo",
+          "requestedBackupStorageRedundancy": "Geo",
+          "maintenanceConfigurationId": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+          "isLedgerOn": false,
+          "isInfraEncryptionEnabled": false,
+          "preferredEnclaveType": "Default"
+        },
+        "location": "eastus2euap",
+        "tags": {},
+        "id": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-Default-1062",
+        "name": "sql-database-Default-1062",
+        "type": "Microsoft.Sql/servers/databases"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-Default-1062?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-dd340b37d90a0e0dda8caa8d0dc79f19-cc983582841de439-00",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.2.0-alpha.20221221.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a55bb15c4de6fdcf85eaaef5053e3652",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1168",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:59:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b80f7438-8d5b-4291-aaac-4b8bb7ceabc1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11955",
+        "x-ms-request-id": "3cd863b6-1b4a-4b7b-9325-3c7c12286c5b",
+        "x-ms-routing-request-id": "WESTUS:20221222T055951Z:b80f7438-8d5b-4291-aaac-4b8bb7ceabc1"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 10
+        },
+        "kind": "v12.0,user",
+        "properties": {
+          "collation": "SQL_Latin1_General_CP1_CI_AS",
+          "maxSizeBytes": 268435456000,
+          "status": "Online",
+          "databaseId": "0bd11d40-bd05-4370-8ad4-0cd54094ce72",
+          "creationDate": "2022-12-22T05:59:42.213Z",
+          "currentServiceObjectiveName": "S0",
+          "requestedServiceObjectiveName": "S0",
+          "defaultSecondaryLocation": "centraluseuap",
+          "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+          "zoneRedundant": false,
+          "readScale": "Disabled",
+          "currentSku": {
+            "name": "Standard",
+            "tier": "Standard",
+            "capacity": 10
+          },
+          "currentBackupStorageRedundancy": "Geo",
+          "requestedBackupStorageRedundancy": "Geo",
+          "maintenanceConfigurationId": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+          "isLedgerOn": false,
+          "isInfraEncryptionEnabled": false,
+          "preferredEnclaveType": "Default"
+        },
+        "location": "eastus2euap",
+        "tags": {},
+        "id": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-Default-1062",
+        "name": "sql-database-Default-1062",
+        "type": "Microsoft.Sql/servers/databases"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-Default-10620?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-418b71207bb998c70848323433ec69a7-706825ad1301ab01-00",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.2.0-alpha.20221221.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9ffc50230ab6d134f0d8d99894b387c2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "268",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:59:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "1f75439e-edb7-44ed-9a05-674e26d0b031",
+        "x-ms-failure-cause": "gateway",
+        "x-ms-request-id": "1f75439e-edb7-44ed-9a05-674e26d0b031",
+        "x-ms-routing-request-id": "WESTUS:20221222T055951Z:1f75439e-edb7-44ed-9a05-674e26d0b031"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ResourceNotFound",
+          "message": "The Resource \u0027Microsoft.Sql/servers/sql-server-3007/databases/sql-database-Default-10620\u0027 under resource group \u0027Sql-ViditGupta-RG-5736\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-Default-1062?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ff7916c0192f494279a84efad581eb51-54c174ddb01b5536-00",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.2.0-alpha.20221221.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "cb70faa2e6651ae4b9ef4c31c6a7c4af",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1168",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:59:50 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0fb1d825-89c2-4771-8b7e-1af3fe741a1c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11953",
+        "x-ms-request-id": "f5b47415-f2fb-4fb9-af1a-e1e3e36ae3e3",
+        "x-ms-routing-request-id": "WESTUS:20221222T055951Z:0fb1d825-89c2-4771-8b7e-1af3fe741a1c"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 10
+        },
+        "kind": "v12.0,user",
+        "properties": {
+          "collation": "SQL_Latin1_General_CP1_CI_AS",
+          "maxSizeBytes": 268435456000,
+          "status": "Online",
+          "databaseId": "0bd11d40-bd05-4370-8ad4-0cd54094ce72",
+          "creationDate": "2022-12-22T05:59:42.213Z",
+          "currentServiceObjectiveName": "S0",
+          "requestedServiceObjectiveName": "S0",
+          "defaultSecondaryLocation": "centraluseuap",
+          "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+          "zoneRedundant": false,
+          "readScale": "Disabled",
+          "currentSku": {
+            "name": "Standard",
+            "tier": "Standard",
+            "capacity": 10
+          },
+          "currentBackupStorageRedundancy": "Geo",
+          "requestedBackupStorageRedundancy": "Geo",
+          "maintenanceConfigurationId": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+          "isLedgerOn": false,
+          "isInfraEncryptionEnabled": false,
+          "preferredEnclaveType": "Default"
+        },
+        "location": "eastus2euap",
+        "tags": {},
+        "id": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-Default-1062",
+        "name": "sql-database-Default-1062",
+        "type": "Microsoft.Sql/servers/databases"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-41f006d79576e73e83e5000fdf28604d-11ff9dbfb08cf3cc-00",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.2.0-alpha.20221221.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5b8a26f8cc5251797d8ab50d733669d1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2425",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:59:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "94354e24-e1e4-4c13-a795-53c3f4b4559c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11952",
+        "x-ms-request-id": "07be172c-be02-4680-8055-ed4fea415cac",
+        "x-ms-routing-request-id": "WESTUS:20221222T055951Z:94354e24-e1e4-4c13-a795-53c3f4b4559c"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "sku": {
+              "name": "Standard",
+              "tier": "Standard",
+              "capacity": 10
+            },
+            "kind": "v12.0,user",
+            "properties": {
+              "collation": "SQL_Latin1_General_CP1_CI_AS",
+              "maxSizeBytes": 268435456000,
+              "status": "Online",
+              "databaseId": "0bd11d40-bd05-4370-8ad4-0cd54094ce72",
+              "creationDate": "2022-12-22T05:59:42.213Z",
+              "currentServiceObjectiveName": "S0",
+              "requestedServiceObjectiveName": "S0",
+              "defaultSecondaryLocation": "centraluseuap",
+              "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+              "zoneRedundant": false,
+              "readScale": "Disabled",
+              "currentSku": {
+                "name": "Standard",
+                "tier": "Standard",
+                "capacity": 10
+              },
+              "currentBackupStorageRedundancy": "Geo",
+              "requestedBackupStorageRedundancy": "Geo",
+              "maintenanceConfigurationId": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+              "isLedgerOn": false,
+              "isInfraEncryptionEnabled": false,
+              "preferredEnclaveType": "Default"
+            },
+            "location": "eastus2euap",
+            "tags": {},
+            "id": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-Default-1062",
+            "name": "sql-database-Default-1062",
+            "type": "Microsoft.Sql/servers/databases"
+          },
+          {
+            "sku": {
+              "name": "System",
+              "tier": "System",
+              "capacity": 0
+            },
+            "kind": "v12.0,system",
+            "managedBy": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007",
+            "properties": {
+              "collation": "SQL_Latin1_General_CP1_CI_AS",
+              "maxSizeBytes": 53687091200,
+              "status": "Online",
+              "databaseId": "f6bcb8ac-473c-4323-a6b5-37ccab0e4cc6",
+              "creationDate": "2022-12-22T05:58:36.603Z",
+              "currentServiceObjectiveName": "System2",
+              "requestedServiceObjectiveName": "System2",
+              "defaultSecondaryLocation": "centraluseuap",
+              "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+              "zoneRedundant": false,
+              "readScale": "Disabled",
+              "currentSku": {
+                "name": "System",
+                "tier": "System",
+                "capacity": 0
+              },
+              "currentBackupStorageRedundancy": "Local",
+              "requestedBackupStorageRedundancy": "Local",
+              "maintenanceConfigurationId": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+              "isLedgerOn": false,
+              "isInfraEncryptionEnabled": false
+            },
+            "location": "eastus2euap",
+            "id": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/master",
+            "name": "master",
+            "type": "Microsoft.Sql/servers/databases"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-Default-1062?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a6a7f2903458bcb39ad5641d01bca2c2-4e4cbb2f2b531bfe-00",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.2.0-alpha.20221221.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0b52ec636bcd3ced6ce2e6c6bd030a49",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1168",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:59:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b309149a-3282-469b-9dec-1af7d22ac058",
+        "x-ms-ratelimit-remaining-subscription-reads": "11951",
+        "x-ms-request-id": "a4f52e8b-f23f-4df9-9240-dc0f0f5f8d96",
+        "x-ms-routing-request-id": "WESTUS:20221222T055951Z:b309149a-3282-469b-9dec-1af7d22ac058"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 10
+        },
+        "kind": "v12.0,user",
+        "properties": {
+          "collation": "SQL_Latin1_General_CP1_CI_AS",
+          "maxSizeBytes": 268435456000,
+          "status": "Online",
+          "databaseId": "0bd11d40-bd05-4370-8ad4-0cd54094ce72",
+          "creationDate": "2022-12-22T05:59:42.213Z",
+          "currentServiceObjectiveName": "S0",
+          "requestedServiceObjectiveName": "S0",
+          "defaultSecondaryLocation": "centraluseuap",
+          "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+          "zoneRedundant": false,
+          "readScale": "Disabled",
+          "currentSku": {
+            "name": "Standard",
+            "tier": "Standard",
+            "capacity": 10
+          },
+          "currentBackupStorageRedundancy": "Geo",
+          "requestedBackupStorageRedundancy": "Geo",
+          "maintenanceConfigurationId": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+          "isLedgerOn": false,
+          "isInfraEncryptionEnabled": false,
+          "preferredEnclaveType": "Default"
+        },
+        "location": "eastus2euap",
+        "tags": {},
+        "id": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-Default-1062",
+        "name": "sql-database-Default-1062",
+        "type": "Microsoft.Sql/servers/databases"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-Default-1062?api-version=2022-05-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efd6e1a2b924dc2f9cb0c973f703a774-94a5fb103c382682-00",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.2.0-alpha.20221221.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6d9f2a142b29d66f801f4edb31d6a682",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/databaseAzureAsyncOperation/ac8652ef-b802-4d4e-ad98-6e93609ff420?api-version=2022-05-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "70",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:59:51 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/databaseOperationResults/ac8652ef-b802-4d4e-ad98-6e93609ff420?api-version=2022-05-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f52b05a7-cb50-43b0-bba0-05bf305f76c5",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14997",
+        "x-ms-request-id": "ac8652ef-b802-4d4e-ad98-6e93609ff420",
+        "x-ms-routing-request-id": "WESTUS:20221222T055952Z:f52b05a7-cb50-43b0-bba0-05bf305f76c5"
+      },
+      "ResponseBody": {
+        "operation": "DropLogicalDatabase",
+        "startTime": "2022-12-22T05:59:52Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/databaseAzureAsyncOperation/ac8652ef-b802-4d4e-ad98-6e93609ff420?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efd6e1a2b924dc2f9cb0c973f703a774-a39debfa264fac9e-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "49f96c7ffc9737a87c7c8aae1d110b95",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "104",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 05:59:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "9392b411-8b38-48d8-8f2c-f4fa6c86d986",
+        "x-ms-ratelimit-remaining-subscription-reads": "11950",
+        "x-ms-request-id": "c61b36c8-ca3b-4ab4-b70c-c8d4c9355229",
+        "x-ms-routing-request-id": "WESTUS:20221222T055952Z:9392b411-8b38-48d8-8f2c-f4fa6c86d986"
+      },
+      "ResponseBody": {
+        "name": "ac8652ef-b802-4d4e-ad98-6e93609ff420",
+        "status": "InProgress",
+        "startTime": "2022-12-22T05:59:52Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/databaseAzureAsyncOperation/ac8652ef-b802-4d4e-ad98-6e93609ff420?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-efd6e1a2b924dc2f9cb0c973f703a774-3fe8b6035533cb70-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4340633b30345bf4481133db3cfff0cd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "103",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 06:00:06 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "52a0d0f6-a486-429d-9d61-d34d2101828e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11949",
+        "x-ms-request-id": "e7eb2749-47aa-4f59-8ab5-6b68298a280d",
+        "x-ms-routing-request-id": "WESTUS:20221222T060007Z:52a0d0f6-a486-429d-9d61-d34d2101828e"
+      },
+      "ResponseBody": {
+        "name": "ac8652ef-b802-4d4e-ad98-6e93609ff420",
+        "status": "Succeeded",
+        "startTime": "2022-12-22T05:59:52Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-94898e11be61590386f85a887f8ca55e-c94ee02850df8794-00",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.2.0-alpha.20221221.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c55cd48b5cdd8aead2965dd72e337028",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1256",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 06:00:06 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "f8108bbb-1c4e-46f9-8067-a79077167802",
+        "x-ms-ratelimit-remaining-subscription-reads": "11948",
+        "x-ms-request-id": "b2c6fb06-dff0-4c1c-bf9a-ec8097daad1d",
+        "x-ms-routing-request-id": "WESTUS:20221222T060007Z:f8108bbb-1c4e-46f9-8067-a79077167802"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "sku": {
+              "name": "System",
+              "tier": "System",
+              "capacity": 0
+            },
+            "kind": "v12.0,system",
+            "managedBy": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007",
+            "properties": {
+              "collation": "SQL_Latin1_General_CP1_CI_AS",
+              "maxSizeBytes": 53687091200,
+              "status": "Online",
+              "databaseId": "f6bcb8ac-473c-4323-a6b5-37ccab0e4cc6",
+              "creationDate": "2022-12-22T05:58:36.603Z",
+              "currentServiceObjectiveName": "System2",
+              "requestedServiceObjectiveName": "System2",
+              "defaultSecondaryLocation": "centraluseuap",
+              "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+              "zoneRedundant": false,
+              "readScale": "Disabled",
+              "currentSku": {
+                "name": "System",
+                "tier": "System",
+                "capacity": 0
+              },
+              "currentBackupStorageRedundancy": "Local",
+              "requestedBackupStorageRedundancy": "Local",
+              "maintenanceConfigurationId": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+              "isLedgerOn": false,
+              "isInfraEncryptionEnabled": false
+            },
+            "location": "eastus2euap",
+            "id": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/master",
+            "name": "master",
+            "type": "Microsoft.Sql/servers/databases"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-VBS-7172?api-version=2022-05-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "80",
+        "Content-Type": "application/json",
+        "traceparent": "00-c8bef77f50c746be0f0947cc87df9e99-c741a180052f664f-00",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.2.0-alpha.20221221.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "728134594450774e9d0186c8ccfa7c8b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "eastus2euap",
+        "properties": {
+          "preferredEnclaveType": "VBS"
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/databaseAzureAsyncOperation/daa7af85-64fa-4a96-a630-e9b5a88347d0?api-version=2022-05-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "76",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 06:00:08 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/databaseOperationResults/daa7af85-64fa-4a96-a630-e9b5a88347d0?api-version=2022-05-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b358314f-df02-49c7-a1cd-04b4ea8a5085",
+        "x-ms-ratelimit-remaining-subscription-writes": "1194",
+        "x-ms-request-id": "daa7af85-64fa-4a96-a630-e9b5a88347d0",
+        "x-ms-routing-request-id": "WESTUS:20221222T060009Z:b358314f-df02-49c7-a1cd-04b4ea8a5085"
+      },
+      "ResponseBody": {
+        "operation": "CreateLogicalDatabase",
+        "startTime": "2022-12-22T06:00:08.953Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/databaseAzureAsyncOperation/daa7af85-64fa-4a96-a630-e9b5a88347d0?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c8bef77f50c746be0f0947cc87df9e99-e5247c979d4a0bd5-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "cbe3980b5b6f8f3b0d4d3f5b64c1059b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "108",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 06:00:08 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5a182417-eca6-401a-bb27-f4fa40bad1ae",
+        "x-ms-ratelimit-remaining-subscription-reads": "11947",
+        "x-ms-request-id": "edf0fe39-51f4-48fa-8225-2c716da562f7",
+        "x-ms-routing-request-id": "WESTUS:20221222T060009Z:5a182417-eca6-401a-bb27-f4fa40bad1ae"
+      },
+      "ResponseBody": {
+        "name": "daa7af85-64fa-4a96-a630-e9b5a88347d0",
+        "status": "InProgress",
+        "startTime": "2022-12-22T06:00:08.953Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/databaseAzureAsyncOperation/daa7af85-64fa-4a96-a630-e9b5a88347d0?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c8bef77f50c746be0f0947cc87df9e99-e045433edecbeac4-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "10714ce07227a1fc5508bce0a67b5a6f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "108",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 06:00:23 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "c9cce7c0-f912-4196-b3a1-d52ec1c14ad8",
+        "x-ms-ratelimit-remaining-subscription-reads": "11946",
+        "x-ms-request-id": "ba348bdd-ef7f-4aab-94fa-038e8ad0b352",
+        "x-ms-routing-request-id": "WESTUS:20221222T060024Z:c9cce7c0-f912-4196-b3a1-d52ec1c14ad8"
+      },
+      "ResponseBody": {
+        "name": "daa7af85-64fa-4a96-a630-e9b5a88347d0",
+        "status": "InProgress",
+        "startTime": "2022-12-22T06:00:08.953Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/databaseAzureAsyncOperation/daa7af85-64fa-4a96-a630-e9b5a88347d0?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c8bef77f50c746be0f0947cc87df9e99-f3112d309ac93b6b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "34bce5ecb117611ce7b9a7f8788314f4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "108",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 06:00:38 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a124bcb3-7e31-4e1c-ba18-62e58f0776b6",
+        "x-ms-ratelimit-remaining-subscription-reads": "11945",
+        "x-ms-request-id": "be03fea3-e058-46c4-8779-1e115b24721c",
+        "x-ms-routing-request-id": "WESTUS:20221222T060039Z:a124bcb3-7e31-4e1c-ba18-62e58f0776b6"
+      },
+      "ResponseBody": {
+        "name": "daa7af85-64fa-4a96-a630-e9b5a88347d0",
+        "status": "InProgress",
+        "startTime": "2022-12-22T06:00:08.953Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/databaseAzureAsyncOperation/daa7af85-64fa-4a96-a630-e9b5a88347d0?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c8bef77f50c746be0f0947cc87df9e99-3c3f862d829e92cb-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d0f1026a04bc98789c4176669f5be891",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "107",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 06:00:53 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "809e556a-4b57-4bbc-a8bf-b554f146f64e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11944",
+        "x-ms-request-id": "7da7a2a0-3315-4119-97a1-eaa9e3a26c0c",
+        "x-ms-routing-request-id": "WESTUS:20221222T060054Z:809e556a-4b57-4bbc-a8bf-b554f146f64e"
+      },
+      "ResponseBody": {
+        "name": "daa7af85-64fa-4a96-a630-e9b5a88347d0",
+        "status": "Succeeded",
+        "startTime": "2022-12-22T06:00:08.953Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-VBS-7172?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-c8bef77f50c746be0f0947cc87df9e99-ba4e040ebecae591-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7e6fcff2d1052f832f10286dcb0428d1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1155",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 06:00:53 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b3522682-5c34-40c0-a33d-aee4504315d0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11943",
+        "x-ms-request-id": "e112c5c0-3483-4f47-9d71-c07b1fd03e4f",
+        "x-ms-routing-request-id": "WESTUS:20221222T060054Z:b3522682-5c34-40c0-a33d-aee4504315d0"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 10
+        },
+        "kind": "v12.0,user",
+        "properties": {
+          "collation": "SQL_Latin1_General_CP1_CI_AS",
+          "maxSizeBytes": 268435456000,
+          "status": "Online",
+          "databaseId": "e6bd4271-f7d5-44a6-b98e-5240505fb0b4",
+          "creationDate": "2022-12-22T06:00:50.27Z",
+          "currentServiceObjectiveName": "S0",
+          "requestedServiceObjectiveName": "S0",
+          "defaultSecondaryLocation": "centraluseuap",
+          "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+          "zoneRedundant": false,
+          "readScale": "Disabled",
+          "currentSku": {
+            "name": "Standard",
+            "tier": "Standard",
+            "capacity": 10
+          },
+          "currentBackupStorageRedundancy": "Geo",
+          "requestedBackupStorageRedundancy": "Geo",
+          "maintenanceConfigurationId": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+          "isLedgerOn": false,
+          "isInfraEncryptionEnabled": false,
+          "preferredEnclaveType": "VBS"
+        },
+        "location": "eastus2euap",
+        "tags": {},
+        "id": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-VBS-7172",
+        "name": "sql-database-VBS-7172",
+        "type": "Microsoft.Sql/servers/databases"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-VBS-7172?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a2171b712aacbed391e0d7a7af6f4245-94657529d9233e19-00",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.2.0-alpha.20221221.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a475c7f38a89e7b36c2397d63bb6c18c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1155",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 06:00:54 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "24614d23-7041-4bbf-80ac-f5f1a1e20c7f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11942",
+        "x-ms-request-id": "c04cc467-c753-46f4-89f3-ca93dcb2cbac",
+        "x-ms-routing-request-id": "WESTUS:20221222T060055Z:24614d23-7041-4bbf-80ac-f5f1a1e20c7f"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 10
+        },
+        "kind": "v12.0,user",
+        "properties": {
+          "collation": "SQL_Latin1_General_CP1_CI_AS",
+          "maxSizeBytes": 268435456000,
+          "status": "Online",
+          "databaseId": "e6bd4271-f7d5-44a6-b98e-5240505fb0b4",
+          "creationDate": "2022-12-22T06:00:50.27Z",
+          "currentServiceObjectiveName": "S0",
+          "requestedServiceObjectiveName": "S0",
+          "defaultSecondaryLocation": "centraluseuap",
+          "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+          "zoneRedundant": false,
+          "readScale": "Disabled",
+          "currentSku": {
+            "name": "Standard",
+            "tier": "Standard",
+            "capacity": 10
+          },
+          "currentBackupStorageRedundancy": "Geo",
+          "requestedBackupStorageRedundancy": "Geo",
+          "maintenanceConfigurationId": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+          "isLedgerOn": false,
+          "isInfraEncryptionEnabled": false,
+          "preferredEnclaveType": "VBS"
+        },
+        "location": "eastus2euap",
+        "tags": {},
+        "id": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-VBS-7172",
+        "name": "sql-database-VBS-7172",
+        "type": "Microsoft.Sql/servers/databases"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-VBS-71720?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-42b4e984fc4ffc20f931d9a8673f8e87-cec3fe212a275ee7-00",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.2.0-alpha.20221221.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a80515d1951499ef7ec2a0acdb0bcd98",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "264",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 06:00:54 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "6be37630-f8b0-4ffa-8391-6c6b00f49eef",
+        "x-ms-failure-cause": "gateway",
+        "x-ms-request-id": "6be37630-f8b0-4ffa-8391-6c6b00f49eef",
+        "x-ms-routing-request-id": "WESTUS:20221222T060055Z:6be37630-f8b0-4ffa-8391-6c6b00f49eef"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "ResourceNotFound",
+          "message": "The Resource \u0027Microsoft.Sql/servers/sql-server-3007/databases/sql-database-VBS-71720\u0027 under resource group \u0027Sql-ViditGupta-RG-5736\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-VBS-7172?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f3ba140f92465032a113870fff16528b-1c6255769e84feae-00",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.2.0-alpha.20221221.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d772a41944e568081c8712e139adf479",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1155",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 06:00:54 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "41d7745a-b913-489f-8d0a-51770414afe6",
+        "x-ms-ratelimit-remaining-subscription-reads": "11940",
+        "x-ms-request-id": "74afeaa1-aa24-4e9b-bfa4-11dbeadf6f8d",
+        "x-ms-routing-request-id": "WESTUS:20221222T060055Z:41d7745a-b913-489f-8d0a-51770414afe6"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 10
+        },
+        "kind": "v12.0,user",
+        "properties": {
+          "collation": "SQL_Latin1_General_CP1_CI_AS",
+          "maxSizeBytes": 268435456000,
+          "status": "Online",
+          "databaseId": "e6bd4271-f7d5-44a6-b98e-5240505fb0b4",
+          "creationDate": "2022-12-22T06:00:50.27Z",
+          "currentServiceObjectiveName": "S0",
+          "requestedServiceObjectiveName": "S0",
+          "defaultSecondaryLocation": "centraluseuap",
+          "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+          "zoneRedundant": false,
+          "readScale": "Disabled",
+          "currentSku": {
+            "name": "Standard",
+            "tier": "Standard",
+            "capacity": 10
+          },
+          "currentBackupStorageRedundancy": "Geo",
+          "requestedBackupStorageRedundancy": "Geo",
+          "maintenanceConfigurationId": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+          "isLedgerOn": false,
+          "isInfraEncryptionEnabled": false,
+          "preferredEnclaveType": "VBS"
+        },
+        "location": "eastus2euap",
+        "tags": {},
+        "id": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-VBS-7172",
+        "name": "sql-database-VBS-7172",
+        "type": "Microsoft.Sql/servers/databases"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-cb1705016598d34302b60bdd41e338e2-08fc8fe4a6577a36-00",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.2.0-alpha.20221221.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b69c9c4e7ffe5ebdd7dc25c7e9060c61",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2412",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 06:00:54 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "845115d6-37df-4283-930d-38f897e51f1b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11939",
+        "x-ms-request-id": "7403b838-c005-41ff-bf54-1a2f60a226f6",
+        "x-ms-routing-request-id": "WESTUS:20221222T060055Z:845115d6-37df-4283-930d-38f897e51f1b"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "sku": {
+              "name": "System",
+              "tier": "System",
+              "capacity": 0
+            },
+            "kind": "v12.0,system",
+            "managedBy": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007",
+            "properties": {
+              "collation": "SQL_Latin1_General_CP1_CI_AS",
+              "maxSizeBytes": 53687091200,
+              "status": "Online",
+              "databaseId": "f6bcb8ac-473c-4323-a6b5-37ccab0e4cc6",
+              "creationDate": "2022-12-22T05:58:36.603Z",
+              "currentServiceObjectiveName": "System2",
+              "requestedServiceObjectiveName": "System2",
+              "defaultSecondaryLocation": "centraluseuap",
+              "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+              "zoneRedundant": false,
+              "readScale": "Disabled",
+              "currentSku": {
+                "name": "System",
+                "tier": "System",
+                "capacity": 0
+              },
+              "currentBackupStorageRedundancy": "Local",
+              "requestedBackupStorageRedundancy": "Local",
+              "maintenanceConfigurationId": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+              "isLedgerOn": false,
+              "isInfraEncryptionEnabled": false
+            },
+            "location": "eastus2euap",
+            "id": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/master",
+            "name": "master",
+            "type": "Microsoft.Sql/servers/databases"
+          },
+          {
+            "sku": {
+              "name": "Standard",
+              "tier": "Standard",
+              "capacity": 10
+            },
+            "kind": "v12.0,user",
+            "properties": {
+              "collation": "SQL_Latin1_General_CP1_CI_AS",
+              "maxSizeBytes": 268435456000,
+              "status": "Online",
+              "databaseId": "e6bd4271-f7d5-44a6-b98e-5240505fb0b4",
+              "creationDate": "2022-12-22T06:00:50.27Z",
+              "currentServiceObjectiveName": "S0",
+              "requestedServiceObjectiveName": "S0",
+              "defaultSecondaryLocation": "centraluseuap",
+              "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+              "zoneRedundant": false,
+              "readScale": "Disabled",
+              "currentSku": {
+                "name": "Standard",
+                "tier": "Standard",
+                "capacity": 10
+              },
+              "currentBackupStorageRedundancy": "Geo",
+              "requestedBackupStorageRedundancy": "Geo",
+              "maintenanceConfigurationId": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+              "isLedgerOn": false,
+              "isInfraEncryptionEnabled": false,
+              "preferredEnclaveType": "VBS"
+            },
+            "location": "eastus2euap",
+            "tags": {},
+            "id": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-VBS-7172",
+            "name": "sql-database-VBS-7172",
+            "type": "Microsoft.Sql/servers/databases"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-VBS-7172?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d7ab330f034d83e75779f3ddb1505608-c9824824010ae7fd-00",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.2.0-alpha.20221221.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "97bcff56e9438ca60d9d8c8c830e5fd1",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1155",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 06:00:54 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e41e833f-9225-46b7-9bcb-aa86574ccaa3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11938",
+        "x-ms-request-id": "ce9d1f83-837e-4ab4-a52c-d937f659a2cc",
+        "x-ms-routing-request-id": "WESTUS:20221222T060055Z:e41e833f-9225-46b7-9bcb-aa86574ccaa3"
+      },
+      "ResponseBody": {
+        "sku": {
+          "name": "Standard",
+          "tier": "Standard",
+          "capacity": 10
+        },
+        "kind": "v12.0,user",
+        "properties": {
+          "collation": "SQL_Latin1_General_CP1_CI_AS",
+          "maxSizeBytes": 268435456000,
+          "status": "Online",
+          "databaseId": "e6bd4271-f7d5-44a6-b98e-5240505fb0b4",
+          "creationDate": "2022-12-22T06:00:50.27Z",
+          "currentServiceObjectiveName": "S0",
+          "requestedServiceObjectiveName": "S0",
+          "defaultSecondaryLocation": "centraluseuap",
+          "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+          "zoneRedundant": false,
+          "readScale": "Disabled",
+          "currentSku": {
+            "name": "Standard",
+            "tier": "Standard",
+            "capacity": 10
+          },
+          "currentBackupStorageRedundancy": "Geo",
+          "requestedBackupStorageRedundancy": "Geo",
+          "maintenanceConfigurationId": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+          "isLedgerOn": false,
+          "isInfraEncryptionEnabled": false,
+          "preferredEnclaveType": "VBS"
+        },
+        "location": "eastus2euap",
+        "tags": {},
+        "id": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-VBS-7172",
+        "name": "sql-database-VBS-7172",
+        "type": "Microsoft.Sql/servers/databases"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/sql-database-VBS-7172?api-version=2022-05-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-b8cdc67b9e581773835f7e80a4bb7634-f109af72c1c6fa02-00",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.2.0-alpha.20221221.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3f5e26ce176e9999e61400091f407e15",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/databaseAzureAsyncOperation/ff2debbc-8563-4247-a634-f40bcceec525?api-version=2022-05-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "74",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 06:00:55 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/databaseOperationResults/ff2debbc-8563-4247-a634-f40bcceec525?api-version=2022-05-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e787b3d3-8216-4838-a07e-c474848ea1d8",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14996",
+        "x-ms-request-id": "ff2debbc-8563-4247-a634-f40bcceec525",
+        "x-ms-routing-request-id": "WESTUS:20221222T060056Z:e787b3d3-8216-4838-a07e-c474848ea1d8"
+      },
+      "ResponseBody": {
+        "operation": "DropLogicalDatabase",
+        "startTime": "2022-12-22T06:00:56.097Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/databaseAzureAsyncOperation/ff2debbc-8563-4247-a634-f40bcceec525?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-b8cdc67b9e581773835f7e80a4bb7634-3e16e4242e300e72-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c2f9547dcca83ff26522b02fe99d6dcc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "108",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 06:00:55 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "969915c9-b5d6-4733-90d4-8e74c9cdb698",
+        "x-ms-ratelimit-remaining-subscription-reads": "11937",
+        "x-ms-request-id": "06335f74-3c29-4967-813b-4d8d67554f97",
+        "x-ms-routing-request-id": "WESTUS:20221222T060056Z:969915c9-b5d6-4733-90d4-8e74c9cdb698"
+      },
+      "ResponseBody": {
+        "name": "ff2debbc-8563-4247-a634-f40bcceec525",
+        "status": "InProgress",
+        "startTime": "2022-12-22T06:00:56.097Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/databaseAzureAsyncOperation/ff2debbc-8563-4247-a634-f40bcceec525?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-b8cdc67b9e581773835f7e80a4bb7634-4cd468b373e71eb9-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d211761e248471dff0fa4a5f6e39a6b5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "107",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 06:01:11 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "d29ca31c-63a2-468c-98bf-0e15dd910e01",
+        "x-ms-ratelimit-remaining-subscription-reads": "11936",
+        "x-ms-request-id": "f190d908-34d8-48a2-9bb7-2b4c5b5571ca",
+        "x-ms-routing-request-id": "WESTUS:20221222T060111Z:d29ca31c-63a2-468c-98bf-0e15dd910e01"
+      },
+      "ResponseBody": {
+        "name": "ff2debbc-8563-4247-a634-f40bcceec525",
+        "status": "Succeeded",
+        "startTime": "2022-12-22T06:00:56.097Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases?api-version=2022-05-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7d9e06f786b6eb56c3806a073a8e2df0-c973f121eb38fe0d-00",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.2.0-alpha.20221221.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "cb8c3739bb47ae6cbe4ad4ceac077a57",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1256",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 06:01:11 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ad0dc1c4-0293-42fd-878a-1f601852ab8f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11935",
+        "x-ms-request-id": "0dd4e8b6-11a6-438b-aa9d-1a485b6f0c16",
+        "x-ms-routing-request-id": "WESTUS:20221222T060111Z:ad0dc1c4-0293-42fd-878a-1f601852ab8f"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "sku": {
+              "name": "System",
+              "tier": "System",
+              "capacity": 0
+            },
+            "kind": "v12.0,system",
+            "managedBy": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007",
+            "properties": {
+              "collation": "SQL_Latin1_General_CP1_CI_AS",
+              "maxSizeBytes": 53687091200,
+              "status": "Online",
+              "databaseId": "f6bcb8ac-473c-4323-a6b5-37ccab0e4cc6",
+              "creationDate": "2022-12-22T05:58:36.603Z",
+              "currentServiceObjectiveName": "System2",
+              "requestedServiceObjectiveName": "System2",
+              "defaultSecondaryLocation": "centraluseuap",
+              "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+              "zoneRedundant": false,
+              "readScale": "Disabled",
+              "currentSku": {
+                "name": "System",
+                "tier": "System",
+                "capacity": 0
+              },
+              "currentBackupStorageRedundancy": "Local",
+              "requestedBackupStorageRedundancy": "Local",
+              "maintenanceConfigurationId": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+              "isLedgerOn": false,
+              "isInfraEncryptionEnabled": false
+            },
+            "location": "eastus2euap",
+            "id": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007/databases/master",
+            "name": "master",
+            "type": "Microsoft.Sql/servers/databases"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers?api-version=2021-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9eab590bb1e6a6b5f2d5b593608f4606-e4e0de1ab1520787-00",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.2.0-alpha.20221221.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7c42dba1081f58447488d2ae8193d12c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "530",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 06:01:11 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3e44a790-6941-44b7-88e1-35dc279b5c54",
+        "x-ms-ratelimit-remaining-subscription-reads": "11934",
+        "x-ms-request-id": "ab17fcb0-8b99-4975-bb1d-b943599cf17d",
+        "x-ms-routing-request-id": "WESTUS:20221222T060112Z:3e44a790-6941-44b7-88e1-35dc279b5c54"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "kind": "v12.0",
+            "properties": {
+              "administratorLogin": "admin-sql-server-3007",
+              "version": "12.0",
+              "state": "Ready",
+              "fullyQualifiedDomainName": "sql-server-3007.database.windows.net",
+              "privateEndpointConnections": [],
+              "publicNetworkAccess": "Enabled",
+              "restrictOutboundNetworkAccess": "Disabled"
+            },
+            "location": "eastus2euap",
+            "tags": {},
+            "id": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007",
+            "name": "sql-server-3007",
+            "type": "Microsoft.Sql/servers"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/servers/sql-server-3007?api-version=2021-02-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-3dbdbd7e0dee21652056cf6f3f39a5e4-bf5526d6abd0cc58-00",
+        "User-Agent": "azsdk-net-ResourceManager.Sql/1.2.0-alpha.20221221.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b2f5fa7ba21062850a6214395011c4e9",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/serverAzureAsyncOperation/123a55c2-34f2-4694-a305-41aba44de8f1?api-version=2021-02-01-preview",
+        "Cache-Control": "no-cache",
+        "Content-Length": "72",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 06:01:12 GMT",
+        "Expires": "-1",
+        "Location": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/serverOperationResults/123a55c2-34f2-4694-a305-41aba44de8f1?api-version=2021-02-01-preview",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5238d6cc-fb40-4738-82ed-0b31625778d7",
+        "x-ms-ratelimit-remaining-subscription-deletes": "14995",
+        "x-ms-request-id": "123a55c2-34f2-4694-a305-41aba44de8f1",
+        "x-ms-routing-request-id": "WESTUS:20221222T060112Z:5238d6cc-fb40-4738-82ed-0b31625778d7"
+      },
+      "ResponseBody": {
+        "operation": "DropLogicalServer",
+        "startTime": "2022-12-22T06:01:12.253Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/serverAzureAsyncOperation/123a55c2-34f2-4694-a305-41aba44de8f1?api-version=2021-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-3dbdbd7e0dee21652056cf6f3f39a5e4-43d01c3d56ad350a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b152a879c811ff4656df72bcf40b0863",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "108",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 06:01:12 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "41a27795-690a-4d4c-8b4d-834eec020a60",
+        "x-ms-ratelimit-remaining-subscription-reads": "11933",
+        "x-ms-request-id": "5bf440da-86c4-4215-ba86-07824f7a4a1f",
+        "x-ms-routing-request-id": "WESTUS:20221222T060112Z:41a27795-690a-4d4c-8b4d-834eec020a60"
+      },
+      "ResponseBody": {
+        "name": "123a55c2-34f2-4694-a305-41aba44de8f1",
+        "status": "InProgress",
+        "startTime": "2022-12-22T06:01:12.253Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736/providers/Microsoft.Sql/locations/eastus2euap/serverAzureAsyncOperation/123a55c2-34f2-4694-a305-41aba44de8f1?api-version=2021-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-3dbdbd7e0dee21652056cf6f3f39a5e4-3c4ee5bca5e49f91-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "8f2ee8c33ed5513564c5c0dc4bc5794b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "107",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Dec 2022 06:01:27 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "15",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "ab214af0-59e8-4b88-905a-0cb7fca31f54",
+        "x-ms-ratelimit-remaining-subscription-reads": "11932",
+        "x-ms-request-id": "a08bc5d0-8911-4b0a-9a7e-a82210f4aa5e",
+        "x-ms-routing-request-id": "WESTUS:20221222T060127Z:ab214af0-59e8-4b88-905a-0cb7fca31f54"
+      },
+      "ResponseBody": {
+        "name": "123a55c2-34f2-4694-a305-41aba44de8f1",
+        "status": "Succeeded",
+        "startTime": "2022-12-22T06:01:12.253Z"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "730393890",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "2c647056-bab2-4175-b172-493ff049eb29"
+  }
+}
