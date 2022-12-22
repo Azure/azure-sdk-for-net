@@ -32,9 +32,11 @@ namespace Azure.Storage.DataMovement.Models
 
         /// <summary>
         /// Optional. Defines the checkpoint id that the transfer should continue from and will
-        /// grab transfer information from <see cref="TransferManagerOptions.Checkpointer"/>.
+        /// grab transfer information from TransferManagerOptions.Checkpointer.
+        ///
+        /// TODO: https://github.com/Azure/azure-sdk-for-net/issues/32955
         /// </summary>
-        public string ResumeFromCheckpointId { get; set; }
+        internal string ResumeFromCheckpointId { get; set; }
 
         /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.
@@ -44,8 +46,7 @@ namespace Azure.Storage.DataMovement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
             => obj is StorageTransferOptions other
-            && Equals(other)
-            ;
+            && Equals(other);
 
         /// <summary>
         /// Get a hash code for the ParallelTransferOptions.
@@ -54,8 +55,7 @@ namespace Azure.Storage.DataMovement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
             => MaximumTransferChunkSize.GetHashCode()
-            ^ InitialTransferSize.GetHashCode()
-            ;
+            ^ InitialTransferSize.GetHashCode();
 
         /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.
@@ -83,8 +83,7 @@ namespace Azure.Storage.DataMovement.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool Equals(SingleTransferOptions obj)
             => MaximumTransferChunkSize == obj?.MaximumTransferChunkSize
-            && InitialTransferSize == obj?.InitialTransferSize
-            ;
+            && InitialTransferSize == obj?.InitialTransferSize;
 
         /// <summary>
         /// Optional <see cref="StorageResourceCreateMode"/> to configure overwrite
@@ -104,5 +103,14 @@ namespace Azure.Storage.DataMovement.Models
         public event SyncAsyncEventHandler<TransferFailedEventArgs> TransferFailed;
 
         internal SyncAsyncEventHandler<TransferFailedEventArgs> GetFailed() => TransferFailed;
+
+        /// <summary>
+        /// If the transfer has any skipped events that occur the event will get added to this handler.
+        /// Skipped transfer occur during Transfer due to no overwrite allowed as specified in
+        /// <see cref="CreateMode"/>
+        /// </summary>
+        public event SyncAsyncEventHandler<TransferSkippedEventArgs> TransferSkipped;
+
+        internal SyncAsyncEventHandler<TransferSkippedEventArgs> GetSkipped() => TransferSkipped;
     }
 }

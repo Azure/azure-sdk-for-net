@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IList<ResourceTypeEndpoint> Endpoints { get; }
         /// <summary> Gets or sets the extension options. </summary>
         internal ResourceTypeRegistrationPropertiesExtensionOptions ExtensionOptions { get; set; }
-        /// <summary> Gets or sets the resource creation begin. </summary>
+        /// <summary> Gets or sets the extension options resource creation begin. </summary>
         public ResourceTypeExtensionOptionsResourceCreationBegin ExtensionOptionsResourceCreationBegin
         {
             get => ExtensionOptions is null ? default : ExtensionOptions.ResourceCreationBegin;

@@ -97,13 +97,13 @@ namespace Azure.Storage.DataMovement
         {
             if (overwrite || !File.Exists(_path))
             {
+                Directory.CreateDirectory(System.IO.Path.GetDirectoryName(_path));
                 File.Create(_path).Close();
                 FileAttributes attributes = File.GetAttributes(_path);
                 File.SetAttributes(_path, attributes | FileAttributes.Temporary);
                 return Task.CompletedTask;
             }
-            // TODO: maybe better exception type?
-            throw new IOException($"File path `{_path}` already exists. Cannot overwite file");
+            throw new IOException($"File path `{_path}` already exists. Cannot overwite file.");
         }
 
         /// <summary>
@@ -125,9 +125,9 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         public override async Task WriteFromStreamAsync(
             Stream stream,
+            long streamLength,
             bool overwrite,
             long position = 0,
-            long? streamLength = default,
             long completeLength = 0,
             StorageResourceWriteToOffsetOptions options = default,
             CancellationToken cancellationToken = default)
@@ -166,12 +166,16 @@ namespace Azure.Storage.DataMovement
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
         /// </param>
+        /// <param name="completeLength">
+        /// The expected complete length of the blob.
+        /// </param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public override Task CopyFromUriAsync(
             StorageResource sourceResource,
             bool overwrite,
+            long completeLength,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {

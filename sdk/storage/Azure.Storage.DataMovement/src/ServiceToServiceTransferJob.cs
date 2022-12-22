@@ -77,7 +77,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>An IEnumerable that contains the job parts</returns>
         public override async IAsyncEnumerable<JobPartInternal> ProcessJobToJobPartAsync()
         {
-            InitializeJobPartStatusEvents();
+            JobPartStatusEvents += JobPartEvent;
             await OnJobStatusChangedAsync(StorageTransferStatus.InProgress).ConfigureAwait(false);
             int partNum = 0;
             if (_isSingleResource)
@@ -107,11 +107,8 @@ namespace Azure.Storage.DataMovement
                     partNum++;
                 }
             }
-            if (_jobParts.All((JobPartInternal x) => x.JobPartStatus == StorageTransferStatus.Completed)
-                && TransferStatusEventHandler != default)
-            {
-                await OnJobStatusChangedAsync(StorageTransferStatus.Completed).ConfigureAwait(false);
-            }
+            _enumerationComplete = true;
+            await OnEnumerationComplete().ConfigureAwait(false);
         }
     }
 }

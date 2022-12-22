@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> The UnknownStorageProperties. </summary>
-    internal partial class UnknownStorageProperties : StorageProperties
+    internal partial class UnknownStorageProperties : AppPlatformStorageProperties
     {
         /// <summary> Initializes a new instance of UnknownStorageProperties. </summary>
         /// <param name="storageType"> The type of the storage. </param>
