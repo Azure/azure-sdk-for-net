@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("failureThreshold");
                 writer.WriteNumberValue(FailureThreshold.Value);
             }
-            if (Optional.IsDefined(HttpRequest))
+            if (Optional.IsDefined(HttpGet))
             {
                 writer.WritePropertyName("httpGet");
-                writer.WriteObjectValue(HttpRequest);
+                writer.WriteObjectValue(HttpGet);
             }
             if (Optional.IsDefined(InitialDelaySeconds))
             {
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("successThreshold");
                 writer.WriteNumberValue(SuccessThreshold.Value);
             }
-            if (Optional.IsDefined(TcpSocketRequest))
+            if (Optional.IsDefined(TcpSocket))
             {
                 writer.WritePropertyName("tcpSocket");
-                writer.WriteObjectValue(TcpSocketRequest);
+                writer.WriteObjectValue(TcpSocket);
             }
             if (Optional.IsDefined(TerminationGracePeriodSeconds))
             {
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         internal static ContainerAppProbe DeserializeContainerAppProbe(JsonElement element)
         {
             Optional<int> failureThreshold = default;
-            Optional<HttpRequestData> httpGet = default;
+            Optional<ContainerAppHttpRequestInfo> httpGet = default;
             Optional<int> initialDelaySeconds = default;
             Optional<int> periodSeconds = default;
             Optional<int> successThreshold = default;
-            Optional<TcpSocketRequestData> tcpSocket = default;
+            Optional<ContainerAppTcpSocketRequestInfo> tcpSocket = default;
             Optional<long> terminationGracePeriodSeconds = default;
             Optional<int> timeoutSeconds = default;
-            Optional<ProbeType> type = default;
+            Optional<ContainerAppProbeType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failureThreshold"))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    httpGet = HttpRequestData.DeserializeHttpRequestData(property.Value);
+                    httpGet = ContainerAppHttpRequestInfo.DeserializeContainerAppHttpRequestInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("initialDelaySeconds"))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tcpSocket = TcpSocketRequestData.DeserializeTcpSocketRequestData(property.Value);
+                    tcpSocket = ContainerAppTcpSocketRequestInfo.DeserializeContainerAppTcpSocketRequestInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("terminationGracePeriodSeconds"))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new ProbeType(property.Value.GetString());
+                    type = new ContainerAppProbeType(property.Value.GetString());
                     continue;
                 }
             }
