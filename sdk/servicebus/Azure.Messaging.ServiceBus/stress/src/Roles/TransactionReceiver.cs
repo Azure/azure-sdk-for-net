@@ -71,7 +71,7 @@ internal class TransactionReceiver
                 await foreach (var message in receiver.ReceiveMessagesAsync(cancellationToken))
                 {
                     _metrics.Client.GetMetric(Metrics.MessagesReceived).TrackValue(1);
-                    MessageTracking.ReceiveMessageAsync(message, _testParameters.Sha256Hash, _metrics, _readMessages);
+                    MessageTracking.ReceiveTransactionMessage(message, _testParameters.Sha256Hash, _metrics, _readMessages);
                     await receiver.CompleteMessageAsync(message).ConfigureAwait(false);
                     _metrics.Client.GetMetric(Metrics.MessagesCompleted).TrackValue(1);
                 }

@@ -72,11 +72,11 @@ internal class TransactionSender
             {
                 var messages = MessageBuilder.CreateMessages(_senderConfiguration.MaxNumberOfMessages,
                                                              batch.MaxSizeInBytes,
-                                                             _senderConfiguration.LargeMessageRandomFactorPercent,
-                                                             _senderConfiguration.MessageBodyMinBytes,
-                                                             _senderConfiguration.MessageBodyMaxBytes);
+                                                             _transactionSenderConfiguration.LargeMessageRandomFactorPercent,
+                                                             _transactionSenderConfiguration.MessageBodyMinBytes,
+                                                             _transactionSenderConfiguration.MessageBodyMaxBytes);
                 try
-                {                               
+                {
                     using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
                         await TransactionSend(messages).ConfigureAwait(false);
@@ -112,9 +112,11 @@ internal class TransactionSender
     {
         var transactionGUID = new Guid.NewGuid();
         var transactionId = $"transaction-{transactionGUID}";
+        var index = 0;
         foreach (var message in messages)
         {
-            MessageTracking.AugmentTransactionMessage(message);
+            MessageTracking.AugmentTransactionMessage(message, _testParameters.Sha256Hash, index, transactionId);
+            index++;
         }
 
         await sender.SendMessageAsync(messages, cancellationToken).ConfigureAwait(false);

@@ -55,11 +55,11 @@ internal class TransactionSenderConfiguration
     ///   The <see cref=""/> when configuring the <see cref="ServiceBusSender" />.
     /// </summary>
     ///
-    public ServiceBusSenderOptions options = default;
+    public ServiceBusSenderOptions senderOptions = default;
 
     /// <summary>
     ///   The <see cref=""/> when configuring the <see cref="ServiceBusClient" />.
     /// </summary>
     ///
-    public ServiceBusClientOptions options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
+    public ServiceBusClientOptions clientOptions = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
 }
