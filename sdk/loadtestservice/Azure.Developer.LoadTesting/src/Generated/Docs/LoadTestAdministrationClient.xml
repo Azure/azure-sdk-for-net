@@ -29,7 +29,7 @@ var data = new {
                 condition = "<condition>",
                 requestName = "<requestName>",
                 value = 123.45d,
-                action = "stop",
+                action = "continue",
             },
         },
     },
@@ -268,7 +268,7 @@ var data = new {
                 condition = "<condition>",
                 requestName = "<requestName>",
                 value = 123.45d,
-                action = "stop",
+                action = "continue",
             },
         },
     },
@@ -1339,14 +1339,14 @@ Schema for <c>TestServerMetricConfig</c>:
 
 </remarks>
     </member>
-    <member name="GetServerMetricsConfigsAsync(String,RequestContext)">
+    <member name="GetServerMetricsConfigAsync(String,RequestContext)">
 <example>
-This sample shows how to call GetServerMetricsConfigsAsync with required parameters and parse the result.
+This sample shows how to call GetServerMetricsConfigAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.GetServerMetricsConfigsAsync("<testId>");
+Response response = await client.GetServerMetricsConfigAsync("<testId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("testId").ToString());
@@ -1382,14 +1382,14 @@ Schema for <c>TestServerMetricConfig</c>:
 
 </remarks>
     </member>
-    <member name="GetServerMetricsConfigs(String,RequestContext)">
+    <member name="GetServerMetricsConfig(String,RequestContext)">
 <example>
-This sample shows how to call GetServerMetricsConfigs with required parameters and parse the result.
+This sample shows how to call GetServerMetricsConfig with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
 
-Response response = client.GetServerMetricsConfigs("<testId>");
+Response response = client.GetServerMetricsConfig("<testId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("testId").ToString());

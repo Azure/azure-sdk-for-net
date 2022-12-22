@@ -37,6 +37,32 @@ namespace Azure.Developer.LoadTesting
         {
         }
 
+        /// <summary> Initializes a new instance of LoadTestAdministrationClient. </summary>
+        /// <param name="endpoint"> URL to perform data plane API operations on the resource. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public LoadTestAdministrationClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new AzureLoadTestingClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of LoadTestAdministrationClient. </summary>
+        /// <param name="endpoint"> URL to perform data plane API operations on the resource. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public LoadTestAdministrationClient(string endpoint, TokenCredential credential, AzureLoadTestingClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new AzureLoadTestingClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
         /// <summary> Create a new test or update an existing test. </summary>
         /// <param name="testId"> Unique name for the load test, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
@@ -542,16 +568,16 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsConfigsAsync(String,RequestContext)']/*" />
-        public virtual async Task<Response> GetServerMetricsConfigsAsync(string testId, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsConfigAsync(String,RequestContext)']/*" />
+        public virtual async Task<Response> GetServerMetricsConfigAsync(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetricsConfigs");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetricsConfig");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetServerMetricsConfigsRequest(testId, context);
+                using HttpMessage message = CreateGetServerMetricsConfigRequest(testId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -568,16 +594,16 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsConfigs(String,RequestContext)']/*" />
-        public virtual Response GetServerMetricsConfigs(string testId, RequestContext context = null)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsConfig(String,RequestContext)']/*" />
+        public virtual Response GetServerMetricsConfig(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetricsConfigs");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetricsConfig");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetServerMetricsConfigsRequest(testId, context);
+                using HttpMessage message = CreateGetServerMetricsConfigRequest(testId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -944,7 +970,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetServerMetricsConfigsRequest(string testId, RequestContext context)
+        internal HttpMessage CreateGetServerMetricsConfigRequest(string testId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

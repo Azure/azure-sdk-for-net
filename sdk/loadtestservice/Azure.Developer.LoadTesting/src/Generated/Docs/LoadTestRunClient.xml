@@ -1,30 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="DeleteTestRunAsync(String,RequestContext)">
-<example>
-This sample shows how to call DeleteTestRunAsync with required parameters.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
-
-Response response = await client.DeleteTestRunAsync("<testRunId>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
-    </member>
-    <member name="DeleteTestRun(String,RequestContext)">
-<example>
-This sample shows how to call DeleteTestRun with required parameters.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
-
-Response response = client.DeleteTestRun("<testRunId>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
-    </member>
     <member name="CreateOrUpdateTestRunAsync(String,RequestContent,String,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateTestRunAsync with required parameters and parse the result.
@@ -53,7 +29,7 @@ var data = new {
                 condition = "<condition>",
                 requestName = "<requestName>",
                 value = 123.45d,
-                action = "stop",
+                action = "continue",
             },
         },
     },
@@ -362,7 +338,7 @@ var data = new {
                 condition = "<condition>",
                 requestName = "<requestName>",
                 value = 123.45d,
-                action = "stop",
+                action = "continue",
             },
         },
     },
@@ -1009,6 +985,30 @@ Schema for <c>TestRun</c>:
 
 </remarks>
     </member>
+    <member name="DeleteTestRunAsync(String,RequestContext)">
+<example>
+This sample shows how to call DeleteTestRunAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
+
+Response response = await client.DeleteTestRunAsync("<testRunId>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="DeleteTestRun(String,RequestContext)">
+<example>
+This sample shows how to call DeleteTestRun with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
+
+Response response = client.DeleteTestRun("<testRunId>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
     <member name="GetTestRunFileAsync(String,String,RequestContext)">
 <example>
 This sample shows how to call GetTestRunFileAsync with required parameters and parse the result.
@@ -1619,246 +1619,6 @@ Schema for <c>MetricDefinitionCollection</c>:
 
 </remarks>
     </member>
-    <member name="GetMetricsAsync(String,String,String,String,RequestContent,String,String,RequestContext)">
-<example>
-This sample shows how to call GetMetricsAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
-
-var data = new {};
-
-Response response = await client.GetMetricsAsync("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetMetricsAsync with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
-
-var data = new {
-    filters = new[] {
-        new {
-            name = "<name>",
-            values = new[] {
-                "<String>"
-            },
-        }
-    },
-};
-
-Response response = await client.GetMetricsAsync("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data), "<aggregation>", "<interval>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("timestamp").ToString());
-Console.WriteLine(result.GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("timeseries")[0].GetProperty("dimensionValues")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("timeseries")[0].GetProperty("dimensionValues")[0].GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("nextLink").ToString());
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>MetricRequestPayload</c>:
-<code>{
-  filters: [
-    {
-      name: string, # Optional. The dimension name
-      values: [string], # Optional. The dimension values. Maximum values can be 20.
-    }
-  ], # Optional. Get metrics for specific dimension values. Example: Metric contains dimension like SamplerName, Error. To retrieve all the time series data where SamplerName is equals to HTTPRequest1 or HTTPRequest2, the DimensionFilter value will be {&quot;SamplerName&quot;, [&quot;HTTPRequest1&quot;, &quot;HTTPRequest2&quot;}
-}
-</code>
-
-Response Body:
-
-Schema for <c>Metrics</c>:
-<code>{
-  timeseries: [
-    {
-      data: [
-        {
-          timestamp: string, # Optional. The timestamp for the metric value in ISO 8601 format.
-          value: number, # Optional. The metric value.
-        }
-      ], # Optional. An array of data points representing the metric values.
-      dimensionValues: [
-        {
-          name: string, # Optional. The name of the dimension.
-          value: string, # Optional. The value of the dimension.
-        }
-      ], # Optional. The dimension values 
-    }
-  ], # Optional. Timeseries data for metric query.
-  nextLink: string, # Optional. Link for the next set of timeseries in case of paginated results, if applicable
-}
-</code>
-
-</remarks>
-    </member>
-    <member name="GetMetrics(String,String,String,String,RequestContent,String,String,RequestContext)">
-<example>
-This sample shows how to call GetMetrics with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
-
-var data = new {};
-
-Response response = client.GetMetrics("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetMetrics with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
-
-var data = new {
-    filters = new[] {
-        new {
-            name = "<name>",
-            values = new[] {
-                "<String>"
-            },
-        }
-    },
-};
-
-Response response = client.GetMetrics("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data), "<aggregation>", "<interval>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("timestamp").ToString());
-Console.WriteLine(result.GetProperty("timeseries")[0].GetProperty("data")[0].GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("timeseries")[0].GetProperty("dimensionValues")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("timeseries")[0].GetProperty("dimensionValues")[0].GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("nextLink").ToString());
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the request and response payloads.
-
-Request Body:
-
-Schema for <c>MetricRequestPayload</c>:
-<code>{
-  filters: [
-    {
-      name: string, # Optional. The dimension name
-      values: [string], # Optional. The dimension values. Maximum values can be 20.
-    }
-  ], # Optional. Get metrics for specific dimension values. Example: Metric contains dimension like SamplerName, Error. To retrieve all the time series data where SamplerName is equals to HTTPRequest1 or HTTPRequest2, the DimensionFilter value will be {&quot;SamplerName&quot;, [&quot;HTTPRequest1&quot;, &quot;HTTPRequest2&quot;}
-}
-</code>
-
-Response Body:
-
-Schema for <c>Metrics</c>:
-<code>{
-  timeseries: [
-    {
-      data: [
-        {
-          timestamp: string, # Optional. The timestamp for the metric value in ISO 8601 format.
-          value: number, # Optional. The metric value.
-        }
-      ], # Optional. An array of data points representing the metric values.
-      dimensionValues: [
-        {
-          name: string, # Optional. The name of the dimension.
-          value: string, # Optional. The value of the dimension.
-        }
-      ], # Optional. The dimension values 
-    }
-  ], # Optional. Timeseries data for metric query.
-  nextLink: string, # Optional. Link for the next set of timeseries in case of paginated results, if applicable
-}
-</code>
-
-</remarks>
-    </member>
-    <member name="GetMetricDimensionValuesAsync(String,String,String,String,String,String,RequestContext)">
-<example>
-This sample shows how to call GetMetricDimensionValuesAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
-
-Response response = await client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricname>", "<metricNamespace>", "<timespan>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetMetricDimensionValuesAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
-
-Response response = await client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricname>", "<metricNamespace>", "<timespan>", "<interval>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].ToString());
-Console.WriteLine(result.GetProperty("nextLink").ToString());
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DimensionValueList</c>:
-<code>{
-  value: [string], # Optional. The dimension values
-  nextLink: string, # Optional. Link for the next set of values in case of paginated results, if applicable
-}
-</code>
-
-</remarks>
-    </member>
-    <member name="GetMetricDimensionValues(String,String,String,String,String,String,RequestContext)">
-<example>
-This sample shows how to call GetMetricDimensionValues with required parameters and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
-
-Response response = client.GetMetricDimensionValues("<testRunId>", "<name>", "<metricname>", "<metricNamespace>", "<timespan>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call GetMetricDimensionValues with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
-
-Response response = client.GetMetricDimensionValues("<testRunId>", "<name>", "<metricname>", "<metricNamespace>", "<timespan>", "<interval>");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].ToString());
-Console.WriteLine(result.GetProperty("nextLink").ToString());
-]]></code>
-</example>
-<remarks>
-Below is the JSON schema for the response payload.
-
-Response Body:
-
-Schema for <c>DimensionValueList</c>:
-<code>{
-  value: [string], # Optional. The dimension values
-  nextLink: string, # Optional. Link for the next set of values in case of paginated results, if applicable
-}
-</code>
-
-</remarks>
-    </member>
     <member name="CreateOrUpdateAppComponentsAsync(String,RequestContent,RequestContext)">
 <example>
 This sample shows how to call CreateOrUpdateAppComponentsAsync with required parameters and request content and parse the result.
@@ -2239,14 +1999,14 @@ Schema for <c>TestRunServerMetricConfig</c>:
 
 </remarks>
     </member>
-    <member name="GetServerMetricsConfigsAsync(String,RequestContext)">
+    <member name="GetServerMetricsConfigAsync(String,RequestContext)">
 <example>
-This sample shows how to call GetServerMetricsConfigsAsync with required parameters and parse the result.
+This sample shows how to call GetServerMetricsConfigAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
-Response response = await client.GetServerMetricsConfigsAsync("<testRunId>");
+Response response = await client.GetServerMetricsConfigAsync("<testRunId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("testRunId").ToString());
@@ -2282,14 +2042,14 @@ Schema for <c>TestRunServerMetricConfig</c>:
 
 </remarks>
     </member>
-    <member name="GetServerMetricsConfigs(String,RequestContext)">
+    <member name="GetServerMetricsConfig(String,RequestContext)">
 <example>
-This sample shows how to call GetServerMetricsConfigs with required parameters and parse the result.
+This sample shows how to call GetServerMetricsConfig with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
 
-Response response = client.GetServerMetricsConfigs("<testRunId>");
+Response response = client.GetServerMetricsConfig("<testRunId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("testRunId").ToString());
@@ -2714,6 +2474,214 @@ Schema for <c>TestRunsListValue</c>:
 </code>
 
 </remarks>
+    </member>
+    <member name="GetMetricsAsync(String,String,String,String,RequestContent,String,String,RequestContext)">
+<example>
+This sample shows how to call GetMetricsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
+
+var data = new {};
+
+await foreach (var data in client.GetMetricsAsync("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data)))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetMetricsAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
+
+var data = new {
+    filters = new[] {
+        new {
+            name = "<name>",
+            values = new[] {
+                "<String>"
+            },
+        }
+    },
+};
+
+await foreach (var data in client.GetMetricsAsync("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data), "<aggregation>", "<interval>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("data")[0].GetProperty("timestamp").ToString());
+    Console.WriteLine(result.GetProperty("data")[0].GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("dimensionValues")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("dimensionValues")[0].GetProperty("value").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request payload and one item in the pageable response.
+
+Request Body:
+
+Schema for <c>MetricRequestPayload</c>:
+<code>{
+  filters: [
+    {
+      name: string, # Optional. The dimension name
+      values: [string], # Optional. The dimension values. Maximum values can be 20.
+    }
+  ], # Optional. Get metrics for specific dimension values. Example: Metric contains dimension like SamplerName, Error. To retrieve all the time series data where SamplerName is equals to HTTPRequest1 or HTTPRequest2, the DimensionFilter value will be {&quot;SamplerName&quot;, [&quot;HTTPRequest1&quot;, &quot;HTTPRequest2&quot;}
+}
+</code>
+
+Response Body:
+
+Schema for <c>MetricsValue</c>:
+<code>{
+  data: [
+    {
+      timestamp: string, # Optional. The timestamp for the metric value in ISO 8601 format.
+      value: number, # Optional. The metric value.
+    }
+  ], # Optional. An array of data points representing the metric values.
+  dimensionValues: [
+    {
+      name: string, # Optional. The name of the dimension.
+      value: string, # Optional. The value of the dimension.
+    }
+  ], # Optional. The dimension values 
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMetrics(String,String,String,String,RequestContent,String,String,RequestContext)">
+<example>
+This sample shows how to call GetMetrics with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
+
+var data = new {};
+
+foreach (var data in client.GetMetrics("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data)))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetMetrics with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
+
+var data = new {
+    filters = new[] {
+        new {
+            name = "<name>",
+            values = new[] {
+                "<String>"
+            },
+        }
+    },
+};
+
+foreach (var data in client.GetMetrics("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", RequestContent.Create(data), "<aggregation>", "<interval>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("data")[0].GetProperty("timestamp").ToString());
+    Console.WriteLine(result.GetProperty("data")[0].GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("dimensionValues")[0].GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("dimensionValues")[0].GetProperty("value").ToString());
+}
+]]></code>
+</example>
+<remarks>
+Below is the JSON schema for the request payload and one item in the pageable response.
+
+Request Body:
+
+Schema for <c>MetricRequestPayload</c>:
+<code>{
+  filters: [
+    {
+      name: string, # Optional. The dimension name
+      values: [string], # Optional. The dimension values. Maximum values can be 20.
+    }
+  ], # Optional. Get metrics for specific dimension values. Example: Metric contains dimension like SamplerName, Error. To retrieve all the time series data where SamplerName is equals to HTTPRequest1 or HTTPRequest2, the DimensionFilter value will be {&quot;SamplerName&quot;, [&quot;HTTPRequest1&quot;, &quot;HTTPRequest2&quot;}
+}
+</code>
+
+Response Body:
+
+Schema for <c>MetricsValue</c>:
+<code>{
+  data: [
+    {
+      timestamp: string, # Optional. The timestamp for the metric value in ISO 8601 format.
+      value: number, # Optional. The metric value.
+    }
+  ], # Optional. An array of data points representing the metric values.
+  dimensionValues: [
+    {
+      name: string, # Optional. The name of the dimension.
+      value: string, # Optional. The value of the dimension.
+    }
+  ], # Optional. The dimension values 
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMetricDimensionValuesAsync(String,String,String,String,String,String,RequestContext)">
+<example>
+This sample shows how to call GetMetricDimensionValuesAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
+
+await foreach (var data in client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricname>", "<metricNamespace>", "<timespan>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetMetricDimensionValuesAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
+
+await foreach (var data in client.GetMetricDimensionValuesAsync("<testRunId>", "<name>", "<metricname>", "<metricNamespace>", "<timespan>", "<interval>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetMetricDimensionValues(String,String,String,String,String,String,RequestContext)">
+<example>
+This sample shows how to call GetMetricDimensionValues with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
+
+foreach (var data in client.GetMetricDimensionValues("<testRunId>", "<name>", "<metricname>", "<metricNamespace>", "<timespan>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetMetricDimensionValues with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var client = new LoadTestRunClient("<https://my-service.azure.com>", credential);
+
+foreach (var data in client.GetMetricDimensionValues("<testRunId>", "<name>", "<metricname>", "<metricNamespace>", "<timespan>", "<interval>"))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+</example>
     </member>
   </members>
 </doc>
