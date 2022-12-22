@@ -212,6 +212,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
                         result = _fileBlobProvider.SaveTelemetry(content, retryInterval);
                         break;
+                    case ResponseStatusCodes.Unauthorized:
+                    case ResponseStatusCodes.Forbidden:
                     case ResponseStatusCodes.InternalServerError:
                     case ResponseStatusCodes.BadGateway:
                     case ResponseStatusCodes.ServiceUnavailable:
@@ -276,6 +278,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
                         blob.TryLease(retryInterval);
                         break;
+                    case ResponseStatusCodes.Unauthorized:
+                    case ResponseStatusCodes.Forbidden:
                     case ResponseStatusCodes.InternalServerError:
                     case ResponseStatusCodes.BadGateway:
                     case ResponseStatusCodes.ServiceUnavailable:
