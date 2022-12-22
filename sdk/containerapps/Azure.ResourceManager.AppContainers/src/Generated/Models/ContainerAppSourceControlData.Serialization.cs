@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("branch");
                 writer.WriteStringValue(Branch);
             }
-            if (Optional.IsDefined(GithubActionConfiguration))
+            if (Optional.IsDefined(GitHubActionConfiguration))
             {
                 writer.WritePropertyName("githubActionConfiguration");
-                writer.WriteObjectValue(GithubActionConfiguration);
+                writer.WriteObjectValue(GitHubActionConfiguration);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppContainers
             Optional<ContainerAppSourceControlOperationState> operationState = default;
             Optional<Uri> repoUrl = default;
             Optional<string> branch = default;
-            Optional<ContainerAppGithubActionConfiguration> githubActionConfiguration = default;
+            Optional<ContainerAppGitHubActionConfiguration> gitHubActionConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -117,14 +117,14 @@ namespace Azure.ResourceManager.AppContainers
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            githubActionConfiguration = ContainerAppGithubActionConfiguration.DeserializeContainerAppGithubActionConfiguration(property0.Value);
+                            gitHubActionConfiguration = ContainerAppGitHubActionConfiguration.DeserializeContainerAppGitHubActionConfiguration(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ContainerAppSourceControlData(id, name, type, systemData.Value, Optional.ToNullable(operationState), repoUrl.Value, branch.Value, githubActionConfiguration.Value);
+            return new ContainerAppSourceControlData(id, name, type, systemData.Value, Optional.ToNullable(operationState), repoUrl.Value, branch.Value, gitHubActionConfiguration.Value);
         }
     }
 }

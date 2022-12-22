@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="operationState"> Current provisioning State of the operation. </param>
         /// <param name="repoUri"> The repo url which will be integrated to ContainerApp. </param>
         /// <param name="branch"> The branch which will trigger the auto deployment. </param>
-        /// <param name="githubActionConfiguration">
+        /// <param name="gitHubActionConfiguration">
         /// Container App Revision Template with all possible settings and the
         /// defaults if user did not provide them. The defaults are populated
         /// as they were at the creation time
         /// </param>
-        internal ContainerAppSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerAppSourceControlOperationState? operationState, Uri repoUri, string branch, ContainerAppGithubActionConfiguration githubActionConfiguration) : base(id, name, resourceType, systemData)
+        internal ContainerAppSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerAppSourceControlOperationState? operationState, Uri repoUri, string branch, ContainerAppGitHubActionConfiguration gitHubActionConfiguration) : base(id, name, resourceType, systemData)
         {
             OperationState = operationState;
             RepoUri = repoUri;
             Branch = branch;
-            GithubActionConfiguration = githubActionConfiguration;
+            GitHubActionConfiguration = gitHubActionConfiguration;
         }
 
         /// <summary> Current provisioning State of the operation. </summary>
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.AppContainers
         /// defaults if user did not provide them. The defaults are populated
         /// as they were at the creation time
         /// </summary>
-        public ContainerAppGithubActionConfiguration GithubActionConfiguration { get; set; }
+        public ContainerAppGitHubActionConfiguration GitHubActionConfiguration { get; set; }
     }
 }
