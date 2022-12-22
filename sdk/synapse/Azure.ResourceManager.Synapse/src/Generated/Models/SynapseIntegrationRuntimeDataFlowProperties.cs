@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.Synapse.Models
     /// Data flow properties for managed integration runtime.
     /// Serialized Name: IntegrationRuntimeDataFlowProperties
     /// </summary>
-    public partial class IntegrationRuntimeDataFlowProperties
+    public partial class SynapseIntegrationRuntimeDataFlowProperties
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeDataFlowProperties. </summary>
-        public IntegrationRuntimeDataFlowProperties()
+        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeDataFlowProperties. </summary>
+        public SynapseIntegrationRuntimeDataFlowProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeDataFlowProperties. </summary>
+        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeDataFlowProperties. </summary>
         /// <param name="computeType">
         /// Compute type of the cluster which will execute data flow job.
         /// Serialized Name: IntegrationRuntimeDataFlowProperties.computeType
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Serialized Name: IntegrationRuntimeDataFlowProperties.cleanup
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeDataFlowProperties(SynapseDataFlowComputeType? computeType, int? coreCount, int? timeToLive, bool? cleanup, IDictionary<string, BinaryData> additionalProperties)
+        internal SynapseIntegrationRuntimeDataFlowProperties(SynapseDataFlowComputeType? computeType, int? coreCount, int? timeToLive, bool? cleanup, IDictionary<string, BinaryData> additionalProperties)
         {
             ComputeType = computeType;
             CoreCount = coreCount;

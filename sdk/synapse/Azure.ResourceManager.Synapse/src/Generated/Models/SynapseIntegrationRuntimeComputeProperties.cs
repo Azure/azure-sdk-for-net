@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.Synapse.Models
     /// The compute resource properties for managed integration runtime.
     /// Serialized Name: IntegrationRuntimeComputeProperties
     /// </summary>
-    public partial class IntegrationRuntimeComputeProperties
+    public partial class SynapseIntegrationRuntimeComputeProperties
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeComputeProperties. </summary>
-        public IntegrationRuntimeComputeProperties()
+        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeComputeProperties. </summary>
+        public SynapseIntegrationRuntimeComputeProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeComputeProperties. </summary>
+        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeComputeProperties. </summary>
         /// <param name="location">
         /// The location for managed integration runtime. The supported regions could be found on https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-activities
         /// Serialized Name: IntegrationRuntimeComputeProperties.location
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Serialized Name: IntegrationRuntimeComputeProperties.vNetProperties
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeComputeProperties(AzureLocation? location, string nodeSize, int? numberOfNodes, int? maxParallelExecutionsPerNode, IntegrationRuntimeDataFlowProperties dataFlowProperties, IntegrationRuntimeVNetProperties vNetProperties, IDictionary<string, BinaryData> additionalProperties)
+        internal SynapseIntegrationRuntimeComputeProperties(AzureLocation? location, string nodeSize, int? numberOfNodes, int? maxParallelExecutionsPerNode, SynapseIntegrationRuntimeDataFlowProperties dataFlowProperties, IntegrationRuntimeVNetProperties vNetProperties, IDictionary<string, BinaryData> additionalProperties)
         {
             Location = location;
             NodeSize = nodeSize;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Data flow properties for managed integration runtime.
         /// Serialized Name: IntegrationRuntimeComputeProperties.dataFlowProperties
         /// </summary>
-        public IntegrationRuntimeDataFlowProperties DataFlowProperties { get; set; }
+        public SynapseIntegrationRuntimeDataFlowProperties DataFlowProperties { get; set; }
         /// <summary>
         /// VNet properties for managed integration runtime.
         /// Serialized Name: IntegrationRuntimeComputeProperties.vNetProperties

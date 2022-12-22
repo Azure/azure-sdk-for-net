@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseEntityReference DeserializeSynapseEntityReference(JsonElement element)
         {
-            Optional<IntegrationRuntimeEntityReferenceType> type = default;
+            Optional<SynapseIntegrationRuntimeEntityReferenceType> type = default;
             Optional<string> referenceName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new IntegrationRuntimeEntityReferenceType(property.Value.GetString());
+                    type = new SynapseIntegrationRuntimeEntityReferenceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("referenceName"))

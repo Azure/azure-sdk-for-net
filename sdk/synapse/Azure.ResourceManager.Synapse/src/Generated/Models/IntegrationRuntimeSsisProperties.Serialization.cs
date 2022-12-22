@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.Synapse.Models
         internal static IntegrationRuntimeSsisProperties DeserializeIntegrationRuntimeSsisProperties(JsonElement element)
         {
             Optional<IntegrationRuntimeSsisCatalogInfo> catalogInfo = default;
-            Optional<IntegrationRuntimeLicenseType> licenseType = default;
-            Optional<IntegrationRuntimeCustomSetupScriptProperties> customSetupScriptProperties = default;
-            Optional<IntegrationRuntimeDataProxyProperties> dataProxyProperties = default;
-            Optional<IntegrationRuntimeEdition> edition = default;
+            Optional<SynapseIntegrationRuntimeLicenseType> licenseType = default;
+            Optional<SynapseIntegrationRuntimeCustomSetupScriptProperties> customSetupScriptProperties = default;
+            Optional<SynapseIntegrationRuntimeDataProxyProperties> dataProxyProperties = default;
+            Optional<SynapseIntegrationRuntimeEdition> edition = default;
             Optional<IList<SynapseCustomSetupBase>> expressCustomSetupProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    licenseType = new IntegrationRuntimeLicenseType(property.Value.GetString());
+                    licenseType = new SynapseIntegrationRuntimeLicenseType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("customSetupScriptProperties"))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    customSetupScriptProperties = IntegrationRuntimeCustomSetupScriptProperties.DeserializeIntegrationRuntimeCustomSetupScriptProperties(property.Value);
+                    customSetupScriptProperties = SynapseIntegrationRuntimeCustomSetupScriptProperties.DeserializeSynapseIntegrationRuntimeCustomSetupScriptProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataProxyProperties"))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dataProxyProperties = IntegrationRuntimeDataProxyProperties.DeserializeIntegrationRuntimeDataProxyProperties(property.Value);
+                    dataProxyProperties = SynapseIntegrationRuntimeDataProxyProperties.DeserializeSynapseIntegrationRuntimeDataProxyProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("edition"))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    edition = new IntegrationRuntimeEdition(property.Value.GetString());
+                    edition = new SynapseIntegrationRuntimeEdition(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("expressCustomSetupProperties"))

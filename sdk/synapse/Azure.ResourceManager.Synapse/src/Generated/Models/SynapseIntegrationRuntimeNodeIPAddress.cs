@@ -5,25 +5,27 @@
 
 #nullable disable
 
+using System.Net;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary>
     /// The IP address of self-hosted integration runtime node.
     /// Serialized Name: IntegrationRuntimeNodeIpAddress
     /// </summary>
-    public partial class IntegrationRuntimeNodeIPAddress
+    public partial class SynapseIntegrationRuntimeNodeIPAddress
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeNodeIPAddress. </summary>
-        internal IntegrationRuntimeNodeIPAddress()
+        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeNodeIPAddress. </summary>
+        internal SynapseIntegrationRuntimeNodeIPAddress()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeNodeIPAddress. </summary>
+        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeNodeIPAddress. </summary>
         /// <param name="ipAddress">
         /// The IP address of self-hosted integration runtime node.
         /// Serialized Name: IntegrationRuntimeNodeIpAddress.ipAddress
         /// </param>
-        internal IntegrationRuntimeNodeIPAddress(string ipAddress)
+        internal SynapseIntegrationRuntimeNodeIPAddress(IPAddress ipAddress)
         {
             IPAddress = ipAddress;
         }
@@ -32,6 +34,6 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The IP address of self-hosted integration runtime node.
         /// Serialized Name: IntegrationRuntimeNodeIpAddress.ipAddress
         /// </summary>
-        public string IPAddress { get; }
+        public IPAddress IPAddress { get; }
     }
 }

@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class IntegrationRuntimeMonitoringData
+    public partial class SynapseIntegrationRuntimeMonitoringResult
     {
-        internal static IntegrationRuntimeMonitoringData DeserializeIntegrationRuntimeMonitoringData(JsonElement element)
+        internal static SynapseIntegrationRuntimeMonitoringResult DeserializeSynapseIntegrationRuntimeMonitoringResult(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<IReadOnlyList<IntegrationRuntimeNodeMonitoringData>> nodes = default;
+            Optional<IReadOnlyList<SynapseIntegrationRuntimeNodeMonitoringResult>> nodes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -31,16 +31,16 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IntegrationRuntimeNodeMonitoringData> array = new List<IntegrationRuntimeNodeMonitoringData>();
+                    List<SynapseIntegrationRuntimeNodeMonitoringResult> array = new List<SynapseIntegrationRuntimeNodeMonitoringResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationRuntimeNodeMonitoringData.DeserializeIntegrationRuntimeNodeMonitoringData(item));
+                        array.Add(SynapseIntegrationRuntimeNodeMonitoringResult.DeserializeSynapseIntegrationRuntimeNodeMonitoringResult(item));
                     }
                     nodes = array;
                     continue;
                 }
             }
-            return new IntegrationRuntimeMonitoringData(name.Value, Optional.ToList(nodes));
+            return new SynapseIntegrationRuntimeMonitoringResult(name.Value, Optional.ToList(nodes));
         }
     }
 }

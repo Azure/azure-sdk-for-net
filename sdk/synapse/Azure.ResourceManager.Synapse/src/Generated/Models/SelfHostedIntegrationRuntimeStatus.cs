@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The newer versions on download center.
         /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.newerVersions
         /// </param>
-        internal SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, DateTimeOffset? createOn, string taskQueueId, string nodeCommunicationChannelEncryptionMode, IntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption, string version, IReadOnlyList<SelfHostedIntegrationRuntimeNode> nodes, DateTimeOffset? scheduledUpdateOn, string updateDelayOffset, string localTimeZoneOffset, IReadOnlyDictionary<string, string> capabilities, IReadOnlyList<string> serviceUrls, IntegrationRuntimeAutoUpdate? autoUpdate, string versionStatus, IReadOnlyList<LinkedIntegrationRuntime> links, string pushedVersion, string latestVersion, DateTimeOffset? autoUpdateETA, string serviceRegion, IReadOnlyList<string> newerVersions) : base(runtimeType, dataFactoryName, state, additionalProperties)
+        internal SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, DateTimeOffset? createOn, string taskQueueId, string nodeCommunicationChannelEncryptionMode, SynapseIntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption, string version, IReadOnlyList<SelfHostedIntegrationRuntimeNode> nodes, DateTimeOffset? scheduledUpdateOn, string updateDelayOffset, string localTimeZoneOffset, IReadOnlyDictionary<string, string> capabilities, IReadOnlyList<string> serviceUrls, SynapseIntegrationRuntimeAutoUpdate? autoUpdate, string versionStatus, IReadOnlyList<LinkedIntegrationRuntime> links, string pushedVersion, string latestVersion, DateTimeOffset? autoUpdateETA, string serviceRegion, IReadOnlyList<string> newerVersions) : base(runtimeType, dataFactoryName, state, additionalProperties)
         {
             CreateOn = createOn;
             TaskQueueId = taskQueueId;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// It is used to set the encryption mode for node-node communication channel (when more than 2 self-hosted integration runtime nodes exist).
         /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.internalChannelEncryption
         /// </summary>
-        public IntegrationRuntimeInternalChannelEncryptionMode? InternalChannelEncryption { get; }
+        public SynapseIntegrationRuntimeInternalChannelEncryptionMode? InternalChannelEncryption { get; }
         /// <summary>
         /// Version of the integration runtime.
         /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.version
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Whether Self-hosted integration runtime auto update has been turned on.
         /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.autoUpdate
         /// </summary>
-        public IntegrationRuntimeAutoUpdate? AutoUpdate { get; }
+        public SynapseIntegrationRuntimeAutoUpdate? AutoUpdate { get; }
         /// <summary>
         /// Status of the integration runtime version.
         /// Serialized Name: SelfHostedIntegrationRuntimeStatus.typeProperties.versionStatus

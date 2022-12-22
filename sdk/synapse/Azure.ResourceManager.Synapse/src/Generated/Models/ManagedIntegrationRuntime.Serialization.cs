@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<string> referenceName = default;
             Optional<string> type0 = default;
             Optional<string> id = default;
-            Optional<IntegrationRuntimeComputeProperties> computeProperties = default;
+            Optional<SynapseIntegrationRuntimeComputeProperties> computeProperties = default;
             Optional<IntegrationRuntimeSsisProperties> ssisProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Synapse.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            computeProperties = IntegrationRuntimeComputeProperties.DeserializeIntegrationRuntimeComputeProperties(property0.Value);
+                            computeProperties = SynapseIntegrationRuntimeComputeProperties.DeserializeSynapseIntegrationRuntimeComputeProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("ssisProperties"))

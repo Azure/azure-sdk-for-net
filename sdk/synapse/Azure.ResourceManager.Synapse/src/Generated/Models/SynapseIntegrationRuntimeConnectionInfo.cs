@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.Synapse.Models
     /// Connection information for encrypting the on-premises data source credentials.
     /// Serialized Name: IntegrationRuntimeConnectionInfo
     /// </summary>
-    public partial class IntegrationRuntimeConnectionInfo
+    public partial class SynapseIntegrationRuntimeConnectionInfo
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeConnectionInfo. </summary>
-        internal IntegrationRuntimeConnectionInfo()
+        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeConnectionInfo. </summary>
+        internal SynapseIntegrationRuntimeConnectionInfo()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeConnectionInfo. </summary>
         /// <param name="serviceToken">
         /// The token generated in service. Callers use this token to authenticate to integration runtime.
         /// Serialized Name: IntegrationRuntimeConnectionInfo.serviceToken
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Serialized Name: IntegrationRuntimeConnectionInfo.isIdentityCertExprired
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeConnectionInfo(string serviceToken, string identityCertThumbprint, Uri hostServiceUri, string version, string publicKey, bool? isIdentityCertExprired, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal SynapseIntegrationRuntimeConnectionInfo(string serviceToken, string identityCertThumbprint, Uri hostServiceUri, string version, string publicKey, bool? isIdentityCertExprired, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             ServiceToken = serviceToken;
             IdentityCertThumbprint = identityCertThumbprint;

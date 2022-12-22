@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class IntegrationRuntimeCustomSetupScriptProperties : IUtf8JsonSerializable
+    public partial class SynapseIntegrationRuntimeCustomSetupScriptProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteEndObject();
         }
 
-        internal static IntegrationRuntimeCustomSetupScriptProperties DeserializeIntegrationRuntimeCustomSetupScriptProperties(JsonElement element)
+        internal static SynapseIntegrationRuntimeCustomSetupScriptProperties DeserializeSynapseIntegrationRuntimeCustomSetupScriptProperties(JsonElement element)
         {
             Optional<Uri> blobContainerUri = default;
             Optional<SecureString> sasToken = default;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new IntegrationRuntimeCustomSetupScriptProperties(blobContainerUri.Value, sasToken.Value);
+            return new SynapseIntegrationRuntimeCustomSetupScriptProperties(blobContainerUri.Value, sasToken.Value);
         }
     }
 }

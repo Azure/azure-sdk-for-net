@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
-        public virtual async Task<Response<IntegrationRuntimeNodeIPAddress>> GetIntegrationRuntimeNodeIpAddresAsync(string nodeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseIntegrationRuntimeNodeIPAddress>> GetIntegrationRuntimeNodeIpAddresAsync(string nodeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
-        public virtual Response<IntegrationRuntimeNodeIPAddress> GetIntegrationRuntimeNodeIpAddres(string nodeName, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseIntegrationRuntimeNodeIPAddress> GetIntegrationRuntimeNodeIpAddres(string nodeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
@@ -957,7 +957,7 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: IntegrationRuntimeConnectionInfos_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IntegrationRuntimeConnectionInfo>> GetIntegrationRuntimeConnectionInfoAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseIntegrationRuntimeConnectionInfo>> GetIntegrationRuntimeConnectionInfoAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _integrationRuntimeConnectionInfosClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.GetIntegrationRuntimeConnectionInfo");
             scope.Start();
@@ -979,7 +979,7 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: IntegrationRuntimeConnectionInfos_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IntegrationRuntimeConnectionInfo> GetIntegrationRuntimeConnectionInfo(CancellationToken cancellationToken = default)
+        public virtual Response<SynapseIntegrationRuntimeConnectionInfo> GetIntegrationRuntimeConnectionInfo(CancellationToken cancellationToken = default)
         {
             using var scope = _integrationRuntimeConnectionInfosClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.GetIntegrationRuntimeConnectionInfo");
             scope.Start();
@@ -1003,7 +1003,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="content"> The parameters for regenerating integration runtime authentication key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<IntegrationRuntimeAuthKeys>> RegenerateIntegrationRuntimeAuthKeyAsync(IntegrationRuntimeRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseIntegrationRuntimeAuthKeys>> RegenerateIntegrationRuntimeAuthKeyAsync(IntegrationRuntimeRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1029,7 +1029,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="content"> The parameters for regenerating integration runtime authentication key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<IntegrationRuntimeAuthKeys> RegenerateIntegrationRuntimeAuthKey(IntegrationRuntimeRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseIntegrationRuntimeAuthKeys> RegenerateIntegrationRuntimeAuthKey(IntegrationRuntimeRegenerateKeyContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: IntegrationRuntimeAuthKeys_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IntegrationRuntimeAuthKeys>> GetIntegrationRuntimeAuthKeyAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseIntegrationRuntimeAuthKeys>> GetIntegrationRuntimeAuthKeyAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _integrationRuntimeAuthKeysClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.GetIntegrationRuntimeAuthKey");
             scope.Start();
@@ -1075,7 +1075,7 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: IntegrationRuntimeAuthKeys_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IntegrationRuntimeAuthKeys> GetIntegrationRuntimeAuthKey(CancellationToken cancellationToken = default)
+        public virtual Response<SynapseIntegrationRuntimeAuthKeys> GetIntegrationRuntimeAuthKey(CancellationToken cancellationToken = default)
         {
             using var scope = _integrationRuntimeAuthKeysClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.GetIntegrationRuntimeAuthKey");
             scope.Start();
@@ -1097,7 +1097,7 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: IntegrationRuntimeMonitoringData_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IntegrationRuntimeMonitoringData>> GetIntegrationRuntimeMonitoringDataAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseIntegrationRuntimeMonitoringResult>> GetIntegrationRuntimeMonitoringDataAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _integrationRuntimeMonitoringDataClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.GetIntegrationRuntimeMonitoringData");
             scope.Start();
@@ -1119,7 +1119,7 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: IntegrationRuntimeMonitoringData_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IntegrationRuntimeMonitoringData> GetIntegrationRuntimeMonitoringData(CancellationToken cancellationToken = default)
+        public virtual Response<SynapseIntegrationRuntimeMonitoringResult> GetIntegrationRuntimeMonitoringData(CancellationToken cancellationToken = default)
         {
             using var scope = _integrationRuntimeMonitoringDataClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.GetIntegrationRuntimeMonitoringData");
             scope.Start();

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The available derived classes include <see cref="SynapseCmdkeySetup"/>, <see cref="SynapseComponentSetup"/> and <see cref="SynapseEnvironmentVariableSetup"/>.
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeSsisProperties(IntegrationRuntimeSsisCatalogInfo catalogInfo, IntegrationRuntimeLicenseType? licenseType, IntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties, IntegrationRuntimeDataProxyProperties dataProxyProperties, IntegrationRuntimeEdition? edition, IList<SynapseCustomSetupBase> expressCustomSetupProperties, IDictionary<string, BinaryData> additionalProperties)
+        internal IntegrationRuntimeSsisProperties(IntegrationRuntimeSsisCatalogInfo catalogInfo, SynapseIntegrationRuntimeLicenseType? licenseType, SynapseIntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties, SynapseIntegrationRuntimeDataProxyProperties dataProxyProperties, SynapseIntegrationRuntimeEdition? edition, IList<SynapseCustomSetupBase> expressCustomSetupProperties, IDictionary<string, BinaryData> additionalProperties)
         {
             CatalogInfo = catalogInfo;
             LicenseType = licenseType;
@@ -72,22 +72,22 @@ namespace Azure.ResourceManager.Synapse.Models
         /// License type for bringing your own license scenario.
         /// Serialized Name: IntegrationRuntimeSsisProperties.licenseType
         /// </summary>
-        public IntegrationRuntimeLicenseType? LicenseType { get; set; }
+        public SynapseIntegrationRuntimeLicenseType? LicenseType { get; set; }
         /// <summary>
         /// Custom setup script properties for a managed dedicated integration runtime.
         /// Serialized Name: IntegrationRuntimeSsisProperties.customSetupScriptProperties
         /// </summary>
-        public IntegrationRuntimeCustomSetupScriptProperties CustomSetupScriptProperties { get; set; }
+        public SynapseIntegrationRuntimeCustomSetupScriptProperties CustomSetupScriptProperties { get; set; }
         /// <summary>
         /// Data proxy properties for a managed dedicated integration runtime.
         /// Serialized Name: IntegrationRuntimeSsisProperties.dataProxyProperties
         /// </summary>
-        public IntegrationRuntimeDataProxyProperties DataProxyProperties { get; set; }
+        public SynapseIntegrationRuntimeDataProxyProperties DataProxyProperties { get; set; }
         /// <summary>
         /// The edition for the SSIS Integration Runtime
         /// Serialized Name: IntegrationRuntimeSsisProperties.edition
         /// </summary>
-        public IntegrationRuntimeEdition? Edition { get; set; }
+        public SynapseIntegrationRuntimeEdition? Edition { get; set; }
         /// <summary>
         /// Custom setup without script properties for a SSIS integration runtime.
         /// Serialized Name: IntegrationRuntimeSsisProperties.expressCustomSetupProperties

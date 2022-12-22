@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The name of this referenced entity.
         /// Serialized Name: EntityReference.referenceName
         /// </param>
-        internal SynapseEntityReference(IntegrationRuntimeEntityReferenceType? integrationRuntimeEntityReferenceType, string referenceName)
+        internal SynapseEntityReference(SynapseIntegrationRuntimeEntityReferenceType? integrationRuntimeEntityReferenceType, string referenceName)
         {
             IntegrationRuntimeEntityReferenceType = integrationRuntimeEntityReferenceType;
             ReferenceName = referenceName;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The type of this referenced entity.
         /// Serialized Name: EntityReference.type
         /// </summary>
-        public IntegrationRuntimeEntityReferenceType? IntegrationRuntimeEntityReferenceType { get; set; }
+        public SynapseIntegrationRuntimeEntityReferenceType? IntegrationRuntimeEntityReferenceType { get; set; }
         /// <summary>
         /// The name of this referenced entity.
         /// Serialized Name: EntityReference.referenceName

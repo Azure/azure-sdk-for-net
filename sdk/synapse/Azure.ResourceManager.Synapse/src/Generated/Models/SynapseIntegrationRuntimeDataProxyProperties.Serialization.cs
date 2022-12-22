@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class IntegrationRuntimeDataProxyProperties : IUtf8JsonSerializable
+    public partial class SynapseIntegrationRuntimeDataProxyProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteEndObject();
         }
 
-        internal static IntegrationRuntimeDataProxyProperties DeserializeIntegrationRuntimeDataProxyProperties(JsonElement element)
+        internal static SynapseIntegrationRuntimeDataProxyProperties DeserializeSynapseIntegrationRuntimeDataProxyProperties(JsonElement element)
         {
             Optional<SynapseEntityReference> connectVia = default;
             Optional<SynapseEntityReference> stagingLinkedService = default;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new IntegrationRuntimeDataProxyProperties(connectVia.Value, stagingLinkedService.Value, path.Value);
+            return new SynapseIntegrationRuntimeDataProxyProperties(connectVia.Value, stagingLinkedService.Value, path.Value);
         }
     }
 }

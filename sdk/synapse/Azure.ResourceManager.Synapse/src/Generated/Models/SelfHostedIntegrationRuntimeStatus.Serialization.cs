@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<DateTimeOffset> createTime = default;
             Optional<string> taskQueueId = default;
             Optional<string> nodeCommunicationChannelEncryptionMode = default;
-            Optional<IntegrationRuntimeInternalChannelEncryptionMode> internalChannelEncryption = default;
+            Optional<SynapseIntegrationRuntimeInternalChannelEncryptionMode> internalChannelEncryption = default;
             Optional<string> version = default;
             Optional<IReadOnlyList<SelfHostedIntegrationRuntimeNode>> nodes = default;
             Optional<DateTimeOffset> scheduledUpdateDate = default;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<string> localTimeZoneOffset = default;
             Optional<IReadOnlyDictionary<string, string>> capabilities = default;
             Optional<IReadOnlyList<string>> serviceUrls = default;
-            Optional<IntegrationRuntimeAutoUpdate> autoUpdate = default;
+            Optional<SynapseIntegrationRuntimeAutoUpdate> autoUpdate = default;
             Optional<string> versionStatus = default;
             Optional<IReadOnlyList<LinkedIntegrationRuntime>> links = default;
             Optional<string> pushedVersion = default;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Synapse.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            internalChannelEncryption = new IntegrationRuntimeInternalChannelEncryptionMode(property0.Value.GetString());
+                            internalChannelEncryption = new SynapseIntegrationRuntimeInternalChannelEncryptionMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("version"))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Synapse.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            autoUpdate = new IntegrationRuntimeAutoUpdate(property0.Value.GetString());
+                            autoUpdate = new SynapseIntegrationRuntimeAutoUpdate(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("versionStatus"))

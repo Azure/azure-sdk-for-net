@@ -56,9 +56,13 @@ rename-mapping:
   CreateSqlPoolRestorePointDefinition: SqlPoolCreateRestorePointContent
   CustomerManagedKeyDetails: WorkspaceCustomerManagedKeyDetails
   IntegrationRuntime: SynapseIntegrationRuntimeProperties
+  Compression: KustoPoolCompressionType
+  IntegrationRuntimeMonitoringData: SynapseIntegrationRuntimeMonitoringResult
+  IntegrationRuntimeNodeMonitoringData: SynapseIntegrationRuntimeNodeMonitoringResult
   MaintenanceWindowTimeRange.startTime: StartOn
   AutoPauseProperties.enabled: IsEnabled
   CheckNameResult.nameAvailable: IsNameAvailable
+  IntegrationRuntimeNodeIpAddress.ipAddress: -|ip-address
 
 prepend-rp-prefix:
   - AttachedDatabaseConfiguration
@@ -151,6 +155,18 @@ prepend-rp-prefix:
   - GeoBackupPolicyState
   - GetSsisObjectMetadataRequest
   - IntegrationRuntimeAuthKeyName
+  - IntegrationRuntimeAuthKeys
+  - IntegrationRuntimeAutoUpdate
+  - IntegrationRuntimeComputeProperties
+  - IntegrationRuntimeConnectionInfo
+  - IntegrationRuntimeCustomSetupScriptProperties
+  - IntegrationRuntimeDataFlowProperties
+  - IntegrationRuntimeDataProxyProperties
+  - IntegrationRuntimeEdition
+  - IntegrationRuntimeEntityReferenceType
+  - IntegrationRuntimeInternalChannelEncryptionMode
+  - IntegrationRuntimeLicenseType
+  - IntegrationRuntimeNodeIPAddress
 
 override-operation-name:
   IntegrationRuntimeStatus_Get: GetIntegrationRuntimeStatus

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// SSIS properties for managed integration runtime.
         /// Serialized Name: ManagedIntegrationRuntime.typeProperties.ssisProperties
         /// </param>
-        internal ManagedIntegrationRuntime(IntegrationRuntimeType integrationRuntimeType, string description, IDictionary<string, BinaryData> additionalProperties, IntegrationRuntimeState? state, string referenceName, string typeManagedVirtualNetworkType, string id, IntegrationRuntimeComputeProperties computeProperties, IntegrationRuntimeSsisProperties ssisProperties) : base(integrationRuntimeType, description, additionalProperties)
+        internal ManagedIntegrationRuntime(IntegrationRuntimeType integrationRuntimeType, string description, IDictionary<string, BinaryData> additionalProperties, IntegrationRuntimeState? state, string referenceName, string typeManagedVirtualNetworkType, string id, SynapseIntegrationRuntimeComputeProperties computeProperties, IntegrationRuntimeSsisProperties ssisProperties) : base(integrationRuntimeType, description, additionalProperties)
         {
             State = state;
             ReferenceName = referenceName;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The compute resource for managed integration runtime.
         /// Serialized Name: ManagedIntegrationRuntime.typeProperties.computeProperties
         /// </summary>
-        public IntegrationRuntimeComputeProperties ComputeProperties { get; set; }
+        public SynapseIntegrationRuntimeComputeProperties ComputeProperties { get; set; }
         /// <summary>
         /// SSIS properties for managed integration runtime.
         /// Serialized Name: ManagedIntegrationRuntime.typeProperties.ssisProperties

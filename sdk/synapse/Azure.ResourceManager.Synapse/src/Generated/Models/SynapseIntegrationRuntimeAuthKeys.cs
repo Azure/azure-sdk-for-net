@@ -11,14 +11,14 @@ namespace Azure.ResourceManager.Synapse.Models
     /// The integration runtime authentication keys.
     /// Serialized Name: IntegrationRuntimeAuthKeys
     /// </summary>
-    public partial class IntegrationRuntimeAuthKeys
+    public partial class SynapseIntegrationRuntimeAuthKeys
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeAuthKeys. </summary>
-        internal IntegrationRuntimeAuthKeys()
+        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeAuthKeys. </summary>
+        internal SynapseIntegrationRuntimeAuthKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeAuthKeys. </summary>
+        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeAuthKeys. </summary>
         /// <param name="authKey1">
         /// The primary integration runtime authentication key.
         /// Serialized Name: IntegrationRuntimeAuthKeys.authKey1
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The secondary integration runtime authentication key.
         /// Serialized Name: IntegrationRuntimeAuthKeys.authKey2
         /// </param>
-        internal IntegrationRuntimeAuthKeys(string authKey1, string authKey2)
+        internal SynapseIntegrationRuntimeAuthKeys(string authKey1, string authKey2)
         {
             AuthKey1 = authKey1;
             AuthKey2 = authKey2;

@@ -14,15 +14,15 @@ namespace Azure.ResourceManager.Synapse.Models
     /// Get monitoring data response.
     /// Serialized Name: IntegrationRuntimeMonitoringData
     /// </summary>
-    public partial class IntegrationRuntimeMonitoringData
+    public partial class SynapseIntegrationRuntimeMonitoringResult
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeMonitoringData. </summary>
-        internal IntegrationRuntimeMonitoringData()
+        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeMonitoringResult. </summary>
+        internal SynapseIntegrationRuntimeMonitoringResult()
         {
-            Nodes = new ChangeTrackingList<IntegrationRuntimeNodeMonitoringData>();
+            Nodes = new ChangeTrackingList<SynapseIntegrationRuntimeNodeMonitoringResult>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeMonitoringData. </summary>
+        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeMonitoringResult. </summary>
         /// <param name="name">
         /// Integration runtime name.
         /// Serialized Name: IntegrationRuntimeMonitoringData.name
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Integration runtime node monitoring data.
         /// Serialized Name: IntegrationRuntimeMonitoringData.nodes
         /// </param>
-        internal IntegrationRuntimeMonitoringData(string name, IReadOnlyList<IntegrationRuntimeNodeMonitoringData> nodes)
+        internal SynapseIntegrationRuntimeMonitoringResult(string name, IReadOnlyList<SynapseIntegrationRuntimeNodeMonitoringResult> nodes)
         {
             Name = name;
             Nodes = nodes;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Integration runtime node monitoring data.
         /// Serialized Name: IntegrationRuntimeMonitoringData.nodes
         /// </summary>
-        public IReadOnlyList<IntegrationRuntimeNodeMonitoringData> Nodes { get; }
+        public IReadOnlyList<SynapseIntegrationRuntimeNodeMonitoringResult> Nodes { get; }
     }
 }

@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.Synapse.Models
     /// Monitoring data for integration runtime node.
     /// Serialized Name: IntegrationRuntimeNodeMonitoringData
     /// </summary>
-    public partial class IntegrationRuntimeNodeMonitoringData
+    public partial class SynapseIntegrationRuntimeNodeMonitoringResult
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeNodeMonitoringData. </summary>
-        internal IntegrationRuntimeNodeMonitoringData()
+        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeNodeMonitoringResult. </summary>
+        internal SynapseIntegrationRuntimeNodeMonitoringResult()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeNodeMonitoringData. </summary>
+        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeNodeMonitoringResult. </summary>
         /// <param name="nodeName">
         /// Name of the integration runtime node.
         /// Serialized Name: IntegrationRuntimeNodeMonitoringData.nodeName
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Serialized Name: IntegrationRuntimeNodeMonitoringData.receivedBytes
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeNodeMonitoringData(string nodeName, int? availableMemoryInMB, int? cpuUtilization, int? concurrentJobsLimit, int? concurrentJobsRunning, int? maxConcurrentJobs, float? sentBytes, float? receivedBytes, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal SynapseIntegrationRuntimeNodeMonitoringResult(string nodeName, int? availableMemoryInMB, int? cpuUtilization, int? concurrentJobsLimit, int? concurrentJobsRunning, int? maxConcurrentJobs, float? sentBytes, float? receivedBytes, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             NodeName = nodeName;
             AvailableMemoryInMB = availableMemoryInMB;

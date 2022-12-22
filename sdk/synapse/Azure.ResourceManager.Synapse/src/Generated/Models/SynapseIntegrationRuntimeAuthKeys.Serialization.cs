@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class IntegrationRuntimeAuthKeys
+    public partial class SynapseIntegrationRuntimeAuthKeys
     {
-        internal static IntegrationRuntimeAuthKeys DeserializeIntegrationRuntimeAuthKeys(JsonElement element)
+        internal static SynapseIntegrationRuntimeAuthKeys DeserializeSynapseIntegrationRuntimeAuthKeys(JsonElement element)
         {
             Optional<string> authKey1 = default;
             Optional<string> authKey2 = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new IntegrationRuntimeAuthKeys(authKey1.Value, authKey2.Value);
+            return new SynapseIntegrationRuntimeAuthKeys(authKey1.Value, authKey2.Value);
         }
     }
 }

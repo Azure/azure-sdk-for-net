@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<string> mappingRuleName = default;
             Optional<SynapseEventHubDataFormat> dataFormat = default;
             Optional<IList<string>> eventSystemProperties = default;
-            Optional<Compression> compression = default;
+            Optional<KustoPoolCompressionType> compression = default;
             Optional<ResourceProvisioningState> provisioningState = default;
             Optional<string> managedIdentityResourceId = default;
             foreach (var property in element.EnumerateObject())
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Synapse.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            compression = new Compression(property0.Value.GetString());
+                            compression = new KustoPoolCompressionType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
