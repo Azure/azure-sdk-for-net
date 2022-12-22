@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Synapse
             string name = default;
             Core.ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ColumnDataType> columnType = default;
+            Optional<SqlPoolColumnDataType> columnType = default;
             Optional<bool> isComputed = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            columnType = new ColumnDataType(property0.Value.GetString());
+                            columnType = new SqlPoolColumnDataType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("isComputed"))

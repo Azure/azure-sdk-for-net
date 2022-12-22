@@ -1491,7 +1491,7 @@ namespace Azure.ResourceManager.Synapse
     public partial class SynapseSqlPoolColumnData : Azure.ResourceManager.Models.ResourceData
     {
         public SynapseSqlPoolColumnData() { }
-        public Azure.ResourceManager.Synapse.Models.ColumnDataType? ColumnType { get { throw null; } set { } }
+        public Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType? ColumnType { get { throw null; } set { } }
         public bool? IsComputed { get { throw null; } }
     }
     public partial class SynapseSqlPoolColumnResource : Azure.ResourceManager.ArmResource
@@ -2147,56 +2147,6 @@ namespace Azure.ResourceManager.Synapse
 }
 namespace Azure.ResourceManager.Synapse.Models
 {
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ColumnDataType : System.IEquatable<Azure.ResourceManager.Synapse.Models.ColumnDataType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ColumnDataType(string value) { throw null; }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Bigint { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Binary { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Bit { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Char { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Date { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Datetime { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Datetime2 { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Datetimeoffset { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Decimal { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Float { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Geography { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Geometry { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Hierarchyid { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Image { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Int { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Money { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Nchar { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Ntext { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Numeric { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Nvarchar { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Real { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Smalldatetime { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Smallint { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Smallmoney { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType SqlVariant { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Sysname { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Text { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Time { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Timestamp { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Tinyint { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Uniqueidentifier { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Varbinary { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Varchar { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.ColumnDataType Xml { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Synapse.Models.ColumnDataType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Synapse.Models.ColumnDataType left, Azure.ResourceManager.Synapse.Models.ColumnDataType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Synapse.Models.ColumnDataType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Synapse.Models.ColumnDataType left, Azure.ResourceManager.Synapse.Models.ColumnDataType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint
     {
         internal IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint() { }
@@ -3108,6 +3058,56 @@ namespace Azure.ResourceManager.Synapse.Models
         public string Content { get { throw null; } set { } }
         public string Filename { get { throw null; } set { } }
         public System.DateTimeOffset? Time { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SqlPoolColumnDataType : System.IEquatable<Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SqlPoolColumnDataType(string value) { throw null; }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType BigInt { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Binary { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Bit { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Char { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Date { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType DateTime { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType DateTime2 { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType DateTimeOffset { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Decimal { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Float { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Geography { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Geometry { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Hierarchyid { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Image { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Int { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Money { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Nchar { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Ntext { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Numeric { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Nvarchar { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Real { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType SmallDateTime { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType SmallInt { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType SmallMoney { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType SqlVariant { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Sysname { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Text { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Time { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Timestamp { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType TinyInt { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType UniqueIdentifier { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Varbinary { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Varchar { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType Xml { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType left, Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType left, Azure.ResourceManager.Synapse.Models.SqlPoolColumnDataType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SqlPoolConnectionPolicyName : System.IEquatable<Azure.ResourceManager.Synapse.Models.SqlPoolConnectionPolicyName>

@@ -14,39 +14,39 @@ namespace Azure.ResourceManager.Synapse.Models
     /// The column data type.
     /// Serialized Name: ColumnDataType
     /// </summary>
-    public readonly partial struct ColumnDataType : IEquatable<ColumnDataType>
+    public readonly partial struct SqlPoolColumnDataType : IEquatable<SqlPoolColumnDataType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ColumnDataType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlPoolColumnDataType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ColumnDataType(string value)
+        public SqlPoolColumnDataType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         private const string ImageValue = "image";
         private const string TextValue = "text";
-        private const string UniqueidentifierValue = "uniqueidentifier";
+        private const string UniqueIdentifierValue = "uniqueidentifier";
         private const string DateValue = "date";
         private const string TimeValue = "time";
-        private const string Datetime2Value = "datetime2";
-        private const string DatetimeoffsetValue = "datetimeoffset";
-        private const string TinyintValue = "tinyint";
-        private const string SmallintValue = "smallint";
+        private const string DateTime2Value = "datetime2";
+        private const string DateTimeOffsetValue = "datetimeoffset";
+        private const string TinyIntValue = "tinyint";
+        private const string SmallIntValue = "smallint";
         private const string IntValue = "int";
-        private const string SmalldatetimeValue = "smalldatetime";
+        private const string SmallDateTimeValue = "smalldatetime";
         private const string RealValue = "real";
         private const string MoneyValue = "money";
-        private const string DatetimeValue = "datetime";
+        private const string DateTimeValue = "datetime";
         private const string FloatValue = "float";
         private const string SqlVariantValue = "sql_variant";
         private const string NtextValue = "ntext";
         private const string BitValue = "bit";
         private const string DecimalValue = "decimal";
         private const string NumericValue = "numeric";
-        private const string SmallmoneyValue = "smallmoney";
-        private const string BigintValue = "bigint";
+        private const string SmallMoneyValue = "smallmoney";
+        private const string BigIntValue = "bigint";
         private const string HierarchyidValue = "hierarchyid";
         private const string GeometryValue = "geometry";
         private const string GeographyValue = "geography";
@@ -64,184 +64,184 @@ namespace Azure.ResourceManager.Synapse.Models
         /// image
         /// Serialized Name: ColumnDataType.image
         /// </summary>
-        public static ColumnDataType Image { get; } = new ColumnDataType(ImageValue);
+        public static SqlPoolColumnDataType Image { get; } = new SqlPoolColumnDataType(ImageValue);
         /// <summary>
         /// text
         /// Serialized Name: ColumnDataType.text
         /// </summary>
-        public static ColumnDataType Text { get; } = new ColumnDataType(TextValue);
+        public static SqlPoolColumnDataType Text { get; } = new SqlPoolColumnDataType(TextValue);
         /// <summary>
         /// uniqueidentifier
         /// Serialized Name: ColumnDataType.uniqueidentifier
         /// </summary>
-        public static ColumnDataType Uniqueidentifier { get; } = new ColumnDataType(UniqueidentifierValue);
+        public static SqlPoolColumnDataType UniqueIdentifier { get; } = new SqlPoolColumnDataType(UniqueIdentifierValue);
         /// <summary>
         /// date
         /// Serialized Name: ColumnDataType.date
         /// </summary>
-        public static ColumnDataType Date { get; } = new ColumnDataType(DateValue);
+        public static SqlPoolColumnDataType Date { get; } = new SqlPoolColumnDataType(DateValue);
         /// <summary>
         /// time
         /// Serialized Name: ColumnDataType.time
         /// </summary>
-        public static ColumnDataType Time { get; } = new ColumnDataType(TimeValue);
+        public static SqlPoolColumnDataType Time { get; } = new SqlPoolColumnDataType(TimeValue);
         /// <summary>
         /// datetime2
         /// Serialized Name: ColumnDataType.datetime2
         /// </summary>
-        public static ColumnDataType Datetime2 { get; } = new ColumnDataType(Datetime2Value);
+        public static SqlPoolColumnDataType DateTime2 { get; } = new SqlPoolColumnDataType(DateTime2Value);
         /// <summary>
         /// datetimeoffset
         /// Serialized Name: ColumnDataType.datetimeoffset
         /// </summary>
-        public static ColumnDataType Datetimeoffset { get; } = new ColumnDataType(DatetimeoffsetValue);
+        public static SqlPoolColumnDataType DateTimeOffset { get; } = new SqlPoolColumnDataType(DateTimeOffsetValue);
         /// <summary>
         /// tinyint
         /// Serialized Name: ColumnDataType.tinyint
         /// </summary>
-        public static ColumnDataType Tinyint { get; } = new ColumnDataType(TinyintValue);
+        public static SqlPoolColumnDataType TinyInt { get; } = new SqlPoolColumnDataType(TinyIntValue);
         /// <summary>
         /// smallint
         /// Serialized Name: ColumnDataType.smallint
         /// </summary>
-        public static ColumnDataType Smallint { get; } = new ColumnDataType(SmallintValue);
+        public static SqlPoolColumnDataType SmallInt { get; } = new SqlPoolColumnDataType(SmallIntValue);
         /// <summary>
         /// int
         /// Serialized Name: ColumnDataType.int
         /// </summary>
-        public static ColumnDataType Int { get; } = new ColumnDataType(IntValue);
+        public static SqlPoolColumnDataType Int { get; } = new SqlPoolColumnDataType(IntValue);
         /// <summary>
         /// smalldatetime
         /// Serialized Name: ColumnDataType.smalldatetime
         /// </summary>
-        public static ColumnDataType Smalldatetime { get; } = new ColumnDataType(SmalldatetimeValue);
+        public static SqlPoolColumnDataType SmallDateTime { get; } = new SqlPoolColumnDataType(SmallDateTimeValue);
         /// <summary>
         /// real
         /// Serialized Name: ColumnDataType.real
         /// </summary>
-        public static ColumnDataType Real { get; } = new ColumnDataType(RealValue);
+        public static SqlPoolColumnDataType Real { get; } = new SqlPoolColumnDataType(RealValue);
         /// <summary>
         /// money
         /// Serialized Name: ColumnDataType.money
         /// </summary>
-        public static ColumnDataType Money { get; } = new ColumnDataType(MoneyValue);
+        public static SqlPoolColumnDataType Money { get; } = new SqlPoolColumnDataType(MoneyValue);
         /// <summary>
         /// datetime
         /// Serialized Name: ColumnDataType.datetime
         /// </summary>
-        public static ColumnDataType Datetime { get; } = new ColumnDataType(DatetimeValue);
+        public static SqlPoolColumnDataType DateTime { get; } = new SqlPoolColumnDataType(DateTimeValue);
         /// <summary>
         /// float
         /// Serialized Name: ColumnDataType.float
         /// </summary>
-        public static ColumnDataType Float { get; } = new ColumnDataType(FloatValue);
+        public static SqlPoolColumnDataType Float { get; } = new SqlPoolColumnDataType(FloatValue);
         /// <summary>
         /// sql_variant
         /// Serialized Name: ColumnDataType.sql_variant
         /// </summary>
-        public static ColumnDataType SqlVariant { get; } = new ColumnDataType(SqlVariantValue);
+        public static SqlPoolColumnDataType SqlVariant { get; } = new SqlPoolColumnDataType(SqlVariantValue);
         /// <summary>
         /// ntext
         /// Serialized Name: ColumnDataType.ntext
         /// </summary>
-        public static ColumnDataType Ntext { get; } = new ColumnDataType(NtextValue);
+        public static SqlPoolColumnDataType Ntext { get; } = new SqlPoolColumnDataType(NtextValue);
         /// <summary>
         /// bit
         /// Serialized Name: ColumnDataType.bit
         /// </summary>
-        public static ColumnDataType Bit { get; } = new ColumnDataType(BitValue);
+        public static SqlPoolColumnDataType Bit { get; } = new SqlPoolColumnDataType(BitValue);
         /// <summary>
         /// decimal
         /// Serialized Name: ColumnDataType.decimal
         /// </summary>
-        public static ColumnDataType Decimal { get; } = new ColumnDataType(DecimalValue);
+        public static SqlPoolColumnDataType Decimal { get; } = new SqlPoolColumnDataType(DecimalValue);
         /// <summary>
         /// numeric
         /// Serialized Name: ColumnDataType.numeric
         /// </summary>
-        public static ColumnDataType Numeric { get; } = new ColumnDataType(NumericValue);
+        public static SqlPoolColumnDataType Numeric { get; } = new SqlPoolColumnDataType(NumericValue);
         /// <summary>
         /// smallmoney
         /// Serialized Name: ColumnDataType.smallmoney
         /// </summary>
-        public static ColumnDataType Smallmoney { get; } = new ColumnDataType(SmallmoneyValue);
+        public static SqlPoolColumnDataType SmallMoney { get; } = new SqlPoolColumnDataType(SmallMoneyValue);
         /// <summary>
         /// bigint
         /// Serialized Name: ColumnDataType.bigint
         /// </summary>
-        public static ColumnDataType Bigint { get; } = new ColumnDataType(BigintValue);
+        public static SqlPoolColumnDataType BigInt { get; } = new SqlPoolColumnDataType(BigIntValue);
         /// <summary>
         /// hierarchyid
         /// Serialized Name: ColumnDataType.hierarchyid
         /// </summary>
-        public static ColumnDataType Hierarchyid { get; } = new ColumnDataType(HierarchyidValue);
+        public static SqlPoolColumnDataType Hierarchyid { get; } = new SqlPoolColumnDataType(HierarchyidValue);
         /// <summary>
         /// geometry
         /// Serialized Name: ColumnDataType.geometry
         /// </summary>
-        public static ColumnDataType Geometry { get; } = new ColumnDataType(GeometryValue);
+        public static SqlPoolColumnDataType Geometry { get; } = new SqlPoolColumnDataType(GeometryValue);
         /// <summary>
         /// geography
         /// Serialized Name: ColumnDataType.geography
         /// </summary>
-        public static ColumnDataType Geography { get; } = new ColumnDataType(GeographyValue);
+        public static SqlPoolColumnDataType Geography { get; } = new SqlPoolColumnDataType(GeographyValue);
         /// <summary>
         /// varbinary
         /// Serialized Name: ColumnDataType.varbinary
         /// </summary>
-        public static ColumnDataType Varbinary { get; } = new ColumnDataType(VarbinaryValue);
+        public static SqlPoolColumnDataType Varbinary { get; } = new SqlPoolColumnDataType(VarbinaryValue);
         /// <summary>
         /// varchar
         /// Serialized Name: ColumnDataType.varchar
         /// </summary>
-        public static ColumnDataType Varchar { get; } = new ColumnDataType(VarcharValue);
+        public static SqlPoolColumnDataType Varchar { get; } = new SqlPoolColumnDataType(VarcharValue);
         /// <summary>
         /// binary
         /// Serialized Name: ColumnDataType.binary
         /// </summary>
-        public static ColumnDataType Binary { get; } = new ColumnDataType(BinaryValue);
+        public static SqlPoolColumnDataType Binary { get; } = new SqlPoolColumnDataType(BinaryValue);
         /// <summary>
         /// char
         /// Serialized Name: ColumnDataType.char
         /// </summary>
-        public static ColumnDataType Char { get; } = new ColumnDataType(CharValue);
+        public static SqlPoolColumnDataType Char { get; } = new SqlPoolColumnDataType(CharValue);
         /// <summary>
         /// timestamp
         /// Serialized Name: ColumnDataType.timestamp
         /// </summary>
-        public static ColumnDataType Timestamp { get; } = new ColumnDataType(TimestampValue);
+        public static SqlPoolColumnDataType Timestamp { get; } = new SqlPoolColumnDataType(TimestampValue);
         /// <summary>
         /// nvarchar
         /// Serialized Name: ColumnDataType.nvarchar
         /// </summary>
-        public static ColumnDataType Nvarchar { get; } = new ColumnDataType(NvarcharValue);
+        public static SqlPoolColumnDataType Nvarchar { get; } = new SqlPoolColumnDataType(NvarcharValue);
         /// <summary>
         /// nchar
         /// Serialized Name: ColumnDataType.nchar
         /// </summary>
-        public static ColumnDataType Nchar { get; } = new ColumnDataType(NcharValue);
+        public static SqlPoolColumnDataType Nchar { get; } = new SqlPoolColumnDataType(NcharValue);
         /// <summary>
         /// xml
         /// Serialized Name: ColumnDataType.xml
         /// </summary>
-        public static ColumnDataType Xml { get; } = new ColumnDataType(XmlValue);
+        public static SqlPoolColumnDataType Xml { get; } = new SqlPoolColumnDataType(XmlValue);
         /// <summary>
         /// sysname
         /// Serialized Name: ColumnDataType.sysname
         /// </summary>
-        public static ColumnDataType Sysname { get; } = new ColumnDataType(SysnameValue);
-        /// <summary> Determines if two <see cref="ColumnDataType"/> values are the same. </summary>
-        public static bool operator ==(ColumnDataType left, ColumnDataType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ColumnDataType"/> values are not the same. </summary>
-        public static bool operator !=(ColumnDataType left, ColumnDataType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ColumnDataType"/>. </summary>
-        public static implicit operator ColumnDataType(string value) => new ColumnDataType(value);
+        public static SqlPoolColumnDataType Sysname { get; } = new SqlPoolColumnDataType(SysnameValue);
+        /// <summary> Determines if two <see cref="SqlPoolColumnDataType"/> values are the same. </summary>
+        public static bool operator ==(SqlPoolColumnDataType left, SqlPoolColumnDataType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="SqlPoolColumnDataType"/> values are not the same. </summary>
+        public static bool operator !=(SqlPoolColumnDataType left, SqlPoolColumnDataType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="SqlPoolColumnDataType"/>. </summary>
+        public static implicit operator SqlPoolColumnDataType(string value) => new SqlPoolColumnDataType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ColumnDataType other && Equals(other);
+        public override bool Equals(object obj) => obj is SqlPoolColumnDataType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(ColumnDataType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SqlPoolColumnDataType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

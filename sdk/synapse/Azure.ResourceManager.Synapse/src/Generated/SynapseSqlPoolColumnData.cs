@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Synapse
         /// Indicates whether column value is computed or not
         /// Serialized Name: SqlPoolColumn.properties.isComputed
         /// </param>
-        internal SynapseSqlPoolColumnData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, ColumnDataType? columnType, bool? isComputed) : base(id, name, resourceType, systemData)
+        internal SynapseSqlPoolColumnData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, SqlPoolColumnDataType? columnType, bool? isComputed) : base(id, name, resourceType, systemData)
         {
             ColumnType = columnType;
             IsComputed = isComputed;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Synapse
         /// The column data type.
         /// Serialized Name: SqlPoolColumn.properties.columnType
         /// </summary>
-        public ColumnDataType? ColumnType { get; set; }
+        public SqlPoolColumnDataType? ColumnType { get; set; }
         /// <summary>
         /// Indicates whether column value is computed or not
         /// Serialized Name: SqlPoolColumn.properties.isComputed

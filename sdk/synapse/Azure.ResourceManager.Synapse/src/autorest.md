@@ -59,10 +59,20 @@ rename-mapping:
   Compression: KustoPoolCompressionType
   IntegrationRuntimeMonitoringData: SynapseIntegrationRuntimeMonitoringResult
   IntegrationRuntimeNodeMonitoringData: SynapseIntegrationRuntimeNodeMonitoringResult
+  ColumnDataType: SqlPoolColumnDataType
   MaintenanceWindowTimeRange.startTime: StartOn
   AutoPauseProperties.enabled: IsEnabled
   CheckNameResult.nameAvailable: IsNameAvailable
   IntegrationRuntimeNodeIpAddress.ipAddress: -|ip-address
+  ColumnDataType.uniqueidentifier: UniqueIdentifier
+  ColumnDataType.datetime2: DateTime2
+  ColumnDataType.datetimeoffset: DateTimeOffset
+  ColumnDataType.tinyint: TinyInt
+  ColumnDataType.smallint: SmallInt
+  ColumnDataType.smalldatetime: SmallDateTime
+  ColumnDataType.datetime: DateTime
+  ColumnDataType.smallmoney: SmallMoney
+  ColumnDataType.bigint: BigInt
 
 prepend-rp-prefix:
   - AttachedDatabaseConfiguration
