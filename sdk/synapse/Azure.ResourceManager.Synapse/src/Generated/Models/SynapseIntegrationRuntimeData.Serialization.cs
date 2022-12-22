@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseIntegrationRuntimeData DeserializeSynapseIntegrationRuntimeData(JsonElement element)
         {
-            IntegrationRuntime properties = default;
+            SynapseIntegrationRuntimeProperties properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Synapse
             {
                 if (property.NameEquals("properties"))
                 {
-                    properties = IntegrationRuntime.DeserializeIntegrationRuntime(property.Value);
+                    properties = SynapseIntegrationRuntimeProperties.DeserializeSynapseIntegrationRuntimeProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"))

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(RuntimeType.ToString());
+            writer.WriteStringValue(IntegrationRuntimeType.ToString());
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description");

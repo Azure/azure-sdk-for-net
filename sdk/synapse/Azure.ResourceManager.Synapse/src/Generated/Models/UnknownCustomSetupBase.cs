@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// The UnknownCustomSetupBase.
     /// Serialized Name: UnknownCustomSetupBase
     /// </summary>
-    internal partial class UnknownCustomSetupBase : CustomSetupBase
+    internal partial class UnknownCustomSetupBase : SynapseCustomSetupBase
     {
         /// <summary> Initializes a new instance of UnknownCustomSetupBase. </summary>
         /// <param name="customSetupBaseType">

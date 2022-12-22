@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Synapse
         /// The time when the Big Data pool was updated successfully.
         /// Serialized Name: BigDataPoolResourceInfo.properties.lastSucceededTimestamp
         /// </param>
-        internal SynapseBigDataPoolInfoData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, AutoScaleProperties autoScale, DateTimeOffset? createdOn, AutoPauseProperties autoPause, bool? isComputeIsolationEnabled, bool? isAutotuneEnabled, bool? sessionLevelPackagesEnabled, int? cacheSize, DynamicExecutorAllocation dynamicExecutorAllocation, string sparkEventsFolder, int? nodeCount, LibraryRequirements libraryRequirements, IList<LibraryInfo> customLibraries, SparkConfigProperties sparkConfigProperties, string sparkVersion, string defaultSparkLogFolder, NodeSize? nodeSize, NodeSizeFamily? nodeSizeFamily, DateTimeOffset? lastSucceededTimestamp) : base(id, name, resourceType, systemData, tags, location)
+        internal SynapseBigDataPoolInfoData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, SynapseBigDataPoolAutoScaleProperties autoScale, DateTimeOffset? createdOn, SynapseBigDataPoolAutoPauseProperties autoPause, bool? isComputeIsolationEnabled, bool? isAutotuneEnabled, bool? sessionLevelPackagesEnabled, int? cacheSize, SynapseDynamicExecutorAllocation dynamicExecutorAllocation, string sparkEventsFolder, int? nodeCount, LibraryRequirements libraryRequirements, IList<LibraryInfo> customLibraries, SparkConfigProperties sparkConfigProperties, string sparkVersion, string defaultSparkLogFolder, NodeSize? nodeSize, NodeSizeFamily? nodeSizeFamily, DateTimeOffset? lastSucceededTimestamp) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             AutoScale = autoScale;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Synapse
         /// Auto-scaling properties
         /// Serialized Name: BigDataPoolResourceInfo.properties.autoScale
         /// </summary>
-        public AutoScaleProperties AutoScale { get; set; }
+        public SynapseBigDataPoolAutoScaleProperties AutoScale { get; set; }
         /// <summary>
         /// The time when the Big Data pool was created.
         /// Serialized Name: BigDataPoolResourceInfo.properties.creationDate
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Synapse
         /// Auto-pausing properties
         /// Serialized Name: BigDataPoolResourceInfo.properties.autoPause
         /// </summary>
-        public AutoPauseProperties AutoPause { get; set; }
+        public SynapseBigDataPoolAutoPauseProperties AutoPause { get; set; }
         /// <summary>
         /// Whether compute isolation is required or not.
         /// Serialized Name: BigDataPoolResourceInfo.properties.isComputeIsolationEnabled
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Synapse
         /// Dynamic Executor Allocation
         /// Serialized Name: BigDataPoolResourceInfo.properties.dynamicExecutorAllocation
         /// </summary>
-        public DynamicExecutorAllocation DynamicExecutorAllocation { get; set; }
+        public SynapseDynamicExecutorAllocation DynamicExecutorAllocation { get; set; }
         /// <summary>
         /// The Spark events folder
         /// Serialized Name: BigDataPoolResourceInfo.properties.sparkEventsFolder

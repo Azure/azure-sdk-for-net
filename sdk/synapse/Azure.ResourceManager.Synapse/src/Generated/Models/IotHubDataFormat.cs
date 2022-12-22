@@ -25,28 +25,28 @@ namespace Azure.ResourceManager.Synapse.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string MultijsonValue = "MULTIJSON";
+        private const string MultiJsonValue = "MULTIJSON";
         private const string JsonValue = "JSON";
-        private const string CSVValue = "CSV";
-        private const string TSVValue = "TSV";
+        private const string CsvValue = "CSV";
+        private const string TsvValue = "TSV";
         private const string ScsvValue = "SCSV";
         private const string SohsvValue = "SOHSV";
-        private const string PSVValue = "PSV";
-        private const string TXTValue = "TXT";
-        private const string RAWValue = "RAW";
-        private const string SinglejsonValue = "SINGLEJSON";
+        private const string PsvValue = "PSV";
+        private const string TxtValue = "TXT";
+        private const string RawValue = "RAW";
+        private const string SingleJsonValue = "SINGLEJSON";
         private const string AvroValue = "AVRO";
         private const string TsveValue = "TSVE";
         private const string ParquetValue = "PARQUET";
-        private const string ORCValue = "ORC";
-        private const string ApacheavroValue = "APACHEAVRO";
-        private const string W3ClogfileValue = "W3CLOGFILE";
+        private const string OrcValue = "ORC";
+        private const string ApacheAvroValue = "APACHEAVRO";
+        private const string W3CLogfileValue = "W3CLOGFILE";
 
         /// <summary>
         /// MULTIJSON
         /// Serialized Name: IotHubDataFormat.MULTIJSON
         /// </summary>
-        public static IotHubDataFormat Multijson { get; } = new IotHubDataFormat(MultijsonValue);
+        public static IotHubDataFormat MultiJson { get; } = new IotHubDataFormat(MultiJsonValue);
         /// <summary>
         /// JSON
         /// Serialized Name: IotHubDataFormat.JSON
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Synapse.Models
         /// CSV
         /// Serialized Name: IotHubDataFormat.CSV
         /// </summary>
-        public static IotHubDataFormat CSV { get; } = new IotHubDataFormat(CSVValue);
+        public static IotHubDataFormat Csv { get; } = new IotHubDataFormat(CsvValue);
         /// <summary>
         /// TSV
         /// Serialized Name: IotHubDataFormat.TSV
         /// </summary>
-        public static IotHubDataFormat TSV { get; } = new IotHubDataFormat(TSVValue);
+        public static IotHubDataFormat Tsv { get; } = new IotHubDataFormat(TsvValue);
         /// <summary>
         /// SCSV
         /// Serialized Name: IotHubDataFormat.SCSV
@@ -76,22 +76,22 @@ namespace Azure.ResourceManager.Synapse.Models
         /// PSV
         /// Serialized Name: IotHubDataFormat.PSV
         /// </summary>
-        public static IotHubDataFormat PSV { get; } = new IotHubDataFormat(PSVValue);
+        public static IotHubDataFormat Psv { get; } = new IotHubDataFormat(PsvValue);
         /// <summary>
         /// TXT
         /// Serialized Name: IotHubDataFormat.TXT
         /// </summary>
-        public static IotHubDataFormat TXT { get; } = new IotHubDataFormat(TXTValue);
+        public static IotHubDataFormat Txt { get; } = new IotHubDataFormat(TxtValue);
         /// <summary>
         /// RAW
         /// Serialized Name: IotHubDataFormat.RAW
         /// </summary>
-        public static IotHubDataFormat RAW { get; } = new IotHubDataFormat(RAWValue);
+        public static IotHubDataFormat Raw { get; } = new IotHubDataFormat(RawValue);
         /// <summary>
         /// SINGLEJSON
         /// Serialized Name: IotHubDataFormat.SINGLEJSON
         /// </summary>
-        public static IotHubDataFormat Singlejson { get; } = new IotHubDataFormat(SinglejsonValue);
+        public static IotHubDataFormat SingleJson { get; } = new IotHubDataFormat(SingleJsonValue);
         /// <summary>
         /// AVRO
         /// Serialized Name: IotHubDataFormat.AVRO
@@ -111,17 +111,17 @@ namespace Azure.ResourceManager.Synapse.Models
         /// ORC
         /// Serialized Name: IotHubDataFormat.ORC
         /// </summary>
-        public static IotHubDataFormat ORC { get; } = new IotHubDataFormat(ORCValue);
+        public static IotHubDataFormat Orc { get; } = new IotHubDataFormat(OrcValue);
         /// <summary>
         /// APACHEAVRO
         /// Serialized Name: IotHubDataFormat.APACHEAVRO
         /// </summary>
-        public static IotHubDataFormat Apacheavro { get; } = new IotHubDataFormat(ApacheavroValue);
+        public static IotHubDataFormat ApacheAvro { get; } = new IotHubDataFormat(ApacheAvroValue);
         /// <summary>
         /// W3CLOGFILE
         /// Serialized Name: IotHubDataFormat.W3CLOGFILE
         /// </summary>
-        public static IotHubDataFormat W3Clogfile { get; } = new IotHubDataFormat(W3ClogfileValue);
+        public static IotHubDataFormat W3CLogfile { get; } = new IotHubDataFormat(W3CLogfileValue);
         /// <summary> Determines if two <see cref="IotHubDataFormat"/> values are the same. </summary>
         public static bool operator ==(IotHubDataFormat left, IotHubDataFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotHubDataFormat"/> values are not the same. </summary>

@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="azureADOnlyAuthenticationName"> name of the property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SynapseAadOnlyAuthenticationResource>> GetSynapseAadOnlyAuthenticationAsync(AzureADOnlyAuthenticationName azureADOnlyAuthenticationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseAadOnlyAuthenticationResource>> GetSynapseAadOnlyAuthenticationAsync(SynapseAadOnlyAuthenticationName azureADOnlyAuthenticationName, CancellationToken cancellationToken = default)
         {
             return await GetSynapseAadOnlyAuthentications().GetAsync(azureADOnlyAuthenticationName, cancellationToken).ConfigureAwait(false);
         }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="azureADOnlyAuthenticationName"> name of the property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<SynapseAadOnlyAuthenticationResource> GetSynapseAadOnlyAuthentication(AzureADOnlyAuthenticationName azureADOnlyAuthenticationName, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseAadOnlyAuthenticationResource> GetSynapseAadOnlyAuthentication(SynapseAadOnlyAuthenticationName azureADOnlyAuthenticationName, CancellationToken cancellationToken = default)
         {
             return GetSynapseAadOnlyAuthentications().Get(azureADOnlyAuthenticationName, cancellationToken);
         }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SynapseServerBlobAuditingPolicyResource>> GetSynapseServerBlobAuditingPolicyAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseServerBlobAuditingPolicyResource>> GetSynapseServerBlobAuditingPolicyAsync(SynapseBlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             return await GetSynapseServerBlobAuditingPolicies().GetAsync(blobAuditingPolicyName, cancellationToken).ConfigureAwait(false);
         }
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<SynapseServerBlobAuditingPolicyResource> GetSynapseServerBlobAuditingPolicy(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseServerBlobAuditingPolicyResource> GetSynapseServerBlobAuditingPolicy(SynapseBlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             return GetSynapseServerBlobAuditingPolicies().Get(blobAuditingPolicyName, cancellationToken);
         }
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SynapseExtendedServerBlobAuditingPolicyResource>> GetSynapseExtendedServerBlobAuditingPolicyAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseExtendedServerBlobAuditingPolicyResource>> GetSynapseExtendedServerBlobAuditingPolicyAsync(SynapseBlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             return await GetSynapseExtendedServerBlobAuditingPolicies().GetAsync(blobAuditingPolicyName, cancellationToken).ConfigureAwait(false);
         }
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<SynapseExtendedServerBlobAuditingPolicyResource> GetSynapseExtendedServerBlobAuditingPolicy(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseExtendedServerBlobAuditingPolicyResource> GetSynapseExtendedServerBlobAuditingPolicy(SynapseBlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
             return GetSynapseExtendedServerBlobAuditingPolicies().Get(blobAuditingPolicyName, cancellationToken);
         }
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="encryptionProtectorName"> The name of the encryption protector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SynapseEncryptionProtectorResource>> GetSynapseEncryptionProtectorAsync(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseEncryptionProtectorResource>> GetSynapseEncryptionProtectorAsync(SynapseEncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
             return await GetSynapseEncryptionProtectors().GetAsync(encryptionProtectorName, cancellationToken).ConfigureAwait(false);
         }
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="encryptionProtectorName"> The name of the encryption protector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<SynapseEncryptionProtectorResource> GetSynapseEncryptionProtector(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseEncryptionProtectorResource> GetSynapseEncryptionProtector(SynapseEncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
             return GetSynapseEncryptionProtectors().Get(encryptionProtectorName, cancellationToken);
         }

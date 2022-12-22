@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="geoBackupPolicyName"> The name of the geo backup policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SynapseGeoBackupPolicyResource>> GetSynapseGeoBackupPolicyAsync(GeoBackupPolicyName geoBackupPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseGeoBackupPolicyResource>> GetSynapseGeoBackupPolicyAsync(SynapseGeoBackupPolicyName geoBackupPolicyName, CancellationToken cancellationToken = default)
         {
             return await GetSynapseGeoBackupPolicies().GetAsync(geoBackupPolicyName, cancellationToken).ConfigureAwait(false);
         }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="geoBackupPolicyName"> The name of the geo backup policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<SynapseGeoBackupPolicyResource> GetSynapseGeoBackupPolicy(GeoBackupPolicyName geoBackupPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseGeoBackupPolicyResource> GetSynapseGeoBackupPolicy(SynapseGeoBackupPolicyName geoBackupPolicyName, CancellationToken cancellationToken = default)
         {
             return GetSynapseGeoBackupPolicies().Get(geoBackupPolicyName, cancellationToken);
         }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="dataWarehouseUserActivityName"> The activity name of the Sql pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SynapseDataWarehouseUserActivityResource>> GetSynapseDataWarehouseUserActivityAsync(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseDataWarehouseUserActivityResource>> GetSynapseDataWarehouseUserActivityAsync(SynapseDataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
             return await GetSynapseDataWarehouseUserActivities().GetAsync(dataWarehouseUserActivityName, cancellationToken).ConfigureAwait(false);
         }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="dataWarehouseUserActivityName"> The activity name of the Sql pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<SynapseDataWarehouseUserActivityResource> GetSynapseDataWarehouseUserActivity(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseDataWarehouseUserActivityResource> GetSynapseDataWarehouseUserActivity(SynapseDataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
             return GetSynapseDataWarehouseUserActivities().Get(dataWarehouseUserActivityName, cancellationToken);
         }
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SynapseSqlPoolConnectionPolicyResource>> GetSynapseSqlPoolConnectionPolicyAsync(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseSqlPoolConnectionPolicyResource>> GetSynapseSqlPoolConnectionPolicyAsync(SqlPoolConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
         {
             return await GetSynapseSqlPoolConnectionPolicies().GetAsync(connectionPolicyName, cancellationToken).ConfigureAwait(false);
         }
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<SynapseSqlPoolConnectionPolicyResource> GetSynapseSqlPoolConnectionPolicy(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseSqlPoolConnectionPolicyResource> GetSynapseSqlPoolConnectionPolicy(SqlPoolConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
         {
             return GetSynapseSqlPoolConnectionPolicies().Get(connectionPolicyName, cancellationToken);
         }
@@ -871,19 +871,19 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: SqlPoolRestorePoints_Create
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="createSqlPoolRestorePointDefinition"> The definition for creating the restore point of this Sql pool. </param>
+        /// <param name="content"> The definition for creating the restore point of this Sql pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="createSqlPoolRestorePointDefinition"/> is null. </exception>
-        public virtual async Task<ArmOperation<SynapseRestorePointResource>> CreateSqlPoolRestorePointAsync(WaitUntil waitUntil, CreateSqlPoolRestorePointDefinition createSqlPoolRestorePointDefinition, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<SynapseRestorePointResource>> CreateSqlPoolRestorePointAsync(WaitUntil waitUntil, SqlPoolCreateRestorePointContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(createSqlPoolRestorePointDefinition, nameof(createSqlPoolRestorePointDefinition));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _synapseRestorePointSqlPoolRestorePointsClientDiagnostics.CreateScope("SynapseSqlPoolResource.CreateSqlPoolRestorePoint");
             scope.Start();
             try
             {
-                var response = await _synapseRestorePointSqlPoolRestorePointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createSqlPoolRestorePointDefinition, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseRestorePointResource>(new SynapseRestorePointOperationSource(Client), _synapseRestorePointSqlPoolRestorePointsClientDiagnostics, Pipeline, _synapseRestorePointSqlPoolRestorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createSqlPoolRestorePointDefinition).Request, response, OperationFinalStateVia.Location);
+                var response = await _synapseRestorePointSqlPoolRestorePointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new SynapseArmOperation<SynapseRestorePointResource>(new SynapseRestorePointOperationSource(Client), _synapseRestorePointSqlPoolRestorePointsClientDiagnostics, Pipeline, _synapseRestorePointSqlPoolRestorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -901,19 +901,19 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: SqlPoolRestorePoints_Create
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="createSqlPoolRestorePointDefinition"> The definition for creating the restore point of this Sql pool. </param>
+        /// <param name="content"> The definition for creating the restore point of this Sql pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="createSqlPoolRestorePointDefinition"/> is null. </exception>
-        public virtual ArmOperation<SynapseRestorePointResource> CreateSqlPoolRestorePoint(WaitUntil waitUntil, CreateSqlPoolRestorePointDefinition createSqlPoolRestorePointDefinition, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<SynapseRestorePointResource> CreateSqlPoolRestorePoint(WaitUntil waitUntil, SqlPoolCreateRestorePointContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(createSqlPoolRestorePointDefinition, nameof(createSqlPoolRestorePointDefinition));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _synapseRestorePointSqlPoolRestorePointsClientDiagnostics.CreateScope("SynapseSqlPoolResource.CreateSqlPoolRestorePoint");
             scope.Start();
             try
             {
-                var response = _synapseRestorePointSqlPoolRestorePointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createSqlPoolRestorePointDefinition, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseRestorePointResource>(new SynapseRestorePointOperationSource(Client), _synapseRestorePointSqlPoolRestorePointsClientDiagnostics, Pipeline, _synapseRestorePointSqlPoolRestorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createSqlPoolRestorePointDefinition).Request, response, OperationFinalStateVia.Location);
+                var response = _synapseRestorePointSqlPoolRestorePointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new SynapseArmOperation<SynapseRestorePointResource>(new SynapseRestorePointOperationSource(Client), _synapseRestorePointSqlPoolRestorePointsClientDiagnostics, Pipeline, _synapseRestorePointSqlPoolRestorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

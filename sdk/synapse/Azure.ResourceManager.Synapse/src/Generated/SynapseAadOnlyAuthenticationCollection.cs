@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="data"> Azure Active Directory Property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SynapseAadOnlyAuthenticationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AzureADOnlyAuthenticationName azureADOnlyAuthenticationName, SynapseAadOnlyAuthenticationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SynapseAadOnlyAuthenticationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SynapseAadOnlyAuthenticationName azureADOnlyAuthenticationName, SynapseAadOnlyAuthenticationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="data"> Azure Active Directory Property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SynapseAadOnlyAuthenticationResource> CreateOrUpdate(WaitUntil waitUntil, AzureADOnlyAuthenticationName azureADOnlyAuthenticationName, SynapseAadOnlyAuthenticationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SynapseAadOnlyAuthenticationResource> CreateOrUpdate(WaitUntil waitUntil, SynapseAadOnlyAuthenticationName azureADOnlyAuthenticationName, SynapseAadOnlyAuthenticationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="azureADOnlyAuthenticationName"> name of the property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SynapseAadOnlyAuthenticationResource>> GetAsync(AzureADOnlyAuthenticationName azureADOnlyAuthenticationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseAadOnlyAuthenticationResource>> GetAsync(SynapseAadOnlyAuthenticationName azureADOnlyAuthenticationName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SynapseAadOnlyAuthenticationCollection.Get");
             scope.Start();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="azureADOnlyAuthenticationName"> name of the property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SynapseAadOnlyAuthenticationResource> Get(AzureADOnlyAuthenticationName azureADOnlyAuthenticationName, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseAadOnlyAuthenticationResource> Get(SynapseAadOnlyAuthenticationName azureADOnlyAuthenticationName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SynapseAadOnlyAuthenticationCollection.Get");
             scope.Start();
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="azureADOnlyAuthenticationName"> name of the property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(AzureADOnlyAuthenticationName azureADOnlyAuthenticationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(SynapseAadOnlyAuthenticationName azureADOnlyAuthenticationName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SynapseAadOnlyAuthenticationCollection.Exists");
             scope.Start();
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="azureADOnlyAuthenticationName"> name of the property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(AzureADOnlyAuthenticationName azureADOnlyAuthenticationName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(SynapseAadOnlyAuthenticationName azureADOnlyAuthenticationName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseAadOnlyAuthenticationAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SynapseAadOnlyAuthenticationCollection.Exists");
             scope.Start();

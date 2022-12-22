@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<DateTimeOffset> time = default;
             Optional<string> content = default;
             Optional<string> filename = default;
-            Optional<ConfigurationType> configurationType = default;
+            Optional<SynapseSparkConfigurationType> configurationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("time"))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    configurationType = new ConfigurationType(property.Value.GetString());
+                    configurationType = new SynapseSparkConfigurationType(property.Value.GetString());
                     continue;
                 }
             }

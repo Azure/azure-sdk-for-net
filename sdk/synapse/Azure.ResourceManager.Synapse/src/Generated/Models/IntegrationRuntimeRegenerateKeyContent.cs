@@ -22,6 +22,6 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The name of the authentication key to regenerate.
         /// Serialized Name: IntegrationRuntimeRegenerateKeyParameters.keyName
         /// </summary>
-        public IntegrationRuntimeAuthKeyName? KeyName { get; set; }
+        public SynapseIntegrationRuntimeAuthKeyName? KeyName { get; set; }
     }
 }

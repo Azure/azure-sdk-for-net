@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="properties">
         /// Integration runtime properties.
         /// Serialized Name: IntegrationRuntimeResource.properties
-        /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SynapseIntegrationRuntimeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public SynapseIntegrationRuntimeData(IntegrationRuntime properties)
+        public SynapseIntegrationRuntimeData(SynapseIntegrationRuntimeProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="properties">
         /// Integration runtime properties.
         /// Serialized Name: IntegrationRuntimeResource.properties
-        /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SynapseIntegrationRuntimeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
         /// </param>
         /// <param name="etag">
         /// Resource Etag.
         /// Serialized Name: AzureEntityResource.etag
         /// </param>
-        internal SynapseIntegrationRuntimeData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IntegrationRuntime properties, ETag? etag) : base(id, name, resourceType, systemData)
+        internal SynapseIntegrationRuntimeData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, SynapseIntegrationRuntimeProperties properties, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = etag;
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.Synapse
         /// <summary>
         /// Integration runtime properties.
         /// Serialized Name: IntegrationRuntimeResource.properties
-        /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="SynapseIntegrationRuntimeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
         /// </summary>
-        public IntegrationRuntime Properties { get; set; }
+        public SynapseIntegrationRuntimeProperties Properties { get; set; }
         /// <summary>
         /// Resource Etag.
         /// Serialized Name: AzureEntityResource.etag

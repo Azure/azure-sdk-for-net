@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Synapse
             Core.ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> principalId = default;
-            Optional<DatabasePrincipalRole> role = default;
+            Optional<SynapseDatabasePrincipalRole> role = default;
             Optional<Guid> tenantId = default;
             Optional<PrincipalType> principalType = default;
             Optional<string> tenantName = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            role = new DatabasePrincipalRole(property0.Value.GetString());
+                            role = new SynapseDatabasePrincipalRole(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("tenantId"))

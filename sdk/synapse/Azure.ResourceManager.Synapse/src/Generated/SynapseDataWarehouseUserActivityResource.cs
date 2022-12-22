@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse
     public partial class SynapseDataWarehouseUserActivityResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseDataWarehouseUserActivityResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, DataWarehouseUserActivityName dataWarehouseUserActivityName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseDataWarehouseUserActivityName dataWarehouseUserActivityName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}";
             return new ResourceIdentifier(resourceId);

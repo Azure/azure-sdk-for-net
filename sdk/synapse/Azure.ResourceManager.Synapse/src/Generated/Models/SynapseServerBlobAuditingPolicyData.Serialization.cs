@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Synapse
             string name = default;
             Core.ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<BlobAuditingPolicyState> state = default;
+            Optional<SynapseBlobAuditingPolicyState> state = default;
             Optional<string> storageEndpoint = default;
             Optional<string> storageAccountAccessKey = default;
             Optional<int> retentionDays = default;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            state = property0.Value.GetString().ToBlobAuditingPolicyState();
+                            state = property0.Value.GetString().ToSynapseBlobAuditingPolicyState();
                             continue;
                         }
                         if (property0.NameEquals("storageEndpoint"))

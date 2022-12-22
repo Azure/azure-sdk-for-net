@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="content"> The parameters for getting a SSIS object metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SsisObjectMetadata" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadataAsync(GetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadataAsync(SynapseGetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SsisObjectMetadata>> FirstPageFunc(int? pageSizeHint)
             {
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="content"> The parameters for getting a SSIS object metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SsisObjectMetadata" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadata(GetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadata(SynapseGetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
         {
             Page<SsisObjectMetadata> FirstPageFunc(int? pageSizeHint)
             {

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="data"> The required parameters for creating or updating the geo backup policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SynapseGeoBackupPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, GeoBackupPolicyName geoBackupPolicyName, SynapseGeoBackupPolicyData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SynapseGeoBackupPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SynapseGeoBackupPolicyName geoBackupPolicyName, SynapseGeoBackupPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="data"> The required parameters for creating or updating the geo backup policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SynapseGeoBackupPolicyResource> CreateOrUpdate(WaitUntil waitUntil, GeoBackupPolicyName geoBackupPolicyName, SynapseGeoBackupPolicyData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SynapseGeoBackupPolicyResource> CreateOrUpdate(WaitUntil waitUntil, SynapseGeoBackupPolicyName geoBackupPolicyName, SynapseGeoBackupPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="geoBackupPolicyName"> The name of the geo backup policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SynapseGeoBackupPolicyResource>> GetAsync(GeoBackupPolicyName geoBackupPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseGeoBackupPolicyResource>> GetAsync(SynapseGeoBackupPolicyName geoBackupPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseGeoBackupPolicySqlPoolGeoBackupPoliciesClientDiagnostics.CreateScope("SynapseGeoBackupPolicyCollection.Get");
             scope.Start();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="geoBackupPolicyName"> The name of the geo backup policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SynapseGeoBackupPolicyResource> Get(GeoBackupPolicyName geoBackupPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseGeoBackupPolicyResource> Get(SynapseGeoBackupPolicyName geoBackupPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseGeoBackupPolicySqlPoolGeoBackupPoliciesClientDiagnostics.CreateScope("SynapseGeoBackupPolicyCollection.Get");
             scope.Start();
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="geoBackupPolicyName"> The name of the geo backup policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(GeoBackupPolicyName geoBackupPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(SynapseGeoBackupPolicyName geoBackupPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseGeoBackupPolicySqlPoolGeoBackupPoliciesClientDiagnostics.CreateScope("SynapseGeoBackupPolicyCollection.Exists");
             scope.Start();
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="geoBackupPolicyName"> The name of the geo backup policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(GeoBackupPolicyName geoBackupPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(SynapseGeoBackupPolicyName geoBackupPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseGeoBackupPolicySqlPoolGeoBackupPoliciesClientDiagnostics.CreateScope("SynapseGeoBackupPolicyCollection.Exists");
             scope.Start();

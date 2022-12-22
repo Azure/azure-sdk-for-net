@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="dataWarehouseUserActivityName"> The activity name of the Sql pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SynapseDataWarehouseUserActivityResource>> GetAsync(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseDataWarehouseUserActivityResource>> GetAsync(SynapseDataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseDataWarehouseUserActivitySqlPoolDataWarehouseUserActivitiesClientDiagnostics.CreateScope("SynapseDataWarehouseUserActivityCollection.Get");
             scope.Start();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="dataWarehouseUserActivityName"> The activity name of the Sql pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SynapseDataWarehouseUserActivityResource> Get(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseDataWarehouseUserActivityResource> Get(SynapseDataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseDataWarehouseUserActivitySqlPoolDataWarehouseUserActivitiesClientDiagnostics.CreateScope("SynapseDataWarehouseUserActivityCollection.Get");
             scope.Start();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="dataWarehouseUserActivityName"> The activity name of the Sql pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(SynapseDataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseDataWarehouseUserActivitySqlPoolDataWarehouseUserActivitiesClientDiagnostics.CreateScope("SynapseDataWarehouseUserActivityCollection.Exists");
             scope.Start();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="dataWarehouseUserActivityName"> The activity name of the Sql pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(SynapseDataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseDataWarehouseUserActivitySqlPoolDataWarehouseUserActivitiesClientDiagnostics.CreateScope("SynapseDataWarehouseUserActivityCollection.Exists");
             scope.Start();

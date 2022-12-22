@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Serialized Name: IntegrationRuntimeDataFlowProperties.cleanup
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeDataFlowProperties(DataFlowComputeType? computeType, int? coreCount, int? timeToLive, bool? cleanup, IDictionary<string, BinaryData> additionalProperties)
+        internal IntegrationRuntimeDataFlowProperties(SynapseDataFlowComputeType? computeType, int? coreCount, int? timeToLive, bool? cleanup, IDictionary<string, BinaryData> additionalProperties)
         {
             ComputeType = computeType;
             CoreCount = coreCount;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Compute type of the cluster which will execute data flow job.
         /// Serialized Name: IntegrationRuntimeDataFlowProperties.computeType
         /// </summary>
-        public DataFlowComputeType? ComputeType { get; set; }
+        public SynapseDataFlowComputeType? ComputeType { get; set; }
         /// <summary>
         /// Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272.
         /// Serialized Name: IntegrationRuntimeDataFlowProperties.coreCount

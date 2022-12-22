@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The path to contain the staged data in the Blob storage.
         /// Serialized Name: IntegrationRuntimeDataProxyProperties.path
         /// </param>
-        internal IntegrationRuntimeDataProxyProperties(EntityReference connectVia, EntityReference stagingLinkedService, string path)
+        internal IntegrationRuntimeDataProxyProperties(SynapseEntityReference connectVia, SynapseEntityReference stagingLinkedService, string path)
         {
             ConnectVia = connectVia;
             StagingLinkedService = stagingLinkedService;
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The self-hosted integration runtime reference.
         /// Serialized Name: IntegrationRuntimeDataProxyProperties.connectVia
         /// </summary>
-        public EntityReference ConnectVia { get; set; }
+        public SynapseEntityReference ConnectVia { get; set; }
         /// <summary>
         /// The staging linked service reference.
         /// Serialized Name: IntegrationRuntimeDataProxyProperties.stagingLinkedService
         /// </summary>
-        public EntityReference StagingLinkedService { get; set; }
+        public SynapseEntityReference StagingLinkedService { get; set; }
         /// <summary>
         /// The path to contain the staged data in the Blob storage.
         /// Serialized Name: IntegrationRuntimeDataProxyProperties.path

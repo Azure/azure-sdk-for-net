@@ -480,10 +480,10 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: KustoPools_ListSkusByResource
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AzureResourceSku> GetSkusByResourceAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SynapseDataSourceResourceSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SynapseDataSourceResourceSku> GetSkusByResourceAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AzureResourceSku>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SynapseDataSourceResourceSku>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.GetSkusByResource");
                 scope.Start();
@@ -507,10 +507,10 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: KustoPools_ListSkusByResource
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureResourceSku" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AzureResourceSku> GetSkusByResource(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SynapseDataSourceResourceSku" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SynapseDataSourceResourceSku> GetSkusByResource(CancellationToken cancellationToken = default)
         {
-            Page<AzureResourceSku> FirstPageFunc(int? pageSizeHint)
+            Page<SynapseDataSourceResourceSku> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.GetSkusByResource");
                 scope.Start();
@@ -708,10 +708,10 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: KustoPools_ListFollowerDatabases
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FollowerDatabaseDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FollowerDatabaseDefinition> GetFollowerDatabasesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SynapseFollowerDatabaseDefinition" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SynapseFollowerDatabaseDefinition> GetFollowerDatabasesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<FollowerDatabaseDefinition>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SynapseFollowerDatabaseDefinition>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.GetFollowerDatabases");
                 scope.Start();
@@ -735,10 +735,10 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: KustoPools_ListFollowerDatabases
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FollowerDatabaseDefinition" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FollowerDatabaseDefinition> GetFollowerDatabases(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SynapseFollowerDatabaseDefinition" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SynapseFollowerDatabaseDefinition> GetFollowerDatabases(CancellationToken cancellationToken = default)
         {
-            Page<FollowerDatabaseDefinition> FirstPageFunc(int? pageSizeHint)
+            Page<SynapseFollowerDatabaseDefinition> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.GetFollowerDatabases");
                 scope.Start();
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="followerDatabaseToRemove"> The follower databases properties to remove. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="followerDatabaseToRemove"/> is null. </exception>
-        public virtual async Task<ArmOperation> DetachFollowerDatabasesAsync(WaitUntil waitUntil, FollowerDatabaseDefinition followerDatabaseToRemove, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DetachFollowerDatabasesAsync(WaitUntil waitUntil, SynapseFollowerDatabaseDefinition followerDatabaseToRemove, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(followerDatabaseToRemove, nameof(followerDatabaseToRemove));
 
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="followerDatabaseToRemove"> The follower databases properties to remove. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="followerDatabaseToRemove"/> is null. </exception>
-        public virtual ArmOperation DetachFollowerDatabases(WaitUntil waitUntil, FollowerDatabaseDefinition followerDatabaseToRemove, CancellationToken cancellationToken = default)
+        public virtual ArmOperation DetachFollowerDatabases(WaitUntil waitUntil, SynapseFollowerDatabaseDefinition followerDatabaseToRemove, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(followerDatabaseToRemove, nameof(followerDatabaseToRemove));
 
@@ -824,11 +824,11 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="content"> The name of the Kusto Pool child resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckNameResult>> CheckNameAvailabilityKustoPoolChildResourceAsync(DatabaseCheckNameContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KustoPoolNameAvailabilityResult>> CheckKustoPoolChildResourceNameAvailabilityAsync(KustoPoolChildResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _kustoPoolChildResourceClientDiagnostics.CreateScope("SynapseKustoPoolResource.CheckNameAvailabilityKustoPoolChildResource");
+            using var scope = _kustoPoolChildResourceClientDiagnostics.CreateScope("SynapseKustoPoolResource.CheckKustoPoolChildResourceNameAvailability");
             scope.Start();
             try
             {
@@ -850,11 +850,11 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="content"> The name of the Kusto Pool child resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckNameResult> CheckNameAvailabilityKustoPoolChildResource(DatabaseCheckNameContent content, CancellationToken cancellationToken = default)
+        public virtual Response<KustoPoolNameAvailabilityResult> CheckKustoPoolChildResourceNameAvailability(KustoPoolChildResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _kustoPoolChildResourceClientDiagnostics.CreateScope("SynapseKustoPoolResource.CheckNameAvailabilityKustoPoolChildResource");
+            using var scope = _kustoPoolChildResourceClientDiagnostics.CreateScope("SynapseKustoPoolResource.CheckKustoPoolChildResourceNameAvailability");
             scope.Start();
             try
             {
@@ -876,11 +876,11 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="content"> The name of the principal assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckNameResult>> CheckNameAvailabilityKustoPoolPrincipalAssignmentAsync(ClusterPrincipalAssignmentCheckNameContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KustoPoolNameAvailabilityResult>> CheckKustoPoolPrincipalAssignmentNameAvailabilityAsync(KustoPoolPrincipalAssignmentNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics.CreateScope("SynapseKustoPoolResource.CheckNameAvailabilityKustoPoolPrincipalAssignment");
+            using var scope = _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics.CreateScope("SynapseKustoPoolResource.CheckKustoPoolPrincipalAssignmentNameAvailability");
             scope.Start();
             try
             {
@@ -902,11 +902,11 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="content"> The name of the principal assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckNameResult> CheckNameAvailabilityKustoPoolPrincipalAssignment(ClusterPrincipalAssignmentCheckNameContent content, CancellationToken cancellationToken = default)
+        public virtual Response<KustoPoolNameAvailabilityResult> CheckKustoPoolPrincipalAssignmentNameAvailability(KustoPoolPrincipalAssignmentNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics.CreateScope("SynapseKustoPoolResource.CheckNameAvailabilityKustoPoolPrincipalAssignment");
+            using var scope = _synapseClusterPrincipalAssignmentKustoPoolPrincipalAssignmentsClientDiagnostics.CreateScope("SynapseKustoPoolResource.CheckKustoPoolPrincipalAssignmentNameAvailability");
             scope.Start();
             try
             {

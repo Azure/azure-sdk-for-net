@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Synapse
         /// Specifies the time that the sql pool was deleted
         /// Serialized Name: SqlPool.properties.sourceDatabaseDeletionDate
         /// </param>
-        internal SynapseSqlPoolData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SynapseSku sku, long? maxSizeBytes, string collation, string sourceDatabaseId, string recoverableDatabaseId, string provisioningState, string status, DateTimeOffset? restorePointInTime, CreateMode? createMode, DateTimeOffset? createdOn, StorageAccountType? storageAccountType, DateTimeOffset? sourceDatabaseDeletionOn) : base(id, name, resourceType, systemData, tags, location)
+        internal SynapseSqlPoolData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SynapseSku sku, long? maxSizeBytes, string collation, string sourceDatabaseId, string recoverableDatabaseId, string provisioningState, string status, DateTimeOffset? restorePointInTime, SqlPoolCreateMode? createMode, DateTimeOffset? createdOn, StorageAccountType? storageAccountType, DateTimeOffset? sourceDatabaseDeletionOn) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             MaxSizeBytes = maxSizeBytes;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Synapse
         /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool&apos;s original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
         /// Serialized Name: SqlPool.properties.createMode
         /// </summary>
-        public CreateMode? CreateMode { get; set; }
+        public SqlPoolCreateMode? CreateMode { get; set; }
         /// <summary>
         /// Date the SQL pool was created
         /// Serialized Name: SqlPool.properties.creationDate

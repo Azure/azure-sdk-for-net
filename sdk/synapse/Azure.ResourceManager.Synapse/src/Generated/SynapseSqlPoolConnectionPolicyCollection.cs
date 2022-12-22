@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SynapseSqlPoolConnectionPolicyResource>> GetAsync(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseSqlPoolConnectionPolicyResource>> GetAsync(SqlPoolConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseSqlPoolConnectionPolicySqlPoolConnectionPoliciesClientDiagnostics.CreateScope("SynapseSqlPoolConnectionPolicyCollection.Get");
             scope.Start();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SynapseSqlPoolConnectionPolicyResource> Get(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseSqlPoolConnectionPolicyResource> Get(SqlPoolConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseSqlPoolConnectionPolicySqlPoolConnectionPoliciesClientDiagnostics.CreateScope("SynapseSqlPoolConnectionPolicyCollection.Get");
             scope.Start();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(SqlPoolConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseSqlPoolConnectionPolicySqlPoolConnectionPoliciesClientDiagnostics.CreateScope("SynapseSqlPoolConnectionPolicyCollection.Exists");
             scope.Start();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(ConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(SqlPoolConnectionPolicyName connectionPolicyName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseSqlPoolConnectionPolicySqlPoolConnectionPoliciesClientDiagnostics.CreateScope("SynapseSqlPoolConnectionPolicyCollection.Exists");
             scope.Start();

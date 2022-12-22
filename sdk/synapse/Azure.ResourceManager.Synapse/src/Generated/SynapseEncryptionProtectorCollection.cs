@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="data"> The requested encryption protector resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SynapseEncryptionProtectorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, EncryptionProtectorName encryptionProtectorName, SynapseEncryptionProtectorData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SynapseEncryptionProtectorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SynapseEncryptionProtectorName encryptionProtectorName, SynapseEncryptionProtectorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="data"> The requested encryption protector resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SynapseEncryptionProtectorResource> CreateOrUpdate(WaitUntil waitUntil, EncryptionProtectorName encryptionProtectorName, SynapseEncryptionProtectorData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SynapseEncryptionProtectorResource> CreateOrUpdate(WaitUntil waitUntil, SynapseEncryptionProtectorName encryptionProtectorName, SynapseEncryptionProtectorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="encryptionProtectorName"> The name of the encryption protector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SynapseEncryptionProtectorResource>> GetAsync(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseEncryptionProtectorResource>> GetAsync(SynapseEncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorClientDiagnostics.CreateScope("SynapseEncryptionProtectorCollection.Get");
             scope.Start();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="encryptionProtectorName"> The name of the encryption protector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SynapseEncryptionProtectorResource> Get(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseEncryptionProtectorResource> Get(SynapseEncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorClientDiagnostics.CreateScope("SynapseEncryptionProtectorCollection.Get");
             scope.Start();
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="encryptionProtectorName"> The name of the encryption protector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(SynapseEncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorClientDiagnostics.CreateScope("SynapseEncryptionProtectorCollection.Exists");
             scope.Start();
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="encryptionProtectorName"> The name of the encryption protector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(SynapseEncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorClientDiagnostics.CreateScope("SynapseEncryptionProtectorCollection.Exists");
             scope.Start();

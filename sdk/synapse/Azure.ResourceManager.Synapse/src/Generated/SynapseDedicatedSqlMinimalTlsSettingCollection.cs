@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="data"> minimal tls settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SynapseDedicatedSqlMinimalTlsSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, DedicatedSQLMinimalTlsSettingsName dedicatedSQLminimalTlsSettingsName, SynapseDedicatedSqlMinimalTlsSettingData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SynapseDedicatedSqlMinimalTlsSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SynapseDedicatedSqlMinimalTlsSettingName dedicatedSQLminimalTlsSettingsName, SynapseDedicatedSqlMinimalTlsSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="data"> minimal tls settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SynapseDedicatedSqlMinimalTlsSettingResource> CreateOrUpdate(WaitUntil waitUntil, DedicatedSQLMinimalTlsSettingsName dedicatedSQLminimalTlsSettingsName, SynapseDedicatedSqlMinimalTlsSettingData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SynapseDedicatedSqlMinimalTlsSettingResource> CreateOrUpdate(WaitUntil waitUntil, SynapseDedicatedSqlMinimalTlsSettingName dedicatedSQLminimalTlsSettingsName, SynapseDedicatedSqlMinimalTlsSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

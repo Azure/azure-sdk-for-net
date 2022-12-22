@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Duration of maintenance window in minutes.
         /// Serialized Name: MaintenanceWindowTimeRange.duration
         /// </param>
-        internal MaintenanceWindowTimeRange(DayOfWeek? dayOfWeek, TimeSpan? startOn, TimeSpan? duration)
+        internal MaintenanceWindowTimeRange(SynapseDayOfWeek? dayOfWeek, TimeSpan? startOn, TimeSpan? duration)
         {
             DayOfWeek = dayOfWeek;
             StartOn = startOn;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Day of maintenance window.
         /// Serialized Name: MaintenanceWindowTimeRange.dayOfWeek
         /// </summary>
-        public DayOfWeek? DayOfWeek { get; set; }
+        public SynapseDayOfWeek? DayOfWeek { get; set; }
         /// <summary>
         /// Start time minutes offset from 12am.
         /// Serialized Name: MaintenanceWindowTimeRange.startTime

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The type of the spark config properties file.
         /// Serialized Name: SparkConfigProperties.configurationType
         /// </param>
-        internal SparkConfigProperties(DateTimeOffset? time, string content, string filename, ConfigurationType? configurationType)
+        internal SparkConfigProperties(DateTimeOffset? time, string content, string filename, SynapseSparkConfigurationType? configurationType)
         {
             Time = time;
             Content = content;
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The type of the spark config properties file.
         /// Serialized Name: SparkConfigProperties.configurationType
         /// </summary>
-        public ConfigurationType? ConfigurationType { get; set; }
+        public SynapseSparkConfigurationType? ConfigurationType { get; set; }
     }
 }

@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.Synapse
             Core.ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
-            Optional<AutoScaleProperties> autoScale = default;
+            Optional<SynapseBigDataPoolAutoScaleProperties> autoScale = default;
             Optional<DateTimeOffset> creationDate = default;
-            Optional<AutoPauseProperties> autoPause = default;
+            Optional<SynapseBigDataPoolAutoPauseProperties> autoPause = default;
             Optional<bool> isComputeIsolationEnabled = default;
             Optional<bool> isAutotuneEnabled = default;
             Optional<bool> sessionLevelPackagesEnabled = default;
             Optional<int> cacheSize = default;
-            Optional<DynamicExecutorAllocation> dynamicExecutorAllocation = default;
+            Optional<SynapseDynamicExecutorAllocation> dynamicExecutorAllocation = default;
             Optional<string> sparkEventsFolder = default;
             Optional<int> nodeCount = default;
             Optional<LibraryRequirements> libraryRequirements = default;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            autoScale = AutoScaleProperties.DeserializeAutoScaleProperties(property0.Value);
+                            autoScale = SynapseBigDataPoolAutoScaleProperties.DeserializeSynapseBigDataPoolAutoScaleProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("creationDate"))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            autoPause = AutoPauseProperties.DeserializeAutoPauseProperties(property0.Value);
+                            autoPause = SynapseBigDataPoolAutoPauseProperties.DeserializeSynapseBigDataPoolAutoPauseProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isComputeIsolationEnabled"))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dynamicExecutorAllocation = DynamicExecutorAllocation.DeserializeDynamicExecutorAllocation(property0.Value);
+                            dynamicExecutorAllocation = SynapseDynamicExecutorAllocation.DeserializeSynapseDynamicExecutorAllocation(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sparkEventsFolder"))

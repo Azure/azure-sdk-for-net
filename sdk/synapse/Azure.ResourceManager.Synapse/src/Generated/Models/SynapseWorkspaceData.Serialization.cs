@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Synapse
             string name = default;
             Core.ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<DataLakeStorageAccountDetails> defaultDataLakeStorage = default;
+            Optional<SynapseDataLakeStorageAccountDetails> defaultDataLakeStorage = default;
             Optional<string> sqlAdministratorLoginPassword = default;
             Optional<string> managedResourceGroupName = default;
             Optional<string> provisioningState = default;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Synapse
             Optional<IDictionary<string, string>> connectivityEndpoints = default;
             Optional<string> managedVirtualNetwork = default;
             Optional<IList<SynapsePrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<EncryptionDetails> encryption = default;
+            Optional<SynapseEncryptionDetails> encryption = default;
             Optional<Guid> workspaceUID = default;
             Optional<IReadOnlyDictionary<string, BinaryData>> extraProperties = default;
             Optional<ManagedVirtualNetworkSettings> managedVirtualNetworkSettings = default;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultDataLakeStorage = DataLakeStorageAccountDetails.DeserializeDataLakeStorageAccountDetails(property0.Value);
+                            defaultDataLakeStorage = SynapseDataLakeStorageAccountDetails.DeserializeSynapseDataLakeStorageAccountDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sqlAdministratorLoginPassword"))
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = EncryptionDetails.DeserializeEncryptionDetails(property0.Value);
+                            encryption = SynapseEncryptionDetails.DeserializeSynapseEncryptionDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("workspaceUID"))

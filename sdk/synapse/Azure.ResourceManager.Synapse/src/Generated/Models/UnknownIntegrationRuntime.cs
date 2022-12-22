@@ -14,10 +14,10 @@ namespace Azure.ResourceManager.Synapse.Models
     /// The UnknownIntegrationRuntime.
     /// Serialized Name: UnknownIntegrationRuntime
     /// </summary>
-    internal partial class UnknownIntegrationRuntime : IntegrationRuntime
+    internal partial class UnknownIntegrationRuntime : SynapseIntegrationRuntimeProperties
     {
         /// <summary> Initializes a new instance of UnknownIntegrationRuntime. </summary>
-        /// <param name="runtimeType">
+        /// <param name="integrationRuntimeType">
         /// Type of integration runtime.
         /// Serialized Name: IntegrationRuntime.type
         /// </param>
@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Serialized Name: IntegrationRuntime.description
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal UnknownIntegrationRuntime(IntegrationRuntimeType runtimeType, string description, IDictionary<string, BinaryData> additionalProperties) : base(runtimeType, description, additionalProperties)
+        internal UnknownIntegrationRuntime(IntegrationRuntimeType integrationRuntimeType, string description, IDictionary<string, BinaryData> additionalProperties) : base(integrationRuntimeType, description, additionalProperties)
         {
-            RuntimeType = runtimeType;
+            IntegrationRuntimeType = integrationRuntimeType;
         }
     }
 }

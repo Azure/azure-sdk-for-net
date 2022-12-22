@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Synapse
         /// 
         /// Serialized Name: SqlPoolBlobAuditingPolicy.properties.isAzureMonitorTargetEnabled
         /// </param>
-        internal SynapseSqlPoolBlobAuditingPolicyData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string kind, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, IList<string> auditActionsAndGroups, Guid? storageAccountSubscriptionId, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled) : base(id, name, resourceType, systemData)
+        internal SynapseSqlPoolBlobAuditingPolicyData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string kind, SynapseBlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, IList<string> auditActionsAndGroups, Guid? storageAccountSubscriptionId, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             State = state;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Synapse
         /// Specifies the state of the policy. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required.
         /// Serialized Name: SqlPoolBlobAuditingPolicy.properties.state
         /// </summary>
-        public BlobAuditingPolicyState? State { get; set; }
+        public SynapseBlobAuditingPolicyState? State { get; set; }
         /// <summary>
         /// Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint is required.
         /// Serialized Name: SqlPoolBlobAuditingPolicy.properties.storageEndpoint

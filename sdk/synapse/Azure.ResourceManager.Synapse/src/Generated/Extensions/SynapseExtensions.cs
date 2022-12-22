@@ -151,11 +151,11 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="content"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckNameResult>> CheckNameAvailabilityKustoPoolAsync(this SubscriptionResource subscriptionResource, AzureLocation location, KustoPoolCheckNameContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<KustoPoolNameAvailabilityResult>> CheckKustoPoolNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, KustoPoolNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityKustoPoolAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckKustoPoolNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -168,11 +168,11 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="content"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CheckNameResult> CheckNameAvailabilityKustoPool(this SubscriptionResource subscriptionResource, AzureLocation location, KustoPoolCheckNameContent content, CancellationToken cancellationToken = default)
+        public static Response<KustoPoolNameAvailabilityResult> CheckKustoPoolNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, KustoPoolNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityKustoPool(location, content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckKustoPoolNameAvailability(location, content, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)

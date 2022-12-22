@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static ListResourceSkusResult DeserializeListResourceSkusResult(JsonElement element)
         {
-            Optional<IReadOnlyList<AzureResourceSku>> value = default;
+            Optional<IReadOnlyList<SynapseDataSourceResourceSku>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AzureResourceSku> array = new List<AzureResourceSku>();
+                    List<SynapseDataSourceResourceSku> array = new List<SynapseDataSourceResourceSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureResourceSku.DeserializeAzureResourceSku(item));
+                        array.Add(SynapseDataSourceResourceSku.DeserializeSynapseDataSourceResourceSku(item));
                     }
                     value = array;
                     continue;

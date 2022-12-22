@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse
     public partial class SynapseServerBlobAuditingPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseServerBlobAuditingPolicyResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, BlobAuditingPolicyName blobAuditingPolicyName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, SynapseBlobAuditingPolicyName blobAuditingPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/auditingSettings/{blobAuditingPolicyName}";
             return new ResourceIdentifier(resourceId);

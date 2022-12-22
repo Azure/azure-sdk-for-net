@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Synapse
         /// If maskingFunction is set to Text, the character to use for masking the unexposed part of the string. Otherwise, this parameter will be ignored.
         /// Serialized Name: DataMaskingRule.properties.replacementString
         /// </param>
-        internal SynapseDataMaskingRuleData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, string idPropertiesId, string aliasName, DataMaskingRuleState? ruleState, string schemaName, string tableName, string columnName, DataMaskingFunction? maskingFunction, string numberFrom, string numberTo, string prefixSize, string suffixSize, string replacementString) : base(id, name, resourceType, systemData)
+        internal SynapseDataMaskingRuleData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, string idPropertiesId, string aliasName, SynapseDataMaskingRuleState? ruleState, string schemaName, string tableName, string columnName, SynapseDataMaskingFunction? maskingFunction, string numberFrom, string numberTo, string prefixSize, string suffixSize, string replacementString) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Kind = kind;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Synapse
         /// The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn&apos;t already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState.
         /// Serialized Name: DataMaskingRule.properties.ruleState
         /// </summary>
-        public DataMaskingRuleState? RuleState { get; set; }
+        public SynapseDataMaskingRuleState? RuleState { get; set; }
         /// <summary>
         /// The schema name on which the data masking rule is applied.
         /// Serialized Name: DataMaskingRule.properties.schemaName
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Synapse
         /// The masking function that is used for the data masking rule.
         /// Serialized Name: DataMaskingRule.properties.maskingFunction
         /// </summary>
-        public DataMaskingFunction? MaskingFunction { get; set; }
+        public SynapseDataMaskingFunction? MaskingFunction { get; set; }
         /// <summary>
         /// The numberFrom property of the masking rule. Required if maskingFunction is set to Number, otherwise this parameter will be ignored.
         /// Serialized Name: DataMaskingRule.properties.numberFrom

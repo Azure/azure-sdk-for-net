@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of IntegrationRuntimeSsisProperties. </summary>
         public IntegrationRuntimeSsisProperties()
         {
-            ExpressCustomSetupProperties = new ChangeTrackingList<CustomSetupBase>();
+            ExpressCustomSetupProperties = new ChangeTrackingList<SynapseCustomSetupBase>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="expressCustomSetupProperties">
         /// Custom setup without script properties for a SSIS integration runtime.
         /// Serialized Name: IntegrationRuntimeSsisProperties.expressCustomSetupProperties
-        /// Please note <see cref="CustomSetupBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CmdkeySetup"/>, <see cref="ComponentSetup"/> and <see cref="EnvironmentVariableSetup"/>.
+        /// Please note <see cref="SynapseCustomSetupBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SynapseCmdkeySetup"/>, <see cref="SynapseComponentSetup"/> and <see cref="SynapseEnvironmentVariableSetup"/>.
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal IntegrationRuntimeSsisProperties(IntegrationRuntimeSsisCatalogInfo catalogInfo, IntegrationRuntimeLicenseType? licenseType, IntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties, IntegrationRuntimeDataProxyProperties dataProxyProperties, IntegrationRuntimeEdition? edition, IList<CustomSetupBase> expressCustomSetupProperties, IDictionary<string, BinaryData> additionalProperties)
+        internal IntegrationRuntimeSsisProperties(IntegrationRuntimeSsisCatalogInfo catalogInfo, IntegrationRuntimeLicenseType? licenseType, IntegrationRuntimeCustomSetupScriptProperties customSetupScriptProperties, IntegrationRuntimeDataProxyProperties dataProxyProperties, IntegrationRuntimeEdition? edition, IList<SynapseCustomSetupBase> expressCustomSetupProperties, IDictionary<string, BinaryData> additionalProperties)
         {
             CatalogInfo = catalogInfo;
             LicenseType = licenseType;
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary>
         /// Custom setup without script properties for a SSIS integration runtime.
         /// Serialized Name: IntegrationRuntimeSsisProperties.expressCustomSetupProperties
-        /// Please note <see cref="CustomSetupBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CmdkeySetup"/>, <see cref="ComponentSetup"/> and <see cref="EnvironmentVariableSetup"/>.
+        /// Please note <see cref="SynapseCustomSetupBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SynapseCmdkeySetup"/>, <see cref="SynapseComponentSetup"/> and <see cref="SynapseEnvironmentVariableSetup"/>.
         /// </summary>
-        public IList<CustomSetupBase> ExpressCustomSetupProperties { get; }
+        public IList<SynapseCustomSetupBase> ExpressCustomSetupProperties { get; }
         /// <summary>
         /// Additional Properties
         /// <para>

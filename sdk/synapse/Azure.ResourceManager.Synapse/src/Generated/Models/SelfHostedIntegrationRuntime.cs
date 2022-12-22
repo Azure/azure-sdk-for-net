@@ -14,16 +14,16 @@ namespace Azure.ResourceManager.Synapse.Models
     /// Self-hosted integration runtime.
     /// Serialized Name: SelfHostedIntegrationRuntime
     /// </summary>
-    public partial class SelfHostedIntegrationRuntime : IntegrationRuntime
+    public partial class SelfHostedIntegrationRuntime : SynapseIntegrationRuntimeProperties
     {
         /// <summary> Initializes a new instance of SelfHostedIntegrationRuntime. </summary>
         public SelfHostedIntegrationRuntime()
         {
-            RuntimeType = IntegrationRuntimeType.SelfHosted;
+            IntegrationRuntimeType = IntegrationRuntimeType.SelfHosted;
         }
 
         /// <summary> Initializes a new instance of SelfHostedIntegrationRuntime. </summary>
-        /// <param name="runtimeType">
+        /// <param name="integrationRuntimeType">
         /// Type of integration runtime.
         /// Serialized Name: IntegrationRuntime.type
         /// </param>
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Please note <see cref="LinkedIntegrationRuntimeType"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="LinkedIntegrationRuntimeKeyAuthorization"/> and <see cref="LinkedIntegrationRuntimeRbacAuthorization"/>.
         /// </param>
-        internal SelfHostedIntegrationRuntime(IntegrationRuntimeType runtimeType, string description, IDictionary<string, BinaryData> additionalProperties, LinkedIntegrationRuntimeType linkedInfo) : base(runtimeType, description, additionalProperties)
+        internal SelfHostedIntegrationRuntime(IntegrationRuntimeType integrationRuntimeType, string description, IDictionary<string, BinaryData> additionalProperties, LinkedIntegrationRuntimeType linkedInfo) : base(integrationRuntimeType, description, additionalProperties)
         {
             LinkedInfo = linkedInfo;
-            RuntimeType = runtimeType;
+            IntegrationRuntimeType = integrationRuntimeType;
         }
 
         /// <summary>

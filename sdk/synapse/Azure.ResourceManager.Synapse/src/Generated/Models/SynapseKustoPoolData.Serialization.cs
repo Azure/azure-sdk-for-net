@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseKustoPoolData DeserializeSynapseKustoPoolData(JsonElement element)
         {
-            AzureSku sku = default;
+            SynapseDataSourceSku sku = default;
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Synapse
             {
                 if (property.NameEquals("sku"))
                 {
-                    sku = AzureSku.DeserializeAzureSku(property.Value);
+                    sku = SynapseDataSourceSku.DeserializeSynapseDataSourceSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"))

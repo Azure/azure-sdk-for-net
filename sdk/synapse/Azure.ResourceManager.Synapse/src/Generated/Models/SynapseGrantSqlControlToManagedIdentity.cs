@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Actual state
         /// Serialized Name: ManagedIdentitySqlControlSettingsModelPropertiesGrantSqlControlToManagedIdentity.actualState
         /// </param>
-        internal SynapseGrantSqlControlToManagedIdentity(DesiredState? desiredState, SynapseGrantSqlControlToManagedIdentityState? actualState)
+        internal SynapseGrantSqlControlToManagedIdentity(SynapseDesiredState? desiredState, SynapseGrantSqlControlToManagedIdentityState? actualState)
         {
             DesiredState = desiredState;
             ActualState = actualState;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Desired state
         /// Serialized Name: ManagedIdentitySqlControlSettingsModelPropertiesGrantSqlControlToManagedIdentity.desiredState
         /// </summary>
-        public DesiredState? DesiredState { get; set; }
+        public SynapseDesiredState? DesiredState { get; set; }
         /// <summary>
         /// Actual state
         /// Serialized Name: ManagedIdentitySqlControlSettingsModelPropertiesGrantSqlControlToManagedIdentity.actualState

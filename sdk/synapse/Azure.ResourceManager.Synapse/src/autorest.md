@@ -23,30 +23,66 @@ mgmt-debug:
 
 rename-mapping:
   AzureADOnlyAuthentication: SynapseAadOnlyAuthentication
+  AzureADOnlyAuthenticationListResult: SynapseAadOnlyAuthenticationListResult
+  AzureADOnlyAuthenticationName: SynapseAadOnlyAuthenticationName
   DedicatedSQLminimalTlsSettings: SynapseDedicatedSqlMinimalTlsSetting
+  DedicatedSQLminimalTlsSettingsListResult: SynapseDedicatedSqlMinimalTlsSettingListResult
+  DedicatedSQLMinimalTlsSettingsName: SynapseDedicatedSqlMinimalTlsSettingName
   BigDataPoolResourceInfo: SynapseBigDataPoolInfo
+  BigDataPoolResourceInfoListResult: SynapseBigDataPoolInfoListResult
   IntegrationRuntimeResource: SynapseIntegrationRuntime
   LibraryResource: SynapseLibrary
   ManagedIdentitySqlControlSettingsModel: SynapseManagedIdentitySqlControlSetting
   ManagedIdentitySqlControlSettingsModelPropertiesGrantSqlControlToManagedIdentity: SynapseGrantSqlControlToManagedIdentity
   MetadataSyncConfig: SynapseMetadataSyncConfiguration
   SparkConfigurationResource: SynapseSparkConfiguration
+  ConfigurationType: SynapseSparkConfigurationType
   ActualState: SynapseGrantSqlControlToManagedIdentityState
+  AzureCapacity: SynapseDataSourceCapacity
+  AzureScaleType: SynapseDataSourceScaleType
+  AzureSku: SynapseDataSourceSku
+  AzureResourceSku: SynapseDataSourceResourceSku
+  AutoPauseProperties: SynapseBigDataPoolAutoPauseProperties
+  AutoScaleProperties: SynapseBigDataPoolAutoScaleProperties
+  CheckNameResult: KustoPoolNameAvailabilityResult
+  Reason: KustoPoolNameUnavailableReason
+  DataConnectionCheckNameRequest: KustoPoolDataConnectionNameAvailabilityContent
+  DatabasePrincipalAssignmentCheckNameRequest: KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent
+  DatabaseCheckNameRequest: KustoPoolChildResourceNameAvailabilityContent
+  ClusterPrincipalAssignmentCheckNameRequest: KustoPoolPrincipalAssignmentNameAvailabilityContent
+  KustoPoolCheckNameRequest: KustoPoolNameAvailabilityContent
+  ConnectionPolicyName: SqlPoolConnectionPolicyName
+  CreateMode: SqlPoolCreateMode
+  CreateSqlPoolRestorePointDefinition: SqlPoolCreateRestorePointContent
+  CustomerManagedKeyDetails: WorkspaceCustomerManagedKeyDetails
+  IntegrationRuntime: SynapseIntegrationRuntimeProperties
   MaintenanceWindowTimeRange.startTime: StartOn
+  AutoPauseProperties.enabled: IsEnabled
+  CheckNameResult.nameAvailable: IsNameAvailable
 
 prepend-rp-prefix:
   - AttachedDatabaseConfiguration
+  - AttachedDatabaseConfigurationListResult
   - ClusterPrincipalAssignment
+  - ClusterPrincipalAssignmentListResult
+  - ClusterPrincipalRole
   - Database
+  - DatabaseListResult
   - DatabasePrincipalAssignment
+  - DatabasePrincipalAssignmentListResult
   - DataConnection
   - DataMaskingPolicy
   - DataMaskingRule
+  - DataMaskingRuleListResult
   - DataWarehouseUserActivities
   - EncryptionProtector
+  - EncryptionProtectorListResult
   - ExtendedServerBlobAuditingPolicy
+  - ExtendedServerBlobAuditingPolicyListResult
   - ExtendedSqlPoolBlobAuditingPolicy
+  - ExtendedSqlPoolBlobAuditingPolicyListResult
   - GeoBackupPolicy
+  - GeoBackupPolicyListResult
   - IPFirewallRuleInfo
   - Key
   - KustoPool
@@ -77,6 +113,52 @@ prepend-rp-prefix:
   - WorkloadGroup
   - WorkspaceAadAdminInfo
   - Workspace
+  - BlobAuditingPolicyName
+  - BlobAuditingPolicyState
+  - BlobStorageEventType
+  - CmdkeySetup
+  - CustomSetupBase
+  - ComponentSetup
+  - DatabasePrincipalAssignmentType
+  - DatabasePrincipalRole
+  - DataConnectionKind
+  - DataConnectionListResult
+  - DataConnectionType
+  - DataConnectionValidation
+  - DataConnectionValidationListResult
+  - DataConnectionValidationResult
+  - DataFlowComputeType
+  - DataLakeStorageAccountDetails
+  - DataMaskingFunction
+  - DataMaskingRuleState
+  - DataMaskingState
+  - DataWarehouseUserActivityName
+  - DayOfWeek
+  - DefaultPrincipalsModificationKind
+  - DesiredState
+  - DynamicExecutorAllocation
+  - EncryptionDetails
+  - EncryptionProtectorName
+  - EntityReference
+  - EnvironmentVariableSetup
+  - EventGridDataConnection
+  - EventGridDataFormat
+  - EventHubDataConnection
+  - EventHubDataFormat
+  - FollowerDatabaseDefinition
+  - FollowerDatabaseListResult
+  - GeoBackupPolicyName
+  - GeoBackupPolicyState
+  - GetSsisObjectMetadataRequest
+  - IntegrationRuntimeAuthKeyName
+
+override-operation-name:
+  IntegrationRuntimeStatus_Get: GetIntegrationRuntimeStatus
+  KustoPoolDataConnections_CheckNameAvailability: CheckKustoPoolDataConnectionNameAvailability
+  KustoPoolDatabasePrincipalAssignments_CheckNameAvailability: CheckKustoPoolDatabasePrincipalAssignmentNameAvailability
+  KustoPoolChildResource_CheckNameAvailability: CheckKustoPoolChildResourceNameAvailability
+  KustoPoolPrincipalAssignments_CheckNameAvailability: CheckKustoPoolPrincipalAssignmentNameAvailability
+  KustoPools_CheckNameAvailability: CheckKustoPoolNameAvailability
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}/privateLinkResources/{privateLinkResourceName}: SynapsePrivateLinkResource
@@ -113,15 +195,22 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  Multijson: MultiJson
+  CSV: Csv
+  TSV: Tsv
+  PSV: Psv
+  TXT: Txt
+  RAW: Raw
+  Singlejson: SingleJson
+  ORC: Orc
+  Apacheavro: ApacheAvro
+  W3Clogfile: W3CLogfile
 
 list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/connectionPolicies/{connectionPolicyName}
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}
-
-override-operation-name:
-  IntegrationRuntimeStatus_Get: GetIntegrationRuntimeStatus
 
 directive:
   - remove-operation: Operations_List

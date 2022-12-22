@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 switch (discriminator.GetString())
                 {
-                    case "EventGrid": return EventGridDataConnection.DeserializeEventGridDataConnection(element);
-                    case "EventHub": return EventHubDataConnection.DeserializeEventHubDataConnection(element);
+                    case "EventGrid": return SynapseEventGridDataConnection.DeserializeSynapseEventGridDataConnection(element);
+                    case "EventHub": return SynapseEventHubDataConnection.DeserializeSynapseEventHubDataConnection(element);
                     case "IotHub": return IotHubDataConnection.DeserializeIotHubDataConnection(element);
                 }
             }
             Optional<AzureLocation> location = default;
-            DataConnectionKind kind = default;
+            SynapseDataConnectionKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             Core.ResourceType type = default;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Synapse
                 }
                 if (property.NameEquals("kind"))
                 {
-                    kind = new DataConnectionKind(property.Value.GetString());
+                    kind = new SynapseDataConnectionKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))

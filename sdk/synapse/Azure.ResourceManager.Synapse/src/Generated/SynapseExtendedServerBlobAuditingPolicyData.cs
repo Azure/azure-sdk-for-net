@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Synapse
         /// 
         /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.isDevopsAuditEnabled
         /// </param>
-        internal SynapseExtendedServerBlobAuditingPolicyData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string predicateExpression, BlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, IList<string> auditActionsAndGroups, Guid? storageAccountSubscriptionId, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, bool? isDevopsAuditEnabled) : base(id, name, resourceType, systemData)
+        internal SynapseExtendedServerBlobAuditingPolicyData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string predicateExpression, SynapseBlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, IList<string> auditActionsAndGroups, Guid? storageAccountSubscriptionId, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, bool? isDevopsAuditEnabled) : base(id, name, resourceType, systemData)
         {
             PredicateExpression = predicateExpression;
             State = state;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Synapse
         /// Specifies the state of the policy. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required.
         /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.state
         /// </summary>
-        public BlobAuditingPolicyState? State { get; set; }
+        public SynapseBlobAuditingPolicyState? State { get; set; }
         /// <summary>
         /// Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required.
         /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.storageEndpoint

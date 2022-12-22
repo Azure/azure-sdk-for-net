@@ -282,9 +282,9 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameResult>> CheckNameAvailabilityKustoPoolAsync(AzureLocation location, KustoPoolCheckNameContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KustoPoolNameAvailabilityResult>> CheckKustoPoolNameAvailabilityAsync(AzureLocation location, KustoPoolNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = SynapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityKustoPool");
+            using var scope = SynapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckKustoPoolNameAvailability");
             scope.Start();
             try
             {
@@ -306,9 +306,9 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameResult> CheckNameAvailabilityKustoPool(AzureLocation location, KustoPoolCheckNameContent content, CancellationToken cancellationToken = default)
+        public virtual Response<KustoPoolNameAvailabilityResult> CheckKustoPoolNameAvailability(AzureLocation location, KustoPoolNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = SynapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilityKustoPool");
+            using var scope = SynapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckKustoPoolNameAvailability");
             scope.Start();
             try
             {

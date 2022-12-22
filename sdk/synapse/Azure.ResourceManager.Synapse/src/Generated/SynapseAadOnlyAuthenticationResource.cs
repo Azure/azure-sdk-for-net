@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse
     public partial class SynapseAadOnlyAuthenticationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseAadOnlyAuthenticationResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, AzureADOnlyAuthenticationName azureADOnlyAuthenticationName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, SynapseAadOnlyAuthenticationName azureADOnlyAuthenticationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/azureADOnlyAuthentications/{azureADOnlyAuthenticationName}";
             return new ResourceIdentifier(resourceId);

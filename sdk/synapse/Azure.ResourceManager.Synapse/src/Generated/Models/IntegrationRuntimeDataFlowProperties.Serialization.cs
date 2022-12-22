@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static IntegrationRuntimeDataFlowProperties DeserializeIntegrationRuntimeDataFlowProperties(JsonElement element)
         {
-            Optional<DataFlowComputeType> computeType = default;
+            Optional<SynapseDataFlowComputeType> computeType = default;
             Optional<int> coreCount = default;
             Optional<int> timeToLive = default;
             Optional<bool> cleanup = default;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    computeType = new DataFlowComputeType(property.Value.GetString());
+                    computeType = new SynapseDataFlowComputeType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("coreCount"))

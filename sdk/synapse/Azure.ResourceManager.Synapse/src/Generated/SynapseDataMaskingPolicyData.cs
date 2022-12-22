@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Synapse
         /// The masking level. This is a legacy parameter and is no longer used.
         /// Serialized Name: DataMaskingPolicy.properties.maskingLevel
         /// </param>
-        internal SynapseDataMaskingPolicyData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, string managedBy, DataMaskingState? dataMaskingState, string exemptPrincipals, string applicationPrincipals, string maskingLevel) : base(id, name, resourceType, systemData)
+        internal SynapseDataMaskingPolicyData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, string managedBy, SynapseDataMaskingState? dataMaskingState, string exemptPrincipals, string applicationPrincipals, string maskingLevel) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Kind = kind;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Synapse
         /// The state of the data masking policy.
         /// Serialized Name: DataMaskingPolicy.properties.dataMaskingState
         /// </summary>
-        public DataMaskingState? DataMaskingState { get; set; }
+        public SynapseDataMaskingState? DataMaskingState { get; set; }
         /// <summary>
         /// The list of the exempt principals. Specifies the semicolon-separated list of database users for which the data masking policy does not apply. The specified users receive data results without masking for all of the database queries.
         /// Serialized Name: DataMaskingPolicy.properties.exemptPrincipals

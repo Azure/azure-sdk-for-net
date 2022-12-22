@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Synapse
             string name = default;
             Core.ResourceType type = default;
             Optional<SystemData> systemData = default;
-            GeoBackupPolicyState state = default;
+            SynapseGeoBackupPolicyState state = default;
             Optional<string> storageType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse
                     {
                         if (property0.NameEquals("state"))
                         {
-                            state = property0.Value.GetString().ToGeoBackupPolicyState();
+                            state = property0.Value.GetString().ToSynapseGeoBackupPolicyState();
                             continue;
                         }
                         if (property0.NameEquals("storageType"))

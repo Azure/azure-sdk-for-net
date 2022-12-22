@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.Synapse
             Optional<SystemData> systemData = default;
             Optional<string> id0 = default;
             Optional<string> aliasName = default;
-            Optional<DataMaskingRuleState> ruleState = default;
+            Optional<SynapseDataMaskingRuleState> ruleState = default;
             Optional<string> schemaName = default;
             Optional<string> tableName = default;
             Optional<string> columnName = default;
-            Optional<DataMaskingFunction> maskingFunction = default;
+            Optional<SynapseDataMaskingFunction> maskingFunction = default;
             Optional<string> numberFrom = default;
             Optional<string> numberTo = default;
             Optional<string> prefixSize = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            ruleState = property0.Value.GetString().ToDataMaskingRuleState();
+                            ruleState = property0.Value.GetString().ToSynapseDataMaskingRuleState();
                             continue;
                         }
                         if (property0.NameEquals("schemaName"))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            maskingFunction = property0.Value.GetString().ToDataMaskingFunction();
+                            maskingFunction = property0.Value.GetString().ToSynapseDataMaskingFunction();
                             continue;
                         }
                         if (property0.NameEquals("numberFrom"))

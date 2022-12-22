@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Synapse
             Optional<string> provisioningState = default;
             Optional<string> status = default;
             Optional<DateTimeOffset> restorePointInTime = default;
-            Optional<CreateMode> createMode = default;
+            Optional<SqlPoolCreateMode> createMode = default;
             Optional<DateTimeOffset> creationDate = default;
             Optional<StorageAccountType> storageAccountType = default;
             Optional<DateTimeOffset> sourceDatabaseDeletionDate = default;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            createMode = new CreateMode(property0.Value.GetString());
+                            createMode = new SqlPoolCreateMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("creationDate"))

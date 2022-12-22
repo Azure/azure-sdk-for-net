@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Synapse
             Optional<string> databaseName = default;
             Optional<string> clusterResourceId = default;
             Optional<IReadOnlyList<string>> attachedDatabaseNames = default;
-            Optional<DefaultPrincipalsModificationKind> defaultPrincipalsModificationKind = default;
+            Optional<SynapseDefaultPrincipalsModificationKind> defaultPrincipalsModificationKind = default;
             Optional<TableLevelSharingProperties> tableLevelSharingProperties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultPrincipalsModificationKind = new DefaultPrincipalsModificationKind(property0.Value.GetString());
+                            defaultPrincipalsModificationKind = new SynapseDefaultPrincipalsModificationKind(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("tableLevelSharingProperties"))

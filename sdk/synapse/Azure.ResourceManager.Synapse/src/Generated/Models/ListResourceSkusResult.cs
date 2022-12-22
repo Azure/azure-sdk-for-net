@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of ListResourceSkusResult. </summary>
         internal ListResourceSkusResult()
         {
-            Value = new ChangeTrackingList<AzureResourceSku>();
+            Value = new ChangeTrackingList<SynapseDataSourceResourceSku>();
         }
 
         /// <summary> Initializes a new instance of ListResourceSkusResult. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The collection of available SKUs for an existing resource.
         /// Serialized Name: ListResourceSkusResult.value
         /// </param>
-        internal ListResourceSkusResult(IReadOnlyList<AzureResourceSku> value)
+        internal ListResourceSkusResult(IReadOnlyList<SynapseDataSourceResourceSku> value)
         {
             Value = value;
         }
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The collection of available SKUs for an existing resource.
         /// Serialized Name: ListResourceSkusResult.value
         /// </summary>
-        public IReadOnlyList<AzureResourceSku> Value { get; }
+        public IReadOnlyList<SynapseDataSourceResourceSku> Value { get; }
     }
 }

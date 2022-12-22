@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Synapse
             string name = default;
             Core.ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<DataMaskingState> dataMaskingState = default;
+            Optional<SynapseDataMaskingState> dataMaskingState = default;
             Optional<string> exemptPrincipals = default;
             Optional<string> applicationPrincipals = default;
             Optional<string> maskingLevel = default;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dataMaskingState = property0.Value.GetString().ToDataMaskingState();
+                            dataMaskingState = property0.Value.GetString().ToSynapseDataMaskingState();
                             continue;
                         }
                         if (property0.NameEquals("exemptPrincipals"))

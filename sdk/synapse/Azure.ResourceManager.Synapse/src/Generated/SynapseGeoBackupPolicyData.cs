@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Synapse
         /// The state of the geo backup policy.
         /// Serialized Name: GeoBackupPolicy.properties.state
         /// </param>
-        public SynapseGeoBackupPolicyData(GeoBackupPolicyState state)
+        public SynapseGeoBackupPolicyData(SynapseGeoBackupPolicyState state)
         {
             State = state;
         }
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Synapse
         /// The storage type of the geo backup policy.
         /// Serialized Name: GeoBackupPolicy.properties.storageType
         /// </param>
-        internal SynapseGeoBackupPolicyData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, GeoBackupPolicyState state, string storageType) : base(id, name, resourceType, systemData)
+        internal SynapseGeoBackupPolicyData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, SynapseGeoBackupPolicyState state, string storageType) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Synapse
         /// The state of the geo backup policy.
         /// Serialized Name: GeoBackupPolicy.properties.state
         /// </summary>
-        public GeoBackupPolicyState State { get; set; }
+        public SynapseGeoBackupPolicyState State { get; set; }
         /// <summary>
         /// The storage type of the geo backup policy.
         /// Serialized Name: GeoBackupPolicy.properties.storageType

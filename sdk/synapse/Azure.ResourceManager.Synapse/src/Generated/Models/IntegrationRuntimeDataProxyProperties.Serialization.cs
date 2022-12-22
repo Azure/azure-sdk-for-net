@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static IntegrationRuntimeDataProxyProperties DeserializeIntegrationRuntimeDataProxyProperties(JsonElement element)
         {
-            Optional<EntityReference> connectVia = default;
-            Optional<EntityReference> stagingLinkedService = default;
+            Optional<SynapseEntityReference> connectVia = default;
+            Optional<SynapseEntityReference> stagingLinkedService = default;
             Optional<string> path = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    connectVia = EntityReference.DeserializeEntityReference(property.Value);
+                    connectVia = SynapseEntityReference.DeserializeSynapseEntityReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("stagingLinkedService"))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    stagingLinkedService = EntityReference.DeserializeEntityReference(property.Value);
+                    stagingLinkedService = SynapseEntityReference.DeserializeSynapseEntityReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("path"))

@@ -339,11 +339,11 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="content"> The name of the data connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckNameResult>> CheckNameAvailabilityKustoPoolDataConnectionAsync(DataConnectionCheckNameContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KustoPoolNameAvailabilityResult>> CheckKustoPoolDataConnectionNameAvailabilityAsync(KustoPoolDataConnectionNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDatabaseResource.CheckNameAvailabilityKustoPoolDataConnection");
+            using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDatabaseResource.CheckKustoPoolDataConnectionNameAvailability");
             scope.Start();
             try
             {
@@ -365,11 +365,11 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="content"> The name of the data connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckNameResult> CheckNameAvailabilityKustoPoolDataConnection(DataConnectionCheckNameContent content, CancellationToken cancellationToken = default)
+        public virtual Response<KustoPoolNameAvailabilityResult> CheckKustoPoolDataConnectionNameAvailability(KustoPoolDataConnectionNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDatabaseResource.CheckNameAvailabilityKustoPoolDataConnection");
+            using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDatabaseResource.CheckKustoPoolDataConnectionNameAvailability");
             scope.Start();
             try
             {
@@ -389,19 +389,19 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: KustoPoolDataConnections_dataConnectionValidation
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="dataConnectionValidation"> The data connection parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="synapseDataConnectionValidation"> The data connection parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionValidation"/> is null. </exception>
-        public virtual async Task<ArmOperation<DataConnectionValidationListResult>> DataConnectionValidationKustoPoolDataConnectionAsync(WaitUntil waitUntil, DataConnectionValidation dataConnectionValidation, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="synapseDataConnectionValidation"/> is null. </exception>
+        public virtual async Task<ArmOperation<SynapseDataConnectionValidationListResult>> DataConnectionValidationKustoPoolDataConnectionAsync(WaitUntil waitUntil, SynapseDataConnectionValidation synapseDataConnectionValidation, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(dataConnectionValidation, nameof(dataConnectionValidation));
+            Argument.AssertNotNull(synapseDataConnectionValidation, nameof(synapseDataConnectionValidation));
 
             using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDatabaseResource.DataConnectionValidationKustoPoolDataConnection");
             scope.Start();
             try
             {
-                var response = await _synapseDataConnectionKustoPoolDataConnectionsRestClient.DataConnectionValidationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, dataConnectionValidation, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<DataConnectionValidationListResult>(new DataConnectionValidationListResultOperationSource(), _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics, Pipeline, _synapseDataConnectionKustoPoolDataConnectionsRestClient.CreateDataConnectionValidationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, dataConnectionValidation).Request, response, OperationFinalStateVia.Location);
+                var response = await _synapseDataConnectionKustoPoolDataConnectionsRestClient.DataConnectionValidationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, synapseDataConnectionValidation, cancellationToken).ConfigureAwait(false);
+                var operation = new SynapseArmOperation<SynapseDataConnectionValidationListResult>(new SynapseDataConnectionValidationListResultOperationSource(), _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics, Pipeline, _synapseDataConnectionKustoPoolDataConnectionsRestClient.CreateDataConnectionValidationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, synapseDataConnectionValidation).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -419,19 +419,19 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: KustoPoolDataConnections_dataConnectionValidation
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="dataConnectionValidation"> The data connection parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="synapseDataConnectionValidation"> The data connection parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionValidation"/> is null. </exception>
-        public virtual ArmOperation<DataConnectionValidationListResult> DataConnectionValidationKustoPoolDataConnection(WaitUntil waitUntil, DataConnectionValidation dataConnectionValidation, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="synapseDataConnectionValidation"/> is null. </exception>
+        public virtual ArmOperation<SynapseDataConnectionValidationListResult> DataConnectionValidationKustoPoolDataConnection(WaitUntil waitUntil, SynapseDataConnectionValidation synapseDataConnectionValidation, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(dataConnectionValidation, nameof(dataConnectionValidation));
+            Argument.AssertNotNull(synapseDataConnectionValidation, nameof(synapseDataConnectionValidation));
 
             using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDatabaseResource.DataConnectionValidationKustoPoolDataConnection");
             scope.Start();
             try
             {
-                var response = _synapseDataConnectionKustoPoolDataConnectionsRestClient.DataConnectionValidation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, dataConnectionValidation, cancellationToken);
-                var operation = new SynapseArmOperation<DataConnectionValidationListResult>(new DataConnectionValidationListResultOperationSource(), _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics, Pipeline, _synapseDataConnectionKustoPoolDataConnectionsRestClient.CreateDataConnectionValidationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, dataConnectionValidation).Request, response, OperationFinalStateVia.Location);
+                var response = _synapseDataConnectionKustoPoolDataConnectionsRestClient.DataConnectionValidation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, synapseDataConnectionValidation, cancellationToken);
+                var operation = new SynapseArmOperation<SynapseDataConnectionValidationListResult>(new SynapseDataConnectionValidationListResultOperationSource(), _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics, Pipeline, _synapseDataConnectionKustoPoolDataConnectionsRestClient.CreateDataConnectionValidationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, synapseDataConnectionValidation).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -451,11 +451,11 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="content"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckNameResult>> CheckNameAvailabilityKustoPoolDatabasePrincipalAssignmentAsync(DatabasePrincipalAssignmentCheckNameContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KustoPoolNameAvailabilityResult>> CheckKustoPoolDatabasePrincipalAssignmentNameAvailabilityAsync(KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsClientDiagnostics.CreateScope("SynapseDatabaseResource.CheckNameAvailabilityKustoPoolDatabasePrincipalAssignment");
+            using var scope = _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsClientDiagnostics.CreateScope("SynapseDatabaseResource.CheckKustoPoolDatabasePrincipalAssignmentNameAvailability");
             scope.Start();
             try
             {
@@ -477,11 +477,11 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="content"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckNameResult> CheckNameAvailabilityKustoPoolDatabasePrincipalAssignment(DatabasePrincipalAssignmentCheckNameContent content, CancellationToken cancellationToken = default)
+        public virtual Response<KustoPoolNameAvailabilityResult> CheckKustoPoolDatabasePrincipalAssignmentNameAvailability(KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsClientDiagnostics.CreateScope("SynapseDatabaseResource.CheckNameAvailabilityKustoPoolDatabasePrincipalAssignment");
+            using var scope = _synapseDatabasePrincipalAssignmentKustoPoolDatabasePrincipalAssignmentsClientDiagnostics.CreateScope("SynapseDatabaseResource.CheckKustoPoolDatabasePrincipalAssignmentNameAvailability");
             scope.Start();
             try
             {

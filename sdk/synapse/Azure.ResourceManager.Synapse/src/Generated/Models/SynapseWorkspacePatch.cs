@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The encryption details of the workspace
         /// Serialized Name: WorkspacePatchInfo.properties.encryption
         /// </summary>
-        public EncryptionDetails Encryption { get; set; }
+        public SynapseEncryptionDetails Encryption { get; set; }
         /// <summary>
         /// Enable or Disable public network access to workspace
         /// Serialized Name: WorkspacePatchInfo.properties.publicNetworkAccess

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The workspace unique identifier.
         /// Serialized Name: KustoPoolUpdate.properties.workspaceUID
         /// </param>
-        internal SynapseKustoPoolPatch(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureSku sku, State? state, ResourceProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, OptimizedAutoscale optimizedAutoscale, bool? enableStreamingIngest, bool? enablePurge, LanguageExtensionsList languageExtensions, string workspaceUID) : base(id, name, resourceType, systemData)
+        internal SynapseKustoPoolPatch(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, SynapseDataSourceSku sku, State? state, ResourceProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, OptimizedAutoscale optimizedAutoscale, bool? enableStreamingIngest, bool? enablePurge, LanguageExtensionsList languageExtensions, string workspaceUID) : base(id, name, resourceType, systemData)
         {
             Tags = tags;
             Sku = sku;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The SKU of the kusto pool.
         /// Serialized Name: KustoPoolUpdate.sku
         /// </summary>
-        public AzureSku Sku { get; set; }
+        public SynapseDataSourceSku Sku { get; set; }
         /// <summary>
         /// The state of the resource.
         /// Serialized Name: KustoPoolUpdate.properties.state

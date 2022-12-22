@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public IotHubDataConnection()
         {
             EventSystemProperties = new ChangeTrackingList<string>();
-            Kind = DataConnectionKind.IotHub;
+            Kind = SynapseDataConnectionKind.IotHub;
         }
 
         /// <summary> Initializes a new instance of IotHubDataConnection. </summary>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The provisioned state of the resource.
         /// Serialized Name: IotHubDataConnection.properties.provisioningState
         /// </param>
-        internal IotHubDataConnection(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, string iotHubResourceId, string consumerGroup, string tableName, string mappingRuleName, IotHubDataFormat? dataFormat, IList<string> eventSystemProperties, string sharedAccessPolicyName, ResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind)
+        internal IotHubDataConnection(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseDataConnectionKind kind, string iotHubResourceId, string consumerGroup, string tableName, string mappingRuleName, IotHubDataFormat? dataFormat, IList<string> eventSystemProperties, string sharedAccessPolicyName, ResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind)
         {
             IotHubResourceId = iotHubResourceId;
             ConsumerGroup = consumerGroup;

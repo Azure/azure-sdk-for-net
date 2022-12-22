@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Synapse
         /// Serialized Name: KustoPool.sku
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public SynapseKustoPoolData(AzureLocation location, AzureSku sku) : base(location)
+        public SynapseKustoPoolData(AzureLocation location, SynapseDataSourceSku sku) : base(location)
         {
             Argument.AssertNotNull(sku, nameof(sku));
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Synapse
         /// The workspace unique identifier.
         /// Serialized Name: KustoPool.properties.workspaceUID
         /// </param>
-        internal SynapseKustoPoolData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AzureSku sku, ETag? etag, State? state, ResourceProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, OptimizedAutoscale optimizedAutoscale, bool? enableStreamingIngest, bool? enablePurge, LanguageExtensionsList languageExtensions, string workspaceUID) : base(id, name, resourceType, systemData, tags, location)
+        internal SynapseKustoPoolData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SynapseDataSourceSku sku, ETag? etag, State? state, ResourceProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, OptimizedAutoscale optimizedAutoscale, bool? enableStreamingIngest, bool? enablePurge, LanguageExtensionsList languageExtensions, string workspaceUID) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ETag = etag;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Synapse
         /// The SKU of the kusto pool.
         /// Serialized Name: KustoPool.sku
         /// </summary>
-        public AzureSku Sku { get; set; }
+        public SynapseDataSourceSku Sku { get; set; }
         /// <summary>
         /// A unique read-only string that changes whenever the resource is updated.
         /// Serialized Name: KustoPool.etag

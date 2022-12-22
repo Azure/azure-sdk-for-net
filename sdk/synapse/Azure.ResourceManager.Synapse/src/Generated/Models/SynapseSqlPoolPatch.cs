@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool&apos;s original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
         /// Serialized Name: SqlPoolPatchInfo.properties.createMode
         /// </summary>
-        public CreateMode? CreateMode { get; set; }
+        public SqlPoolCreateMode? CreateMode { get; set; }
         /// <summary>
         /// Date the SQL pool was created
         /// Serialized Name: SqlPoolPatchInfo.properties.creationDate

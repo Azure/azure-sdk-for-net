@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Synapse.Models
         internal static SynapseKustoPoolPatch DeserializeSynapseKustoPoolPatch(JsonElement element)
         {
             Optional<IDictionary<string, string>> tags = default;
-            Optional<AzureSku> sku = default;
+            Optional<SynapseDataSourceSku> sku = default;
             ResourceIdentifier id = default;
             string name = default;
             Core.ResourceType type = default;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = AzureSku.DeserializeAzureSku(property.Value);
+                    sku = SynapseDataSourceSku.DeserializeSynapseDataSourceSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
