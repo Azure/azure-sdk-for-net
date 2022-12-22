@@ -9,6 +9,19 @@ $ErrorActionPreference = "Stop"
 . $PSScriptRoot/../common/scripts/Helpers/PSModule-Helpers.ps1
 Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
 $sparseCheckoutFile = ".git/info/sparse-checkout"
+$sdkGitRemoteAPI = "https://api.github.com/repos/Azure/azure-sdk-for-net/git/refs/heads/main"
+$sdkGitRemote = "https://github.com/Azure/azure-sdk-for-net.git"
+
+function GetLatestCommit() {
+    $response =  Invoke-WebRequest $sdkGitRemoteAPI
+    $responseContent = ConvertFrom-Json $([String]::new($response.Content))
+    return $responseContent.object.sha
+}
+
+function GetProjectRelativePath() {
+    $rootPath = Resolve-Path "$PSScriptRoot/../.."
+    return [System.IO.Path]::GetRelativePath($rootPath, $ProjectDirectory).Replace("\","/")
+}
 
 function AddSparseCheckoutPath([string]$subDirectory) {
     if (!(Test-Path $sparseCheckoutFile) -or !((Get-Content $sparseCheckoutFile).Contains($subDirectory))) {
@@ -71,7 +84,7 @@ function InitializeSparseGitClone([string]$repo) {
     Remove-Item $sparseCheckoutFile -Force
 }
 
-function GetSpecCloneDir([string]$projectName) {
+function GetSparseCloneDir([string]$projectName, [string]$repoName) {
     Push-Location $ProjectDirectory
     try {
         $root = git rev-parse --show-toplevel
@@ -80,7 +93,7 @@ function GetSpecCloneDir([string]$projectName) {
         Pop-Location
     }
 
-    $sparseSpecCloneDir = "$root/../sparse-spec/$projectName"
+    $sparseSpecCloneDir = "$root/../sparse-spec/$repoName/$projectName"
     New-Item $sparseSpecCloneDir -Type Directory -Force | Out-Null
     $createResult = Resolve-Path $sparseSpecCloneDir
     return $createResult
@@ -95,7 +108,7 @@ $projectName = $pieces[$pieces.Count - 3]
 
 $specSubDirectory = $configuration["directory"]
 if ( $configuration["repo"] -and $configuration["commit"]) {
-    $specCloneDir = GetSpecCloneDir $projectName
+    $specCloneDir = GetSparseCloneDir $projectName "spec"
     $gitRemoteValue = GetGitRemoteValue $configuration["repo"]
 
     Write-Host "Setting up sparse clone for $projectName at $specCloneDir"
@@ -123,3 +136,25 @@ CopySpecToProjectIfNeeded `
     -mainSpecDir $specSubDirectory `
     -dest $tempCadlDir `
     -specAdditionalSubDirectories $configuration["additionalDirectories"]
+
+
+# Download the existing SDK
+$latestCommit = GetLatestCommit
+if ($latestCommit) {
+    $sdkCloneDir = GetSparseCloneDir $projectName "sdk"
+
+    Write-Host "Setting up sparse clone for $projectName at $sdkCloneDir"
+
+    Push-Location $sdkCloneDir.Path
+    try {
+        if (!(Test-Path ".git")) {
+            InitializeSparseGitClone $sdkGitRemote
+            AddSparseCheckoutPath (GetProjectRelativePath)
+        }
+        git checkout $latestCommit
+    }
+    finally {
+        Pop-Location
+    }
+}
+
