@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -143,10 +144,26 @@ Content = "aaaaaaaaaaaaaaaaaaaa",
                                 AssessmentMode = WindowsPatchAssessmentMode.ImageDefault,
                                 AutomaticByPlatformRebootSetting = WindowsVmGuestPatchAutomaticByPlatformRebootSetting.Never,
                             },
+                            WinRMListeners =
+{
+new WinRMListener()
+{
+Protocol = WinRMListenerProtocolType.Http,
+CertificateUri = new Uri("aaaaaaaaaaaaaaaaaaaaaa"),
+}
+},
                         },
                         LinuxConfiguration = new LinuxConfiguration()
                         {
                             DisablePasswordAuthentication = true,
+                            SshPublicKeys =
+{
+new SshPublicKeyConfiguration()
+{
+Path = "/home/{your-username}/.ssh/authorized_keys",
+KeyData = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCeClRAk2ipUs/l5voIsDC5q9RI+YSRd1Bvd/O+axgY4WiBzG+4FwJWZm/mLLe5DoOdHQwmU2FrKXZSW4w2sYE70KeWnrFViCOX5MTVvJgPE8ClugNl8RWth/tU849DvM9sT7vFgfVSHcAS2yDRyDlueii+8nF2ym8XWAPltFVCyLHRsyBp5YPqK8JFYIa1eybKsY3hEAxRCA+/7bq8et+Gj3coOsuRmrehav7rE6N12Pb80I6ofa6SM5XNYq4Xk0iYNx7R3kdz0Jj9XgZYWjAHjJmT0gTRoOnt6upOuxK7xI/ykWrllgpXrCPu3Ymz+c+ujaqcxDopnAl2lmf69/J1",
+}
+},
                             ProvisionVmAgent = true,
                             PatchSettings = new LinuxPatchSettings()
                             {
@@ -227,6 +244,9 @@ Primary = true,
 EnableAcceleratedNetworking = true,
 EnableFpga = true,
 NetworkSecurityGroupId = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
+DnsServers =
+{
+},
 IPConfigurations =
 {
 new VirtualMachineScaleSetUpdateIPConfiguration()
@@ -307,10 +327,10 @@ ExtensionType = "{extension-Type}",
 TypeHandlerVersion = "{handler-version}",
 AutoUpgradeMinorVersion = true,
 EnableAutomaticUpgrade = true,
-Settings = BinaryData.FromObjectAsJson(new
+Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 {
 }),
-ProtectedSettings = BinaryData.FromObjectAsJson(new
+ProtectedSettings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 {
 }),
 ProvisionAfterExtensions =

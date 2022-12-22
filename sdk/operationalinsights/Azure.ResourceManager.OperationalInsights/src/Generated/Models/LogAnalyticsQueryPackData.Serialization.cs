@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.OperationalInsights
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> queryPackId = default;
+            Optional<Guid> queryPackId = default;
             Optional<DateTimeOffset> timeCreated = default;
             Optional<DateTimeOffset> timeModified = default;
             Optional<string> provisioningState = default;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.OperationalInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -107,7 +107,12 @@ namespace Azure.ResourceManager.OperationalInsights
                     {
                         if (property0.NameEquals("queryPackId"))
                         {
-                            queryPackId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            queryPackId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("timeCreated"))
@@ -139,7 +144,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     continue;
                 }
             }
-            return new LogAnalyticsQueryPackData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, queryPackId.Value, Optional.ToNullable(timeCreated), Optional.ToNullable(timeModified), provisioningState.Value);
+            return new LogAnalyticsQueryPackData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(queryPackId), Optional.ToNullable(timeCreated), Optional.ToNullable(timeModified), provisioningState.Value);
         }
     }
 }

@@ -1,0 +1,1863 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="DetectUnivariateEntireSeriesAsync(RequestContent,RequestContext)">
+<example>
+This sample shows how to call DetectUnivariateEntireSeriesAsync with required request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            value = 123.45f,
+        }
+    },
+};
+
+Response response = await client.DetectUnivariateEntireSeriesAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("period").ToString());
+Console.WriteLine(result.GetProperty("expectedValues")[0].ToString());
+Console.WriteLine(result.GetProperty("upperMargins")[0].ToString());
+Console.WriteLine(result.GetProperty("lowerMargins")[0].ToString());
+Console.WriteLine(result.GetProperty("isAnomaly")[0].ToString());
+Console.WriteLine(result.GetProperty("isNegativeAnomaly")[0].ToString());
+Console.WriteLine(result.GetProperty("isPositiveAnomaly")[0].ToString());
+]]></code>
+This sample shows how to call DetectUnivariateEntireSeriesAsync with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            timestamp = "2022-05-10T14:57:31.2311892-04:00",
+            value = 123.45f,
+        }
+    },
+    granularity = "yearly",
+    customInterval = 1234,
+    period = 1234,
+    maxAnomalyRatio = 123.45f,
+    sensitivity = 1234,
+    imputeMode = "auto",
+    imputeFixedValue = 123.45f,
+};
+
+Response response = await client.DetectUnivariateEntireSeriesAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("period").ToString());
+Console.WriteLine(result.GetProperty("expectedValues")[0].ToString());
+Console.WriteLine(result.GetProperty("upperMargins")[0].ToString());
+Console.WriteLine(result.GetProperty("lowerMargins")[0].ToString());
+Console.WriteLine(result.GetProperty("isAnomaly")[0].ToString());
+Console.WriteLine(result.GetProperty("isNegativeAnomaly")[0].ToString());
+Console.WriteLine(result.GetProperty("isPositiveAnomaly")[0].ToString());
+Console.WriteLine(result.GetProperty("severity")[0].ToString());
+]]></code>
+</example>
+<remarks>
+This operation generates a model with an entire series, each point is detected
+with the same model. With this method, points before and after a certain point
+are used to determine whether it is an anomaly. The entire detection can give
+user an overall status of the time series.
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>UnivariateDetectionOptions</c>:
+<code>{
+  series: [
+    {
+      timestamp: string (date &amp; time), # Optional.
+      value: number, # Required.
+    }
+  ], # Required.
+  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Optional.
+  customInterval: number, # Optional.
+  period: number, # Optional.
+  maxAnomalyRatio: number, # Optional.
+  sensitivity: number, # Optional.
+  imputeMode: &quot;auto&quot; | &quot;previous&quot; | &quot;linear&quot; | &quot;fixed&quot; | &quot;zero&quot; | &quot;notFill&quot;, # Optional.
+  imputeFixedValue: number, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>UnivariateEntireDetectionResult</c>:
+<code>{
+  period: number, # Required.
+  expectedValues: [number], # Required.
+  upperMargins: [number], # Required.
+  lowerMargins: [number], # Required.
+  isAnomaly: [boolean], # Required.
+  isNegativeAnomaly: [boolean], # Required.
+  isPositiveAnomaly: [boolean], # Required.
+  severity: [number], # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DetectUnivariateEntireSeries(RequestContent,RequestContext)">
+<example>
+This sample shows how to call DetectUnivariateEntireSeries with required request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            value = 123.45f,
+        }
+    },
+};
+
+Response response = client.DetectUnivariateEntireSeries(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("period").ToString());
+Console.WriteLine(result.GetProperty("expectedValues")[0].ToString());
+Console.WriteLine(result.GetProperty("upperMargins")[0].ToString());
+Console.WriteLine(result.GetProperty("lowerMargins")[0].ToString());
+Console.WriteLine(result.GetProperty("isAnomaly")[0].ToString());
+Console.WriteLine(result.GetProperty("isNegativeAnomaly")[0].ToString());
+Console.WriteLine(result.GetProperty("isPositiveAnomaly")[0].ToString());
+]]></code>
+This sample shows how to call DetectUnivariateEntireSeries with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            timestamp = "2022-05-10T14:57:31.2311892-04:00",
+            value = 123.45f,
+        }
+    },
+    granularity = "yearly",
+    customInterval = 1234,
+    period = 1234,
+    maxAnomalyRatio = 123.45f,
+    sensitivity = 1234,
+    imputeMode = "auto",
+    imputeFixedValue = 123.45f,
+};
+
+Response response = client.DetectUnivariateEntireSeries(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("period").ToString());
+Console.WriteLine(result.GetProperty("expectedValues")[0].ToString());
+Console.WriteLine(result.GetProperty("upperMargins")[0].ToString());
+Console.WriteLine(result.GetProperty("lowerMargins")[0].ToString());
+Console.WriteLine(result.GetProperty("isAnomaly")[0].ToString());
+Console.WriteLine(result.GetProperty("isNegativeAnomaly")[0].ToString());
+Console.WriteLine(result.GetProperty("isPositiveAnomaly")[0].ToString());
+Console.WriteLine(result.GetProperty("severity")[0].ToString());
+]]></code>
+</example>
+<remarks>
+This operation generates a model with an entire series, each point is detected
+with the same model. With this method, points before and after a certain point
+are used to determine whether it is an anomaly. The entire detection can give
+user an overall status of the time series.
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>UnivariateDetectionOptions</c>:
+<code>{
+  series: [
+    {
+      timestamp: string (date &amp; time), # Optional.
+      value: number, # Required.
+    }
+  ], # Required.
+  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Optional.
+  customInterval: number, # Optional.
+  period: number, # Optional.
+  maxAnomalyRatio: number, # Optional.
+  sensitivity: number, # Optional.
+  imputeMode: &quot;auto&quot; | &quot;previous&quot; | &quot;linear&quot; | &quot;fixed&quot; | &quot;zero&quot; | &quot;notFill&quot;, # Optional.
+  imputeFixedValue: number, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>UnivariateEntireDetectionResult</c>:
+<code>{
+  period: number, # Required.
+  expectedValues: [number], # Required.
+  upperMargins: [number], # Required.
+  lowerMargins: [number], # Required.
+  isAnomaly: [boolean], # Required.
+  isNegativeAnomaly: [boolean], # Required.
+  isPositiveAnomaly: [boolean], # Required.
+  severity: [number], # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DetectUnivariateLastPointAsync(RequestContent,RequestContext)">
+<example>
+This sample shows how to call DetectUnivariateLastPointAsync with required request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            value = 123.45f,
+        }
+    },
+};
+
+Response response = await client.DetectUnivariateLastPointAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("period").ToString());
+Console.WriteLine(result.GetProperty("suggestedWindow").ToString());
+Console.WriteLine(result.GetProperty("expectedValue").ToString());
+Console.WriteLine(result.GetProperty("upperMargin").ToString());
+Console.WriteLine(result.GetProperty("lowerMargin").ToString());
+Console.WriteLine(result.GetProperty("isAnomaly").ToString());
+Console.WriteLine(result.GetProperty("isNegativeAnomaly").ToString());
+Console.WriteLine(result.GetProperty("isPositiveAnomaly").ToString());
+]]></code>
+This sample shows how to call DetectUnivariateLastPointAsync with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            timestamp = "2022-05-10T14:57:31.2311892-04:00",
+            value = 123.45f,
+        }
+    },
+    granularity = "yearly",
+    customInterval = 1234,
+    period = 1234,
+    maxAnomalyRatio = 123.45f,
+    sensitivity = 1234,
+    imputeMode = "auto",
+    imputeFixedValue = 123.45f,
+};
+
+Response response = await client.DetectUnivariateLastPointAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("period").ToString());
+Console.WriteLine(result.GetProperty("suggestedWindow").ToString());
+Console.WriteLine(result.GetProperty("expectedValue").ToString());
+Console.WriteLine(result.GetProperty("upperMargin").ToString());
+Console.WriteLine(result.GetProperty("lowerMargin").ToString());
+Console.WriteLine(result.GetProperty("isAnomaly").ToString());
+Console.WriteLine(result.GetProperty("isNegativeAnomaly").ToString());
+Console.WriteLine(result.GetProperty("isPositiveAnomaly").ToString());
+Console.WriteLine(result.GetProperty("severity").ToString());
+]]></code>
+</example>
+<remarks>
+This operation generates a model using the points that you sent into the API,
+and based on all data to determine whether the last point is anomalous.
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>UnivariateDetectionOptions</c>:
+<code>{
+  series: [
+    {
+      timestamp: string (date &amp; time), # Optional.
+      value: number, # Required.
+    }
+  ], # Required.
+  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Optional.
+  customInterval: number, # Optional.
+  period: number, # Optional.
+  maxAnomalyRatio: number, # Optional.
+  sensitivity: number, # Optional.
+  imputeMode: &quot;auto&quot; | &quot;previous&quot; | &quot;linear&quot; | &quot;fixed&quot; | &quot;zero&quot; | &quot;notFill&quot;, # Optional.
+  imputeFixedValue: number, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>UnivariateLastDetectionResult</c>:
+<code>{
+  period: number, # Required.
+  suggestedWindow: number, # Required.
+  expectedValue: number, # Required.
+  upperMargin: number, # Required.
+  lowerMargin: number, # Required.
+  isAnomaly: boolean, # Required.
+  isNegativeAnomaly: boolean, # Required.
+  isPositiveAnomaly: boolean, # Required.
+  severity: number, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DetectUnivariateLastPoint(RequestContent,RequestContext)">
+<example>
+This sample shows how to call DetectUnivariateLastPoint with required request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            value = 123.45f,
+        }
+    },
+};
+
+Response response = client.DetectUnivariateLastPoint(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("period").ToString());
+Console.WriteLine(result.GetProperty("suggestedWindow").ToString());
+Console.WriteLine(result.GetProperty("expectedValue").ToString());
+Console.WriteLine(result.GetProperty("upperMargin").ToString());
+Console.WriteLine(result.GetProperty("lowerMargin").ToString());
+Console.WriteLine(result.GetProperty("isAnomaly").ToString());
+Console.WriteLine(result.GetProperty("isNegativeAnomaly").ToString());
+Console.WriteLine(result.GetProperty("isPositiveAnomaly").ToString());
+]]></code>
+This sample shows how to call DetectUnivariateLastPoint with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            timestamp = "2022-05-10T14:57:31.2311892-04:00",
+            value = 123.45f,
+        }
+    },
+    granularity = "yearly",
+    customInterval = 1234,
+    period = 1234,
+    maxAnomalyRatio = 123.45f,
+    sensitivity = 1234,
+    imputeMode = "auto",
+    imputeFixedValue = 123.45f,
+};
+
+Response response = client.DetectUnivariateLastPoint(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("period").ToString());
+Console.WriteLine(result.GetProperty("suggestedWindow").ToString());
+Console.WriteLine(result.GetProperty("expectedValue").ToString());
+Console.WriteLine(result.GetProperty("upperMargin").ToString());
+Console.WriteLine(result.GetProperty("lowerMargin").ToString());
+Console.WriteLine(result.GetProperty("isAnomaly").ToString());
+Console.WriteLine(result.GetProperty("isNegativeAnomaly").ToString());
+Console.WriteLine(result.GetProperty("isPositiveAnomaly").ToString());
+Console.WriteLine(result.GetProperty("severity").ToString());
+]]></code>
+</example>
+<remarks>
+This operation generates a model using the points that you sent into the API,
+and based on all data to determine whether the last point is anomalous.
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>UnivariateDetectionOptions</c>:
+<code>{
+  series: [
+    {
+      timestamp: string (date &amp; time), # Optional.
+      value: number, # Required.
+    }
+  ], # Required.
+  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Optional.
+  customInterval: number, # Optional.
+  period: number, # Optional.
+  maxAnomalyRatio: number, # Optional.
+  sensitivity: number, # Optional.
+  imputeMode: &quot;auto&quot; | &quot;previous&quot; | &quot;linear&quot; | &quot;fixed&quot; | &quot;zero&quot; | &quot;notFill&quot;, # Optional.
+  imputeFixedValue: number, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>UnivariateLastDetectionResult</c>:
+<code>{
+  period: number, # Required.
+  suggestedWindow: number, # Required.
+  expectedValue: number, # Required.
+  upperMargin: number, # Required.
+  lowerMargin: number, # Required.
+  isAnomaly: boolean, # Required.
+  isNegativeAnomaly: boolean, # Required.
+  isPositiveAnomaly: boolean, # Required.
+  severity: number, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DetectUnivariateChangePointAsync(RequestContent,RequestContext)">
+<example>
+This sample shows how to call DetectUnivariateChangePointAsync with required request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            value = 123.45f,
+        }
+    },
+    granularity = "yearly",
+};
+
+Response response = await client.DetectUnivariateChangePointAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call DetectUnivariateChangePointAsync with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            timestamp = "2022-05-10T14:57:31.2311892-04:00",
+            value = 123.45f,
+        }
+    },
+    granularity = "yearly",
+    customInterval = 1234,
+    period = 1234,
+    stableTrendWindow = 1234,
+    threshold = 123.45f,
+};
+
+Response response = await client.DetectUnivariateChangePointAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("period").ToString());
+Console.WriteLine(result.GetProperty("isChangePoint")[0].ToString());
+Console.WriteLine(result.GetProperty("confidenceScores")[0].ToString());
+]]></code>
+</example>
+<remarks>
+Evaluate change point score of every series point
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>UnivariateChangePointDetectionOptions</c>:
+<code>{
+  series: [
+    {
+      timestamp: string (date &amp; time), # Optional.
+      value: number, # Required.
+    }
+  ], # Required.
+  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Required.
+  customInterval: number, # Optional.
+  period: number, # Optional.
+  stableTrendWindow: number, # Optional.
+  threshold: number, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>UnivariateChangePointDetectionResult</c>:
+<code>{
+  period: number, # Optional.
+  isChangePoint: [boolean], # Optional.
+  confidenceScores: [number], # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DetectUnivariateChangePoint(RequestContent,RequestContext)">
+<example>
+This sample shows how to call DetectUnivariateChangePoint with required request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            value = 123.45f,
+        }
+    },
+    granularity = "yearly",
+};
+
+Response response = client.DetectUnivariateChangePoint(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call DetectUnivariateChangePoint with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    series = new[] {
+        new {
+            timestamp = "2022-05-10T14:57:31.2311892-04:00",
+            value = 123.45f,
+        }
+    },
+    granularity = "yearly",
+    customInterval = 1234,
+    period = 1234,
+    stableTrendWindow = 1234,
+    threshold = 123.45f,
+};
+
+Response response = client.DetectUnivariateChangePoint(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("period").ToString());
+Console.WriteLine(result.GetProperty("isChangePoint")[0].ToString());
+Console.WriteLine(result.GetProperty("confidenceScores")[0].ToString());
+]]></code>
+</example>
+<remarks>
+Evaluate change point score of every series point
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>UnivariateChangePointDetectionOptions</c>:
+<code>{
+  series: [
+    {
+      timestamp: string (date &amp; time), # Optional.
+      value: number, # Required.
+    }
+  ], # Required.
+  granularity: &quot;yearly&quot; | &quot;monthly&quot; | &quot;weekly&quot; | &quot;daily&quot; | &quot;hourly&quot; | &quot;minutely&quot; | &quot;secondly&quot; | &quot;microsecond&quot; | &quot;none&quot;, # Required.
+  customInterval: number, # Optional.
+  period: number, # Optional.
+  stableTrendWindow: number, # Optional.
+  threshold: number, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>UnivariateChangePointDetectionResult</c>:
+<code>{
+  period: number, # Optional.
+  isChangePoint: [boolean], # Optional.
+  confidenceScores: [number], # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMultivariateBatchDetectionResultAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetMultivariateBatchDetectionResultAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+Response response = await client.GetMultivariateBatchDetectionResultAsync("<resultId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("resultId").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("variable").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("dataSource").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("topContributorCount").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("timestamp").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("isAnomaly").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("severity").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("score").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("variable").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("contributionScore").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("correlationChanges").GetProperty("changedVariables")[0].ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("message").ToString());
+]]></code>
+</example>
+<remarks>
+For asynchronous inference, get multivariate anomaly detection result based on
+resultId returned by the BatchDetectAnomaly api.
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>MultivariateDetectionResult</c>:
+<code>{
+  resultId: string, # Required.
+  summary: {
+    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Required.
+    errors: [ErrorResponse], # Optional.
+    variableStates: [VariableState], # Optional.
+    setupInfo: {
+      dataSource: string, # Required.
+      topContributorCount: number, # Required.
+      startTime: string (date &amp; time), # Required.
+      endTime: string (date &amp; time), # Required.
+    }, # Required.
+  }, # Required.
+  results: [
+    {
+      timestamp: string (date &amp; time), # Required.
+      value: {
+        isAnomaly: boolean, # Required.
+        severity: number, # Required.
+        score: number, # Required.
+        interpretation: [AnomalyInterpretation], # Optional.
+      }, # Optional.
+      errors: [ErrorResponse], # Optional.
+    }
+  ], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMultivariateBatchDetectionResult(String,RequestContext)">
+<example>
+This sample shows how to call GetMultivariateBatchDetectionResult with required parameters and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+Response response = client.GetMultivariateBatchDetectionResult("<resultId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("resultId").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("variable").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("dataSource").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("topContributorCount").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("timestamp").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("isAnomaly").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("severity").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("score").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("variable").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("contributionScore").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("correlationChanges").GetProperty("changedVariables")[0].ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("message").ToString());
+]]></code>
+</example>
+<remarks>
+For asynchronous inference, get multivariate anomaly detection result based on
+resultId returned by the BatchDetectAnomaly api.
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>MultivariateDetectionResult</c>:
+<code>{
+  resultId: string, # Required.
+  summary: {
+    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Required.
+    errors: [ErrorResponse], # Optional.
+    variableStates: [VariableState], # Optional.
+    setupInfo: {
+      dataSource: string, # Required.
+      topContributorCount: number, # Required.
+      startTime: string (date &amp; time), # Required.
+      endTime: string (date &amp; time), # Required.
+    }, # Required.
+  }, # Required.
+  results: [
+    {
+      timestamp: string (date &amp; time), # Required.
+      value: {
+        isAnomaly: boolean, # Required.
+        severity: number, # Required.
+        score: number, # Required.
+        interpretation: [AnomalyInterpretation], # Optional.
+      }, # Optional.
+      errors: [ErrorResponse], # Optional.
+    }
+  ], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="TrainMultivariateModelAsync(RequestContent,RequestContext)">
+<example>
+This sample shows how to call TrainMultivariateModelAsync with required request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    dataSource = "<dataSource>",
+    startTime = "2022-05-10T14:57:31.2311892-04:00",
+    endTime = "2022-05-10T14:57:31.2311892-04:00",
+};
+
+Response response = await client.TrainMultivariateModelAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("createdTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
+]]></code>
+This sample shows how to call TrainMultivariateModelAsync with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    dataSource = "<dataSource>",
+    dataSchema = "OneTable",
+    startTime = "2022-05-10T14:57:31.2311892-04:00",
+    endTime = "2022-05-10T14:57:31.2311892-04:00",
+    displayName = "<displayName>",
+    slidingWindow = 1234,
+    alignPolicy = new {
+        alignMode = "Inner",
+        fillNAMethod = "Previous",
+        paddingValue = 123.45f,
+    },
+    status = "CREATED",
+    diagnosticsInfo = new {
+        modelState = new {
+            epochIds = new[] {
+                1234
+            },
+            trainLosses = new[] {
+                123.45f
+            },
+            validationLosses = new[] {
+                123.45f
+            },
+            latenciesInSeconds = new[] {
+                123.45f
+            },
+        },
+        variableStates = new[] {
+            new {
+                variable = "<variable>",
+                filledNARatio = 123.45f,
+                effectiveCount = 1234,
+                firstTimestamp = "2022-05-10T14:57:31.2311892-04:00",
+                lastTimestamp = "2022-05-10T14:57:31.2311892-04:00",
+            }
+        },
+    },
+};
+
+Response response = await client.TrainMultivariateModelAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("createdTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSource").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSchema").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("slidingWindow").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("alignMode").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("fillNAMethod").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("paddingValue").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("epochIds")[0].ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("trainLosses")[0].ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("validationLosses")[0].ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("latenciesInSeconds")[0].ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("variable").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
+]]></code>
+</example>
+<remarks>
+Create and train a multivariate anomaly detection model. The request must
+include a source parameter to indicate an externally accessible Azure blob
+storage URI.There are two types of data input: An URI pointed to an Azure blob
+storage folder which contains multiple CSV files, and each CSV file contains
+two columns, timestamp and variable. Another type of input is an URI pointed to
+a CSV file in Azure blob storage, which contains all the variables and a
+timestamp column.
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>ModelInfo</c>:
+<code>{
+  dataSource: string, # Required.
+  dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional.
+  startTime: string (date &amp; time), # Required.
+  endTime: string (date &amp; time), # Required.
+  displayName: string, # Optional.
+  slidingWindow: number, # Optional.
+  alignPolicy: {
+    alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional.
+    fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional.
+    paddingValue: number, # Optional.
+  }, # Optional.
+  status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional.
+  errors: [
+    {
+      code: string, # Required.
+      message: string, # Required.
+    }
+  ], # Optional.
+  diagnosticsInfo: {
+    modelState: {
+      epochIds: [number], # Optional.
+      trainLosses: [number], # Optional.
+      validationLosses: [number], # Optional.
+      latenciesInSeconds: [number], # Optional.
+    }, # Optional.
+    variableStates: [VariableState], # Optional.
+  }, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>AnomalyDetectionModel</c>:
+<code>{
+  modelId: string, # Required.
+  createdTime: string (date &amp; time), # Required.
+  lastUpdatedTime: string (date &amp; time), # Required.
+  modelInfo: {
+    dataSource: string, # Required.
+    dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional.
+    startTime: string (date &amp; time), # Required.
+    endTime: string (date &amp; time), # Required.
+    displayName: string, # Optional.
+    slidingWindow: number, # Optional.
+    alignPolicy: {
+      alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional.
+      fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional.
+      paddingValue: number, # Optional.
+    }, # Optional.
+    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional.
+    errors: [
+      {
+        code: string, # Required.
+        message: string, # Required.
+      }
+    ], # Optional.
+    diagnosticsInfo: {
+      modelState: {
+        epochIds: [number], # Optional.
+        trainLosses: [number], # Optional.
+        validationLosses: [number], # Optional.
+        latenciesInSeconds: [number], # Optional.
+      }, # Optional.
+      variableStates: [VariableState], # Optional.
+    }, # Optional.
+  }, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="TrainMultivariateModel(RequestContent,RequestContext)">
+<example>
+This sample shows how to call TrainMultivariateModel with required request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    dataSource = "<dataSource>",
+    startTime = "2022-05-10T14:57:31.2311892-04:00",
+    endTime = "2022-05-10T14:57:31.2311892-04:00",
+};
+
+Response response = client.TrainMultivariateModel(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("createdTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
+]]></code>
+This sample shows how to call TrainMultivariateModel with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    dataSource = "<dataSource>",
+    dataSchema = "OneTable",
+    startTime = "2022-05-10T14:57:31.2311892-04:00",
+    endTime = "2022-05-10T14:57:31.2311892-04:00",
+    displayName = "<displayName>",
+    slidingWindow = 1234,
+    alignPolicy = new {
+        alignMode = "Inner",
+        fillNAMethod = "Previous",
+        paddingValue = 123.45f,
+    },
+    status = "CREATED",
+    diagnosticsInfo = new {
+        modelState = new {
+            epochIds = new[] {
+                1234
+            },
+            trainLosses = new[] {
+                123.45f
+            },
+            validationLosses = new[] {
+                123.45f
+            },
+            latenciesInSeconds = new[] {
+                123.45f
+            },
+        },
+        variableStates = new[] {
+            new {
+                variable = "<variable>",
+                filledNARatio = 123.45f,
+                effectiveCount = 1234,
+                firstTimestamp = "2022-05-10T14:57:31.2311892-04:00",
+                lastTimestamp = "2022-05-10T14:57:31.2311892-04:00",
+            }
+        },
+    },
+};
+
+Response response = client.TrainMultivariateModel(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("createdTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSource").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSchema").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("slidingWindow").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("alignMode").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("fillNAMethod").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("paddingValue").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("epochIds")[0].ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("trainLosses")[0].ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("validationLosses")[0].ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("latenciesInSeconds")[0].ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("variable").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
+]]></code>
+</example>
+<remarks>
+Create and train a multivariate anomaly detection model. The request must
+include a source parameter to indicate an externally accessible Azure blob
+storage URI.There are two types of data input: An URI pointed to an Azure blob
+storage folder which contains multiple CSV files, and each CSV file contains
+two columns, timestamp and variable. Another type of input is an URI pointed to
+a CSV file in Azure blob storage, which contains all the variables and a
+timestamp column.
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>ModelInfo</c>:
+<code>{
+  dataSource: string, # Required.
+  dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional.
+  startTime: string (date &amp; time), # Required.
+  endTime: string (date &amp; time), # Required.
+  displayName: string, # Optional.
+  slidingWindow: number, # Optional.
+  alignPolicy: {
+    alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional.
+    fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional.
+    paddingValue: number, # Optional.
+  }, # Optional.
+  status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional.
+  errors: [
+    {
+      code: string, # Required.
+      message: string, # Required.
+    }
+  ], # Optional.
+  diagnosticsInfo: {
+    modelState: {
+      epochIds: [number], # Optional.
+      trainLosses: [number], # Optional.
+      validationLosses: [number], # Optional.
+      latenciesInSeconds: [number], # Optional.
+    }, # Optional.
+    variableStates: [VariableState], # Optional.
+  }, # Optional.
+}
+</code>
+
+Response Body:
+
+Schema for <c>AnomalyDetectionModel</c>:
+<code>{
+  modelId: string, # Required.
+  createdTime: string (date &amp; time), # Required.
+  lastUpdatedTime: string (date &amp; time), # Required.
+  modelInfo: {
+    dataSource: string, # Required.
+    dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional.
+    startTime: string (date &amp; time), # Required.
+    endTime: string (date &amp; time), # Required.
+    displayName: string, # Optional.
+    slidingWindow: number, # Optional.
+    alignPolicy: {
+      alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional.
+      fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional.
+      paddingValue: number, # Optional.
+    }, # Optional.
+    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional.
+    errors: [
+      {
+        code: string, # Required.
+        message: string, # Required.
+      }
+    ], # Optional.
+    diagnosticsInfo: {
+      modelState: {
+        epochIds: [number], # Optional.
+        trainLosses: [number], # Optional.
+        validationLosses: [number], # Optional.
+        latenciesInSeconds: [number], # Optional.
+      }, # Optional.
+      variableStates: [VariableState], # Optional.
+    }, # Optional.
+  }, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DeleteMultivariateModelAsync(String,RequestContext)">
+<example>
+This sample shows how to call DeleteMultivariateModelAsync with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+Response response = await client.DeleteMultivariateModelAsync("<modelId>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+Delete an existing multivariate model according to the modelId
+</remarks>
+    </member>
+    <member name="DeleteMultivariateModel(String,RequestContext)">
+<example>
+This sample shows how to call DeleteMultivariateModel with required parameters.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+Response response = client.DeleteMultivariateModel("<modelId>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+<remarks>
+Delete an existing multivariate model according to the modelId
+</remarks>
+    </member>
+    <member name="GetMultivariateModelAsync(String,RequestContext)">
+<example>
+This sample shows how to call GetMultivariateModelAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+Response response = await client.GetMultivariateModelAsync("<modelId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("createdTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSource").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSchema").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("slidingWindow").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("alignMode").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("fillNAMethod").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("paddingValue").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("epochIds")[0].ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("trainLosses")[0].ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("validationLosses")[0].ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("latenciesInSeconds")[0].ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("variable").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
+]]></code>
+</example>
+<remarks>
+Get detailed information of multivariate model, including the training status
+and variables used in the model.
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>AnomalyDetectionModel</c>:
+<code>{
+  modelId: string, # Required.
+  createdTime: string (date &amp; time), # Required.
+  lastUpdatedTime: string (date &amp; time), # Required.
+  modelInfo: {
+    dataSource: string, # Required.
+    dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional.
+    startTime: string (date &amp; time), # Required.
+    endTime: string (date &amp; time), # Required.
+    displayName: string, # Optional.
+    slidingWindow: number, # Optional.
+    alignPolicy: {
+      alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional.
+      fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional.
+      paddingValue: number, # Optional.
+    }, # Optional.
+    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional.
+    errors: [
+      {
+        code: string, # Required.
+        message: string, # Required.
+      }
+    ], # Optional.
+    diagnosticsInfo: {
+      modelState: {
+        epochIds: [number], # Optional.
+        trainLosses: [number], # Optional.
+        validationLosses: [number], # Optional.
+        latenciesInSeconds: [number], # Optional.
+      }, # Optional.
+      variableStates: [VariableState], # Optional.
+    }, # Optional.
+  }, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMultivariateModel(String,RequestContext)">
+<example>
+This sample shows how to call GetMultivariateModel with required parameters and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+Response response = client.GetMultivariateModel("<modelId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("createdTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSource").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSchema").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("slidingWindow").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("alignMode").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("fillNAMethod").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("paddingValue").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("epochIds")[0].ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("trainLosses")[0].ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("validationLosses")[0].ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("latenciesInSeconds")[0].ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("variable").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
+Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
+]]></code>
+</example>
+<remarks>
+Get detailed information of multivariate model, including the training status
+and variables used in the model.
+
+Below is the JSON schema for the response payload.
+
+Response Body:
+
+Schema for <c>AnomalyDetectionModel</c>:
+<code>{
+  modelId: string, # Required.
+  createdTime: string (date &amp; time), # Required.
+  lastUpdatedTime: string (date &amp; time), # Required.
+  modelInfo: {
+    dataSource: string, # Required.
+    dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional.
+    startTime: string (date &amp; time), # Required.
+    endTime: string (date &amp; time), # Required.
+    displayName: string, # Optional.
+    slidingWindow: number, # Optional.
+    alignPolicy: {
+      alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional.
+      fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional.
+      paddingValue: number, # Optional.
+    }, # Optional.
+    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional.
+    errors: [
+      {
+        code: string, # Required.
+        message: string, # Required.
+      }
+    ], # Optional.
+    diagnosticsInfo: {
+      modelState: {
+        epochIds: [number], # Optional.
+        trainLosses: [number], # Optional.
+        validationLosses: [number], # Optional.
+        latenciesInSeconds: [number], # Optional.
+      }, # Optional.
+      variableStates: [VariableState], # Optional.
+    }, # Optional.
+  }, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DetectMultivariateBatchAnomalyAsync(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call DetectMultivariateBatchAnomalyAsync with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    dataSource = "<dataSource>",
+    topContributorCount = 1234,
+    startTime = "2022-05-10T14:57:31.2311892-04:00",
+    endTime = "2022-05-10T14:57:31.2311892-04:00",
+};
+
+Response response = await client.DetectMultivariateBatchAnomalyAsync("<modelId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("resultId").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("variable").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("dataSource").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("topContributorCount").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("timestamp").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("isAnomaly").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("severity").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("score").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("variable").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("contributionScore").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("correlationChanges").GetProperty("changedVariables")[0].ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("message").ToString());
+]]></code>
+</example>
+<remarks>
+Submit multivariate anomaly detection task with the modelId of trained model
+and inference data, the input schema should be the same with the training
+request. The request will complete asynchronously and return a resultId to
+query the detection result.The request should be a source link to indicate an
+externally accessible Azure storage Uri, either pointed to an Azure blob
+storage folder, or pointed to a CSV file in Azure blob storage.
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>MultivariateBatchDetectionOptions</c>:
+<code>{
+  dataSource: string, # Required.
+  topContributorCount: number, # Required.
+  startTime: string (date &amp; time), # Required.
+  endTime: string (date &amp; time), # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>MultivariateDetectionResult</c>:
+<code>{
+  resultId: string, # Required.
+  summary: {
+    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Required.
+    errors: [ErrorResponse], # Optional.
+    variableStates: [VariableState], # Optional.
+    setupInfo: {
+      dataSource: string, # Required.
+      topContributorCount: number, # Required.
+      startTime: string (date &amp; time), # Required.
+      endTime: string (date &amp; time), # Required.
+    }, # Required.
+  }, # Required.
+  results: [
+    {
+      timestamp: string (date &amp; time), # Required.
+      value: {
+        isAnomaly: boolean, # Required.
+        severity: number, # Required.
+        score: number, # Required.
+        interpretation: [AnomalyInterpretation], # Optional.
+      }, # Optional.
+      errors: [ErrorResponse], # Optional.
+    }
+  ], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DetectMultivariateBatchAnomaly(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call DetectMultivariateBatchAnomaly with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    dataSource = "<dataSource>",
+    topContributorCount = 1234,
+    startTime = "2022-05-10T14:57:31.2311892-04:00",
+    endTime = "2022-05-10T14:57:31.2311892-04:00",
+};
+
+Response response = client.DetectMultivariateBatchAnomaly("<modelId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("resultId").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("variable").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("dataSource").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("topContributorCount").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("summary").GetProperty("setupInfo").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("timestamp").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("isAnomaly").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("severity").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("score").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("variable").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("contributionScore").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("correlationChanges").GetProperty("changedVariables")[0].ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("message").ToString());
+]]></code>
+</example>
+<remarks>
+Submit multivariate anomaly detection task with the modelId of trained model
+and inference data, the input schema should be the same with the training
+request. The request will complete asynchronously and return a resultId to
+query the detection result.The request should be a source link to indicate an
+externally accessible Azure storage Uri, either pointed to an Azure blob
+storage folder, or pointed to a CSV file in Azure blob storage.
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>MultivariateBatchDetectionOptions</c>:
+<code>{
+  dataSource: string, # Required.
+  topContributorCount: number, # Required.
+  startTime: string (date &amp; time), # Required.
+  endTime: string (date &amp; time), # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>MultivariateDetectionResult</c>:
+<code>{
+  resultId: string, # Required.
+  summary: {
+    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Required.
+    errors: [ErrorResponse], # Optional.
+    variableStates: [VariableState], # Optional.
+    setupInfo: {
+      dataSource: string, # Required.
+      topContributorCount: number, # Required.
+      startTime: string (date &amp; time), # Required.
+      endTime: string (date &amp; time), # Required.
+    }, # Required.
+  }, # Required.
+  results: [
+    {
+      timestamp: string (date &amp; time), # Required.
+      value: {
+        isAnomaly: boolean, # Required.
+        severity: number, # Required.
+        score: number, # Required.
+        interpretation: [AnomalyInterpretation], # Optional.
+      }, # Optional.
+      errors: [ErrorResponse], # Optional.
+    }
+  ], # Required.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DetectMultivariateLastAnomalyAsync(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call DetectMultivariateLastAnomalyAsync with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    variables = new[] {
+        new {
+            variable = "<variable>",
+            timestamps = new[] {
+                "<String>"
+            },
+            values = new[] {
+                123.45f
+            },
+        }
+    },
+    topContributorCount = 1234,
+};
+
+Response response = await client.DetectMultivariateLastAnomalyAsync("<modelId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("variableStates")[0].GetProperty("variable").ToString());
+Console.WriteLine(result.GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
+Console.WriteLine(result.GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
+Console.WriteLine(result.GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
+Console.WriteLine(result.GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("timestamp").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("isAnomaly").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("severity").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("score").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("variable").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("contributionScore").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("correlationChanges").GetProperty("changedVariables")[0].ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("message").ToString());
+]]></code>
+</example>
+<remarks>
+Submit multivariate anomaly detection task with the modelId of trained model
+and inference data, and the inference data should be put into request body in a
+JSON format. The request will complete synchronously and return the detection
+immediately in the response body.
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>MultivariateLastDetectionOptions</c>:
+<code>{
+  variables: [
+    {
+      variable: string, # Required.
+      timestamps: [string], # Required.
+      values: [number], # Required.
+    }
+  ], # Required.
+  topContributorCount: number, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>MultivariateLastDetectionResult</c>:
+<code>{
+  variableStates: [
+    {
+      variable: string, # Optional.
+      filledNARatio: number, # Optional.
+      effectiveCount: number, # Optional.
+      firstTimestamp: string (date &amp; time), # Optional.
+      lastTimestamp: string (date &amp; time), # Optional.
+    }
+  ], # Optional.
+  results: [AnomalyState], # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="DetectMultivariateLastAnomaly(String,RequestContent,RequestContext)">
+<example>
+This sample shows how to call DetectMultivariateLastAnomaly with required parameters and request content and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+var data = new {
+    variables = new[] {
+        new {
+            variable = "<variable>",
+            timestamps = new[] {
+                "<String>"
+            },
+            values = new[] {
+                123.45f
+            },
+        }
+    },
+    topContributorCount = 1234,
+};
+
+Response response = client.DetectMultivariateLastAnomaly("<modelId>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("variableStates")[0].GetProperty("variable").ToString());
+Console.WriteLine(result.GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
+Console.WriteLine(result.GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
+Console.WriteLine(result.GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
+Console.WriteLine(result.GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("timestamp").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("isAnomaly").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("severity").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("score").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("variable").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("contributionScore").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("value").GetProperty("interpretation")[0].GetProperty("correlationChanges").GetProperty("changedVariables")[0].ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("results")[0].GetProperty("errors")[0].GetProperty("message").ToString());
+]]></code>
+</example>
+<remarks>
+Submit multivariate anomaly detection task with the modelId of trained model
+and inference data, and the inference data should be put into request body in a
+JSON format. The request will complete synchronously and return the detection
+immediately in the response body.
+
+Below is the JSON schema for the request and response payloads.
+
+Request Body:
+
+Schema for <c>MultivariateLastDetectionOptions</c>:
+<code>{
+  variables: [
+    {
+      variable: string, # Required.
+      timestamps: [string], # Required.
+      values: [number], # Required.
+    }
+  ], # Required.
+  topContributorCount: number, # Required.
+}
+</code>
+
+Response Body:
+
+Schema for <c>MultivariateLastDetectionResult</c>:
+<code>{
+  variableStates: [
+    {
+      variable: string, # Optional.
+      filledNARatio: number, # Optional.
+      effectiveCount: number, # Optional.
+      firstTimestamp: string (date &amp; time), # Optional.
+      lastTimestamp: string (date &amp; time), # Optional.
+    }
+  ], # Optional.
+  results: [AnomalyState], # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMultivariateModelsAsync(Int32,Int32,RequestContext)">
+<example>
+This sample shows how to call GetMultivariateModelsAsync and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+await foreach (var data in client.GetMultivariateModelsAsync())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("modelId").ToString());
+    Console.WriteLine(result.GetProperty("createdTime").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
+}
+]]></code>
+This sample shows how to call GetMultivariateModelsAsync with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+await foreach (var data in client.GetMultivariateModelsAsync(1234, 1234))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("modelId").ToString());
+    Console.WriteLine(result.GetProperty("createdTime").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSource").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSchema").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("startTime").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("endTime").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("slidingWindow").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("alignMode").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("fillNAMethod").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("paddingValue").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("epochIds")[0].ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("trainLosses")[0].ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("validationLosses")[0].ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("latenciesInSeconds")[0].ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("variable").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
+}
+]]></code>
+</example>
+<remarks>
+List models of a resource.
+
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  modelId: string, # Required.
+  createdTime: string (date &amp; time), # Required.
+  lastUpdatedTime: string (date &amp; time), # Required.
+  modelInfo: {
+    dataSource: string, # Required.
+    dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional.
+    startTime: string (date &amp; time), # Required.
+    endTime: string (date &amp; time), # Required.
+    displayName: string, # Optional.
+    slidingWindow: number, # Optional.
+    alignPolicy: {
+      alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional.
+      fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional.
+      paddingValue: number, # Optional.
+    }, # Optional.
+    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional.
+    errors: [ErrorResponse], # Optional.
+    diagnosticsInfo: {
+      modelState: {
+        epochIds: [number], # Optional.
+        trainLosses: [number], # Optional.
+        validationLosses: [number], # Optional.
+        latenciesInSeconds: [number], # Optional.
+      }, # Optional.
+      variableStates: [VariableState], # Optional.
+    }, # Optional.
+  }, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+    <member name="GetMultivariateModels(Int32,Int32,RequestContext)">
+<example>
+This sample shows how to call GetMultivariateModels and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+foreach (var data in client.GetMultivariateModels())
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("modelId").ToString());
+    Console.WriteLine(result.GetProperty("createdTime").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
+}
+]]></code>
+This sample shows how to call GetMultivariateModels with all parameters, and how to parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new AnomalyDetectorClient(endpoint, credential);
+
+foreach (var data in client.GetMultivariateModels(1234, 1234))
+{
+    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("modelId").ToString());
+    Console.WriteLine(result.GetProperty("createdTime").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedTime").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSource").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("dataSchema").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("startTime").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("endTime").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("displayName").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("slidingWindow").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("alignMode").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("fillNAMethod").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("alignPolicy").GetProperty("paddingValue").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("errors")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("epochIds")[0].ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("trainLosses")[0].ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("validationLosses")[0].ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("modelState").GetProperty("latenciesInSeconds")[0].ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("variable").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("filledNARatio").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("effectiveCount").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("firstTimestamp").ToString());
+    Console.WriteLine(result.GetProperty("modelInfo").GetProperty("diagnosticsInfo").GetProperty("variableStates")[0].GetProperty("lastTimestamp").ToString());
+}
+]]></code>
+</example>
+<remarks>
+List models of a resource.
+
+Below is the JSON schema for one item in the pageable response.
+
+Response Body:
+
+Schema for <c>Array</c>:
+<code>{
+  modelId: string, # Required.
+  createdTime: string (date &amp; time), # Required.
+  lastUpdatedTime: string (date &amp; time), # Required.
+  modelInfo: {
+    dataSource: string, # Required.
+    dataSchema: &quot;OneTable&quot; | &quot;MultiTable&quot;, # Optional.
+    startTime: string (date &amp; time), # Required.
+    endTime: string (date &amp; time), # Required.
+    displayName: string, # Optional.
+    slidingWindow: number, # Optional.
+    alignPolicy: {
+      alignMode: &quot;Inner&quot; | &quot;Outer&quot;, # Optional.
+      fillNAMethod: &quot;Previous&quot; | &quot;Subsequent&quot; | &quot;Linear&quot; | &quot;Zero&quot; | &quot;Fixed&quot;, # Optional.
+      paddingValue: number, # Optional.
+    }, # Optional.
+    status: &quot;CREATED&quot; | &quot;RUNNING&quot; | &quot;READY&quot; | &quot;FAILED&quot;, # Optional.
+    errors: [ErrorResponse], # Optional.
+    diagnosticsInfo: {
+      modelState: {
+        epochIds: [number], # Optional.
+        trainLosses: [number], # Optional.
+        validationLosses: [number], # Optional.
+        latenciesInSeconds: [number], # Optional.
+      }, # Optional.
+      variableStates: [VariableState], # Optional.
+    }, # Optional.
+  }, # Optional.
+}
+</code>
+
+</remarks>
+    </member>
+  </members>
+</doc>

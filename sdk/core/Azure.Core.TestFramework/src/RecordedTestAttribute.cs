@@ -70,19 +70,27 @@ namespace Azure.Core.TestFramework
                         // If the recording succeeded, set an error result.
                         if (context.CurrentResult.ResultState.Status == TestStatus.Passed)
                         {
-                            context.CurrentResult.SetResult(ResultState.Error,
-                                "Test failed playback, but was successfully re-recorded (it should pass if re-run)." +
+                            string message = "Test failed playback, but was successfully re-recorded. It should pass if re-run." +
                                 Environment.NewLine +
                                 Environment.NewLine +
-                                originalResult.Message);
+                                originalResult.Message;
+
+                            context.CurrentResult.SetResult(ResultState.Error, message);
                         }
                         else
                         {
-                            context.CurrentResult.SetResult(context.CurrentResult.ResultState,
-                                originalResult.Message, context.CurrentResult.StackTrace + Environment.NewLine + Environment.NewLine +
-                                                        "The [RecordedTest] attribute attempted to re-record, but failed: " +
-                                                        Environment.NewLine +
-                                                        context.CurrentResult.Message + Environment.NewLine);
+                            string message = "The [RecordedTest] attribute attempted to re-record, but failed:" +
+                                Environment.NewLine +
+                                Environment.NewLine +
+                                context.CurrentResult.Message +
+                                Environment.NewLine +
+                                Environment.NewLine +
+                                "Original failure:" +
+                                Environment.NewLine +
+                                Environment.NewLine +
+                                originalResult.Message;
+
+                            context.CurrentResult.SetResult(context.CurrentResult.ResultState, message, context.CurrentResult.StackTrace);
                         }
 
                         // revert RecordTestMode to Playback

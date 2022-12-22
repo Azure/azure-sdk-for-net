@@ -34,7 +34,8 @@ namespace Azure.AI.AnomalyDetector.Tests
 
             if (useTokenCredential)
             {
-                client = new AnomalyDetectorClient(endpoint, TestEnvironment.Credential, options: options);
+                AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.Credential.ToString());
+                client = new AnomalyDetectorClient(endpoint, credential, options: options);
             }
             else
             {
