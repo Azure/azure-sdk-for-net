@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string IncidentTacticsValue = "IncidentTactics";
         private const string IncidentLabelValue = "IncidentLabel";
         private const string IncidentProviderNameValue = "IncidentProviderName";
+        private const string IncidentUpdatedBySourceValue = "IncidentUpdatedBySource";
         private const string AccountAadTenantIdValue = "AccountAadTenantId";
         private const string AccountAadUserIdValue = "AccountAadUserId";
         private const string AccountNameValue = "AccountName";
@@ -94,6 +95,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static AutomationRulePropertyConditionSupportedProperty IncidentLabel { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentLabelValue);
         /// <summary> The provider name of the incident. </summary>
         public static AutomationRulePropertyConditionSupportedProperty IncidentProviderName { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentProviderNameValue);
+        /// <summary> The update source of the incident. </summary>
+        public static AutomationRulePropertyConditionSupportedProperty IncidentUpdatedBySource { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentUpdatedBySourceValue);
         /// <summary> The account Azure Active Directory tenant id. </summary>
         public static AutomationRulePropertyConditionSupportedProperty AccountAadTenantId { get; } = new AutomationRulePropertyConditionSupportedProperty(AccountAadTenantIdValue);
         /// <summary> The account Azure Active Directory user id. </summary>

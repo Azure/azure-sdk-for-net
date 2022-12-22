@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         internal static IncidentEntitiesResultsMetadata DeserializeIncidentEntitiesResultsMetadata(JsonElement element)
         {
             int count = default;
-            EntityKind entityKind = default;
+            EntityKindEnum entityKind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"))
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("entityKind"))
                 {
-                    entityKind = new EntityKind(property.Value.GetString());
+                    entityKind = new EntityKindEnum(property.Value.GetString());
                     continue;
                 }
             }

@@ -26,19 +26,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
+            if (Optional.IsDefined(DataTypes))
+            {
+                writer.WritePropertyName("dataTypes");
+                writer.WriteObjectValue(DataTypes);
+            }
             if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId");
                 writer.WriteStringValue(SubscriptionId);
             }
-            writer.WritePropertyName("dataTypes");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Alerts))
-            {
-                writer.WritePropertyName("alerts");
-                writer.WriteObjectValue(Alerts);
-            }
-            writer.WriteEndObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -51,8 +48,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Optional<AlertsDataTypeOfDataConnector> dataTypes = default;
             Optional<string> subscriptionId = default;
-            Optional<DataConnectorDataTypeCommon> alerts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -104,11 +101,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("subscriptionId"))
-                        {
-                            subscriptionId = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("dataTypes"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -116,26 +108,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                if (property1.NameEquals("alerts"))
-                                {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        property1.ThrowNonNullablePropertyIsNull();
-                                        continue;
-                                    }
-                                    alerts = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property1.Value);
-                                    continue;
-                                }
-                            }
+                            dataTypes = AlertsDataTypeOfDataConnector.DeserializeAlertsDataTypeOfDataConnector(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("subscriptionId"))
+                        {
+                            subscriptionId = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ASCDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), alerts.Value, subscriptionId.Value);
+            return new ASCDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), dataTypes.Value, subscriptionId.Value);
         }
     }
 }

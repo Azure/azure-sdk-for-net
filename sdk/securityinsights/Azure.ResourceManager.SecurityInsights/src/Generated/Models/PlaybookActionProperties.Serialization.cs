@@ -16,11 +16,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogicAppResourceId))
-            {
-                writer.WritePropertyName("logicAppResourceId");
-                writer.WriteStringValue(LogicAppResourceId);
-            }
+            writer.WritePropertyName("logicAppResourceId");
+            writer.WriteStringValue(LogicAppResourceId);
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId");
@@ -31,7 +28,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static PlaybookActionProperties DeserializePlaybookActionProperties(JsonElement element)
         {
-            Optional<string> logicAppResourceId = default;
+            string logicAppResourceId = default;
             Optional<Guid> tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -51,7 +48,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new PlaybookActionProperties(logicAppResourceId.Value, Optional.ToNullable(tenantId));
+            return new PlaybookActionProperties(logicAppResourceId, Optional.ToNullable(tenantId));
         }
     }
 }

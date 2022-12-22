@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -13,8 +14,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class PlaybookActionProperties
     {
         /// <summary> Initializes a new instance of PlaybookActionProperties. </summary>
-        public PlaybookActionProperties()
+        /// <param name="logicAppResourceId"> The resource id of the playbook resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="logicAppResourceId"/> is null. </exception>
+        public PlaybookActionProperties(string logicAppResourceId)
         {
+            Argument.AssertNotNull(logicAppResourceId, nameof(logicAppResourceId));
+
+            LogicAppResourceId = logicAppResourceId;
         }
 
         /// <summary> Initializes a new instance of PlaybookActionProperties. </summary>

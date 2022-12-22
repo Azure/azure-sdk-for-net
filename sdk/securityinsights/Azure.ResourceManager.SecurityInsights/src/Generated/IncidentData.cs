@@ -39,18 +39,15 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="incidentUri"> The deep-link url to the incident in Azure portal. </param>
         /// <param name="incidentNumber"> A sequential number. </param>
         /// <param name="labels"> List of labels relevant to this incident. </param>
-        /// <param name="providerName"> The name of the source provider that generated the incident. </param>
-        /// <param name="providerIncidentId"> The incident ID assigned by the incident provider. </param>
         /// <param name="lastActivityTimeUtc"> The time of the last activity in the incident. </param>
         /// <param name="lastModifiedTimeUtc"> The last time the incident was updated. </param>
         /// <param name="owner"> Describes a user that the incident is assigned to. </param>
         /// <param name="relatedAnalyticRuleIds"> List of resource ids of Analytic rules related to the incident. </param>
         /// <param name="severity"> The severity of the incident. </param>
         /// <param name="status"> The status of the incident. </param>
-        /// <param name="teamInformation"> Describes a team for the incident. </param>
         /// <param name="title"> The title of the incident. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        internal IncidentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IncidentAdditionalData additionalData, IncidentClassification? classification, string classificationComment, IncidentClassificationReason? classificationReason, DateTimeOffset? createdTimeUtc, string description, DateTimeOffset? firstActivityTimeUtc, Uri incidentUri, int? incidentNumber, IList<IncidentLabel> labels, string providerName, string providerIncidentId, DateTimeOffset? lastActivityTimeUtc, DateTimeOffset? lastModifiedTimeUtc, IncidentOwnerInfo owner, IReadOnlyList<string> relatedAnalyticRuleIds, IncidentSeverity? severity, IncidentStatus? status, TeamInformation teamInformation, string title, ETag? etag) : base(id, name, resourceType, systemData)
+        internal IncidentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IncidentAdditionalData additionalData, IncidentClassification? classification, string classificationComment, IncidentClassificationReason? classificationReason, DateTimeOffset? createdTimeUtc, string description, DateTimeOffset? firstActivityTimeUtc, Uri incidentUri, int? incidentNumber, IList<IncidentLabel> labels, DateTimeOffset? lastActivityTimeUtc, DateTimeOffset? lastModifiedTimeUtc, IncidentOwnerInfo owner, IReadOnlyList<string> relatedAnalyticRuleIds, IncidentSeverity? severity, IncidentStatus? status, string title, ETag? etag) : base(id, name, resourceType, systemData)
         {
             AdditionalData = additionalData;
             Classification = classification;
@@ -62,15 +59,12 @@ namespace Azure.ResourceManager.SecurityInsights
             IncidentUri = incidentUri;
             IncidentNumber = incidentNumber;
             Labels = labels;
-            ProviderName = providerName;
-            ProviderIncidentId = providerIncidentId;
             LastActivityTimeUtc = lastActivityTimeUtc;
             LastModifiedTimeUtc = lastModifiedTimeUtc;
             Owner = owner;
             RelatedAnalyticRuleIds = relatedAnalyticRuleIds;
             Severity = severity;
             Status = status;
-            TeamInformation = teamInformation;
             Title = title;
             ETag = etag;
         }
@@ -95,10 +89,6 @@ namespace Azure.ResourceManager.SecurityInsights
         public int? IncidentNumber { get; }
         /// <summary> List of labels relevant to this incident. </summary>
         public IList<IncidentLabel> Labels { get; }
-        /// <summary> The name of the source provider that generated the incident. </summary>
-        public string ProviderName { get; set; }
-        /// <summary> The incident ID assigned by the incident provider. </summary>
-        public string ProviderIncidentId { get; set; }
         /// <summary> The time of the last activity in the incident. </summary>
         public DateTimeOffset? LastActivityTimeUtc { get; set; }
         /// <summary> The last time the incident was updated. </summary>
@@ -111,8 +101,6 @@ namespace Azure.ResourceManager.SecurityInsights
         public IncidentSeverity? Severity { get; set; }
         /// <summary> The status of the incident. </summary>
         public IncidentStatus? Status { get; set; }
-        /// <summary> Describes a team for the incident. </summary>
-        public TeamInformation TeamInformation { get; set; }
         /// <summary> The title of the incident. </summary>
         public string Title { get; set; }
         /// <summary> Etag of the azure resource. </summary>

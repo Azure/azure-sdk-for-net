@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the AlertRuleTemplate data model.
     /// Please note <see cref="AlertRuleTemplateData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="FusionAlertRuleTemplate"/>, <see cref="MLBehaviorAnalyticsAlertRuleTemplate"/>, <see cref="MicrosoftSecurityIncidentCreationAlertRuleTemplate"/>, <see cref="NrtAlertRuleTemplate"/>, <see cref="ScheduledAlertRuleTemplate"/> and <see cref="ThreatIntelligenceAlertRuleTemplate"/>.
+    /// The available derived classes include <see cref="FusionAlertRuleTemplate"/>, <see cref="MicrosoftSecurityIncidentCreationAlertRuleTemplate"/> and <see cref="ScheduledAlertRuleTemplate"/>.
     /// </summary>
     public partial class AlertRuleTemplateData : ResourceData
     {
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the alert rule. </param>
+        /// <param name="kind"> The alert rule kind. </param>
         internal AlertRuleTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
         }
 
-        /// <summary> The kind of the alert rule. </summary>
+        /// <summary> The alert rule kind. </summary>
         internal AlertRuleKind Kind { get; set; }
     }
 }

@@ -45,12 +45,7 @@ namespace Azure.ResourceManager.SecurityInsights
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source");
-                writer.WriteStringValue(Source);
-            }
-            if (Optional.IsDefined(SourceType))
-            {
-                writer.WritePropertyName("sourceType");
-                writer.WriteStringValue(SourceType.Value.ToString());
+                writer.WriteStringValue(Source.Value.ToString());
             }
             if (Optional.IsDefined(Created))
             {
@@ -151,8 +146,7 @@ namespace Azure.ResourceManager.SecurityInsights
             Optional<string> watchlistId = default;
             Optional<string> displayName = default;
             Optional<string> provider = default;
-            Optional<string> source = default;
-            Optional<SourceType> sourceType = default;
+            Optional<Source> source = default;
             Optional<DateTimeOffset> created = default;
             Optional<DateTimeOffset> updated = default;
             Optional<UserInfo> createdBy = default;
@@ -232,17 +226,12 @@ namespace Azure.ResourceManager.SecurityInsights
                         }
                         if (property0.NameEquals("source"))
                         {
-                            source = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sourceType"))
-                        {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sourceType = new SourceType(property0.Value.GetString());
+                            source = new Source(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("created"))
@@ -379,7 +368,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new WatchlistData(id, name, type, systemData.Value, watchlistId.Value, displayName.Value, provider.Value, source.Value, Optional.ToNullable(sourceType), Optional.ToNullable(created), Optional.ToNullable(updated), createdBy.Value, updatedBy.Value, description.Value, watchlistType.Value, watchlistAlias.Value, Optional.ToNullable(isDeleted), Optional.ToList(labels), Optional.ToNullable(defaultDuration), Optional.ToNullable(tenantId), Optional.ToNullable(numberOfLinesToSkip), rawContent.Value, itemsSearchKey.Value, contentType.Value, uploadStatus.Value, Optional.ToNullable(etag));
+            return new WatchlistData(id, name, type, systemData.Value, watchlistId.Value, displayName.Value, provider.Value, Optional.ToNullable(source), Optional.ToNullable(created), Optional.ToNullable(updated), createdBy.Value, updatedBy.Value, description.Value, watchlistType.Value, watchlistAlias.Value, Optional.ToNullable(isDeleted), Optional.ToList(labels), Optional.ToNullable(defaultDuration), Optional.ToNullable(tenantId), Optional.ToNullable(numberOfLinesToSkip), rawContent.Value, itemsSearchKey.Value, contentType.Value, uploadStatus.Value, Optional.ToNullable(etag));
         }
     }
 }

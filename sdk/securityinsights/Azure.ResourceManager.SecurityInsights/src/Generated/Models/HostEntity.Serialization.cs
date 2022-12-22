@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static HostEntity DeserializeHostEntity(JsonElement element)
         {
-            EntityKind kind = default;
+            EntityKindEnum kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (property.NameEquals("kind"))
                 {
-                    kind = new EntityKind(property.Value.GetString());
+                    kind = new EntityKindEnum(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"))

@@ -9,18 +9,17 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a file hash entity. </summary>
-    public partial class FileHashEntity : EntityData
+    public partial class FileHashEntity : Entity
     {
         /// <summary> Initializes a new instance of FileHashEntity. </summary>
         public FileHashEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            Kind = EntityKind.FileHash;
+            Kind = EntityKindEnum.FileHash;
         }
 
         /// <summary> Initializes a new instance of FileHashEntity. </summary>
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
         /// <param name="algorithm"> The hash algorithm type. </param>
         /// <param name="hashValue"> The file hash value. </param>
-        internal FileHashEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, FileHashAlgorithm? algorithm, string hashValue) : base(id, name, resourceType, systemData, kind)
+        internal FileHashEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKindEnum kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, FileHashAlgorithm? algorithm, string hashValue) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

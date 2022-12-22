@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
@@ -240,102 +239,6 @@ namespace Azure.ResourceManager.SecurityInsights
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Connects a data connector.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}/connect
-        /// Operation Id: DataConnectors_Connect
-        /// </summary>
-        /// <param name="connectBody"> The data connector. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectBody"/> is null. </exception>
-        public virtual async Task<Response> ConnectAsync(DataConnectorConnectBody connectBody, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(connectBody, nameof(connectBody));
-
-            using var scope = _dataConnectorClientDiagnostics.CreateScope("DataConnectorResource.Connect");
-            scope.Start();
-            try
-            {
-                var response = await _dataConnectorRestClient.ConnectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectBody, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Connects a data connector.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}/connect
-        /// Operation Id: DataConnectors_Connect
-        /// </summary>
-        /// <param name="connectBody"> The data connector. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectBody"/> is null. </exception>
-        public virtual Response Connect(DataConnectorConnectBody connectBody, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(connectBody, nameof(connectBody));
-
-            using var scope = _dataConnectorClientDiagnostics.CreateScope("DataConnectorResource.Connect");
-            scope.Start();
-            try
-            {
-                var response = _dataConnectorRestClient.Connect(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectBody, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Disconnect a data connector.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}/disconnect
-        /// Operation Id: DataConnectors_Disconnect
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DisconnectAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _dataConnectorClientDiagnostics.CreateScope("DataConnectorResource.Disconnect");
-            scope.Start();
-            try
-            {
-                var response = await _dataConnectorRestClient.DisconnectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Disconnect a data connector.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}/disconnect
-        /// Operation Id: DataConnectors_Disconnect
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Disconnect(CancellationToken cancellationToken = default)
-        {
-            using var scope = _dataConnectorClientDiagnostics.CreateScope("DataConnectorResource.Disconnect");
-            scope.Start();
-            try
-            {
-                var response = _dataConnectorRestClient.Disconnect(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

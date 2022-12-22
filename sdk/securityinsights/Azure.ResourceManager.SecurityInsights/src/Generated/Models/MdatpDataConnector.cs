@@ -30,25 +30,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="kind"> The data connector kind. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="alerts"> Alerts data type connection. </param>
-        internal MdatpDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, Guid? tenantId, DataConnectorDataTypeCommon alerts) : base(id, name, resourceType, systemData, kind, etag)
+        /// <param name="dataTypes"> The available data types for the connector. </param>
+        internal MdatpDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, Guid? tenantId, AlertsDataTypeOfDataConnector dataTypes) : base(id, name, resourceType, systemData, kind, etag)
         {
             TenantId = tenantId;
-            Alerts = alerts;
+            DataTypes = dataTypes;
             Kind = kind;
         }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         public Guid? TenantId { get; set; }
-        /// <summary> Alerts data type connection. </summary>
-        internal DataConnectorDataTypeCommon Alerts { get; set; }
+        /// <summary> The available data types for the connector. </summary>
+        internal AlertsDataTypeOfDataConnector DataTypes { get; set; }
         /// <summary> Describe whether this data type connection is enabled or not. </summary>
         public DataTypeState? AlertsState
         {
-            get => Alerts is null ? default(DataTypeState?) : Alerts.State;
+            get => DataTypes is null ? default : DataTypes.AlertsState;
             set
             {
-                Alerts = value.HasValue ? new DataConnectorDataTypeCommon(value.Value) : null;
+                if (DataTypes is null)
+                    DataTypes = new AlertsDataTypeOfDataConnector();
+                DataTypes.AlertsState = value;
             }
         }
     }

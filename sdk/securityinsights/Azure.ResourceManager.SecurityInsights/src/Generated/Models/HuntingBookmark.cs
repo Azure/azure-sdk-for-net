@@ -9,19 +9,18 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a Hunting bookmark entity. </summary>
-    public partial class HuntingBookmark : EntityData
+    public partial class HuntingBookmark : Entity
     {
         /// <summary> Initializes a new instance of HuntingBookmark. </summary>
         public HuntingBookmark()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Labels = new ChangeTrackingList<string>();
-            Kind = EntityKind.Bookmark;
+            Kind = EntityKindEnum.Bookmark;
         }
 
         /// <summary> Initializes a new instance of HuntingBookmark. </summary>
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="updatedOn"> The last time the bookmark was updated. </param>
         /// <param name="updatedBy"> Describes a user that updated the bookmark. </param>
         /// <param name="incidentInfo"> Describes an incident that relates to bookmark. </param>
-        internal HuntingBookmark(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, DateTimeOffset? created, UserInfo createdBy, string displayName, DateTimeOffset? eventOn, IList<string> labels, string notes, string query, string queryResult, DateTimeOffset? updatedOn, UserInfo updatedBy, IncidentInfo incidentInfo) : base(id, name, resourceType, systemData, kind)
+        internal HuntingBookmark(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKindEnum kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, DateTimeOffset? created, UserInfo createdBy, string displayName, DateTimeOffset? eventOn, IList<string> labels, string notes, string query, string queryResult, DateTimeOffset? updatedOn, UserInfo updatedBy, IncidentInfo incidentInfo) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

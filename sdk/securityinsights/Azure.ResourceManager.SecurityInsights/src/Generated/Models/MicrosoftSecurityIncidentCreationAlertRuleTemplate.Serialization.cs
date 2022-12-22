@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<int> alertRulesCreatedByTemplateCount = default;
-            Optional<DateTimeOffset> lastUpdatedDateUTC = default;
             Optional<DateTimeOffset> createdDateUTC = default;
+            Optional<DateTimeOffset> lastUpdatedDateUTC = default;
             Optional<string> description = default;
             Optional<string> displayName = default;
             Optional<IList<AlertRuleTemplateDataSource>> requiredDataConnectors = default;
@@ -160,16 +160,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             alertRulesCreatedByTemplateCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("lastUpdatedDateUTC"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            lastUpdatedDateUTC = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
                         if (property0.NameEquals("createdDateUTC"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -178,6 +168,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                 continue;
                             }
                             createdDateUTC = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("lastUpdatedDateUTC"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            lastUpdatedDateUTC = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("description"))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     continue;
                 }
             }
-            return new MicrosoftSecurityIncidentCreationAlertRuleTemplate(id, name, type, systemData.Value, kind, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(lastUpdatedDateUTC), Optional.ToNullable(createdDateUTC), description.Value, displayName.Value, Optional.ToList(requiredDataConnectors), Optional.ToNullable(status), Optional.ToList(displayNamesFilter), Optional.ToList(displayNamesExcludeFilter), Optional.ToNullable(productFilter), Optional.ToList(severitiesFilter));
+            return new MicrosoftSecurityIncidentCreationAlertRuleTemplate(id, name, type, systemData.Value, kind, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(createdDateUTC), Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, Optional.ToList(requiredDataConnectors), Optional.ToNullable(status), Optional.ToList(displayNamesFilter), Optional.ToList(displayNamesExcludeFilter), Optional.ToNullable(productFilter), Optional.ToList(severitiesFilter));
         }
     }
 }

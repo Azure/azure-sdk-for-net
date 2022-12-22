@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of BookmarkList. </summary>
-        /// <param name="nextLink"> URL to fetch the next set of bookmarks. </param>
+        /// <param name="nextLink"> URL to fetch the next set of cases. </param>
         /// <param name="value"> Array of bookmarks. </param>
         internal BookmarkList(string nextLink, IReadOnlyList<BookmarkData> value)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Value = value;
         }
 
-        /// <summary> URL to fetch the next set of bookmarks. </summary>
+        /// <summary> URL to fetch the next set of cases. </summary>
         public string NextLink { get; }
         /// <summary> Array of bookmarks. </summary>
         public IReadOnlyList<BookmarkData> Value { get; }

@@ -9,12 +9,11 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents an IoT device entity. </summary>
-    public partial class IoTDeviceEntity : EntityData
+    public partial class IoTDeviceEntity : Entity
     {
         /// <summary> Initializes a new instance of IoTDeviceEntity. </summary>
         public IoTDeviceEntity()
@@ -22,9 +21,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             ThreatIntelligence = new ChangeTrackingList<ThreatIntelligence>();
             Protocols = new ChangeTrackingList<string>();
-            Owners = new ChangeTrackingList<string>();
-            NicEntityIds = new ChangeTrackingList<string>();
-            Kind = EntityKind.IoTDevice;
+            Kind = EntityKindEnum.IoTDevice;
         }
 
         /// <summary> Initializes a new instance of IoTDeviceEntity. </summary>
@@ -52,18 +49,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="ipAddressEntityId"> The IP entity if of this device. </param>
         /// <param name="threatIntelligence"> A list of TI contexts attached to the IoTDevice entity. </param>
         /// <param name="protocols"> A list of protocols of the IoTDevice entity. </param>
-        /// <param name="owners"> A list of owners of the IoTDevice entity. </param>
-        /// <param name="nicEntityIds"> A list of Nic entity ids of the IoTDevice entity. </param>
-        /// <param name="site"> The site of the device. </param>
-        /// <param name="zone"> The zone location of the device within a site. </param>
-        /// <param name="sensor"> The sensor the device is monitored by. </param>
-        /// <param name="deviceSubType"> The subType of the device (&apos;PLC&apos;, &apos;HMI&apos;, &apos;EWS&apos;, etc.). </param>
-        /// <param name="importance"> Device importance, determines if the device classified as &apos;crown jewel&apos;. </param>
-        /// <param name="purdueLayer"> The Purdue Layer of the device. </param>
-        /// <param name="isAuthorized"> Determines whether the device classified as authorized device. </param>
-        /// <param name="isProgramming"> Determines whether the device classified as programming device. </param>
-        /// <param name="isScanner"> Is the device classified as a scanner device. </param>
-        internal IoTDeviceEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string deviceId, string deviceName, string source, Guid? iotSecurityAgentId, string deviceType, string vendor, string edgeId, string macAddress, string model, string serialNumber, string firmwareVersion, string operatingSystem, string iotHubEntityId, string hostEntityId, string ipAddressEntityId, IReadOnlyList<ThreatIntelligence> threatIntelligence, IReadOnlyList<string> protocols, IReadOnlyList<string> owners, IReadOnlyList<string> nicEntityIds, string site, string zone, string sensor, string deviceSubType, DeviceImportance? importance, string purdueLayer, bool? isAuthorized, bool? isProgramming, bool? isScanner) : base(id, name, resourceType, systemData, kind)
+        internal IoTDeviceEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKindEnum kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string deviceId, string deviceName, string source, Guid? iotSecurityAgentId, string deviceType, string vendor, string edgeId, string macAddress, string model, string serialNumber, string firmwareVersion, string operatingSystem, string iotHubEntityId, string hostEntityId, string ipAddressEntityId, IReadOnlyList<ThreatIntelligence> threatIntelligence, IReadOnlyList<string> protocols) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;
@@ -84,17 +70,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             IPAddressEntityId = ipAddressEntityId;
             ThreatIntelligence = threatIntelligence;
             Protocols = protocols;
-            Owners = owners;
-            NicEntityIds = nicEntityIds;
-            Site = site;
-            Zone = zone;
-            Sensor = sensor;
-            DeviceSubType = deviceSubType;
-            Importance = importance;
-            PurdueLayer = purdueLayer;
-            IsAuthorized = isAuthorized;
-            IsProgramming = isProgramming;
-            IsScanner = isScanner;
             Kind = kind;
         }
 
@@ -165,27 +140,5 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public IReadOnlyList<ThreatIntelligence> ThreatIntelligence { get; }
         /// <summary> A list of protocols of the IoTDevice entity. </summary>
         public IReadOnlyList<string> Protocols { get; }
-        /// <summary> A list of owners of the IoTDevice entity. </summary>
-        public IReadOnlyList<string> Owners { get; }
-        /// <summary> A list of Nic entity ids of the IoTDevice entity. </summary>
-        public IReadOnlyList<string> NicEntityIds { get; }
-        /// <summary> The site of the device. </summary>
-        public string Site { get; }
-        /// <summary> The zone location of the device within a site. </summary>
-        public string Zone { get; }
-        /// <summary> The sensor the device is monitored by. </summary>
-        public string Sensor { get; }
-        /// <summary> The subType of the device (&apos;PLC&apos;, &apos;HMI&apos;, &apos;EWS&apos;, etc.). </summary>
-        public string DeviceSubType { get; }
-        /// <summary> Device importance, determines if the device classified as &apos;crown jewel&apos;. </summary>
-        public DeviceImportance? Importance { get; set; }
-        /// <summary> The Purdue Layer of the device. </summary>
-        public string PurdueLayer { get; }
-        /// <summary> Determines whether the device classified as authorized device. </summary>
-        public bool? IsAuthorized { get; }
-        /// <summary> Determines whether the device classified as programming device. </summary>
-        public bool? IsProgramming { get; }
-        /// <summary> Is the device classified as a scanner device. </summary>
-        public bool? IsScanner { get; }
     }
 }

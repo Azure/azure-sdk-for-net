@@ -77,16 +77,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourceSettings))
-            {
-                writer.WritePropertyName("sourceSettings");
-                writer.WriteStartArray();
-                foreach (var item in SourceSettings)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -108,7 +98,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<AlertSeverity> severity = default;
             Optional<IList<AttackTactic>> tactics = default;
             Optional<IList<string>> techniques = default;
-            Optional<IList<FusionTemplateSourceSetting>> sourceSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -255,26 +244,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             techniques = array;
                             continue;
                         }
-                        if (property0.NameEquals("sourceSettings"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<FusionTemplateSourceSetting> array = new List<FusionTemplateSourceSetting>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(FusionTemplateSourceSetting.DeserializeFusionTemplateSourceSetting(item));
-                            }
-                            sourceSettings = array;
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new FusionAlertRuleTemplate(id, name, type, systemData.Value, kind, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(createdDateUTC), Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, Optional.ToList(requiredDataConnectors), Optional.ToNullable(status), Optional.ToNullable(severity), Optional.ToList(tactics), Optional.ToList(techniques), Optional.ToList(sourceSettings));
+            return new FusionAlertRuleTemplate(id, name, type, systemData.Value, kind, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(createdDateUTC), Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, Optional.ToList(requiredDataConnectors), Optional.ToNullable(status), Optional.ToNullable(severity), Optional.ToList(tactics), Optional.ToList(techniques));
         }
     }
 }

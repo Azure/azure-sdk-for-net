@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new ActionResponseData(id, name, type, systemData.Value, logicAppResourceId.Value, workflowId.Value, Optional.ToNullable(etag));
+            return new ActionResponseData(id, name, type, systemData.Value, Optional.ToNullable(etag), logicAppResourceId.Value, workflowId.Value);
         }
     }
 }

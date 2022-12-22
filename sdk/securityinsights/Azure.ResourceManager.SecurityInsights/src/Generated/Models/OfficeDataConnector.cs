@@ -30,54 +30,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="kind"> The data connector kind. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="exchange"> Exchange data type connection. </param>
-        /// <param name="sharePoint"> SharePoint data type connection. </param>
-        /// <param name="teams"> Teams data type connection. </param>
-        internal OfficeDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, Guid? tenantId, OfficeDataConnectorDataTypesExchange exchange, OfficeDataConnectorDataTypesSharePoint sharePoint, OfficeDataConnectorDataTypesTeams teams) : base(id, name, resourceType, systemData, kind, etag)
+        /// <param name="dataTypes"> The available data types for the connector. </param>
+        internal OfficeDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, Guid? tenantId, OfficeDataConnectorDataTypes dataTypes) : base(id, name, resourceType, systemData, kind, etag)
         {
             TenantId = tenantId;
-            Exchange = exchange;
-            SharePoint = sharePoint;
-            Teams = teams;
+            DataTypes = dataTypes;
             Kind = kind;
         }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
         public Guid? TenantId { get; set; }
-        /// <summary> Exchange data type connection. </summary>
-        internal OfficeDataConnectorDataTypesExchange Exchange { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        public DataTypeState? ExchangeState
-        {
-            get => Exchange is null ? default(DataTypeState?) : Exchange.State;
-            set
-            {
-                Exchange = value.HasValue ? new OfficeDataConnectorDataTypesExchange(value.Value) : null;
-            }
-        }
-
-        /// <summary> SharePoint data type connection. </summary>
-        internal OfficeDataConnectorDataTypesSharePoint SharePoint { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        public DataTypeState? SharePointState
-        {
-            get => SharePoint is null ? default(DataTypeState?) : SharePoint.State;
-            set
-            {
-                SharePoint = value.HasValue ? new OfficeDataConnectorDataTypesSharePoint(value.Value) : null;
-            }
-        }
-
-        /// <summary> Teams data type connection. </summary>
-        internal OfficeDataConnectorDataTypesTeams Teams { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        public DataTypeState? TeamsState
-        {
-            get => Teams is null ? default(DataTypeState?) : Teams.State;
-            set
-            {
-                Teams = value.HasValue ? new OfficeDataConnectorDataTypesTeams(value.Value) : null;
-            }
-        }
+        /// <summary> The available data types for the connector. </summary>
+        public OfficeDataConnectorDataTypes DataTypes { get; set; }
     }
 }

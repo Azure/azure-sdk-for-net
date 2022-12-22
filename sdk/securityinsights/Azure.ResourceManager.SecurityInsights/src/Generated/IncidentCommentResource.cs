@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets an incident comment.
+        /// Gets a comment for a given incident.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}
         /// Operation Id: IncidentComments_Get
         /// </summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets an incident comment.
+        /// Gets a comment for a given incident.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}
         /// Operation Id: IncidentComments_Get
         /// </summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Delete the incident comment.
+        /// Deletes a comment for a given incident.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}
         /// Operation Id: IncidentComments_Delete
         /// </summary>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Delete the incident comment.
+        /// Deletes a comment for a given incident.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}
         /// Operation Id: IncidentComments_Delete
         /// </summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Creates or updates the incident comment.
+        /// Creates or updates a comment for a given incident.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}
         /// Operation Id: IncidentComments_CreateOrUpdate
         /// </summary>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Creates or updates the incident comment.
+        /// Creates or updates a comment for a given incident.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/comments/{incidentCommentId}
         /// Operation Id: IncidentComments_CreateOrUpdate
         /// </summary>

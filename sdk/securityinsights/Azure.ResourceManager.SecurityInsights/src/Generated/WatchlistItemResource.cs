@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a watchlist, without its watchlist items.
+        /// Get a watchlist item.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}
         /// Operation Id: WatchlistItems_Get
         /// </summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a watchlist, without its watchlist items.
+        /// Get a watchlist item.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}
         /// Operation Id: WatchlistItems_Get
         /// </summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Creates or updates a watchlist item.
+        /// Create or update a watchlist item.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}
         /// Operation Id: WatchlistItems_CreateOrUpdate
         /// </summary>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Creates or updates a watchlist item.
+        /// Create or update a watchlist item.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}
         /// Operation Id: WatchlistItems_CreateOrUpdate
         /// </summary>

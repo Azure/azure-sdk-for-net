@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         /// <param name="tipLookbackPeriod"> The lookback period for the feed to be imported. </param>
-        /// <param name="indicators"> Data type for indicators connection. </param>
-        internal TIDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, Guid? tenantId, DateTimeOffset? tipLookbackPeriod, TIDataConnectorDataTypesIndicators indicators) : base(id, name, resourceType, systemData, kind, etag)
+        /// <param name="dataTypes"> The available data types for the connector. </param>
+        internal TIDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, Guid? tenantId, DateTimeOffset? tipLookbackPeriod, TIDataConnectorDataTypes dataTypes) : base(id, name, resourceType, systemData, kind, etag)
         {
             TenantId = tenantId;
             TipLookbackPeriod = tipLookbackPeriod;
-            Indicators = indicators;
+            DataTypes = dataTypes;
             Kind = kind;
         }
 
@@ -44,15 +44,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public Guid? TenantId { get; set; }
         /// <summary> The lookback period for the feed to be imported. </summary>
         public DateTimeOffset? TipLookbackPeriod { get; set; }
-        /// <summary> Data type for indicators connection. </summary>
-        internal TIDataConnectorDataTypesIndicators Indicators { get; set; }
+        /// <summary> The available data types for the connector. </summary>
+        internal TIDataConnectorDataTypes DataTypes { get; set; }
         /// <summary> Describe whether this data type connection is enabled or not. </summary>
         public DataTypeState? IndicatorsState
         {
-            get => Indicators is null ? default(DataTypeState?) : Indicators.State;
+            get => DataTypes is null ? default : DataTypes.IndicatorsState;
             set
             {
-                Indicators = value.HasValue ? new TIDataConnectorDataTypesIndicators(value.Value) : null;
+                if (DataTypes is null)
+                    DataTypes = new TIDataConnectorDataTypes();
+                DataTypes.IndicatorsState = value;
             }
         }
     }

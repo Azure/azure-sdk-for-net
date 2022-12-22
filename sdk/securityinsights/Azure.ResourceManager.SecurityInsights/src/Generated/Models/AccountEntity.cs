@@ -9,18 +9,17 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents an account entity. </summary>
-    public partial class AccountEntity : EntityData
+    public partial class AccountEntity : Entity
     {
         /// <summary> Initializes a new instance of AccountEntity. </summary>
         public AccountEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            Kind = EntityKind.Account;
+            Kind = EntityKindEnum.Account;
         }
 
         /// <summary> Initializes a new instance of AccountEntity. </summary>
@@ -37,13 +36,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="displayName"> The display name of the account. </param>
         /// <param name="hostEntityId"> The Host entity id that contains the account in case it is a local account (not domain joined). </param>
         /// <param name="isDomainJoined"> Determines whether this is a domain account. </param>
-        /// <param name="ntDomain"> The NetBIOS domain name as it appears in the alert format domain/username. Examples: NT AUTHORITY. </param>
+        /// <param name="ntDomain"> The NetBIOS domain name as it appears in the alert format - domain\username. Examples: NT AUTHORITY. </param>
         /// <param name="objectGuid"> The objectGUID attribute is a single-value attribute that is the unique identifier for the object, assigned by active directory. </param>
         /// <param name="puid"> The Azure Active Directory Passport User ID. </param>
         /// <param name="sid"> The account security identifier, e.g. S-1-5-18. </param>
         /// <param name="upnSuffix"> The user principal name suffix for the account, in some cases it is also the domain name. Examples: contoso.com. </param>
         /// <param name="dnsDomain"> The fully qualified domain DNS name. </param>
-        internal AccountEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string aadTenantId, string aadUserId, string accountName, string displayName, string hostEntityId, bool? isDomainJoined, string ntDomain, Guid? objectGuid, string puid, string sid, string upnSuffix, string dnsDomain) : base(id, name, resourceType, systemData, kind)
+        internal AccountEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKindEnum kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string aadTenantId, string aadUserId, string accountName, string displayName, string hostEntityId, bool? isDomainJoined, string ntDomain, Guid? objectGuid, string puid, string sid, string upnSuffix, string dnsDomain) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;
@@ -107,7 +106,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string HostEntityId { get; }
         /// <summary> Determines whether this is a domain account. </summary>
         public bool? IsDomainJoined { get; }
-        /// <summary> The NetBIOS domain name as it appears in the alert format domain/username. Examples: NT AUTHORITY. </summary>
+        /// <summary> The NetBIOS domain name as it appears in the alert format - domain\username. Examples: NT AUTHORITY. </summary>
         public string NtDomain { get; }
         /// <summary> The objectGUID attribute is a single-value attribute that is the unique identifier for the object, assigned by active directory. </summary>
         public Guid? ObjectGuid { get; }

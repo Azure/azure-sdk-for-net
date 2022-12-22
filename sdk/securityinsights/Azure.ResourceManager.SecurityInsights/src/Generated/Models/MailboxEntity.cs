@@ -9,18 +9,17 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a mailbox entity. </summary>
-    public partial class MailboxEntity : EntityData
+    public partial class MailboxEntity : Entity
     {
         /// <summary> Initializes a new instance of MailboxEntity. </summary>
         public MailboxEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            Kind = EntityKind.Mailbox;
+            Kind = EntityKindEnum.Mailbox;
         }
 
         /// <summary> Initializes a new instance of MailboxEntity. </summary>
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="displayName"> The mailbox&apos;s display name. </param>
         /// <param name="upn"> The mailbox&apos;s UPN. </param>
         /// <param name="externalDirectoryObjectId"> The AzureAD identifier of mailbox. Similar to AadUserId in account entity but this property is specific to mailbox object on office side. </param>
-        internal MailboxEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string mailboxPrimaryAddress, string displayName, string upn, Guid? externalDirectoryObjectId) : base(id, name, resourceType, systemData, kind)
+        internal MailboxEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityKindEnum kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string mailboxPrimaryAddress, string displayName, string upn, Guid? externalDirectoryObjectId) : base(id, name, resourceType, systemData, kind)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

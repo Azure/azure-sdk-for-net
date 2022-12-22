@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -67,35 +66,23 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("updatedBy");
                 writer.WriteObjectValue(UpdatedBy);
             }
-            if (Optional.IsCollectionDefined(ItemsKeyValue))
+            if (Optional.IsDefined(ItemsKeyValue))
             {
                 writer.WritePropertyName("itemsKeyValue");
-                writer.WriteStartObject();
-                foreach (var item in ItemsKeyValue)
-                {
-                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(ItemsKeyValue);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ItemsKeyValue.ToString()).RootElement);
 #endif
-                }
-                writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(EntityMapping))
+            if (Optional.IsDefined(EntityMapping))
             {
                 writer.WritePropertyName("entityMapping");
-                writer.WriteStartObject();
-                foreach (var item in EntityMapping)
-                {
-                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(EntityMapping);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(EntityMapping.ToString()).RootElement);
 #endif
-                }
-                writer.WriteEndObject();
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -116,8 +103,8 @@ namespace Azure.ResourceManager.SecurityInsights
             Optional<DateTimeOffset> updated = default;
             Optional<UserInfo> createdBy = default;
             Optional<UserInfo> updatedBy = default;
-            Optional<IDictionary<string, BinaryData>> itemsKeyValue = default;
-            Optional<IDictionary<string, BinaryData>> entityMapping = default;
+            Optional<BinaryData> itemsKeyValue = default;
+            Optional<BinaryData> entityMapping = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -241,12 +228,7 @@ namespace Azure.ResourceManager.SecurityInsights
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
-                            }
-                            itemsKeyValue = dictionary;
+                            itemsKeyValue = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("entityMapping"))
@@ -256,19 +238,14 @@ namespace Azure.ResourceManager.SecurityInsights
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
-                            }
-                            entityMapping = dictionary;
+                            entityMapping = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new WatchlistItemData(id, name, type, systemData.Value, watchlistItemType.Value, watchlistItemId.Value, Optional.ToNullable(tenantId), Optional.ToNullable(isDeleted), Optional.ToNullable(created), Optional.ToNullable(updated), createdBy.Value, updatedBy.Value, Optional.ToDictionary(itemsKeyValue), Optional.ToDictionary(entityMapping), Optional.ToNullable(etag));
+            return new WatchlistItemData(id, name, type, systemData.Value, watchlistItemType.Value, watchlistItemId.Value, Optional.ToNullable(tenantId), Optional.ToNullable(isDeleted), Optional.ToNullable(created), Optional.ToNullable(updated), createdBy.Value, updatedBy.Value, itemsKeyValue.Value, entityMapping.Value, Optional.ToNullable(etag));
         }
     }
 }
