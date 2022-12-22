@@ -6,7 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 title: EventGridClient
 require: https://github.com/Azure/azure-rest-api-specs/blob/d5ff2c358382dfa75282bf3c13aa00dd92c38d71/specification/eventgrid/data-plane/readme.md
 generation1-convenience-client: true
-model-factory-only-includes-readonly-models: true
+model-factory-for-hlc: true
 ```
 
 ## Swagger workarounds

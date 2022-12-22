@@ -13,7 +13,9 @@ Run `dotnet build /t:GenerateCode` to generate code. Notice how there are two ma
 input-file:
     -  https://github.com/Azure/azure-rest-api-specs/blob/7043b48f4be1fdd40757b9ef372b65f054daf48f/specification/cognitiveservices/data-plane/FormRecognizer/stable/v2.1/FormRecognizer.json
 generation1-convenience-client: true
-model-factory-only-includes-readonly-models: true
+model-factory-for-hlc: true
+# csharpgen:
+#   attach: true
 ```
 
 ## Suppress Abstract Base Class

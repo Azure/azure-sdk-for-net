@@ -7,54 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> Model factory for generated models. </summary>
     public static partial class QueuesModelFactory
     {
-        /// <summary> Initializes a new instance of QueueServiceProperties. </summary>
-        /// <param name="logging"> Azure Analytics Logging settings. </param>
-        /// <param name="hourMetrics"> A summary of request statistics grouped by API in hourly aggregates for queues. </param>
-        /// <param name="minuteMetrics"> a summary of request statistics grouped by API in minute aggregates for queues. </param>
-        /// <param name="cors"> The set of CORS rules. </param>
-        /// <returns> A new <see cref="Models.QueueServiceProperties"/> instance for mocking. </returns>
-        public static QueueServiceProperties QueueServiceProperties(QueueAnalyticsLogging logging = null, QueueMetrics hourMetrics = null, QueueMetrics minuteMetrics = null, IEnumerable<QueueCorsRule> cors = null)
-        {
-            cors ??= new List<QueueCorsRule>();
-
-            return new QueueServiceProperties(logging, hourMetrics, minuteMetrics, cors?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of QueueRetentionPolicy. </summary>
-        /// <param name="enabled"> Indicates whether a retention policy is enabled for the storage service. </param>
-        /// <param name="days"> Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted. </param>
-        /// <returns> A new <see cref="Models.QueueRetentionPolicy"/> instance for mocking. </returns>
-        public static QueueRetentionPolicy QueueRetentionPolicy(bool enabled = default, int? days = null)
-        {
-            return new QueueRetentionPolicy(enabled, days);
-        }
-
-        /// <summary> Initializes a new instance of QueueMetrics. </summary>
-        /// <param name="version"> The version of Storage Analytics to configure. </param>
-        /// <param name="enabled"> Indicates whether metrics are enabled for the Queue service. </param>
-        /// <param name="includeApis"> Indicates whether metrics should generate summary statistics for called API operations. </param>
-        /// <param name="retentionPolicy"> the retention policy. </param>
-        /// <returns> A new <see cref="Models.QueueMetrics"/> instance for mocking. </returns>
-        public static QueueMetrics QueueMetrics(string version = null, bool enabled = default, bool? includeApis = null, QueueRetentionPolicy retentionPolicy = null)
-        {
-            return new QueueMetrics(version, enabled, includeApis, retentionPolicy);
-        }
-
-        /// <summary> Initializes a new instance of QueueAccessPolicy. </summary>
-        /// <param name="startsOn"> the date-time the policy is active. </param>
-        /// <param name="expiresOn"> the date-time the policy expires. </param>
-        /// <param name="permissions"> the permissions for the acl policy. </param>
-        /// <returns> A new <see cref="Models.QueueAccessPolicy"/> instance for mocking. </returns>
-        public static QueueAccessPolicy QueueAccessPolicy(DateTimeOffset? startsOn = null, DateTimeOffset? expiresOn = null, string permissions = null)
-        {
-            return new QueueAccessPolicy(startsOn, expiresOn, permissions);
-        }
     }
 }

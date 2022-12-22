@@ -11,7 +11,7 @@ require:
     - https://github.com/Azure/azure-rest-api-specs/blob/fc5e2fbcfc3f585d38bdb1c513ce1ad2c570cf3d/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.Monitoring
 generation1-convenience-client: true
-model-factory-only-includes-readonly-models: true
+model-factory-for-hlc: true
 public-clients: true
 security: AADToken
 security-scopes: https://dev.azuresynapse.net/.default

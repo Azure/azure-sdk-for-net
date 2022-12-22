@@ -5,89 +5,10 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Model factory for generated models. </summary>
     public static partial class ShareModelFactory
     {
-        /// <summary> Initializes a new instance of ShareServiceProperties. </summary>
-        /// <param name="hourMetrics"> A summary of request statistics grouped by API in hourly aggregates for files. </param>
-        /// <param name="minuteMetrics"> A summary of request statistics grouped by API in minute aggregates for files. </param>
-        /// <param name="cors"> The set of CORS rules. </param>
-        /// <param name="protocol"> Protocol settings. </param>
-        /// <returns> A new <see cref="Models.ShareServiceProperties"/> instance for mocking. </returns>
-        public static ShareServiceProperties ShareServiceProperties(ShareMetrics hourMetrics = null, ShareMetrics minuteMetrics = null, IEnumerable<ShareCorsRule> cors = null, ShareProtocolSettings protocol = null)
-        {
-            cors ??= new List<ShareCorsRule>();
-
-            return new ShareServiceProperties(hourMetrics, minuteMetrics, cors?.ToList(), protocol);
-        }
-
-        /// <summary> Initializes a new instance of ShareMetrics. </summary>
-        /// <param name="version"> The version of Storage Analytics to configure. </param>
-        /// <param name="enabled"> Indicates whether metrics are enabled for the File service. </param>
-        /// <param name="includeApis"> Indicates whether metrics should generate summary statistics for called API operations. </param>
-        /// <param name="retentionPolicy"> The retention policy. </param>
-        /// <returns> A new <see cref="Models.ShareMetrics"/> instance for mocking. </returns>
-        public static ShareMetrics ShareMetrics(string version = null, bool enabled = default, bool? includeApis = null, ShareRetentionPolicy retentionPolicy = null)
-        {
-            return new ShareMetrics(version, enabled, includeApis, retentionPolicy);
-        }
-
-        /// <summary> Initializes a new instance of ShareRetentionPolicy. </summary>
-        /// <param name="enabled"> Indicates whether a retention policy is enabled for the File service. If false, metrics data is retained, and the user is responsible for deleting it. </param>
-        /// <param name="days"> Indicates the number of days that metrics data should be retained. All data older than this value will be deleted. Metrics data is deleted on a best-effort basis after the retention period expires. </param>
-        /// <returns> A new <see cref="Models.ShareRetentionPolicy"/> instance for mocking. </returns>
-        public static ShareRetentionPolicy ShareRetentionPolicy(bool enabled = default, int? days = null)
-        {
-            return new ShareRetentionPolicy(enabled, days);
-        }
-
-        /// <summary> Initializes a new instance of ShareProtocolSettings. </summary>
-        /// <param name="smb"> Settings for SMB protocol. </param>
-        /// <returns> A new <see cref="Models.ShareProtocolSettings"/> instance for mocking. </returns>
-        public static ShareProtocolSettings ShareProtocolSettings(ShareSmbSettings smb = null)
-        {
-            return new ShareProtocolSettings(smb);
-        }
-
-        /// <summary> Initializes a new instance of ShareSmbSettings. </summary>
-        /// <param name="multichannel"> Settings for SMB Multichannel. </param>
-        /// <returns> A new <see cref="Models.ShareSmbSettings"/> instance for mocking. </returns>
-        public static ShareSmbSettings ShareSmbSettings(SmbMultichannel multichannel = null)
-        {
-            return new ShareSmbSettings(multichannel);
-        }
-
-        /// <summary> Initializes a new instance of SmbMultichannel. </summary>
-        /// <param name="enabled"> If SMB multichannel is enabled. </param>
-        /// <returns> A new <see cref="Models.SmbMultichannel"/> instance for mocking. </returns>
-        public static SmbMultichannel SmbMultichannel(bool? enabled = null)
-        {
-            return new SmbMultichannel(enabled);
-        }
-
-        /// <summary> Initializes a new instance of ShareSignedIdentifier. </summary>
-        /// <param name="id"> A unique id. </param>
-        /// <param name="accessPolicy"> The access policy. </param>
-        /// <returns> A new <see cref="Models.ShareSignedIdentifier"/> instance for mocking. </returns>
-        public static ShareSignedIdentifier ShareSignedIdentifier(string id = null, ShareAccessPolicy accessPolicy = null)
-        {
-            return new ShareSignedIdentifier(id, accessPolicy);
-        }
-
-        /// <summary> Initializes a new instance of ShareAccessPolicy. </summary>
-        /// <param name="policyStartsOn"> The date-time the policy is active. </param>
-        /// <param name="policyExpiresOn"> The date-time the policy expires. </param>
-        /// <param name="permissions"> The permissions for the ACL policy. </param>
-        /// <returns> A new <see cref="Models.ShareAccessPolicy"/> instance for mocking. </returns>
-        public static ShareAccessPolicy ShareAccessPolicy(DateTimeOffset? policyStartsOn = null, DateTimeOffset? policyExpiresOn = null, string permissions = null)
-        {
-            return new ShareAccessPolicy(policyStartsOn, policyExpiresOn, permissions);
-        }
     }
 }

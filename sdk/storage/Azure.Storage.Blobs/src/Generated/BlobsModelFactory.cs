@@ -7,60 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Model factory for generated models. </summary>
     public static partial class BlobsModelFactory
     {
-        /// <summary> Initializes a new instance of BlobServiceProperties. </summary>
-        /// <param name="logging"> Azure Analytics Logging settings. </param>
-        /// <param name="hourMetrics"> a summary of request statistics grouped by API in hour or minute aggregates for blobs. </param>
-        /// <param name="minuteMetrics"> a summary of request statistics grouped by API in hour or minute aggregates for blobs. </param>
-        /// <param name="cors"> The set of CORS rules. </param>
-        /// <param name="defaultServiceVersion"> The default version to use for requests to the Blob service if an incoming request&apos;s version is not specified. Possible values include version 2008-10-27 and all more recent versions. </param>
-        /// <param name="deleteRetentionPolicy"> the retention policy which determines how long the associated data should persist. </param>
-        /// <param name="staticWebsite"> The properties that enable an account to host a static website. </param>
-        /// <returns> A new <see cref="Models.BlobServiceProperties"/> instance for mocking. </returns>
-        public static BlobServiceProperties BlobServiceProperties(BlobAnalyticsLogging logging = null, BlobMetrics hourMetrics = null, BlobMetrics minuteMetrics = null, IEnumerable<BlobCorsRule> cors = null, string defaultServiceVersion = null, BlobRetentionPolicy deleteRetentionPolicy = null, BlobStaticWebsite staticWebsite = null)
-        {
-            cors ??= new List<BlobCorsRule>();
-
-            return new BlobServiceProperties(logging, hourMetrics, minuteMetrics, cors?.ToList(), defaultServiceVersion, deleteRetentionPolicy, staticWebsite);
-        }
-
-        /// <summary> Initializes a new instance of BlobRetentionPolicy. </summary>
-        /// <param name="enabled"> Indicates whether a retention policy is enabled for the storage service. </param>
-        /// <param name="days"> Indicates the number of days that metrics or logging or soft-deleted data should be retained. All data older than this value will be deleted. </param>
-        /// <param name="allowPermanentDelete"> Indicates whether permanent delete is allowed on this storage account. </param>
-        /// <returns> A new <see cref="Models.BlobRetentionPolicy"/> instance for mocking. </returns>
-        public static BlobRetentionPolicy BlobRetentionPolicy(bool enabled = default, int? days = null, bool? allowPermanentDelete = null)
-        {
-            return new BlobRetentionPolicy(enabled, days, allowPermanentDelete);
-        }
-
-        /// <summary> Initializes a new instance of BlobMetrics. </summary>
-        /// <param name="version"> The version of Storage Analytics to configure. </param>
-        /// <param name="enabled"> Indicates whether metrics are enabled for the Blob service. </param>
-        /// <param name="includeApis"> Indicates whether metrics should generate summary statistics for called API operations. </param>
-        /// <param name="retentionPolicy"> the retention policy which determines how long the associated data should persist. </param>
-        /// <returns> A new <see cref="Models.BlobMetrics"/> instance for mocking. </returns>
-        public static BlobMetrics BlobMetrics(string version = null, bool enabled = default, bool? includeApis = null, BlobRetentionPolicy retentionPolicy = null)
-        {
-            return new BlobMetrics(version, enabled, includeApis, retentionPolicy);
-        }
-
-        /// <summary> Initializes a new instance of BlobStaticWebsite. </summary>
-        /// <param name="enabled"> Indicates whether this account is hosting a static website. </param>
-        /// <param name="indexDocument"> The default name of the index page under each directory. </param>
-        /// <param name="errorDocument404Path"> The absolute path of the custom 404 page. </param>
-        /// <param name="defaultIndexDocumentPath"> Absolute path of the default index page. </param>
-        /// <returns> A new <see cref="Models.BlobStaticWebsite"/> instance for mocking. </returns>
-        public static BlobStaticWebsite BlobStaticWebsite(bool enabled = default, string indexDocument = null, string errorDocument404Path = null, string defaultIndexDocumentPath = null)
-        {
-            return new BlobStaticWebsite(enabled, indexDocument, errorDocument404Path, defaultIndexDocumentPath);
-        }
 
         /// <summary> Initializes a new instance of UserDelegationKey. </summary>
         /// <param name="signedObjectId"> The Azure Active Directory object ID in GUID format. </param>
@@ -96,16 +48,6 @@ namespace Azure.Storage.Blobs.Models
             }
 
             return new UserDelegationKey(signedObjectId, signedTenantId, signedStartsOn, signedExpiresOn, signedService, signedVersion, value);
-        }
-
-        /// <summary> Initializes a new instance of BlobAccessPolicy. </summary>
-        /// <param name="policyStartsOn"> the date-time the policy is active. </param>
-        /// <param name="policyExpiresOn"> the date-time the policy expires. </param>
-        /// <param name="permissions"> the permissions for the acl policy. </param>
-        /// <returns> A new <see cref="Models.BlobAccessPolicy"/> instance for mocking. </returns>
-        public static BlobAccessPolicy BlobAccessPolicy(DateTimeOffset? policyStartsOn = null, DateTimeOffset? policyExpiresOn = null, string permissions = null)
-        {
-            return new BlobAccessPolicy(policyStartsOn, policyExpiresOn, permissions);
         }
     }
 }
