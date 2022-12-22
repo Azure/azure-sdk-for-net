@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.AppContainers
     {
         public ContainerAppSourceControlData() { }
         public string Branch { get { throw null; } set { } }
-        public Azure.ResourceManager.AppContainers.Models.ContainerAppGithubActionConfiguration GithubActionConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppGitHubActionConfiguration GitHubActionConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppSourceControlOperationState? OperationState { get { throw null; } }
         public System.Uri RepoUri { get { throw null; } set { } }
     }
@@ -1305,9 +1305,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         Standard = 1,
         Custom = 2,
     }
-    public partial class ContainerAppGithubActionConfiguration
+    public partial class ContainerAppGitHubActionConfiguration
     {
-        public ContainerAppGithubActionConfiguration() { }
+        public ContainerAppGitHubActionConfiguration() { }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppCredentials AzureCredentials { get { throw null; } set { } }
         public string ContextPath { get { throw null; } set { } }
         public string Image { get { throw null; } set { } }
