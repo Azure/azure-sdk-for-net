@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// Recovery: Creates a sql pool by a geo-replicated backup. sourceDatabaseId  must be specified as the recoverableDatabaseId to restore.
     /// 
     /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool&apos;s original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
+    /// Serialized Name: CreateMode
     /// </summary>
     public readonly partial struct CreateMode : IEquatable<CreateMode>
     {
@@ -37,13 +38,25 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string RecoveryValue = "Recovery";
         private const string RestoreValue = "Restore";
 
-        /// <summary> Default. </summary>
+        /// <summary>
+        /// Default
+        /// Serialized Name: CreateMode.Default
+        /// </summary>
         public static CreateMode Default { get; } = new CreateMode(DefaultValue);
-        /// <summary> PointInTimeRestore. </summary>
+        /// <summary>
+        /// PointInTimeRestore
+        /// Serialized Name: CreateMode.PointInTimeRestore
+        /// </summary>
         public static CreateMode PointInTimeRestore { get; } = new CreateMode(PointInTimeRestoreValue);
-        /// <summary> Recovery. </summary>
+        /// <summary>
+        /// Recovery
+        /// Serialized Name: CreateMode.Recovery
+        /// </summary>
         public static CreateMode Recovery { get; } = new CreateMode(RecoveryValue);
-        /// <summary> Restore. </summary>
+        /// <summary>
+        /// Restore
+        /// Serialized Name: CreateMode.Restore
+        /// </summary>
         public static CreateMode Restore { get; } = new CreateMode(RestoreValue);
         /// <summary> Determines if two <see cref="CreateMode"/> values are the same. </summary>
         public static bool operator ==(CreateMode left, CreateMode right) => left.Equals(right);

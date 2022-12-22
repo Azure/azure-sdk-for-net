@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The name of blob storage event type to process. </summary>
+    /// <summary>
+    /// The name of blob storage event type to process.
+    /// Serialized Name: BlobStorageEventType
+    /// </summary>
     public readonly partial struct BlobStorageEventType : IEquatable<BlobStorageEventType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string MicrosoftStorageBlobCreatedValue = "Microsoft.Storage.BlobCreated";
         private const string MicrosoftStorageBlobRenamedValue = "Microsoft.Storage.BlobRenamed";
 
-        /// <summary> Microsoft.Storage.BlobCreated. </summary>
+        /// <summary>
+        /// Microsoft.Storage.BlobCreated
+        /// Serialized Name: BlobStorageEventType.Microsoft.Storage.BlobCreated
+        /// </summary>
         public static BlobStorageEventType MicrosoftStorageBlobCreated { get; } = new BlobStorageEventType(MicrosoftStorageBlobCreatedValue);
-        /// <summary> Microsoft.Storage.BlobRenamed. </summary>
+        /// <summary>
+        /// Microsoft.Storage.BlobRenamed
+        /// Serialized Name: BlobStorageEventType.Microsoft.Storage.BlobRenamed
+        /// </summary>
         public static BlobStorageEventType MicrosoftStorageBlobRenamed { get; } = new BlobStorageEventType(MicrosoftStorageBlobRenamedValue);
         /// <summary> Determines if two <see cref="BlobStorageEventType"/> values are the same. </summary>
         public static bool operator ==(BlobStorageEventType left, BlobStorageEventType right) => left.Equals(right);

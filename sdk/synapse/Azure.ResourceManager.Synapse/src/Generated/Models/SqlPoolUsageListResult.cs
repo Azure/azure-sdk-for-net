@@ -12,11 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The response to a list Sql pool usages request. </summary>
+    /// <summary>
+    /// The response to a list Sql pool usages request.
+    /// Serialized Name: SqlPoolUsageListResult
+    /// </summary>
     internal partial class SqlPoolUsageListResult
     {
         /// <summary> Initializes a new instance of SqlPoolUsageListResult. </summary>
-        /// <param name="value"> The list of usages for the Sql pool. </param>
+        /// <param name="value">
+        /// The list of usages for the Sql pool.
+        /// Serialized Name: SqlPoolUsageListResult.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SqlPoolUsageListResult(IEnumerable<SqlPoolUsage> value)
         {
@@ -26,17 +32,29 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SqlPoolUsageListResult. </summary>
-        /// <param name="value"> The list of usages for the Sql pool. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
+        /// <param name="value">
+        /// The list of usages for the Sql pool.
+        /// Serialized Name: SqlPoolUsageListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to retrieve next page of results.
+        /// Serialized Name: SqlPoolUsageListResult.nextLink
+        /// </param>
         internal SqlPoolUsageListResult(IReadOnlyList<SqlPoolUsage> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of usages for the Sql pool. </summary>
+        /// <summary>
+        /// The list of usages for the Sql pool.
+        /// Serialized Name: SqlPoolUsageListResult.value
+        /// </summary>
         public IReadOnlyList<SqlPoolUsage> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
+        /// <summary>
+        /// Link to retrieve next page of results.
+        /// Serialized Name: SqlPoolUsageListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

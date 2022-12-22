@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> SKU name. </summary>
+    /// <summary>
+    /// SKU name.
+    /// Serialized Name: SkuName
+    /// </summary>
     public readonly partial struct SynapseSkuName : IEquatable<SynapseSkuName>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string ComputeOptimizedValue = "Compute optimized";
         private const string StorageOptimizedValue = "Storage optimized";
 
-        /// <summary> Compute optimized. </summary>
+        /// <summary>
+        /// Compute optimized
+        /// Serialized Name: SkuName.Compute optimized
+        /// </summary>
         public static SynapseSkuName ComputeOptimized { get; } = new SynapseSkuName(ComputeOptimizedValue);
-        /// <summary> Storage optimized. </summary>
+        /// <summary>
+        /// Storage optimized
+        /// Serialized Name: SkuName.Storage optimized
+        /// </summary>
         public static SynapseSkuName StorageOptimized { get; } = new SynapseSkuName(StorageOptimizedValue);
         /// <summary> Determines if two <see cref="SynapseSkuName"/> values are the same. </summary>
         public static bool operator ==(SynapseSkuName left, SynapseSkuName right) => left.Equals(right);

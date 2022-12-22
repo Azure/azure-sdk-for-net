@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The state of the geo backup policy. </summary>
+    /// <summary>
+    /// The state of the geo backup policy.
+    /// Serialized Name: GeoBackupPolicyState
+    /// </summary>
     public enum GeoBackupPolicyState
     {
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: GeoBackupPolicyState.Disabled
+        /// </summary>
         Disabled,
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: GeoBackupPolicyState.Enabled
+        /// </summary>
         Enabled
     }
 }

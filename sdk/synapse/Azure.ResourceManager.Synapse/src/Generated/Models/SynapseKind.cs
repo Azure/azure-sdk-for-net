@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Kind of the database. </summary>
+    /// <summary>
+    /// Kind of the database
+    /// Serialized Name: Kind
+    /// </summary>
     internal readonly partial struct SynapseKind : IEquatable<SynapseKind>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string ReadWriteValue = "ReadWrite";
         private const string ReadOnlyFollowingValue = "ReadOnlyFollowing";
 
-        /// <summary> ReadWrite. </summary>
+        /// <summary>
+        /// ReadWrite
+        /// Serialized Name: Kind.ReadWrite
+        /// </summary>
         public static SynapseKind ReadWrite { get; } = new SynapseKind(ReadWriteValue);
-        /// <summary> ReadOnlyFollowing. </summary>
+        /// <summary>
+        /// ReadOnlyFollowing
+        /// Serialized Name: Kind.ReadOnlyFollowing
+        /// </summary>
         public static SynapseKind ReadOnlyFollowing { get; } = new SynapseKind(ReadOnlyFollowingValue);
         /// <summary> Determines if two <see cref="SynapseKind"/> values are the same. </summary>
         public static bool operator ==(SynapseKind left, SynapseKind right) => left.Equals(right);

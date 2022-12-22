@@ -11,31 +11,36 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The list Kusto databases operation response. </summary>
+    /// <summary>
+    /// The list Kusto databases operation response.
+    /// Serialized Name: DatabaseListResult
+    /// </summary>
     internal partial class DatabaseListResult
     {
         /// <summary> Initializes a new instance of DatabaseListResult. </summary>
         internal DatabaseListResult()
         {
-            Value = new ChangeTrackingList<DatabaseData>();
+            Value = new ChangeTrackingList<SynapseDatabaseData>();
         }
 
         /// <summary> Initializes a new instance of DatabaseListResult. </summary>
         /// <param name="value">
         /// The list of Kusto databases.
-        /// Please note <see cref="DatabaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Serialized Name: DatabaseListResult.value
+        /// Please note <see cref="SynapseDatabaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ReadOnlyFollowingDatabase"/> and <see cref="ReadWriteDatabase"/>.
         /// </param>
-        internal DatabaseListResult(IReadOnlyList<DatabaseData> value)
+        internal DatabaseListResult(IReadOnlyList<SynapseDatabaseData> value)
         {
             Value = value;
         }
 
         /// <summary>
         /// The list of Kusto databases.
-        /// Please note <see cref="DatabaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Serialized Name: DatabaseListResult.value
+        /// Please note <see cref="SynapseDatabaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ReadOnlyFollowingDatabase"/> and <see cref="ReadWriteDatabase"/>.
         /// </summary>
-        public IReadOnlyList<DatabaseData> Value { get; }
+        public IReadOnlyList<SynapseDatabaseData> Value { get; }
     }
 }

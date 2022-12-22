@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         internal static BigDataPoolResourceInfoListResult DeserializeBigDataPoolResourceInfoListResult(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<BigDataPoolResourceInfoData>> value = default;
+            Optional<IReadOnlyList<SynapseBigDataPoolInfoData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BigDataPoolResourceInfoData> array = new List<BigDataPoolResourceInfoData>();
+                    List<SynapseBigDataPoolInfoData> array = new List<SynapseBigDataPoolInfoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BigDataPoolResourceInfoData.DeserializeBigDataPoolResourceInfoData(item));
+                        array.Add(SynapseBigDataPoolInfoData.DeserializeSynapseBigDataPoolInfoData(item));
                     }
                     value = array;
                     continue;

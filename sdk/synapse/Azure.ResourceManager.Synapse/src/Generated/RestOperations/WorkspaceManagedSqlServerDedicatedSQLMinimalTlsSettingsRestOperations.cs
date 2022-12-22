@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, DedicatedSQLMinimalTlsSettingsName dedicatedSQLminimalTlsSettingsName, DedicatedSQLminimalTlsSettingData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, DedicatedSQLMinimalTlsSettingsName dedicatedSQLminimalTlsSettingsName, SynapseDedicatedSqlMinimalTlsSettingData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, DedicatedSQLMinimalTlsSettingsName dedicatedSQLminimalTlsSettingsName, DedicatedSQLminimalTlsSettingData data, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, DedicatedSQLMinimalTlsSettingsName dedicatedSQLminimalTlsSettingsName, SynapseDedicatedSqlMinimalTlsSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string workspaceName, DedicatedSQLMinimalTlsSettingsName dedicatedSQLminimalTlsSettingsName, DedicatedSQLminimalTlsSettingData data, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string workspaceName, DedicatedSQLMinimalTlsSettingsName dedicatedSQLminimalTlsSettingsName, SynapseDedicatedSqlMinimalTlsSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dedicatedSQLminimalTlsSettingsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dedicatedSQLminimalTlsSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DedicatedSQLminimalTlsSettingData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string dedicatedSQLminimalTlsSettingsName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseDedicatedSqlMinimalTlsSettingData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string dedicatedSQLminimalTlsSettingsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -162,13 +162,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        DedicatedSQLminimalTlsSettingData value = default;
+                        SynapseDedicatedSqlMinimalTlsSettingData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DedicatedSQLminimalTlsSettingData.DeserializeDedicatedSQLminimalTlsSettingData(document.RootElement);
+                        value = SynapseDedicatedSqlMinimalTlsSettingData.DeserializeSynapseDedicatedSqlMinimalTlsSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DedicatedSQLminimalTlsSettingData)null, message.Response);
+                    return Response.FromValue((SynapseDedicatedSqlMinimalTlsSettingData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dedicatedSQLminimalTlsSettingsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="dedicatedSQLminimalTlsSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DedicatedSQLminimalTlsSettingData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string dedicatedSQLminimalTlsSettingsName, CancellationToken cancellationToken = default)
+        public Response<SynapseDedicatedSqlMinimalTlsSettingData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string dedicatedSQLminimalTlsSettingsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -195,13 +195,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        DedicatedSQLminimalTlsSettingData value = default;
+                        SynapseDedicatedSqlMinimalTlsSettingData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DedicatedSQLminimalTlsSettingData.DeserializeDedicatedSQLminimalTlsSettingData(document.RootElement);
+                        value = SynapseDedicatedSqlMinimalTlsSettingData.DeserializeSynapseDedicatedSqlMinimalTlsSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DedicatedSQLminimalTlsSettingData)null, message.Response);
+                    return Response.FromValue((SynapseDedicatedSqlMinimalTlsSettingData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

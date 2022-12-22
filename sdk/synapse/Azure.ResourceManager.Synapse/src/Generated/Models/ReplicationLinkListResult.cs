@@ -11,27 +11,42 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Represents the response to a List Sql pool replication link request. </summary>
+    /// <summary>
+    /// Represents the response to a List Sql pool replication link request.
+    /// Serialized Name: ReplicationLinkListResult
+    /// </summary>
     internal partial class ReplicationLinkListResult
     {
         /// <summary> Initializes a new instance of ReplicationLinkListResult. </summary>
         internal ReplicationLinkListResult()
         {
-            Value = new ChangeTrackingList<ReplicationLinkData>();
+            Value = new ChangeTrackingList<SynapseReplicationLinkData>();
         }
 
         /// <summary> Initializes a new instance of ReplicationLinkListResult. </summary>
-        /// <param name="value"> The list of Sql pool replication links housed in the Sql pool. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal ReplicationLinkListResult(IReadOnlyList<ReplicationLinkData> value, string nextLink)
+        /// <param name="value">
+        /// The list of Sql pool replication links housed in the Sql pool.
+        /// Serialized Name: ReplicationLinkListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to retrieve next page of results.
+        /// Serialized Name: ReplicationLinkListResult.nextLink
+        /// </param>
+        internal ReplicationLinkListResult(IReadOnlyList<SynapseReplicationLinkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of Sql pool replication links housed in the Sql pool. </summary>
-        public IReadOnlyList<ReplicationLinkData> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
+        /// <summary>
+        /// The list of Sql pool replication links housed in the Sql pool.
+        /// Serialized Name: ReplicationLinkListResult.value
+        /// </summary>
+        public IReadOnlyList<SynapseReplicationLinkData> Value { get; }
+        /// <summary>
+        /// Link to retrieve next page of results.
+        /// Serialized Name: ReplicationLinkListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

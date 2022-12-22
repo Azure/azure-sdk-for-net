@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The DedicatedSQLMinimalTlsSettingsName. </summary>
+    /// <summary>
+    /// The DedicatedSQLMinimalTlsSettingsName.
+    /// Serialized Name: DedicatedSQLMinimalTlsSettingsName
+    /// </summary>
     public readonly partial struct DedicatedSQLMinimalTlsSettingsName : IEquatable<DedicatedSQLMinimalTlsSettingsName>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         private const string DefaultValue = "default";
 
-        /// <summary> default. </summary>
+        /// <summary>
+        /// default
+        /// Serialized Name: DedicatedSQLMinimalTlsSettingsName.default
+        /// </summary>
         public static DedicatedSQLMinimalTlsSettingsName Default { get; } = new DedicatedSQLMinimalTlsSettingsName(DefaultValue);
         /// <summary> Determines if two <see cref="DedicatedSQLMinimalTlsSettingsName"/> values are the same. </summary>
         public static bool operator ==(DedicatedSQLMinimalTlsSettingsName left, DedicatedSQLMinimalTlsSettingsName right) => left.Equals(right);

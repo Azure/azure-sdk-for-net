@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static ListSqlPoolSecurityAlertPolicies DeserializeListSqlPoolSecurityAlertPolicies(JsonElement element)
         {
-            Optional<IReadOnlyList<SqlPoolSecurityAlertPolicyData>> value = default;
+            Optional<IReadOnlyList<SynapseSqlPoolSecurityAlertPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SqlPoolSecurityAlertPolicyData> array = new List<SqlPoolSecurityAlertPolicyData>();
+                    List<SynapseSqlPoolSecurityAlertPolicyData> array = new List<SynapseSqlPoolSecurityAlertPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlPoolSecurityAlertPolicyData.DeserializeSqlPoolSecurityAlertPolicyData(item));
+                        array.Add(SynapseSqlPoolSecurityAlertPolicyData.DeserializeSynapseSqlPoolSecurityAlertPolicyData(item));
                     }
                     value = array;
                     continue;

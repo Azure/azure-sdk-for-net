@@ -11,27 +11,42 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> List of keys. </summary>
+    /// <summary>
+    /// List of keys
+    /// Serialized Name: KeyInfoListResult
+    /// </summary>
     internal partial class KeyInfoListResult
     {
         /// <summary> Initializes a new instance of KeyInfoListResult. </summary>
         internal KeyInfoListResult()
         {
-            Value = new ChangeTrackingList<KeyData>();
+            Value = new ChangeTrackingList<SynapseKeyData>();
         }
 
         /// <summary> Initializes a new instance of KeyInfoListResult. </summary>
-        /// <param name="nextLink"> Link to the next page of results. </param>
-        /// <param name="value"> List of keys. </param>
-        internal KeyInfoListResult(string nextLink, IReadOnlyList<KeyData> value)
+        /// <param name="nextLink">
+        /// Link to the next page of results
+        /// Serialized Name: KeyInfoListResult.nextLink
+        /// </param>
+        /// <param name="value">
+        /// List of keys
+        /// Serialized Name: KeyInfoListResult.value
+        /// </param>
+        internal KeyInfoListResult(string nextLink, IReadOnlyList<SynapseKeyData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> Link to the next page of results. </summary>
+        /// <summary>
+        /// Link to the next page of results
+        /// Serialized Name: KeyInfoListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> List of keys. </summary>
-        public IReadOnlyList<KeyData> Value { get; }
+        /// <summary>
+        /// List of keys
+        /// Serialized Name: KeyInfoListResult.value
+        /// </summary>
+        public IReadOnlyList<SynapseKeyData> Value { get; }
     }
 }

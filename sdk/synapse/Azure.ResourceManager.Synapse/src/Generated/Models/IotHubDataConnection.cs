@@ -12,8 +12,11 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Class representing an iot hub data connection. </summary>
-    public partial class IotHubDataConnection : DataConnectionData
+    /// <summary>
+    /// Class representing an iot hub data connection.
+    /// Serialized Name: IotHubDataConnection
+    /// </summary>
+    public partial class IotHubDataConnection : SynapseDataConnectionData
     {
         /// <summary> Initializes a new instance of IotHubDataConnection. </summary>
         public IotHubDataConnection()
@@ -27,17 +30,47 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="kind"> Kind of the endpoint for the data connection. </param>
-        /// <param name="iotHubResourceId"> The resource ID of the Iot hub to be used to create a data connection. </param>
-        /// <param name="consumerGroup"> The iot hub consumer group. </param>
-        /// <param name="tableName"> The table where the data should be ingested. Optionally the table information can be added to each message. </param>
-        /// <param name="mappingRuleName"> The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message. </param>
-        /// <param name="dataFormat"> The data format of the message. Optionally the data format can be added to each message. </param>
-        /// <param name="eventSystemProperties"> System properties of the iot hub. </param>
-        /// <param name="sharedAccessPolicyName"> The name of the share access policy. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        internal IotHubDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, string iotHubResourceId, string consumerGroup, string tableName, string mappingRuleName, IotHubDataFormat? dataFormat, IList<string> eventSystemProperties, string sharedAccessPolicyName, ResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind)
+        /// <param name="location">
+        /// Resource location.
+        /// Serialized Name: DataConnection.location
+        /// </param>
+        /// <param name="kind">
+        /// Kind of the endpoint for the data connection
+        /// Serialized Name: DataConnection.kind
+        /// </param>
+        /// <param name="iotHubResourceId">
+        /// The resource ID of the Iot hub to be used to create a data connection.
+        /// Serialized Name: IotHubDataConnection.properties.iotHubResourceId
+        /// </param>
+        /// <param name="consumerGroup">
+        /// The iot hub consumer group.
+        /// Serialized Name: IotHubDataConnection.properties.consumerGroup
+        /// </param>
+        /// <param name="tableName">
+        /// The table where the data should be ingested. Optionally the table information can be added to each message.
+        /// Serialized Name: IotHubDataConnection.properties.tableName
+        /// </param>
+        /// <param name="mappingRuleName">
+        /// The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message.
+        /// Serialized Name: IotHubDataConnection.properties.mappingRuleName
+        /// </param>
+        /// <param name="dataFormat">
+        /// The data format of the message. Optionally the data format can be added to each message.
+        /// Serialized Name: IotHubDataConnection.properties.dataFormat
+        /// </param>
+        /// <param name="eventSystemProperties">
+        /// System properties of the iot hub
+        /// Serialized Name: IotHubDataConnection.properties.eventSystemProperties
+        /// </param>
+        /// <param name="sharedAccessPolicyName">
+        /// The name of the share access policy
+        /// Serialized Name: IotHubDataConnection.properties.sharedAccessPolicyName
+        /// </param>
+        /// <param name="provisioningState">
+        /// The provisioned state of the resource.
+        /// Serialized Name: IotHubDataConnection.properties.provisioningState
+        /// </param>
+        internal IotHubDataConnection(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, string iotHubResourceId, string consumerGroup, string tableName, string mappingRuleName, IotHubDataFormat? dataFormat, IList<string> eventSystemProperties, string sharedAccessPolicyName, ResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind)
         {
             IotHubResourceId = iotHubResourceId;
             ConsumerGroup = consumerGroup;
@@ -50,21 +83,45 @@ namespace Azure.ResourceManager.Synapse.Models
             Kind = kind;
         }
 
-        /// <summary> The resource ID of the Iot hub to be used to create a data connection. </summary>
+        /// <summary>
+        /// The resource ID of the Iot hub to be used to create a data connection.
+        /// Serialized Name: IotHubDataConnection.properties.iotHubResourceId
+        /// </summary>
         public string IotHubResourceId { get; set; }
-        /// <summary> The iot hub consumer group. </summary>
+        /// <summary>
+        /// The iot hub consumer group.
+        /// Serialized Name: IotHubDataConnection.properties.consumerGroup
+        /// </summary>
         public string ConsumerGroup { get; set; }
-        /// <summary> The table where the data should be ingested. Optionally the table information can be added to each message. </summary>
+        /// <summary>
+        /// The table where the data should be ingested. Optionally the table information can be added to each message.
+        /// Serialized Name: IotHubDataConnection.properties.tableName
+        /// </summary>
         public string TableName { get; set; }
-        /// <summary> The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message. </summary>
+        /// <summary>
+        /// The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message.
+        /// Serialized Name: IotHubDataConnection.properties.mappingRuleName
+        /// </summary>
         public string MappingRuleName { get; set; }
-        /// <summary> The data format of the message. Optionally the data format can be added to each message. </summary>
+        /// <summary>
+        /// The data format of the message. Optionally the data format can be added to each message.
+        /// Serialized Name: IotHubDataConnection.properties.dataFormat
+        /// </summary>
         public IotHubDataFormat? DataFormat { get; set; }
-        /// <summary> System properties of the iot hub. </summary>
+        /// <summary>
+        /// System properties of the iot hub
+        /// Serialized Name: IotHubDataConnection.properties.eventSystemProperties
+        /// </summary>
         public IList<string> EventSystemProperties { get; }
-        /// <summary> The name of the share access policy. </summary>
+        /// <summary>
+        /// The name of the share access policy
+        /// Serialized Name: IotHubDataConnection.properties.sharedAccessPolicyName
+        /// </summary>
         public string SharedAccessPolicyName { get; set; }
-        /// <summary> The provisioned state of the resource. </summary>
+        /// <summary>
+        /// The provisioned state of the resource.
+        /// Serialized Name: IotHubDataConnection.properties.provisioningState
+        /// </summary>
         public ResourceProvisioningState? ProvisioningState { get; }
     }
 }

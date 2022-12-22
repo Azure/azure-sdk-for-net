@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The SensitivityLabelUpdateKind. </summary>
+    /// <summary>
+    /// The SensitivityLabelUpdateKind.
+    /// Serialized Name: SensitivityLabelUpdateKind
+    /// </summary>
     public enum SensitivityLabelUpdateKind
     {
-        /// <summary> set. </summary>
+        /// <summary>
+        /// set
+        /// Serialized Name: SensitivityLabelUpdateKind.set
+        /// </summary>
         Set,
-        /// <summary> remove. </summary>
+        /// <summary>
+        /// remove
+        /// Serialized Name: SensitivityLabelUpdateKind.remove
+        /// </summary>
         Remove
     }
 }

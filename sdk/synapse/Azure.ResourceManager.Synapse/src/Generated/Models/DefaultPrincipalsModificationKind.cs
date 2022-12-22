@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The default principals modification kind. </summary>
+    /// <summary>
+    /// The default principals modification kind
+    /// Serialized Name: DefaultPrincipalsModificationKind
+    /// </summary>
     public readonly partial struct DefaultPrincipalsModificationKind : IEquatable<DefaultPrincipalsModificationKind>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string ReplaceValue = "Replace";
         private const string NoneValue = "None";
 
-        /// <summary> Union. </summary>
+        /// <summary>
+        /// Union
+        /// Serialized Name: DefaultPrincipalsModificationKind.Union
+        /// </summary>
         public static DefaultPrincipalsModificationKind Union { get; } = new DefaultPrincipalsModificationKind(UnionValue);
-        /// <summary> Replace. </summary>
+        /// <summary>
+        /// Replace
+        /// Serialized Name: DefaultPrincipalsModificationKind.Replace
+        /// </summary>
         public static DefaultPrincipalsModificationKind Replace { get; } = new DefaultPrincipalsModificationKind(ReplaceValue);
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: DefaultPrincipalsModificationKind.None
+        /// </summary>
         public static DefaultPrincipalsModificationKind None { get; } = new DefaultPrincipalsModificationKind(NoneValue);
         /// <summary> Determines if two <see cref="DefaultPrincipalsModificationKind"/> values are the same. </summary>
         public static bool operator ==(DefaultPrincipalsModificationKind left, DefaultPrincipalsModificationKind right) => left.Equals(right);

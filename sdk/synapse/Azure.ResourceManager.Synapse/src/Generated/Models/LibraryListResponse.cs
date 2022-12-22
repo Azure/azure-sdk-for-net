@@ -13,13 +13,19 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> A list of Library resources. </summary>
+    /// <summary>
+    /// A list of Library resources.
+    /// Serialized Name: LibraryListResponse
+    /// </summary>
     internal partial class LibraryListResponse
     {
         /// <summary> Initializes a new instance of LibraryListResponse. </summary>
-        /// <param name="value"> List of Library. </param>
+        /// <param name="value">
+        /// List of Library.
+        /// Serialized Name: LibraryListResponse.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal LibraryListResponse(IEnumerable<LibraryResourceData> value)
+        internal LibraryListResponse(IEnumerable<SynapseLibraryData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -27,17 +33,29 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of LibraryListResponse. </summary>
-        /// <param name="value"> List of Library. </param>
-        /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal LibraryListResponse(IReadOnlyList<LibraryResourceData> value, string nextLink)
+        /// <param name="value">
+        /// List of Library.
+        /// Serialized Name: LibraryListResponse.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of results, if any remaining results exist.
+        /// Serialized Name: LibraryListResponse.nextLink
+        /// </param>
+        internal LibraryListResponse(IReadOnlyList<SynapseLibraryData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of Library. </summary>
-        public IReadOnlyList<LibraryResourceData> Value { get; }
-        /// <summary> The link to the next page of results, if any remaining results exist. </summary>
+        /// <summary>
+        /// List of Library.
+        /// Serialized Name: LibraryListResponse.value
+        /// </summary>
+        public IReadOnlyList<SynapseLibraryData> Value { get; }
+        /// <summary>
+        /// The link to the next page of results, if any remaining results exist.
+        /// Serialized Name: LibraryListResponse.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

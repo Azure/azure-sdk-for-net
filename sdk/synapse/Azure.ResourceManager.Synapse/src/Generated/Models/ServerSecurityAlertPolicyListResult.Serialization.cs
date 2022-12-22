@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static ServerSecurityAlertPolicyListResult DeserializeServerSecurityAlertPolicyListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServerSecurityAlertPolicyData>> value = default;
+            Optional<IReadOnlyList<SynapseServerSecurityAlertPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServerSecurityAlertPolicyData> array = new List<ServerSecurityAlertPolicyData>();
+                    List<SynapseServerSecurityAlertPolicyData> array = new List<SynapseServerSecurityAlertPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerSecurityAlertPolicyData.DeserializeServerSecurityAlertPolicyData(item));
+                        array.Add(SynapseServerSecurityAlertPolicyData.DeserializeSynapseServerSecurityAlertPolicyData(item));
                     }
                     value = array;
                     continue;

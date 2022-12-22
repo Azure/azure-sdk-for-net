@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Replace all IP firewall rules request. </summary>
+    /// <summary>
+    /// Replace all IP firewall rules request
+    /// Serialized Name: ReplaceAllIpFirewallRulesRequest
+    /// </summary>
     public partial class ReplaceAllIPFirewallRulesContent
     {
         /// <summary> Initializes a new instance of ReplaceAllIPFirewallRulesContent. </summary>
@@ -19,7 +22,10 @@ namespace Azure.ResourceManager.Synapse.Models
             IPFirewallRules = new ChangeTrackingDictionary<string, IPFirewallRuleProperties>();
         }
 
-        /// <summary> IP firewall rule properties. </summary>
+        /// <summary>
+        /// IP firewall rule properties
+        /// Serialized Name: ReplaceAllIpFirewallRulesRequest.ipFirewallRules
+        /// </summary>
         public IDictionary<string, IPFirewallRuleProperties> IPFirewallRules { get; }
     }
 }

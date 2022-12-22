@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Message providing the reason why the given name is invalid. </summary>
+    /// <summary>
+    /// Message providing the reason why the given name is invalid.
+    /// Serialized Name: Reason
+    /// </summary>
     public readonly partial struct Reason : IEquatable<Reason>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string InvalidValue = "Invalid";
         private const string AlreadyExistsValue = "AlreadyExists";
 
-        /// <summary> Invalid. </summary>
+        /// <summary>
+        /// Invalid
+        /// Serialized Name: Reason.Invalid
+        /// </summary>
         public static Reason Invalid { get; } = new Reason(InvalidValue);
-        /// <summary> AlreadyExists. </summary>
+        /// <summary>
+        /// AlreadyExists
+        /// Serialized Name: Reason.AlreadyExists
+        /// </summary>
         public static Reason AlreadyExists { get; } = new Reason(AlreadyExistsValue);
         /// <summary> Determines if two <see cref="Reason"/> values are the same. </summary>
         public static bool operator ==(Reason left, Reason right) => left.Equals(right);

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static RecoverableSqlPoolListResult DeserializeRecoverableSqlPoolListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<RecoverableSqlPoolData>> value = default;
+            Optional<IReadOnlyList<SynapseRecoverableSqlPoolData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RecoverableSqlPoolData> array = new List<RecoverableSqlPoolData>();
+                    List<SynapseRecoverableSqlPoolData> array = new List<SynapseRecoverableSqlPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoverableSqlPoolData.DeserializeRecoverableSqlPoolData(item));
+                        array.Add(SynapseRecoverableSqlPoolData.DeserializeSynapseRecoverableSqlPoolData(item));
                     }
                     value = array;
                     continue;

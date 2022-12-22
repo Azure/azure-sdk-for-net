@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, string columnName, SensitivityLabelData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, string columnName, SynapseSensitivityLabelData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/>, <paramref name="columnName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SensitivityLabelData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, string columnName, SensitivityLabelData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseSensitivityLabelData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, string columnName, SynapseSensitivityLabelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -377,9 +377,9 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                 case 201:
                     {
-                        SensitivityLabelData value = default;
+                        SynapseSensitivityLabelData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SensitivityLabelData.DeserializeSensitivityLabelData(document.RootElement);
+                        value = SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/>, <paramref name="columnName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SensitivityLabelData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, string columnName, SensitivityLabelData data, CancellationToken cancellationToken = default)
+        public Response<SynapseSensitivityLabelData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, string columnName, SynapseSensitivityLabelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -417,9 +417,9 @@ namespace Azure.ResourceManager.Synapse
                 case 200:
                 case 201:
                     {
-                        SensitivityLabelData value = default;
+                        SynapseSensitivityLabelData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SensitivityLabelData.DeserializeSensitivityLabelData(document.RootElement);
+                        value = SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SensitivityLabelData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, string columnName, SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseSensitivityLabelData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, string columnName, SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -580,13 +580,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        SensitivityLabelData value = default;
+                        SynapseSensitivityLabelData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SensitivityLabelData.DeserializeSensitivityLabelData(document.RootElement);
+                        value = SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SensitivityLabelData)null, message.Response);
+                    return Response.FromValue((SynapseSensitivityLabelData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SensitivityLabelData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, string columnName, SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
+        public Response<SynapseSensitivityLabelData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, string columnName, SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -620,13 +620,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        SensitivityLabelData value = default;
+                        SynapseSensitivityLabelData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SensitivityLabelData.DeserializeSensitivityLabelData(document.RootElement);
+                        value = SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SensitivityLabelData)null, message.Response);
+                    return Response.FromValue((SynapseSensitivityLabelData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

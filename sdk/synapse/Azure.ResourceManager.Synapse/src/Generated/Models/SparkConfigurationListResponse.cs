@@ -13,13 +13,19 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> A list of SparkConfiguration resources. </summary>
+    /// <summary>
+    /// A list of SparkConfiguration resources.
+    /// Serialized Name: SparkConfigurationListResponse
+    /// </summary>
     internal partial class SparkConfigurationListResponse
     {
         /// <summary> Initializes a new instance of SparkConfigurationListResponse. </summary>
-        /// <param name="value"> List of SparkConfiguration. </param>
+        /// <param name="value">
+        /// List of SparkConfiguration.
+        /// Serialized Name: SparkConfigurationListResponse.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SparkConfigurationListResponse(IEnumerable<SparkConfigurationResourceData> value)
+        internal SparkConfigurationListResponse(IEnumerable<SynapseSparkConfigurationData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -27,17 +33,29 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SparkConfigurationListResponse. </summary>
-        /// <param name="value"> List of SparkConfiguration. </param>
-        /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
-        internal SparkConfigurationListResponse(IReadOnlyList<SparkConfigurationResourceData> value, string nextLink)
+        /// <param name="value">
+        /// List of SparkConfiguration.
+        /// Serialized Name: SparkConfigurationListResponse.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of results, if any remaining results exist.
+        /// Serialized Name: SparkConfigurationListResponse.nextLink
+        /// </param>
+        internal SparkConfigurationListResponse(IReadOnlyList<SynapseSparkConfigurationData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of SparkConfiguration. </summary>
-        public IReadOnlyList<SparkConfigurationResourceData> Value { get; }
-        /// <summary> The link to the next page of results, if any remaining results exist. </summary>
+        /// <summary>
+        /// List of SparkConfiguration.
+        /// Serialized Name: SparkConfigurationListResponse.value
+        /// </summary>
+        public IReadOnlyList<SynapseSparkConfigurationData> Value { get; }
+        /// <summary>
+        /// The link to the next page of results, if any remaining results exist.
+        /// Serialized Name: SparkConfigurationListResponse.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

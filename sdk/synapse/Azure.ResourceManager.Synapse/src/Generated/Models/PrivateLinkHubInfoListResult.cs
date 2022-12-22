@@ -11,27 +11,42 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> List of privateLinkHubs. </summary>
+    /// <summary>
+    /// List of privateLinkHubs
+    /// Serialized Name: PrivateLinkHubInfoListResult
+    /// </summary>
     internal partial class PrivateLinkHubInfoListResult
     {
         /// <summary> Initializes a new instance of PrivateLinkHubInfoListResult. </summary>
         internal PrivateLinkHubInfoListResult()
         {
-            Value = new ChangeTrackingList<PrivateLinkHubData>();
+            Value = new ChangeTrackingList<SynapsePrivateLinkHubData>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkHubInfoListResult. </summary>
-        /// <param name="nextLink"> Link to the next page of results. </param>
-        /// <param name="value"> List of privateLinkHubs. </param>
-        internal PrivateLinkHubInfoListResult(string nextLink, IReadOnlyList<PrivateLinkHubData> value)
+        /// <param name="nextLink">
+        /// Link to the next page of results
+        /// Serialized Name: PrivateLinkHubInfoListResult.nextLink
+        /// </param>
+        /// <param name="value">
+        /// List of privateLinkHubs
+        /// Serialized Name: PrivateLinkHubInfoListResult.value
+        /// </param>
+        internal PrivateLinkHubInfoListResult(string nextLink, IReadOnlyList<SynapsePrivateLinkHubData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> Link to the next page of results. </summary>
+        /// <summary>
+        /// Link to the next page of results
+        /// Serialized Name: PrivateLinkHubInfoListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> List of privateLinkHubs. </summary>
-        public IReadOnlyList<PrivateLinkHubData> Value { get; }
+        /// <summary>
+        /// List of privateLinkHubs
+        /// Serialized Name: PrivateLinkHubInfoListResult.value
+        /// </summary>
+        public IReadOnlyList<SynapsePrivateLinkHubData> Value { get; }
     }
 }

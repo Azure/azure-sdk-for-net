@@ -11,23 +11,32 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The list Kusto database principal assignments operation response. </summary>
+    /// <summary>
+    /// The list Kusto database principal assignments operation response.
+    /// Serialized Name: DatabasePrincipalAssignmentListResult
+    /// </summary>
     internal partial class DatabasePrincipalAssignmentListResult
     {
         /// <summary> Initializes a new instance of DatabasePrincipalAssignmentListResult. </summary>
         internal DatabasePrincipalAssignmentListResult()
         {
-            Value = new ChangeTrackingList<DatabasePrincipalAssignmentData>();
+            Value = new ChangeTrackingList<SynapseDatabasePrincipalAssignmentData>();
         }
 
         /// <summary> Initializes a new instance of DatabasePrincipalAssignmentListResult. </summary>
-        /// <param name="value"> The list of Kusto database principal assignments. </param>
-        internal DatabasePrincipalAssignmentListResult(IReadOnlyList<DatabasePrincipalAssignmentData> value)
+        /// <param name="value">
+        /// The list of Kusto database principal assignments.
+        /// Serialized Name: DatabasePrincipalAssignmentListResult.value
+        /// </param>
+        internal DatabasePrincipalAssignmentListResult(IReadOnlyList<SynapseDatabasePrincipalAssignmentData> value)
         {
             Value = value;
         }
 
-        /// <summary> The list of Kusto database principal assignments. </summary>
-        public IReadOnlyList<DatabasePrincipalAssignmentData> Value { get; }
+        /// <summary>
+        /// The list of Kusto database principal assignments.
+        /// Serialized Name: DatabasePrincipalAssignmentListResult.value
+        /// </summary>
+        public IReadOnlyList<SynapseDatabasePrincipalAssignmentData> Value { get; }
     }
 }

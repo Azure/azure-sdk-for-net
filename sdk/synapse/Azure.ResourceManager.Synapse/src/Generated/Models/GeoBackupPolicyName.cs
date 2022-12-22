@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The GeoBackupPolicyName. </summary>
+    /// <summary>
+    /// The GeoBackupPolicyName.
+    /// Serialized Name: GeoBackupPolicyName
+    /// </summary>
     public readonly partial struct GeoBackupPolicyName : IEquatable<GeoBackupPolicyName>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         private const string DefaultValue = "Default";
 
-        /// <summary> Default. </summary>
+        /// <summary>
+        /// Default
+        /// Serialized Name: GeoBackupPolicyName.Default
+        /// </summary>
         public static GeoBackupPolicyName Default { get; } = new GeoBackupPolicyName(DefaultValue);
         /// <summary> Determines if two <see cref="GeoBackupPolicyName"/> values are the same. </summary>
         public static bool operator ==(GeoBackupPolicyName left, GeoBackupPolicyName right) => left.Equals(right);

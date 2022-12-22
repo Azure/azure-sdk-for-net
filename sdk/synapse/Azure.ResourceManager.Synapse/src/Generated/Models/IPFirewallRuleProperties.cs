@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> IP firewall rule properties. </summary>
+    /// <summary>
+    /// IP firewall rule properties
+    /// Serialized Name: IpFirewallRuleProperties
+    /// </summary>
     public partial class IPFirewallRuleProperties
     {
         /// <summary> Initializes a new instance of IPFirewallRuleProperties. </summary>
@@ -15,11 +18,20 @@ namespace Azure.ResourceManager.Synapse.Models
         {
         }
 
-        /// <summary> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. </summary>
+        /// <summary>
+        /// The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress
+        /// Serialized Name: IpFirewallRuleProperties.endIpAddress
+        /// </summary>
         public string EndIPAddress { get; set; }
-        /// <summary> Resource provisioning state. </summary>
+        /// <summary>
+        /// Resource provisioning state
+        /// Serialized Name: IpFirewallRuleProperties.provisioningState
+        /// </summary>
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary> The start IP address of the firewall rule. Must be IPv4 format. </summary>
+        /// <summary>
+        /// The start IP address of the firewall rule. Must be IPv4 format
+        /// Serialized Name: IpFirewallRuleProperties.startIpAddress
+        /// </summary>
         public string StartIPAddress { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The kind of nodes that the Big Data pool provides. </summary>
+    /// <summary>
+    /// The kind of nodes that the Big Data pool provides.
+    /// Serialized Name: NodeSizeFamily
+    /// </summary>
     public readonly partial struct NodeSizeFamily : IEquatable<NodeSizeFamily>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string HardwareAcceleratedFpgaValue = "HardwareAcceleratedFPGA";
         private const string HardwareAcceleratedGPUValue = "HardwareAcceleratedGPU";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: NodeSizeFamily.None
+        /// </summary>
         public static NodeSizeFamily None { get; } = new NodeSizeFamily(NoneValue);
-        /// <summary> MemoryOptimized. </summary>
+        /// <summary>
+        /// MemoryOptimized
+        /// Serialized Name: NodeSizeFamily.MemoryOptimized
+        /// </summary>
         public static NodeSizeFamily MemoryOptimized { get; } = new NodeSizeFamily(MemoryOptimizedValue);
-        /// <summary> HardwareAcceleratedFPGA. </summary>
+        /// <summary>
+        /// HardwareAcceleratedFPGA
+        /// Serialized Name: NodeSizeFamily.HardwareAcceleratedFPGA
+        /// </summary>
         public static NodeSizeFamily HardwareAcceleratedFpga { get; } = new NodeSizeFamily(HardwareAcceleratedFpgaValue);
-        /// <summary> HardwareAcceleratedGPU. </summary>
+        /// <summary>
+        /// HardwareAcceleratedGPU
+        /// Serialized Name: NodeSizeFamily.HardwareAcceleratedGPU
+        /// </summary>
         public static NodeSizeFamily HardwareAcceleratedGPU { get; } = new NodeSizeFamily(HardwareAcceleratedGPUValue);
         /// <summary> Determines if two <see cref="NodeSizeFamily"/> values are the same. </summary>
         public static bool operator ==(NodeSizeFamily left, NodeSizeFamily right) => left.Equals(right);

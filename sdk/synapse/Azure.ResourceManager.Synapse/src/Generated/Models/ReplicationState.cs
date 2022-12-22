@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The replication state for the replication link. </summary>
+    /// <summary>
+    /// The replication state for the replication link.
+    /// Serialized Name: ReplicationState
+    /// </summary>
     public readonly partial struct ReplicationState : IEquatable<ReplicationState>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string CatchUPValue = "CATCH_UP";
         private const string SuspendedValue = "SUSPENDED";
 
-        /// <summary> PENDING. </summary>
+        /// <summary>
+        /// PENDING
+        /// Serialized Name: ReplicationState.PENDING
+        /// </summary>
         public static ReplicationState Pending { get; } = new ReplicationState(PendingValue);
-        /// <summary> SEEDING. </summary>
+        /// <summary>
+        /// SEEDING
+        /// Serialized Name: ReplicationState.SEEDING
+        /// </summary>
         public static ReplicationState Seeding { get; } = new ReplicationState(SeedingValue);
-        /// <summary> CATCH_UP. </summary>
+        /// <summary>
+        /// CATCH_UP
+        /// Serialized Name: ReplicationState.CATCH_UP
+        /// </summary>
         public static ReplicationState CatchUP { get; } = new ReplicationState(CatchUPValue);
-        /// <summary> SUSPENDED. </summary>
+        /// <summary>
+        /// SUSPENDED
+        /// Serialized Name: ReplicationState.SUSPENDED
+        /// </summary>
         public static ReplicationState Suspended { get; } = new ReplicationState(SuspendedValue);
         /// <summary> Determines if two <see cref="ReplicationState"/> values are the same. </summary>
         public static bool operator ==(ReplicationState left, ReplicationState right) => left.Equals(right);

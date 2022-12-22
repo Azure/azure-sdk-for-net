@@ -11,27 +11,42 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> A list of transparent data encryption configurations. </summary>
+    /// <summary>
+    /// A list of transparent data encryption configurations.
+    /// Serialized Name: TransparentDataEncryptionListResult
+    /// </summary>
     internal partial class TransparentDataEncryptionListResult
     {
         /// <summary> Initializes a new instance of TransparentDataEncryptionListResult. </summary>
         internal TransparentDataEncryptionListResult()
         {
-            Value = new ChangeTrackingList<TransparentDataEncryptionData>();
+            Value = new ChangeTrackingList<SynapseTransparentDataEncryptionData>();
         }
 
         /// <summary> Initializes a new instance of TransparentDataEncryptionListResult. </summary>
-        /// <param name="value"> Array of results. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal TransparentDataEncryptionListResult(IReadOnlyList<TransparentDataEncryptionData> value, string nextLink)
+        /// <param name="value">
+        /// Array of results.
+        /// Serialized Name: TransparentDataEncryptionListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to retrieve next page of results.
+        /// Serialized Name: TransparentDataEncryptionListResult.nextLink
+        /// </param>
+        internal TransparentDataEncryptionListResult(IReadOnlyList<SynapseTransparentDataEncryptionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Array of results. </summary>
-        public IReadOnlyList<TransparentDataEncryptionData> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
+        /// <summary>
+        /// Array of results.
+        /// Serialized Name: TransparentDataEncryptionListResult.value
+        /// </summary>
+        public IReadOnlyList<SynapseTransparentDataEncryptionData> Value { get; }
+        /// <summary>
+        /// Link to retrieve next page of results.
+        /// Serialized Name: TransparentDataEncryptionListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

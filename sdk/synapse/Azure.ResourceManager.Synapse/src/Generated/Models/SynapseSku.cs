@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> SQL pool SKU. </summary>
+    /// <summary>
+    /// SQL pool SKU
+    /// Serialized Name: Sku
+    /// </summary>
     public partial class SynapseSku
     {
         /// <summary> Initializes a new instance of SynapseSku. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseSku. </summary>
-        /// <param name="tier"> The service tier. </param>
-        /// <param name="name"> The SKU name. </param>
-        /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>
+        /// <param name="tier">
+        /// The service tier
+        /// Serialized Name: Sku.tier
+        /// </param>
+        /// <param name="name">
+        /// The SKU name
+        /// Serialized Name: Sku.name
+        /// </param>
+        /// <param name="capacity">
+        /// If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted.
+        /// Serialized Name: Sku.capacity
+        /// </param>
         internal SynapseSku(string tier, string name, int? capacity)
         {
             Tier = tier;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.Synapse.Models
             Capacity = capacity;
         }
 
-        /// <summary> The service tier. </summary>
+        /// <summary>
+        /// The service tier
+        /// Serialized Name: Sku.tier
+        /// </summary>
         public string Tier { get; set; }
-        /// <summary> The SKU name. </summary>
+        /// <summary>
+        /// The SKU name
+        /// Serialized Name: Sku.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </summary>
+        /// <summary>
+        /// If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted.
+        /// Serialized Name: Sku.capacity
+        /// </summary>
         public int? Capacity { get; set; }
     }
 }

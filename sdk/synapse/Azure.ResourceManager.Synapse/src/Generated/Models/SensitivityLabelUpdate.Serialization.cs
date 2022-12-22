@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Core.ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<SensitivityLabelUpdateKind> op = default;
             Optional<string> schema = default;
             Optional<string> table = default;
             Optional<string> column = default;
-            Optional<SensitivityLabelData> sensitivityLabel = default;
+            Optional<SynapseSensitivityLabelData> sensitivityLabel = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new ResourceType(property.Value.GetString());
+                    type = new Core.ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Synapse.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sensitivityLabel = SensitivityLabelData.DeserializeSensitivityLabelData(property0.Value);
+                            sensitivityLabel = SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(property0.Value);
                             continue;
                         }
                     }

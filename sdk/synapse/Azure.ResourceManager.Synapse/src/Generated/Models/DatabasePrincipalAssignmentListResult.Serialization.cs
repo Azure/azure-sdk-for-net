@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static DatabasePrincipalAssignmentListResult DeserializeDatabasePrincipalAssignmentListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DatabasePrincipalAssignmentData>> value = default;
+            Optional<IReadOnlyList<SynapseDatabasePrincipalAssignmentData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DatabasePrincipalAssignmentData> array = new List<DatabasePrincipalAssignmentData>();
+                    List<SynapseDatabasePrincipalAssignmentData> array = new List<SynapseDatabasePrincipalAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabasePrincipalAssignmentData.DeserializeDatabasePrincipalAssignmentData(item));
+                        array.Add(SynapseDatabasePrincipalAssignmentData.DeserializeSynapseDatabasePrincipalAssignmentData(item));
                     }
                     value = array;
                     continue;

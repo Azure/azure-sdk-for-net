@@ -11,27 +11,42 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> A list of sensitivity labels. </summary>
+    /// <summary>
+    /// A list of sensitivity labels.
+    /// Serialized Name: SensitivityLabelListResult
+    /// </summary>
     internal partial class SensitivityLabelListResult
     {
         /// <summary> Initializes a new instance of SensitivityLabelListResult. </summary>
         internal SensitivityLabelListResult()
         {
-            Value = new ChangeTrackingList<SensitivityLabelData>();
+            Value = new ChangeTrackingList<SynapseSensitivityLabelData>();
         }
 
         /// <summary> Initializes a new instance of SensitivityLabelListResult. </summary>
-        /// <param name="value"> Array of results. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal SensitivityLabelListResult(IReadOnlyList<SensitivityLabelData> value, string nextLink)
+        /// <param name="value">
+        /// Array of results.
+        /// Serialized Name: SensitivityLabelListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to retrieve next page of results.
+        /// Serialized Name: SensitivityLabelListResult.nextLink
+        /// </param>
+        internal SensitivityLabelListResult(IReadOnlyList<SynapseSensitivityLabelData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Array of results. </summary>
-        public IReadOnlyList<SensitivityLabelData> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
+        /// <summary>
+        /// Array of results.
+        /// Serialized Name: SensitivityLabelListResult.value
+        /// </summary>
+        public IReadOnlyList<SynapseSensitivityLabelData> Value { get; }
+        /// <summary>
+        /// Link to retrieve next page of results.
+        /// Serialized Name: SensitivityLabelListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

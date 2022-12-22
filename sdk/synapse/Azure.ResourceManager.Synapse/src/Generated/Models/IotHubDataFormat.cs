@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The data format of the message. Optionally the data format can be added to each message. </summary>
+    /// <summary>
+    /// The data format of the message. Optionally the data format can be added to each message.
+    /// Serialized Name: IotHubDataFormat
+    /// </summary>
     public readonly partial struct IotHubDataFormat : IEquatable<IotHubDataFormat>
     {
         private readonly string _value;
@@ -39,37 +42,85 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string ApacheavroValue = "APACHEAVRO";
         private const string W3ClogfileValue = "W3CLOGFILE";
 
-        /// <summary> MULTIJSON. </summary>
+        /// <summary>
+        /// MULTIJSON
+        /// Serialized Name: IotHubDataFormat.MULTIJSON
+        /// </summary>
         public static IotHubDataFormat Multijson { get; } = new IotHubDataFormat(MultijsonValue);
-        /// <summary> JSON. </summary>
+        /// <summary>
+        /// JSON
+        /// Serialized Name: IotHubDataFormat.JSON
+        /// </summary>
         public static IotHubDataFormat Json { get; } = new IotHubDataFormat(JsonValue);
-        /// <summary> CSV. </summary>
+        /// <summary>
+        /// CSV
+        /// Serialized Name: IotHubDataFormat.CSV
+        /// </summary>
         public static IotHubDataFormat CSV { get; } = new IotHubDataFormat(CSVValue);
-        /// <summary> TSV. </summary>
+        /// <summary>
+        /// TSV
+        /// Serialized Name: IotHubDataFormat.TSV
+        /// </summary>
         public static IotHubDataFormat TSV { get; } = new IotHubDataFormat(TSVValue);
-        /// <summary> SCSV. </summary>
+        /// <summary>
+        /// SCSV
+        /// Serialized Name: IotHubDataFormat.SCSV
+        /// </summary>
         public static IotHubDataFormat Scsv { get; } = new IotHubDataFormat(ScsvValue);
-        /// <summary> SOHSV. </summary>
+        /// <summary>
+        /// SOHSV
+        /// Serialized Name: IotHubDataFormat.SOHSV
+        /// </summary>
         public static IotHubDataFormat Sohsv { get; } = new IotHubDataFormat(SohsvValue);
-        /// <summary> PSV. </summary>
+        /// <summary>
+        /// PSV
+        /// Serialized Name: IotHubDataFormat.PSV
+        /// </summary>
         public static IotHubDataFormat PSV { get; } = new IotHubDataFormat(PSVValue);
-        /// <summary> TXT. </summary>
+        /// <summary>
+        /// TXT
+        /// Serialized Name: IotHubDataFormat.TXT
+        /// </summary>
         public static IotHubDataFormat TXT { get; } = new IotHubDataFormat(TXTValue);
-        /// <summary> RAW. </summary>
+        /// <summary>
+        /// RAW
+        /// Serialized Name: IotHubDataFormat.RAW
+        /// </summary>
         public static IotHubDataFormat RAW { get; } = new IotHubDataFormat(RAWValue);
-        /// <summary> SINGLEJSON. </summary>
+        /// <summary>
+        /// SINGLEJSON
+        /// Serialized Name: IotHubDataFormat.SINGLEJSON
+        /// </summary>
         public static IotHubDataFormat Singlejson { get; } = new IotHubDataFormat(SinglejsonValue);
-        /// <summary> AVRO. </summary>
+        /// <summary>
+        /// AVRO
+        /// Serialized Name: IotHubDataFormat.AVRO
+        /// </summary>
         public static IotHubDataFormat Avro { get; } = new IotHubDataFormat(AvroValue);
-        /// <summary> TSVE. </summary>
+        /// <summary>
+        /// TSVE
+        /// Serialized Name: IotHubDataFormat.TSVE
+        /// </summary>
         public static IotHubDataFormat Tsve { get; } = new IotHubDataFormat(TsveValue);
-        /// <summary> PARQUET. </summary>
+        /// <summary>
+        /// PARQUET
+        /// Serialized Name: IotHubDataFormat.PARQUET
+        /// </summary>
         public static IotHubDataFormat Parquet { get; } = new IotHubDataFormat(ParquetValue);
-        /// <summary> ORC. </summary>
+        /// <summary>
+        /// ORC
+        /// Serialized Name: IotHubDataFormat.ORC
+        /// </summary>
         public static IotHubDataFormat ORC { get; } = new IotHubDataFormat(ORCValue);
-        /// <summary> APACHEAVRO. </summary>
+        /// <summary>
+        /// APACHEAVRO
+        /// Serialized Name: IotHubDataFormat.APACHEAVRO
+        /// </summary>
         public static IotHubDataFormat Apacheavro { get; } = new IotHubDataFormat(ApacheavroValue);
-        /// <summary> W3CLOGFILE. </summary>
+        /// <summary>
+        /// W3CLOGFILE
+        /// Serialized Name: IotHubDataFormat.W3CLOGFILE
+        /// </summary>
         public static IotHubDataFormat W3Clogfile { get; } = new IotHubDataFormat(W3ClogfileValue);
         /// <summary> Determines if two <see cref="IotHubDataFormat"/> values are the same. </summary>
         public static bool operator ==(IotHubDataFormat left, IotHubDataFormat right) => left.Equals(right);

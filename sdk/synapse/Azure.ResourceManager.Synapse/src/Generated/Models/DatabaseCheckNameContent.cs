@@ -10,14 +10,23 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The result returned from a database check name availability request. </summary>
+    /// <summary>
+    /// The result returned from a database check name availability request.
+    /// Serialized Name: DatabaseCheckNameRequest
+    /// </summary>
     public partial class DatabaseCheckNameContent
     {
         /// <summary> Initializes a new instance of DatabaseCheckNameContent. </summary>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> The type of resource, for instance Microsoft.Synapse/workspaces/kustoPools/databases. </param>
+        /// <param name="name">
+        /// Resource name.
+        /// Serialized Name: DatabaseCheckNameRequest.name
+        /// </param>
+        /// <param name="resourceType">
+        /// The type of resource, for instance Microsoft.Synapse/workspaces/kustoPools/databases.
+        /// Serialized Name: DatabaseCheckNameRequest.type
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public DatabaseCheckNameContent(string name, KustoDatabaseResourceType resourceType)
+        public DatabaseCheckNameContent(string name, ResourceType resourceType)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -25,9 +34,15 @@ namespace Azure.ResourceManager.Synapse.Models
             ResourceType = resourceType;
         }
 
-        /// <summary> Resource name. </summary>
+        /// <summary>
+        /// Resource name.
+        /// Serialized Name: DatabaseCheckNameRequest.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The type of resource, for instance Microsoft.Synapse/workspaces/kustoPools/databases. </summary>
-        public KustoDatabaseResourceType ResourceType { get; }
+        /// <summary>
+        /// The type of resource, for instance Microsoft.Synapse/workspaces/kustoPools/databases.
+        /// Serialized Name: DatabaseCheckNameRequest.type
+        /// </summary>
+        public ResourceType ResourceType { get; }
     }
 }

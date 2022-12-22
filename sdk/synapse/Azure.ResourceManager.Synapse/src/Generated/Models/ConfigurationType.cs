@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The type of the spark config properties file. </summary>
+    /// <summary>
+    /// The type of the spark config properties file.
+    /// Serialized Name: ConfigurationType
+    /// </summary>
     public readonly partial struct ConfigurationType : IEquatable<ConfigurationType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string FileValue = "File";
         private const string ArtifactValue = "Artifact";
 
-        /// <summary> File. </summary>
+        /// <summary>
+        /// File
+        /// Serialized Name: ConfigurationType.File
+        /// </summary>
         public static ConfigurationType File { get; } = new ConfigurationType(FileValue);
-        /// <summary> Artifact. </summary>
+        /// <summary>
+        /// Artifact
+        /// Serialized Name: ConfigurationType.Artifact
+        /// </summary>
         public static ConfigurationType Artifact { get; } = new ConfigurationType(ArtifactValue);
         /// <summary> Determines if two <see cref="ConfigurationType"/> values are the same. </summary>
         public static bool operator ==(ConfigurationType left, ConfigurationType right) => left.Equals(right);

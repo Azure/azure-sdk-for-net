@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> List of available SKUs for a Kusto Pool. </summary>
+    /// <summary>
+    /// List of available SKUs for a Kusto Pool.
+    /// Serialized Name: ListResourceSkusResult
+    /// </summary>
     internal partial class ListResourceSkusResult
     {
         /// <summary> Initializes a new instance of ListResourceSkusResult. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of ListResourceSkusResult. </summary>
-        /// <param name="value"> The collection of available SKUs for an existing resource. </param>
+        /// <param name="value">
+        /// The collection of available SKUs for an existing resource.
+        /// Serialized Name: ListResourceSkusResult.value
+        /// </param>
         internal ListResourceSkusResult(IReadOnlyList<AzureResourceSku> value)
         {
             Value = value;
         }
 
-        /// <summary> The collection of available SKUs for an existing resource. </summary>
+        /// <summary>
+        /// The collection of available SKUs for an existing resource.
+        /// Serialized Name: ListResourceSkusResult.value
+        /// </summary>
         public IReadOnlyList<AzureResourceSku> Value { get; }
     }
 }

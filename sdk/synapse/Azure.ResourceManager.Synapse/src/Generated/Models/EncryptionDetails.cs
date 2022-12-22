@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Details of the encryption associated with the workspace. </summary>
+    /// <summary>
+    /// Details of the encryption associated with the workspace
+    /// Serialized Name: EncryptionDetails
+    /// </summary>
     public partial class EncryptionDetails
     {
         /// <summary> Initializes a new instance of EncryptionDetails. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of EncryptionDetails. </summary>
-        /// <param name="doubleEncryptionEnabled"> Double Encryption enabled. </param>
-        /// <param name="cmk"> Customer Managed Key Details. </param>
+        /// <param name="doubleEncryptionEnabled">
+        /// Double Encryption enabled
+        /// Serialized Name: EncryptionDetails.doubleEncryptionEnabled
+        /// </param>
+        /// <param name="cmk">
+        /// Customer Managed Key Details
+        /// Serialized Name: EncryptionDetails.cmk
+        /// </param>
         internal EncryptionDetails(bool? doubleEncryptionEnabled, CustomerManagedKeyDetails cmk)
         {
             DoubleEncryptionEnabled = doubleEncryptionEnabled;
             Cmk = cmk;
         }
 
-        /// <summary> Double Encryption enabled. </summary>
+        /// <summary>
+        /// Double Encryption enabled
+        /// Serialized Name: EncryptionDetails.doubleEncryptionEnabled
+        /// </summary>
         public bool? DoubleEncryptionEnabled { get; }
-        /// <summary> Customer Managed Key Details. </summary>
+        /// <summary>
+        /// Customer Managed Key Details
+        /// Serialized Name: EncryptionDetails.cmk
+        /// </summary>
         public CustomerManagedKeyDetails Cmk { get; set; }
     }
 }

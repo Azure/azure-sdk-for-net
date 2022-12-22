@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse
         private ClientDiagnostics KustoOperationsClientDiagnostics => _kustoOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Synapse", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private KustoRestOperations KustoOperationsRestClient => _kustoOperationsRestClient ??= new KustoRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        private string GetApiVersionOrNull(Core.ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;

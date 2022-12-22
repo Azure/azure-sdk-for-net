@@ -11,27 +11,42 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> A list of server encryption protectors. </summary>
+    /// <summary>
+    /// A list of server encryption protectors.
+    /// Serialized Name: EncryptionProtectorListResult
+    /// </summary>
     internal partial class EncryptionProtectorListResult
     {
         /// <summary> Initializes a new instance of EncryptionProtectorListResult. </summary>
         internal EncryptionProtectorListResult()
         {
-            Value = new ChangeTrackingList<EncryptionProtectorData>();
+            Value = new ChangeTrackingList<SynapseEncryptionProtectorData>();
         }
 
         /// <summary> Initializes a new instance of EncryptionProtectorListResult. </summary>
-        /// <param name="value"> Array of results. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal EncryptionProtectorListResult(IReadOnlyList<EncryptionProtectorData> value, string nextLink)
+        /// <param name="value">
+        /// Array of results.
+        /// Serialized Name: EncryptionProtectorListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to retrieve next page of results.
+        /// Serialized Name: EncryptionProtectorListResult.nextLink
+        /// </param>
+        internal EncryptionProtectorListResult(IReadOnlyList<SynapseEncryptionProtectorData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Array of results. </summary>
-        public IReadOnlyList<EncryptionProtectorData> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
+        /// <summary>
+        /// Array of results.
+        /// Serialized Name: EncryptionProtectorListResult.value
+        /// </summary>
+        public IReadOnlyList<SynapseEncryptionProtectorData> Value { get; }
+        /// <summary>
+        /// Link to retrieve next page of results.
+        /// Serialized Name: EncryptionProtectorListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

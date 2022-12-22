@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The principals modification kind of the database. </summary>
+    /// <summary>
+    /// The principals modification kind of the database
+    /// Serialized Name: PrincipalsModificationKind
+    /// </summary>
     public readonly partial struct PrincipalsModificationKind : IEquatable<PrincipalsModificationKind>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string ReplaceValue = "Replace";
         private const string NoneValue = "None";
 
-        /// <summary> Union. </summary>
+        /// <summary>
+        /// Union
+        /// Serialized Name: PrincipalsModificationKind.Union
+        /// </summary>
         public static PrincipalsModificationKind Union { get; } = new PrincipalsModificationKind(UnionValue);
-        /// <summary> Replace. </summary>
+        /// <summary>
+        /// Replace
+        /// Serialized Name: PrincipalsModificationKind.Replace
+        /// </summary>
         public static PrincipalsModificationKind Replace { get; } = new PrincipalsModificationKind(ReplaceValue);
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: PrincipalsModificationKind.None
+        /// </summary>
         public static PrincipalsModificationKind None { get; } = new PrincipalsModificationKind(NoneValue);
         /// <summary> Determines if two <see cref="PrincipalsModificationKind"/> values are the same. </summary>
         public static bool operator ==(PrincipalsModificationKind left, PrincipalsModificationKind right) => left.Equals(right);

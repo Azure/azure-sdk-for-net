@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Resource provisioning state. </summary>
+    /// <summary>
+    /// Resource provisioning state
+    /// Serialized Name: ProvisioningState
+    /// </summary>
     public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string FailedValue = "Failed";
         private const string DeleteErrorValue = "DeleteError";
 
-        /// <summary> Provisioning. </summary>
+        /// <summary>
+        /// Provisioning
+        /// Serialized Name: ProvisioningState.Provisioning
+        /// </summary>
         public static ProvisioningState Provisioning { get; } = new ProvisioningState(ProvisioningValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: ProvisioningState.Succeeded
+        /// </summary>
         public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: ProvisioningState.Deleting
+        /// </summary>
         public static ProvisioningState Deleting { get; } = new ProvisioningState(DeletingValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: ProvisioningState.Failed
+        /// </summary>
         public static ProvisioningState Failed { get; } = new ProvisioningState(FailedValue);
-        /// <summary> DeleteError. </summary>
+        /// <summary>
+        /// DeleteError
+        /// Serialized Name: ProvisioningState.DeleteError
+        /// </summary>
         public static ProvisioningState DeleteError { get; } = new ProvisioningState(DeleteErrorValue);
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);

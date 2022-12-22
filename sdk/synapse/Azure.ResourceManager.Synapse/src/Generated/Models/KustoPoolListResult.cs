@@ -11,23 +11,32 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The list Kusto pools operation response. </summary>
+    /// <summary>
+    /// The list Kusto pools operation response.
+    /// Serialized Name: KustoPoolListResult
+    /// </summary>
     internal partial class KustoPoolListResult
     {
         /// <summary> Initializes a new instance of KustoPoolListResult. </summary>
         internal KustoPoolListResult()
         {
-            Value = new ChangeTrackingList<KustoPoolData>();
+            Value = new ChangeTrackingList<SynapseKustoPoolData>();
         }
 
         /// <summary> Initializes a new instance of KustoPoolListResult. </summary>
-        /// <param name="value"> The list of Kusto pools. </param>
-        internal KustoPoolListResult(IReadOnlyList<KustoPoolData> value)
+        /// <param name="value">
+        /// The list of Kusto pools.
+        /// Serialized Name: KustoPoolListResult.value
+        /// </param>
+        internal KustoPoolListResult(IReadOnlyList<SynapseKustoPoolData> value)
         {
             Value = value;
         }
 
-        /// <summary> The list of Kusto pools. </summary>
-        public IReadOnlyList<KustoPoolData> Value { get; }
+        /// <summary>
+        /// The list of Kusto pools.
+        /// Serialized Name: KustoPoolListResult.value
+        /// </summary>
+        public IReadOnlyList<SynapseKustoPoolData> Value { get; }
     }
 }

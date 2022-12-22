@@ -11,27 +11,42 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> A list of Sql pool tables. </summary>
+    /// <summary>
+    /// A list of Sql pool tables.
+    /// Serialized Name: SqlPoolTableListResult
+    /// </summary>
     internal partial class SqlPoolTableListResult
     {
         /// <summary> Initializes a new instance of SqlPoolTableListResult. </summary>
         internal SqlPoolTableListResult()
         {
-            Value = new ChangeTrackingList<SqlPoolTableData>();
+            Value = new ChangeTrackingList<SynapseSqlPoolTableData>();
         }
 
         /// <summary> Initializes a new instance of SqlPoolTableListResult. </summary>
-        /// <param name="value"> Array of results. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal SqlPoolTableListResult(IReadOnlyList<SqlPoolTableData> value, string nextLink)
+        /// <param name="value">
+        /// Array of results.
+        /// Serialized Name: SqlPoolTableListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to retrieve next page of results.
+        /// Serialized Name: SqlPoolTableListResult.nextLink
+        /// </param>
+        internal SqlPoolTableListResult(IReadOnlyList<SynapseSqlPoolTableData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Array of results. </summary>
-        public IReadOnlyList<SqlPoolTableData> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
+        /// <summary>
+        /// Array of results.
+        /// Serialized Name: SqlPoolTableListResult.value
+        /// </summary>
+        public IReadOnlyList<SynapseSqlPoolTableData> Value { get; }
+        /// <summary>
+        /// Link to retrieve next page of results.
+        /// Serialized Name: SqlPoolTableListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

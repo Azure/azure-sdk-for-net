@@ -11,27 +11,42 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> A list of sql pool extended auditing settings. </summary>
+    /// <summary>
+    /// A list of sql pool extended auditing settings.
+    /// Serialized Name: ExtendedSqlPoolBlobAuditingPolicyListResult
+    /// </summary>
     internal partial class ExtendedSqlPoolBlobAuditingPolicyListResult
     {
         /// <summary> Initializes a new instance of ExtendedSqlPoolBlobAuditingPolicyListResult. </summary>
         internal ExtendedSqlPoolBlobAuditingPolicyListResult()
         {
-            Value = new ChangeTrackingList<ExtendedSqlPoolBlobAuditingPolicyData>();
+            Value = new ChangeTrackingList<SynapseExtendedSqlPoolBlobAuditingPolicyData>();
         }
 
         /// <summary> Initializes a new instance of ExtendedSqlPoolBlobAuditingPolicyListResult. </summary>
-        /// <param name="value"> Array of results. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal ExtendedSqlPoolBlobAuditingPolicyListResult(IReadOnlyList<ExtendedSqlPoolBlobAuditingPolicyData> value, string nextLink)
+        /// <param name="value">
+        /// Array of results.
+        /// Serialized Name: ExtendedSqlPoolBlobAuditingPolicyListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to retrieve next page of results.
+        /// Serialized Name: ExtendedSqlPoolBlobAuditingPolicyListResult.nextLink
+        /// </param>
+        internal ExtendedSqlPoolBlobAuditingPolicyListResult(IReadOnlyList<SynapseExtendedSqlPoolBlobAuditingPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Array of results. </summary>
-        public IReadOnlyList<ExtendedSqlPoolBlobAuditingPolicyData> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
+        /// <summary>
+        /// Array of results.
+        /// Serialized Name: ExtendedSqlPoolBlobAuditingPolicyListResult.value
+        /// </summary>
+        public IReadOnlyList<SynapseExtendedSqlPoolBlobAuditingPolicyData> Value { get; }
+        /// <summary>
+        /// Link to retrieve next page of results.
+        /// Serialized Name: ExtendedSqlPoolBlobAuditingPolicyListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static EncryptionProtectorListResult DeserializeEncryptionProtectorListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<EncryptionProtectorData>> value = default;
+            Optional<IReadOnlyList<SynapseEncryptionProtectorData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EncryptionProtectorData> array = new List<EncryptionProtectorData>();
+                    List<SynapseEncryptionProtectorData> array = new List<SynapseEncryptionProtectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EncryptionProtectorData.DeserializeEncryptionProtectorData(item));
+                        array.Add(SynapseEncryptionProtectorData.DeserializeSynapseEncryptionProtectorData(item));
                     }
                     value = array;
                     continue;

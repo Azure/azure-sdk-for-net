@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static AttachedDatabaseConfigurationListResult DeserializeAttachedDatabaseConfigurationListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<AttachedDatabaseConfigurationData>> value = default;
+            Optional<IReadOnlyList<SynapseAttachedDatabaseConfigurationData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AttachedDatabaseConfigurationData> array = new List<AttachedDatabaseConfigurationData>();
+                    List<SynapseAttachedDatabaseConfigurationData> array = new List<SynapseAttachedDatabaseConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AttachedDatabaseConfigurationData.DeserializeAttachedDatabaseConfigurationData(item));
+                        array.Add(SynapseAttachedDatabaseConfigurationData.DeserializeSynapseAttachedDatabaseConfigurationData(item));
                     }
                     value = array;
                     continue;

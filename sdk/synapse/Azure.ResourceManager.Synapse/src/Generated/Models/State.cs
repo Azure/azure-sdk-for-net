@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The state of the resource. </summary>
+    /// <summary>
+    /// The state of the resource.
+    /// Serialized Name: State
+    /// </summary>
     public readonly partial struct State : IEquatable<State>
     {
         private readonly string _value;
@@ -32,23 +35,50 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string StartingValue = "Starting";
         private const string UpdatingValue = "Updating";
 
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: State.Creating
+        /// </summary>
         public static State Creating { get; } = new State(CreatingValue);
-        /// <summary> Unavailable. </summary>
+        /// <summary>
+        /// Unavailable
+        /// Serialized Name: State.Unavailable
+        /// </summary>
         public static State Unavailable { get; } = new State(UnavailableValue);
-        /// <summary> Running. </summary>
+        /// <summary>
+        /// Running
+        /// Serialized Name: State.Running
+        /// </summary>
         public static State Running { get; } = new State(RunningValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: State.Deleting
+        /// </summary>
         public static State Deleting { get; } = new State(DeletingValue);
-        /// <summary> Deleted. </summary>
+        /// <summary>
+        /// Deleted
+        /// Serialized Name: State.Deleted
+        /// </summary>
         public static State Deleted { get; } = new State(DeletedValue);
-        /// <summary> Stopping. </summary>
+        /// <summary>
+        /// Stopping
+        /// Serialized Name: State.Stopping
+        /// </summary>
         public static State Stopping { get; } = new State(StoppingValue);
-        /// <summary> Stopped. </summary>
+        /// <summary>
+        /// Stopped
+        /// Serialized Name: State.Stopped
+        /// </summary>
         public static State Stopped { get; } = new State(StoppedValue);
-        /// <summary> Starting. </summary>
+        /// <summary>
+        /// Starting
+        /// Serialized Name: State.Starting
+        /// </summary>
         public static State Starting { get; } = new State(StartingValue);
-        /// <summary> Updating. </summary>
+        /// <summary>
+        /// Updating
+        /// Serialized Name: State.Updating
+        /// </summary>
         public static State Updating { get; } = new State(UpdatingValue);
         /// <summary> Determines if two <see cref="State"/> values are the same. </summary>
         public static bool operator ==(State left, State right) => left.Equals(right);

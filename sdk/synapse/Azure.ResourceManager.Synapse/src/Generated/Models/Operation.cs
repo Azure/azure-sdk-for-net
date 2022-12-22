@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> A REST API operation. </summary>
+    /// <summary>
+    /// A REST API operation
+    /// Serialized Name: Operation
+    /// </summary>
     public partial class Operation
     {
         /// <summary> Initializes a new instance of Operation. </summary>
@@ -18,10 +21,22 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of Operation. </summary>
-        /// <param name="name"> This is of the format {provider}/{resource}/{operation}. </param>
-        /// <param name="display"> The object that describes the operation. </param>
-        /// <param name="origin"> The intended executor of the operation. </param>
-        /// <param name="properties"> Properties of the operation. </param>
+        /// <param name="name">
+        /// This is of the format {provider}/{resource}/{operation}.
+        /// Serialized Name: Operation.name
+        /// </param>
+        /// <param name="display">
+        /// The object that describes the operation.
+        /// Serialized Name: Operation.display
+        /// </param>
+        /// <param name="origin">
+        /// The intended executor of the operation.
+        /// Serialized Name: Operation.origin
+        /// </param>
+        /// <param name="properties">
+        /// Properties of the operation.
+        /// Serialized Name: Operation.properties
+        /// </param>
         internal Operation(string name, OperationDisplay display, string origin, BinaryData properties)
         {
             Name = name;
@@ -30,14 +45,24 @@ namespace Azure.ResourceManager.Synapse.Models
             Properties = properties;
         }
 
-        /// <summary> This is of the format {provider}/{resource}/{operation}. </summary>
+        /// <summary>
+        /// This is of the format {provider}/{resource}/{operation}.
+        /// Serialized Name: Operation.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The object that describes the operation. </summary>
+        /// <summary>
+        /// The object that describes the operation.
+        /// Serialized Name: Operation.display
+        /// </summary>
         public OperationDisplay Display { get; }
-        /// <summary> The intended executor of the operation. </summary>
+        /// <summary>
+        /// The intended executor of the operation.
+        /// Serialized Name: Operation.origin
+        /// </summary>
         public string Origin { get; }
         /// <summary>
         /// Properties of the operation.
+        /// Serialized Name: Operation.properties
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

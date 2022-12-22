@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static TransparentDataEncryptionListResult DeserializeTransparentDataEncryptionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<TransparentDataEncryptionData>> value = default;
+            Optional<IReadOnlyList<SynapseTransparentDataEncryptionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TransparentDataEncryptionData> array = new List<TransparentDataEncryptionData>();
+                    List<SynapseTransparentDataEncryptionData> array = new List<SynapseTransparentDataEncryptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TransparentDataEncryptionData.DeserializeTransparentDataEncryptionData(item));
+                        array.Add(SynapseTransparentDataEncryptionData.DeserializeSynapseTransparentDataEncryptionData(item));
                     }
                     value = array;
                     continue;

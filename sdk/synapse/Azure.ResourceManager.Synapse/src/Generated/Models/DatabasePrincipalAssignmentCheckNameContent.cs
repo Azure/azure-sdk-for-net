@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> A principal assignment check name availability request. </summary>
+    /// <summary>
+    /// A principal assignment check name availability request.
+    /// Serialized Name: DatabasePrincipalAssignmentCheckNameRequest
+    /// </summary>
     public partial class DatabasePrincipalAssignmentCheckNameContent
     {
         /// <summary> Initializes a new instance of DatabasePrincipalAssignmentCheckNameContent. </summary>
-        /// <param name="name"> Principal Assignment resource name. </param>
+        /// <param name="name">
+        /// Principal Assignment resource name.
+        /// Serialized Name: DatabasePrincipalAssignmentCheckNameRequest.name
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DatabasePrincipalAssignmentCheckNameContent(string name)
         {
@@ -24,9 +30,15 @@ namespace Azure.ResourceManager.Synapse.Models
             AssignmentType = DatabasePrincipalAssignmentType.MicrosoftSynapseWorkspacesKustoPoolsDatabasesPrincipalAssignments;
         }
 
-        /// <summary> Principal Assignment resource name. </summary>
+        /// <summary>
+        /// Principal Assignment resource name.
+        /// Serialized Name: DatabasePrincipalAssignmentCheckNameRequest.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The type of resource, Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments. </summary>
+        /// <summary>
+        /// The type of resource, Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments.
+        /// Serialized Name: DatabasePrincipalAssignmentCheckNameRequest.type
+        /// </summary>
         public DatabasePrincipalAssignmentType AssignmentType { get; }
     }
 }

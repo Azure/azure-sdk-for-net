@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         internal static IPFirewallRuleInfoListResult DeserializeIPFirewallRuleInfoListResult(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<IPFirewallRuleInfoData>> value = default;
+            Optional<IReadOnlyList<SynapseIPFirewallRuleInfoData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IPFirewallRuleInfoData> array = new List<IPFirewallRuleInfoData>();
+                    List<SynapseIPFirewallRuleInfoData> array = new List<SynapseIPFirewallRuleInfoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPFirewallRuleInfoData.DeserializeIPFirewallRuleInfoData(item));
+                        array.Add(SynapseIPFirewallRuleInfoData.DeserializeSynapseIPFirewallRuleInfoData(item));
                     }
                     value = array;
                     continue;

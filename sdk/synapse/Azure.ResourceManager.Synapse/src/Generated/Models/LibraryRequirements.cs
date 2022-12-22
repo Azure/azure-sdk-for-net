@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Library requirements for a Big Data pool powered by Apache Spark. </summary>
+    /// <summary>
+    /// Library requirements for a Big Data pool powered by Apache Spark
+    /// Serialized Name: LibraryRequirements
+    /// </summary>
     public partial class LibraryRequirements
     {
         /// <summary> Initializes a new instance of LibraryRequirements. </summary>
@@ -18,9 +21,18 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of LibraryRequirements. </summary>
-        /// <param name="time"> The last update time of the library requirements file. </param>
-        /// <param name="content"> The library requirements. </param>
-        /// <param name="filename"> The filename of the library requirements file. </param>
+        /// <param name="time">
+        /// The last update time of the library requirements file.
+        /// Serialized Name: LibraryRequirements.time
+        /// </param>
+        /// <param name="content">
+        /// The library requirements.
+        /// Serialized Name: LibraryRequirements.content
+        /// </param>
+        /// <param name="filename">
+        /// The filename of the library requirements file.
+        /// Serialized Name: LibraryRequirements.filename
+        /// </param>
         internal LibraryRequirements(DateTimeOffset? time, string content, string filename)
         {
             Time = time;
@@ -28,11 +40,20 @@ namespace Azure.ResourceManager.Synapse.Models
             Filename = filename;
         }
 
-        /// <summary> The last update time of the library requirements file. </summary>
+        /// <summary>
+        /// The last update time of the library requirements file.
+        /// Serialized Name: LibraryRequirements.time
+        /// </summary>
         public DateTimeOffset? Time { get; }
-        /// <summary> The library requirements. </summary>
+        /// <summary>
+        /// The library requirements.
+        /// Serialized Name: LibraryRequirements.content
+        /// </summary>
         public string Content { get; set; }
-        /// <summary> The filename of the library requirements file. </summary>
+        /// <summary>
+        /// The filename of the library requirements file.
+        /// Serialized Name: LibraryRequirements.filename
+        /// </summary>
         public string Filename { get; set; }
     }
 }

@@ -11,27 +11,42 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> List of workspaces. </summary>
+    /// <summary>
+    /// List of workspaces
+    /// Serialized Name: WorkspaceInfoListResult
+    /// </summary>
     internal partial class WorkspaceInfoListResult
     {
         /// <summary> Initializes a new instance of WorkspaceInfoListResult. </summary>
         internal WorkspaceInfoListResult()
         {
-            Value = new ChangeTrackingList<WorkspaceData>();
+            Value = new ChangeTrackingList<SynapseWorkspaceData>();
         }
 
         /// <summary> Initializes a new instance of WorkspaceInfoListResult. </summary>
-        /// <param name="nextLink"> Link to the next page of results. </param>
-        /// <param name="value"> List of workspaces. </param>
-        internal WorkspaceInfoListResult(string nextLink, IReadOnlyList<WorkspaceData> value)
+        /// <param name="nextLink">
+        /// Link to the next page of results
+        /// Serialized Name: WorkspaceInfoListResult.nextLink
+        /// </param>
+        /// <param name="value">
+        /// List of workspaces
+        /// Serialized Name: WorkspaceInfoListResult.value
+        /// </param>
+        internal WorkspaceInfoListResult(string nextLink, IReadOnlyList<SynapseWorkspaceData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> Link to the next page of results. </summary>
+        /// <summary>
+        /// Link to the next page of results
+        /// Serialized Name: WorkspaceInfoListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> List of workspaces. </summary>
-        public IReadOnlyList<WorkspaceData> Value { get; }
+        /// <summary>
+        /// List of workspaces
+        /// Serialized Name: WorkspaceInfoListResult.value
+        /// </summary>
+        public IReadOnlyList<SynapseWorkspaceData> Value { get; }
     }
 }

@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Represents server metrics. </summary>
+    /// <summary>
+    /// Represents server metrics.
+    /// Serialized Name: ServerUsage
+    /// </summary>
     public partial class ServerUsage
     {
         /// <summary> Initializes a new instance of ServerUsage. </summary>
@@ -18,13 +21,34 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of ServerUsage. </summary>
-        /// <param name="name"> Name of the server usage metric. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
-        /// <param name="displayName"> The metric display name. </param>
-        /// <param name="currentValue"> The current value of the metric. </param>
-        /// <param name="limit"> The current limit of the metric. </param>
-        /// <param name="unit"> The units of the metric. </param>
-        /// <param name="nextResetOn"> The next reset time for the metric (ISO8601 format). </param>
+        /// <param name="name">
+        /// Name of the server usage metric.
+        /// Serialized Name: ServerUsage.name
+        /// </param>
+        /// <param name="resourceName">
+        /// The name of the resource.
+        /// Serialized Name: ServerUsage.resourceName
+        /// </param>
+        /// <param name="displayName">
+        /// The metric display name.
+        /// Serialized Name: ServerUsage.displayName
+        /// </param>
+        /// <param name="currentValue">
+        /// The current value of the metric.
+        /// Serialized Name: ServerUsage.currentValue
+        /// </param>
+        /// <param name="limit">
+        /// The current limit of the metric.
+        /// Serialized Name: ServerUsage.limit
+        /// </param>
+        /// <param name="unit">
+        /// The units of the metric.
+        /// Serialized Name: ServerUsage.unit
+        /// </param>
+        /// <param name="nextResetOn">
+        /// The next reset time for the metric (ISO8601 format).
+        /// Serialized Name: ServerUsage.nextResetTime
+        /// </param>
         internal ServerUsage(string name, string resourceName, string displayName, double? currentValue, double? limit, string unit, DateTimeOffset? nextResetOn)
         {
             Name = name;
@@ -36,19 +60,40 @@ namespace Azure.ResourceManager.Synapse.Models
             NextResetOn = nextResetOn;
         }
 
-        /// <summary> Name of the server usage metric. </summary>
+        /// <summary>
+        /// Name of the server usage metric.
+        /// Serialized Name: ServerUsage.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The name of the resource. </summary>
+        /// <summary>
+        /// The name of the resource.
+        /// Serialized Name: ServerUsage.resourceName
+        /// </summary>
         public string ResourceName { get; }
-        /// <summary> The metric display name. </summary>
+        /// <summary>
+        /// The metric display name.
+        /// Serialized Name: ServerUsage.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> The current value of the metric. </summary>
+        /// <summary>
+        /// The current value of the metric.
+        /// Serialized Name: ServerUsage.currentValue
+        /// </summary>
         public double? CurrentValue { get; }
-        /// <summary> The current limit of the metric. </summary>
+        /// <summary>
+        /// The current limit of the metric.
+        /// Serialized Name: ServerUsage.limit
+        /// </summary>
         public double? Limit { get; }
-        /// <summary> The units of the metric. </summary>
+        /// <summary>
+        /// The units of the metric.
+        /// Serialized Name: ServerUsage.unit
+        /// </summary>
         public string Unit { get; }
-        /// <summary> The next reset time for the metric (ISO8601 format). </summary>
+        /// <summary>
+        /// The next reset time for the metric (ISO8601 format).
+        /// Serialized Name: ServerUsage.nextResetTime
+        /// </summary>
         public DateTimeOffset? NextResetOn { get; }
     }
 }

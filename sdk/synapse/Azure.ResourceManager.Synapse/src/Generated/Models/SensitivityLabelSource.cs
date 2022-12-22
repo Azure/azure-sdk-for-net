@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The SensitivityLabelSource. </summary>
+    /// <summary>
+    /// The SensitivityLabelSource.
+    /// Serialized Name: SensitivityLabelSource
+    /// </summary>
     public enum SensitivityLabelSource
     {
-        /// <summary> current. </summary>
+        /// <summary>
+        /// current
+        /// Serialized Name: SensitivityLabelSource.current
+        /// </summary>
         Current,
-        /// <summary> recommended. </summary>
+        /// <summary>
+        /// recommended
+        /// Serialized Name: SensitivityLabelSource.recommended
+        /// </summary>
         Recommended
     }
 }

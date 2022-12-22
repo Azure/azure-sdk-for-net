@@ -11,23 +11,32 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The list attached database configurations operation response. </summary>
+    /// <summary>
+    /// The list attached database configurations operation response.
+    /// Serialized Name: AttachedDatabaseConfigurationListResult
+    /// </summary>
     internal partial class AttachedDatabaseConfigurationListResult
     {
         /// <summary> Initializes a new instance of AttachedDatabaseConfigurationListResult. </summary>
         internal AttachedDatabaseConfigurationListResult()
         {
-            Value = new ChangeTrackingList<AttachedDatabaseConfigurationData>();
+            Value = new ChangeTrackingList<SynapseAttachedDatabaseConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of AttachedDatabaseConfigurationListResult. </summary>
-        /// <param name="value"> The list of attached database configurations. </param>
-        internal AttachedDatabaseConfigurationListResult(IReadOnlyList<AttachedDatabaseConfigurationData> value)
+        /// <param name="value">
+        /// The list of attached database configurations.
+        /// Serialized Name: AttachedDatabaseConfigurationListResult.value
+        /// </param>
+        internal AttachedDatabaseConfigurationListResult(IReadOnlyList<SynapseAttachedDatabaseConfigurationData> value)
         {
             Value = value;
         }
 
-        /// <summary> The list of attached database configurations. </summary>
-        public IReadOnlyList<AttachedDatabaseConfigurationData> Value { get; }
+        /// <summary>
+        /// The list of attached database configurations.
+        /// Serialized Name: AttachedDatabaseConfigurationListResult.value
+        /// </summary>
+        public IReadOnlyList<SynapseAttachedDatabaseConfigurationData> Value { get; }
     }
 }

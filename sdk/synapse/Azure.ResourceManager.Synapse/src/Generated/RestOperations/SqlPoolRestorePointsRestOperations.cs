@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="restorePointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RestorePointData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string restorePointName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseRestorePointData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string restorePointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -256,13 +256,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        RestorePointData value = default;
+                        SynapseRestorePointData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RestorePointData.DeserializeRestorePointData(document.RootElement);
+                        value = SynapseRestorePointData.DeserializeSynapseRestorePointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RestorePointData)null, message.Response);
+                    return Response.FromValue((SynapseRestorePointData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="restorePointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RestorePointData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string restorePointName, CancellationToken cancellationToken = default)
+        public Response<SynapseRestorePointData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string restorePointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -291,13 +291,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        RestorePointData value = default;
+                        SynapseRestorePointData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RestorePointData.DeserializeRestorePointData(document.RootElement);
+                        value = SynapseRestorePointData.DeserializeSynapseRestorePointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RestorePointData)null, message.Response);
+                    return Response.FromValue((SynapseRestorePointData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

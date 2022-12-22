@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static PrivateEndpointConnectionForPrivateLinkHubResourceCollectionResponse DeserializePrivateEndpointConnectionForPrivateLinkHubResourceCollectionResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<PrivateEndpointConnectionForPrivateLinkHubData>> value = default;
+            Optional<IReadOnlyList<SynapsePrivateEndpointConnectionForPrivateLinkHubData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateEndpointConnectionForPrivateLinkHubData> array = new List<PrivateEndpointConnectionForPrivateLinkHubData>();
+                    List<SynapsePrivateEndpointConnectionForPrivateLinkHubData> array = new List<SynapsePrivateEndpointConnectionForPrivateLinkHubData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpointConnectionForPrivateLinkHubData.DeserializePrivateEndpointConnectionForPrivateLinkHubData(item));
+                        array.Add(SynapsePrivateEndpointConnectionForPrivateLinkHubData.DeserializeSynapsePrivateEndpointConnectionForPrivateLinkHubData(item));
                     }
                     value = array;
                     continue;

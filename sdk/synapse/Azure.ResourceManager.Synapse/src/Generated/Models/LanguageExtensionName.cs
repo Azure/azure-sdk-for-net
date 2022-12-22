@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Language extension that can run within KQL query. </summary>
+    /// <summary>
+    /// Language extension that can run within KQL query.
+    /// Serialized Name: LanguageExtensionName
+    /// </summary>
     public readonly partial struct LanguageExtensionName : IEquatable<LanguageExtensionName>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string PythonValue = "PYTHON";
         private const string RValue = "R";
 
-        /// <summary> PYTHON. </summary>
+        /// <summary>
+        /// PYTHON
+        /// Serialized Name: LanguageExtensionName.PYTHON
+        /// </summary>
         public static LanguageExtensionName Python { get; } = new LanguageExtensionName(PythonValue);
-        /// <summary> R. </summary>
+        /// <summary>
+        /// R
+        /// Serialized Name: LanguageExtensionName.R
+        /// </summary>
         public static LanguageExtensionName R { get; } = new LanguageExtensionName(RValue);
         /// <summary> Determines if two <see cref="LanguageExtensionName"/> values are the same. </summary>
         public static bool operator ==(LanguageExtensionName left, LanguageExtensionName right) => left.Equals(right);

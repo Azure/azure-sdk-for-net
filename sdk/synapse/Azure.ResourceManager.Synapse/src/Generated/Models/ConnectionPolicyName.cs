@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The ConnectionPolicyName. </summary>
+    /// <summary>
+    /// The ConnectionPolicyName.
+    /// Serialized Name: ConnectionPolicyName
+    /// </summary>
     public readonly partial struct ConnectionPolicyName : IEquatable<ConnectionPolicyName>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         private const string DefaultValue = "default";
 
-        /// <summary> default. </summary>
+        /// <summary>
+        /// default
+        /// Serialized Name: ConnectionPolicyName.default
+        /// </summary>
         public static ConnectionPolicyName Default { get; } = new ConnectionPolicyName(DefaultValue);
         /// <summary> Determines if two <see cref="ConnectionPolicyName"/> values are the same. </summary>
         public static bool operator ==(ConnectionPolicyName left, ConnectionPolicyName right) => left.Equals(right);

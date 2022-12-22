@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The type of restore point. </summary>
+    /// <summary>
+    /// The type of restore point
+    /// Serialized Name: RestorePointType
+    /// </summary>
     public enum RestorePointType
     {
-        /// <summary> CONTINUOUS. </summary>
+        /// <summary>
+        /// CONTINUOUS
+        /// Serialized Name: RestorePointType.CONTINUOUS
+        /// </summary>
         Continuous,
-        /// <summary> DISCRETE. </summary>
+        /// <summary>
+        /// DISCRETE
+        /// Serialized Name: RestorePointType.DISCRETE
+        /// </summary>
         Discrete
     }
 }

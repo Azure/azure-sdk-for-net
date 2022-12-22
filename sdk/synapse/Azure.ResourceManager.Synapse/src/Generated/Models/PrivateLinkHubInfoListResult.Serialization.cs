@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         internal static PrivateLinkHubInfoListResult DeserializePrivateLinkHubInfoListResult(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<PrivateLinkHubData>> value = default;
+            Optional<IReadOnlyList<SynapsePrivateLinkHubData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateLinkHubData> array = new List<PrivateLinkHubData>();
+                    List<SynapsePrivateLinkHubData> array = new List<SynapsePrivateLinkHubData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkHubData.DeserializePrivateLinkHubData(item));
+                        array.Add(SynapsePrivateLinkHubData.DeserializeSynapsePrivateLinkHubData(item));
                     }
                     value = array;
                     continue;

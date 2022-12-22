@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The list Kusto database principals operation response. </summary>
+    /// <summary>
+    /// The list Kusto database principals operation response.
+    /// Serialized Name: FollowerDatabaseListResult
+    /// </summary>
     internal partial class FollowerDatabaseListResult
     {
         /// <summary> Initializes a new instance of FollowerDatabaseListResult. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of FollowerDatabaseListResult. </summary>
-        /// <param name="value"> The list of follower database result. </param>
+        /// <param name="value">
+        /// The list of follower database result.
+        /// Serialized Name: FollowerDatabaseListResult.value
+        /// </param>
         internal FollowerDatabaseListResult(IReadOnlyList<FollowerDatabaseDefinition> value)
         {
             Value = value;
         }
 
-        /// <summary> The list of follower database result. </summary>
+        /// <summary>
+        /// The list of follower database result.
+        /// Serialized Name: FollowerDatabaseListResult.value
+        /// </summary>
         public IReadOnlyList<FollowerDatabaseDefinition> Value { get; }
     }
 }

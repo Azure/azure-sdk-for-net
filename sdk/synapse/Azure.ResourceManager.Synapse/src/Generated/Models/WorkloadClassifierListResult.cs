@@ -11,27 +11,42 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> A list of workload classifiers for a workload group. </summary>
+    /// <summary>
+    /// A list of workload classifiers for a workload group.
+    /// Serialized Name: WorkloadClassifierListResult
+    /// </summary>
     internal partial class WorkloadClassifierListResult
     {
         /// <summary> Initializes a new instance of WorkloadClassifierListResult. </summary>
         internal WorkloadClassifierListResult()
         {
-            Value = new ChangeTrackingList<WorkloadClassifierData>();
+            Value = new ChangeTrackingList<SynapseWorkloadClassifierData>();
         }
 
         /// <summary> Initializes a new instance of WorkloadClassifierListResult. </summary>
-        /// <param name="value"> Array of results. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal WorkloadClassifierListResult(IReadOnlyList<WorkloadClassifierData> value, string nextLink)
+        /// <param name="value">
+        /// Array of results.
+        /// Serialized Name: WorkloadClassifierListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to retrieve next page of results.
+        /// Serialized Name: WorkloadClassifierListResult.nextLink
+        /// </param>
+        internal WorkloadClassifierListResult(IReadOnlyList<SynapseWorkloadClassifierData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Array of results. </summary>
-        public IReadOnlyList<WorkloadClassifierData> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
+        /// <summary>
+        /// Array of results.
+        /// Serialized Name: WorkloadClassifierListResult.value
+        /// </summary>
+        public IReadOnlyList<SynapseWorkloadClassifierData> Value { get; }
+        /// <summary>
+        /// Link to retrieve next page of results.
+        /// Serialized Name: WorkloadClassifierListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Purview Configuration. </summary>
+    /// <summary>
+    /// Purview Configuration
+    /// Serialized Name: PurviewConfiguration
+    /// </summary>
     internal partial class PurviewConfiguration
     {
         /// <summary> Initializes a new instance of PurviewConfiguration. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of PurviewConfiguration. </summary>
-        /// <param name="purviewResourceId"> Purview Resource ID. </param>
+        /// <param name="purviewResourceId">
+        /// Purview Resource ID
+        /// Serialized Name: PurviewConfiguration.purviewResourceId
+        /// </param>
         internal PurviewConfiguration(string purviewResourceId)
         {
             PurviewResourceId = purviewResourceId;
         }
 
-        /// <summary> Purview Resource ID. </summary>
+        /// <summary>
+        /// Purview Resource ID
+        /// Serialized Name: PurviewConfiguration.purviewResourceId
+        /// </summary>
         public string PurviewResourceId { get; set; }
     }
 }

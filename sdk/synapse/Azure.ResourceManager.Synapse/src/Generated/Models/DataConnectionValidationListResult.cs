@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The list Kusto data connection validation result. </summary>
+    /// <summary>
+    /// The list Kusto data connection validation result.
+    /// Serialized Name: DataConnectionValidationListResult
+    /// </summary>
     public partial class DataConnectionValidationListResult
     {
         /// <summary> Initializes a new instance of DataConnectionValidationListResult. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of DataConnectionValidationListResult. </summary>
-        /// <param name="value"> The list of Kusto data connection validation errors. </param>
+        /// <param name="value">
+        /// The list of Kusto data connection validation errors.
+        /// Serialized Name: DataConnectionValidationListResult.value
+        /// </param>
         internal DataConnectionValidationListResult(IReadOnlyList<DataConnectionValidationResult> value)
         {
             Value = value;
         }
 
-        /// <summary> The list of Kusto data connection validation errors. </summary>
+        /// <summary>
+        /// The list of Kusto data connection validation errors.
+        /// Serialized Name: DataConnectionValidationListResult.value
+        /// </summary>
         public IReadOnlyList<DataConnectionValidationResult> Value { get; }
     }
 }

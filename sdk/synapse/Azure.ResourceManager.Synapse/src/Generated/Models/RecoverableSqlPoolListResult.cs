@@ -11,27 +11,42 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The response to a list recoverable sql pools request. </summary>
+    /// <summary>
+    /// The response to a list recoverable sql pools request
+    /// Serialized Name: RecoverableSqlPoolListResult
+    /// </summary>
     internal partial class RecoverableSqlPoolListResult
     {
         /// <summary> Initializes a new instance of RecoverableSqlPoolListResult. </summary>
         internal RecoverableSqlPoolListResult()
         {
-            Value = new ChangeTrackingList<RecoverableSqlPoolData>();
+            Value = new ChangeTrackingList<SynapseRecoverableSqlPoolData>();
         }
 
         /// <summary> Initializes a new instance of RecoverableSqlPoolListResult. </summary>
-        /// <param name="value"> A list of recoverable sql pool. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal RecoverableSqlPoolListResult(IReadOnlyList<RecoverableSqlPoolData> value, string nextLink)
+        /// <param name="value">
+        /// A list of recoverable sql pool
+        /// Serialized Name: RecoverableSqlPoolListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to retrieve next page of results.
+        /// Serialized Name: RecoverableSqlPoolListResult.nextLink
+        /// </param>
+        internal RecoverableSqlPoolListResult(IReadOnlyList<SynapseRecoverableSqlPoolData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> A list of recoverable sql pool. </summary>
-        public IReadOnlyList<RecoverableSqlPoolData> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
+        /// <summary>
+        /// A list of recoverable sql pool
+        /// Serialized Name: RecoverableSqlPoolListResult.value
+        /// </summary>
+        public IReadOnlyList<SynapseRecoverableSqlPoolData> Value { get; }
+        /// <summary>
+        /// Link to retrieve next page of results.
+        /// Serialized Name: RecoverableSqlPoolListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

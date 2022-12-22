@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The type of resource, Microsoft.Synapse/workspaces/kustoPools. </summary>
+    /// <summary>
+    /// The type of resource, Microsoft.Synapse/workspaces/kustoPools.
+    /// Serialized Name: KustoPoolType
+    /// </summary>
     public readonly partial struct KustoPoolType : IEquatable<KustoPoolType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         private const string MicrosoftSynapseWorkspacesKustoPoolsValue = "Microsoft.Synapse/workspaces/kustoPools";
 
-        /// <summary> Microsoft.Synapse/workspaces/kustoPools. </summary>
+        /// <summary>
+        /// Microsoft.Synapse/workspaces/kustoPools
+        /// Serialized Name: KustoPoolType.Microsoft.Synapse/workspaces/kustoPools
+        /// </summary>
         public static KustoPoolType MicrosoftSynapseWorkspacesKustoPools { get; } = new KustoPoolType(MicrosoftSynapseWorkspacesKustoPoolsValue);
         /// <summary> Determines if two <see cref="KustoPoolType"/> values are the same. </summary>
         public static bool operator ==(KustoPoolType left, KustoPoolType right) => left.Equals(right);

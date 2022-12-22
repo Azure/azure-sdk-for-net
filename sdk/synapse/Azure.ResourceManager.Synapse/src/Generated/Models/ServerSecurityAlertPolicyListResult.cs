@@ -11,27 +11,42 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> A list of the workspace managed sql server&apos;s security alert policies. </summary>
+    /// <summary>
+    /// A list of the workspace managed sql server&apos;s security alert policies.
+    /// Serialized Name: ServerSecurityAlertPolicyListResult
+    /// </summary>
     internal partial class ServerSecurityAlertPolicyListResult
     {
         /// <summary> Initializes a new instance of ServerSecurityAlertPolicyListResult. </summary>
         internal ServerSecurityAlertPolicyListResult()
         {
-            Value = new ChangeTrackingList<ServerSecurityAlertPolicyData>();
+            Value = new ChangeTrackingList<SynapseServerSecurityAlertPolicyData>();
         }
 
         /// <summary> Initializes a new instance of ServerSecurityAlertPolicyListResult. </summary>
-        /// <param name="value"> Array of results. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal ServerSecurityAlertPolicyListResult(IReadOnlyList<ServerSecurityAlertPolicyData> value, string nextLink)
+        /// <param name="value">
+        /// Array of results.
+        /// Serialized Name: ServerSecurityAlertPolicyListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to retrieve next page of results.
+        /// Serialized Name: ServerSecurityAlertPolicyListResult.nextLink
+        /// </param>
+        internal ServerSecurityAlertPolicyListResult(IReadOnlyList<SynapseServerSecurityAlertPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Array of results. </summary>
-        public IReadOnlyList<ServerSecurityAlertPolicyData> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
+        /// <summary>
+        /// Array of results.
+        /// Serialized Name: ServerSecurityAlertPolicyListResult.value
+        /// </summary>
+        public IReadOnlyList<SynapseServerSecurityAlertPolicyData> Value { get; }
+        /// <summary>
+        /// Link to retrieve next page of results.
+        /// Serialized Name: ServerSecurityAlertPolicyListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

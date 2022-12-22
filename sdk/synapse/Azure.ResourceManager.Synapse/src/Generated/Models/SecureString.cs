@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Azure Synapse secure string definition. The string value will be masked with asterisks &apos;*&apos; during Get or List API calls. </summary>
+    /// <summary>
+    /// Azure Synapse secure string definition. The string value will be masked with asterisks &apos;*&apos; during Get or List API calls.
+    /// Serialized Name: SecureString
+    /// </summary>
     public partial class SecureString : SecretBase
     {
         /// <summary> Initializes a new instance of SecureString. </summary>
-        /// <param name="value"> Value of secure string. </param>
+        /// <param name="value">
+        /// Value of secure string.
+        /// Serialized Name: SecureString.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecureString(string value)
         {
@@ -25,15 +31,24 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SecureString. </summary>
-        /// <param name="secretBaseType"> Type of the secret. </param>
-        /// <param name="value"> Value of secure string. </param>
+        /// <param name="secretBaseType">
+        /// Type of the secret.
+        /// Serialized Name: SecretBase.type
+        /// </param>
+        /// <param name="value">
+        /// Value of secure string.
+        /// Serialized Name: SecureString.value
+        /// </param>
         internal SecureString(string secretBaseType, string value) : base(secretBaseType)
         {
             Value = value;
             SecretBaseType = secretBaseType ?? "SecureString";
         }
 
-        /// <summary> Value of secure string. </summary>
+        /// <summary>
+        /// Value of secure string.
+        /// Serialized Name: SecureString.value
+        /// </summary>
         public string Value { get; set; }
     }
 }

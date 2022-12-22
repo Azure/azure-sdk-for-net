@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Catalog information for managed dedicated integration runtime. </summary>
+    /// <summary>
+    /// Catalog information for managed dedicated integration runtime.
+    /// Serialized Name: IntegrationRuntimeSsisCatalogInfo
+    /// </summary>
     public partial class IntegrationRuntimeSsisCatalogInfo
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeSsisCatalogInfo. </summary>
@@ -21,10 +24,22 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeSsisCatalogInfo. </summary>
-        /// <param name="catalogServerEndpoint"> The catalog database server URL. </param>
-        /// <param name="catalogAdminUserName"> The administrator user name of catalog database. </param>
-        /// <param name="catalogAdminPassword"> The password of the administrator user account of the catalog database. </param>
-        /// <param name="catalogPricingTier"> The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/. </param>
+        /// <param name="catalogServerEndpoint">
+        /// The catalog database server URL.
+        /// Serialized Name: IntegrationRuntimeSsisCatalogInfo.catalogServerEndpoint
+        /// </param>
+        /// <param name="catalogAdminUserName">
+        /// The administrator user name of catalog database.
+        /// Serialized Name: IntegrationRuntimeSsisCatalogInfo.catalogAdminUserName
+        /// </param>
+        /// <param name="catalogAdminPassword">
+        /// The password of the administrator user account of the catalog database.
+        /// Serialized Name: IntegrationRuntimeSsisCatalogInfo.catalogAdminPassword
+        /// </param>
+        /// <param name="catalogPricingTier">
+        /// The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/
+        /// Serialized Name: IntegrationRuntimeSsisCatalogInfo.catalogPricingTier
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal IntegrationRuntimeSsisCatalogInfo(string catalogServerEndpoint, string catalogAdminUserName, SecureString catalogAdminPassword, IntegrationRuntimeSsisCatalogPricingTier? catalogPricingTier, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -35,13 +50,25 @@ namespace Azure.ResourceManager.Synapse.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> The catalog database server URL. </summary>
+        /// <summary>
+        /// The catalog database server URL.
+        /// Serialized Name: IntegrationRuntimeSsisCatalogInfo.catalogServerEndpoint
+        /// </summary>
         public string CatalogServerEndpoint { get; set; }
-        /// <summary> The administrator user name of catalog database. </summary>
+        /// <summary>
+        /// The administrator user name of catalog database.
+        /// Serialized Name: IntegrationRuntimeSsisCatalogInfo.catalogAdminUserName
+        /// </summary>
         public string CatalogAdminUserName { get; set; }
-        /// <summary> The password of the administrator user account of the catalog database. </summary>
+        /// <summary>
+        /// The password of the administrator user account of the catalog database.
+        /// Serialized Name: IntegrationRuntimeSsisCatalogInfo.catalogAdminPassword
+        /// </summary>
         public SecureString CatalogAdminPassword { get; set; }
-        /// <summary> The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/. </summary>
+        /// <summary>
+        /// The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/
+        /// Serialized Name: IntegrationRuntimeSsisCatalogInfo.catalogPricingTier
+        /// </summary>
         public IntegrationRuntimeSsisCatalogPricingTier? CatalogPricingTier { get; set; }
         /// <summary>
         /// Additional Properties

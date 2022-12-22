@@ -11,23 +11,32 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The response to a list geo backup policies request. </summary>
+    /// <summary>
+    /// The response to a list geo backup policies request.
+    /// Serialized Name: GeoBackupPolicyListResult
+    /// </summary>
     internal partial class GeoBackupPolicyListResult
     {
         /// <summary> Initializes a new instance of GeoBackupPolicyListResult. </summary>
         internal GeoBackupPolicyListResult()
         {
-            Value = new ChangeTrackingList<GeoBackupPolicyData>();
+            Value = new ChangeTrackingList<SynapseGeoBackupPolicyData>();
         }
 
         /// <summary> Initializes a new instance of GeoBackupPolicyListResult. </summary>
-        /// <param name="value"> The list of geo backup policies. </param>
-        internal GeoBackupPolicyListResult(IReadOnlyList<GeoBackupPolicyData> value)
+        /// <param name="value">
+        /// The list of geo backup policies.
+        /// Serialized Name: GeoBackupPolicyListResult.value
+        /// </param>
+        internal GeoBackupPolicyListResult(IReadOnlyList<SynapseGeoBackupPolicyData> value)
         {
             Value = value;
         }
 
-        /// <summary> The list of geo backup policies. </summary>
-        public IReadOnlyList<GeoBackupPolicyData> Value { get; }
+        /// <summary>
+        /// The list of geo backup policies.
+        /// Serialized Name: GeoBackupPolicyListResult.value
+        /// </summary>
+        public IReadOnlyList<SynapseGeoBackupPolicyData> Value { get; }
     }
 }

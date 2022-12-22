@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Auto-pausing properties of a Big Data pool powered by Apache Spark. </summary>
+    /// <summary>
+    /// Auto-pausing properties of a Big Data pool powered by Apache Spark
+    /// Serialized Name: AutoPauseProperties
+    /// </summary>
     public partial class AutoPauseProperties
     {
         /// <summary> Initializes a new instance of AutoPauseProperties. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of AutoPauseProperties. </summary>
-        /// <param name="delayInMinutes"> Number of minutes of idle time before the Big Data pool is automatically paused. </param>
-        /// <param name="enabled"> Whether auto-pausing is enabled for the Big Data pool. </param>
+        /// <param name="delayInMinutes">
+        /// Number of minutes of idle time before the Big Data pool is automatically paused.
+        /// Serialized Name: AutoPauseProperties.delayInMinutes
+        /// </param>
+        /// <param name="enabled">
+        /// Whether auto-pausing is enabled for the Big Data pool.
+        /// Serialized Name: AutoPauseProperties.enabled
+        /// </param>
         internal AutoPauseProperties(int? delayInMinutes, bool? enabled)
         {
             DelayInMinutes = delayInMinutes;
             Enabled = enabled;
         }
 
-        /// <summary> Number of minutes of idle time before the Big Data pool is automatically paused. </summary>
+        /// <summary>
+        /// Number of minutes of idle time before the Big Data pool is automatically paused.
+        /// Serialized Name: AutoPauseProperties.delayInMinutes
+        /// </summary>
         public int? DelayInMinutes { get; set; }
-        /// <summary> Whether auto-pausing is enabled for the Big Data pool. </summary>
+        /// <summary>
+        /// Whether auto-pausing is enabled for the Big Data pool.
+        /// Serialized Name: AutoPauseProperties.enabled
+        /// </summary>
         public bool? Enabled { get; set; }
     }
 }

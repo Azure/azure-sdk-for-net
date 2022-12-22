@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The encryption protector type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </summary>
+    /// <summary>
+    /// The encryption protector type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;.
+    /// Serialized Name: ServerKeyType
+    /// </summary>
     public readonly partial struct ServerKeyType : IEquatable<ServerKeyType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string ServiceManagedValue = "ServiceManaged";
         private const string AzureKeyVaultValue = "AzureKeyVault";
 
-        /// <summary> ServiceManaged. </summary>
+        /// <summary>
+        /// ServiceManaged
+        /// Serialized Name: ServerKeyType.ServiceManaged
+        /// </summary>
         public static ServerKeyType ServiceManaged { get; } = new ServerKeyType(ServiceManagedValue);
-        /// <summary> AzureKeyVault. </summary>
+        /// <summary>
+        /// AzureKeyVault
+        /// Serialized Name: ServerKeyType.AzureKeyVault
+        /// </summary>
         public static ServerKeyType AzureKeyVault { get; } = new ServerKeyType(AzureKeyVaultValue);
         /// <summary> Determines if two <see cref="ServerKeyType"/> values are the same. </summary>
         public static bool operator ==(ServerKeyType left, ServerKeyType right) => left.Equals(right);

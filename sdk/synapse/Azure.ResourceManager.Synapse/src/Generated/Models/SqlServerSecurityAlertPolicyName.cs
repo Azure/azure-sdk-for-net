@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The SqlServerSecurityAlertPolicyName. </summary>
+    /// <summary>
+    /// The SqlServerSecurityAlertPolicyName.
+    /// Serialized Name: SqlServerSecurityAlertPolicyName
+    /// </summary>
     public readonly partial struct SqlServerSecurityAlertPolicyName : IEquatable<SqlServerSecurityAlertPolicyName>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         private const string DefaultValue = "Default";
 
-        /// <summary> Default. </summary>
+        /// <summary>
+        /// Default
+        /// Serialized Name: SqlServerSecurityAlertPolicyName.Default
+        /// </summary>
         public static SqlServerSecurityAlertPolicyName Default { get; } = new SqlServerSecurityAlertPolicyName(DefaultValue);
         /// <summary> Determines if two <see cref="SqlServerSecurityAlertPolicyName"/> values are the same. </summary>
         public static bool operator ==(SqlServerSecurityAlertPolicyName left, SqlServerSecurityAlertPolicyName right) => left.Equals(right);

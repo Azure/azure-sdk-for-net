@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Auto-scaling properties of a Big Data pool powered by Apache Spark. </summary>
+    /// <summary>
+    /// Auto-scaling properties of a Big Data pool powered by Apache Spark
+    /// Serialized Name: AutoScaleProperties
+    /// </summary>
     public partial class AutoScaleProperties
     {
         /// <summary> Initializes a new instance of AutoScaleProperties. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of AutoScaleProperties. </summary>
-        /// <param name="minNodeCount"> The minimum number of nodes the Big Data pool can support. </param>
-        /// <param name="enabled"> Whether automatic scaling is enabled for the Big Data pool. </param>
-        /// <param name="maxNodeCount"> The maximum number of nodes the Big Data pool can support. </param>
+        /// <param name="minNodeCount">
+        /// The minimum number of nodes the Big Data pool can support.
+        /// Serialized Name: AutoScaleProperties.minNodeCount
+        /// </param>
+        /// <param name="enabled">
+        /// Whether automatic scaling is enabled for the Big Data pool.
+        /// Serialized Name: AutoScaleProperties.enabled
+        /// </param>
+        /// <param name="maxNodeCount">
+        /// The maximum number of nodes the Big Data pool can support.
+        /// Serialized Name: AutoScaleProperties.maxNodeCount
+        /// </param>
         internal AutoScaleProperties(int? minNodeCount, bool? enabled, int? maxNodeCount)
         {
             MinNodeCount = minNodeCount;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.Synapse.Models
             MaxNodeCount = maxNodeCount;
         }
 
-        /// <summary> The minimum number of nodes the Big Data pool can support. </summary>
+        /// <summary>
+        /// The minimum number of nodes the Big Data pool can support.
+        /// Serialized Name: AutoScaleProperties.minNodeCount
+        /// </summary>
         public int? MinNodeCount { get; set; }
-        /// <summary> Whether automatic scaling is enabled for the Big Data pool. </summary>
+        /// <summary>
+        /// Whether automatic scaling is enabled for the Big Data pool.
+        /// Serialized Name: AutoScaleProperties.enabled
+        /// </summary>
         public bool? Enabled { get; set; }
-        /// <summary> The maximum number of nodes the Big Data pool can support. </summary>
+        /// <summary>
+        /// The maximum number of nodes the Big Data pool can support.
+        /// Serialized Name: AutoScaleProperties.maxNodeCount
+        /// </summary>
         public int? MaxNodeCount { get; set; }
     }
 }

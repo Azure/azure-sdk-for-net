@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static ServerBlobAuditingPolicyListResult DeserializeServerBlobAuditingPolicyListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServerBlobAuditingPolicyData>> value = default;
+            Optional<IReadOnlyList<SynapseServerBlobAuditingPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServerBlobAuditingPolicyData> array = new List<ServerBlobAuditingPolicyData>();
+                    List<SynapseServerBlobAuditingPolicyData> array = new List<SynapseServerBlobAuditingPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerBlobAuditingPolicyData.DeserializeServerBlobAuditingPolicyData(item));
+                        array.Add(SynapseServerBlobAuditingPolicyData.DeserializeSynapseServerBlobAuditingPolicyData(item));
                     }
                     value = array;
                     continue;

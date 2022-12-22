@@ -18,6 +18,72 @@ modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true   # Mitigate the duplication schema 'ErrorResponse' issue
 
+mgmt-debug: 
+  show-serialized-names: true
+
+rename-mapping:
+  AzureADOnlyAuthentication: SynapseAadOnlyAuthentication
+  DedicatedSQLminimalTlsSettings: SynapseDedicatedSqlMinimalTlsSetting
+  BigDataPoolResourceInfo: SynapseBigDataPoolInfo
+  IntegrationRuntimeResource: SynapseIntegrationRuntime
+  LibraryResource: SynapseLibrary
+  ManagedIdentitySqlControlSettingsModel: SynapseManagedIdentitySqlControlSetting
+  ManagedIdentitySqlControlSettingsModelPropertiesGrantSqlControlToManagedIdentity: SynapseGrantSqlControlToManagedIdentity
+  MetadataSyncConfig: SynapseMetadataSyncConfiguration
+  SparkConfigurationResource: SynapseSparkConfiguration
+  ActualState: SynapseGrantSqlControlToManagedIdentityState
+  MaintenanceWindowTimeRange.startTime: StartOn
+
+prepend-rp-prefix:
+  - AttachedDatabaseConfiguration
+  - ClusterPrincipalAssignment
+  - Database
+  - DatabasePrincipalAssignment
+  - DataConnection
+  - DataMaskingPolicy
+  - DataMaskingRule
+  - DataWarehouseUserActivities
+  - EncryptionProtector
+  - ExtendedServerBlobAuditingPolicy
+  - ExtendedSqlPoolBlobAuditingPolicy
+  - GeoBackupPolicy
+  - IPFirewallRuleInfo
+  - Key
+  - KustoPool
+  - MaintenanceWindows
+  - MaintenanceWindowOptions
+  - PrivateEndpointConnectionForPrivateLinkHub
+  - PrivateLinkHub
+  - RecoverableSqlPool
+  - ReplicationLink
+  - RestorableDroppedSqlPool
+  - RestorePoint
+  - SensitivityLabel
+  - ServerBlobAuditingPolicy
+  - ServerSecurityAlertPolicy
+  - ServerVulnerabilityAssessment
+  - SqlPool
+  - SqlPoolBlobAuditingPolicy
+  - SqlPoolColumn
+  - SqlPoolConnectionPolicy
+  - SqlPoolSchema
+  - SqlPoolSecurityAlertPolicy
+  - SqlPoolTable
+  - SqlPoolVulnerabilityAssessment
+  - SqlPoolVulnerabilityAssessmentRuleBaseline
+  - TransparentDataEncryption
+  - VulnerabilityAssessmentScanRecord
+  - WorkloadClassifier
+  - WorkloadGroup
+  - WorkspaceAadAdminInfo
+  - Workspace
+
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}/privateLinkResources/{privateLinkResourceName}: SynapsePrivateLinkResource
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateLinkResources/{privateLinkResourceName}: SynapseWorkspacePrivateLinkResource
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/administrators/activeDirectory: SynapseWorkspaceAdministratorResource
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlAdministrators/activeDirectory: SynapseWorkspaceSqlAdministratorResource
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -69,11 +135,12 @@ directive:
     where: $.definitions
     transform: >
       $.MaintenanceWindowTimeRange.properties.duration['format'] = 'duration';
+      $.MaintenanceWindowTimeRange.properties.startTime['format'] = 'time';
   - from: kustoPool.json
     where: $.definitions
     transform: >
       $.DatabaseCheckNameRequest.properties.type['x-ms-client-name'] = 'resourceType';
-      $.DatabaseCheckNameRequest.properties.type['x-ms-enum']['name'] = 'KustoDatabaseResourceType';
+      $.DatabaseCheckNameRequest.properties.type['x-ms-enum']['name'] = 'ResourceType';
   # Fix the dubplicate schema 'PrivateEndpointConnectionForPrivateLinkHubBasic'
   - from: privatelinkhub.json
     where: $.definitions

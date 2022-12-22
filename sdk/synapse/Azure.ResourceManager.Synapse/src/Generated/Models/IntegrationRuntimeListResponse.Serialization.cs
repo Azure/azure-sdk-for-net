@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static IntegrationRuntimeListResponse DeserializeIntegrationRuntimeListResponse(JsonElement element)
         {
-            IReadOnlyList<IntegrationRuntimeResourceData> value = default;
+            IReadOnlyList<SynapseIntegrationRuntimeData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<IntegrationRuntimeResourceData> array = new List<IntegrationRuntimeResourceData>();
+                    List<SynapseIntegrationRuntimeData> array = new List<SynapseIntegrationRuntimeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationRuntimeResourceData.DeserializeIntegrationRuntimeResourceData(item));
+                        array.Add(SynapseIntegrationRuntimeData.DeserializeSynapseIntegrationRuntimeData(item));
                     }
                     value = array;
                     continue;

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The column data type. </summary>
+    /// <summary>
+    /// The column data type.
+    /// Serialized Name: ColumnDataType
+    /// </summary>
     public readonly partial struct ColumnDataType : IEquatable<ColumnDataType>
     {
         private readonly string _value;
@@ -57,73 +60,175 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string XmlValue = "xml";
         private const string SysnameValue = "sysname";
 
-        /// <summary> image. </summary>
+        /// <summary>
+        /// image
+        /// Serialized Name: ColumnDataType.image
+        /// </summary>
         public static ColumnDataType Image { get; } = new ColumnDataType(ImageValue);
-        /// <summary> text. </summary>
+        /// <summary>
+        /// text
+        /// Serialized Name: ColumnDataType.text
+        /// </summary>
         public static ColumnDataType Text { get; } = new ColumnDataType(TextValue);
-        /// <summary> uniqueidentifier. </summary>
+        /// <summary>
+        /// uniqueidentifier
+        /// Serialized Name: ColumnDataType.uniqueidentifier
+        /// </summary>
         public static ColumnDataType Uniqueidentifier { get; } = new ColumnDataType(UniqueidentifierValue);
-        /// <summary> date. </summary>
+        /// <summary>
+        /// date
+        /// Serialized Name: ColumnDataType.date
+        /// </summary>
         public static ColumnDataType Date { get; } = new ColumnDataType(DateValue);
-        /// <summary> time. </summary>
+        /// <summary>
+        /// time
+        /// Serialized Name: ColumnDataType.time
+        /// </summary>
         public static ColumnDataType Time { get; } = new ColumnDataType(TimeValue);
-        /// <summary> datetime2. </summary>
+        /// <summary>
+        /// datetime2
+        /// Serialized Name: ColumnDataType.datetime2
+        /// </summary>
         public static ColumnDataType Datetime2 { get; } = new ColumnDataType(Datetime2Value);
-        /// <summary> datetimeoffset. </summary>
+        /// <summary>
+        /// datetimeoffset
+        /// Serialized Name: ColumnDataType.datetimeoffset
+        /// </summary>
         public static ColumnDataType Datetimeoffset { get; } = new ColumnDataType(DatetimeoffsetValue);
-        /// <summary> tinyint. </summary>
+        /// <summary>
+        /// tinyint
+        /// Serialized Name: ColumnDataType.tinyint
+        /// </summary>
         public static ColumnDataType Tinyint { get; } = new ColumnDataType(TinyintValue);
-        /// <summary> smallint. </summary>
+        /// <summary>
+        /// smallint
+        /// Serialized Name: ColumnDataType.smallint
+        /// </summary>
         public static ColumnDataType Smallint { get; } = new ColumnDataType(SmallintValue);
-        /// <summary> int. </summary>
+        /// <summary>
+        /// int
+        /// Serialized Name: ColumnDataType.int
+        /// </summary>
         public static ColumnDataType Int { get; } = new ColumnDataType(IntValue);
-        /// <summary> smalldatetime. </summary>
+        /// <summary>
+        /// smalldatetime
+        /// Serialized Name: ColumnDataType.smalldatetime
+        /// </summary>
         public static ColumnDataType Smalldatetime { get; } = new ColumnDataType(SmalldatetimeValue);
-        /// <summary> real. </summary>
+        /// <summary>
+        /// real
+        /// Serialized Name: ColumnDataType.real
+        /// </summary>
         public static ColumnDataType Real { get; } = new ColumnDataType(RealValue);
-        /// <summary> money. </summary>
+        /// <summary>
+        /// money
+        /// Serialized Name: ColumnDataType.money
+        /// </summary>
         public static ColumnDataType Money { get; } = new ColumnDataType(MoneyValue);
-        /// <summary> datetime. </summary>
+        /// <summary>
+        /// datetime
+        /// Serialized Name: ColumnDataType.datetime
+        /// </summary>
         public static ColumnDataType Datetime { get; } = new ColumnDataType(DatetimeValue);
-        /// <summary> float. </summary>
+        /// <summary>
+        /// float
+        /// Serialized Name: ColumnDataType.float
+        /// </summary>
         public static ColumnDataType Float { get; } = new ColumnDataType(FloatValue);
-        /// <summary> sql_variant. </summary>
+        /// <summary>
+        /// sql_variant
+        /// Serialized Name: ColumnDataType.sql_variant
+        /// </summary>
         public static ColumnDataType SqlVariant { get; } = new ColumnDataType(SqlVariantValue);
-        /// <summary> ntext. </summary>
+        /// <summary>
+        /// ntext
+        /// Serialized Name: ColumnDataType.ntext
+        /// </summary>
         public static ColumnDataType Ntext { get; } = new ColumnDataType(NtextValue);
-        /// <summary> bit. </summary>
+        /// <summary>
+        /// bit
+        /// Serialized Name: ColumnDataType.bit
+        /// </summary>
         public static ColumnDataType Bit { get; } = new ColumnDataType(BitValue);
-        /// <summary> decimal. </summary>
+        /// <summary>
+        /// decimal
+        /// Serialized Name: ColumnDataType.decimal
+        /// </summary>
         public static ColumnDataType Decimal { get; } = new ColumnDataType(DecimalValue);
-        /// <summary> numeric. </summary>
+        /// <summary>
+        /// numeric
+        /// Serialized Name: ColumnDataType.numeric
+        /// </summary>
         public static ColumnDataType Numeric { get; } = new ColumnDataType(NumericValue);
-        /// <summary> smallmoney. </summary>
+        /// <summary>
+        /// smallmoney
+        /// Serialized Name: ColumnDataType.smallmoney
+        /// </summary>
         public static ColumnDataType Smallmoney { get; } = new ColumnDataType(SmallmoneyValue);
-        /// <summary> bigint. </summary>
+        /// <summary>
+        /// bigint
+        /// Serialized Name: ColumnDataType.bigint
+        /// </summary>
         public static ColumnDataType Bigint { get; } = new ColumnDataType(BigintValue);
-        /// <summary> hierarchyid. </summary>
+        /// <summary>
+        /// hierarchyid
+        /// Serialized Name: ColumnDataType.hierarchyid
+        /// </summary>
         public static ColumnDataType Hierarchyid { get; } = new ColumnDataType(HierarchyidValue);
-        /// <summary> geometry. </summary>
+        /// <summary>
+        /// geometry
+        /// Serialized Name: ColumnDataType.geometry
+        /// </summary>
         public static ColumnDataType Geometry { get; } = new ColumnDataType(GeometryValue);
-        /// <summary> geography. </summary>
+        /// <summary>
+        /// geography
+        /// Serialized Name: ColumnDataType.geography
+        /// </summary>
         public static ColumnDataType Geography { get; } = new ColumnDataType(GeographyValue);
-        /// <summary> varbinary. </summary>
+        /// <summary>
+        /// varbinary
+        /// Serialized Name: ColumnDataType.varbinary
+        /// </summary>
         public static ColumnDataType Varbinary { get; } = new ColumnDataType(VarbinaryValue);
-        /// <summary> varchar. </summary>
+        /// <summary>
+        /// varchar
+        /// Serialized Name: ColumnDataType.varchar
+        /// </summary>
         public static ColumnDataType Varchar { get; } = new ColumnDataType(VarcharValue);
-        /// <summary> binary. </summary>
+        /// <summary>
+        /// binary
+        /// Serialized Name: ColumnDataType.binary
+        /// </summary>
         public static ColumnDataType Binary { get; } = new ColumnDataType(BinaryValue);
-        /// <summary> char. </summary>
+        /// <summary>
+        /// char
+        /// Serialized Name: ColumnDataType.char
+        /// </summary>
         public static ColumnDataType Char { get; } = new ColumnDataType(CharValue);
-        /// <summary> timestamp. </summary>
+        /// <summary>
+        /// timestamp
+        /// Serialized Name: ColumnDataType.timestamp
+        /// </summary>
         public static ColumnDataType Timestamp { get; } = new ColumnDataType(TimestampValue);
-        /// <summary> nvarchar. </summary>
+        /// <summary>
+        /// nvarchar
+        /// Serialized Name: ColumnDataType.nvarchar
+        /// </summary>
         public static ColumnDataType Nvarchar { get; } = new ColumnDataType(NvarcharValue);
-        /// <summary> nchar. </summary>
+        /// <summary>
+        /// nchar
+        /// Serialized Name: ColumnDataType.nchar
+        /// </summary>
         public static ColumnDataType Nchar { get; } = new ColumnDataType(NcharValue);
-        /// <summary> xml. </summary>
+        /// <summary>
+        /// xml
+        /// Serialized Name: ColumnDataType.xml
+        /// </summary>
         public static ColumnDataType Xml { get; } = new ColumnDataType(XmlValue);
-        /// <summary> sysname. </summary>
+        /// <summary>
+        /// sysname
+        /// Serialized Name: ColumnDataType.sysname
+        /// </summary>
         public static ColumnDataType Sysname { get; } = new ColumnDataType(SysnameValue);
         /// <summary> Determines if two <see cref="ColumnDataType"/> values are the same. </summary>
         public static bool operator ==(ColumnDataType left, ColumnDataType right) => left.Equals(right);

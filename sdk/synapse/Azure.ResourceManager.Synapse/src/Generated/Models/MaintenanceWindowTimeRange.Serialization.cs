@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("dayOfWeek");
                 writer.WriteStringValue(DayOfWeek.Value.ToString());
             }
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime");
-                writer.WriteStringValue(StartTime);
+                writer.WriteStringValue(StartOn.Value, "T");
             }
             if (Optional.IsDefined(Duration))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse.Models
         internal static MaintenanceWindowTimeRange DeserializeMaintenanceWindowTimeRange(JsonElement element)
         {
             Optional<DayOfWeek> dayOfWeek = default;
-            Optional<string> startTime = default;
+            Optional<TimeSpan> startTime = default;
             Optional<TimeSpan> duration = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -53,7 +53,12 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 if (property.NameEquals("startTime"))
                 {
-                    startTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    startTime = property.Value.GetTimeSpan("T");
                     continue;
                 }
                 if (property.NameEquals("duration"))
@@ -67,7 +72,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     continue;
                 }
             }
-            return new MaintenanceWindowTimeRange(Optional.ToNullable(dayOfWeek), startTime.Value, Optional.ToNullable(duration));
+            return new MaintenanceWindowTimeRange(Optional.ToNullable(dayOfWeek), Optional.ToNullable(startTime), Optional.ToNullable(duration));
         }
     }
 }

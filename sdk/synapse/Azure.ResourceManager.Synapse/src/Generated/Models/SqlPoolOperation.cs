@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> A Sql pool operation. </summary>
+    /// <summary>
+    /// A Sql pool operation.
+    /// Serialized Name: SqlPoolOperation
+    /// </summary>
     public partial class SqlPoolOperation : ResourceData
     {
         /// <summary> Initializes a new instance of SqlPoolOperation. </summary>
@@ -24,21 +27,63 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="databaseName"> The name of the Sql pool the operation is being performed on. </param>
-        /// <param name="operation"> The name of operation. </param>
-        /// <param name="operationFriendlyName"> The friendly name of operation. </param>
-        /// <param name="percentComplete"> The percentage of the operation completed. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="startOn"> The operation start time. </param>
-        /// <param name="state"> The operation state. </param>
-        /// <param name="errorCode"> The operation error code. </param>
-        /// <param name="errorDescription"> The operation error description. </param>
-        /// <param name="errorSeverity"> The operation error severity. </param>
-        /// <param name="isUserError"> Whether or not the error is a user error. </param>
-        /// <param name="estimatedCompletionOn"> The estimated completion time of the operation. </param>
-        /// <param name="description"> The operation description. </param>
-        /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
-        internal SqlPoolOperation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string databaseName, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startOn, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompletionOn, string description, bool? isCancellable) : base(id, name, resourceType, systemData)
+        /// <param name="databaseName">
+        /// The name of the Sql pool the operation is being performed on.
+        /// Serialized Name: SqlPoolOperation.properties.databaseName
+        /// </param>
+        /// <param name="operation">
+        /// The name of operation.
+        /// Serialized Name: SqlPoolOperation.properties.operation
+        /// </param>
+        /// <param name="operationFriendlyName">
+        /// The friendly name of operation.
+        /// Serialized Name: SqlPoolOperation.properties.operationFriendlyName
+        /// </param>
+        /// <param name="percentComplete">
+        /// The percentage of the operation completed.
+        /// Serialized Name: SqlPoolOperation.properties.percentComplete
+        /// </param>
+        /// <param name="serverName">
+        /// The name of the server.
+        /// Serialized Name: SqlPoolOperation.properties.serverName
+        /// </param>
+        /// <param name="startOn">
+        /// The operation start time.
+        /// Serialized Name: SqlPoolOperation.properties.startTime
+        /// </param>
+        /// <param name="state">
+        /// The operation state.
+        /// Serialized Name: SqlPoolOperation.properties.state
+        /// </param>
+        /// <param name="errorCode">
+        /// The operation error code.
+        /// Serialized Name: SqlPoolOperation.properties.errorCode
+        /// </param>
+        /// <param name="errorDescription">
+        /// The operation error description.
+        /// Serialized Name: SqlPoolOperation.properties.errorDescription
+        /// </param>
+        /// <param name="errorSeverity">
+        /// The operation error severity.
+        /// Serialized Name: SqlPoolOperation.properties.errorSeverity
+        /// </param>
+        /// <param name="isUserError">
+        /// Whether or not the error is a user error.
+        /// Serialized Name: SqlPoolOperation.properties.isUserError
+        /// </param>
+        /// <param name="estimatedCompletionOn">
+        /// The estimated completion time of the operation.
+        /// Serialized Name: SqlPoolOperation.properties.estimatedCompletionTime
+        /// </param>
+        /// <param name="description">
+        /// The operation description.
+        /// Serialized Name: SqlPoolOperation.properties.description
+        /// </param>
+        /// <param name="isCancellable">
+        /// Whether the operation can be cancelled.
+        /// Serialized Name: SqlPoolOperation.properties.isCancellable
+        /// </param>
+        internal SqlPoolOperation(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string databaseName, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startOn, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompletionOn, string description, bool? isCancellable) : base(id, name, resourceType, systemData)
         {
             DatabaseName = databaseName;
             Operation = operation;
@@ -56,33 +101,75 @@ namespace Azure.ResourceManager.Synapse.Models
             IsCancellable = isCancellable;
         }
 
-        /// <summary> The name of the Sql pool the operation is being performed on. </summary>
+        /// <summary>
+        /// The name of the Sql pool the operation is being performed on.
+        /// Serialized Name: SqlPoolOperation.properties.databaseName
+        /// </summary>
         public string DatabaseName { get; }
-        /// <summary> The name of operation. </summary>
+        /// <summary>
+        /// The name of operation.
+        /// Serialized Name: SqlPoolOperation.properties.operation
+        /// </summary>
         public string Operation { get; }
-        /// <summary> The friendly name of operation. </summary>
+        /// <summary>
+        /// The friendly name of operation.
+        /// Serialized Name: SqlPoolOperation.properties.operationFriendlyName
+        /// </summary>
         public string OperationFriendlyName { get; }
-        /// <summary> The percentage of the operation completed. </summary>
+        /// <summary>
+        /// The percentage of the operation completed.
+        /// Serialized Name: SqlPoolOperation.properties.percentComplete
+        /// </summary>
         public int? PercentComplete { get; }
-        /// <summary> The name of the server. </summary>
+        /// <summary>
+        /// The name of the server.
+        /// Serialized Name: SqlPoolOperation.properties.serverName
+        /// </summary>
         public string ServerName { get; }
-        /// <summary> The operation start time. </summary>
+        /// <summary>
+        /// The operation start time.
+        /// Serialized Name: SqlPoolOperation.properties.startTime
+        /// </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary> The operation state. </summary>
+        /// <summary>
+        /// The operation state.
+        /// Serialized Name: SqlPoolOperation.properties.state
+        /// </summary>
         public ManagementOperationState? State { get; }
-        /// <summary> The operation error code. </summary>
+        /// <summary>
+        /// The operation error code.
+        /// Serialized Name: SqlPoolOperation.properties.errorCode
+        /// </summary>
         public int? ErrorCode { get; }
-        /// <summary> The operation error description. </summary>
+        /// <summary>
+        /// The operation error description.
+        /// Serialized Name: SqlPoolOperation.properties.errorDescription
+        /// </summary>
         public string ErrorDescription { get; }
-        /// <summary> The operation error severity. </summary>
+        /// <summary>
+        /// The operation error severity.
+        /// Serialized Name: SqlPoolOperation.properties.errorSeverity
+        /// </summary>
         public int? ErrorSeverity { get; }
-        /// <summary> Whether or not the error is a user error. </summary>
+        /// <summary>
+        /// Whether or not the error is a user error.
+        /// Serialized Name: SqlPoolOperation.properties.isUserError
+        /// </summary>
         public bool? IsUserError { get; }
-        /// <summary> The estimated completion time of the operation. </summary>
+        /// <summary>
+        /// The estimated completion time of the operation.
+        /// Serialized Name: SqlPoolOperation.properties.estimatedCompletionTime
+        /// </summary>
         public DateTimeOffset? EstimatedCompletionOn { get; }
-        /// <summary> The operation description. </summary>
+        /// <summary>
+        /// The operation description.
+        /// Serialized Name: SqlPoolOperation.properties.description
+        /// </summary>
         public string Description { get; }
-        /// <summary> Whether the operation can be cancelled. </summary>
+        /// <summary>
+        /// Whether the operation can be cancelled.
+        /// Serialized Name: SqlPoolOperation.properties.isCancellable
+        /// </summary>
         public bool? IsCancellable { get; }
     }
 }

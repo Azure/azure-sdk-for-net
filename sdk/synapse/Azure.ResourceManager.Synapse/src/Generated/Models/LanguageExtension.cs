@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The language extension object. </summary>
+    /// <summary>
+    /// The language extension object.
+    /// Serialized Name: LanguageExtension
+    /// </summary>
     public partial class LanguageExtension
     {
         /// <summary> Initializes a new instance of LanguageExtension. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of LanguageExtension. </summary>
-        /// <param name="languageExtensionName"> The language extension name. </param>
+        /// <param name="languageExtensionName">
+        /// The language extension name.
+        /// Serialized Name: LanguageExtension.languageExtensionName
+        /// </param>
         internal LanguageExtension(LanguageExtensionName? languageExtensionName)
         {
             LanguageExtensionName = languageExtensionName;
         }
 
-        /// <summary> The language extension name. </summary>
+        /// <summary>
+        /// The language extension name.
+        /// Serialized Name: LanguageExtension.languageExtensionName
+        /// </summary>
         public LanguageExtensionName? LanguageExtensionName { get; set; }
     }
 }

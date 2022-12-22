@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static LibraryListResponse DeserializeLibraryListResponse(JsonElement element)
         {
-            IReadOnlyList<LibraryResourceData> value = default;
+            IReadOnlyList<SynapseLibraryData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<LibraryResourceData> array = new List<LibraryResourceData>();
+                    List<SynapseLibraryData> array = new List<SynapseLibraryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LibraryResourceData.DeserializeLibraryResourceData(item));
+                        array.Add(SynapseLibraryData.DeserializeSynapseLibraryData(item));
                     }
                     value = array;
                     continue;

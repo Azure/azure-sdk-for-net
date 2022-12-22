@@ -11,27 +11,30 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The PrivateEndpointConnectionForPrivateLinkHubResourceCollectionResponse. </summary>
+    /// <summary>
+    /// The PrivateEndpointConnectionForPrivateLinkHubResourceCollectionResponse.
+    /// Serialized Name: PrivateEndpointConnectionForPrivateLinkHubResourceCollectionResponse
+    /// </summary>
     internal partial class PrivateEndpointConnectionForPrivateLinkHubResourceCollectionResponse
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionForPrivateLinkHubResourceCollectionResponse. </summary>
         internal PrivateEndpointConnectionForPrivateLinkHubResourceCollectionResponse()
         {
-            Value = new ChangeTrackingList<PrivateEndpointConnectionForPrivateLinkHubData>();
+            Value = new ChangeTrackingList<SynapsePrivateEndpointConnectionForPrivateLinkHubData>();
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionForPrivateLinkHubResourceCollectionResponse. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"></param>
-        internal PrivateEndpointConnectionForPrivateLinkHubResourceCollectionResponse(IReadOnlyList<PrivateEndpointConnectionForPrivateLinkHubData> value, string nextLink)
+        /// <param name="value"> Serialized Name: PrivateEndpointConnectionForPrivateLinkHubResourceCollectionResponse.value. </param>
+        /// <param name="nextLink"> Serialized Name: PrivateEndpointConnectionForPrivateLinkHubResourceCollectionResponse.nextLink. </param>
+        internal PrivateEndpointConnectionForPrivateLinkHubResourceCollectionResponse(IReadOnlyList<SynapsePrivateEndpointConnectionForPrivateLinkHubData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the value. </summary>
-        public IReadOnlyList<PrivateEndpointConnectionForPrivateLinkHubData> Value { get; }
-        /// <summary> Gets the next link. </summary>
+        /// <summary> Serialized Name: PrivateEndpointConnectionForPrivateLinkHubResourceCollectionResponse.value. </summary>
+        public IReadOnlyList<SynapsePrivateEndpointConnectionForPrivateLinkHubData> Value { get; }
+        /// <summary> Serialized Name: PrivateEndpointConnectionForPrivateLinkHubResourceCollectionResponse.nextLink. </summary>
         public string NextLink { get; }
     }
 }

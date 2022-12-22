@@ -11,27 +11,42 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Collection of Big Data pool information. </summary>
+    /// <summary>
+    /// Collection of Big Data pool information
+    /// Serialized Name: BigDataPoolResourceInfoListResult
+    /// </summary>
     internal partial class BigDataPoolResourceInfoListResult
     {
         /// <summary> Initializes a new instance of BigDataPoolResourceInfoListResult. </summary>
         internal BigDataPoolResourceInfoListResult()
         {
-            Value = new ChangeTrackingList<BigDataPoolResourceInfoData>();
+            Value = new ChangeTrackingList<SynapseBigDataPoolInfoData>();
         }
 
         /// <summary> Initializes a new instance of BigDataPoolResourceInfoListResult. </summary>
-        /// <param name="nextLink"> Link to the next page of results. </param>
-        /// <param name="value"> List of Big Data pools. </param>
-        internal BigDataPoolResourceInfoListResult(string nextLink, IReadOnlyList<BigDataPoolResourceInfoData> value)
+        /// <param name="nextLink">
+        /// Link to the next page of results
+        /// Serialized Name: BigDataPoolResourceInfoListResult.nextLink
+        /// </param>
+        /// <param name="value">
+        /// List of Big Data pools
+        /// Serialized Name: BigDataPoolResourceInfoListResult.value
+        /// </param>
+        internal BigDataPoolResourceInfoListResult(string nextLink, IReadOnlyList<SynapseBigDataPoolInfoData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> Link to the next page of results. </summary>
+        /// <summary>
+        /// Link to the next page of results
+        /// Serialized Name: BigDataPoolResourceInfoListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> List of Big Data pools. </summary>
-        public IReadOnlyList<BigDataPoolResourceInfoData> Value { get; }
+        /// <summary>
+        /// List of Big Data pools
+        /// Serialized Name: BigDataPoolResourceInfoListResult.value
+        /// </summary>
+        public IReadOnlyList<SynapseBigDataPoolInfoData> Value { get; }
     }
 }

@@ -25,17 +25,29 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateEndpoint"> The private endpoint which the connection belongs to. </param>
-        /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
-        /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal SynapsePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, SynapsePrivateLinkServiceConnectionState connectionState, string provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="privateEndpoint">
+        /// The private endpoint which the connection belongs to.
+        /// Serialized Name: PrivateEndpointConnection.properties.privateEndpoint
+        /// </param>
+        /// <param name="connectionState">
+        /// Connection state of the private endpoint connection.
+        /// Serialized Name: PrivateEndpointConnection.properties.privateLinkServiceConnectionState
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state of the private endpoint connection.
+        /// Serialized Name: PrivateEndpointConnection.properties.provisioningState
+        /// </param>
+        internal SynapsePrivateEndpointConnectionData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, SynapsePrivateLinkServiceConnectionState connectionState, string provisioningState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The private endpoint which the connection belongs to. </summary>
+        /// <summary>
+        /// The private endpoint which the connection belongs to.
+        /// Serialized Name: PrivateEndpointConnection.properties.privateEndpoint
+        /// </summary>
         internal SubResource PrivateEndpoint { get; set; }
         /// <summary> Gets Id. </summary>
         public ResourceIdentifier PrivateEndpointId
@@ -43,9 +55,15 @@ namespace Azure.ResourceManager.Synapse
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
         }
 
-        /// <summary> Connection state of the private endpoint connection. </summary>
+        /// <summary>
+        /// Connection state of the private endpoint connection.
+        /// Serialized Name: PrivateEndpointConnection.properties.privateLinkServiceConnectionState
+        /// </summary>
         public SynapsePrivateLinkServiceConnectionState ConnectionState { get; set; }
-        /// <summary> Provisioning state of the private endpoint connection. </summary>
+        /// <summary>
+        /// Provisioning state of the private endpoint connection.
+        /// Serialized Name: PrivateEndpointConnection.properties.provisioningState
+        /// </summary>
         public string ProvisioningState { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Initial workspace AAD admin properties for a CSP subscription. </summary>
+    /// <summary>
+    /// Initial workspace AAD admin properties for a CSP subscription
+    /// Serialized Name: CspWorkspaceAdminProperties
+    /// </summary>
     internal partial class CspWorkspaceAdminProperties
     {
         /// <summary> Initializes a new instance of CspWorkspaceAdminProperties. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of CspWorkspaceAdminProperties. </summary>
-        /// <param name="initialWorkspaceAdminObjectId"> AAD object ID of initial workspace admin. </param>
+        /// <param name="initialWorkspaceAdminObjectId">
+        /// AAD object ID of initial workspace admin
+        /// Serialized Name: CspWorkspaceAdminProperties.initialWorkspaceAdminObjectId
+        /// </param>
         internal CspWorkspaceAdminProperties(string initialWorkspaceAdminObjectId)
         {
             InitialWorkspaceAdminObjectId = initialWorkspaceAdminObjectId;
         }
 
-        /// <summary> AAD object ID of initial workspace admin. </summary>
+        /// <summary>
+        /// AAD object ID of initial workspace admin
+        /// Serialized Name: CspWorkspaceAdminProperties.initialWorkspaceAdminObjectId
+        /// </summary>
         public string InitialWorkspaceAdminObjectId { get; set; }
     }
 }

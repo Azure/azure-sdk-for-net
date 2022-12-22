@@ -7,14 +7,29 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The UnknownSsisObjectMetadata. </summary>
+    /// <summary>
+    /// The UnknownSsisObjectMetadata.
+    /// Serialized Name: UnknownSsisObjectMetadata
+    /// </summary>
     internal partial class UnknownSsisObjectMetadata : SsisObjectMetadata
     {
         /// <summary> Initializes a new instance of UnknownSsisObjectMetadata. </summary>
-        /// <param name="metadataType"> Type of metadata. </param>
-        /// <param name="id"> Metadata id. </param>
-        /// <param name="name"> Metadata name. </param>
-        /// <param name="description"> Metadata description. </param>
+        /// <param name="metadataType">
+        /// Type of metadata.
+        /// Serialized Name: SsisObjectMetadata.type
+        /// </param>
+        /// <param name="id">
+        /// Metadata id.
+        /// Serialized Name: SsisObjectMetadata.id
+        /// </param>
+        /// <param name="name">
+        /// Metadata name.
+        /// Serialized Name: SsisObjectMetadata.name
+        /// </param>
+        /// <param name="description">
+        /// Metadata description.
+        /// Serialized Name: SsisObjectMetadata.description
+        /// </param>
         internal UnknownSsisObjectMetadata(SsisObjectMetadataType metadataType, long? id, string name, string description) : base(metadataType, id, name, description)
         {
             MetadataType = metadataType;

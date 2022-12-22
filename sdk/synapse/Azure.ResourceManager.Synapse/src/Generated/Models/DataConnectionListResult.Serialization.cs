@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static DataConnectionListResult DeserializeDataConnectionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DataConnectionData>> value = default;
+            Optional<IReadOnlyList<SynapseDataConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DataConnectionData> array = new List<DataConnectionData>();
+                    List<SynapseDataConnectionData> array = new List<SynapseDataConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataConnectionData.DeserializeDataConnectionData(item));
+                        array.Add(SynapseDataConnectionData.DeserializeSynapseDataConnectionData(item));
                     }
                     value = array;
                     continue;

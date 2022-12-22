@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Day of maintenance window. </summary>
+    /// <summary>
+    /// Day of maintenance window.
+    /// Serialized Name: DayOfWeek
+    /// </summary>
     public readonly partial struct DayOfWeek : IEquatable<DayOfWeek>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string FridayValue = "Friday";
         private const string SaturdayValue = "Saturday";
 
-        /// <summary> Sunday. </summary>
+        /// <summary>
+        /// Sunday
+        /// Serialized Name: DayOfWeek.Sunday
+        /// </summary>
         public static DayOfWeek Sunday { get; } = new DayOfWeek(SundayValue);
-        /// <summary> Monday. </summary>
+        /// <summary>
+        /// Monday
+        /// Serialized Name: DayOfWeek.Monday
+        /// </summary>
         public static DayOfWeek Monday { get; } = new DayOfWeek(MondayValue);
-        /// <summary> Tuesday. </summary>
+        /// <summary>
+        /// Tuesday
+        /// Serialized Name: DayOfWeek.Tuesday
+        /// </summary>
         public static DayOfWeek Tuesday { get; } = new DayOfWeek(TuesdayValue);
-        /// <summary> Wednesday. </summary>
+        /// <summary>
+        /// Wednesday
+        /// Serialized Name: DayOfWeek.Wednesday
+        /// </summary>
         public static DayOfWeek Wednesday { get; } = new DayOfWeek(WednesdayValue);
-        /// <summary> Thursday. </summary>
+        /// <summary>
+        /// Thursday
+        /// Serialized Name: DayOfWeek.Thursday
+        /// </summary>
         public static DayOfWeek Thursday { get; } = new DayOfWeek(ThursdayValue);
-        /// <summary> Friday. </summary>
+        /// <summary>
+        /// Friday
+        /// Serialized Name: DayOfWeek.Friday
+        /// </summary>
         public static DayOfWeek Friday { get; } = new DayOfWeek(FridayValue);
-        /// <summary> Saturday. </summary>
+        /// <summary>
+        /// Saturday
+        /// Serialized Name: DayOfWeek.Saturday
+        /// </summary>
         public static DayOfWeek Saturday { get; } = new DayOfWeek(SaturdayValue);
         /// <summary> Determines if two <see cref="DayOfWeek"/> values are the same. </summary>
         public static bool operator ==(DayOfWeek left, DayOfWeek right) => left.Equals(right);

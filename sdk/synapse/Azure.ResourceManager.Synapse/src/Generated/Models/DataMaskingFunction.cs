@@ -7,20 +7,41 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The masking function that is used for the data masking rule. </summary>
+    /// <summary>
+    /// The masking function that is used for the data masking rule.
+    /// Serialized Name: DataMaskingFunction
+    /// </summary>
     public enum DataMaskingFunction
     {
-        /// <summary> Default. </summary>
+        /// <summary>
+        /// Default
+        /// Serialized Name: DataMaskingFunction.Default
+        /// </summary>
         Default,
-        /// <summary> CCN. </summary>
+        /// <summary>
+        /// CCN
+        /// Serialized Name: DataMaskingFunction.CCN
+        /// </summary>
         CCN,
-        /// <summary> Email. </summary>
+        /// <summary>
+        /// Email
+        /// Serialized Name: DataMaskingFunction.Email
+        /// </summary>
         Email,
-        /// <summary> Number. </summary>
+        /// <summary>
+        /// Number
+        /// Serialized Name: DataMaskingFunction.Number
+        /// </summary>
         Number,
-        /// <summary> SSN. </summary>
+        /// <summary>
+        /// SSN
+        /// Serialized Name: DataMaskingFunction.SSN
+        /// </summary>
         SSN,
-        /// <summary> Text. </summary>
+        /// <summary>
+        /// Text
+        /// Serialized Name: DataMaskingFunction.Text
+        /// </summary>
         Text
     }
 }

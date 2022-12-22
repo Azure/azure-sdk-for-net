@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Synapse.Models
             SynapseKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            Core.ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<ResourceProvisioningState> provisioningState = default;
             Optional<TimeSpan> softDeletePeriod = default;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new ResourceType(property.Value.GetString());
+                    type = new Core.ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))

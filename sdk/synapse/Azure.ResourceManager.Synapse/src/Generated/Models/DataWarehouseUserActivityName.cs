@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The DataWarehouseUserActivityName. </summary>
+    /// <summary>
+    /// The DataWarehouseUserActivityName.
+    /// Serialized Name: DataWarehouseUserActivityName
+    /// </summary>
     public readonly partial struct DataWarehouseUserActivityName : IEquatable<DataWarehouseUserActivityName>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         private const string CurrentValue = "current";
 
-        /// <summary> current. </summary>
+        /// <summary>
+        /// current
+        /// Serialized Name: DataWarehouseUserActivityName.current
+        /// </summary>
         public static DataWarehouseUserActivityName Current { get; } = new DataWarehouseUserActivityName(CurrentValue);
         /// <summary> Determines if two <see cref="DataWarehouseUserActivityName"/> values are the same. </summary>
         public static bool operator ==(DataWarehouseUserActivityName left, DataWarehouseUserActivityName right) => left.Equals(right);

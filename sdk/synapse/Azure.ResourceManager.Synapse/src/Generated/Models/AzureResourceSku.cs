@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Azure resource SKU definition. </summary>
+    /// <summary>
+    /// Azure resource SKU definition.
+    /// Serialized Name: AzureResourceSku
+    /// </summary>
     public partial class AzureResourceSku
     {
         /// <summary> Initializes a new instance of AzureResourceSku. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of AzureResourceSku. </summary>
-        /// <param name="resourceType"> Resource Namespace and Type. </param>
-        /// <param name="sku"> The SKU details. </param>
-        /// <param name="capacity"> The number of instances of the cluster. </param>
+        /// <param name="resourceType">
+        /// Resource Namespace and Type.
+        /// Serialized Name: AzureResourceSku.resourceType
+        /// </param>
+        /// <param name="sku">
+        /// The SKU details.
+        /// Serialized Name: AzureResourceSku.sku
+        /// </param>
+        /// <param name="capacity">
+        /// The number of instances of the cluster.
+        /// Serialized Name: AzureResourceSku.capacity
+        /// </param>
         internal AzureResourceSku(string resourceType, AzureSku sku, AzureCapacity capacity)
         {
             ResourceType = resourceType;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.Synapse.Models
             Capacity = capacity;
         }
 
-        /// <summary> Resource Namespace and Type. </summary>
+        /// <summary>
+        /// Resource Namespace and Type.
+        /// Serialized Name: AzureResourceSku.resourceType
+        /// </summary>
         public string ResourceType { get; }
-        /// <summary> The SKU details. </summary>
+        /// <summary>
+        /// The SKU details.
+        /// Serialized Name: AzureResourceSku.sku
+        /// </summary>
         public AzureSku Sku { get; }
-        /// <summary> The number of instances of the cluster. </summary>
+        /// <summary>
+        /// The number of instances of the cluster.
+        /// Serialized Name: AzureResourceSku.capacity
+        /// </summary>
         public AzureCapacity Capacity { get; }
     }
 }

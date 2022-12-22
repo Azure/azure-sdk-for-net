@@ -10,12 +10,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Integration runtime status response. </summary>
+    /// <summary>
+    /// Integration runtime status response.
+    /// Serialized Name: IntegrationRuntimeStatusResponse
+    /// </summary>
     public partial class IntegrationRuntimeStatusResponse
     {
         /// <summary> Initializes a new instance of IntegrationRuntimeStatusResponse. </summary>
         /// <param name="properties">
         /// Integration runtime properties.
+        /// Serialized Name: IntegrationRuntimeStatusResponse.properties
         /// Please note <see cref="IntegrationRuntimeStatus"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedIntegrationRuntimeStatus"/> and <see cref="SelfHostedIntegrationRuntimeStatus"/>.
         /// </param>
@@ -28,9 +32,13 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeStatusResponse. </summary>
-        /// <param name="name"> The integration runtime name. </param>
+        /// <param name="name">
+        /// The integration runtime name.
+        /// Serialized Name: IntegrationRuntimeStatusResponse.name
+        /// </param>
         /// <param name="properties">
         /// Integration runtime properties.
+        /// Serialized Name: IntegrationRuntimeStatusResponse.properties
         /// Please note <see cref="IntegrationRuntimeStatus"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedIntegrationRuntimeStatus"/> and <see cref="SelfHostedIntegrationRuntimeStatus"/>.
         /// </param>
@@ -40,10 +48,14 @@ namespace Azure.ResourceManager.Synapse.Models
             Properties = properties;
         }
 
-        /// <summary> The integration runtime name. </summary>
+        /// <summary>
+        /// The integration runtime name.
+        /// Serialized Name: IntegrationRuntimeStatusResponse.name
+        /// </summary>
         public string Name { get; }
         /// <summary>
         /// Integration runtime properties.
+        /// Serialized Name: IntegrationRuntimeStatusResponse.properties
         /// Please note <see cref="IntegrationRuntimeStatus"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ManagedIntegrationRuntimeStatus"/> and <see cref="SelfHostedIntegrationRuntimeStatus"/>.
         /// </summary>

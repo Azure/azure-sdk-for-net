@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Connection state details of the private endpoint. </summary>
+    /// <summary>
+    /// Connection state details of the private endpoint
+    /// Serialized Name: PrivateLinkServiceConnectionState
+    /// </summary>
     public partial class SynapsePrivateLinkServiceConnectionState
     {
         /// <summary> Initializes a new instance of SynapsePrivateLinkServiceConnectionState. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapsePrivateLinkServiceConnectionState. </summary>
-        /// <param name="status"> The private link service connection status. </param>
-        /// <param name="description"> The private link service connection description. </param>
-        /// <param name="actionsRequired"> The actions required for private link service connection. </param>
+        /// <param name="status">
+        /// The private link service connection status.
+        /// Serialized Name: PrivateLinkServiceConnectionState.status
+        /// </param>
+        /// <param name="description">
+        /// The private link service connection description.
+        /// Serialized Name: PrivateLinkServiceConnectionState.description
+        /// </param>
+        /// <param name="actionsRequired">
+        /// The actions required for private link service connection.
+        /// Serialized Name: PrivateLinkServiceConnectionState.actionsRequired
+        /// </param>
         internal SynapsePrivateLinkServiceConnectionState(string status, string description, string actionsRequired)
         {
             Status = status;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.Synapse.Models
             ActionsRequired = actionsRequired;
         }
 
-        /// <summary> The private link service connection status. </summary>
+        /// <summary>
+        /// The private link service connection status.
+        /// Serialized Name: PrivateLinkServiceConnectionState.status
+        /// </summary>
         public string Status { get; set; }
-        /// <summary> The private link service connection description. </summary>
+        /// <summary>
+        /// The private link service connection description.
+        /// Serialized Name: PrivateLinkServiceConnectionState.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> The actions required for private link service connection. </summary>
+        /// <summary>
+        /// The actions required for private link service connection.
+        /// Serialized Name: PrivateLinkServiceConnectionState.actionsRequired
+        /// </summary>
         public string ActionsRequired { get; }
     }
 }

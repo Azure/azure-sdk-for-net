@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static AzureADOnlyAuthenticationListResult DeserializeAzureADOnlyAuthenticationListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<AzureADOnlyAuthenticationData>> value = default;
+            Optional<IReadOnlyList<SynapseAadOnlyAuthenticationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AzureADOnlyAuthenticationData> array = new List<AzureADOnlyAuthenticationData>();
+                    List<SynapseAadOnlyAuthenticationData> array = new List<SynapseAadOnlyAuthenticationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureADOnlyAuthenticationData.DeserializeAzureADOnlyAuthenticationData(item));
+                        array.Add(SynapseAadOnlyAuthenticationData.DeserializeSynapseAadOnlyAuthenticationData(item));
                     }
                     value = array;
                     continue;

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The TransparentDataEncryptionName. </summary>
+    /// <summary>
+    /// The TransparentDataEncryptionName.
+    /// Serialized Name: TransparentDataEncryptionName
+    /// </summary>
     public readonly partial struct TransparentDataEncryptionName : IEquatable<TransparentDataEncryptionName>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         private const string CurrentValue = "current";
 
-        /// <summary> current. </summary>
+        /// <summary>
+        /// current
+        /// Serialized Name: TransparentDataEncryptionName.current
+        /// </summary>
         public static TransparentDataEncryptionName Current { get; } = new TransparentDataEncryptionName(CurrentValue);
         /// <summary> Determines if two <see cref="TransparentDataEncryptionName"/> values are the same. </summary>
         public static bool operator ==(TransparentDataEncryptionName left, TransparentDataEncryptionName right) => left.Equals(right);

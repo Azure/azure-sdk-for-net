@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The operation state. </summary>
+    /// <summary>
+    /// The operation state.
+    /// Serialized Name: ManagementOperationState
+    /// </summary>
     public readonly partial struct ManagementOperationState : IEquatable<ManagementOperationState>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string CancelInProgressValue = "CancelInProgress";
         private const string CancelledValue = "Cancelled";
 
-        /// <summary> Pending. </summary>
+        /// <summary>
+        /// Pending
+        /// Serialized Name: ManagementOperationState.Pending
+        /// </summary>
         public static ManagementOperationState Pending { get; } = new ManagementOperationState(PendingValue);
-        /// <summary> InProgress. </summary>
+        /// <summary>
+        /// InProgress
+        /// Serialized Name: ManagementOperationState.InProgress
+        /// </summary>
         public static ManagementOperationState InProgress { get; } = new ManagementOperationState(InProgressValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: ManagementOperationState.Succeeded
+        /// </summary>
         public static ManagementOperationState Succeeded { get; } = new ManagementOperationState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: ManagementOperationState.Failed
+        /// </summary>
         public static ManagementOperationState Failed { get; } = new ManagementOperationState(FailedValue);
-        /// <summary> CancelInProgress. </summary>
+        /// <summary>
+        /// CancelInProgress
+        /// Serialized Name: ManagementOperationState.CancelInProgress
+        /// </summary>
         public static ManagementOperationState CancelInProgress { get; } = new ManagementOperationState(CancelInProgressValue);
-        /// <summary> Cancelled. </summary>
+        /// <summary>
+        /// Cancelled
+        /// Serialized Name: ManagementOperationState.Cancelled
+        /// </summary>
         public static ManagementOperationState Cancelled { get; } = new ManagementOperationState(CancelledValue);
         /// <summary> Determines if two <see cref="ManagementOperationState"/> values are the same. </summary>
         public static bool operator ==(ManagementOperationState left, ManagementOperationState right) => left.Equals(right);

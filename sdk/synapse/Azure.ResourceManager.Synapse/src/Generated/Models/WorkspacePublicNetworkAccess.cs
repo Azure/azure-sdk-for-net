@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Enable or Disable public network access to workspace. </summary>
+    /// <summary>
+    /// Enable or Disable public network access to workspace
+    /// Serialized Name: WorkspacePublicNetworkAccess
+    /// </summary>
     public readonly partial struct WorkspacePublicNetworkAccess : IEquatable<WorkspacePublicNetworkAccess>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: WorkspacePublicNetworkAccess.Enabled
+        /// </summary>
         public static WorkspacePublicNetworkAccess Enabled { get; } = new WorkspacePublicNetworkAccess(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: WorkspacePublicNetworkAccess.Disabled
+        /// </summary>
         public static WorkspacePublicNetworkAccess Disabled { get; } = new WorkspacePublicNetworkAccess(DisabledValue);
         /// <summary> Determines if two <see cref="WorkspacePublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(WorkspacePublicNetworkAccess left, WorkspacePublicNetworkAccess right) => left.Equals(right);

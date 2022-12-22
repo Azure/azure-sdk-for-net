@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Details of the data lake storage account associated with the workspace. </summary>
+    /// <summary>
+    /// Details of the data lake storage account associated with the workspace
+    /// Serialized Name: DataLakeStorageAccountDetails
+    /// </summary>
     public partial class DataLakeStorageAccountDetails
     {
         /// <summary> Initializes a new instance of DataLakeStorageAccountDetails. </summary>
@@ -18,10 +21,22 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of DataLakeStorageAccountDetails. </summary>
-        /// <param name="accountUri"> Account URL. </param>
-        /// <param name="filesystem"> Filesystem name. </param>
-        /// <param name="resourceId"> ARM resource Id of this storage account. </param>
-        /// <param name="createManagedPrivateEndpoint"> Create managed private endpoint to this storage account or not. </param>
+        /// <param name="accountUri">
+        /// Account URL
+        /// Serialized Name: DataLakeStorageAccountDetails.accountUrl
+        /// </param>
+        /// <param name="filesystem">
+        /// Filesystem name
+        /// Serialized Name: DataLakeStorageAccountDetails.filesystem
+        /// </param>
+        /// <param name="resourceId">
+        /// ARM resource Id of this storage account
+        /// Serialized Name: DataLakeStorageAccountDetails.resourceId
+        /// </param>
+        /// <param name="createManagedPrivateEndpoint">
+        /// Create managed private endpoint to this storage account or not
+        /// Serialized Name: DataLakeStorageAccountDetails.createManagedPrivateEndpoint
+        /// </param>
         internal DataLakeStorageAccountDetails(Uri accountUri, string filesystem, string resourceId, bool? createManagedPrivateEndpoint)
         {
             AccountUri = accountUri;
@@ -30,13 +45,25 @@ namespace Azure.ResourceManager.Synapse.Models
             CreateManagedPrivateEndpoint = createManagedPrivateEndpoint;
         }
 
-        /// <summary> Account URL. </summary>
+        /// <summary>
+        /// Account URL
+        /// Serialized Name: DataLakeStorageAccountDetails.accountUrl
+        /// </summary>
         public Uri AccountUri { get; set; }
-        /// <summary> Filesystem name. </summary>
+        /// <summary>
+        /// Filesystem name
+        /// Serialized Name: DataLakeStorageAccountDetails.filesystem
+        /// </summary>
         public string Filesystem { get; set; }
-        /// <summary> ARM resource Id of this storage account. </summary>
+        /// <summary>
+        /// ARM resource Id of this storage account
+        /// Serialized Name: DataLakeStorageAccountDetails.resourceId
+        /// </summary>
         public string ResourceId { get; set; }
-        /// <summary> Create managed private endpoint to this storage account or not. </summary>
+        /// <summary>
+        /// Create managed private endpoint to this storage account or not
+        /// Serialized Name: DataLakeStorageAccountDetails.createManagedPrivateEndpoint
+        /// </summary>
         public bool? CreateManagedPrivateEndpoint { get; set; }
     }
 }

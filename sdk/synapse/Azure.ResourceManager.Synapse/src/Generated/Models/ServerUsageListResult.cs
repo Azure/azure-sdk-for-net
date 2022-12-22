@@ -12,11 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Represents the response to a list server metrics request. </summary>
+    /// <summary>
+    /// Represents the response to a list server metrics request.
+    /// Serialized Name: ServerUsageListResult
+    /// </summary>
     internal partial class ServerUsageListResult
     {
         /// <summary> Initializes a new instance of ServerUsageListResult. </summary>
-        /// <param name="value"> The list of server metrics for the server. </param>
+        /// <param name="value">
+        /// The list of server metrics for the server.
+        /// Serialized Name: ServerUsageListResult.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ServerUsageListResult(IEnumerable<ServerUsage> value)
         {
@@ -26,17 +32,29 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of ServerUsageListResult. </summary>
-        /// <param name="value"> The list of server metrics for the server. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
+        /// <param name="value">
+        /// The list of server metrics for the server.
+        /// Serialized Name: ServerUsageListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to retrieve next page of results.
+        /// Serialized Name: ServerUsageListResult.nextLink
+        /// </param>
         internal ServerUsageListResult(IReadOnlyList<ServerUsage> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of server metrics for the server. </summary>
+        /// <summary>
+        /// The list of server metrics for the server.
+        /// Serialized Name: ServerUsageListResult.value
+        /// </summary>
         public IReadOnlyList<ServerUsage> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
+        /// <summary>
+        /// Link to retrieve next page of results.
+        /// Serialized Name: ServerUsageListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> A principal assignment check name availability request. </summary>
+    /// <summary>
+    /// A principal assignment check name availability request.
+    /// Serialized Name: ClusterPrincipalAssignmentCheckNameRequest
+    /// </summary>
     public partial class ClusterPrincipalAssignmentCheckNameContent
     {
         /// <summary> Initializes a new instance of ClusterPrincipalAssignmentCheckNameContent. </summary>
-        /// <param name="name"> Principal Assignment resource name. </param>
+        /// <param name="name">
+        /// Principal Assignment resource name.
+        /// Serialized Name: ClusterPrincipalAssignmentCheckNameRequest.name
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ClusterPrincipalAssignmentCheckNameContent(string name)
         {
@@ -24,9 +30,15 @@ namespace Azure.ResourceManager.Synapse.Models
             PrincipalAssignmentType = PrincipalAssignmentType.MicrosoftSynapseWorkspacesKustoPoolsPrincipalAssignments;
         }
 
-        /// <summary> Principal Assignment resource name. </summary>
+        /// <summary>
+        /// Principal Assignment resource name.
+        /// Serialized Name: ClusterPrincipalAssignmentCheckNameRequest.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The type of resource, Microsoft.Synapse/workspaces/kustoPools/principalAssignments. </summary>
+        /// <summary>
+        /// The type of resource, Microsoft.Synapse/workspaces/kustoPools/principalAssignments.
+        /// Serialized Name: ClusterPrincipalAssignmentCheckNameRequest.type
+        /// </summary>
         public PrincipalAssignmentType PrincipalAssignmentType { get; }
     }
 }

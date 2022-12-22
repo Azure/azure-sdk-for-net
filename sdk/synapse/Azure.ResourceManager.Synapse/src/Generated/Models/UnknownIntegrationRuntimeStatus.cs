@@ -10,13 +10,25 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The UnknownIntegrationRuntimeStatus. </summary>
+    /// <summary>
+    /// The UnknownIntegrationRuntimeStatus.
+    /// Serialized Name: UnknownIntegrationRuntimeStatus
+    /// </summary>
     internal partial class UnknownIntegrationRuntimeStatus : IntegrationRuntimeStatus
     {
         /// <summary> Initializes a new instance of UnknownIntegrationRuntimeStatus. </summary>
-        /// <param name="runtimeType"> Type of integration runtime. </param>
-        /// <param name="dataFactoryName"> The workspace name which the integration runtime belong to. </param>
-        /// <param name="state"> The state of integration runtime. </param>
+        /// <param name="runtimeType">
+        /// Type of integration runtime.
+        /// Serialized Name: IntegrationRuntimeStatus.type
+        /// </param>
+        /// <param name="dataFactoryName">
+        /// The workspace name which the integration runtime belong to.
+        /// Serialized Name: IntegrationRuntimeStatus.dataFactoryName
+        /// </param>
+        /// <param name="state">
+        /// The state of integration runtime.
+        /// Serialized Name: IntegrationRuntimeStatus.state
+        /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal UnknownIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties) : base(runtimeType, dataFactoryName, state, additionalProperties)
         {

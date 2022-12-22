@@ -11,31 +11,36 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The list Kusto data connections operation response. </summary>
+    /// <summary>
+    /// The list Kusto data connections operation response.
+    /// Serialized Name: DataConnectionListResult
+    /// </summary>
     internal partial class DataConnectionListResult
     {
         /// <summary> Initializes a new instance of DataConnectionListResult. </summary>
         internal DataConnectionListResult()
         {
-            Value = new ChangeTrackingList<DataConnectionData>();
+            Value = new ChangeTrackingList<SynapseDataConnectionData>();
         }
 
         /// <summary> Initializes a new instance of DataConnectionListResult. </summary>
         /// <param name="value">
         /// The list of Kusto data connections.
-        /// Please note <see cref="DataConnectionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Serialized Name: DataConnectionListResult.value
+        /// Please note <see cref="SynapseDataConnectionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="EventGridDataConnection"/>, <see cref="EventHubDataConnection"/> and <see cref="IotHubDataConnection"/>.
         /// </param>
-        internal DataConnectionListResult(IReadOnlyList<DataConnectionData> value)
+        internal DataConnectionListResult(IReadOnlyList<SynapseDataConnectionData> value)
         {
             Value = value;
         }
 
         /// <summary>
         /// The list of Kusto data connections.
-        /// Please note <see cref="DataConnectionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Serialized Name: DataConnectionListResult.value
+        /// Please note <see cref="SynapseDataConnectionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="EventGridDataConnection"/>, <see cref="EventHubDataConnection"/> and <see cref="IotHubDataConnection"/>.
         /// </summary>
-        public IReadOnlyList<DataConnectionData> Value { get; }
+        public IReadOnlyList<SynapseDataConnectionData> Value { get; }
     }
 }

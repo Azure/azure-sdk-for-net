@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The RecommendedSensitivityLabelUpdateKind. </summary>
+    /// <summary>
+    /// The RecommendedSensitivityLabelUpdateKind.
+    /// Serialized Name: RecommendedSensitivityLabelUpdateKind
+    /// </summary>
     public enum RecommendedSensitivityLabelUpdateKind
     {
-        /// <summary> enable. </summary>
+        /// <summary>
+        /// enable
+        /// Serialized Name: RecommendedSensitivityLabelUpdateKind.enable
+        /// </summary>
         Enable,
-        /// <summary> disable. </summary>
+        /// <summary>
+        /// disable
+        /// Serialized Name: RecommendedSensitivityLabelUpdateKind.disable
+        /// </summary>
         Disable
     }
 }

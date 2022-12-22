@@ -11,27 +11,42 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> A list of the server&apos;s dedicated sql minimal tls settings. </summary>
+    /// <summary>
+    /// A list of the server&apos;s dedicated sql minimal tls settings.
+    /// Serialized Name: DedicatedSQLminimalTlsSettingsListResult
+    /// </summary>
     internal partial class DedicatedSQLminimalTlsSettingsListResult
     {
         /// <summary> Initializes a new instance of DedicatedSQLminimalTlsSettingsListResult. </summary>
         internal DedicatedSQLminimalTlsSettingsListResult()
         {
-            Value = new ChangeTrackingList<DedicatedSQLminimalTlsSettingData>();
+            Value = new ChangeTrackingList<SynapseDedicatedSqlMinimalTlsSettingData>();
         }
 
         /// <summary> Initializes a new instance of DedicatedSQLminimalTlsSettingsListResult. </summary>
-        /// <param name="value"> Array of results. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal DedicatedSQLminimalTlsSettingsListResult(IReadOnlyList<DedicatedSQLminimalTlsSettingData> value, string nextLink)
+        /// <param name="value">
+        /// Array of results.
+        /// Serialized Name: DedicatedSQLminimalTlsSettingsListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to retrieve next page of results.
+        /// Serialized Name: DedicatedSQLminimalTlsSettingsListResult.nextLink
+        /// </param>
+        internal DedicatedSQLminimalTlsSettingsListResult(IReadOnlyList<SynapseDedicatedSqlMinimalTlsSettingData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Array of results. </summary>
-        public IReadOnlyList<DedicatedSQLminimalTlsSettingData> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
+        /// <summary>
+        /// Array of results.
+        /// Serialized Name: DedicatedSQLminimalTlsSettingsListResult.value
+        /// </summary>
+        public IReadOnlyList<SynapseDedicatedSqlMinimalTlsSettingData> Value { get; }
+        /// <summary>
+        /// Link to retrieve next page of results.
+        /// Serialized Name: DedicatedSQLminimalTlsSettingsListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

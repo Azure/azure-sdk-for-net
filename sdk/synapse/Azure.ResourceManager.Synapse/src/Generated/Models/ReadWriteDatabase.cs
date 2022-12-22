@@ -12,8 +12,11 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Class representing a read write database. </summary>
-    public partial class ReadWriteDatabase : DatabaseData
+    /// <summary>
+    /// Class representing a read write database.
+    /// Serialized Name: ReadWriteDatabase
+    /// </summary>
+    public partial class ReadWriteDatabase : SynapseDatabaseData
     {
         /// <summary> Initializes a new instance of ReadWriteDatabase. </summary>
         public ReadWriteDatabase()
@@ -26,14 +29,35 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="kind"> Kind of the database. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="softDeletePeriod"> The time the data should be kept before it stops being accessible to queries in TimeSpan. </param>
-        /// <param name="hotCachePeriod"> The time the data should be kept in cache for fast queries in TimeSpan. </param>
-        /// <param name="statistics"> The statistics of the database. </param>
-        /// <param name="isFollowed"> Indicates whether the database is followed. </param>
-        internal ReadWriteDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseKind kind, ResourceProvisioningState? provisioningState, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, DatabaseStatistics statistics, bool? isFollowed) : base(id, name, resourceType, systemData, location, kind)
+        /// <param name="location">
+        /// Resource location.
+        /// Serialized Name: Database.location
+        /// </param>
+        /// <param name="kind">
+        /// Kind of the database
+        /// Serialized Name: Database.kind
+        /// </param>
+        /// <param name="provisioningState">
+        /// The provisioned state of the resource.
+        /// Serialized Name: ReadWriteDatabase.properties.provisioningState
+        /// </param>
+        /// <param name="softDeletePeriod">
+        /// The time the data should be kept before it stops being accessible to queries in TimeSpan.
+        /// Serialized Name: ReadWriteDatabase.properties.softDeletePeriod
+        /// </param>
+        /// <param name="hotCachePeriod">
+        /// The time the data should be kept in cache for fast queries in TimeSpan.
+        /// Serialized Name: ReadWriteDatabase.properties.hotCachePeriod
+        /// </param>
+        /// <param name="statistics">
+        /// The statistics of the database.
+        /// Serialized Name: ReadWriteDatabase.properties.statistics
+        /// </param>
+        /// <param name="isFollowed">
+        /// Indicates whether the database is followed.
+        /// Serialized Name: ReadWriteDatabase.properties.isFollowed
+        /// </param>
+        internal ReadWriteDatabase(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseKind kind, ResourceProvisioningState? provisioningState, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, DatabaseStatistics statistics, bool? isFollowed) : base(id, name, resourceType, systemData, location, kind)
         {
             ProvisioningState = provisioningState;
             SoftDeletePeriod = softDeletePeriod;
@@ -43,21 +67,39 @@ namespace Azure.ResourceManager.Synapse.Models
             Kind = kind;
         }
 
-        /// <summary> The provisioned state of the resource. </summary>
+        /// <summary>
+        /// The provisioned state of the resource.
+        /// Serialized Name: ReadWriteDatabase.properties.provisioningState
+        /// </summary>
         public ResourceProvisioningState? ProvisioningState { get; }
-        /// <summary> The time the data should be kept before it stops being accessible to queries in TimeSpan. </summary>
+        /// <summary>
+        /// The time the data should be kept before it stops being accessible to queries in TimeSpan.
+        /// Serialized Name: ReadWriteDatabase.properties.softDeletePeriod
+        /// </summary>
         public TimeSpan? SoftDeletePeriod { get; set; }
-        /// <summary> The time the data should be kept in cache for fast queries in TimeSpan. </summary>
+        /// <summary>
+        /// The time the data should be kept in cache for fast queries in TimeSpan.
+        /// Serialized Name: ReadWriteDatabase.properties.hotCachePeriod
+        /// </summary>
         public TimeSpan? HotCachePeriod { get; set; }
-        /// <summary> The statistics of the database. </summary>
+        /// <summary>
+        /// The statistics of the database.
+        /// Serialized Name: ReadWriteDatabase.properties.statistics
+        /// </summary>
         internal DatabaseStatistics Statistics { get; }
-        /// <summary> The database size - the total size of compressed data and index in bytes. </summary>
+        /// <summary>
+        /// The database size - the total size of compressed data and index in bytes.
+        /// Serialized Name: DatabaseStatistics.size
+        /// </summary>
         public float? StatisticsSize
         {
             get => Statistics?.Size;
         }
 
-        /// <summary> Indicates whether the database is followed. </summary>
+        /// <summary>
+        /// Indicates whether the database is followed.
+        /// Serialized Name: ReadWriteDatabase.properties.isFollowed
+        /// </summary>
         public bool? IsFollowed { get; }
     }
 }

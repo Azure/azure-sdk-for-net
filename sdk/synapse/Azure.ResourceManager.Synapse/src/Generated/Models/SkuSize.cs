@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> SKU size. </summary>
+    /// <summary>
+    /// SKU size.
+    /// Serialized Name: SkuSize
+    /// </summary>
     public readonly partial struct SkuSize : IEquatable<SkuSize>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string MediumValue = "Medium";
         private const string LargeValue = "Large";
 
-        /// <summary> Extra small. </summary>
+        /// <summary>
+        /// Extra small
+        /// Serialized Name: SkuSize.Extra small
+        /// </summary>
         public static SkuSize ExtraSmall { get; } = new SkuSize(ExtraSmallValue);
-        /// <summary> Small. </summary>
+        /// <summary>
+        /// Small
+        /// Serialized Name: SkuSize.Small
+        /// </summary>
         public static SkuSize Small { get; } = new SkuSize(SmallValue);
-        /// <summary> Medium. </summary>
+        /// <summary>
+        /// Medium
+        /// Serialized Name: SkuSize.Medium
+        /// </summary>
         public static SkuSize Medium { get; } = new SkuSize(MediumValue);
-        /// <summary> Large. </summary>
+        /// <summary>
+        /// Large
+        /// Serialized Name: SkuSize.Large
+        /// </summary>
         public static SkuSize Large { get; } = new SkuSize(LargeValue);
         /// <summary> Determines if two <see cref="SkuSize"/> values are the same. </summary>
         public static bool operator ==(SkuSize left, SkuSize right) => left.Equals(right);

@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Git integration settings. </summary>
+    /// <summary>
+    /// Git integration settings
+    /// Serialized Name: WorkspaceRepositoryConfiguration
+    /// </summary>
     public partial class WorkspaceRepositoryConfiguration
     {
         /// <summary> Initializes a new instance of WorkspaceRepositoryConfiguration. </summary>
@@ -18,15 +21,42 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of WorkspaceRepositoryConfiguration. </summary>
-        /// <param name="workspaceRepositoryConfigurationType"> Type of workspace repositoryID configuration. Example WorkspaceVSTSConfiguration, WorkspaceGitHubConfiguration. </param>
-        /// <param name="hostName"> GitHub Enterprise host name. For example: https://github.mydomain.com. </param>
-        /// <param name="accountName"> Account name. </param>
-        /// <param name="projectName"> VSTS project name. </param>
-        /// <param name="repositoryName"> Repository name. </param>
-        /// <param name="collaborationBranch"> Collaboration branch. </param>
-        /// <param name="rootFolder"> Root folder to use in the repository. </param>
-        /// <param name="lastCommitId"> The last commit ID. </param>
-        /// <param name="tenantId"> The VSTS tenant ID. </param>
+        /// <param name="workspaceRepositoryConfigurationType">
+        /// Type of workspace repositoryID configuration. Example WorkspaceVSTSConfiguration, WorkspaceGitHubConfiguration
+        /// Serialized Name: WorkspaceRepositoryConfiguration.type
+        /// </param>
+        /// <param name="hostName">
+        /// GitHub Enterprise host name. For example: https://github.mydomain.com
+        /// Serialized Name: WorkspaceRepositoryConfiguration.hostName
+        /// </param>
+        /// <param name="accountName">
+        /// Account name
+        /// Serialized Name: WorkspaceRepositoryConfiguration.accountName
+        /// </param>
+        /// <param name="projectName">
+        /// VSTS project name
+        /// Serialized Name: WorkspaceRepositoryConfiguration.projectName
+        /// </param>
+        /// <param name="repositoryName">
+        /// Repository name
+        /// Serialized Name: WorkspaceRepositoryConfiguration.repositoryName
+        /// </param>
+        /// <param name="collaborationBranch">
+        /// Collaboration branch
+        /// Serialized Name: WorkspaceRepositoryConfiguration.collaborationBranch
+        /// </param>
+        /// <param name="rootFolder">
+        /// Root folder to use in the repository
+        /// Serialized Name: WorkspaceRepositoryConfiguration.rootFolder
+        /// </param>
+        /// <param name="lastCommitId">
+        /// The last commit ID
+        /// Serialized Name: WorkspaceRepositoryConfiguration.lastCommitId
+        /// </param>
+        /// <param name="tenantId">
+        /// The VSTS tenant ID
+        /// Serialized Name: WorkspaceRepositoryConfiguration.tenantId
+        /// </param>
         internal WorkspaceRepositoryConfiguration(string workspaceRepositoryConfigurationType, string hostName, string accountName, string projectName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, Guid? tenantId)
         {
             WorkspaceRepositoryConfigurationType = workspaceRepositoryConfigurationType;
@@ -40,23 +70,50 @@ namespace Azure.ResourceManager.Synapse.Models
             TenantId = tenantId;
         }
 
-        /// <summary> Type of workspace repositoryID configuration. Example WorkspaceVSTSConfiguration, WorkspaceGitHubConfiguration. </summary>
+        /// <summary>
+        /// Type of workspace repositoryID configuration. Example WorkspaceVSTSConfiguration, WorkspaceGitHubConfiguration
+        /// Serialized Name: WorkspaceRepositoryConfiguration.type
+        /// </summary>
         public string WorkspaceRepositoryConfigurationType { get; set; }
-        /// <summary> GitHub Enterprise host name. For example: https://github.mydomain.com. </summary>
+        /// <summary>
+        /// GitHub Enterprise host name. For example: https://github.mydomain.com
+        /// Serialized Name: WorkspaceRepositoryConfiguration.hostName
+        /// </summary>
         public string HostName { get; set; }
-        /// <summary> Account name. </summary>
+        /// <summary>
+        /// Account name
+        /// Serialized Name: WorkspaceRepositoryConfiguration.accountName
+        /// </summary>
         public string AccountName { get; set; }
-        /// <summary> VSTS project name. </summary>
+        /// <summary>
+        /// VSTS project name
+        /// Serialized Name: WorkspaceRepositoryConfiguration.projectName
+        /// </summary>
         public string ProjectName { get; set; }
-        /// <summary> Repository name. </summary>
+        /// <summary>
+        /// Repository name
+        /// Serialized Name: WorkspaceRepositoryConfiguration.repositoryName
+        /// </summary>
         public string RepositoryName { get; set; }
-        /// <summary> Collaboration branch. </summary>
+        /// <summary>
+        /// Collaboration branch
+        /// Serialized Name: WorkspaceRepositoryConfiguration.collaborationBranch
+        /// </summary>
         public string CollaborationBranch { get; set; }
-        /// <summary> Root folder to use in the repository. </summary>
+        /// <summary>
+        /// Root folder to use in the repository
+        /// Serialized Name: WorkspaceRepositoryConfiguration.rootFolder
+        /// </summary>
         public string RootFolder { get; set; }
-        /// <summary> The last commit ID. </summary>
+        /// <summary>
+        /// The last commit ID
+        /// Serialized Name: WorkspaceRepositoryConfiguration.lastCommitId
+        /// </summary>
         public string LastCommitId { get; set; }
-        /// <summary> The VSTS tenant ID. </summary>
+        /// <summary>
+        /// The VSTS tenant ID
+        /// Serialized Name: WorkspaceRepositoryConfiguration.tenantId
+        /// </summary>
         public Guid? TenantId { get; set; }
     }
 }

@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SparkConfigurationListResponse DeserializeSparkConfigurationListResponse(JsonElement element)
         {
-            IReadOnlyList<SparkConfigurationResourceData> value = default;
+            IReadOnlyList<SynapseSparkConfigurationData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<SparkConfigurationResourceData> array = new List<SparkConfigurationResourceData>();
+                    List<SynapseSparkConfigurationData> array = new List<SynapseSparkConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SparkConfigurationResourceData.DeserializeSparkConfigurationResourceData(item));
+                        array.Add(SynapseSparkConfigurationData.DeserializeSynapseSparkConfigurationData(item));
                     }
                     value = array;
                     continue;

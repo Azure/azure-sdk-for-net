@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Maintenance window time range. </summary>
+    /// <summary>
+    /// Maintenance window time range.
+    /// Serialized Name: MaintenanceWindowTimeRange
+    /// </summary>
     public partial class MaintenanceWindowTimeRange
     {
         /// <summary> Initializes a new instance of MaintenanceWindowTimeRange. </summary>
@@ -18,21 +21,39 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of MaintenanceWindowTimeRange. </summary>
-        /// <param name="dayOfWeek"> Day of maintenance window. </param>
-        /// <param name="startTime"> Start time minutes offset from 12am. </param>
-        /// <param name="duration"> Duration of maintenance window in minutes. </param>
-        internal MaintenanceWindowTimeRange(DayOfWeek? dayOfWeek, string startTime, TimeSpan? duration)
+        /// <param name="dayOfWeek">
+        /// Day of maintenance window.
+        /// Serialized Name: MaintenanceWindowTimeRange.dayOfWeek
+        /// </param>
+        /// <param name="startOn">
+        /// Start time minutes offset from 12am.
+        /// Serialized Name: MaintenanceWindowTimeRange.startTime
+        /// </param>
+        /// <param name="duration">
+        /// Duration of maintenance window in minutes.
+        /// Serialized Name: MaintenanceWindowTimeRange.duration
+        /// </param>
+        internal MaintenanceWindowTimeRange(DayOfWeek? dayOfWeek, TimeSpan? startOn, TimeSpan? duration)
         {
             DayOfWeek = dayOfWeek;
-            StartTime = startTime;
+            StartOn = startOn;
             Duration = duration;
         }
 
-        /// <summary> Day of maintenance window. </summary>
+        /// <summary>
+        /// Day of maintenance window.
+        /// Serialized Name: MaintenanceWindowTimeRange.dayOfWeek
+        /// </summary>
         public DayOfWeek? DayOfWeek { get; set; }
-        /// <summary> Start time minutes offset from 12am. </summary>
-        public string StartTime { get; set; }
-        /// <summary> Duration of maintenance window in minutes. </summary>
+        /// <summary>
+        /// Start time minutes offset from 12am.
+        /// Serialized Name: MaintenanceWindowTimeRange.startTime
+        /// </summary>
+        public TimeSpan? StartOn { get; set; }
+        /// <summary>
+        /// Duration of maintenance window in minutes.
+        /// Serialized Name: MaintenanceWindowTimeRange.duration
+        /// </summary>
         public TimeSpan? Duration { get; set; }
     }
 }

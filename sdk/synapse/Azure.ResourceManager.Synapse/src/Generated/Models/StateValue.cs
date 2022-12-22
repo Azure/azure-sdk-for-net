@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> property configuration state. </summary>
+    /// <summary>
+    /// property configuration state
+    /// Serialized Name: StateValue
+    /// </summary>
     public readonly partial struct StateValue : IEquatable<StateValue>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string InConsistentValue = "InConsistent";
         private const string UpdatingValue = "Updating";
 
-        /// <summary> Consistent. </summary>
+        /// <summary>
+        /// Consistent
+        /// Serialized Name: StateValue.Consistent
+        /// </summary>
         public static StateValue Consistent { get; } = new StateValue(ConsistentValue);
-        /// <summary> InConsistent. </summary>
+        /// <summary>
+        /// InConsistent
+        /// Serialized Name: StateValue.InConsistent
+        /// </summary>
         public static StateValue InConsistent { get; } = new StateValue(InConsistentValue);
-        /// <summary> Updating. </summary>
+        /// <summary>
+        /// Updating
+        /// Serialized Name: StateValue.Updating
+        /// </summary>
         public static StateValue Updating { get; } = new StateValue(UpdatingValue);
         /// <summary> Determines if two <see cref="StateValue"/> values are the same. </summary>
         public static bool operator ==(StateValue left, StateValue right) => left.Equals(right);

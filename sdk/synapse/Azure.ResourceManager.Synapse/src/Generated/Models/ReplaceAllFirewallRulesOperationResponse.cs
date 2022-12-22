@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> An existing operation for replacing the firewall rules. </summary>
+    /// <summary>
+    /// An existing operation for replacing the firewall rules
+    /// Serialized Name: ReplaceAllFirewallRulesOperationResponse
+    /// </summary>
     public partial class ReplaceAllFirewallRulesOperationResponse
     {
         /// <summary> Initializes a new instance of ReplaceAllFirewallRulesOperationResponse. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of ReplaceAllFirewallRulesOperationResponse. </summary>
-        /// <param name="operationId"> The operation ID. </param>
+        /// <param name="operationId">
+        /// The operation ID
+        /// Serialized Name: ReplaceAllFirewallRulesOperationResponse.operationId
+        /// </param>
         internal ReplaceAllFirewallRulesOperationResponse(string operationId)
         {
             OperationId = operationId;
         }
 
-        /// <summary> The operation ID. </summary>
+        /// <summary>
+        /// The operation ID
+        /// Serialized Name: ReplaceAllFirewallRulesOperationResponse.operationId
+        /// </summary>
         public string OperationId { get; }
     }
 }

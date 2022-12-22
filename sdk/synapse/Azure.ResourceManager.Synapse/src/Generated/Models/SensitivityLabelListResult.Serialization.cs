@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SensitivityLabelListResult DeserializeSensitivityLabelListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SensitivityLabelData>> value = default;
+            Optional<IReadOnlyList<SynapseSensitivityLabelData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SensitivityLabelData> array = new List<SensitivityLabelData>();
+                    List<SynapseSensitivityLabelData> array = new List<SynapseSensitivityLabelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SensitivityLabelData.DeserializeSensitivityLabelData(item));
+                        array.Add(SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(item));
                     }
                     value = array;
                     continue;

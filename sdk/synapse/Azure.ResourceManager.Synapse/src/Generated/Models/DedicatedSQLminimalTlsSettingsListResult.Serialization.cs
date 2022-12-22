@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static DedicatedSQLminimalTlsSettingsListResult DeserializeDedicatedSQLminimalTlsSettingsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DedicatedSQLminimalTlsSettingData>> value = default;
+            Optional<IReadOnlyList<SynapseDedicatedSqlMinimalTlsSettingData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DedicatedSQLminimalTlsSettingData> array = new List<DedicatedSQLminimalTlsSettingData>();
+                    List<SynapseDedicatedSqlMinimalTlsSettingData> array = new List<SynapseDedicatedSqlMinimalTlsSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DedicatedSQLminimalTlsSettingData.DeserializeDedicatedSQLminimalTlsSettingData(item));
+                        array.Add(SynapseDedicatedSqlMinimalTlsSettingData.DeserializeSynapseDedicatedSqlMinimalTlsSettingData(item));
                     }
                     value = array;
                     continue;

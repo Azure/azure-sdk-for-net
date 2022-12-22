@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The type of resource, Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections. </summary>
+    /// <summary>
+    /// The type of resource, Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections.
+    /// Serialized Name: DataConnectionType
+    /// </summary>
     public readonly partial struct DataConnectionType : IEquatable<DataConnectionType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         private const string MicrosoftSynapseWorkspacesKustoPoolsDatabasesDataConnectionsValue = "Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections";
 
-        /// <summary> Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections. </summary>
+        /// <summary>
+        /// Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections
+        /// Serialized Name: DataConnectionType.Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections
+        /// </summary>
         public static DataConnectionType MicrosoftSynapseWorkspacesKustoPoolsDatabasesDataConnections { get; } = new DataConnectionType(MicrosoftSynapseWorkspacesKustoPoolsDatabasesDataConnectionsValue);
         /// <summary> Determines if two <see cref="DataConnectionType"/> values are the same. </summary>
         public static bool operator ==(DataConnectionType left, DataConnectionType right) => left.Equals(right);

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static RestorePointListResult DeserializeRestorePointListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<RestorePointData>> value = default;
+            Optional<IReadOnlyList<SynapseRestorePointData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RestorePointData> array = new List<RestorePointData>();
+                    List<SynapseRestorePointData> array = new List<SynapseRestorePointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorePointData.DeserializeRestorePointData(item));
+                        array.Add(SynapseRestorePointData.DeserializeSynapseRestorePointData(item));
                     }
                     value = array;
                     continue;

@@ -11,27 +11,42 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> A list of workload groups. </summary>
+    /// <summary>
+    /// A list of workload groups.
+    /// Serialized Name: WorkloadGroupListResult
+    /// </summary>
     internal partial class WorkloadGroupListResult
     {
         /// <summary> Initializes a new instance of WorkloadGroupListResult. </summary>
         internal WorkloadGroupListResult()
         {
-            Value = new ChangeTrackingList<WorkloadGroupData>();
+            Value = new ChangeTrackingList<SynapseWorkloadGroupData>();
         }
 
         /// <summary> Initializes a new instance of WorkloadGroupListResult. </summary>
-        /// <param name="value"> Array of results. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal WorkloadGroupListResult(IReadOnlyList<WorkloadGroupData> value, string nextLink)
+        /// <param name="value">
+        /// Array of results.
+        /// Serialized Name: WorkloadGroupListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to retrieve next page of results.
+        /// Serialized Name: WorkloadGroupListResult.nextLink
+        /// </param>
+        internal WorkloadGroupListResult(IReadOnlyList<SynapseWorkloadGroupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Array of results. </summary>
-        public IReadOnlyList<WorkloadGroupData> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
+        /// <summary>
+        /// Array of results.
+        /// Serialized Name: WorkloadGroupListResult.value
+        /// </summary>
+        public IReadOnlyList<SynapseWorkloadGroupData> Value { get; }
+        /// <summary>
+        /// Link to retrieve next page of results.
+        /// Serialized Name: WorkloadGroupListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

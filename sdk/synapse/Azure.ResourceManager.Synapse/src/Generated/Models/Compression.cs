@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The compression type. </summary>
+    /// <summary>
+    /// The compression type
+    /// Serialized Name: Compression
+    /// </summary>
     public readonly partial struct Compression : IEquatable<Compression>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string NoneValue = "None";
         private const string GZipValue = "GZip";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: Compression.None
+        /// </summary>
         public static Compression None { get; } = new Compression(NoneValue);
-        /// <summary> GZip. </summary>
+        /// <summary>
+        /// GZip
+        /// Serialized Name: Compression.GZip
+        /// </summary>
         public static Compression GZip { get; } = new Compression(GZipValue);
         /// <summary> Determines if two <see cref="Compression"/> values are the same. </summary>
         public static bool operator ==(Compression left, Compression right) => left.Equals(right);

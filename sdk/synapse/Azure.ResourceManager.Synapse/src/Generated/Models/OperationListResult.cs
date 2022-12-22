@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Result of the request to list REST API operations. It contains a list of operations and a URL nextLink to get the next set of results. </summary>
+    /// <summary>
+    /// Result of the request to list REST API operations. It contains a list of operations and a URL nextLink to get the next set of results.
+    /// Serialized Name: OperationListResult
+    /// </summary>
     internal partial class OperationListResult
     {
         /// <summary> Initializes a new instance of OperationListResult. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of OperationListResult. </summary>
-        /// <param name="value"> The list of operations supported by the resource provider. </param>
-        /// <param name="nextLink"> The URL to get the next set of operation list results if there are any. </param>
+        /// <param name="value">
+        /// The list of operations supported by the resource provider.
+        /// Serialized Name: OperationListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of operation list results if there are any.
+        /// Serialized Name: OperationListResult.nextLink
+        /// </param>
         internal OperationListResult(IReadOnlyList<Operation> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> The list of operations supported by the resource provider. </summary>
+        /// <summary>
+        /// The list of operations supported by the resource provider.
+        /// Serialized Name: OperationListResult.value
+        /// </summary>
         public IReadOnlyList<Operation> Value { get; }
-        /// <summary> The URL to get the next set of operation list results if there are any. </summary>
+        /// <summary>
+        /// The URL to get the next set of operation list results if there are any.
+        /// Serialized Name: OperationListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -13,13 +13,19 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The response to a list restorable dropped Sql pools request. </summary>
+    /// <summary>
+    /// The response to a list restorable dropped Sql pools request
+    /// Serialized Name: RestorableDroppedSqlPoolListResult
+    /// </summary>
     internal partial class RestorableDroppedSqlPoolListResult
     {
         /// <summary> Initializes a new instance of RestorableDroppedSqlPoolListResult. </summary>
-        /// <param name="value"> A list of restorable dropped Sql pools. </param>
+        /// <param name="value">
+        /// A list of restorable dropped Sql pools
+        /// Serialized Name: RestorableDroppedSqlPoolListResult.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal RestorableDroppedSqlPoolListResult(IEnumerable<RestorableDroppedSqlPoolData> value)
+        internal RestorableDroppedSqlPoolListResult(IEnumerable<SynapseRestorableDroppedSqlPoolData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -27,13 +33,19 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of RestorableDroppedSqlPoolListResult. </summary>
-        /// <param name="value"> A list of restorable dropped Sql pools. </param>
-        internal RestorableDroppedSqlPoolListResult(IReadOnlyList<RestorableDroppedSqlPoolData> value)
+        /// <param name="value">
+        /// A list of restorable dropped Sql pools
+        /// Serialized Name: RestorableDroppedSqlPoolListResult.value
+        /// </param>
+        internal RestorableDroppedSqlPoolListResult(IReadOnlyList<SynapseRestorableDroppedSqlPoolData> value)
         {
             Value = value;
         }
 
-        /// <summary> A list of restorable dropped Sql pools. </summary>
-        public IReadOnlyList<RestorableDroppedSqlPoolData> Value { get; }
+        /// <summary>
+        /// A list of restorable dropped Sql pools
+        /// Serialized Name: RestorableDroppedSqlPoolListResult.value
+        /// </summary>
+        public IReadOnlyList<SynapseRestorableDroppedSqlPoolData> Value { get; }
     }
 }

@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> SparkConfig Properties for a Big Data pool powered by Apache Spark. </summary>
+    /// <summary>
+    /// SparkConfig Properties for a Big Data pool powered by Apache Spark
+    /// Serialized Name: SparkConfigProperties
+    /// </summary>
     public partial class SparkConfigProperties
     {
         /// <summary> Initializes a new instance of SparkConfigProperties. </summary>
@@ -18,10 +21,22 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SparkConfigProperties. </summary>
-        /// <param name="time"> The last update time of the spark config properties file. </param>
-        /// <param name="content"> The spark config properties. </param>
-        /// <param name="filename"> The filename of the spark config properties file. </param>
-        /// <param name="configurationType"> The type of the spark config properties file. </param>
+        /// <param name="time">
+        /// The last update time of the spark config properties file.
+        /// Serialized Name: SparkConfigProperties.time
+        /// </param>
+        /// <param name="content">
+        /// The spark config properties.
+        /// Serialized Name: SparkConfigProperties.content
+        /// </param>
+        /// <param name="filename">
+        /// The filename of the spark config properties file.
+        /// Serialized Name: SparkConfigProperties.filename
+        /// </param>
+        /// <param name="configurationType">
+        /// The type of the spark config properties file.
+        /// Serialized Name: SparkConfigProperties.configurationType
+        /// </param>
         internal SparkConfigProperties(DateTimeOffset? time, string content, string filename, ConfigurationType? configurationType)
         {
             Time = time;
@@ -30,13 +45,25 @@ namespace Azure.ResourceManager.Synapse.Models
             ConfigurationType = configurationType;
         }
 
-        /// <summary> The last update time of the spark config properties file. </summary>
+        /// <summary>
+        /// The last update time of the spark config properties file.
+        /// Serialized Name: SparkConfigProperties.time
+        /// </summary>
         public DateTimeOffset? Time { get; }
-        /// <summary> The spark config properties. </summary>
+        /// <summary>
+        /// The spark config properties.
+        /// Serialized Name: SparkConfigProperties.content
+        /// </summary>
         public string Content { get; set; }
-        /// <summary> The filename of the spark config properties file. </summary>
+        /// <summary>
+        /// The filename of the spark config properties file.
+        /// Serialized Name: SparkConfigProperties.filename
+        /// </summary>
         public string Filename { get; set; }
-        /// <summary> The type of the spark config properties file. </summary>
+        /// <summary>
+        /// The type of the spark config properties file.
+        /// Serialized Name: SparkConfigProperties.configurationType
+        /// </summary>
         public ConfigurationType? ConfigurationType { get; set; }
     }
 }

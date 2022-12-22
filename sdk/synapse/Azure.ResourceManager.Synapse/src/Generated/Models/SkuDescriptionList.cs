@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The list of the SKU descriptions. </summary>
+    /// <summary>
+    /// The list of the SKU descriptions
+    /// Serialized Name: SkuDescriptionList
+    /// </summary>
     internal partial class SkuDescriptionList
     {
         /// <summary> Initializes a new instance of SkuDescriptionList. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SkuDescriptionList. </summary>
-        /// <param name="value"> SKU descriptions. </param>
+        /// <param name="value">
+        /// SKU descriptions
+        /// Serialized Name: SkuDescriptionList.value
+        /// </param>
         internal SkuDescriptionList(IReadOnlyList<SkuDescription> value)
         {
             Value = value;
         }
 
-        /// <summary> SKU descriptions. </summary>
+        /// <summary>
+        /// SKU descriptions
+        /// Serialized Name: SkuDescriptionList.value
+        /// </summary>
         public IReadOnlyList<SkuDescription> Value { get; }
     }
 }

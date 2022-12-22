@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static RestorableDroppedSqlPoolListResult DeserializeRestorableDroppedSqlPoolListResult(JsonElement element)
         {
-            IReadOnlyList<RestorableDroppedSqlPoolData> value = default;
+            IReadOnlyList<SynapseRestorableDroppedSqlPoolData> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<RestorableDroppedSqlPoolData> array = new List<RestorableDroppedSqlPoolData>();
+                    List<SynapseRestorableDroppedSqlPoolData> array = new List<SynapseRestorableDroppedSqlPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableDroppedSqlPoolData.DeserializeRestorableDroppedSqlPoolData(item));
+                        array.Add(SynapseRestorableDroppedSqlPoolData.DeserializeSynapseRestorableDroppedSqlPoolData(item));
                     }
                     value = array;
                     continue;

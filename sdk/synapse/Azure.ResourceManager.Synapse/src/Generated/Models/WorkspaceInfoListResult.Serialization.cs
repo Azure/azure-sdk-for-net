@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         internal static WorkspaceInfoListResult DeserializeWorkspaceInfoListResult(JsonElement element)
         {
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<WorkspaceData>> value = default;
+            Optional<IReadOnlyList<SynapseWorkspaceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<WorkspaceData> array = new List<WorkspaceData>();
+                    List<SynapseWorkspaceData> array = new List<SynapseWorkspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkspaceData.DeserializeWorkspaceData(item));
+                        array.Add(SynapseWorkspaceData.DeserializeSynapseWorkspaceData(item));
                     }
                     value = array;
                     continue;

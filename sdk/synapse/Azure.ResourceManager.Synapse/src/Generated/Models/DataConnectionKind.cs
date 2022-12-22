@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Kind of the endpoint for the data connection. </summary>
+    /// <summary>
+    /// Kind of the endpoint for the data connection
+    /// Serialized Name: DataConnectionKind
+    /// </summary>
     internal readonly partial struct DataConnectionKind : IEquatable<DataConnectionKind>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string EventGridValue = "EventGrid";
         private const string IotHubValue = "IotHub";
 
-        /// <summary> EventHub. </summary>
+        /// <summary>
+        /// EventHub
+        /// Serialized Name: DataConnectionKind.EventHub
+        /// </summary>
         public static DataConnectionKind EventHub { get; } = new DataConnectionKind(EventHubValue);
-        /// <summary> EventGrid. </summary>
+        /// <summary>
+        /// EventGrid
+        /// Serialized Name: DataConnectionKind.EventGrid
+        /// </summary>
         public static DataConnectionKind EventGrid { get; } = new DataConnectionKind(EventGridValue);
-        /// <summary> IotHub. </summary>
+        /// <summary>
+        /// IotHub
+        /// Serialized Name: DataConnectionKind.IotHub
+        /// </summary>
         public static DataConnectionKind IotHub { get; } = new DataConnectionKind(IotHubValue);
         /// <summary> Determines if two <see cref="DataConnectionKind"/> values are the same. </summary>
         public static bool operator ==(DataConnectionKind left, DataConnectionKind right) => left.Equals(right);

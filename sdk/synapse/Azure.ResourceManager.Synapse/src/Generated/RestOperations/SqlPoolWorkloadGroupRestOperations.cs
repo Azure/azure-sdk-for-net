@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="workloadGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="workloadGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkloadGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseWorkloadGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -84,13 +84,13 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        WorkloadGroupData value = default;
+                        SynapseWorkloadGroupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkloadGroupData.DeserializeWorkloadGroupData(document.RootElement);
+                        value = SynapseWorkloadGroupData.DeserializeSynapseWorkloadGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WorkloadGroupData)null, message.Response);
+                    return Response.FromValue((SynapseWorkloadGroupData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="workloadGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="workloadGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkloadGroupData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, CancellationToken cancellationToken = default)
+        public Response<SynapseWorkloadGroupData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -119,19 +119,19 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        WorkloadGroupData value = default;
+                        SynapseWorkloadGroupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkloadGroupData.DeserializeWorkloadGroupData(document.RootElement);
+                        value = SynapseWorkloadGroupData.DeserializeSynapseWorkloadGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WorkloadGroupData)null, message.Response);
+                    return Response.FromValue((SynapseWorkloadGroupData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, WorkloadGroupData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, SynapseWorkloadGroupData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="workloadGroupName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="workloadGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, WorkloadGroupData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, SynapseWorkloadGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="workloadGroupName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="workloadGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, WorkloadGroupData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string workloadGroupName, SynapseWorkloadGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

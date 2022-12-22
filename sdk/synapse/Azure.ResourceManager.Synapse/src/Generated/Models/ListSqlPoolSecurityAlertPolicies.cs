@@ -11,27 +11,42 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> A list of SQL pool security alert policies. </summary>
+    /// <summary>
+    /// A list of SQL pool security alert policies.
+    /// Serialized Name: ListSqlPoolSecurityAlertPolicies
+    /// </summary>
     internal partial class ListSqlPoolSecurityAlertPolicies
     {
         /// <summary> Initializes a new instance of ListSqlPoolSecurityAlertPolicies. </summary>
         internal ListSqlPoolSecurityAlertPolicies()
         {
-            Value = new ChangeTrackingList<SqlPoolSecurityAlertPolicyData>();
+            Value = new ChangeTrackingList<SynapseSqlPoolSecurityAlertPolicyData>();
         }
 
         /// <summary> Initializes a new instance of ListSqlPoolSecurityAlertPolicies. </summary>
-        /// <param name="value"> Array of results. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal ListSqlPoolSecurityAlertPolicies(IReadOnlyList<SqlPoolSecurityAlertPolicyData> value, string nextLink)
+        /// <param name="value">
+        /// Array of results.
+        /// Serialized Name: ListSqlPoolSecurityAlertPolicies.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to retrieve next page of results.
+        /// Serialized Name: ListSqlPoolSecurityAlertPolicies.nextLink
+        /// </param>
+        internal ListSqlPoolSecurityAlertPolicies(IReadOnlyList<SynapseSqlPoolSecurityAlertPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Array of results. </summary>
-        public IReadOnlyList<SqlPoolSecurityAlertPolicyData> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
+        /// <summary>
+        /// Array of results.
+        /// Serialized Name: ListSqlPoolSecurityAlertPolicies.value
+        /// </summary>
+        public IReadOnlyList<SynapseSqlPoolSecurityAlertPolicyData> Value { get; }
+        /// <summary>
+        /// Link to retrieve next page of results.
+        /// Serialized Name: ListSqlPoolSecurityAlertPolicies.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

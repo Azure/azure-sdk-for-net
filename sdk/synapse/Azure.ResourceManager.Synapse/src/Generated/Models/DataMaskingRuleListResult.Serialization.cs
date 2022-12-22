@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static DataMaskingRuleListResult DeserializeDataMaskingRuleListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DataMaskingRuleData>> value = default;
+            Optional<IReadOnlyList<SynapseDataMaskingRuleData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DataMaskingRuleData> array = new List<DataMaskingRuleData>();
+                    List<SynapseDataMaskingRuleData> array = new List<SynapseDataMaskingRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMaskingRuleData.DeserializeDataMaskingRuleData(item));
+                        array.Add(SynapseDataMaskingRuleData.DeserializeSynapseDataMaskingRuleData(item));
                     }
                     value = array;
                     continue;

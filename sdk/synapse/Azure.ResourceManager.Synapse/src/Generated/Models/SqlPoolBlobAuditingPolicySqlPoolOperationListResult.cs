@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The response to a list Sql pool operations request. </summary>
+    /// <summary>
+    /// The response to a list Sql pool operations request
+    /// Serialized Name: SqlPoolBlobAuditingPolicySqlPoolOperationListResult
+    /// </summary>
     internal partial class SqlPoolBlobAuditingPolicySqlPoolOperationListResult
     {
         /// <summary> Initializes a new instance of SqlPoolBlobAuditingPolicySqlPoolOperationListResult. </summary>
@@ -20,17 +23,29 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SqlPoolBlobAuditingPolicySqlPoolOperationListResult. </summary>
-        /// <param name="value"> Array of results. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
+        /// <param name="value">
+        /// Array of results.
+        /// Serialized Name: SqlPoolBlobAuditingPolicySqlPoolOperationListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to retrieve next page of results.
+        /// Serialized Name: SqlPoolBlobAuditingPolicySqlPoolOperationListResult.nextLink
+        /// </param>
         internal SqlPoolBlobAuditingPolicySqlPoolOperationListResult(IReadOnlyList<SqlPoolOperation> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Array of results. </summary>
+        /// <summary>
+        /// Array of results.
+        /// Serialized Name: SqlPoolBlobAuditingPolicySqlPoolOperationListResult.value
+        /// </summary>
         public IReadOnlyList<SqlPoolOperation> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
+        /// <summary>
+        /// Link to retrieve next page of results.
+        /// Serialized Name: SqlPoolBlobAuditingPolicySqlPoolOperationListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

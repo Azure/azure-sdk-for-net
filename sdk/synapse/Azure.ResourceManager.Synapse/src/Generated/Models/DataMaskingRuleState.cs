@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn&apos;t already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </summary>
+    /// <summary>
+    /// The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn&apos;t already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState.
+    /// Serialized Name: DataMaskingRuleState
+    /// </summary>
     public enum DataMaskingRuleState
     {
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: DataMaskingRuleState.Disabled
+        /// </summary>
         Disabled,
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: DataMaskingRuleState.Enabled
+        /// </summary>
         Enabled
     }
 }

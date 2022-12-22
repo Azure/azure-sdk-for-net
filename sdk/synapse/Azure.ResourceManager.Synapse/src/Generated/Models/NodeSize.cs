@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The level of compute power that each node in the Big Data pool has. </summary>
+    /// <summary>
+    /// The level of compute power that each node in the Big Data pool has.
+    /// Serialized Name: NodeSize
+    /// </summary>
     public readonly partial struct NodeSize : IEquatable<NodeSize>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string XXLargeValue = "XXLarge";
         private const string XXXLargeValue = "XXXLarge";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: NodeSize.None
+        /// </summary>
         public static NodeSize None { get; } = new NodeSize(NoneValue);
-        /// <summary> Small. </summary>
+        /// <summary>
+        /// Small
+        /// Serialized Name: NodeSize.Small
+        /// </summary>
         public static NodeSize Small { get; } = new NodeSize(SmallValue);
-        /// <summary> Medium. </summary>
+        /// <summary>
+        /// Medium
+        /// Serialized Name: NodeSize.Medium
+        /// </summary>
         public static NodeSize Medium { get; } = new NodeSize(MediumValue);
-        /// <summary> Large. </summary>
+        /// <summary>
+        /// Large
+        /// Serialized Name: NodeSize.Large
+        /// </summary>
         public static NodeSize Large { get; } = new NodeSize(LargeValue);
-        /// <summary> XLarge. </summary>
+        /// <summary>
+        /// XLarge
+        /// Serialized Name: NodeSize.XLarge
+        /// </summary>
         public static NodeSize XLarge { get; } = new NodeSize(XLargeValue);
-        /// <summary> XXLarge. </summary>
+        /// <summary>
+        /// XXLarge
+        /// Serialized Name: NodeSize.XXLarge
+        /// </summary>
         public static NodeSize XXLarge { get; } = new NodeSize(XXLargeValue);
-        /// <summary> XXXLarge. </summary>
+        /// <summary>
+        /// XXXLarge
+        /// Serialized Name: NodeSize.XXXLarge
+        /// </summary>
         public static NodeSize XXXLarge { get; } = new NodeSize(XXXLargeValue);
         /// <summary> Determines if two <see cref="NodeSize"/> values are the same. </summary>
         public static bool operator ==(NodeSize left, NodeSize right) => left.Equals(right);

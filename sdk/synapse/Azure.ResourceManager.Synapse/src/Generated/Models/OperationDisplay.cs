@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The object that describes the operation. </summary>
+    /// <summary>
+    /// The object that describes the operation.
+    /// Serialized Name: OperationDisplay
+    /// </summary>
     public partial class OperationDisplay
     {
         /// <summary> Initializes a new instance of OperationDisplay. </summary>
@@ -16,10 +19,22 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of OperationDisplay. </summary>
-        /// <param name="provider"> Friendly name of the resource provider. </param>
-        /// <param name="operation"> For example: read, write, delete. </param>
-        /// <param name="resource"> The resource type on which the operation is performed. </param>
-        /// <param name="description"> The friendly name of the operation. </param>
+        /// <param name="provider">
+        /// Friendly name of the resource provider.
+        /// Serialized Name: OperationDisplay.provider
+        /// </param>
+        /// <param name="operation">
+        /// For example: read, write, delete.
+        /// Serialized Name: OperationDisplay.operation
+        /// </param>
+        /// <param name="resource">
+        /// The resource type on which the operation is performed.
+        /// Serialized Name: OperationDisplay.resource
+        /// </param>
+        /// <param name="description">
+        /// The friendly name of the operation.
+        /// Serialized Name: OperationDisplay.description
+        /// </param>
         internal OperationDisplay(string provider, string operation, string resource, string description)
         {
             Provider = provider;
@@ -28,13 +43,25 @@ namespace Azure.ResourceManager.Synapse.Models
             Description = description;
         }
 
-        /// <summary> Friendly name of the resource provider. </summary>
+        /// <summary>
+        /// Friendly name of the resource provider.
+        /// Serialized Name: OperationDisplay.provider
+        /// </summary>
         public string Provider { get; }
-        /// <summary> For example: read, write, delete. </summary>
+        /// <summary>
+        /// For example: read, write, delete.
+        /// Serialized Name: OperationDisplay.operation
+        /// </summary>
         public string Operation { get; }
-        /// <summary> The resource type on which the operation is performed. </summary>
+        /// <summary>
+        /// The resource type on which the operation is performed.
+        /// Serialized Name: OperationDisplay.resource
+        /// </summary>
         public string Resource { get; }
-        /// <summary> The friendly name of the operation. </summary>
+        /// <summary>
+        /// The friendly name of the operation.
+        /// Serialized Name: OperationDisplay.description
+        /// </summary>
         public string Description { get; }
     }
 }

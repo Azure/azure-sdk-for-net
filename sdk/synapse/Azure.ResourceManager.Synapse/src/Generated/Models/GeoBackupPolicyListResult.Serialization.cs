@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static GeoBackupPolicyListResult DeserializeGeoBackupPolicyListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<GeoBackupPolicyData>> value = default;
+            Optional<IReadOnlyList<SynapseGeoBackupPolicyData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<GeoBackupPolicyData> array = new List<GeoBackupPolicyData>();
+                    List<SynapseGeoBackupPolicyData> array = new List<SynapseGeoBackupPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GeoBackupPolicyData.DeserializeGeoBackupPolicyData(item));
+                        array.Add(SynapseGeoBackupPolicyData.DeserializeSynapseGeoBackupPolicyData(item));
                     }
                     value = array;
                     continue;

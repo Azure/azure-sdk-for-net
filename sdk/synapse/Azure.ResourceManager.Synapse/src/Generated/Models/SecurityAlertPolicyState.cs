@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Specifies the state of the policy, whether it is enabled or disabled or a policy has not been applied yet on the specific Sql pool. </summary>
+    /// <summary>
+    /// Specifies the state of the policy, whether it is enabled or disabled or a policy has not been applied yet on the specific Sql pool.
+    /// Serialized Name: SecurityAlertPolicyState
+    /// </summary>
     public enum SecurityAlertPolicyState
     {
-        /// <summary> New. </summary>
+        /// <summary>
+        /// New
+        /// Serialized Name: SecurityAlertPolicyState.New
+        /// </summary>
         New,
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: SecurityAlertPolicyState.Enabled
+        /// </summary>
         Enabled,
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: SecurityAlertPolicyState.Disabled
+        /// </summary>
         Disabled
     }
 }
