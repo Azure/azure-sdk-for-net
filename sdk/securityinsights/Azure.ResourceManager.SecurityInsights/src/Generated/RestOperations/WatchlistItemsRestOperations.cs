@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="watchlistAlias"/> or <paramref name="watchlistItemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="watchlistAlias"/> or <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WatchlistItemData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias, string watchlistItemId, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsWatchlistItemData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias, string watchlistItemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -175,13 +175,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        WatchlistItemData value = default;
+                        SecurityInsightsWatchlistItemData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WatchlistItemData.DeserializeWatchlistItemData(document.RootElement);
+                        value = SecurityInsightsWatchlistItemData.DeserializeSecurityInsightsWatchlistItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WatchlistItemData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsWatchlistItemData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="watchlistAlias"/> or <paramref name="watchlistItemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="watchlistAlias"/> or <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WatchlistItemData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias, string watchlistItemId, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsWatchlistItemData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias, string watchlistItemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -210,13 +210,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        WatchlistItemData value = default;
+                        SecurityInsightsWatchlistItemData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WatchlistItemData.DeserializeWatchlistItemData(document.RootElement);
+                        value = SecurityInsightsWatchlistItemData.DeserializeSecurityInsightsWatchlistItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WatchlistItemData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsWatchlistItemData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias, string watchlistItemId, WatchlistItemData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias, string watchlistItemId, SecurityInsightsWatchlistItemData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="watchlistAlias"/>, <paramref name="watchlistItemId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="watchlistAlias"/> or <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WatchlistItemData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias, string watchlistItemId, WatchlistItemData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsWatchlistItemData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias, string watchlistItemId, SecurityInsightsWatchlistItemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -358,9 +358,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        WatchlistItemData value = default;
+                        SecurityInsightsWatchlistItemData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WatchlistItemData.DeserializeWatchlistItemData(document.RootElement);
+                        value = SecurityInsightsWatchlistItemData.DeserializeSecurityInsightsWatchlistItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="watchlistAlias"/>, <paramref name="watchlistItemId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="watchlistAlias"/> or <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WatchlistItemData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias, string watchlistItemId, WatchlistItemData data, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsWatchlistItemData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias, string watchlistItemId, SecurityInsightsWatchlistItemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -394,9 +394,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        WatchlistItemData value = default;
+                        SecurityInsightsWatchlistItemData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WatchlistItemData.DeserializeWatchlistItemData(document.RootElement);
+                        value = SecurityInsightsWatchlistItemData.DeserializeSecurityInsightsWatchlistItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

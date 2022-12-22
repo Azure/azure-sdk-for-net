@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Initializes a new instance of TIDataConnectorDataTypesIndicators. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        internal TIDataConnectorDataTypesIndicators(DataTypeState? state) : base(state)
+        internal TIDataConnectorDataTypesIndicators(SecurityInsightsDataTypeConnectionState? state) : base(state)
         {
         }
     }

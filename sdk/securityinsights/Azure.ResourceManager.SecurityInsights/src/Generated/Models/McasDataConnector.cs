@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents MCAS (Microsoft Cloud App Security) data connector. </summary>
-    public partial class McasDataConnector : DataConnectorData
+    public partial class McasDataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of McasDataConnector. </summary>
         public McasDataConnector()

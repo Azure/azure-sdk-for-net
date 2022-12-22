@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents MicrosoftSecurityIncidentCreation rule template. </summary>
-    public partial class MicrosoftSecurityIncidentCreationAlertRuleTemplate : AlertRuleTemplateData
+    public partial class MicrosoftSecurityIncidentCreationAlertRuleTemplate : SecurityInsightsAlertRuleTemplateData
     {
         /// <summary> Initializes a new instance of MicrosoftSecurityIncidentCreationAlertRuleTemplate. </summary>
         public MicrosoftSecurityIncidentCreationAlertRuleTemplate()
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             RequiredDataConnectors = new ChangeTrackingList<AlertRuleTemplateDataSource>();
             DisplayNamesFilter = new ChangeTrackingList<string>();
             DisplayNamesExcludeFilter = new ChangeTrackingList<string>();
-            SeveritiesFilter = new ChangeTrackingList<AlertSeverity>();
+            SeveritiesFilter = new ChangeTrackingList<SecurityInsightsAlertSeverity>();
             Kind = AlertRuleKind.MicrosoftSecurityIncidentCreation;
         }
 
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The alert rule kind. </param>
         /// <param name="alertRulesCreatedByTemplateCount"> the number of alert rules that were created by this template. </param>
-        /// <param name="createdDateUTC"> The time that this alert rule template has been added. </param>
-        /// <param name="lastUpdatedDateUTC"> The time that this alert rule template was last updated. </param>
+        /// <param name="createdOn"> The time that this alert rule template has been added. </param>
+        /// <param name="lastUpdatedOn"> The time that this alert rule template was last updated. </param>
         /// <param name="description"> The description of the alert rule template. </param>
         /// <param name="displayName"> The display name for alert rule template. </param>
         /// <param name="requiredDataConnectors"> The required data connectors for this template. </param>
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="displayNamesExcludeFilter"> the alerts&apos; displayNames on which the cases will not be generated. </param>
         /// <param name="productFilter"> The alerts&apos; productName on which the cases will be generated. </param>
         /// <param name="severitiesFilter"> the alerts&apos; severities on which the cases will be generated. </param>
-        internal MicrosoftSecurityIncidentCreationAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, int? alertRulesCreatedByTemplateCount, DateTimeOffset? createdDateUTC, DateTimeOffset? lastUpdatedDateUTC, string description, string displayName, IList<AlertRuleTemplateDataSource> requiredDataConnectors, TemplateStatus? status, IList<string> displayNamesFilter, IList<string> displayNamesExcludeFilter, MicrosoftSecurityProductName? productFilter, IList<AlertSeverity> severitiesFilter) : base(id, name, resourceType, systemData, kind)
+        internal MicrosoftSecurityIncidentCreationAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, int? alertRulesCreatedByTemplateCount, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string description, string displayName, IList<AlertRuleTemplateDataSource> requiredDataConnectors, SecurityInsightsAlertRuleTemplateStatus? status, IList<string> displayNamesFilter, IList<string> displayNamesExcludeFilter, MicrosoftSecurityProductName? productFilter, IList<SecurityInsightsAlertSeverity> severitiesFilter) : base(id, name, resourceType, systemData, kind)
         {
             AlertRulesCreatedByTemplateCount = alertRulesCreatedByTemplateCount;
-            CreatedDateUTC = createdDateUTC;
-            LastUpdatedDateUTC = lastUpdatedDateUTC;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
             Description = description;
             DisplayName = displayName;
             RequiredDataConnectors = requiredDataConnectors;
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> the number of alert rules that were created by this template. </summary>
         public int? AlertRulesCreatedByTemplateCount { get; set; }
         /// <summary> The time that this alert rule template has been added. </summary>
-        public DateTimeOffset? CreatedDateUTC { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The time that this alert rule template was last updated. </summary>
-        public DateTimeOffset? LastUpdatedDateUTC { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> The description of the alert rule template. </summary>
         public string Description { get; set; }
         /// <summary> The display name for alert rule template. </summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> The required data connectors for this template. </summary>
         public IList<AlertRuleTemplateDataSource> RequiredDataConnectors { get; }
         /// <summary> The alert rule template status. </summary>
-        public TemplateStatus? Status { get; set; }
+        public SecurityInsightsAlertRuleTemplateStatus? Status { get; set; }
         /// <summary> the alerts&apos; displayNames on which the cases will be generated. </summary>
         public IList<string> DisplayNamesFilter { get; }
         /// <summary> the alerts&apos; displayNames on which the cases will not be generated. </summary>
@@ -80,6 +80,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> The alerts&apos; productName on which the cases will be generated. </summary>
         public MicrosoftSecurityProductName? ProductFilter { get; set; }
         /// <summary> the alerts&apos; severities on which the cases will be generated. </summary>
-        public IList<AlertSeverity> SeveritiesFilter { get; }
+        public IList<SecurityInsightsAlertSeverity> SeveritiesFilter { get; }
     }
 }

@@ -14,16 +14,16 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents scheduled alert rule template. </summary>
-    public partial class ScheduledAlertRuleTemplate : AlertRuleTemplateData
+    public partial class ScheduledAlertRuleTemplate : SecurityInsightsAlertRuleTemplateData
     {
         /// <summary> Initializes a new instance of ScheduledAlertRuleTemplate. </summary>
         public ScheduledAlertRuleTemplate()
         {
             RequiredDataConnectors = new ChangeTrackingList<AlertRuleTemplateDataSource>();
-            Tactics = new ChangeTrackingList<AttackTactic>();
+            Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
             Techniques = new ChangeTrackingList<string>();
             CustomDetails = new ChangeTrackingDictionary<string, string>();
-            EntityMappings = new ChangeTrackingList<EntityMapping>();
+            EntityMappings = new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>();
             Kind = AlertRuleKind.Scheduled;
         }
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="customDetails"> Dictionary of string key-value pairs of columns to be attached to the alert. </param>
         /// <param name="entityMappings"> Array of the entity mappings of the alert rule. </param>
         /// <param name="alertDetailsOverride"> The alert details override settings. </param>
-        internal ScheduledAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, int? alertRulesCreatedByTemplateCount, DateTimeOffset? createdDateUTC, DateTimeOffset? lastUpdatedDateUTC, string description, string displayName, IList<AlertRuleTemplateDataSource> requiredDataConnectors, TemplateStatus? status, string query, TimeSpan? queryFrequency, TimeSpan? queryPeriod, AlertSeverity? severity, TriggerOperator? triggerOperator, int? triggerThreshold, IList<AttackTactic> tactics, IList<string> techniques, string version, EventGroupingSettings eventGroupingSettings, IDictionary<string, string> customDetails, IList<EntityMapping> entityMappings, AlertDetailsOverride alertDetailsOverride) : base(id, name, resourceType, systemData, kind)
+        internal ScheduledAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, int? alertRulesCreatedByTemplateCount, DateTimeOffset? createdDateUTC, DateTimeOffset? lastUpdatedDateUTC, string description, string displayName, IList<AlertRuleTemplateDataSource> requiredDataConnectors, SecurityInsightsAlertRuleTemplateStatus? status, string query, TimeSpan? queryFrequency, TimeSpan? queryPeriod, SecurityInsightsAlertSeverity? severity, SecurityInsightsAlertRuleTriggerOperator? triggerOperator, int? triggerThreshold, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, string version, EventGroupingSettings eventGroupingSettings, IDictionary<string, string> customDetails, IList<SecurityInsightsAlertRuleEntityMapping> entityMappings, SecurityInsightsAlertDetailsOverride alertDetailsOverride) : base(id, name, resourceType, systemData, kind)
         {
             AlertRulesCreatedByTemplateCount = alertRulesCreatedByTemplateCount;
             CreatedDateUTC = createdDateUTC;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> The required data connectors for this template. </summary>
         public IList<AlertRuleTemplateDataSource> RequiredDataConnectors { get; }
         /// <summary> The alert rule template status. </summary>
-        public TemplateStatus? Status { get; set; }
+        public SecurityInsightsAlertRuleTemplateStatus? Status { get; set; }
         /// <summary> The query that creates alerts for this rule. </summary>
         public string Query { get; set; }
         /// <summary> The frequency (in ISO 8601 duration format) for this alert rule to run. </summary>
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> The period (in ISO 8601 duration format) that this alert rule looks at. </summary>
         public TimeSpan? QueryPeriod { get; set; }
         /// <summary> The severity for alerts created by this alert rule. </summary>
-        public AlertSeverity? Severity { get; set; }
+        public SecurityInsightsAlertSeverity? Severity { get; set; }
         /// <summary> The operation against the threshold that triggers alert rule. </summary>
-        public TriggerOperator? TriggerOperator { get; set; }
+        public SecurityInsightsAlertRuleTriggerOperator? TriggerOperator { get; set; }
         /// <summary> The threshold triggers this alert rule. </summary>
         public int? TriggerThreshold { get; set; }
         /// <summary> The tactics of the alert rule template. </summary>
-        public IList<AttackTactic> Tactics { get; }
+        public IList<SecurityInsightsAttackTactic> Tactics { get; }
         /// <summary> The techniques of the alert rule template. </summary>
         public IList<string> Techniques { get; }
         /// <summary> The version of this template - in format &lt;a.b.c&gt;, where all are numbers. For example &lt;1.0.2&gt;. </summary>
@@ -127,8 +127,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Dictionary of string key-value pairs of columns to be attached to the alert. </summary>
         public IDictionary<string, string> CustomDetails { get; }
         /// <summary> Array of the entity mappings of the alert rule. </summary>
-        public IList<EntityMapping> EntityMappings { get; }
+        public IList<SecurityInsightsAlertRuleEntityMapping> EntityMappings { get; }
         /// <summary> The alert details override settings. </summary>
-        public AlertDetailsOverride AlertDetailsOverride { get; set; }
+        public SecurityInsightsAlertDetailsOverride AlertDetailsOverride { get; set; }
     }
 }

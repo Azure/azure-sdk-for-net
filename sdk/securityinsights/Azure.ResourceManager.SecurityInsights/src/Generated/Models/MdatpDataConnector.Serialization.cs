@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<Guid> tenantId = default;
-            Optional<AlertsDataTypeOfDataConnector> dataTypes = default;
+            Optional<SecurityInsightsAlertsDataTypeOfDataConnector> dataTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dataTypes = AlertsDataTypeOfDataConnector.DeserializeAlertsDataTypeOfDataConnector(property0.Value);
+                            dataTypes = SecurityInsightsAlertsDataTypeOfDataConnector.DeserializeSecurityInsightsAlertsDataTypeOfDataConnector(property0.Value);
                             continue;
                         }
                     }

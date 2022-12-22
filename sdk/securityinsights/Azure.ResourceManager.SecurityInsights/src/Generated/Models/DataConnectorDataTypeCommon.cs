@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Initializes a new instance of DataConnectorDataTypeCommon. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        internal DataConnectorDataTypeCommon(DataTypeState? state)
+        internal DataConnectorDataTypeCommon(SecurityInsightsDataTypeConnectionState? state)
         {
             State = state;
         }
 
         /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        public DataTypeState? State { get; set; }
+        public SecurityInsightsDataTypeConnectionState? State { get; set; }
     }
 }
