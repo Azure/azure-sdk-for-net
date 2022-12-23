@@ -15,10 +15,10 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Threat intelligence indicator entity. </summary>
-    public partial class SecurityInsightsThreatIntelligenceIndicatorCreateOrUpdateContent : SecurityInsightsThreatIntelligenceIndicatorBaseData
+    public partial class SecurityInsightsThreatIntelligenceIndicatorData : SecurityInsightsThreatIntelligenceIndicatorBaseData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsThreatIntelligenceIndicatorCreateOrUpdateContent. </summary>
-        public SecurityInsightsThreatIntelligenceIndicatorCreateOrUpdateContent()
+        /// <summary> Initializes a new instance of SecurityInsightsThreatIntelligenceIndicatorData. </summary>
+        public SecurityInsightsThreatIntelligenceIndicatorData()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             ThreatIntelligenceTags = new ChangeTrackingList<string>();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = ThreatIntelligenceResourceInnerKind.Indicator;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsThreatIntelligenceIndicatorCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of SecurityInsightsThreatIntelligenceIndicatorData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="createdOn"> Created by. </param>
         /// <param name="modified"> Modified by. </param>
         /// <param name="extensions"> Extensions map. </param>
-        internal SecurityInsightsThreatIntelligenceIndicatorCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ThreatIntelligenceResourceInnerKind kind, ETag? etag, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IList<string> threatIntelligenceTags, DateTimeOffset? lastUpdatedOn, string source, string displayName, string description, IList<string> indicatorTypes, string pattern, string patternType, string patternVersion, IList<ThreatIntelligenceKillChainPhase> killChainPhases, IList<ThreatIntelligenceParsedPattern> parsedPattern, string externalId, string createdByRef, bool? isDefanged, DateTimeOffset? externalLastUpdatedOn, IList<ThreatIntelligenceExternalReference> externalReferences, IList<ThreatIntelligenceGranularMarkingEntity> granularMarkings, IList<string> labels, bool? isRevoked, int? confidence, IList<string> objectMarkingRefs, string language, IList<string> threatTypes, DateTimeOffset? validFrom, DateTimeOffset? validUntil, DateTimeOffset? createdOn, string modified, IDictionary<string, BinaryData> extensions) : base(id, name, resourceType, systemData, kind, etag)
+        internal SecurityInsightsThreatIntelligenceIndicatorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ThreatIntelligenceResourceInnerKind kind, ETag? etag, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IList<string> threatIntelligenceTags, DateTimeOffset? lastUpdatedOn, string source, string displayName, string description, IList<string> indicatorTypes, string pattern, string patternType, string patternVersion, IList<ThreatIntelligenceKillChainPhase> killChainPhases, IList<ThreatIntelligenceParsedPattern> parsedPattern, string externalId, string createdByRef, bool? isDefanged, DateTimeOffset? externalLastUpdatedOn, IList<ThreatIntelligenceExternalReference> externalReferences, IList<ThreatIntelligenceGranularMarkingEntity> granularMarkings, IList<string> labels, bool? isRevoked, int? confidence, IList<string> objectMarkingRefs, string language, IList<string> threatTypes, DateTimeOffset? validFrom, DateTimeOffset? validUntil, DateTimeOffset? createdOn, string modified, IDictionary<string, BinaryData> extensions) : base(id, name, resourceType, systemData, kind, etag)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

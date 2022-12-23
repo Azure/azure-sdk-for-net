@@ -60,20 +60,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> Threat intelligence indicator name field. </param>
-        /// <param name="content"> Properties of threat intelligence indicators to create and update. </param>
+        /// <param name="data"> Properties of threat intelligence indicators to create and update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<SecurityInsightsThreatIntelligenceIndicatorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, SecurityInsightsThreatIntelligenceIndicatorCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<SecurityInsightsThreatIntelligenceIndicatorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, SecurityInsightsThreatIntelligenceIndicatorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsClientDiagnostics.CreateScope("SecurityInsightsThreatIntelligenceIndicatorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, content, cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
                 var operation = new SecurityInsightsArmOperation<SecurityInsightsThreatIntelligenceIndicatorResource>(Response.FromValue(new SecurityInsightsThreatIntelligenceIndicatorResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -93,20 +93,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> Threat intelligence indicator name field. </param>
-        /// <param name="content"> Properties of threat intelligence indicators to create and update. </param>
+        /// <param name="data"> Properties of threat intelligence indicators to create and update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<SecurityInsightsThreatIntelligenceIndicatorResource> CreateOrUpdate(WaitUntil waitUntil, string name, SecurityInsightsThreatIntelligenceIndicatorCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<SecurityInsightsThreatIntelligenceIndicatorResource> CreateOrUpdate(WaitUntil waitUntil, string name, SecurityInsightsThreatIntelligenceIndicatorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsClientDiagnostics.CreateScope("SecurityInsightsThreatIntelligenceIndicatorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, content, cancellationToken);
+                var response = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
                 var operation = new SecurityInsightsArmOperation<SecurityInsightsThreatIntelligenceIndicatorResource>(Response.FromValue(new SecurityInsightsThreatIntelligenceIndicatorResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
