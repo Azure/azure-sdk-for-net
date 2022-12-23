@@ -188,6 +188,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _isSessionReceiver = isSessionReceiver;
             _isProcessor = isProcessor;
             _receiveMode = receiveMode;
+            _prefetchCount = (int)prefetchCount;
             Identifier = identifier;
             RequestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
             SessionId = sessionId;
