@@ -699,10 +699,7 @@ namespace Azure.Messaging.ServiceBus
                 for (int i = 0; i < receiverManagers; i++)
                 {
                     var receiverManager = _receiverManagers[i];
-                    if (receiverManager.Receiver != null && receiverManager.Receiver.PrefetchCount != prefetchCount)
-                    {
-                        receiverManager.Receiver.PrefetchCount = prefetchCount;
-                    }
+                    receiverManager.UpdatePrefetchCount(prefetchCount);
                 }
             }
         }
