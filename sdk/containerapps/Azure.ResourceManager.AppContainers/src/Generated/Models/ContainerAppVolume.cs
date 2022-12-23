@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="name"> Volume name. </param>
         /// <param name="storageType"> Storage type for the volume. If not provided, use EmptyDir. </param>
         /// <param name="storageName"> Name of storage resource. No need to provide for EmptyDir. </param>
-        internal ContainerAppVolume(string name, StorageType? storageType, string storageName)
+        internal ContainerAppVolume(string name, ContainerAppStorageType? storageType, string storageName)
         {
             Name = name;
             StorageType = storageType;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Volume name. </summary>
         public string Name { get; set; }
         /// <summary> Storage type for the volume. If not provided, use EmptyDir. </summary>
-        public StorageType? StorageType { get; set; }
+        public ContainerAppStorageType? StorageType { get; set; }
         /// <summary> Name of storage resource. No need to provide for EmptyDir. </summary>
         public string StorageName { get; set; }
     }
