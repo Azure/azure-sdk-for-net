@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         internal static AlertRuleTemplatesList DeserializeAlertRuleTemplatesList(JsonElement element)
         {
             Optional<string> nextLink = default;
-            IReadOnlyList<AlertRuleTemplateData> value = default;
+            IReadOnlyList<SecurityInsightsAlertRuleTemplateData> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("value"))
                 {
-                    List<AlertRuleTemplateData> array = new List<AlertRuleTemplateData>();
+                    List<SecurityInsightsAlertRuleTemplateData> array = new List<SecurityInsightsAlertRuleTemplateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AlertRuleTemplateData.DeserializeAlertRuleTemplateData(item));
+                        array.Add(SecurityInsightsAlertRuleTemplateData.DeserializeSecurityInsightsAlertRuleTemplateData(item));
                     }
                     value = array;
                     continue;
