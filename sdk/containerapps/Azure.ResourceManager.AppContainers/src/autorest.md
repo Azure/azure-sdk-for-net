@@ -125,7 +125,7 @@ rename-mapping:
   EnvironmentProvisioningState: ContainerAppEnvironmentProvisioningState
   EnvironmentVar: ContainerAppEnvironmentVariable
   ExtendedLocation: ContainerAppExtendedLocation
-  ExtendedLocationType: ContainerAppExtendedLocationType
+  ExtendedLocationTypes: ContainerAppExtendedLocationType
   ForwardProxy: ContainerAppForwardProxy
   ForwardProxyConvention: ContainerAppForwardProxyConvention
   GithubActionConfiguration: ContainerAppGitHubActionConfiguration

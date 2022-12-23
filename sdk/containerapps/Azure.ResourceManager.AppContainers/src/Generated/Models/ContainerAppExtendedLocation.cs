@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppExtendedLocation. </summary>
         /// <param name="name"> The name of the extended location. </param>
         /// <param name="extendedLocationType"> The type of the extended location. </param>
-        internal ContainerAppExtendedLocation(string name, ExtendedLocationType? extendedLocationType)
+        internal ContainerAppExtendedLocation(string name, ContainerAppExtendedLocationType? extendedLocationType)
         {
             Name = name;
             ExtendedLocationType = extendedLocationType;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> The name of the extended location. </summary>
         public string Name { get; set; }
         /// <summary> The type of the extended location. </summary>
-        public ExtendedLocationType? ExtendedLocationType { get; set; }
+        public ContainerAppExtendedLocationType? ExtendedLocationType { get; set; }
     }
 }
