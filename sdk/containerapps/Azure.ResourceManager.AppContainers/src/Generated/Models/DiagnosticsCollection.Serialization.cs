@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static DiagnosticsCollection DeserializeDiagnosticsCollection(JsonElement element)
         {
-            IReadOnlyList<DiagnosticData> value = default;
+            IReadOnlyList<ContainerAppDiagnosticData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<DiagnosticData> array = new List<DiagnosticData>();
+                    List<ContainerAppDiagnosticData> array = new List<ContainerAppDiagnosticData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticData.DeserializeDiagnosticData(item));
+                        array.Add(ContainerAppDiagnosticData.DeserializeContainerAppDiagnosticData(item));
                     }
                     value = array;
                     continue;
