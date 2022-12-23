@@ -196,6 +196,7 @@ rename-mapping:
   TrafficWeight.latestRevision: IsLatestRevision
   VnetConfiguration.infrastructureSubnetId: -|arm-id
   VnetConfiguration.internal: IsInternal
+  ContainerApp.properties.eventStreamEndpoint: -|uri
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}: ContainerAppConnectedEnvironmentCertificate
@@ -222,5 +223,8 @@ directive:
     transform: >
       if ($['type'] === 'boolean')
         $['x-ms-client-name'] = 'IsEnabled'
-
+  - from: ContainerApps.json
+    where: $.definitions.ContainerApp
+    transform: >
+      $.properties.properties.properties.outboundIpAddresses.items.format = 'uri';
 ```

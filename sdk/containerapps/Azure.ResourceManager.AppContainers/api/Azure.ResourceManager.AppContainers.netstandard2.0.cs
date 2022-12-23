@@ -267,14 +267,14 @@ namespace Azure.ResourceManager.AppContainers
         public Azure.ResourceManager.AppContainers.Models.ContainerAppConfiguration Configuration { get { throw null; } set { } }
         public string CustomDomainVerificationId { get { throw null; } }
         public Azure.Core.ResourceIdentifier EnvironmentId { get { throw null; } set { } }
-        public string EventStreamEndpoint { get { throw null; } }
+        public System.Uri EventStreamEndpoint { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string LatestReadyRevisionName { get { throw null; } }
         public string LatestRevisionFqdn { get { throw null; } }
         public string LatestRevisionName { get { throw null; } }
         public Azure.Core.ResourceIdentifier ManagedEnvironmentId { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<string> OutboundIPAddresses { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.Uri> OutboundIPAddresses { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppTemplate Template { get { throw null; } set { } }
         public string WorkloadProfileType { get { throw null; } set { } }
