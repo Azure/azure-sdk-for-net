@@ -269,6 +269,8 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         protected ServiceBusProcessor()
         {
+            // assign default options since some of the properties reach into the options
+            Options = new ServiceBusProcessorOptions();
         }
 
         /// <summary>
