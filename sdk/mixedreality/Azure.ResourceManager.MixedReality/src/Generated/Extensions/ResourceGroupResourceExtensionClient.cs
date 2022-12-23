@@ -44,12 +44,5 @@ namespace Azure.ResourceManager.MixedReality
         {
             return GetCachedClient(Client => new RemoteRenderingAccountCollection(Client, Id));
         }
-
-        /// <summary> Gets a collection of ObjectAnchorsAccountResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ObjectAnchorsAccountResources and their operations over a ObjectAnchorsAccountResource. </returns>
-        public virtual ObjectAnchorsAccountCollection GetObjectAnchorsAccounts()
-        {
-            return GetCachedClient(Client => new ObjectAnchorsAccountCollection(Client, Id));
-        }
     }
 }

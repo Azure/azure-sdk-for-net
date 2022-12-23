@@ -226,9 +226,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(progressSeen);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33018")]
         [RecordedTest]
-        [LiveOnly]
         public async Task LocalToBlockBlobSize_SmallChunk()
         {
             long fileSize = Constants.KB;
@@ -449,7 +447,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
         [Test]
-        [Category("Live")]
+        [LiveOnly]
         [TestCase(257 * Constants.MB, 600)]
         [TestCase(500 * Constants.MB, 200)]
         [TestCase(700 * Constants.MB, 200)]
@@ -499,7 +497,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
         [Test]
-        [Category("Live")]
+        [LiveOnly]
         [TestCase(1, 257 * Constants.MB, 200)]
         [TestCase(4, 257 * Constants.MB, 200)]
         [TestCase(16, 257 * Constants.MB, 200)]
@@ -523,9 +521,9 @@ namespace Azure.Storage.DataMovement.Tests
                 transferManagerOptions: managerOptions);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33018")]
-        [RecordedTest]
-        [Category("Live")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33003")]
+        [Test]
+        [LiveOnly]
         [TestCase(2, 0, 30)]
         [TestCase(2, Constants.KB, 30)]
         [TestCase(6, Constants.KB, 30)]
@@ -546,7 +544,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
         [Test]
-        [Category("Live")]
+        [LiveOnly]
         [TestCase(2, 257 * Constants.MB, 400)]
         [TestCase(6, 257 * Constants.MB, 400)]
         [TestCase(2, Constants.GB, 1000)]
@@ -926,7 +924,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
         [Test]
-        [Category("Live")]
+        [LiveOnly]
         [TestCase(257 * Constants.MB, 200)]
         [TestCase(400 * Constants.MB, 400)]
         [TestCase(800 * Constants.MB, 400)]
@@ -979,7 +977,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
         [Test]
-        [Category("Live")]
+        [LiveOnly]
         [TestCase(1, Constants.MB, 200)]
         [TestCase(2, Constants.MB, 300)]
         [TestCase(6, Constants.MB, 300)]
@@ -1005,9 +1003,9 @@ namespace Azure.Storage.DataMovement.Tests
                 container: testContainer.Container);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33018")]
-        [RecordedTest]
-        [Category("Live")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33003")]
+        [Test]
+        [LiveOnly]
         [TestCase(2, Constants.KB, 10)]
         [TestCase(6, Constants.KB, 10)]
         [TestCase(2, 2 * Constants.KB, 10)]
@@ -1026,7 +1024,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
         [Test]
-        [Category("Live")]
+        [LiveOnly]
         [TestCase(2, 4 * Constants.MB, 60)]
         [TestCase(6, 4 * Constants.MB, 60)]
         [TestCase(2, Constants.GB, 1000)]
@@ -1045,9 +1043,7 @@ namespace Azure.Storage.DataMovement.Tests
                 blobCount: blobCount);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33018")]
         [RecordedTest]
-        [Category("Live")]
         public async Task LocalToPageBlob_SmallChunks()
         {
             long size = 12 * Constants.KB;
@@ -1199,9 +1195,7 @@ namespace Azure.Storage.DataMovement.Tests
             await UploadAppendBlobsAndVerify(testContainer.Container);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33018")]
         [RecordedTest]
-        [LiveOnly]
         public async Task LocalToAppend_SmallChunk()
         {
             long size = Constants.KB;
@@ -1280,7 +1274,6 @@ namespace Azure.Storage.DataMovement.Tests
             };
             List<SingleTransferOptions> optionsList = new List<SingleTransferOptions>() { options };
             List<string> blobNames = new List<string>() { blobName };
-            TransferManager transferManager = new TransferManager();
 
             // Start transfer and await for completion.
             await UploadAppendBlobsAndVerify(
@@ -1461,7 +1454,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
         [Test]
-        [Category("Live")]
+        [LiveOnly]
         [TestCase(Constants.MB, 60)]
         [TestCase(257 * Constants.MB, 600)]
         [TestCase(400 * Constants.MB, 500)]
@@ -1519,7 +1512,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
         [Test]
-        [Category("Live")]
+        [LiveOnly]
         [TestCase(1, Constants.MB, 200)]
         [TestCase(6, Constants.MB, 200)]
         [TestCase(32, Constants.MB, 200)]
@@ -1546,9 +1539,9 @@ namespace Azure.Storage.DataMovement.Tests
                 transferManagerOptions: managerOptions);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33018")]
-        [RecordedTest]
-        [Category("Live")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33003")]
+        [Test]
+        [LiveOnly]
         [TestCase(2, 0, 30)]
         [TestCase(6, 0, 30)]
         [TestCase(2, Constants.KB, 30)]
@@ -1569,7 +1562,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
         [Test]
-        [Category("Live")]
+        [LiveOnly]
         [TestCase(2, Constants.MB, 300)]
         [TestCase(6, Constants.MB, 300)]
         [TestCase(2, 257 * Constants.MB, 400)]

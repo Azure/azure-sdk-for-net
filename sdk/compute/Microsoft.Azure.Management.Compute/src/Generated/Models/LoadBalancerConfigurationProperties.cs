@@ -34,13 +34,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// LoadBalancerConfigurationProperties class.
         /// </summary>
-        /// <param name="frontendIPConfigurations">Specifies the frontend IP to
+        /// <param name="frontendIpConfigurations">Specifies the frontend IP to
         /// be used for the load balancer. Only IPv4 frontend IP address is
         /// supported. Each load balancer configuration must have exactly one
         /// frontend IP configuration.</param>
-        public LoadBalancerConfigurationProperties(IList<LoadBalancerFrontendIPConfiguration> frontendIPConfigurations)
+        public LoadBalancerConfigurationProperties(IList<LoadBalancerFrontendIpConfiguration> frontendIpConfigurations)
         {
-            FrontendIPConfigurations = frontendIPConfigurations;
+            FrontendIpConfigurations = frontendIpConfigurations;
             CustomInit();
         }
 
@@ -55,8 +55,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// balancer configuration must have exactly one frontend IP
         /// configuration.
         /// </summary>
-        [JsonProperty(PropertyName = "frontendIPConfigurations")]
-        public IList<LoadBalancerFrontendIPConfiguration> FrontendIPConfigurations { get; set; }
+        [JsonProperty(PropertyName = "frontendIpConfigurations")]
+        public IList<LoadBalancerFrontendIpConfiguration> FrontendIpConfigurations { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -66,13 +66,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (FrontendIPConfigurations == null)
+            if (FrontendIpConfigurations == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "FrontendIPConfigurations");
+                throw new ValidationException(ValidationRules.CannotBeNull, "FrontendIpConfigurations");
             }
-            if (FrontendIPConfigurations != null)
+            if (FrontendIpConfigurations != null)
             {
-                foreach (var element in FrontendIPConfigurations)
+                foreach (var element in FrontendIpConfigurations)
                 {
                     if (element != null)
                     {
