@@ -1,14 +1,8 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (2022-12-23)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+This release is the first stable release of the Analysis Services Management library.
 
 ## 1.0.0-beta.1 (2022-12-05)
 
