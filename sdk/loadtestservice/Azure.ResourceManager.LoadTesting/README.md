@@ -1,8 +1,8 @@
-# Azure Load Testing management client library for .NET
+# Microsoft Azure Load Testing management client library for .NET
 
-Azure Load Testing is a fully managed load-testing service that enables you to generate high-scale load. The service simulates traffic for your applications, regardless of where they're hosted. Developers, testers, and quality assurance (QA) engineers can use it to optimize application performance, scalability, or capacity.
+Microsoft Azure Load Testing is a fully managed load-testing service that enables you to generate high-scale load. The service simulates traffic for your applications, regardless of where they're hosted. Developers, testers, and quality assurance (QA) engineers can use it to optimize application performance, scalability, or capacity.
 
-This library supports managing Azure Load Testing resources.
+This library supports managing Microsoft Azure Load Testing resources.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -16,7 +16,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Azure Load Testing management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Load Testing management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.LoadTesting --prerelease
