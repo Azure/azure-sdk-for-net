@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The SAS token of the Azure blob container.
         /// Serialized Name: IntegrationRuntimeCustomSetupScriptProperties.sasToken
         /// </param>
-        internal SynapseIntegrationRuntimeCustomSetupScriptProperties(Uri blobContainerUri, SecureString sasToken)
+        internal SynapseIntegrationRuntimeCustomSetupScriptProperties(Uri blobContainerUri, SynapseSecureString sasToken)
         {
             BlobContainerUri = blobContainerUri;
             SasToken = sasToken;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The SAS token of the Azure blob container.
         /// Serialized Name: IntegrationRuntimeCustomSetupScriptProperties.sasToken
         /// </summary>
-        public SecureString SasToken { get; set; }
+        public SynapseSecureString SasToken { get; set; }
     }
 }

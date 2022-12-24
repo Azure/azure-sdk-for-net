@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Synapse
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> id0 = default;
             Optional<string> aliasName = default;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Synapse
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))

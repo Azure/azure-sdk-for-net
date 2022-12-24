@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="password">
         /// The password of data source access.
         /// Serialized Name: CmdkeySetup.typeProperties.password
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/>.
+        /// Please note <see cref="SynapseSecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SynapseSecureString"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetName"/>, <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
-        public SynapseCmdkeySetup(BinaryData targetName, BinaryData userName, SecretBase password)
+        public SynapseCmdkeySetup(BinaryData targetName, BinaryData userName, SynapseSecretBase password)
         {
             Argument.AssertNotNull(targetName, nameof(targetName));
             Argument.AssertNotNull(userName, nameof(userName));
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="password">
         /// The password of data source access.
         /// Serialized Name: CmdkeySetup.typeProperties.password
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/>.
+        /// Please note <see cref="SynapseSecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SynapseSecureString"/>.
         /// </param>
-        internal SynapseCmdkeySetup(string customSetupBaseType, BinaryData targetName, BinaryData userName, SecretBase password) : base(customSetupBaseType)
+        internal SynapseCmdkeySetup(string customSetupBaseType, BinaryData targetName, BinaryData userName, SynapseSecretBase password) : base(customSetupBaseType)
         {
             TargetName = targetName;
             UserName = userName;
@@ -138,9 +138,9 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary>
         /// The password of data source access.
         /// Serialized Name: CmdkeySetup.typeProperties.password
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/>.
+        /// Please note <see cref="SynapseSecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SynapseSecureString"/>.
         /// </summary>
-        public SecretBase Password { get; set; }
+        public SynapseSecretBase Password { get; set; }
     }
 }

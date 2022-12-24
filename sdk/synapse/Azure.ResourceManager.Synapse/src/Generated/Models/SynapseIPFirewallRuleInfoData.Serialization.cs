@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -22,12 +23,12 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(EndIPAddress))
             {
                 writer.WritePropertyName("endIpAddress");
-                writer.WriteStringValue(EndIPAddress);
+                writer.WriteStringValue(EndIPAddress.ToString());
             }
             if (Optional.IsDefined(StartIPAddress))
             {
                 writer.WritePropertyName("startIpAddress");
-                writer.WriteStringValue(StartIPAddress);
+                writer.WriteStringValue(StartIPAddress.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -37,11 +38,11 @@ namespace Azure.ResourceManager.Synapse
         {
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> endIPAddress = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> startIPAddress = default;
+            Optional<IPAddress> endIPAddress = default;
+            Optional<SynapseProvisioningState> provisioningState = default;
+            Optional<IPAddress> startIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Synapse
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -80,7 +81,12 @@ namespace Azure.ResourceManager.Synapse
                     {
                         if (property0.NameEquals("endIpAddress"))
                         {
-                            endIPAddress = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            endIPAddress = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -90,12 +96,17 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new SynapseProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("startIpAddress"))
                         {
-                            startIPAddress = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            startIPAddress = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                     }

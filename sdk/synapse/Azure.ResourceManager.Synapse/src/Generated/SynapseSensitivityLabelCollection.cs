@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SynapseSensitivityLabelResource>> GetAsync(SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseSensitivityLabelResource>> GetAsync(SynapseSensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics.CreateScope("SynapseSensitivityLabelCollection.Get");
             scope.Start();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SynapseSensitivityLabelResource> Get(SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseSensitivityLabelResource> Get(SynapseSensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics.CreateScope("SynapseSensitivityLabelCollection.Get");
             scope.Start();
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(SynapseSensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics.CreateScope("SynapseSensitivityLabelCollection.Exists");
             scope.Start();
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(SynapseSensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics.CreateScope("SynapseSensitivityLabelCollection.Exists");
             scope.Start();

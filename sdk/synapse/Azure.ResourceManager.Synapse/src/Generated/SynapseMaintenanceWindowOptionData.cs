@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Synapse
         /// <summary> Initializes a new instance of SynapseMaintenanceWindowOptionData. </summary>
         public SynapseMaintenanceWindowOptionData()
         {
-            MaintenanceWindowCycles = new ChangeTrackingList<MaintenanceWindowTimeRange>();
+            MaintenanceWindowCycles = new ChangeTrackingList<SynapseMaintenanceWindowTimeRange>();
         }
 
         /// <summary> Initializes a new instance of SynapseMaintenanceWindowOptionData. </summary>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Synapse
         /// Whether we allow multiple maintenance windows per cycle.
         /// Serialized Name: MaintenanceWindowOptions.properties.allowMultipleMaintenanceWindowsPerCycle
         /// </param>
-        internal SynapseMaintenanceWindowOptionData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, bool? isEnabled, IList<MaintenanceWindowTimeRange> maintenanceWindowCycles, int? minDurationInMinutes, int? defaultDurationInMinutes, int? minCycles, int? timeGranularityInMinutes, bool? allowMultipleMaintenanceWindowsPerCycle) : base(id, name, resourceType, systemData)
+        internal SynapseMaintenanceWindowOptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, IList<SynapseMaintenanceWindowTimeRange> maintenanceWindowCycles, int? minDurationInMinutes, int? defaultDurationInMinutes, int? minCycles, int? timeGranularityInMinutes, bool? allowMultipleMaintenanceWindowsPerCycle) : base(id, name, resourceType, systemData)
         {
             IsEnabled = isEnabled;
             MaintenanceWindowCycles = maintenanceWindowCycles;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse
         /// Available maintenance cycles e.g. {Saturday, 0, 48*60}, {Wednesday, 0, 24*60}.
         /// Serialized Name: MaintenanceWindowOptions.properties.maintenanceWindowCycles
         /// </summary>
-        public IList<MaintenanceWindowTimeRange> MaintenanceWindowCycles { get; }
+        public IList<SynapseMaintenanceWindowTimeRange> MaintenanceWindowCycles { get; }
         /// <summary>
         /// Minimum duration of maintenance window.
         /// Serialized Name: MaintenanceWindowOptions.properties.minDurationInMinutes

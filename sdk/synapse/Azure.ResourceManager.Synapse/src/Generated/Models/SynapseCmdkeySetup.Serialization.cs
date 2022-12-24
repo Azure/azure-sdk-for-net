@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Synapse.Models
             string type = default;
             BinaryData targetName = default;
             BinaryData userName = default;
-            SecretBase password = default;
+            SynapseSecretBase password = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         }
                         if (property0.NameEquals("password"))
                         {
-                            password = SecretBase.DeserializeSecretBase(property0.Value);
+                            password = SynapseSecretBase.DeserializeSynapseSecretBase(property0.Value);
                             continue;
                         }
                     }

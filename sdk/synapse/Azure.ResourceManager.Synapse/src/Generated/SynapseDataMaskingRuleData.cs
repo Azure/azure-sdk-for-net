@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Synapse
         /// If maskingFunction is set to Text, the character to use for masking the unexposed part of the string. Otherwise, this parameter will be ignored.
         /// Serialized Name: DataMaskingRule.properties.replacementString
         /// </param>
-        internal SynapseDataMaskingRuleData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, string idPropertiesId, string aliasName, SynapseDataMaskingRuleState? ruleState, string schemaName, string tableName, string columnName, SynapseDataMaskingFunction? maskingFunction, string numberFrom, string numberTo, string prefixSize, string suffixSize, string replacementString) : base(id, name, resourceType, systemData)
+        internal SynapseDataMaskingRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, string idPropertiesId, string aliasName, SynapseDataMaskingRuleState? ruleState, string schemaName, string tableName, string columnName, SynapseDataMaskingFunction? maskingFunction, string numberFrom, string numberTo, string prefixSize, string suffixSize, string replacementString) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Kind = kind;

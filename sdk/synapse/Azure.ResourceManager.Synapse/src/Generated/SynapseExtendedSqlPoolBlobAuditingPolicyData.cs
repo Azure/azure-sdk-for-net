@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Synapse
         /// The default minimum value is 1000 (1 second). The maximum is 2,147,483,647.
         /// Serialized Name: ExtendedSqlPoolBlobAuditingPolicy.properties.queueDelayMs
         /// </param>
-        internal SynapseExtendedSqlPoolBlobAuditingPolicyData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string predicateExpression, SynapseBlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, IList<string> auditActionsAndGroups, Guid? storageAccountSubscriptionId, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs) : base(id, name, resourceType, systemData)
+        internal SynapseExtendedSqlPoolBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string predicateExpression, SynapseBlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, IList<string> auditActionsAndGroups, Guid? storageAccountSubscriptionId, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs) : base(id, name, resourceType, systemData)
         {
             PredicateExpression = predicateExpression;
             State = state;

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Synapse
         /// The storage type of the geo backup policy.
         /// Serialized Name: GeoBackupPolicy.properties.storageType
         /// </param>
-        internal SynapseGeoBackupPolicyData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, SynapseGeoBackupPolicyState state, string storageType) : base(id, name, resourceType, systemData)
+        internal SynapseGeoBackupPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, SynapseGeoBackupPolicyState state, string storageType) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;

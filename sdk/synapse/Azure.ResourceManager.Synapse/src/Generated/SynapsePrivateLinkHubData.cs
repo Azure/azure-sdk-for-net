@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse
         /// List of private endpoint connections
         /// Serialized Name: PrivateLinkHub.properties.privateEndpointConnections
         /// </param>
-        internal SynapsePrivateLinkHubData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, IReadOnlyList<PrivateEndpointConnectionForPrivateLinkHubBasic> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        internal SynapsePrivateLinkHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, IReadOnlyList<PrivateEndpointConnectionForPrivateLinkHubBasic> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             PrivateEndpointConnections = privateEndpointConnections;

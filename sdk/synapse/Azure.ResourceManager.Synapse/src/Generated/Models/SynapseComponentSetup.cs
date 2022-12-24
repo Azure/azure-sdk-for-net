@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="licenseKey">
         /// The license key to activate the component.
         /// Serialized Name: ComponentSetup.typeProperties.licenseKey
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/>.
+        /// Please note <see cref="SynapseSecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SynapseSecureString"/>.
         /// </param>
-        internal SynapseComponentSetup(string customSetupBaseType, string componentName, SecretBase licenseKey) : base(customSetupBaseType)
+        internal SynapseComponentSetup(string customSetupBaseType, string componentName, SynapseSecretBase licenseKey) : base(customSetupBaseType)
         {
             ComponentName = componentName;
             LicenseKey = licenseKey;
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary>
         /// The license key to activate the component.
         /// Serialized Name: ComponentSetup.typeProperties.licenseKey
-        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecureString"/>.
+        /// Please note <see cref="SynapseSecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SynapseSecureString"/>.
         /// </summary>
-        public SecretBase LicenseKey { get; set; }
+        public SynapseSecretBase LicenseKey { get; set; }
     }
 }

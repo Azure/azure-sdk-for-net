@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.Synapse
     /// <summary>
     /// A class representing the SynapseDatabase data model.
     /// Please note <see cref="SynapseDatabaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ReadOnlyFollowingDatabase"/> and <see cref="ReadWriteDatabase"/>.
+    /// The available derived classes include <see cref="SynapseReadOnlyFollowingDatabase"/> and <see cref="SynapseReadWriteDatabase"/>.
     /// Please note <see cref="SynapseDatabaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ReadOnlyFollowingDatabase"/> and <see cref="ReadWriteDatabase"/>.
+    /// The available derived classes include <see cref="SynapseReadOnlyFollowingDatabase"/> and <see cref="SynapseReadWriteDatabase"/>.
     /// </summary>
     public partial class SynapseDatabaseData : ResourceData
     {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Synapse
         /// Kind of the database
         /// Serialized Name: Database.kind
         /// </param>
-        internal SynapseDatabaseData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseKind kind) : base(id, name, resourceType, systemData)
+        internal SynapseDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseKind kind) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Kind = kind;

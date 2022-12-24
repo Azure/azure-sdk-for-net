@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Synapse
         /// The replication state for the replication link.
         /// Serialized Name: ReplicationLink.properties.replicationState
         /// </param>
-        internal SynapseReplicationLinkData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AzureLocation? location, bool? isTerminationAllowed, string replicationMode, string partnerServer, string partnerDatabase, string partnerLocation, ReplicationRole? role, ReplicationRole? partnerRole, DateTimeOffset? startOn, int? percentComplete, ReplicationState? replicationState) : base(id, name, resourceType, systemData)
+        internal SynapseReplicationLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, bool? isTerminationAllowed, string replicationMode, string partnerServer, string partnerDatabase, string partnerLocation, SynapseReplicationRole? role, SynapseReplicationRole? partnerRole, DateTimeOffset? startOn, int? percentComplete, SynapseReplicationState? replicationState) : base(id, name, resourceType, systemData)
         {
             Location = location;
             IsTerminationAllowed = isTerminationAllowed;
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.Synapse
         /// The role of the Sql pool in the replication link.
         /// Serialized Name: ReplicationLink.properties.role
         /// </summary>
-        public ReplicationRole? Role { get; }
+        public SynapseReplicationRole? Role { get; }
         /// <summary>
         /// The role of the partner Sql pool in the replication link.
         /// Serialized Name: ReplicationLink.properties.partnerRole
         /// </summary>
-        public ReplicationRole? PartnerRole { get; }
+        public SynapseReplicationRole? PartnerRole { get; }
         /// <summary>
         /// The start time for the replication link.
         /// Serialized Name: ReplicationLink.properties.startTime
@@ -138,6 +138,6 @@ namespace Azure.ResourceManager.Synapse
         /// The replication state for the replication link.
         /// Serialized Name: ReplicationLink.properties.replicationState
         /// </summary>
-        public ReplicationState? ReplicationState { get; }
+        public SynapseReplicationState? ReplicationState { get; }
     }
 }

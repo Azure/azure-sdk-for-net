@@ -69,17 +69,17 @@ namespace Azure.ResourceManager.Synapse
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<State> state = default;
+            Optional<KustoPoolState> state = default;
             Optional<ResourceProvisioningState> provisioningState = default;
             Optional<Uri> uri = default;
             Optional<Uri> dataIngestionUri = default;
             Optional<string> stateReason = default;
-            Optional<OptimizedAutoscale> optimizedAutoscale = default;
+            Optional<SynapseOptimizedAutoscale> optimizedAutoscale = default;
             Optional<bool> enableStreamingIngest = default;
             Optional<bool> enablePurge = default;
-            Optional<LanguageExtensionsList> languageExtensions = default;
+            Optional<SynapseLanguageExtensionsList> languageExtensions = default;
             Optional<string> workspaceUID = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Synapse
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            state = new State(property0.Value.GetString());
+                            state = new KustoPoolState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            optimizedAutoscale = OptimizedAutoscale.DeserializeOptimizedAutoscale(property0.Value);
+                            optimizedAutoscale = SynapseOptimizedAutoscale.DeserializeSynapseOptimizedAutoscale(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("enableStreamingIngest"))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            languageExtensions = LanguageExtensionsList.DeserializeLanguageExtensionsList(property0.Value);
+                            languageExtensions = SynapseLanguageExtensionsList.DeserializeSynapseLanguageExtensionsList(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("workspaceUID"))

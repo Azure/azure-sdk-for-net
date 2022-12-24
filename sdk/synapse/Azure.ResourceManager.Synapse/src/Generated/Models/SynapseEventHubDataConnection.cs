@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub.
         /// Serialized Name: EventHubDataConnection.properties.managedIdentityResourceId
         /// </param>
-        internal SynapseEventHubDataConnection(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseDataConnectionKind kind, string eventHubResourceId, string consumerGroup, string tableName, string mappingRuleName, SynapseEventHubDataFormat? dataFormat, IList<string> eventSystemProperties, KustoPoolCompressionType? compression, ResourceProvisioningState? provisioningState, string managedIdentityResourceId) : base(id, name, resourceType, systemData, location, kind)
+        internal SynapseEventHubDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseDataConnectionKind kind, string eventHubResourceId, string consumerGroup, string tableName, string mappingRuleName, SynapseEventHubDataFormat? dataFormat, IList<string> eventSystemProperties, KustoPoolCompressionType? compression, ResourceProvisioningState? provisioningState, string managedIdentityResourceId) : base(id, name, resourceType, systemData, location, kind)
         {
             EventHubResourceId = eventHubResourceId;
             ConsumerGroup = consumerGroup;

@@ -40,8 +40,6 @@ namespace Azure.ResourceManager.Synapse
         private readonly SqlPoolOperationResultsRestOperations _sqlPoolOperationResultsRestClient;
         private readonly ClientDiagnostics _synapseRestorePointSqlPoolRestorePointsClientDiagnostics;
         private readonly SqlPoolRestorePointsRestOperations _synapseRestorePointSqlPoolRestorePointsRestClient;
-        private readonly ClientDiagnostics _sqlPoolOperationsClientDiagnostics;
-        private readonly SqlPoolRestOperations _sqlPoolOperationsRestClient;
         private readonly ClientDiagnostics _sqlPoolUsagesClientDiagnostics;
         private readonly SqlPoolUsagesRestOperations _sqlPoolUsagesRestClient;
         private readonly ClientDiagnostics _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics;
@@ -77,8 +75,6 @@ namespace Azure.ResourceManager.Synapse
             _synapseRestorePointSqlPoolRestorePointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Synapse", SynapseRestorePointResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SynapseRestorePointResource.ResourceType, out string synapseRestorePointSqlPoolRestorePointsApiVersion);
             _synapseRestorePointSqlPoolRestorePointsRestClient = new SqlPoolRestorePointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, synapseRestorePointSqlPoolRestorePointsApiVersion);
-            _sqlPoolOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Synapse", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _sqlPoolOperationsRestClient = new SqlPoolRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _sqlPoolUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Synapse", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _sqlPoolUsagesRestClient = new SqlPoolUsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Synapse", SynapseSensitivityLabelResource.ResourceType.Namespace, Diagnostics);
@@ -92,7 +88,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools";
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -291,7 +287,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="transparentDataEncryptionName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SynapseTransparentDataEncryptionResource>> GetSynapseTransparentDataEncryptionAsync(TransparentDataEncryptionName transparentDataEncryptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseTransparentDataEncryptionResource>> GetSynapseTransparentDataEncryptionAsync(SynapseTransparentDataEncryptionName transparentDataEncryptionName, CancellationToken cancellationToken = default)
         {
             return await GetSynapseTransparentDataEncryptions().GetAsync(transparentDataEncryptionName, cancellationToken).ConfigureAwait(false);
         }
@@ -304,7 +300,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="transparentDataEncryptionName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<SynapseTransparentDataEncryptionResource> GetSynapseTransparentDataEncryption(TransparentDataEncryptionName transparentDataEncryptionName, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseTransparentDataEncryptionResource> GetSynapseTransparentDataEncryption(SynapseTransparentDataEncryptionName transparentDataEncryptionName, CancellationToken cancellationToken = default)
         {
             return GetSynapseTransparentDataEncryptions().Get(transparentDataEncryptionName, cancellationToken);
         }
@@ -401,7 +397,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SynapseSqlPoolVulnerabilityAssessmentResource>> GetSynapseSqlPoolVulnerabilityAssessmentAsync(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseSqlPoolVulnerabilityAssessmentResource>> GetSynapseSqlPoolVulnerabilityAssessmentAsync(SynapseVulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
         {
             return await GetSynapseSqlPoolVulnerabilityAssessments().GetAsync(vulnerabilityAssessmentName, cancellationToken).ConfigureAwait(false);
         }
@@ -414,7 +410,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<SynapseSqlPoolVulnerabilityAssessmentResource> GetSynapseSqlPoolVulnerabilityAssessment(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseSqlPoolVulnerabilityAssessmentResource> GetSynapseSqlPoolVulnerabilityAssessment(SynapseVulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
         {
             return GetSynapseSqlPoolVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
         }
@@ -764,18 +760,18 @@ namespace Azure.ResourceManager.Synapse
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/move
         /// Operation Id: SqlPools_Rename
         /// </summary>
-        /// <param name="resourceMoveDefinition"> The resource move definition for renaming this Sql pool. </param>
+        /// <param name="synapseResourceMoveDefinition"> The resource move definition for renaming this Sql pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceMoveDefinition"/> is null. </exception>
-        public virtual async Task<Response> RenameAsync(ResourceMoveDefinition resourceMoveDefinition, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="synapseResourceMoveDefinition"/> is null. </exception>
+        public virtual async Task<Response> RenameAsync(SynapseResourceMoveDefinition synapseResourceMoveDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceMoveDefinition, nameof(resourceMoveDefinition));
+            Argument.AssertNotNull(synapseResourceMoveDefinition, nameof(synapseResourceMoveDefinition));
 
             using var scope = _synapseSqlPoolSqlPoolsClientDiagnostics.CreateScope("SynapseSqlPoolResource.Rename");
             scope.Start();
             try
             {
-                var response = await _synapseSqlPoolSqlPoolsRestClient.RenameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, resourceMoveDefinition, cancellationToken).ConfigureAwait(false);
+                var response = await _synapseSqlPoolSqlPoolsRestClient.RenameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synapseResourceMoveDefinition, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -790,18 +786,18 @@ namespace Azure.ResourceManager.Synapse
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/move
         /// Operation Id: SqlPools_Rename
         /// </summary>
-        /// <param name="resourceMoveDefinition"> The resource move definition for renaming this Sql pool. </param>
+        /// <param name="synapseResourceMoveDefinition"> The resource move definition for renaming this Sql pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceMoveDefinition"/> is null. </exception>
-        public virtual Response Rename(ResourceMoveDefinition resourceMoveDefinition, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="synapseResourceMoveDefinition"/> is null. </exception>
+        public virtual Response Rename(SynapseResourceMoveDefinition synapseResourceMoveDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceMoveDefinition, nameof(resourceMoveDefinition));
+            Argument.AssertNotNull(synapseResourceMoveDefinition, nameof(synapseResourceMoveDefinition));
 
             using var scope = _synapseSqlPoolSqlPoolsClientDiagnostics.CreateScope("SynapseSqlPoolResource.Rename");
             scope.Start();
             try
             {
-                var response = _synapseSqlPoolSqlPoolsRestClient.Rename(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, resourceMoveDefinition, cancellationToken);
+                var response = _synapseSqlPoolSqlPoolsRestClient.Rename(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synapseResourceMoveDefinition, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -923,90 +919,6 @@ namespace Azure.ResourceManager.Synapse
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Gets a list of operations performed on the SQL pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/operations
-        /// Operation Id: SqlPoolOperations_List
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlPoolOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlPoolOperation> GetSqlPoolOperationsAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<SqlPoolOperation>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlPoolOperationsClientDiagnostics.CreateScope("SynapseSqlPoolResource.GetSqlPoolOperations");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlPoolOperationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlPoolOperation>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlPoolOperationsClientDiagnostics.CreateScope("SynapseSqlPoolResource.GetSqlPoolOperations");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlPoolOperationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Gets a list of operations performed on the SQL pool.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/operations
-        /// Operation Id: SqlPoolOperations_List
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlPoolOperation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlPoolOperation> GetSqlPoolOperations(CancellationToken cancellationToken = default)
-        {
-            Page<SqlPoolOperation> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlPoolOperationsClientDiagnostics.CreateScope("SynapseSqlPoolResource.GetSqlPoolOperations");
-                scope.Start();
-                try
-                {
-                    var response = _sqlPoolOperationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlPoolOperation> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlPoolOperationsClientDiagnostics.CreateScope("SynapseSqlPoolResource.GetSqlPoolOperations");
-                scope.Start();
-                try
-                {
-                    var response = _sqlPoolOperationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
@@ -1184,18 +1096,18 @@ namespace Azure.ResourceManager.Synapse
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/currentSensitivityLabels
         /// Operation Id: SqlPoolSensitivityLabels_Update
         /// </summary>
-        /// <param name="sensitivityLabelUpdateList"> The SensitivityLabelUpdateList to use. </param>
+        /// <param name="synapseSensitivityLabelUpdateListResult"> The SynapseSensitivityLabelUpdateListResult to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sensitivityLabelUpdateList"/> is null. </exception>
-        public virtual async Task<Response> UpdateSqlPoolSensitivityLabelAsync(SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="synapseSensitivityLabelUpdateListResult"/> is null. </exception>
+        public virtual async Task<Response> UpdateSqlPoolSensitivityLabelAsync(SynapseSensitivityLabelUpdateListResult synapseSensitivityLabelUpdateListResult, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(sensitivityLabelUpdateList, nameof(sensitivityLabelUpdateList));
+            Argument.AssertNotNull(synapseSensitivityLabelUpdateListResult, nameof(synapseSensitivityLabelUpdateListResult));
 
             using var scope = _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics.CreateScope("SynapseSqlPoolResource.UpdateSqlPoolSensitivityLabel");
             scope.Start();
             try
             {
-                var response = await _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sensitivityLabelUpdateList, cancellationToken).ConfigureAwait(false);
+                var response = await _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synapseSensitivityLabelUpdateListResult, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1210,18 +1122,18 @@ namespace Azure.ResourceManager.Synapse
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/currentSensitivityLabels
         /// Operation Id: SqlPoolSensitivityLabels_Update
         /// </summary>
-        /// <param name="sensitivityLabelUpdateList"> The SensitivityLabelUpdateList to use. </param>
+        /// <param name="synapseSensitivityLabelUpdateListResult"> The SynapseSensitivityLabelUpdateListResult to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sensitivityLabelUpdateList"/> is null. </exception>
-        public virtual Response UpdateSqlPoolSensitivityLabel(SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="synapseSensitivityLabelUpdateListResult"/> is null. </exception>
+        public virtual Response UpdateSqlPoolSensitivityLabel(SynapseSensitivityLabelUpdateListResult synapseSensitivityLabelUpdateListResult, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(sensitivityLabelUpdateList, nameof(sensitivityLabelUpdateList));
+            Argument.AssertNotNull(synapseSensitivityLabelUpdateListResult, nameof(synapseSensitivityLabelUpdateListResult));
 
             using var scope = _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics.CreateScope("SynapseSqlPoolResource.UpdateSqlPoolSensitivityLabel");
             scope.Start();
             try
             {
-                var response = _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sensitivityLabelUpdateList, cancellationToken);
+                var response = _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synapseSensitivityLabelUpdateListResult, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1326,18 +1238,18 @@ namespace Azure.ResourceManager.Synapse
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/recommendedSensitivityLabels
         /// Operation Id: SqlPoolRecommendedSensitivityLabels_Update
         /// </summary>
-        /// <param name="recommendedSensitivityLabelUpdateList"> The RecommendedSensitivityLabelUpdateList to use. </param>
+        /// <param name="synapseRecommendedSensitivityLabelUpdateOperationListResult"> The SynapseRecommendedSensitivityLabelUpdateOperationListResult to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recommendedSensitivityLabelUpdateList"/> is null. </exception>
-        public virtual async Task<Response> UpdateSqlPoolRecommendedSensitivityLabelAsync(RecommendedSensitivityLabelUpdateList recommendedSensitivityLabelUpdateList, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="synapseRecommendedSensitivityLabelUpdateOperationListResult"/> is null. </exception>
+        public virtual async Task<Response> UpdateSqlPoolRecommendedSensitivityLabelAsync(SynapseRecommendedSensitivityLabelUpdateOperationListResult synapseRecommendedSensitivityLabelUpdateOperationListResult, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(recommendedSensitivityLabelUpdateList, nameof(recommendedSensitivityLabelUpdateList));
+            Argument.AssertNotNull(synapseRecommendedSensitivityLabelUpdateOperationListResult, nameof(synapseRecommendedSensitivityLabelUpdateOperationListResult));
 
             using var scope = _sqlPoolRecommendedSensitivityLabelsClientDiagnostics.CreateScope("SynapseSqlPoolResource.UpdateSqlPoolRecommendedSensitivityLabel");
             scope.Start();
             try
             {
-                var response = await _sqlPoolRecommendedSensitivityLabelsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendedSensitivityLabelUpdateList, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlPoolRecommendedSensitivityLabelsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synapseRecommendedSensitivityLabelUpdateOperationListResult, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1352,18 +1264,18 @@ namespace Azure.ResourceManager.Synapse
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/recommendedSensitivityLabels
         /// Operation Id: SqlPoolRecommendedSensitivityLabels_Update
         /// </summary>
-        /// <param name="recommendedSensitivityLabelUpdateList"> The RecommendedSensitivityLabelUpdateList to use. </param>
+        /// <param name="synapseRecommendedSensitivityLabelUpdateOperationListResult"> The SynapseRecommendedSensitivityLabelUpdateOperationListResult to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recommendedSensitivityLabelUpdateList"/> is null. </exception>
-        public virtual Response UpdateSqlPoolRecommendedSensitivityLabel(RecommendedSensitivityLabelUpdateList recommendedSensitivityLabelUpdateList, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="synapseRecommendedSensitivityLabelUpdateOperationListResult"/> is null. </exception>
+        public virtual Response UpdateSqlPoolRecommendedSensitivityLabel(SynapseRecommendedSensitivityLabelUpdateOperationListResult synapseRecommendedSensitivityLabelUpdateOperationListResult, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(recommendedSensitivityLabelUpdateList, nameof(recommendedSensitivityLabelUpdateList));
+            Argument.AssertNotNull(synapseRecommendedSensitivityLabelUpdateOperationListResult, nameof(synapseRecommendedSensitivityLabelUpdateOperationListResult));
 
             using var scope = _sqlPoolRecommendedSensitivityLabelsClientDiagnostics.CreateScope("SynapseSqlPoolResource.UpdateSqlPoolRecommendedSensitivityLabel");
             scope.Start();
             try
             {
-                var response = _sqlPoolRecommendedSensitivityLabelsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendedSensitivityLabelUpdateList, cancellationToken);
+                var response = _sqlPoolRecommendedSensitivityLabelsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synapseRecommendedSensitivityLabelUpdateOperationListResult, cancellationToken);
                 return response;
             }
             catch (Exception e)

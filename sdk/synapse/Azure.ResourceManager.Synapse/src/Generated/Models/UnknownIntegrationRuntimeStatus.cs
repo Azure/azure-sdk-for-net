@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// The UnknownIntegrationRuntimeStatus.
     /// Serialized Name: UnknownIntegrationRuntimeStatus
     /// </summary>
-    internal partial class UnknownIntegrationRuntimeStatus : IntegrationRuntimeStatus
+    internal partial class UnknownIntegrationRuntimeStatus : SynapseIntegrationRuntimeStatus
     {
         /// <summary> Initializes a new instance of UnknownIntegrationRuntimeStatus. </summary>
         /// <param name="runtimeType">
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Serialized Name: IntegrationRuntimeStatus.state
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal UnknownIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties) : base(runtimeType, dataFactoryName, state, additionalProperties)
+        internal UnknownIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, SynapseIntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties) : base(runtimeType, dataFactoryName, state, additionalProperties)
         {
             RuntimeType = runtimeType;
         }

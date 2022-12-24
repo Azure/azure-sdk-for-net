@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Serialized Name: IntegrationRuntimeComputeProperties.vNetProperties
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SynapseIntegrationRuntimeComputeProperties(AzureLocation? location, string nodeSize, int? numberOfNodes, int? maxParallelExecutionsPerNode, SynapseIntegrationRuntimeDataFlowProperties dataFlowProperties, IntegrationRuntimeVNetProperties vNetProperties, IDictionary<string, BinaryData> additionalProperties)
+        internal SynapseIntegrationRuntimeComputeProperties(AzureLocation? location, string nodeSize, int? numberOfNodes, int? maxParallelExecutionsPerNode, SynapseIntegrationRuntimeDataFlowProperties dataFlowProperties, SynapseIntegrationRuntimeVnetProperties vNetProperties, IDictionary<string, BinaryData> additionalProperties)
         {
             Location = location;
             NodeSize = nodeSize;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// VNet properties for managed integration runtime.
         /// Serialized Name: IntegrationRuntimeComputeProperties.vNetProperties
         /// </summary>
-        public IntegrationRuntimeVNetProperties VNetProperties { get; set; }
+        public SynapseIntegrationRuntimeVnetProperties VNetProperties { get; set; }
         /// <summary>
         /// Additional Properties
         /// <para>

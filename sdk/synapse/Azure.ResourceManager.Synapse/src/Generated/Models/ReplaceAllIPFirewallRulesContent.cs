@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of ReplaceAllIPFirewallRulesContent. </summary>
         public ReplaceAllIPFirewallRulesContent()
         {
-            IPFirewallRules = new ChangeTrackingDictionary<string, IPFirewallRuleProperties>();
+            IPFirewallRules = new ChangeTrackingDictionary<string, SynapseIPFirewallRuleProperties>();
         }
 
         /// <summary>
         /// IP firewall rule properties
         /// Serialized Name: ReplaceAllIpFirewallRulesRequest.ipFirewallRules
         /// </summary>
-        public IDictionary<string, IPFirewallRuleProperties> IPFirewallRules { get; }
+        public IDictionary<string, SynapseIPFirewallRuleProperties> IPFirewallRules { get; }
     }
 }

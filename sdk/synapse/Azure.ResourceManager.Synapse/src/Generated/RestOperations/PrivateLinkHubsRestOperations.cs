@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateLinkHubInfoListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapsePrivateLinkHubListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        PrivateLinkHubInfoListResult value = default;
+                        SynapsePrivateLinkHubListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateLinkHubInfoListResult.DeserializePrivateLinkHubInfoListResult(document.RootElement);
+                        value = SynapsePrivateLinkHubListResult.DeserializeSynapsePrivateLinkHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateLinkHubInfoListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<SynapsePrivateLinkHubListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        PrivateLinkHubInfoListResult value = default;
+                        SynapsePrivateLinkHubListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateLinkHubInfoListResult.DeserializePrivateLinkHubInfoListResult(document.RootElement);
+                        value = SynapsePrivateLinkHubListResult.DeserializeSynapsePrivateLinkHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateLinkHubInfoListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapsePrivateLinkHubListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -472,9 +472,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        PrivateLinkHubInfoListResult value = default;
+                        SynapsePrivateLinkHubListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateLinkHubInfoListResult.DeserializePrivateLinkHubInfoListResult(document.RootElement);
+                        value = SynapsePrivateLinkHubListResult.DeserializeSynapsePrivateLinkHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateLinkHubInfoListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<SynapsePrivateLinkHubListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -497,9 +497,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        PrivateLinkHubInfoListResult value = default;
+                        SynapsePrivateLinkHubListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateLinkHubInfoListResult.DeserializePrivateLinkHubInfoListResult(document.RootElement);
+                        value = SynapsePrivateLinkHubListResult.DeserializeSynapsePrivateLinkHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateLinkHubInfoListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapsePrivateLinkHubListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -540,9 +540,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        PrivateLinkHubInfoListResult value = default;
+                        SynapsePrivateLinkHubListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateLinkHubInfoListResult.DeserializePrivateLinkHubInfoListResult(document.RootElement);
+                        value = SynapsePrivateLinkHubListResult.DeserializeSynapsePrivateLinkHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateLinkHubInfoListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<SynapsePrivateLinkHubListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -569,9 +569,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        PrivateLinkHubInfoListResult value = default;
+                        SynapsePrivateLinkHubListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateLinkHubInfoListResult.DeserializePrivateLinkHubInfoListResult(document.RootElement);
+                        value = SynapsePrivateLinkHubListResult.DeserializeSynapsePrivateLinkHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateLinkHubInfoListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapsePrivateLinkHubListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -610,9 +610,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        PrivateLinkHubInfoListResult value = default;
+                        SynapsePrivateLinkHubListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateLinkHubInfoListResult.DeserializePrivateLinkHubInfoListResult(document.RootElement);
+                        value = SynapsePrivateLinkHubListResult.DeserializeSynapsePrivateLinkHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateLinkHubInfoListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<SynapsePrivateLinkHubListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -637,9 +637,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        PrivateLinkHubInfoListResult value = default;
+                        SynapsePrivateLinkHubListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateLinkHubInfoListResult.DeserializePrivateLinkHubInfoListResult(document.RootElement);
+                        value = SynapsePrivateLinkHubListResult.DeserializeSynapsePrivateLinkHubListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

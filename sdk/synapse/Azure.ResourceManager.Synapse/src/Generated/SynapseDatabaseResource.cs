@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Synapse/workspaces/kustoPools/databases";
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/kustoPools/databases";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Synapse
         /// <summary> Initializes a new instance of SynapseMaintenanceWindowData. </summary>
         public SynapseMaintenanceWindowData()
         {
-            TimeRanges = new ChangeTrackingList<MaintenanceWindowTimeRange>();
+            TimeRanges = new ChangeTrackingList<SynapseMaintenanceWindowTimeRange>();
         }
 
         /// <summary> Initializes a new instance of SynapseMaintenanceWindowData. </summary>
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="timeRanges"> Serialized Name: MaintenanceWindows.properties.timeRanges. </param>
-        internal SynapseMaintenanceWindowData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IList<MaintenanceWindowTimeRange> timeRanges) : base(id, name, resourceType, systemData)
+        internal SynapseMaintenanceWindowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<SynapseMaintenanceWindowTimeRange> timeRanges) : base(id, name, resourceType, systemData)
         {
             TimeRanges = timeRanges;
         }
 
         /// <summary> Serialized Name: MaintenanceWindows.properties.timeRanges. </summary>
-        public IList<MaintenanceWindowTimeRange> TimeRanges { get; }
+        public IList<SynapseMaintenanceWindowTimeRange> TimeRanges { get; }
     }
 }

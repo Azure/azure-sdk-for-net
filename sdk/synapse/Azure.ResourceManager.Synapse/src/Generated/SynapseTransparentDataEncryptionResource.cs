@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse
     public partial class SynapseTransparentDataEncryptionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseTransparentDataEncryptionResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, TransparentDataEncryptionName transparentDataEncryptionName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseTransparentDataEncryptionName transparentDataEncryptionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/transparentDataEncryption/{transparentDataEncryptionName}";
             return new ResourceIdentifier(resourceId);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/transparentDataEncryption";
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/transparentDataEncryption";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }

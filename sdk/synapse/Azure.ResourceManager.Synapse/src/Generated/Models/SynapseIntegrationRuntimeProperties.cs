@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// Azure Synapse nested object which serves as a compute resource for activities.
     /// Serialized Name: IntegrationRuntime
     /// Please note <see cref="SynapseIntegrationRuntimeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
+    /// The available derived classes include <see cref="SynapseManagedIntegrationRuntime"/> and <see cref="SynapseSelfHostedIntegrationRuntime"/>.
     /// </summary>
     public partial class SynapseIntegrationRuntimeProperties
     {

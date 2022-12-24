@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Managed": return ManagedIntegrationRuntime.DeserializeManagedIntegrationRuntime(element);
-                    case "SelfHosted": return SelfHostedIntegrationRuntime.DeserializeSelfHostedIntegrationRuntime(element);
+                    case "Managed": return SynapseManagedIntegrationRuntime.DeserializeSynapseManagedIntegrationRuntime(element);
+                    case "SelfHosted": return SynapseSelfHostedIntegrationRuntime.DeserializeSynapseSelfHostedIntegrationRuntime(element);
                 }
             }
             return UnknownIntegrationRuntime.DeserializeUnknownIntegrationRuntime(element);

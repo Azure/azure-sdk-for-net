@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.Synapse
         {
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<SecurityAlertPolicyState> state = default;
+            Optional<SynapseSecurityAlertPolicyState> state = default;
             Optional<IList<string>> disabledAlerts = default;
             Optional<IList<string>> emailAddresses = default;
             Optional<bool> emailAccountAdmins = default;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Synapse
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            state = property0.Value.GetString().ToSecurityAlertPolicyState();
+                            state = property0.Value.GetString().ToSynapseSecurityAlertPolicyState();
                             continue;
                         }
                         if (property0.NameEquals("disabledAlerts"))

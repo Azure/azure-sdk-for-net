@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Serialized Name: DatabaseCheckNameRequest.type
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public KustoPoolChildResourceNameAvailabilityContent(string name, ResourceType resourceType)
+        public KustoPoolChildResourceNameAvailabilityContent(string name, KustoPoolDatabaseType resourceType)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The type of resource, for instance Microsoft.Synapse/workspaces/kustoPools/databases.
         /// Serialized Name: DatabaseCheckNameRequest.type
         /// </summary>
-        public ResourceType ResourceType { get; }
+        public KustoPoolDatabaseType ResourceType { get; }
     }
 }

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The storage account type used to store backups for this sql pool.
         /// Serialized Name: SqlPoolPatchInfo.properties.storageAccountType
         /// </summary>
-        public StorageAccountType? StorageAccountType { get; set; }
+        public SqlPoolStorageAccountType? StorageAccountType { get; set; }
         /// <summary>
         /// Specifies the time that the sql pool was deleted
         /// Serialized Name: SqlPoolPatchInfo.properties.sourceDatabaseDeletionDate

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Synapse
         /// Serialized Name: SensitivityLabel.properties.isDisabled
         /// </param>
         /// <param name="rank"> Serialized Name: SensitivityLabel.properties.rank. </param>
-        internal SynapseSensitivityLabelData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string managedBy, string schemaName, string tableName, string columnName, string labelName, string labelId, string informationType, string informationTypeId, bool? isDisabled, SensitivityLabelRank? rank) : base(id, name, resourceType, systemData)
+        internal SynapseSensitivityLabelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedBy, string schemaName, string tableName, string columnName, string labelName, string labelId, string informationType, string informationTypeId, bool? isDisabled, SynapseSensitivityLabelRank? rank) : base(id, name, resourceType, systemData)
         {
             ManagedBy = managedBy;
             SchemaName = schemaName;
@@ -121,6 +121,6 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         public bool? IsDisabled { get; }
         /// <summary> Serialized Name: SensitivityLabel.properties.rank. </summary>
-        public SensitivityLabelRank? Rank { get; set; }
+        public SynapseSensitivityLabelRank? Rank { get; set; }
     }
 }

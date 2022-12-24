@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// The UnknownSecretBase.
     /// Serialized Name: UnknownSecretBase
     /// </summary>
-    internal partial class UnknownSecretBase : SecretBase
+    internal partial class UnknownSecretBase : SynapseSecretBase
     {
         /// <summary> Initializes a new instance of UnknownSecretBase. </summary>
         /// <param name="secretBaseType">

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Synapse/workspaces";
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SynapseServerVulnerabilityAssessmentResource>> GetSynapseServerVulnerabilityAssessmentAsync(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseServerVulnerabilityAssessmentResource>> GetSynapseServerVulnerabilityAssessmentAsync(SynapseVulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
         {
             return await GetSynapseServerVulnerabilityAssessments().GetAsync(vulnerabilityAssessmentName, cancellationToken).ConfigureAwait(false);
         }
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<SynapseServerVulnerabilityAssessmentResource> GetSynapseServerVulnerabilityAssessment(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseServerVulnerabilityAssessmentResource> GetSynapseServerVulnerabilityAssessment(SynapseVulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
         {
             return GetSynapseServerVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
         }
@@ -969,7 +969,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="content"> Replace all IP firewall rules request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ReplaceAllFirewallRulesOperationResponse>> ReplaceAllIpFirewallRuleAsync(WaitUntil waitUntil, ReplaceAllIPFirewallRulesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ReplaceAllFirewallRulesOperationResult>> ReplaceAllIpFirewallRuleAsync(WaitUntil waitUntil, ReplaceAllIPFirewallRulesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -978,7 +978,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.ReplaceAllAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<ReplaceAllFirewallRulesOperationResponse>(new ReplaceAllFirewallRulesOperationResponseOperationSource(), _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateReplaceAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<ReplaceAllFirewallRulesOperationResult>(new ReplaceAllFirewallRulesOperationResultOperationSource(), _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateReplaceAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -999,7 +999,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="content"> Replace all IP firewall rules request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ReplaceAllFirewallRulesOperationResponse> ReplaceAllIpFirewallRule(WaitUntil waitUntil, ReplaceAllIPFirewallRulesContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ReplaceAllFirewallRulesOperationResult> ReplaceAllIpFirewallRule(WaitUntil waitUntil, ReplaceAllIPFirewallRulesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1008,7 +1008,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.ReplaceAll(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new SynapseArmOperation<ReplaceAllFirewallRulesOperationResponse>(new ReplaceAllFirewallRulesOperationResponseOperationSource(), _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateReplaceAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<ReplaceAllFirewallRulesOperationResult>(new ReplaceAllFirewallRulesOperationResultOperationSource(), _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateReplaceAllRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1026,10 +1026,10 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: WorkspaceManagedSqlServerUsages_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServerUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServerUsage> GetWorkspaceManagedSqlServerUsagesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SynapseServerUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SynapseServerUsage> GetWorkspaceManagedSqlServerUsagesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerUsage>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SynapseServerUsage>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _workspaceManagedSqlServerUsagesClientDiagnostics.CreateScope("SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages");
                 scope.Start();
@@ -1044,7 +1044,7 @@ namespace Azure.ResourceManager.Synapse
                     throw;
                 }
             }
-            async Task<Page<ServerUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SynapseServerUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _workspaceManagedSqlServerUsagesClientDiagnostics.CreateScope("SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages");
                 scope.Start();
@@ -1068,10 +1068,10 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: WorkspaceManagedSqlServerUsages_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServerUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServerUsage> GetWorkspaceManagedSqlServerUsages(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SynapseServerUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SynapseServerUsage> GetWorkspaceManagedSqlServerUsages(CancellationToken cancellationToken = default)
         {
-            Page<ServerUsage> FirstPageFunc(int? pageSizeHint)
+            Page<SynapseServerUsage> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _workspaceManagedSqlServerUsagesClientDiagnostics.CreateScope("SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages");
                 scope.Start();
@@ -1086,7 +1086,7 @@ namespace Azure.ResourceManager.Synapse
                     throw;
                 }
             }
-            Page<ServerUsage> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SynapseServerUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _workspaceManagedSqlServerUsagesClientDiagnostics.CreateScope("SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages");
                 scope.Start();

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<long> maxSizeBytes = default;
             Optional<string> collation = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Synapse
             Optional<DateTimeOffset> restorePointInTime = default;
             Optional<SqlPoolCreateMode> createMode = default;
             Optional<DateTimeOffset> creationDate = default;
-            Optional<StorageAccountType> storageAccountType = default;
+            Optional<SqlPoolStorageAccountType> storageAccountType = default;
             Optional<DateTimeOffset> sourceDatabaseDeletionDate = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Synapse
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            storageAccountType = new StorageAccountType(property0.Value.GetString());
+                            storageAccountType = new SqlPoolStorageAccountType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("sourceDatabaseDeletionDate"))

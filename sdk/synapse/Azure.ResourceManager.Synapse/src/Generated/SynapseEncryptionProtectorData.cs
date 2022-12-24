@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Synapse
         /// Thumbprint of the server key.
         /// Serialized Name: EncryptionProtector.properties.thumbprint
         /// </param>
-        internal SynapseEncryptionProtectorData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, string serverKeyName, ServerKeyType? serverKeyType, Uri uri, string thumbprint) : base(id, name, resourceType, systemData)
+        internal SynapseEncryptionProtectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, string serverKeyName, SynapseServerKeyType? serverKeyType, Uri uri, string thumbprint) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse
         /// The encryption protector type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;.
         /// Serialized Name: EncryptionProtector.properties.serverKeyType
         /// </summary>
-        public ServerKeyType? ServerKeyType { get; set; }
+        public SynapseServerKeyType? ServerKeyType { get; set; }
         /// <summary>
         /// The URI of the server key.
         /// Serialized Name: EncryptionProtector.properties.uri

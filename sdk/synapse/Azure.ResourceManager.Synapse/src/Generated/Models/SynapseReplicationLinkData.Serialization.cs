@@ -29,18 +29,18 @@ namespace Azure.ResourceManager.Synapse
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<bool> isTerminationAllowed = default;
             Optional<string> replicationMode = default;
             Optional<string> partnerServer = default;
             Optional<string> partnerDatabase = default;
             Optional<string> partnerLocation = default;
-            Optional<ReplicationRole> role = default;
-            Optional<ReplicationRole> partnerRole = default;
+            Optional<SynapseReplicationRole> role = default;
+            Optional<SynapseReplicationRole> partnerRole = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<int> percentComplete = default;
-            Optional<ReplicationState> replicationState = default;
+            Optional<SynapseReplicationState> replicationState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Synapse
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            role = property0.Value.GetString().ToReplicationRole();
+                            role = property0.Value.GetString().ToSynapseReplicationRole();
                             continue;
                         }
                         if (property0.NameEquals("partnerRole"))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            partnerRole = property0.Value.GetString().ToReplicationRole();
+                            partnerRole = property0.Value.GetString().ToSynapseReplicationRole();
                             continue;
                         }
                         if (property0.NameEquals("startTime"))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            replicationState = new ReplicationState(property0.Value.GetString());
+                            replicationState = new SynapseReplicationState(property0.Value.GetString());
                             continue;
                         }
                     }

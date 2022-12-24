@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Synapse
         /// The label of restore point for backup request by user
         /// Serialized Name: RestorePoint.properties.restorePointLabel
         /// </param>
-        internal SynapseRestorePointData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AzureLocation? location, RestorePointType? restorePointType, DateTimeOffset? earliestRestoreOn, DateTimeOffset? restorePointCreationOn, string restorePointLabel) : base(id, name, resourceType, systemData)
+        internal SynapseRestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseRestorePointType? restorePointType, DateTimeOffset? earliestRestoreOn, DateTimeOffset? restorePointCreationOn, string restorePointLabel) : base(id, name, resourceType, systemData)
         {
             Location = location;
             RestorePointType = restorePointType;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Synapse
         /// The type of restore point
         /// Serialized Name: RestorePoint.properties.restorePointType
         /// </summary>
-        public RestorePointType? RestorePointType { get; }
+        public SynapseRestorePointType? RestorePointType { get; }
         /// <summary>
         /// The earliest time to which this database can be restored
         /// Serialized Name: RestorePoint.properties.earliestRestoreDate

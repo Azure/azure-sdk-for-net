@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Synapse
         /// Specifies the time that the sql pool was deleted
         /// Serialized Name: SqlPool.properties.sourceDatabaseDeletionDate
         /// </param>
-        internal SynapseSqlPoolData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SynapseSku sku, long? maxSizeBytes, string collation, string sourceDatabaseId, string recoverableDatabaseId, string provisioningState, string status, DateTimeOffset? restorePointInTime, SqlPoolCreateMode? createMode, DateTimeOffset? createdOn, StorageAccountType? storageAccountType, DateTimeOffset? sourceDatabaseDeletionOn) : base(id, name, resourceType, systemData, tags, location)
+        internal SynapseSqlPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SynapseSku sku, long? maxSizeBytes, string collation, string sourceDatabaseId, string recoverableDatabaseId, string provisioningState, string status, DateTimeOffset? restorePointInTime, SqlPoolCreateMode? createMode, DateTimeOffset? createdOn, SqlPoolStorageAccountType? storageAccountType, DateTimeOffset? sourceDatabaseDeletionOn) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             MaxSizeBytes = maxSizeBytes;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Synapse
         /// The storage account type used to store backups for this sql pool.
         /// Serialized Name: SqlPool.properties.storageAccountType
         /// </summary>
-        public StorageAccountType? StorageAccountType { get; set; }
+        public SqlPoolStorageAccountType? StorageAccountType { get; set; }
         /// <summary>
         /// Specifies the time that the sql pool was deleted
         /// Serialized Name: SqlPool.properties.sourceDatabaseDeletionDate

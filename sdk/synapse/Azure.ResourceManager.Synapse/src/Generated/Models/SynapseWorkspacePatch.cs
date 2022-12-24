@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Managed Virtual Network Settings
         /// Serialized Name: WorkspacePatchInfo.properties.managedVirtualNetworkSettings
         /// </summary>
-        public ManagedVirtualNetworkSettings ManagedVirtualNetworkSettings { get; set; }
+        public SynapseManagedVirtualNetworkSettings ManagedVirtualNetworkSettings { get; set; }
         /// <summary>
         /// Git integration settings
         /// Serialized Name: WorkspacePatchInfo.properties.workspaceRepositoryConfiguration
         /// </summary>
-        public WorkspaceRepositoryConfiguration WorkspaceRepositoryConfiguration { get; set; }
+        public SynapseWorkspaceRepositoryConfiguration WorkspaceRepositoryConfiguration { get; set; }
         /// <summary>
         /// Purview Configuration
         /// Serialized Name: WorkspacePatchInfo.properties.purviewConfiguration

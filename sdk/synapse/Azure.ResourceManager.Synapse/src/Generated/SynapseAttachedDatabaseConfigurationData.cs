@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Synapse
         /// Table level sharing specifications
         /// Serialized Name: AttachedDatabaseConfiguration.properties.tableLevelSharingProperties
         /// </param>
-        internal SynapseAttachedDatabaseConfigurationData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceProvisioningState? provisioningState, string databaseName, string kustoPoolResourceId, IReadOnlyList<string> attachedDatabaseNames, SynapseDefaultPrincipalsModificationKind? defaultPrincipalsModificationKind, TableLevelSharingProperties tableLevelSharingProperties) : base(id, name, resourceType, systemData)
+        internal SynapseAttachedDatabaseConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceProvisioningState? provisioningState, string databaseName, string kustoPoolResourceId, IReadOnlyList<string> attachedDatabaseNames, SynapseDefaultPrincipalsModificationKind? defaultPrincipalsModificationKind, SynapseTableLevelSharingProperties tableLevelSharingProperties) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ProvisioningState = provisioningState;
@@ -99,6 +99,6 @@ namespace Azure.ResourceManager.Synapse
         /// Table level sharing specifications
         /// Serialized Name: AttachedDatabaseConfiguration.properties.tableLevelSharingProperties
         /// </summary>
-        public TableLevelSharingProperties TableLevelSharingProperties { get; set; }
+        public SynapseTableLevelSharingProperties TableLevelSharingProperties { get; set; }
     }
 }

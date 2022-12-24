@@ -19,41 +19,6 @@ namespace Azure.ResourceManager.Synapse
     /// <summary> A class to add extension methods to Azure.ResourceManager.Synapse. </summary>
     public static partial class SynapseExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
-        {
-            return tenantResource.GetCachedClient((client) =>
-            {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
-            }
-            );
-        }
-
-        /// <summary>
-        /// Lists available operations for the Kusto sub-resources inside Microsoft.Synapse provider.
-        /// Request Path: /providers/Microsoft.Synapse/kustooperations
-        /// Operation Id: KustoOperations_List
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Models.Operation" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.Operation> GetKustoOperationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetKustoOperationsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists available operations for the Kusto sub-resources inside Microsoft.Synapse provider.
-        /// Request Path: /providers/Microsoft.Synapse/kustooperations
-        /// Operation Id: KustoOperations_List
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Models.Operation" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.Operation> GetKustoOperations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(tenantResource).GetKustoOperations(cancellationToken);
-        }
-
         private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
         {
             return subscriptionResource.GetCachedClient((client) =>
@@ -122,8 +87,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SkuDescription" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SkuDescription> GetSkusKustoPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="KustoPoolSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<KustoPoolSkuDescription> GetSkusKustoPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSkusKustoPoolsAsync(cancellationToken);
         }
@@ -135,8 +100,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SkuDescription" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SkuDescription> GetSkusKustoPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="KustoPoolSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<KustoPoolSkuDescription> GetSkusKustoPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSkusKustoPools(cancellationToken);
         }

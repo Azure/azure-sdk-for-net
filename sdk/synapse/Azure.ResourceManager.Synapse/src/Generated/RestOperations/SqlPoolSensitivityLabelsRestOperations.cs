@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SensitivityLabelListResult>> ListCurrentAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseSensitivityLabelListResult>> ListCurrentAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        SensitivityLabelListResult value = default;
+                        SynapseSensitivityLabelListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SensitivityLabelListResult.DeserializeSensitivityLabelListResult(document.RootElement);
+                        value = SynapseSensitivityLabelListResult.DeserializeSynapseSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SensitivityLabelListResult> ListCurrent(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<SynapseSensitivityLabelListResult> ListCurrent(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        SensitivityLabelListResult value = default;
+                        SynapseSensitivityLabelListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SensitivityLabelListResult.DeserializeSensitivityLabelListResult(document.RootElement);
+                        value = SynapseSensitivityLabelListResult.DeserializeSynapseSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SensitivityLabelUpdateList sensitivityLabelUpdateList)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseSensitivityLabelUpdateListResult synapseSensitivityLabelUpdateListResult)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Synapse
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sensitivityLabelUpdateList);
+            content.JsonWriter.WriteObjectValue(synapseSensitivityLabelUpdateListResult);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -159,19 +159,19 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="sqlPoolName"> SQL pool name. </param>
-        /// <param name="sensitivityLabelUpdateList"> The SensitivityLabelUpdateList to use. </param>
+        /// <param name="synapseSensitivityLabelUpdateListResult"> The SynapseSensitivityLabelUpdateListResult to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="sensitivityLabelUpdateList"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="synapseSensitivityLabelUpdateListResult"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseSensitivityLabelUpdateListResult synapseSensitivityLabelUpdateListResult, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
-            Argument.AssertNotNull(sensitivityLabelUpdateList, nameof(sensitivityLabelUpdateList));
+            Argument.AssertNotNull(synapseSensitivityLabelUpdateListResult, nameof(synapseSensitivityLabelUpdateListResult));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, workspaceName, sqlPoolName, sensitivityLabelUpdateList);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, workspaceName, sqlPoolName, synapseSensitivityLabelUpdateListResult);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -187,19 +187,19 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="sqlPoolName"> SQL pool name. </param>
-        /// <param name="sensitivityLabelUpdateList"> The SensitivityLabelUpdateList to use. </param>
+        /// <param name="synapseSensitivityLabelUpdateListResult"> The SynapseSensitivityLabelUpdateListResult to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="sensitivityLabelUpdateList"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="synapseSensitivityLabelUpdateListResult"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseSensitivityLabelUpdateListResult synapseSensitivityLabelUpdateListResult, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
-            Argument.AssertNotNull(sensitivityLabelUpdateList, nameof(sensitivityLabelUpdateList));
+            Argument.AssertNotNull(synapseSensitivityLabelUpdateListResult, nameof(synapseSensitivityLabelUpdateListResult));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, workspaceName, sqlPoolName, sensitivityLabelUpdateList);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, workspaceName, sqlPoolName, synapseSensitivityLabelUpdateListResult);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SensitivityLabelListResult>> ListRecommendedAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, bool? includeDisabledRecommendations = null, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseSensitivityLabelListResult>> ListRecommendedAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, bool? includeDisabledRecommendations = null, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -269,9 +269,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        SensitivityLabelListResult value = default;
+                        SynapseSensitivityLabelListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SensitivityLabelListResult.DeserializeSensitivityLabelListResult(document.RootElement);
+                        value = SynapseSensitivityLabelListResult.DeserializeSynapseSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SensitivityLabelListResult> ListRecommended(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, bool? includeDisabledRecommendations = null, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<SynapseSensitivityLabelListResult> ListRecommended(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, bool? includeDisabledRecommendations = null, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -303,9 +303,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        SensitivityLabelListResult value = default;
+                        SynapseSensitivityLabelListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SensitivityLabelListResult.DeserializeSensitivityLabelListResult(document.RootElement);
+                        value = SynapseSensitivityLabelListResult.DeserializeSynapseSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, string columnName, SensitivityLabelSource sensitivityLabelSource)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, string columnName, SynapseSensitivityLabelSource sensitivityLabelSource)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SynapseSensitivityLabelData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, string columnName, SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseSensitivityLabelData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, string columnName, SynapseSensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/>, <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SynapseSensitivityLabelData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, string columnName, SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
+        public Response<SynapseSensitivityLabelData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName, string columnName, SynapseSensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SensitivityLabelListResult>> ListCurrentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseSensitivityLabelListResult>> ListCurrentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -858,9 +858,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        SensitivityLabelListResult value = default;
+                        SynapseSensitivityLabelListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SensitivityLabelListResult.DeserializeSensitivityLabelListResult(document.RootElement);
+                        value = SynapseSensitivityLabelListResult.DeserializeSynapseSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SensitivityLabelListResult> ListCurrentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<SynapseSensitivityLabelListResult> ListCurrentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -892,9 +892,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        SensitivityLabelListResult value = default;
+                        SynapseSensitivityLabelListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SensitivityLabelListResult.DeserializeSensitivityLabelListResult(document.RootElement);
+                        value = SynapseSensitivityLabelListResult.DeserializeSynapseSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -928,7 +928,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SensitivityLabelListResult>> ListRecommendedNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, bool? includeDisabledRecommendations = null, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseSensitivityLabelListResult>> ListRecommendedNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, bool? includeDisabledRecommendations = null, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -942,9 +942,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        SensitivityLabelListResult value = default;
+                        SynapseSensitivityLabelListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SensitivityLabelListResult.DeserializeSensitivityLabelListResult(document.RootElement);
+                        value = SynapseSensitivityLabelListResult.DeserializeSynapseSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -964,7 +964,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SensitivityLabelListResult> ListRecommendedNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, bool? includeDisabledRecommendations = null, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<SynapseSensitivityLabelListResult> ListRecommendedNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, bool? includeDisabledRecommendations = null, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -978,9 +978,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        SensitivityLabelListResult value = default;
+                        SynapseSensitivityLabelListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SensitivityLabelListResult.DeserializeSensitivityLabelListResult(document.RootElement);
+                        value = SynapseSensitivityLabelListResult.DeserializeSynapseSensitivityLabelListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

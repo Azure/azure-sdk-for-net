@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.Synapse
     /// <summary>
     /// A class representing the SynapseDataConnection data model.
     /// Please note <see cref="SynapseDataConnectionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="SynapseEventGridDataConnection"/>, <see cref="SynapseEventHubDataConnection"/> and <see cref="IotHubDataConnection"/>.
+    /// The available derived classes include <see cref="SynapseEventGridDataConnection"/>, <see cref="SynapseEventHubDataConnection"/> and <see cref="SynapseIotHubDataConnection"/>.
     /// Please note <see cref="SynapseDataConnectionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="SynapseEventGridDataConnection"/>, <see cref="SynapseEventHubDataConnection"/> and <see cref="IotHubDataConnection"/>.
+    /// The available derived classes include <see cref="SynapseEventGridDataConnection"/>, <see cref="SynapseEventHubDataConnection"/> and <see cref="SynapseIotHubDataConnection"/>.
     /// </summary>
     public partial class SynapseDataConnectionData : ResourceData
     {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Synapse
         /// Kind of the endpoint for the data connection
         /// Serialized Name: DataConnection.kind
         /// </param>
-        internal SynapseDataConnectionData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseDataConnectionKind kind) : base(id, name, resourceType, systemData)
+        internal SynapseDataConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseDataConnectionKind kind) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Kind = kind;

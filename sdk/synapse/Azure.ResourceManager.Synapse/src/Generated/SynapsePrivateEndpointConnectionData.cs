@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse
         /// Provisioning state of the private endpoint connection.
         /// Serialized Name: PrivateEndpointConnection.properties.provisioningState
         /// </param>
-        internal SynapsePrivateEndpointConnectionData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, SynapsePrivateLinkServiceConnectionState connectionState, string provisioningState) : base(id, name, resourceType, systemData)
+        internal SynapsePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, SynapsePrivateLinkServiceConnectionState connectionState, string provisioningState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
             ConnectionState = connectionState;

@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.Synapse
         {
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<bool> isEnabled = default;
-            Optional<IList<MaintenanceWindowTimeRange>> maintenanceWindowCycles = default;
+            Optional<IList<SynapseMaintenanceWindowTimeRange>> maintenanceWindowCycles = default;
             Optional<int> minDurationInMinutes = default;
             Optional<int> defaultDurationInMinutes = default;
             Optional<int> minCycles = default;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Synapse
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<MaintenanceWindowTimeRange> array = new List<MaintenanceWindowTimeRange>();
+                            List<SynapseMaintenanceWindowTimeRange> array = new List<SynapseMaintenanceWindowTimeRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MaintenanceWindowTimeRange.DeserializeMaintenanceWindowTimeRange(item));
+                                array.Add(SynapseMaintenanceWindowTimeRange.DeserializeSynapseMaintenanceWindowTimeRange(item));
                             }
                             maintenanceWindowCycles = array;
                             continue;

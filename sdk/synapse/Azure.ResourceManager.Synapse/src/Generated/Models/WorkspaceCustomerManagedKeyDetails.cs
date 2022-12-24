@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Key encryption key
         /// Serialized Name: CustomerManagedKeyDetails.kekIdentity
         /// </param>
-        internal WorkspaceCustomerManagedKeyDetails(string status, WorkspaceKeyDetails key, KekIdentityProperties kekIdentity)
+        internal WorkspaceCustomerManagedKeyDetails(string status, SynapseWorkspaceKeyDetails key, KekIdentityProperties kekIdentity)
         {
             Status = status;
             Key = key;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The key object of the workspace
         /// Serialized Name: CustomerManagedKeyDetails.key
         /// </summary>
-        public WorkspaceKeyDetails Key { get; set; }
+        public SynapseWorkspaceKeyDetails Key { get; set; }
         /// <summary>
         /// Key encryption key
         /// Serialized Name: CustomerManagedKeyDetails.kekIdentity

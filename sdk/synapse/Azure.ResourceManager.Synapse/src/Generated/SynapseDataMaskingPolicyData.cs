@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Synapse
         /// The masking level. This is a legacy parameter and is no longer used.
         /// Serialized Name: DataMaskingPolicy.properties.maskingLevel
         /// </param>
-        internal SynapseDataMaskingPolicyData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, string managedBy, SynapseDataMaskingState? dataMaskingState, string exemptPrincipals, string applicationPrincipals, string maskingLevel) : base(id, name, resourceType, systemData)
+        internal SynapseDataMaskingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, string managedBy, SynapseDataMaskingState? dataMaskingState, string exemptPrincipals, string applicationPrincipals, string maskingLevel) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Kind = kind;

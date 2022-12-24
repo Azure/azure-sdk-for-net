@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The list of Kusto databases.
         /// Serialized Name: DatabaseListResult.value
         /// Please note <see cref="SynapseDatabaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ReadOnlyFollowingDatabase"/> and <see cref="ReadWriteDatabase"/>.
+        /// The available derived classes include <see cref="SynapseReadOnlyFollowingDatabase"/> and <see cref="SynapseReadWriteDatabase"/>.
         /// </param>
         internal SynapseDatabaseListResult(IReadOnlyList<SynapseDatabaseData> value)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The list of Kusto databases.
         /// Serialized Name: DatabaseListResult.value
         /// Please note <see cref="SynapseDatabaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ReadOnlyFollowingDatabase"/> and <see cref="ReadWriteDatabase"/>.
+        /// The available derived classes include <see cref="SynapseReadOnlyFollowingDatabase"/> and <see cref="SynapseReadWriteDatabase"/>.
         /// </summary>
         public IReadOnlyList<SynapseDatabaseData> Value { get; }
     }

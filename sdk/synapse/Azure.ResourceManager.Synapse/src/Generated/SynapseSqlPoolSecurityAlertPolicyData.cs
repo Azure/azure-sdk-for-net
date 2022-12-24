@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Synapse
         /// Specifies the UTC creation time of the policy.
         /// Serialized Name: SqlPoolSecurityAlertPolicy.properties.creationTime
         /// </param>
-        internal SynapseSqlPoolSecurityAlertPolicyData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, SecurityAlertPolicyState? state, IList<string> disabledAlerts, IList<string> emailAddresses, bool? emailAccountAdmins, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData)
+        internal SynapseSqlPoolSecurityAlertPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynapseSecurityAlertPolicyState? state, IList<string> disabledAlerts, IList<string> emailAddresses, bool? emailAccountAdmins, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData)
         {
             State = state;
             DisabledAlerts = disabledAlerts;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Synapse
         /// Specifies the state of the policy, whether it is enabled or disabled or a policy has not been applied yet on the specific Sql pool.
         /// Serialized Name: SqlPoolSecurityAlertPolicy.properties.state
         /// </summary>
-        public SecurityAlertPolicyState? State { get; set; }
+        public SynapseSecurityAlertPolicyState? State { get; set; }
         /// <summary>
         /// Specifies an array of alerts that are disabled. Allowed values are: Sql_Injection, Sql_Injection_Vulnerability, Access_Anomaly, Data_Exfiltration, Unsafe_Action
         /// Serialized Name: SqlPoolSecurityAlertPolicy.properties.disabledAlerts

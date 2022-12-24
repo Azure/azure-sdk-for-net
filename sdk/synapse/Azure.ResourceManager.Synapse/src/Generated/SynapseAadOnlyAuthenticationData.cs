@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse
         /// property configuration date
         /// Serialized Name: AzureADOnlyAuthentication.properties.creationDate
         /// </param>
-        internal SynapseAadOnlyAuthenticationData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, bool? azureADOnlyAuthentication, StateValue? state, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData)
+        internal SynapseAadOnlyAuthenticationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? azureADOnlyAuthentication, AadAuthenticationState? state, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData)
         {
             AzureADOnlyAuthentication = azureADOnlyAuthentication;
             State = state;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Synapse
         /// property configuration state
         /// Serialized Name: AzureADOnlyAuthentication.properties.state
         /// </summary>
-        public StateValue? State { get; }
+        public AadAuthenticationState? State { get; }
         /// <summary>
         /// property configuration date
         /// Serialized Name: AzureADOnlyAuthentication.properties.creationDate

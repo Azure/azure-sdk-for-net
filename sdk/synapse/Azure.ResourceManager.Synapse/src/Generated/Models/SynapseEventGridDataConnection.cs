@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The provisioned state of the resource.
         /// Serialized Name: EventGridDataConnection.properties.provisioningState
         /// </param>
-        internal SynapseEventGridDataConnection(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseDataConnectionKind kind, string storageAccountResourceId, string eventHubResourceId, string consumerGroup, string tableName, string mappingRuleName, SynapseEventGridDataFormat? dataFormat, bool? ignoreFirstRecord, SynapseBlobStorageEventType? blobStorageEventType, ResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind)
+        internal SynapseEventGridDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseDataConnectionKind kind, string storageAccountResourceId, string eventHubResourceId, string consumerGroup, string tableName, string mappingRuleName, SynapseEventGridDataFormat? dataFormat, bool? ignoreFirstRecord, SynapseBlobStorageEventType? blobStorageEventType, ResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind)
         {
             StorageAccountResourceId = storageAccountResourceId;
             EventHubResourceId = eventHubResourceId;

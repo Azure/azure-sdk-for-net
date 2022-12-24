@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="data"> The required parameters for creating or updating transparent data encryption. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SynapseTransparentDataEncryptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, TransparentDataEncryptionName transparentDataEncryptionName, SynapseTransparentDataEncryptionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SynapseTransparentDataEncryptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SynapseTransparentDataEncryptionName transparentDataEncryptionName, SynapseTransparentDataEncryptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="data"> The required parameters for creating or updating transparent data encryption. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SynapseTransparentDataEncryptionResource> CreateOrUpdate(WaitUntil waitUntil, TransparentDataEncryptionName transparentDataEncryptionName, SynapseTransparentDataEncryptionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SynapseTransparentDataEncryptionResource> CreateOrUpdate(WaitUntil waitUntil, SynapseTransparentDataEncryptionName transparentDataEncryptionName, SynapseTransparentDataEncryptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="transparentDataEncryptionName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SynapseTransparentDataEncryptionResource>> GetAsync(TransparentDataEncryptionName transparentDataEncryptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseTransparentDataEncryptionResource>> GetAsync(SynapseTransparentDataEncryptionName transparentDataEncryptionName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsClientDiagnostics.CreateScope("SynapseTransparentDataEncryptionCollection.Get");
             scope.Start();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="transparentDataEncryptionName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SynapseTransparentDataEncryptionResource> Get(TransparentDataEncryptionName transparentDataEncryptionName, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseTransparentDataEncryptionResource> Get(SynapseTransparentDataEncryptionName transparentDataEncryptionName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsClientDiagnostics.CreateScope("SynapseTransparentDataEncryptionCollection.Get");
             scope.Start();
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="transparentDataEncryptionName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(TransparentDataEncryptionName transparentDataEncryptionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(SynapseTransparentDataEncryptionName transparentDataEncryptionName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsClientDiagnostics.CreateScope("SynapseTransparentDataEncryptionCollection.Exists");
             scope.Start();
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="transparentDataEncryptionName"> The name of the transparent data encryption configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(TransparentDataEncryptionName transparentDataEncryptionName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(SynapseTransparentDataEncryptionName transparentDataEncryptionName, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsClientDiagnostics.CreateScope("SynapseTransparentDataEncryptionCollection.Exists");
             scope.Start();

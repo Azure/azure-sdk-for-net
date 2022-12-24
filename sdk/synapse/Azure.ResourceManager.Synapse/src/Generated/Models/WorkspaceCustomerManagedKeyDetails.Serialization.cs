@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Synapse.Models
         internal static WorkspaceCustomerManagedKeyDetails DeserializeWorkspaceCustomerManagedKeyDetails(JsonElement element)
         {
             Optional<string> status = default;
-            Optional<WorkspaceKeyDetails> key = default;
+            Optional<SynapseWorkspaceKeyDetails> key = default;
             Optional<KekIdentityProperties> kekIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    key = WorkspaceKeyDetails.DeserializeWorkspaceKeyDetails(property.Value);
+                    key = SynapseWorkspaceKeyDetails.DeserializeSynapseWorkspaceKeyDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kekIdentity"))

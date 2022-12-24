@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/schemas/tables/columns";
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/schemas/tables/columns";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SynapseSensitivityLabelResource>> GetSynapseSensitivityLabelAsync(SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseSensitivityLabelResource>> GetSynapseSensitivityLabelAsync(SynapseSensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
         {
             return await GetSynapseSensitivityLabels().GetAsync(sensitivityLabelSource, cancellationToken).ConfigureAwait(false);
         }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<SynapseSensitivityLabelResource> GetSynapseSensitivityLabel(SensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseSensitivityLabelResource> GetSynapseSensitivityLabel(SynapseSensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
         {
             return GetSynapseSensitivityLabels().Get(sensitivityLabelSource, cancellationToken);
         }

@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        internal HttpMessage CreateRenameRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, ResourceMoveDefinition resourceMoveDefinition)
+        internal HttpMessage CreateRenameRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseResourceMoveDefinition synapseResourceMoveDefinition)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.Synapse
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(resourceMoveDefinition);
+            content.JsonWriter.WriteObjectValue(synapseResourceMoveDefinition);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -647,19 +647,19 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="sqlPoolName"> SQL pool name. </param>
-        /// <param name="resourceMoveDefinition"> The resource move definition for renaming this Sql pool. </param>
+        /// <param name="synapseResourceMoveDefinition"> The resource move definition for renaming this Sql pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="resourceMoveDefinition"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="synapseResourceMoveDefinition"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RenameAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, ResourceMoveDefinition resourceMoveDefinition, CancellationToken cancellationToken = default)
+        public async Task<Response> RenameAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseResourceMoveDefinition synapseResourceMoveDefinition, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
-            Argument.AssertNotNull(resourceMoveDefinition, nameof(resourceMoveDefinition));
+            Argument.AssertNotNull(synapseResourceMoveDefinition, nameof(synapseResourceMoveDefinition));
 
-            using var message = CreateRenameRequest(subscriptionId, resourceGroupName, workspaceName, sqlPoolName, resourceMoveDefinition);
+            using var message = CreateRenameRequest(subscriptionId, resourceGroupName, workspaceName, sqlPoolName, synapseResourceMoveDefinition);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -675,19 +675,19 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="sqlPoolName"> SQL pool name. </param>
-        /// <param name="resourceMoveDefinition"> The resource move definition for renaming this Sql pool. </param>
+        /// <param name="synapseResourceMoveDefinition"> The resource move definition for renaming this Sql pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="resourceMoveDefinition"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="synapseResourceMoveDefinition"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Rename(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, ResourceMoveDefinition resourceMoveDefinition, CancellationToken cancellationToken = default)
+        public Response Rename(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseResourceMoveDefinition synapseResourceMoveDefinition, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(sqlPoolName, nameof(sqlPoolName));
-            Argument.AssertNotNull(resourceMoveDefinition, nameof(resourceMoveDefinition));
+            Argument.AssertNotNull(synapseResourceMoveDefinition, nameof(synapseResourceMoveDefinition));
 
-            using var message = CreateRenameRequest(subscriptionId, resourceGroupName, workspaceName, sqlPoolName, resourceMoveDefinition);
+            using var message = CreateRenameRequest(subscriptionId, resourceGroupName, workspaceName, sqlPoolName, synapseResourceMoveDefinition);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

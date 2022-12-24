@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse.Models;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Synapse
         /// The start IP address of the firewall rule. Must be IPv4 format
         /// Serialized Name: IpFirewallRuleInfo.properties.startIpAddress
         /// </param>
-        internal SynapseIPFirewallRuleInfoData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string endIPAddress, ProvisioningState? provisioningState, string startIPAddress) : base(id, name, resourceType, systemData)
+        internal SynapseIPFirewallRuleInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress endIPAddress, SynapseProvisioningState? provisioningState, IPAddress startIPAddress) : base(id, name, resourceType, systemData)
         {
             EndIPAddress = endIPAddress;
             ProvisioningState = provisioningState;
@@ -47,16 +48,16 @@ namespace Azure.ResourceManager.Synapse
         /// The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress
         /// Serialized Name: IpFirewallRuleInfo.properties.endIpAddress
         /// </summary>
-        public string EndIPAddress { get; set; }
+        public IPAddress EndIPAddress { get; set; }
         /// <summary>
         /// Resource provisioning state
         /// Serialized Name: IpFirewallRuleInfo.properties.provisioningState
         /// </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public SynapseProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// The start IP address of the firewall rule. Must be IPv4 format
         /// Serialized Name: IpFirewallRuleInfo.properties.startIpAddress
         /// </summary>
-        public string StartIPAddress { get; set; }
+        public IPAddress StartIPAddress { get; set; }
     }
 }

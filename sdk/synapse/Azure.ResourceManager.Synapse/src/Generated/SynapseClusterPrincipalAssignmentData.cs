@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Synapse
         /// The service principal object id in AAD (Azure active directory)
         /// Serialized Name: ClusterPrincipalAssignment.properties.aadObjectId
         /// </param>
-        internal SynapseClusterPrincipalAssignmentData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string principalId, SynapseClusterPrincipalRole? role, Guid? tenantId, PrincipalType? principalType, string tenantName, string principalName, ResourceProvisioningState? provisioningState, string aadObjectId) : base(id, name, resourceType, systemData)
+        internal SynapseClusterPrincipalAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string principalId, SynapseClusterPrincipalRole? role, Guid? tenantId, SynapsePrincipalType? principalType, string tenantName, string principalName, ResourceProvisioningState? provisioningState, string aadObjectId) : base(id, name, resourceType, systemData)
         {
             PrincipalId = principalId;
             Role = role;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse
         /// Principal type.
         /// Serialized Name: ClusterPrincipalAssignment.properties.principalType
         /// </summary>
-        public PrincipalType? PrincipalType { get; set; }
+        public SynapsePrincipalType? PrincipalType { get; set; }
         /// <summary>
         /// The tenant name of the principal
         /// Serialized Name: ClusterPrincipalAssignment.properties.tenantName

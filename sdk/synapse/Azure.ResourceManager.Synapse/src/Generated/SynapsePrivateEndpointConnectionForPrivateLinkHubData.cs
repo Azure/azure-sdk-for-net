@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Synapse
         /// Properties of a private endpoint connection.
         /// Serialized Name: PrivateEndpointConnectionForPrivateLinkHubBasic.properties
         /// </param>
-        internal SynapsePrivateEndpointConnectionForPrivateLinkHubData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
+        internal SynapsePrivateEndpointConnectionForPrivateLinkHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynapsePrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.Synapse
         /// Properties of a private endpoint connection.
         /// Serialized Name: PrivateEndpointConnectionForPrivateLinkHubBasic.properties
         /// </summary>
-        public PrivateEndpointConnectionProperties Properties { get; }
+        public SynapsePrivateEndpointConnectionProperties Properties { get; }
     }
 }

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkspaceInfoListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseWorkspaceListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        WorkspaceInfoListResult value = default;
+                        SynapseWorkspaceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkspaceInfoListResult.DeserializeWorkspaceInfoListResult(document.RootElement);
+                        value = SynapseWorkspaceListResult.DeserializeSynapseWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkspaceInfoListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<SynapseWorkspaceListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        WorkspaceInfoListResult value = default;
+                        SynapseWorkspaceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkspaceInfoListResult.DeserializeWorkspaceInfoListResult(document.RootElement);
+                        value = SynapseWorkspaceListResult.DeserializeSynapseWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkspaceInfoListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseWorkspaceListResult>> ListAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -452,9 +452,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        WorkspaceInfoListResult value = default;
+                        SynapseWorkspaceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkspaceInfoListResult.DeserializeWorkspaceInfoListResult(document.RootElement);
+                        value = SynapseWorkspaceListResult.DeserializeSynapseWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkspaceInfoListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<SynapseWorkspaceListResult> List(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -477,9 +477,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        WorkspaceInfoListResult value = default;
+                        SynapseWorkspaceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkspaceInfoListResult.DeserializeWorkspaceInfoListResult(document.RootElement);
+                        value = SynapseWorkspaceListResult.DeserializeSynapseWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkspaceInfoListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseWorkspaceListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -520,9 +520,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        WorkspaceInfoListResult value = default;
+                        SynapseWorkspaceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkspaceInfoListResult.DeserializeWorkspaceInfoListResult(document.RootElement);
+                        value = SynapseWorkspaceListResult.DeserializeSynapseWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkspaceInfoListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<SynapseWorkspaceListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -549,9 +549,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        WorkspaceInfoListResult value = default;
+                        SynapseWorkspaceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkspaceInfoListResult.DeserializeWorkspaceInfoListResult(document.RootElement);
+                        value = SynapseWorkspaceListResult.DeserializeSynapseWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkspaceInfoListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<SynapseWorkspaceListResult>> ListNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -590,9 +590,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        WorkspaceInfoListResult value = default;
+                        SynapseWorkspaceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkspaceInfoListResult.DeserializeWorkspaceInfoListResult(document.RootElement);
+                        value = SynapseWorkspaceListResult.DeserializeSynapseWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkspaceInfoListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<SynapseWorkspaceListResult> ListNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -617,9 +617,9 @@ namespace Azure.ResourceManager.Synapse
             {
                 case 200:
                     {
-                        WorkspaceInfoListResult value = default;
+                        SynapseWorkspaceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkspaceInfoListResult.DeserializeWorkspaceInfoListResult(document.RootElement);
+                        value = SynapseWorkspaceListResult.DeserializeSynapseWorkspaceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

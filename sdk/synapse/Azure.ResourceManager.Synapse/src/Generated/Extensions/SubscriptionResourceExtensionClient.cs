@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Synapse
         private ClientDiagnostics SynapseKustoPoolKustoPoolsClientDiagnostics => _synapseKustoPoolKustoPoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Synapse", SynapseKustoPoolResource.ResourceType.Namespace, Diagnostics);
         private KustoPoolsRestOperations SynapseKustoPoolKustoPoolsRestClient => _synapseKustoPoolKustoPoolsRestClient ??= new KustoPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SynapseKustoPoolResource.ResourceType));
 
-        private string GetApiVersionOrNull(Core.ResourceType resourceType)
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
@@ -226,10 +226,10 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: KustoPools_ListSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SkuDescription" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SkuDescription> GetSkusKustoPoolsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="KustoPoolSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<KustoPoolSkuDescription> GetSkusKustoPoolsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SkuDescription>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<KustoPoolSkuDescription>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = SynapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkusKustoPools");
                 scope.Start();
@@ -253,10 +253,10 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: KustoPools_ListSkus
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SkuDescription" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SkuDescription> GetSkusKustoPools(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="KustoPoolSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<KustoPoolSkuDescription> GetSkusKustoPools(CancellationToken cancellationToken = default)
         {
-            Page<SkuDescription> FirstPageFunc(int? pageSizeHint)
+            Page<KustoPoolSkuDescription> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = SynapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkusKustoPools");
                 scope.Start();

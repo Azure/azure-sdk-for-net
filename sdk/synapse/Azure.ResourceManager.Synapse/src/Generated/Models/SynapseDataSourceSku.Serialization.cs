@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             SynapseSkuName name = default;
             Optional<int> capacity = default;
-            SkuSize size = default;
+            KustoPoolSkuSize size = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 if (property.NameEquals("size"))
                 {
-                    size = new SkuSize(property.Value.GetString());
+                    size = new KustoPoolSkuSize(property.Value.GetString());
                     continue;
                 }
             }

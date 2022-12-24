@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Synapse
         /// 
         /// Serialized Name: SqlPoolBlobAuditingPolicy.properties.isAzureMonitorTargetEnabled
         /// </param>
-        internal SynapseSqlPoolBlobAuditingPolicyData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string kind, SynapseBlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, IList<string> auditActionsAndGroups, Guid? storageAccountSubscriptionId, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled) : base(id, name, resourceType, systemData)
+        internal SynapseSqlPoolBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, SynapseBlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, IList<string> auditActionsAndGroups, Guid? storageAccountSubscriptionId, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             State = state;

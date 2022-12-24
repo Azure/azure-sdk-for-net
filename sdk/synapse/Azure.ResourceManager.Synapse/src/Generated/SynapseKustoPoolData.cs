@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Synapse
         /// The workspace unique identifier.
         /// Serialized Name: KustoPool.properties.workspaceUID
         /// </param>
-        internal SynapseKustoPoolData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SynapseDataSourceSku sku, ETag? etag, State? state, ResourceProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, OptimizedAutoscale optimizedAutoscale, bool? enableStreamingIngest, bool? enablePurge, LanguageExtensionsList languageExtensions, string workspaceUID) : base(id, name, resourceType, systemData, tags, location)
+        internal SynapseKustoPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SynapseDataSourceSku sku, ETag? etag, KustoPoolState? state, ResourceProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, SynapseOptimizedAutoscale optimizedAutoscale, bool? enableStreamingIngest, bool? enablePurge, SynapseLanguageExtensionsList languageExtensions, string workspaceUID) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ETag = etag;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Synapse
         /// The state of the resource.
         /// Serialized Name: KustoPool.properties.state
         /// </summary>
-        public State? State { get; }
+        public KustoPoolState? State { get; }
         /// <summary>
         /// The provisioned state of the resource.
         /// Serialized Name: KustoPool.properties.provisioningState
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Synapse
         /// Optimized auto scale definition.
         /// Serialized Name: KustoPool.properties.optimizedAutoscale
         /// </summary>
-        public OptimizedAutoscale OptimizedAutoscale { get; set; }
+        public SynapseOptimizedAutoscale OptimizedAutoscale { get; set; }
         /// <summary>
         /// A boolean value that indicates if the streaming ingest is enabled.
         /// Serialized Name: KustoPool.properties.enableStreamingIngest
@@ -156,12 +156,12 @@ namespace Azure.ResourceManager.Synapse
         /// List of the Kusto Pool&apos;s language extensions.
         /// Serialized Name: KustoPool.properties.languageExtensions
         /// </summary>
-        internal LanguageExtensionsList LanguageExtensions { get; }
+        internal SynapseLanguageExtensionsList LanguageExtensions { get; }
         /// <summary>
         /// The list of language extensions.
         /// Serialized Name: LanguageExtensionsList.value
         /// </summary>
-        public IList<LanguageExtension> LanguageExtensionsValue
+        public IList<SynapseLanguageExtension> LanguageExtensionsValue
         {
             get => LanguageExtensions?.Value;
         }

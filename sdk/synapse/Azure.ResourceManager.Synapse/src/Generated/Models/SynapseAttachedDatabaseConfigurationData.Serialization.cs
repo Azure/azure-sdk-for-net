@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.Synapse
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<ResourceProvisioningState> provisioningState = default;
             Optional<string> databaseName = default;
             Optional<string> clusterResourceId = default;
             Optional<IReadOnlyList<string>> attachedDatabaseNames = default;
             Optional<SynapseDefaultPrincipalsModificationKind> defaultPrincipalsModificationKind = default;
-            Optional<TableLevelSharingProperties> tableLevelSharingProperties = default;
+            Optional<SynapseTableLevelSharingProperties> tableLevelSharingProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Synapse
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            tableLevelSharingProperties = TableLevelSharingProperties.DeserializeTableLevelSharingProperties(property0.Value);
+                            tableLevelSharingProperties = SynapseTableLevelSharingProperties.DeserializeSynapseTableLevelSharingProperties(property0.Value);
                             continue;
                         }
                     }

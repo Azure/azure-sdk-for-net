@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="location"> The location. </param>
         public SynapseBigDataPoolInfoData(AzureLocation location) : base(location)
         {
-            CustomLibraries = new ChangeTrackingList<LibraryInfo>();
+            CustomLibraries = new ChangeTrackingList<BigDataPoolLibraryInfo>();
         }
 
         /// <summary> Initializes a new instance of SynapseBigDataPoolInfoData. </summary>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Synapse
         /// The time when the Big Data pool was updated successfully.
         /// Serialized Name: BigDataPoolResourceInfo.properties.lastSucceededTimestamp
         /// </param>
-        internal SynapseBigDataPoolInfoData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, SynapseBigDataPoolAutoScaleProperties autoScale, DateTimeOffset? createdOn, SynapseBigDataPoolAutoPauseProperties autoPause, bool? isComputeIsolationEnabled, bool? isAutotuneEnabled, bool? sessionLevelPackagesEnabled, int? cacheSize, SynapseDynamicExecutorAllocation dynamicExecutorAllocation, string sparkEventsFolder, int? nodeCount, LibraryRequirements libraryRequirements, IList<LibraryInfo> customLibraries, SparkConfigProperties sparkConfigProperties, string sparkVersion, string defaultSparkLogFolder, NodeSize? nodeSize, NodeSizeFamily? nodeSizeFamily, DateTimeOffset? lastSucceededTimestamp) : base(id, name, resourceType, systemData, tags, location)
+        internal SynapseBigDataPoolInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, BigDataPoolAutoScaleProperties autoScale, DateTimeOffset? createdOn, BigDataPoolAutoPauseProperties autoPause, bool? isComputeIsolationEnabled, bool? isAutotuneEnabled, bool? sessionLevelPackagesEnabled, int? cacheSize, SynapseDynamicExecutorAllocation dynamicExecutorAllocation, string sparkEventsFolder, int? nodeCount, BigDataPoolLibraryRequirements libraryRequirements, IList<BigDataPoolLibraryInfo> customLibraries, BigDataPoolSparkConfigProperties sparkConfigProperties, string sparkVersion, string defaultSparkLogFolder, BigDataPoolNodeSize? nodeSize, BigDataPoolNodeSizeFamily? nodeSizeFamily, DateTimeOffset? lastSucceededTimestamp) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             AutoScale = autoScale;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Synapse
         /// Auto-scaling properties
         /// Serialized Name: BigDataPoolResourceInfo.properties.autoScale
         /// </summary>
-        public SynapseBigDataPoolAutoScaleProperties AutoScale { get; set; }
+        public BigDataPoolAutoScaleProperties AutoScale { get; set; }
         /// <summary>
         /// The time when the Big Data pool was created.
         /// Serialized Name: BigDataPoolResourceInfo.properties.creationDate
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Synapse
         /// Auto-pausing properties
         /// Serialized Name: BigDataPoolResourceInfo.properties.autoPause
         /// </summary>
-        public SynapseBigDataPoolAutoPauseProperties AutoPause { get; set; }
+        public BigDataPoolAutoPauseProperties AutoPause { get; set; }
         /// <summary>
         /// Whether compute isolation is required or not.
         /// Serialized Name: BigDataPoolResourceInfo.properties.isComputeIsolationEnabled
@@ -188,17 +188,17 @@ namespace Azure.ResourceManager.Synapse
         /// Library version requirements
         /// Serialized Name: BigDataPoolResourceInfo.properties.libraryRequirements
         /// </summary>
-        public LibraryRequirements LibraryRequirements { get; set; }
+        public BigDataPoolLibraryRequirements LibraryRequirements { get; set; }
         /// <summary>
         /// List of custom libraries/packages associated with the spark pool.
         /// Serialized Name: BigDataPoolResourceInfo.properties.customLibraries
         /// </summary>
-        public IList<LibraryInfo> CustomLibraries { get; }
+        public IList<BigDataPoolLibraryInfo> CustomLibraries { get; }
         /// <summary>
         /// Spark configuration file to specify additional properties
         /// Serialized Name: BigDataPoolResourceInfo.properties.sparkConfigProperties
         /// </summary>
-        public SparkConfigProperties SparkConfigProperties { get; set; }
+        public BigDataPoolSparkConfigProperties SparkConfigProperties { get; set; }
         /// <summary>
         /// The Apache Spark version.
         /// Serialized Name: BigDataPoolResourceInfo.properties.sparkVersion
@@ -213,12 +213,12 @@ namespace Azure.ResourceManager.Synapse
         /// The level of compute power that each node in the Big Data pool has.
         /// Serialized Name: BigDataPoolResourceInfo.properties.nodeSize
         /// </summary>
-        public NodeSize? NodeSize { get; set; }
+        public BigDataPoolNodeSize? NodeSize { get; set; }
         /// <summary>
         /// The kind of nodes that the Big Data pool provides.
         /// Serialized Name: BigDataPoolResourceInfo.properties.nodeSizeFamily
         /// </summary>
-        public NodeSizeFamily? NodeSizeFamily { get; set; }
+        public BigDataPoolNodeSizeFamily? NodeSizeFamily { get; set; }
         /// <summary>
         /// The time when the Big Data pool was updated successfully.
         /// Serialized Name: BigDataPoolResourceInfo.properties.lastSucceededTimestamp

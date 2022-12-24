@@ -42,8 +42,8 @@ rename-mapping:
   AzureScaleType: SynapseDataSourceScaleType
   AzureSku: SynapseDataSourceSku
   AzureResourceSku: SynapseDataSourceResourceSku
-  AutoPauseProperties: SynapseBigDataPoolAutoPauseProperties
-  AutoScaleProperties: SynapseBigDataPoolAutoScaleProperties
+  AutoPauseProperties: BigDataPoolAutoPauseProperties
+  AutoScaleProperties: BigDataPoolAutoScaleProperties
   CheckNameResult: KustoPoolNameAvailabilityResult
   Reason: KustoPoolNameUnavailableReason
   DataConnectionCheckNameRequest: KustoPoolDataConnectionNameAvailabilityContent
@@ -60,6 +60,45 @@ rename-mapping:
   IntegrationRuntimeMonitoringData: SynapseIntegrationRuntimeMonitoringResult
   IntegrationRuntimeNodeMonitoringData: SynapseIntegrationRuntimeNodeMonitoringResult
   ColumnDataType: SqlPoolColumnDataType
+  IntegrationRuntimeListResponse: SynapseIntegrationRuntimeListResult
+  IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse: SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult
+  IntegrationRuntimeStatusResponse: SynapseIntegrationRuntimeStatusResult
+  IntegrationRuntimeVNetProperties: SynapseIntegrationRuntimeVnetProperties
+  LibraryInfo: BigDataPoolLibraryInfo
+  LibraryListResponse: BigDataPoolLibraryListResult
+  LibraryRequirements: BigDataPoolLibraryRequirements
+  ListResourceSkusResult: SynapseDataSourceResourceSkuListResult
+  ListSqlPoolSecurityAlertPolicies: SynapseSqlPoolSecurityAlertPolicyListResult
+  NodeSize: BigDataPoolNodeSize
+  NodeSizeFamily: BigDataPoolNodeSizeFamily
+  PrivateEndpointConnectionForPrivateLinkHubResourceCollectionResponse: SynapsePrivateEndpointConnectionForPrivateLinkHubListResult
+  PrivateEndpointConnectionList: SynapsePrivateEndpointConnectionListResult
+  PrivateLinkHubInfoListResult: SynapsePrivateLinkHubListResult
+  RecommendedSensitivityLabelUpdateList: SynapseRecommendedSensitivityLabelUpdateOperationListResult
+  RecoverableSqlPoolListResult: SynapseRecoverableSqlPoolListResult
+  ReplaceAllFirewallRulesOperationResponse: ReplaceAllFirewallRulesOperationResult
+  ReplicationLinkListResult: SynapseReplicationLinkListResult
+  ResourceType: KustoPoolDatabaseType
+  RestorableDroppedSqlPoolListResult: SynapseRestorableDroppedSqlPoolListResult
+  RestorePointListResult: SynapseRestorePointListResult
+  SensitivityLabelListResult: SynapseSensitivityLabelListResult
+  SensitivityLabelUpdateList: SynapseSensitivityLabelUpdateListResult
+  ServerBlobAuditingPolicyListResult: SynapseServerBlobAuditingPolicyListResult
+  ServerSecurityAlertPolicyListResult: SynapseServerSecurityAlertPolicyListResult
+  ServerUsageListResult: SynapseServerUsageListResult
+  ServerVulnerabilityAssessmentListResult: SynapseServerVulnerabilityAssessmentListResult
+  SkuDescription: KustoPoolSkuDescription
+  SkuDescriptionList: KustoPoolSkuDescriptionListResult
+  SkuLocationInfoItem: KustoPoolSkuLocationInfoItem
+  SkuSize: KustoPoolSkuSize
+  SparkConfigProperties: BigDataPoolSparkConfigProperties
+  SparkConfigurationListResponse: SynapseSparkConfigurationListResult
+  SsisObjectMetadataStatusResponse: SynapseSsisObjectMetadataStatusResult
+  State: KustoPoolState
+  StateValue: AadAuthenticationState
+  StorageAccountType: SqlPoolStorageAccountType
+  SsisObjectMetadataListResponse: SynapseSsisObjectMetadataListResult
+  WorkspaceInfoListResult: SynapseWorkspaceListResult
   MaintenanceWindowTimeRange.startTime: StartOn
   AutoPauseProperties.enabled: IsEnabled
   CheckNameResult.nameAvailable: IsNameAvailable
@@ -73,6 +112,13 @@ rename-mapping:
   ColumnDataType.datetime: DateTime
   ColumnDataType.smallmoney: SmallMoney
   ColumnDataType.bigint: BigInt
+  IpFirewallRuleProperties.endIpAddress: -|ip-address
+  IpFirewallRuleProperties.startIpAddress: -|ip-address
+  LibraryInfo.uploadedTimestamp: UploadedOn
+  ManagedVirtualNetworkSettings.linkedAccessCheckOnTargetResource: EnableLinkedAccessCheckOnTargetResource
+  AutoScaleProperties.enabled: IsEnabled
+  ReplicationState.CATCH_UP: CatchUp
+  ResourceMoveDefinition.id: -|arm-id
 
 prepend-rp-prefix:
   - AttachedDatabaseConfiguration
@@ -114,6 +160,7 @@ prepend-rp-prefix:
   - ServerVulnerabilityAssessment
   - SqlPool
   - SqlPoolBlobAuditingPolicy
+  - SqlPoolBlobAuditingPolicyListResult
   - SqlPoolColumn
   - SqlPoolConnectionPolicy
   - SqlPoolSchema
@@ -122,9 +169,15 @@ prepend-rp-prefix:
   - SqlPoolVulnerabilityAssessment
   - SqlPoolVulnerabilityAssessmentRuleBaseline
   - TransparentDataEncryption
+  - TransparentDataEncryptionListResult
+  - TransparentDataEncryptionName
+  - TransparentDataEncryptionStatus
   - VulnerabilityAssessmentScanRecord
+  - VulnerabilityAssessmentScanRecordListResult
   - WorkloadClassifier
+  - WorkloadClassifierListResult
   - WorkloadGroup
+  - WorkloadGroupListResult
   - WorkspaceAadAdminInfo
   - Workspace
   - BlobAuditingPolicyName
@@ -177,6 +230,81 @@ prepend-rp-prefix:
   - IntegrationRuntimeInternalChannelEncryptionMode
   - IntegrationRuntimeLicenseType
   - IntegrationRuntimeNodeIPAddress
+  - IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint
+  - IntegrationRuntimeOutboundNetworkDependenciesEndpoint
+  - IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails
+  - IntegrationRuntimeRegenerateKeyContent
+  - IntegrationRuntimeSsisCatalogInfo
+  - IntegrationRuntimeSsisCatalogPricingTier
+  - IntegrationRuntimeSsisProperties
+  - IntegrationRuntimeState
+  - IntegrationRuntimeStatus
+  - IntegrationRuntimeUpdateResult
+  - IotHubDataConnection
+  - IotHubDataFormat
+  - IPFirewallRuleInfoListResult
+  - IPFirewallRuleProperties
+  - LanguageExtension
+  - LanguageExtensionName
+  - LanguageExtensionsList
+  - LinkedIntegrationRuntime
+  - LinkedIntegrationRuntimeKeyAuthorization
+  - LinkedIntegrationRuntimeRbacAuthorization
+  - LinkedIntegrationRuntimeType
+  - MaintenanceWindowTimeRange
+  - ManagedIntegrationRuntime
+  - ManagedIntegrationRuntimeError
+  - ManagedIntegrationRuntimeNode
+  - ManagedIntegrationRuntimeNodeStatus
+  - ManagedIntegrationRuntimeOperationResult
+  - ManagedIntegrationRuntimeStatus
+  - ManagedVirtualNetworkSettings
+  - ManagementOperationState
+  - OptimizedAutoscale
+  - PrincipalAssignmentType
+  - PrincipalsModificationKind
+  - PrincipalType
+  - PrivateEndpointConnectionProperties
+  - ProvisioningState
+  - ReadOnlyFollowingDatabase
+  - ReadWriteDatabase
+  - RecommendedSensitivityLabelUpdate
+  - RecommendedSensitivityLabelUpdateKind
+  - ReplicationRole
+  - ReplicationState
+  - ResourceMoveDefinition
+  - RestorePointType
+  - SecretBase
+  - SecureString
+  - SecurityAlertPolicyState
+  - SelfHostedIntegrationRuntime
+  - SelfHostedIntegrationRuntimeNode
+  - SelfHostedIntegrationRuntimeNodeStatus
+  - SelfHostedIntegrationRuntimeStatus
+  - SensitivityLabelRank
+  - SensitivityLabelSource
+  - SensitivityLabelUpdate
+  - SensitivityLabelUpdateKind
+  - ServerKeyType
+  - ServerUsage
+  - SsisEnvironment
+  - SsisEnvironmentReference
+  - SsisFolder
+  - SsisObjectMetadata
+  - SsisObjectMetadataType
+  - SsisPackage
+  - SsisParameter
+  - SsisProject
+  - SsisVariable
+  - TableLevelSharingProperties
+  - VulnerabilityAssessmentName
+  - VulnerabilityAssessmentPolicyBaselineName
+  - VulnerabilityAssessmentRecurringScansProperties
+  - VulnerabilityAssessmentScanError
+  - VulnerabilityAssessmentScanState
+  - VulnerabilityAssessmentScanTriggerType
+  - WorkspaceKeyDetails
+  - WorkspaceRepositoryConfiguration
 
 override-operation-name:
   IntegrationRuntimeStatus_Get: GetIntegrationRuntimeStatus
@@ -231,6 +359,8 @@ rename-rules:
   ORC: Orc
   Apacheavro: ApacheAvro
   W3Clogfile: W3CLogfile
+  GRS: Grs
+  LRS: Lrs
 
 list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}
@@ -242,6 +372,8 @@ directive:
   - remove-operation: Operations_List
   - remove-operation: Operations_GetLocationHeaderResult
   - remove-operation: Operations_GetAzureAsyncHeaderResult
+  - remove-operation: KustoOperations_List
+  - remove-operation: SqlPoolOperations_List
   - from: operations.json
     where: $.definitions
     transform: >

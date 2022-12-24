@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Synapse
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<SynapseDataLakeStorageAccountDetails> defaultDataLakeStorage = default;
             Optional<string> sqlAdministratorLoginPassword = default;
@@ -156,8 +156,8 @@ namespace Azure.ResourceManager.Synapse
             Optional<SynapseEncryptionDetails> encryption = default;
             Optional<Guid> workspaceUID = default;
             Optional<IReadOnlyDictionary<string, BinaryData>> extraProperties = default;
-            Optional<ManagedVirtualNetworkSettings> managedVirtualNetworkSettings = default;
-            Optional<WorkspaceRepositoryConfiguration> workspaceRepositoryConfiguration = default;
+            Optional<SynapseManagedVirtualNetworkSettings> managedVirtualNetworkSettings = default;
+            Optional<SynapseWorkspaceRepositoryConfiguration> workspaceRepositoryConfiguration = default;
             Optional<PurviewConfiguration> purviewConfiguration = default;
             Optional<string> adlaResourceId = default;
             Optional<WorkspacePublicNetworkAccess> publicNetworkAccess = default;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Synapse
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            managedVirtualNetworkSettings = ManagedVirtualNetworkSettings.DeserializeManagedVirtualNetworkSettings(property0.Value);
+                            managedVirtualNetworkSettings = SynapseManagedVirtualNetworkSettings.DeserializeSynapseManagedVirtualNetworkSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("workspaceRepositoryConfiguration"))
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            workspaceRepositoryConfiguration = WorkspaceRepositoryConfiguration.DeserializeWorkspaceRepositoryConfiguration(property0.Value);
+                            workspaceRepositoryConfiguration = SynapseWorkspaceRepositoryConfiguration.DeserializeSynapseWorkspaceRepositoryConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("purviewConfiguration"))

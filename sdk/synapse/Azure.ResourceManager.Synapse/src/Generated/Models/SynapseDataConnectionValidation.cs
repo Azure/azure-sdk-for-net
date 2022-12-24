@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The data connection properties to validate.
         /// Serialized Name: DataConnectionValidation.properties
         /// Please note <see cref="SynapseDataConnectionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseEventGridDataConnection"/>, <see cref="SynapseEventHubDataConnection"/> and <see cref="IotHubDataConnection"/>.
+        /// The available derived classes include <see cref="SynapseEventGridDataConnection"/>, <see cref="SynapseEventHubDataConnection"/> and <see cref="SynapseIotHubDataConnection"/>.
         /// </summary>
         public SynapseDataConnectionData Properties { get; set; }
     }

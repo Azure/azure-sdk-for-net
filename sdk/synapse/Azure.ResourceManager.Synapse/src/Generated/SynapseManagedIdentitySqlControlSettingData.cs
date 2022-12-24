@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Synapse
         /// Grant sql control to managed identity
         /// Serialized Name: ManagedIdentitySqlControlSettingsModel.properties.grantSqlControlToManagedIdentity
         /// </param>
-        internal SynapseManagedIdentitySqlControlSettingData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, SynapseGrantSqlControlToManagedIdentity grantSqlControlToManagedIdentity) : base(id, name, resourceType, systemData)
+        internal SynapseManagedIdentitySqlControlSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynapseGrantSqlControlToManagedIdentity grantSqlControlToManagedIdentity) : base(id, name, resourceType, systemData)
         {
             GrantSqlControlToManagedIdentity = grantSqlControlToManagedIdentity;
         }

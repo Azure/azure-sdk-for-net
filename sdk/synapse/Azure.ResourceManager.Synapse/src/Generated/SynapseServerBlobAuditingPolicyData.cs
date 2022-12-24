@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Synapse
         /// 
         /// Serialized Name: ServerBlobAuditingPolicy.properties.isDevopsAuditEnabled
         /// </param>
-        internal SynapseServerBlobAuditingPolicyData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, SynapseBlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, IList<string> auditActionsAndGroups, Guid? storageAccountSubscriptionId, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, bool? isDevopsAuditEnabled) : base(id, name, resourceType, systemData)
+        internal SynapseServerBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynapseBlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, IList<string> auditActionsAndGroups, Guid? storageAccountSubscriptionId, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, bool? isDevopsAuditEnabled) : base(id, name, resourceType, systemData)
         {
             State = state;
             StorageEndpoint = storageEndpoint;

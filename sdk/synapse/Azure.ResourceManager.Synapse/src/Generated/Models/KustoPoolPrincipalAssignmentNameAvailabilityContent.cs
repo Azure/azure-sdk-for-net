@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            ResourceType = PrincipalAssignmentType.MicrosoftSynapseWorkspacesKustoPoolsPrincipalAssignments;
+            ResourceType = SynapsePrincipalAssignmentType.MicrosoftSynapseWorkspacesKustoPoolsPrincipalAssignments;
         }
 
         /// <summary>
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Synapse.Models
         /// The type of resource, Microsoft.Synapse/workspaces/kustoPools/principalAssignments.
         /// Serialized Name: ClusterPrincipalAssignmentCheckNameRequest.type
         /// </summary>
-        public PrincipalAssignmentType ResourceType { get; }
+        public SynapsePrincipalAssignmentType ResourceType { get; }
     }
 }

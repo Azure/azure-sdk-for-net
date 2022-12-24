@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             string type = default;
             string componentName = default;
-            Optional<SecretBase> licenseKey = default;
+            Optional<SynapseSecretBase> licenseKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Synapse.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            licenseKey = SecretBase.DeserializeSecretBase(property0.Value);
+                            licenseKey = SynapseSecretBase.DeserializeSynapseSecretBase(property0.Value);
                             continue;
                         }
                     }

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Synapse
         /// Is trustedServiceBypassEnabled for the workspace
         /// Serialized Name: Workspace.properties.trustedServiceBypassEnabled
         /// </param>
-        internal SynapseWorkspaceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, SynapseDataLakeStorageAccountDetails defaultDataLakeStorage, string sqlAdministratorLoginPassword, string managedResourceGroupName, string provisioningState, string sqlAdministratorLogin, VirtualNetworkProfile virtualNetworkProfile, IDictionary<string, string> connectivityEndpoints, string managedVirtualNetwork, IList<SynapsePrivateEndpointConnectionData> privateEndpointConnections, SynapseEncryptionDetails encryption, Guid? workspaceUID, IReadOnlyDictionary<string, BinaryData> extraProperties, ManagedVirtualNetworkSettings managedVirtualNetworkSettings, WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration, PurviewConfiguration purviewConfiguration, string adlaResourceId, WorkspacePublicNetworkAccess? publicNetworkAccess, CspWorkspaceAdminProperties cspWorkspaceAdminProperties, IReadOnlyDictionary<string, BinaryData> settings, bool? azureADOnlyAuthentication, bool? trustedServiceBypassEnabled) : base(id, name, resourceType, systemData, tags, location)
+        internal SynapseWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, SynapseDataLakeStorageAccountDetails defaultDataLakeStorage, string sqlAdministratorLoginPassword, string managedResourceGroupName, string provisioningState, string sqlAdministratorLogin, VirtualNetworkProfile virtualNetworkProfile, IDictionary<string, string> connectivityEndpoints, string managedVirtualNetwork, IList<SynapsePrivateEndpointConnectionData> privateEndpointConnections, SynapseEncryptionDetails encryption, Guid? workspaceUID, IReadOnlyDictionary<string, BinaryData> extraProperties, SynapseManagedVirtualNetworkSettings managedVirtualNetworkSettings, SynapseWorkspaceRepositoryConfiguration workspaceRepositoryConfiguration, PurviewConfiguration purviewConfiguration, string adlaResourceId, WorkspacePublicNetworkAccess? publicNetworkAccess, CspWorkspaceAdminProperties cspWorkspaceAdminProperties, IReadOnlyDictionary<string, BinaryData> settings, bool? azureADOnlyAuthentication, bool? trustedServiceBypassEnabled) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             DefaultDataLakeStorage = defaultDataLakeStorage;
@@ -258,12 +258,12 @@ namespace Azure.ResourceManager.Synapse
         /// Managed Virtual Network Settings
         /// Serialized Name: Workspace.properties.managedVirtualNetworkSettings
         /// </summary>
-        public ManagedVirtualNetworkSettings ManagedVirtualNetworkSettings { get; set; }
+        public SynapseManagedVirtualNetworkSettings ManagedVirtualNetworkSettings { get; set; }
         /// <summary>
         /// Git integration settings
         /// Serialized Name: Workspace.properties.workspaceRepositoryConfiguration
         /// </summary>
-        public WorkspaceRepositoryConfiguration WorkspaceRepositoryConfiguration { get; set; }
+        public SynapseWorkspaceRepositoryConfiguration WorkspaceRepositoryConfiguration { get; set; }
         /// <summary>
         /// Purview Configuration
         /// Serialized Name: Workspace.properties.purviewConfiguration

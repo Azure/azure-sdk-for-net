@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Synapse/workspaces/integrationRuntimes";
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/integrationRuntimes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -324,14 +324,14 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<IntegrationRuntimeStatusResponse>> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SynapseIntegrationRuntimeStatusResult>> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.Start");
             scope.Start();
             try
             {
                 var response = await _synapseIntegrationRuntimeIntegrationRuntimesRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<IntegrationRuntimeStatusResponse>(new IntegrationRuntimeStatusResponseOperationSource(), _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, _synapseIntegrationRuntimeIntegrationRuntimesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SynapseIntegrationRuntimeStatusResult>(new SynapseIntegrationRuntimeStatusResultOperationSource(), _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, _synapseIntegrationRuntimeIntegrationRuntimesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -350,14 +350,14 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<IntegrationRuntimeStatusResponse> Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SynapseIntegrationRuntimeStatusResult> Start(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.Start");
             scope.Start();
             try
             {
                 var response = _synapseIntegrationRuntimeIntegrationRuntimesRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation<IntegrationRuntimeStatusResponse>(new IntegrationRuntimeStatusResponseOperationSource(), _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, _synapseIntegrationRuntimeIntegrationRuntimesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SynapseIntegrationRuntimeStatusResult>(new SynapseIntegrationRuntimeStatusResultOperationSource(), _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, _synapseIntegrationRuntimeIntegrationRuntimesRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -427,10 +427,10 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: IntegrationRuntimes_ListOutboundNetworkDependenciesEndpoints
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.GetOutboundNetworkDependenciesEndpoints");
                 scope.Start();
@@ -454,10 +454,10 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: IntegrationRuntimes_ListOutboundNetworkDependenciesEndpoints
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
-            Page<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> FirstPageFunc(int? pageSizeHint)
+            Page<SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _synapseIntegrationRuntimeIntegrationRuntimesClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.GetOutboundNetworkDependenciesEndpoints");
                 scope.Start();
@@ -640,10 +640,10 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="content"> The parameters for getting a SSIS object metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SsisObjectMetadata" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadataAsync(SynapseGetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SynapseSsisObjectMetadata" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SynapseSsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadataAsync(SynapseGetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SsisObjectMetadata>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SynapseSsisObjectMetadata>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata");
                 scope.Start();
@@ -668,10 +668,10 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="content"> The parameters for getting a SSIS object metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SsisObjectMetadata" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadata(SynapseGetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SynapseSsisObjectMetadata" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SynapseSsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadata(SynapseGetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
         {
-            Page<SsisObjectMetadata> FirstPageFunc(int? pageSizeHint)
+            Page<SynapseSsisObjectMetadata> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata");
                 scope.Start();
@@ -696,14 +696,14 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<SsisObjectMetadataStatusResponse>> RefreshIntegrationRuntimeObjectMetadataAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SynapseSsisObjectMetadataStatusResult>> RefreshIntegrationRuntimeObjectMetadataAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.RefreshIntegrationRuntimeObjectMetadata");
             scope.Start();
             try
             {
                 var response = await _integrationRuntimeObjectMetadataRestClient.RefreshAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SsisObjectMetadataStatusResponse>(new SsisObjectMetadataStatusResponseOperationSource(), _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, _integrationRuntimeObjectMetadataRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SynapseSsisObjectMetadataStatusResult>(new SynapseSsisObjectMetadataStatusResultOperationSource(), _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, _integrationRuntimeObjectMetadataRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -722,14 +722,14 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<SsisObjectMetadataStatusResponse> RefreshIntegrationRuntimeObjectMetadata(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SynapseSsisObjectMetadataStatusResult> RefreshIntegrationRuntimeObjectMetadata(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _integrationRuntimeObjectMetadataClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.RefreshIntegrationRuntimeObjectMetadata");
             scope.Start();
             try
             {
                 var response = _integrationRuntimeObjectMetadataRestClient.Refresh(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation<SsisObjectMetadataStatusResponse>(new SsisObjectMetadataStatusResponseOperationSource(), _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, _integrationRuntimeObjectMetadataRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SynapseSsisObjectMetadataStatusResult>(new SynapseSsisObjectMetadataStatusResultOperationSource(), _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, _integrationRuntimeObjectMetadataRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
-        public virtual async Task<Response<SelfHostedIntegrationRuntimeNode>> GetIntegrationRuntimeNodeAsync(string nodeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseSelfHostedIntegrationRuntimeNode>> GetIntegrationRuntimeNodeAsync(string nodeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
-        public virtual Response<SelfHostedIntegrationRuntimeNode> GetIntegrationRuntimeNode(string nodeName, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseSelfHostedIntegrationRuntimeNode> GetIntegrationRuntimeNode(string nodeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
 
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<SelfHostedIntegrationRuntimeNode>> UpdateIntegrationRuntimeNodeAsync(string nodeName, UpdateIntegrationRuntimeNodeContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseSelfHostedIntegrationRuntimeNode>> UpdateIntegrationRuntimeNodeAsync(string nodeName, UpdateIntegrationRuntimeNodeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
             Argument.AssertNotNull(content, nameof(content));
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="nodeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<SelfHostedIntegrationRuntimeNode> UpdateIntegrationRuntimeNode(string nodeName, UpdateIntegrationRuntimeNodeContent content, CancellationToken cancellationToken = default)
+        public virtual Response<SynapseSelfHostedIntegrationRuntimeNode> UpdateIntegrationRuntimeNode(string nodeName, UpdateIntegrationRuntimeNodeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodeName, nameof(nodeName));
             Argument.AssertNotNull(content, nameof(content));
@@ -1141,7 +1141,7 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: IntegrationRuntimeStatus_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IntegrationRuntimeStatusResponse>> GetIntegrationRuntimeStatusAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SynapseIntegrationRuntimeStatusResult>> GetIntegrationRuntimeStatusAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _integrationRuntimeStatusClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.GetIntegrationRuntimeStatus");
             scope.Start();
@@ -1163,7 +1163,7 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: IntegrationRuntimeStatus_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IntegrationRuntimeStatusResponse> GetIntegrationRuntimeStatus(CancellationToken cancellationToken = default)
+        public virtual Response<SynapseIntegrationRuntimeStatusResult> GetIntegrationRuntimeStatus(CancellationToken cancellationToken = default)
         {
             using var scope = _integrationRuntimeStatusClientDiagnostics.CreateScope("SynapseIntegrationRuntimeResource.GetIntegrationRuntimeStatus");
             scope.Start();

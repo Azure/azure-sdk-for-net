@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.Synapse
         {
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<bool> azureADOnlyAuthentication = default;
-            Optional<StateValue> state = default;
+            Optional<AadAuthenticationState> state = default;
             Optional<DateTimeOffset> creationDate = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Synapse
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            state = new StateValue(property0.Value.GetString());
+                            state = new AadAuthenticationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("creationDate"))

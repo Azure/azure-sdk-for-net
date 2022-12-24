@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Synapse
         /// The private link resource properties.
         /// Serialized Name: PrivateLinkResource.properties
         /// </param>
-        internal SynapsePrivateLinkResourceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, SynapsePrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
+        internal SynapsePrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynapsePrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

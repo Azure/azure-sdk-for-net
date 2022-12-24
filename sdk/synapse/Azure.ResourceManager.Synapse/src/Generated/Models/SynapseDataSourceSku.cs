@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// SKU size.
         /// Serialized Name: AzureSku.size
         /// </param>
-        public SynapseDataSourceSku(SynapseSkuName name, SkuSize size)
+        public SynapseDataSourceSku(SynapseSkuName name, KustoPoolSkuSize size)
         {
             Name = name;
             Size = size;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// SKU size.
         /// Serialized Name: AzureSku.size
         /// </param>
-        internal SynapseDataSourceSku(SynapseSkuName name, int? capacity, SkuSize size)
+        internal SynapseDataSourceSku(SynapseSkuName name, int? capacity, KustoPoolSkuSize size)
         {
             Name = name;
             Capacity = capacity;
@@ -62,6 +62,6 @@ namespace Azure.ResourceManager.Synapse.Models
         /// SKU size.
         /// Serialized Name: AzureSku.size
         /// </summary>
-        public SkuSize Size { get; set; }
+        public KustoPoolSkuSize Size { get; set; }
     }
 }

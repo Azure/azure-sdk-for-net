@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Synapse.Models
         internal static SynapseIntegrationRuntimeCustomSetupScriptProperties DeserializeSynapseIntegrationRuntimeCustomSetupScriptProperties(JsonElement element)
         {
             Optional<Uri> blobContainerUri = default;
-            Optional<SecureString> sasToken = default;
+            Optional<SynapseSecureString> sasToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blobContainerUri"))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sasToken = SecureString.DeserializeSecureString(property.Value);
+                    sasToken = SynapseSecureString.DeserializeSynapseSecureString(property.Value);
                     continue;
                 }
             }

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly Core.ResourceType ResourceType = "Microsoft.Synapse/workspaces/kustoPools";
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/kustoPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -534,10 +534,10 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: KustoPools_ListLanguageExtensions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LanguageExtension" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LanguageExtension> GetLanguageExtensionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SynapseLanguageExtension" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SynapseLanguageExtension> GetLanguageExtensionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<LanguageExtension>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SynapseLanguageExtension>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.GetLanguageExtensions");
                 scope.Start();
@@ -561,10 +561,10 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: KustoPools_ListLanguageExtensions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LanguageExtension" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LanguageExtension> GetLanguageExtensions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SynapseLanguageExtension" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SynapseLanguageExtension> GetLanguageExtensions(CancellationToken cancellationToken = default)
         {
-            Page<LanguageExtension> FirstPageFunc(int? pageSizeHint)
+            Page<SynapseLanguageExtension> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _synapseKustoPoolKustoPoolsClientDiagnostics.CreateScope("SynapseKustoPoolResource.GetLanguageExtensions");
                 scope.Start();
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="languageExtensionsToAdd"> The language extensions to add. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="languageExtensionsToAdd"/> is null. </exception>
-        public virtual async Task<ArmOperation> AddLanguageExtensionsAsync(WaitUntil waitUntil, LanguageExtensionsList languageExtensionsToAdd, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> AddLanguageExtensionsAsync(WaitUntil waitUntil, SynapseLanguageExtensionsList languageExtensionsToAdd, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(languageExtensionsToAdd, nameof(languageExtensionsToAdd));
 
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="languageExtensionsToAdd"> The language extensions to add. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="languageExtensionsToAdd"/> is null. </exception>
-        public virtual ArmOperation AddLanguageExtensions(WaitUntil waitUntil, LanguageExtensionsList languageExtensionsToAdd, CancellationToken cancellationToken = default)
+        public virtual ArmOperation AddLanguageExtensions(WaitUntil waitUntil, SynapseLanguageExtensionsList languageExtensionsToAdd, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(languageExtensionsToAdd, nameof(languageExtensionsToAdd));
 
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="languageExtensionsToRemove"> The language extensions to remove. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="languageExtensionsToRemove"/> is null. </exception>
-        public virtual async Task<ArmOperation> RemoveLanguageExtensionsAsync(WaitUntil waitUntil, LanguageExtensionsList languageExtensionsToRemove, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RemoveLanguageExtensionsAsync(WaitUntil waitUntil, SynapseLanguageExtensionsList languageExtensionsToRemove, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(languageExtensionsToRemove, nameof(languageExtensionsToRemove));
 
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="languageExtensionsToRemove"> The language extensions to remove. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="languageExtensionsToRemove"/> is null. </exception>
-        public virtual ArmOperation RemoveLanguageExtensions(WaitUntil waitUntil, LanguageExtensionsList languageExtensionsToRemove, CancellationToken cancellationToken = default)
+        public virtual ArmOperation RemoveLanguageExtensions(WaitUntil waitUntil, SynapseLanguageExtensionsList languageExtensionsToRemove, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(languageExtensionsToRemove, nameof(languageExtensionsToRemove));
 

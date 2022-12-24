@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.Synapse
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
-            Optional<SynapseBigDataPoolAutoScaleProperties> autoScale = default;
+            Optional<BigDataPoolAutoScaleProperties> autoScale = default;
             Optional<DateTimeOffset> creationDate = default;
-            Optional<SynapseBigDataPoolAutoPauseProperties> autoPause = default;
+            Optional<BigDataPoolAutoPauseProperties> autoPause = default;
             Optional<bool> isComputeIsolationEnabled = default;
             Optional<bool> isAutotuneEnabled = default;
             Optional<bool> sessionLevelPackagesEnabled = default;
@@ -147,13 +147,13 @@ namespace Azure.ResourceManager.Synapse
             Optional<SynapseDynamicExecutorAllocation> dynamicExecutorAllocation = default;
             Optional<string> sparkEventsFolder = default;
             Optional<int> nodeCount = default;
-            Optional<LibraryRequirements> libraryRequirements = default;
-            Optional<IList<LibraryInfo>> customLibraries = default;
-            Optional<SparkConfigProperties> sparkConfigProperties = default;
+            Optional<BigDataPoolLibraryRequirements> libraryRequirements = default;
+            Optional<IList<BigDataPoolLibraryInfo>> customLibraries = default;
+            Optional<BigDataPoolSparkConfigProperties> sparkConfigProperties = default;
             Optional<string> sparkVersion = default;
             Optional<string> defaultSparkLogFolder = default;
-            Optional<NodeSize> nodeSize = default;
-            Optional<NodeSizeFamily> nodeSizeFamily = default;
+            Optional<BigDataPoolNodeSize> nodeSize = default;
+            Optional<BigDataPoolNodeSizeFamily> nodeSizeFamily = default;
             Optional<DateTimeOffset> lastSucceededTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Synapse
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            autoScale = SynapseBigDataPoolAutoScaleProperties.DeserializeSynapseBigDataPoolAutoScaleProperties(property0.Value);
+                            autoScale = BigDataPoolAutoScaleProperties.DeserializeBigDataPoolAutoScaleProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("creationDate"))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            autoPause = SynapseBigDataPoolAutoPauseProperties.DeserializeSynapseBigDataPoolAutoPauseProperties(property0.Value);
+                            autoPause = BigDataPoolAutoPauseProperties.DeserializeBigDataPoolAutoPauseProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("isComputeIsolationEnabled"))
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            libraryRequirements = LibraryRequirements.DeserializeLibraryRequirements(property0.Value);
+                            libraryRequirements = BigDataPoolLibraryRequirements.DeserializeBigDataPoolLibraryRequirements(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("customLibraries"))
@@ -328,10 +328,10 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<LibraryInfo> array = new List<LibraryInfo>();
+                            List<BigDataPoolLibraryInfo> array = new List<BigDataPoolLibraryInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LibraryInfo.DeserializeLibraryInfo(item));
+                                array.Add(BigDataPoolLibraryInfo.DeserializeBigDataPoolLibraryInfo(item));
                             }
                             customLibraries = array;
                             continue;
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sparkConfigProperties = SparkConfigProperties.DeserializeSparkConfigProperties(property0.Value);
+                            sparkConfigProperties = BigDataPoolSparkConfigProperties.DeserializeBigDataPoolSparkConfigProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sparkVersion"))
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            nodeSize = new NodeSize(property0.Value.GetString());
+                            nodeSize = new BigDataPoolNodeSize(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("nodeSizeFamily"))
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Synapse
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            nodeSizeFamily = new NodeSizeFamily(property0.Value.GetString());
+                            nodeSizeFamily = new BigDataPoolNodeSizeFamily(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("lastSucceededTimestamp"))

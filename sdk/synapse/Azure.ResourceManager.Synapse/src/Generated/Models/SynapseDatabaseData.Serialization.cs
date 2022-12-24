@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.Synapse
             {
                 switch (discriminator.GetString())
                 {
-                    case "ReadOnlyFollowing": return ReadOnlyFollowingDatabase.DeserializeReadOnlyFollowingDatabase(element);
-                    case "ReadWrite": return ReadWriteDatabase.DeserializeReadWriteDatabase(element);
+                    case "ReadOnlyFollowing": return SynapseReadOnlyFollowingDatabase.DeserializeSynapseReadOnlyFollowingDatabase(element);
+                    case "ReadWrite": return SynapseReadWriteDatabase.DeserializeSynapseReadWriteDatabase(element);
                 }
             }
             Optional<AzureLocation> location = default;
             SynapseKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Synapse
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))

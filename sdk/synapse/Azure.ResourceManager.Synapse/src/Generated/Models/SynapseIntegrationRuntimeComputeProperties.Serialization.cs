@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<int> numberOfNodes = default;
             Optional<int> maxParallelExecutionsPerNode = default;
             Optional<SynapseIntegrationRuntimeDataFlowProperties> dataFlowProperties = default;
-            Optional<IntegrationRuntimeVNetProperties> vNetProperties = default;
+            Optional<SynapseIntegrationRuntimeVnetProperties> vNetProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vNetProperties = IntegrationRuntimeVNetProperties.DeserializeIntegrationRuntimeVNetProperties(property.Value);
+                    vNetProperties = SynapseIntegrationRuntimeVnetProperties.DeserializeSynapseIntegrationRuntimeVnetProperties(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
