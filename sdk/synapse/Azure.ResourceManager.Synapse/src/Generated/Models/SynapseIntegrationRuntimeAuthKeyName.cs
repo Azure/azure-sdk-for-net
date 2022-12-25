@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The name of the authentication key to regenerate.
-    /// Serialized Name: IntegrationRuntimeAuthKeyName
-    /// </summary>
+    /// <summary> The name of the authentication key to regenerate. </summary>
     public readonly partial struct SynapseIntegrationRuntimeAuthKeyName : IEquatable<SynapseIntegrationRuntimeAuthKeyName>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string AuthKey1Value = "authKey1";
         private const string AuthKey2Value = "authKey2";
 
-        /// <summary>
-        /// authKey1
-        /// Serialized Name: IntegrationRuntimeAuthKeyName.authKey1
-        /// </summary>
+        /// <summary> authKey1. </summary>
         public static SynapseIntegrationRuntimeAuthKeyName AuthKey1 { get; } = new SynapseIntegrationRuntimeAuthKeyName(AuthKey1Value);
-        /// <summary>
-        /// authKey2
-        /// Serialized Name: IntegrationRuntimeAuthKeyName.authKey2
-        /// </summary>
+        /// <summary> authKey2. </summary>
         public static SynapseIntegrationRuntimeAuthKeyName AuthKey2 { get; } = new SynapseIntegrationRuntimeAuthKeyName(AuthKey2Value);
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeAuthKeyName"/> values are the same. </summary>
         public static bool operator ==(SynapseIntegrationRuntimeAuthKeyName left, SynapseIntegrationRuntimeAuthKeyName right) => left.Equals(right);

@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("isAutotuneEnabled");
                 writer.WriteBooleanValue(IsAutotuneEnabled.Value);
             }
-            if (Optional.IsDefined(SessionLevelPackagesEnabled))
+            if (Optional.IsDefined(IsSessionLevelPackagesEnabled))
             {
                 writer.WritePropertyName("sessionLevelPackagesEnabled");
-                writer.WriteBooleanValue(SessionLevelPackagesEnabled.Value);
+                writer.WriteBooleanValue(IsSessionLevelPackagesEnabled.Value);
             }
             if (Optional.IsDefined(CacheSize))
             {

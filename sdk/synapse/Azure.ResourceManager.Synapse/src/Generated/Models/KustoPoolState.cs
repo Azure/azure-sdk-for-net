@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The state of the resource.
-    /// Serialized Name: State
-    /// </summary>
+    /// <summary> The state of the resource. </summary>
     public readonly partial struct KustoPoolState : IEquatable<KustoPoolState>
     {
         private readonly string _value;
@@ -35,50 +32,23 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string StartingValue = "Starting";
         private const string UpdatingValue = "Updating";
 
-        /// <summary>
-        /// Creating
-        /// Serialized Name: State.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static KustoPoolState Creating { get; } = new KustoPoolState(CreatingValue);
-        /// <summary>
-        /// Unavailable
-        /// Serialized Name: State.Unavailable
-        /// </summary>
+        /// <summary> Unavailable. </summary>
         public static KustoPoolState Unavailable { get; } = new KustoPoolState(UnavailableValue);
-        /// <summary>
-        /// Running
-        /// Serialized Name: State.Running
-        /// </summary>
+        /// <summary> Running. </summary>
         public static KustoPoolState Running { get; } = new KustoPoolState(RunningValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: State.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static KustoPoolState Deleting { get; } = new KustoPoolState(DeletingValue);
-        /// <summary>
-        /// Deleted
-        /// Serialized Name: State.Deleted
-        /// </summary>
+        /// <summary> Deleted. </summary>
         public static KustoPoolState Deleted { get; } = new KustoPoolState(DeletedValue);
-        /// <summary>
-        /// Stopping
-        /// Serialized Name: State.Stopping
-        /// </summary>
+        /// <summary> Stopping. </summary>
         public static KustoPoolState Stopping { get; } = new KustoPoolState(StoppingValue);
-        /// <summary>
-        /// Stopped
-        /// Serialized Name: State.Stopped
-        /// </summary>
+        /// <summary> Stopped. </summary>
         public static KustoPoolState Stopped { get; } = new KustoPoolState(StoppedValue);
-        /// <summary>
-        /// Starting
-        /// Serialized Name: State.Starting
-        /// </summary>
+        /// <summary> Starting. </summary>
         public static KustoPoolState Starting { get; } = new KustoPoolState(StartingValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: State.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static KustoPoolState Updating { get; } = new KustoPoolState(UpdatingValue);
         /// <summary> Determines if two <see cref="KustoPoolState"/> values are the same. </summary>
         public static bool operator ==(KustoPoolState left, KustoPoolState right) => left.Equals(right);

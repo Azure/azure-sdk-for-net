@@ -7,29 +7,14 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Azure capacity definition.
-    /// Serialized Name: AzureCapacity
-    /// </summary>
+    /// <summary> Azure capacity definition. </summary>
     public partial class SynapseDataSourceCapacity
     {
         /// <summary> Initializes a new instance of SynapseDataSourceCapacity. </summary>
-        /// <param name="scaleType">
-        /// Scale type.
-        /// Serialized Name: AzureCapacity.scaleType
-        /// </param>
-        /// <param name="minimum">
-        /// Minimum allowed capacity.
-        /// Serialized Name: AzureCapacity.minimum
-        /// </param>
-        /// <param name="maximum">
-        /// Maximum allowed capacity.
-        /// Serialized Name: AzureCapacity.maximum
-        /// </param>
-        /// <param name="default">
-        /// The default capacity that would be used.
-        /// Serialized Name: AzureCapacity.default
-        /// </param>
+        /// <param name="scaleType"> Scale type. </param>
+        /// <param name="minimum"> Minimum allowed capacity. </param>
+        /// <param name="maximum"> Maximum allowed capacity. </param>
+        /// <param name="default"> The default capacity that would be used. </param>
         internal SynapseDataSourceCapacity(SynapseDataSourceScaleType scaleType, int minimum, int maximum, int @default)
         {
             ScaleType = scaleType;
@@ -38,25 +23,13 @@ namespace Azure.ResourceManager.Synapse.Models
             Default = @default;
         }
 
-        /// <summary>
-        /// Scale type.
-        /// Serialized Name: AzureCapacity.scaleType
-        /// </summary>
+        /// <summary> Scale type. </summary>
         public SynapseDataSourceScaleType ScaleType { get; }
-        /// <summary>
-        /// Minimum allowed capacity.
-        /// Serialized Name: AzureCapacity.minimum
-        /// </summary>
+        /// <summary> Minimum allowed capacity. </summary>
         public int Minimum { get; }
-        /// <summary>
-        /// Maximum allowed capacity.
-        /// Serialized Name: AzureCapacity.maximum
-        /// </summary>
+        /// <summary> Maximum allowed capacity. </summary>
         public int Maximum { get; }
-        /// <summary>
-        /// The default capacity that would be used.
-        /// Serialized Name: AzureCapacity.default
-        /// </summary>
+        /// <summary> The default capacity that would be used. </summary>
         public int Default { get; }
     }
 }

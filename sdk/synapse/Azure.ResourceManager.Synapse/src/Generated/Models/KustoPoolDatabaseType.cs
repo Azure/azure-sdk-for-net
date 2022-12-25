@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The type of resource, for instance Microsoft.Synapse/workspaces/kustoPools/databases.
-    /// Serialized Name: ResourceType
-    /// </summary>
+    /// <summary> The type of resource, for instance Microsoft.Synapse/workspaces/kustoPools/databases. </summary>
     public enum KustoPoolDatabaseType
     {
-        /// <summary>
-        /// Microsoft.Synapse/workspaces/kustoPools/databases
-        /// Serialized Name: ResourceType.Microsoft.Synapse/workspaces/kustoPools/databases
-        /// </summary>
+        /// <summary> Microsoft.Synapse/workspaces/kustoPools/databases. </summary>
         MicrosoftSynapseWorkspacesKustoPoolsDatabases,
-        /// <summary>
-        /// Microsoft.Synapse/workspaces/kustoPools/attachedDatabaseConfigurations
-        /// Serialized Name: ResourceType.Microsoft.Synapse/workspaces/kustoPools/attachedDatabaseConfigurations
-        /// </summary>
+        /// <summary> Microsoft.Synapse/workspaces/kustoPools/attachedDatabaseConfigurations. </summary>
         MicrosoftSynapseWorkspacesKustoPoolsAttachedDatabaseConfigurations
     }
 }

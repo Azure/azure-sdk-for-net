@@ -10,24 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The custom setup of running cmdkey commands.
-    /// Serialized Name: CmdkeySetup
-    /// </summary>
+    /// <summary> The custom setup of running cmdkey commands. </summary>
     public partial class SynapseCmdkeySetup : SynapseCustomSetupBase
     {
         /// <summary> Initializes a new instance of SynapseCmdkeySetup. </summary>
-        /// <param name="targetName">
-        /// The server name of data source access.
-        /// Serialized Name: CmdkeySetup.typeProperties.targetName
-        /// </param>
-        /// <param name="userName">
-        /// The user name of data source access.
-        /// Serialized Name: CmdkeySetup.typeProperties.userName
-        /// </param>
+        /// <param name="targetName"> The server name of data source access. </param>
+        /// <param name="userName"> The user name of data source access. </param>
         /// <param name="password">
         /// The password of data source access.
-        /// Serialized Name: CmdkeySetup.typeProperties.password
         /// Please note <see cref="SynapseSecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SynapseSecureString"/>.
         /// </param>
@@ -45,21 +35,11 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseCmdkeySetup. </summary>
-        /// <param name="customSetupBaseType">
-        /// The type of custom setup.
-        /// Serialized Name: CustomSetupBase.type
-        /// </param>
-        /// <param name="targetName">
-        /// The server name of data source access.
-        /// Serialized Name: CmdkeySetup.typeProperties.targetName
-        /// </param>
-        /// <param name="userName">
-        /// The user name of data source access.
-        /// Serialized Name: CmdkeySetup.typeProperties.userName
-        /// </param>
+        /// <param name="customSetupBaseType"> The type of custom setup. </param>
+        /// <param name="targetName"> The server name of data source access. </param>
+        /// <param name="userName"> The user name of data source access. </param>
         /// <param name="password">
         /// The password of data source access.
-        /// Serialized Name: CmdkeySetup.typeProperties.password
         /// Please note <see cref="SynapseSecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SynapseSecureString"/>.
         /// </param>
@@ -73,7 +53,6 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary>
         /// The server name of data source access.
-        /// Serialized Name: CmdkeySetup.typeProperties.targetName
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -105,7 +84,6 @@ namespace Azure.ResourceManager.Synapse.Models
         public BinaryData TargetName { get; set; }
         /// <summary>
         /// The user name of data source access.
-        /// Serialized Name: CmdkeySetup.typeProperties.userName
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -137,7 +115,6 @@ namespace Azure.ResourceManager.Synapse.Models
         public BinaryData UserName { get; set; }
         /// <summary>
         /// The password of data source access.
-        /// Serialized Name: CmdkeySetup.typeProperties.password
         /// Please note <see cref="SynapseSecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SynapseSecureString"/>.
         /// </summary>

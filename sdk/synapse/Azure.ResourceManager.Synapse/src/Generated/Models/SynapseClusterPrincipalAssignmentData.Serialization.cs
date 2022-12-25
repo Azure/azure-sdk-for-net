@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Synapse
             Optional<string> tenantName = default;
             Optional<string> principalName = default;
             Optional<ResourceProvisioningState> provisioningState = default;
-            Optional<string> aadObjectId = default;
+            Optional<Guid> aadObjectId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -151,14 +151,19 @@ namespace Azure.ResourceManager.Synapse
                         }
                         if (property0.NameEquals("aadObjectId"))
                         {
-                            aadObjectId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            aadObjectId = property0.Value.GetGuid();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SynapseClusterPrincipalAssignmentData(id, name, type, systemData.Value, principalId.Value, Optional.ToNullable(role), Optional.ToNullable(tenantId), Optional.ToNullable(principalType), tenantName.Value, principalName.Value, Optional.ToNullable(provisioningState), aadObjectId.Value);
+            return new SynapseClusterPrincipalAssignmentData(id, name, type, systemData.Value, principalId.Value, Optional.ToNullable(role), Optional.ToNullable(tenantId), Optional.ToNullable(principalType), tenantName.Value, principalName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(aadObjectId));
         }
     }
 }

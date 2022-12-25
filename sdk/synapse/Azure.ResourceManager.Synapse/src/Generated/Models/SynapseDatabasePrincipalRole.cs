@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Database principal role.
-    /// Serialized Name: DatabasePrincipalRole
-    /// </summary>
+    /// <summary> Database principal role. </summary>
     public readonly partial struct SynapseDatabasePrincipalRole : IEquatable<SynapseDatabasePrincipalRole>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string UnrestrictedViewerValue = "UnrestrictedViewer";
         private const string ViewerValue = "Viewer";
 
-        /// <summary>
-        /// Admin
-        /// Serialized Name: DatabasePrincipalRole.Admin
-        /// </summary>
+        /// <summary> Admin. </summary>
         public static SynapseDatabasePrincipalRole Admin { get; } = new SynapseDatabasePrincipalRole(AdminValue);
-        /// <summary>
-        /// Ingestor
-        /// Serialized Name: DatabasePrincipalRole.Ingestor
-        /// </summary>
+        /// <summary> Ingestor. </summary>
         public static SynapseDatabasePrincipalRole Ingestor { get; } = new SynapseDatabasePrincipalRole(IngestorValue);
-        /// <summary>
-        /// Monitor
-        /// Serialized Name: DatabasePrincipalRole.Monitor
-        /// </summary>
+        /// <summary> Monitor. </summary>
         public static SynapseDatabasePrincipalRole Monitor { get; } = new SynapseDatabasePrincipalRole(MonitorValue);
-        /// <summary>
-        /// User
-        /// Serialized Name: DatabasePrincipalRole.User
-        /// </summary>
+        /// <summary> User. </summary>
         public static SynapseDatabasePrincipalRole User { get; } = new SynapseDatabasePrincipalRole(UserValue);
-        /// <summary>
-        /// UnrestrictedViewer
-        /// Serialized Name: DatabasePrincipalRole.UnrestrictedViewer
-        /// </summary>
+        /// <summary> UnrestrictedViewer. </summary>
         public static SynapseDatabasePrincipalRole UnrestrictedViewer { get; } = new SynapseDatabasePrincipalRole(UnrestrictedViewerValue);
-        /// <summary>
-        /// Viewer
-        /// Serialized Name: DatabasePrincipalRole.Viewer
-        /// </summary>
+        /// <summary> Viewer. </summary>
         public static SynapseDatabasePrincipalRole Viewer { get; } = new SynapseDatabasePrincipalRole(ViewerValue);
         /// <summary> Determines if two <see cref="SynapseDatabasePrincipalRole"/> values are the same. </summary>
         public static bool operator ==(SynapseDatabasePrincipalRole left, SynapseDatabasePrincipalRole right) => left.Equals(right);

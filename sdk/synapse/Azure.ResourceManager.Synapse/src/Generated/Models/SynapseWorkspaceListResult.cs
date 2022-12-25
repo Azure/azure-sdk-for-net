@@ -11,10 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// List of workspaces
-    /// Serialized Name: WorkspaceInfoListResult
-    /// </summary>
+    /// <summary> List of workspaces. </summary>
     internal partial class SynapseWorkspaceListResult
     {
         /// <summary> Initializes a new instance of SynapseWorkspaceListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseWorkspaceListResult. </summary>
-        /// <param name="nextLink">
-        /// Link to the next page of results
-        /// Serialized Name: WorkspaceInfoListResult.nextLink
-        /// </param>
-        /// <param name="value">
-        /// List of workspaces
-        /// Serialized Name: WorkspaceInfoListResult.value
-        /// </param>
+        /// <param name="nextLink"> Link to the next page of results. </param>
+        /// <param name="value"> List of workspaces. </param>
         internal SynapseWorkspaceListResult(string nextLink, IReadOnlyList<SynapseWorkspaceData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary>
-        /// Link to the next page of results
-        /// Serialized Name: WorkspaceInfoListResult.nextLink
-        /// </summary>
+        /// <summary> Link to the next page of results. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// List of workspaces
-        /// Serialized Name: WorkspaceInfoListResult.value
-        /// </summary>
+        /// <summary> List of workspaces. </summary>
         public IReadOnlyList<SynapseWorkspaceData> Value { get; }
     }
 }

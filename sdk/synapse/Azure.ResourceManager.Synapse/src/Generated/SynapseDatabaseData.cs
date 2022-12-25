@@ -30,29 +30,17 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location">
-        /// Resource location.
-        /// Serialized Name: Database.location
-        /// </param>
-        /// <param name="kind">
-        /// Kind of the database
-        /// Serialized Name: Database.kind
-        /// </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="kind"> Kind of the database. </param>
         internal SynapseDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseKind kind) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Kind = kind;
         }
 
-        /// <summary>
-        /// Resource location.
-        /// Serialized Name: Database.location
-        /// </summary>
+        /// <summary> Resource location. </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary>
-        /// Kind of the database
-        /// Serialized Name: Database.kind
-        /// </summary>
+        /// <summary> Kind of the database. </summary>
         internal SynapseKind Kind { get; set; }
     }
 }

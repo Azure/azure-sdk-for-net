@@ -14,10 +14,10 @@ namespace Azure.ResourceManager.Synapse.Models
         public static string ToSerialString(this SynapseDataMaskingFunction value) => value switch
         {
             SynapseDataMaskingFunction.Default => "Default",
-            SynapseDataMaskingFunction.CCN => "CCN",
+            SynapseDataMaskingFunction.Ccn => "CCN",
             SynapseDataMaskingFunction.Email => "Email",
             SynapseDataMaskingFunction.Number => "Number",
-            SynapseDataMaskingFunction.SSN => "SSN",
+            SynapseDataMaskingFunction.Ssn => "SSN",
             SynapseDataMaskingFunction.Text => "Text",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SynapseDataMaskingFunction value.")
         };
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Synapse.Models
         public static SynapseDataMaskingFunction ToSynapseDataMaskingFunction(this string value)
         {
             if (string.Equals(value, "Default", StringComparison.InvariantCultureIgnoreCase)) return SynapseDataMaskingFunction.Default;
-            if (string.Equals(value, "CCN", StringComparison.InvariantCultureIgnoreCase)) return SynapseDataMaskingFunction.CCN;
+            if (string.Equals(value, "CCN", StringComparison.InvariantCultureIgnoreCase)) return SynapseDataMaskingFunction.Ccn;
             if (string.Equals(value, "Email", StringComparison.InvariantCultureIgnoreCase)) return SynapseDataMaskingFunction.Email;
             if (string.Equals(value, "Number", StringComparison.InvariantCultureIgnoreCase)) return SynapseDataMaskingFunction.Number;
-            if (string.Equals(value, "SSN", StringComparison.InvariantCultureIgnoreCase)) return SynapseDataMaskingFunction.SSN;
+            if (string.Equals(value, "SSN", StringComparison.InvariantCultureIgnoreCase)) return SynapseDataMaskingFunction.Ssn;
             if (string.Equals(value, "Text", StringComparison.InvariantCultureIgnoreCase)) return SynapseDataMaskingFunction.Text;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SynapseDataMaskingFunction value.");
         }

@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The linked integration runtime information.
-    /// Serialized Name: LinkedIntegrationRuntime
-    /// </summary>
+    /// <summary> The linked integration runtime information. </summary>
     public partial class SynapseLinkedIntegrationRuntime
     {
         /// <summary> Initializes a new instance of SynapseLinkedIntegrationRuntime. </summary>
@@ -21,26 +18,11 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseLinkedIntegrationRuntime. </summary>
-        /// <param name="name">
-        /// The name of the linked integration runtime.
-        /// Serialized Name: LinkedIntegrationRuntime.name
-        /// </param>
-        /// <param name="subscriptionId">
-        /// The subscription ID for which the linked integration runtime belong to.
-        /// Serialized Name: LinkedIntegrationRuntime.subscriptionId
-        /// </param>
-        /// <param name="dataFactoryName">
-        /// The name of the workspace for which the linked integration runtime belong to.
-        /// Serialized Name: LinkedIntegrationRuntime.dataFactoryName
-        /// </param>
-        /// <param name="dataFactoryLocation">
-        /// The location of the workspace for which the linked integration runtime belong to.
-        /// Serialized Name: LinkedIntegrationRuntime.dataFactoryLocation
-        /// </param>
-        /// <param name="createOn">
-        /// The creating time of the linked integration runtime.
-        /// Serialized Name: LinkedIntegrationRuntime.createTime
-        /// </param>
+        /// <param name="name"> The name of the linked integration runtime. </param>
+        /// <param name="subscriptionId"> The subscription ID for which the linked integration runtime belong to. </param>
+        /// <param name="dataFactoryName"> The name of the workspace for which the linked integration runtime belong to. </param>
+        /// <param name="dataFactoryLocation"> The location of the workspace for which the linked integration runtime belong to. </param>
+        /// <param name="createOn"> The creating time of the linked integration runtime. </param>
         internal SynapseLinkedIntegrationRuntime(string name, string subscriptionId, string dataFactoryName, string dataFactoryLocation, DateTimeOffset? createOn)
         {
             Name = name;
@@ -50,30 +32,15 @@ namespace Azure.ResourceManager.Synapse.Models
             CreateOn = createOn;
         }
 
-        /// <summary>
-        /// The name of the linked integration runtime.
-        /// Serialized Name: LinkedIntegrationRuntime.name
-        /// </summary>
+        /// <summary> The name of the linked integration runtime. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The subscription ID for which the linked integration runtime belong to.
-        /// Serialized Name: LinkedIntegrationRuntime.subscriptionId
-        /// </summary>
+        /// <summary> The subscription ID for which the linked integration runtime belong to. </summary>
         public string SubscriptionId { get; }
-        /// <summary>
-        /// The name of the workspace for which the linked integration runtime belong to.
-        /// Serialized Name: LinkedIntegrationRuntime.dataFactoryName
-        /// </summary>
+        /// <summary> The name of the workspace for which the linked integration runtime belong to. </summary>
         public string DataFactoryName { get; }
-        /// <summary>
-        /// The location of the workspace for which the linked integration runtime belong to.
-        /// Serialized Name: LinkedIntegrationRuntime.dataFactoryLocation
-        /// </summary>
+        /// <summary> The location of the workspace for which the linked integration runtime belong to. </summary>
         public string DataFactoryLocation { get; }
-        /// <summary>
-        /// The creating time of the linked integration runtime.
-        /// Serialized Name: LinkedIntegrationRuntime.createTime
-        /// </summary>
+        /// <summary> The creating time of the linked integration runtime. </summary>
         public DateTimeOffset? CreateOn { get; }
     }
 }

@@ -25,18 +25,9 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="endIPAddress">
-        /// The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress
-        /// Serialized Name: IpFirewallRuleInfo.properties.endIpAddress
-        /// </param>
-        /// <param name="provisioningState">
-        /// Resource provisioning state
-        /// Serialized Name: IpFirewallRuleInfo.properties.provisioningState
-        /// </param>
-        /// <param name="startIPAddress">
-        /// The start IP address of the firewall rule. Must be IPv4 format
-        /// Serialized Name: IpFirewallRuleInfo.properties.startIpAddress
-        /// </param>
+        /// <param name="endIPAddress"> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. </param>
+        /// <param name="provisioningState"> Resource provisioning state. </param>
+        /// <param name="startIPAddress"> The start IP address of the firewall rule. Must be IPv4 format. </param>
         internal SynapseIPFirewallRuleInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress endIPAddress, SynapseProvisioningState? provisioningState, IPAddress startIPAddress) : base(id, name, resourceType, systemData)
         {
             EndIPAddress = endIPAddress;
@@ -44,20 +35,11 @@ namespace Azure.ResourceManager.Synapse
             StartIPAddress = startIPAddress;
         }
 
-        /// <summary>
-        /// The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress
-        /// Serialized Name: IpFirewallRuleInfo.properties.endIpAddress
-        /// </summary>
+        /// <summary> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. </summary>
         public IPAddress EndIPAddress { get; set; }
-        /// <summary>
-        /// Resource provisioning state
-        /// Serialized Name: IpFirewallRuleInfo.properties.provisioningState
-        /// </summary>
+        /// <summary> Resource provisioning state. </summary>
         public SynapseProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// The start IP address of the firewall rule. Must be IPv4 format
-        /// Serialized Name: IpFirewallRuleInfo.properties.startIpAddress
-        /// </summary>
+        /// <summary> The start IP address of the firewall rule. Must be IPv4 format. </summary>
         public IPAddress StartIPAddress { get; set; }
     }
 }

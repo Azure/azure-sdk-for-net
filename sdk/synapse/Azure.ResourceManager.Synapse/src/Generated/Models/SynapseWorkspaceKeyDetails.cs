@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Details of the customer managed key associated with the workspace
-    /// Serialized Name: WorkspaceKeyDetails
-    /// </summary>
+    /// <summary> Details of the customer managed key associated with the workspace. </summary>
     public partial class SynapseWorkspaceKeyDetails
     {
         /// <summary> Initializes a new instance of SynapseWorkspaceKeyDetails. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseWorkspaceKeyDetails. </summary>
-        /// <param name="name">
-        /// Workspace Key sub-resource name
-        /// Serialized Name: WorkspaceKeyDetails.name
-        /// </param>
-        /// <param name="keyVaultUri">
-        /// Workspace Key sub-resource key vault url
-        /// Serialized Name: WorkspaceKeyDetails.keyVaultUrl
-        /// </param>
+        /// <param name="name"> Workspace Key sub-resource name. </param>
+        /// <param name="keyVaultUri"> Workspace Key sub-resource key vault url. </param>
         internal SynapseWorkspaceKeyDetails(string name, Uri keyVaultUri)
         {
             Name = name;
             KeyVaultUri = keyVaultUri;
         }
 
-        /// <summary>
-        /// Workspace Key sub-resource name
-        /// Serialized Name: WorkspaceKeyDetails.name
-        /// </summary>
+        /// <summary> Workspace Key sub-resource name. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Workspace Key sub-resource key vault url
-        /// Serialized Name: WorkspaceKeyDetails.keyVaultUrl
-        /// </summary>
+        /// <summary> Workspace Key sub-resource key vault url. </summary>
         public Uri KeyVaultUri { get; set; }
     }
 }

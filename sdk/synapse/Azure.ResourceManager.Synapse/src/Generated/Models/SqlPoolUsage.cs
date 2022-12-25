@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The Sql pool usages.
-    /// Serialized Name: SqlPoolUsage
-    /// </summary>
+    /// <summary> The Sql pool usages. </summary>
     public partial class SqlPoolUsage
     {
         /// <summary> Initializes a new instance of SqlPoolUsage. </summary>
@@ -21,34 +18,13 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SqlPoolUsage. </summary>
-        /// <param name="name">
-        /// The name of the usage metric.
-        /// Serialized Name: SqlPoolUsage.name
-        /// </param>
-        /// <param name="resourceName">
-        /// The name of the resource.
-        /// Serialized Name: SqlPoolUsage.resourceName
-        /// </param>
-        /// <param name="displayName">
-        /// The usage metric display name.
-        /// Serialized Name: SqlPoolUsage.displayName
-        /// </param>
-        /// <param name="currentValue">
-        /// The current value of the usage metric.
-        /// Serialized Name: SqlPoolUsage.currentValue
-        /// </param>
-        /// <param name="limit">
-        /// The current limit of the usage metric.
-        /// Serialized Name: SqlPoolUsage.limit
-        /// </param>
-        /// <param name="unit">
-        /// The units of the usage metric.
-        /// Serialized Name: SqlPoolUsage.unit
-        /// </param>
-        /// <param name="nextResetOn">
-        /// The next reset time for the usage metric (ISO8601 format).
-        /// Serialized Name: SqlPoolUsage.nextResetTime
-        /// </param>
+        /// <param name="name"> The name of the usage metric. </param>
+        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="displayName"> The usage metric display name. </param>
+        /// <param name="currentValue"> The current value of the usage metric. </param>
+        /// <param name="limit"> The current limit of the usage metric. </param>
+        /// <param name="unit"> The units of the usage metric. </param>
+        /// <param name="nextResetOn"> The next reset time for the usage metric (ISO8601 format). </param>
         internal SqlPoolUsage(string name, string resourceName, string displayName, double? currentValue, double? limit, string unit, DateTimeOffset? nextResetOn)
         {
             Name = name;
@@ -60,40 +36,19 @@ namespace Azure.ResourceManager.Synapse.Models
             NextResetOn = nextResetOn;
         }
 
-        /// <summary>
-        /// The name of the usage metric.
-        /// Serialized Name: SqlPoolUsage.name
-        /// </summary>
+        /// <summary> The name of the usage metric. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The name of the resource.
-        /// Serialized Name: SqlPoolUsage.resourceName
-        /// </summary>
+        /// <summary> The name of the resource. </summary>
         public string ResourceName { get; }
-        /// <summary>
-        /// The usage metric display name.
-        /// Serialized Name: SqlPoolUsage.displayName
-        /// </summary>
+        /// <summary> The usage metric display name. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// The current value of the usage metric.
-        /// Serialized Name: SqlPoolUsage.currentValue
-        /// </summary>
+        /// <summary> The current value of the usage metric. </summary>
         public double? CurrentValue { get; }
-        /// <summary>
-        /// The current limit of the usage metric.
-        /// Serialized Name: SqlPoolUsage.limit
-        /// </summary>
+        /// <summary> The current limit of the usage metric. </summary>
         public double? Limit { get; }
-        /// <summary>
-        /// The units of the usage metric.
-        /// Serialized Name: SqlPoolUsage.unit
-        /// </summary>
+        /// <summary> The units of the usage metric. </summary>
         public string Unit { get; }
-        /// <summary>
-        /// The next reset time for the usage metric (ISO8601 format).
-        /// Serialized Name: SqlPoolUsage.nextResetTime
-        /// </summary>
+        /// <summary> The next reset time for the usage metric (ISO8601 format). </summary>
         public DateTimeOffset? NextResetOn { get; }
     }
 }

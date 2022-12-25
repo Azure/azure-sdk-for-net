@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse.Models
         internal static SynapseIntegrationRuntimeConnectionInfo DeserializeSynapseIntegrationRuntimeConnectionInfo(JsonElement element)
         {
             Optional<string> serviceToken = default;
-            Optional<string> identityCertThumbprint = default;
+            Optional<BinaryData> identityCertThumbprint = default;
             Optional<Uri> hostServiceUri = default;
             Optional<string> version = default;
             Optional<string> publicKey = default;
@@ -33,7 +33,12 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 if (property.NameEquals("identityCertThumbprint"))
                 {
-                    identityCertThumbprint = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    identityCertThumbprint = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("hostServiceUri"))

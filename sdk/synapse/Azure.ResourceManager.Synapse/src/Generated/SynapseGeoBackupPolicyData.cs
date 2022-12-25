@@ -15,10 +15,7 @@ namespace Azure.ResourceManager.Synapse
     public partial class SynapseGeoBackupPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseGeoBackupPolicyData. </summary>
-        /// <param name="state">
-        /// The state of the geo backup policy.
-        /// Serialized Name: GeoBackupPolicy.properties.state
-        /// </param>
+        /// <param name="state"> The state of the geo backup policy. </param>
         public SynapseGeoBackupPolicyData(SynapseGeoBackupPolicyState state)
         {
             State = state;
@@ -29,22 +26,10 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of geo backup policy.  This is metadata used for the Azure portal experience.
-        /// Serialized Name: GeoBackupPolicy.kind
-        /// </param>
-        /// <param name="location">
-        /// Backup policy location.
-        /// Serialized Name: GeoBackupPolicy.location
-        /// </param>
-        /// <param name="state">
-        /// The state of the geo backup policy.
-        /// Serialized Name: GeoBackupPolicy.properties.state
-        /// </param>
-        /// <param name="storageType">
-        /// The storage type of the geo backup policy.
-        /// Serialized Name: GeoBackupPolicy.properties.storageType
-        /// </param>
+        /// <param name="kind"> Kind of geo backup policy.  This is metadata used for the Azure portal experience. </param>
+        /// <param name="location"> Backup policy location. </param>
+        /// <param name="state"> The state of the geo backup policy. </param>
+        /// <param name="storageType"> The storage type of the geo backup policy. </param>
         internal SynapseGeoBackupPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, SynapseGeoBackupPolicyState state, string storageType) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
@@ -53,25 +38,13 @@ namespace Azure.ResourceManager.Synapse
             StorageType = storageType;
         }
 
-        /// <summary>
-        /// Kind of geo backup policy.  This is metadata used for the Azure portal experience.
-        /// Serialized Name: GeoBackupPolicy.kind
-        /// </summary>
+        /// <summary> Kind of geo backup policy.  This is metadata used for the Azure portal experience. </summary>
         public string Kind { get; }
-        /// <summary>
-        /// Backup policy location.
-        /// Serialized Name: GeoBackupPolicy.location
-        /// </summary>
+        /// <summary> Backup policy location. </summary>
         public AzureLocation? Location { get; }
-        /// <summary>
-        /// The state of the geo backup policy.
-        /// Serialized Name: GeoBackupPolicy.properties.state
-        /// </summary>
+        /// <summary> The state of the geo backup policy. </summary>
         public SynapseGeoBackupPolicyState State { get; set; }
-        /// <summary>
-        /// The storage type of the geo backup policy.
-        /// Serialized Name: GeoBackupPolicy.properties.storageType
-        /// </summary>
+        /// <summary> The storage type of the geo backup policy. </summary>
         public string StorageType { get; }
     }
 }

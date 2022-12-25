@@ -11,10 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The response to a list data masking rules request.
-    /// Serialized Name: DataMaskingRuleListResult
-    /// </summary>
+    /// <summary> The response to a list data masking rules request. </summary>
     internal partial class SynapseDataMaskingRuleListResult
     {
         /// <summary> Initializes a new instance of SynapseDataMaskingRuleListResult. </summary>
@@ -24,19 +21,13 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseDataMaskingRuleListResult. </summary>
-        /// <param name="value">
-        /// The list of Sql pool data masking rules.
-        /// Serialized Name: DataMaskingRuleListResult.value
-        /// </param>
+        /// <param name="value"> The list of Sql pool data masking rules. </param>
         internal SynapseDataMaskingRuleListResult(IReadOnlyList<SynapseDataMaskingRuleData> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// The list of Sql pool data masking rules.
-        /// Serialized Name: DataMaskingRuleListResult.value
-        /// </summary>
+        /// <summary> The list of Sql pool data masking rules. </summary>
         public IReadOnlyList<SynapseDataMaskingRuleData> Value { get; }
     }
 }

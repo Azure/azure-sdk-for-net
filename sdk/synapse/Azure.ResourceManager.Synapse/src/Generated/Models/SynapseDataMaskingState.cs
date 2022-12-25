@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The state of the data masking policy.
-    /// Serialized Name: DataMaskingState
-    /// </summary>
+    /// <summary> The state of the data masking policy. </summary>
     public enum SynapseDataMaskingState
     {
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: DataMaskingState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         Disabled,
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: DataMaskingState.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         Enabled
     }
 }

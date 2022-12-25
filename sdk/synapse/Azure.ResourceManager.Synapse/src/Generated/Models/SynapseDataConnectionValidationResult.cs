@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The result returned from a data connection validation request.
-    /// Serialized Name: DataConnectionValidationResult
-    /// </summary>
+    /// <summary> The result returned from a data connection validation request. </summary>
     public partial class SynapseDataConnectionValidationResult
     {
         /// <summary> Initializes a new instance of SynapseDataConnectionValidationResult. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseDataConnectionValidationResult. </summary>
-        /// <param name="errorMessage">
-        /// A message which indicates a problem in data connection validation.
-        /// Serialized Name: DataConnectionValidationResult.errorMessage
-        /// </param>
+        /// <param name="errorMessage"> A message which indicates a problem in data connection validation. </param>
         internal SynapseDataConnectionValidationResult(string errorMessage)
         {
             ErrorMessage = errorMessage;
         }
 
-        /// <summary>
-        /// A message which indicates a problem in data connection validation.
-        /// Serialized Name: DataConnectionValidationResult.errorMessage
-        /// </summary>
+        /// <summary> A message which indicates a problem in data connection validation. </summary>
         public string ErrorMessage { get; }
     }
 }

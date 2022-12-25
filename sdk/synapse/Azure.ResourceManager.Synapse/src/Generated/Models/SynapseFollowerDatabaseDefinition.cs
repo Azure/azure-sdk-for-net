@@ -10,23 +10,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// A class representing follower database request.
-    /// Serialized Name: FollowerDatabaseDefinition
-    /// </summary>
+    /// <summary> A class representing follower database request. </summary>
     public partial class SynapseFollowerDatabaseDefinition
     {
         /// <summary> Initializes a new instance of SynapseFollowerDatabaseDefinition. </summary>
-        /// <param name="kustoPoolResourceId">
-        /// Resource id of the cluster that follows a database owned by this cluster.
-        /// Serialized Name: FollowerDatabaseDefinition.clusterResourceId
-        /// </param>
-        /// <param name="attachedDatabaseConfigurationName">
-        /// Resource name of the attached database configuration in the follower cluster.
-        /// Serialized Name: FollowerDatabaseDefinition.attachedDatabaseConfigurationName
-        /// </param>
+        /// <param name="kustoPoolResourceId"> Resource id of the cluster that follows a database owned by this cluster. </param>
+        /// <param name="attachedDatabaseConfigurationName"> Resource name of the attached database configuration in the follower cluster. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kustoPoolResourceId"/> or <paramref name="attachedDatabaseConfigurationName"/> is null. </exception>
-        public SynapseFollowerDatabaseDefinition(string kustoPoolResourceId, string attachedDatabaseConfigurationName)
+        public SynapseFollowerDatabaseDefinition(ResourceIdentifier kustoPoolResourceId, string attachedDatabaseConfigurationName)
         {
             Argument.AssertNotNull(kustoPoolResourceId, nameof(kustoPoolResourceId));
             Argument.AssertNotNull(attachedDatabaseConfigurationName, nameof(attachedDatabaseConfigurationName));
@@ -36,39 +27,21 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseFollowerDatabaseDefinition. </summary>
-        /// <param name="kustoPoolResourceId">
-        /// Resource id of the cluster that follows a database owned by this cluster.
-        /// Serialized Name: FollowerDatabaseDefinition.clusterResourceId
-        /// </param>
-        /// <param name="attachedDatabaseConfigurationName">
-        /// Resource name of the attached database configuration in the follower cluster.
-        /// Serialized Name: FollowerDatabaseDefinition.attachedDatabaseConfigurationName
-        /// </param>
-        /// <param name="databaseName">
-        /// The database name owned by this cluster that was followed. * in case following all databases.
-        /// Serialized Name: FollowerDatabaseDefinition.databaseName
-        /// </param>
-        internal SynapseFollowerDatabaseDefinition(string kustoPoolResourceId, string attachedDatabaseConfigurationName, string databaseName)
+        /// <param name="kustoPoolResourceId"> Resource id of the cluster that follows a database owned by this cluster. </param>
+        /// <param name="attachedDatabaseConfigurationName"> Resource name of the attached database configuration in the follower cluster. </param>
+        /// <param name="databaseName"> The database name owned by this cluster that was followed. * in case following all databases. </param>
+        internal SynapseFollowerDatabaseDefinition(ResourceIdentifier kustoPoolResourceId, string attachedDatabaseConfigurationName, string databaseName)
         {
             KustoPoolResourceId = kustoPoolResourceId;
             AttachedDatabaseConfigurationName = attachedDatabaseConfigurationName;
             DatabaseName = databaseName;
         }
 
-        /// <summary>
-        /// Resource id of the cluster that follows a database owned by this cluster.
-        /// Serialized Name: FollowerDatabaseDefinition.clusterResourceId
-        /// </summary>
-        public string KustoPoolResourceId { get; set; }
-        /// <summary>
-        /// Resource name of the attached database configuration in the follower cluster.
-        /// Serialized Name: FollowerDatabaseDefinition.attachedDatabaseConfigurationName
-        /// </summary>
+        /// <summary> Resource id of the cluster that follows a database owned by this cluster. </summary>
+        public ResourceIdentifier KustoPoolResourceId { get; set; }
+        /// <summary> Resource name of the attached database configuration in the follower cluster. </summary>
         public string AttachedDatabaseConfigurationName { get; set; }
-        /// <summary>
-        /// The database name owned by this cluster that was followed. * in case following all databases.
-        /// Serialized Name: FollowerDatabaseDefinition.databaseName
-        /// </summary>
+        /// <summary> The database name owned by this cluster that was followed. * in case following all databases. </summary>
         public string DatabaseName { get; }
     }
 }

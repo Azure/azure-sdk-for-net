@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary>
     /// Azure Synapse nested object which serves as a compute resource for activities.
-    /// Serialized Name: IntegrationRuntime
     /// Please note <see cref="SynapseIntegrationRuntimeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SynapseManagedIntegrationRuntime"/> and <see cref="SynapseSelfHostedIntegrationRuntime"/>.
     /// </summary>
@@ -26,14 +25,8 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeProperties. </summary>
-        /// <param name="integrationRuntimeType">
-        /// Type of integration runtime.
-        /// Serialized Name: IntegrationRuntime.type
-        /// </param>
-        /// <param name="description">
-        /// Integration runtime description.
-        /// Serialized Name: IntegrationRuntime.description
-        /// </param>
+        /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
+        /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal SynapseIntegrationRuntimeProperties(IntegrationRuntimeType integrationRuntimeType, string description, IDictionary<string, BinaryData> additionalProperties)
         {
@@ -42,15 +35,9 @@ namespace Azure.ResourceManager.Synapse.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// Type of integration runtime.
-        /// Serialized Name: IntegrationRuntime.type
-        /// </summary>
+        /// <summary> Type of integration runtime. </summary>
         internal IntegrationRuntimeType IntegrationRuntimeType { get; set; }
-        /// <summary>
-        /// Integration runtime description.
-        /// Serialized Name: IntegrationRuntime.description
-        /// </summary>
+        /// <summary> Integration runtime description. </summary>
         public string Description { get; set; }
         /// <summary>
         /// Additional Properties

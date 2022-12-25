@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("createdBy");
                 writer.WriteStringValue(CreatedBy);
             }
-            if (Optional.IsDefined(Created))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created");
-                writer.WriteStringValue(Created.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(ConfigMergeRule))
             {

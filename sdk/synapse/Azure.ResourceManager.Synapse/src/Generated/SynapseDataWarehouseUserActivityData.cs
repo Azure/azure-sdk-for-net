@@ -23,19 +23,13 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="activeQueriesCount">
-        /// Count of running and suspended queries.
-        /// Serialized Name: DataWarehouseUserActivities.properties.activeQueriesCount
-        /// </param>
+        /// <param name="activeQueriesCount"> Count of running and suspended queries. </param>
         internal SynapseDataWarehouseUserActivityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? activeQueriesCount) : base(id, name, resourceType, systemData)
         {
             ActiveQueriesCount = activeQueriesCount;
         }
 
-        /// <summary>
-        /// Count of running and suspended queries.
-        /// Serialized Name: DataWarehouseUserActivities.properties.activeQueriesCount
-        /// </summary>
+        /// <summary> Count of running and suspended queries. </summary>
         public int? ActiveQueriesCount { get; }
     }
 }

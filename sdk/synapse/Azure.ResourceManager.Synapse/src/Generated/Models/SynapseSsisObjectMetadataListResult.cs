@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// A list of SSIS object metadata.
-    /// Serialized Name: SsisObjectMetadataListResponse
-    /// </summary>
+    /// <summary> A list of SSIS object metadata. </summary>
     internal partial class SynapseSsisObjectMetadataListResult
     {
         /// <summary> Initializes a new instance of SynapseSsisObjectMetadataListResult. </summary>
@@ -25,14 +22,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseSsisObjectMetadataListResult. </summary>
         /// <param name="value">
         /// List of SSIS object metadata.
-        /// Serialized Name: SsisObjectMetadataListResponse.value
         /// Please note <see cref="SynapseSsisObjectMetadata"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SynapseSsisEnvironment"/>, <see cref="SynapseSsisFolder"/>, <see cref="SynapseSsisPackage"/> and <see cref="SynapseSsisProject"/>.
         /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of results, if any remaining results exist.
-        /// Serialized Name: SsisObjectMetadataListResponse.nextLink
-        /// </param>
+        /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal SynapseSsisObjectMetadataListResult(IReadOnlyList<SynapseSsisObjectMetadata> value, string nextLink)
         {
             Value = value;
@@ -41,15 +34,11 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary>
         /// List of SSIS object metadata.
-        /// Serialized Name: SsisObjectMetadataListResponse.value
         /// Please note <see cref="SynapseSsisObjectMetadata"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SynapseSsisEnvironment"/>, <see cref="SynapseSsisFolder"/>, <see cref="SynapseSsisPackage"/> and <see cref="SynapseSsisProject"/>.
         /// </summary>
         public IReadOnlyList<SynapseSsisObjectMetadata> Value { get; }
-        /// <summary>
-        /// The link to the next page of results, if any remaining results exist.
-        /// Serialized Name: SsisObjectMetadataListResponse.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of results, if any remaining results exist. </summary>
         public string NextLink { get; }
     }
 }

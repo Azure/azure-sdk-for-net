@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The type of this referenced entity.
-    /// Serialized Name: IntegrationRuntimeEntityReferenceType
-    /// </summary>
+    /// <summary> The type of this referenced entity. </summary>
     public readonly partial struct SynapseIntegrationRuntimeEntityReferenceType : IEquatable<SynapseIntegrationRuntimeEntityReferenceType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string IntegrationRuntimeReferenceValue = "IntegrationRuntimeReference";
         private const string LinkedServiceReferenceValue = "LinkedServiceReference";
 
-        /// <summary>
-        /// IntegrationRuntimeReference
-        /// Serialized Name: IntegrationRuntimeEntityReferenceType.IntegrationRuntimeReference
-        /// </summary>
+        /// <summary> IntegrationRuntimeReference. </summary>
         public static SynapseIntegrationRuntimeEntityReferenceType IntegrationRuntimeReference { get; } = new SynapseIntegrationRuntimeEntityReferenceType(IntegrationRuntimeReferenceValue);
-        /// <summary>
-        /// LinkedServiceReference
-        /// Serialized Name: IntegrationRuntimeEntityReferenceType.LinkedServiceReference
-        /// </summary>
+        /// <summary> LinkedServiceReference. </summary>
         public static SynapseIntegrationRuntimeEntityReferenceType LinkedServiceReference { get; } = new SynapseIntegrationRuntimeEntityReferenceType(LinkedServiceReferenceValue);
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeEntityReferenceType"/> values are the same. </summary>
         public static bool operator ==(SynapseIntegrationRuntimeEntityReferenceType left, SynapseIntegrationRuntimeEntityReferenceType right) => left.Equals(right);

@@ -23,30 +23,12 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="minResourcePercent">
-        /// The workload group minimum percentage resource.
-        /// Serialized Name: WorkloadGroup.properties.minResourcePercent
-        /// </param>
-        /// <param name="maxResourcePercent">
-        /// The workload group cap percentage resource.
-        /// Serialized Name: WorkloadGroup.properties.maxResourcePercent
-        /// </param>
-        /// <param name="minResourcePercentPerRequest">
-        /// The workload group request minimum grant percentage.
-        /// Serialized Name: WorkloadGroup.properties.minResourcePercentPerRequest
-        /// </param>
-        /// <param name="maxResourcePercentPerRequest">
-        /// The workload group request maximum grant percentage.
-        /// Serialized Name: WorkloadGroup.properties.maxResourcePercentPerRequest
-        /// </param>
-        /// <param name="importance">
-        /// The workload group importance level.
-        /// Serialized Name: WorkloadGroup.properties.importance
-        /// </param>
-        /// <param name="queryExecutionTimeout">
-        /// The workload group query execution timeout.
-        /// Serialized Name: WorkloadGroup.properties.queryExecutionTimeout
-        /// </param>
+        /// <param name="minResourcePercent"> The workload group minimum percentage resource. </param>
+        /// <param name="maxResourcePercent"> The workload group cap percentage resource. </param>
+        /// <param name="minResourcePercentPerRequest"> The workload group request minimum grant percentage. </param>
+        /// <param name="maxResourcePercentPerRequest"> The workload group request maximum grant percentage. </param>
+        /// <param name="importance"> The workload group importance level. </param>
+        /// <param name="queryExecutionTimeout"> The workload group query execution timeout. </param>
         internal SynapseWorkloadGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? minResourcePercent, int? maxResourcePercent, double? minResourcePercentPerRequest, double? maxResourcePercentPerRequest, string importance, int? queryExecutionTimeout) : base(id, name, resourceType, systemData)
         {
             MinResourcePercent = minResourcePercent;
@@ -57,35 +39,17 @@ namespace Azure.ResourceManager.Synapse
             QueryExecutionTimeout = queryExecutionTimeout;
         }
 
-        /// <summary>
-        /// The workload group minimum percentage resource.
-        /// Serialized Name: WorkloadGroup.properties.minResourcePercent
-        /// </summary>
+        /// <summary> The workload group minimum percentage resource. </summary>
         public int? MinResourcePercent { get; set; }
-        /// <summary>
-        /// The workload group cap percentage resource.
-        /// Serialized Name: WorkloadGroup.properties.maxResourcePercent
-        /// </summary>
+        /// <summary> The workload group cap percentage resource. </summary>
         public int? MaxResourcePercent { get; set; }
-        /// <summary>
-        /// The workload group request minimum grant percentage.
-        /// Serialized Name: WorkloadGroup.properties.minResourcePercentPerRequest
-        /// </summary>
+        /// <summary> The workload group request minimum grant percentage. </summary>
         public double? MinResourcePercentPerRequest { get; set; }
-        /// <summary>
-        /// The workload group request maximum grant percentage.
-        /// Serialized Name: WorkloadGroup.properties.maxResourcePercentPerRequest
-        /// </summary>
+        /// <summary> The workload group request maximum grant percentage. </summary>
         public double? MaxResourcePercentPerRequest { get; set; }
-        /// <summary>
-        /// The workload group importance level.
-        /// Serialized Name: WorkloadGroup.properties.importance
-        /// </summary>
+        /// <summary> The workload group importance level. </summary>
         public string Importance { get; set; }
-        /// <summary>
-        /// The workload group query execution timeout.
-        /// Serialized Name: WorkloadGroup.properties.queryExecutionTimeout
-        /// </summary>
+        /// <summary> The workload group query execution timeout. </summary>
         public int? QueryExecutionTimeout { get; set; }
     }
 }

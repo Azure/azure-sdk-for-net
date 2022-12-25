@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Contains the information necessary to perform a create Sql pool restore point operation.
-    /// Serialized Name: CreateSqlPoolRestorePointDefinition
-    /// </summary>
+    /// <summary> Contains the information necessary to perform a create Sql pool restore point operation. </summary>
     public partial class SqlPoolCreateRestorePointContent
     {
         /// <summary> Initializes a new instance of SqlPoolCreateRestorePointContent. </summary>
-        /// <param name="restorePointLabel">
-        /// The restore point label to apply
-        /// Serialized Name: CreateSqlPoolRestorePointDefinition.restorePointLabel
-        /// </param>
+        /// <param name="restorePointLabel"> The restore point label to apply. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointLabel"/> is null. </exception>
         public SqlPoolCreateRestorePointContent(string restorePointLabel)
         {
@@ -29,10 +23,7 @@ namespace Azure.ResourceManager.Synapse.Models
             RestorePointLabel = restorePointLabel;
         }
 
-        /// <summary>
-        /// The restore point label to apply
-        /// Serialized Name: CreateSqlPoolRestorePointDefinition.restorePointLabel
-        /// </summary>
+        /// <summary> The restore point label to apply. </summary>
         public string RestorePointLabel { get; }
     }
 }

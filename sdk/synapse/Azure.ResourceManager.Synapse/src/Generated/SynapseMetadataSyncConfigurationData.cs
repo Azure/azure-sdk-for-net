@@ -23,29 +23,17 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="enabled">
-        /// Indicates whether the metadata sync is enabled or disabled
-        /// Serialized Name: MetadataSyncConfig.properties.enabled
-        /// </param>
-        /// <param name="syncIntervalInMinutes">
-        /// The Sync Interval in minutes.
-        /// Serialized Name: MetadataSyncConfig.properties.syncIntervalInMinutes
-        /// </param>
-        internal SynapseMetadataSyncConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? enabled, int? syncIntervalInMinutes) : base(id, name, resourceType, systemData)
+        /// <param name="isEnabled"> Indicates whether the metadata sync is enabled or disabled. </param>
+        /// <param name="syncIntervalInMinutes"> The Sync Interval in minutes. </param>
+        internal SynapseMetadataSyncConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, int? syncIntervalInMinutes) : base(id, name, resourceType, systemData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             SyncIntervalInMinutes = syncIntervalInMinutes;
         }
 
-        /// <summary>
-        /// Indicates whether the metadata sync is enabled or disabled
-        /// Serialized Name: MetadataSyncConfig.properties.enabled
-        /// </summary>
-        public bool? Enabled { get; set; }
-        /// <summary>
-        /// The Sync Interval in minutes.
-        /// Serialized Name: MetadataSyncConfig.properties.syncIntervalInMinutes
-        /// </summary>
+        /// <summary> Indicates whether the metadata sync is enabled or disabled. </summary>
+        public bool? IsEnabled { get; set; }
+        /// <summary> The Sync Interval in minutes. </summary>
         public int? SyncIntervalInMinutes { get; set; }
     }
 }

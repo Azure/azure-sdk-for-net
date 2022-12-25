@@ -26,35 +26,14 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location">
-        /// Resource location.
-        /// Serialized Name: AttachedDatabaseConfiguration.location
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioned state of the resource.
-        /// Serialized Name: AttachedDatabaseConfiguration.properties.provisioningState
-        /// </param>
-        /// <param name="databaseName">
-        /// The name of the database which you would like to attach, use * if you want to follow all current and future databases.
-        /// Serialized Name: AttachedDatabaseConfiguration.properties.databaseName
-        /// </param>
-        /// <param name="kustoPoolResourceId">
-        /// The resource id of the kusto pool where the databases you would like to attach reside.
-        /// Serialized Name: AttachedDatabaseConfiguration.properties.clusterResourceId
-        /// </param>
-        /// <param name="attachedDatabaseNames">
-        /// The list of databases from the clusterResourceId which are currently attached to the kusto pool.
-        /// Serialized Name: AttachedDatabaseConfiguration.properties.attachedDatabaseNames
-        /// </param>
-        /// <param name="defaultPrincipalsModificationKind">
-        /// The default principals modification kind
-        /// Serialized Name: AttachedDatabaseConfiguration.properties.defaultPrincipalsModificationKind
-        /// </param>
-        /// <param name="tableLevelSharingProperties">
-        /// Table level sharing specifications
-        /// Serialized Name: AttachedDatabaseConfiguration.properties.tableLevelSharingProperties
-        /// </param>
-        internal SynapseAttachedDatabaseConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceProvisioningState? provisioningState, string databaseName, string kustoPoolResourceId, IReadOnlyList<string> attachedDatabaseNames, SynapseDefaultPrincipalsModificationKind? defaultPrincipalsModificationKind, SynapseTableLevelSharingProperties tableLevelSharingProperties) : base(id, name, resourceType, systemData)
+        /// <param name="location"> Resource location. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="databaseName"> The name of the database which you would like to attach, use * if you want to follow all current and future databases. </param>
+        /// <param name="kustoPoolResourceId"> The resource id of the kusto pool where the databases you would like to attach reside. </param>
+        /// <param name="attachedDatabaseNames"> The list of databases from the clusterResourceId which are currently attached to the kusto pool. </param>
+        /// <param name="defaultPrincipalsModificationKind"> The default principals modification kind. </param>
+        /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
+        internal SynapseAttachedDatabaseConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceProvisioningState? provisioningState, string databaseName, ResourceIdentifier kustoPoolResourceId, IReadOnlyList<string> attachedDatabaseNames, SynapseDefaultPrincipalsModificationKind? defaultPrincipalsModificationKind, SynapseTableLevelSharingProperties tableLevelSharingProperties) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ProvisioningState = provisioningState;
@@ -65,40 +44,19 @@ namespace Azure.ResourceManager.Synapse
             TableLevelSharingProperties = tableLevelSharingProperties;
         }
 
-        /// <summary>
-        /// Resource location.
-        /// Serialized Name: AttachedDatabaseConfiguration.location
-        /// </summary>
+        /// <summary> Resource location. </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary>
-        /// The provisioned state of the resource.
-        /// Serialized Name: AttachedDatabaseConfiguration.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioned state of the resource. </summary>
         public ResourceProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// The name of the database which you would like to attach, use * if you want to follow all current and future databases.
-        /// Serialized Name: AttachedDatabaseConfiguration.properties.databaseName
-        /// </summary>
+        /// <summary> The name of the database which you would like to attach, use * if you want to follow all current and future databases. </summary>
         public string DatabaseName { get; set; }
-        /// <summary>
-        /// The resource id of the kusto pool where the databases you would like to attach reside.
-        /// Serialized Name: AttachedDatabaseConfiguration.properties.clusterResourceId
-        /// </summary>
-        public string KustoPoolResourceId { get; set; }
-        /// <summary>
-        /// The list of databases from the clusterResourceId which are currently attached to the kusto pool.
-        /// Serialized Name: AttachedDatabaseConfiguration.properties.attachedDatabaseNames
-        /// </summary>
+        /// <summary> The resource id of the kusto pool where the databases you would like to attach reside. </summary>
+        public ResourceIdentifier KustoPoolResourceId { get; set; }
+        /// <summary> The list of databases from the clusterResourceId which are currently attached to the kusto pool. </summary>
         public IReadOnlyList<string> AttachedDatabaseNames { get; }
-        /// <summary>
-        /// The default principals modification kind
-        /// Serialized Name: AttachedDatabaseConfiguration.properties.defaultPrincipalsModificationKind
-        /// </summary>
+        /// <summary> The default principals modification kind. </summary>
         public SynapseDefaultPrincipalsModificationKind? DefaultPrincipalsModificationKind { get; set; }
-        /// <summary>
-        /// Table level sharing specifications
-        /// Serialized Name: AttachedDatabaseConfiguration.properties.tableLevelSharingProperties
-        /// </summary>
+        /// <summary> Table level sharing specifications. </summary>
         public SynapseTableLevelSharingProperties TableLevelSharingProperties { get; set; }
     }
 }

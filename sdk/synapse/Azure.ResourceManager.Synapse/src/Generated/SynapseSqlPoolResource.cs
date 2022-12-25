@@ -36,8 +36,6 @@ namespace Azure.ResourceManager.Synapse
 
         private readonly ClientDiagnostics _synapseSqlPoolSqlPoolsClientDiagnostics;
         private readonly SqlPoolsRestOperations _synapseSqlPoolSqlPoolsRestClient;
-        private readonly ClientDiagnostics _sqlPoolOperationResultsClientDiagnostics;
-        private readonly SqlPoolOperationResultsRestOperations _sqlPoolOperationResultsRestClient;
         private readonly ClientDiagnostics _synapseRestorePointSqlPoolRestorePointsClientDiagnostics;
         private readonly SqlPoolRestorePointsRestOperations _synapseRestorePointSqlPoolRestorePointsRestClient;
         private readonly ClientDiagnostics _sqlPoolUsagesClientDiagnostics;
@@ -70,8 +68,6 @@ namespace Azure.ResourceManager.Synapse
             _synapseSqlPoolSqlPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Synapse", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string synapseSqlPoolSqlPoolsApiVersion);
             _synapseSqlPoolSqlPoolsRestClient = new SqlPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, synapseSqlPoolSqlPoolsApiVersion);
-            _sqlPoolOperationResultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Synapse", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _sqlPoolOperationResultsRestClient = new SqlPoolOperationResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _synapseRestorePointSqlPoolRestorePointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Synapse", SynapseRestorePointResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SynapseRestorePointResource.ResourceType, out string synapseRestorePointSqlPoolRestorePointsApiVersion);
             _synapseRestorePointSqlPoolRestorePointsRestClient = new SqlPoolRestorePointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, synapseRestorePointSqlPoolRestorePointsApiVersion);
@@ -798,60 +794,6 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _synapseSqlPoolSqlPoolsRestClient.Rename(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synapseResourceMoveDefinition, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the status of a SQL pool operation
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/operationResults/{operationId}
-        /// Operation Id: SqlPoolOperationResults_GetLocationHeaderResult
-        /// </summary>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<Response<BinaryData>> GetLocationHeaderResultSqlPoolOperationResultAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _sqlPoolOperationResultsClientDiagnostics.CreateScope("SynapseSqlPoolResource.GetLocationHeaderResultSqlPoolOperationResult");
-            scope.Start();
-            try
-            {
-                var response = await _sqlPoolOperationResultsRestClient.GetLocationHeaderResultAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the status of a SQL pool operation
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/operationResults/{operationId}
-        /// Operation Id: SqlPoolOperationResults_GetLocationHeaderResult
-        /// </summary>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual Response<BinaryData> GetLocationHeaderResultSqlPoolOperationResult(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _sqlPoolOperationResultsClientDiagnostics.CreateScope("SynapseSqlPoolResource.GetLocationHeaderResultSqlPoolOperationResult");
-            scope.Start();
-            try
-            {
-                var response = _sqlPoolOperationResultsRestClient.GetLocationHeaderResult(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, cancellationToken);
                 return response;
             }
             catch (Exception e)

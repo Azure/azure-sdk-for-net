@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("enablePurge");
                 writer.WriteBooleanValue(EnablePurge.Value);
             }
-            if (Optional.IsDefined(WorkspaceUID))
+            if (Optional.IsDefined(WorkspaceUid))
             {
                 writer.WritePropertyName("workspaceUID");
-                writer.WriteStringValue(WorkspaceUID);
+                writer.WriteStringValue(WorkspaceUid.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Synapse
             Optional<bool> enableStreamingIngest = default;
             Optional<bool> enablePurge = default;
             Optional<SynapseLanguageExtensionsList> languageExtensions = default;
-            Optional<string> workspaceUID = default;
+            Optional<Guid> workspaceUID = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -239,14 +239,19 @@ namespace Azure.ResourceManager.Synapse
                         }
                         if (property0.NameEquals("workspaceUID"))
                         {
-                            workspaceUID = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            workspaceUID = property0.Value.GetGuid();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SynapseKustoPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToNullable(etag), Optional.ToNullable(state), Optional.ToNullable(provisioningState), uri.Value, dataIngestionUri.Value, stateReason.Value, optimizedAutoscale.Value, Optional.ToNullable(enableStreamingIngest), Optional.ToNullable(enablePurge), languageExtensions.Value, workspaceUID.Value);
+            return new SynapseKustoPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToNullable(etag), Optional.ToNullable(state), Optional.ToNullable(provisioningState), uri.Value, dataIngestionUri.Value, stateReason.Value, optimizedAutoscale.Value, Optional.ToNullable(enableStreamingIngest), Optional.ToNullable(enablePurge), languageExtensions.Value, Optional.ToNullable(workspaceUID));
         }
     }
 }

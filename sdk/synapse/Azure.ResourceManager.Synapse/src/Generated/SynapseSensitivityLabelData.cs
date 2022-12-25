@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse.Models;
@@ -24,44 +25,17 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="managedBy">
-        /// managed by
-        /// Serialized Name: SensitivityLabel.managedBy
-        /// </param>
-        /// <param name="schemaName">
-        /// The schema name.
-        /// Serialized Name: SensitivityLabel.properties.schemaName
-        /// </param>
-        /// <param name="tableName">
-        /// The table name.
-        /// Serialized Name: SensitivityLabel.properties.tableName
-        /// </param>
-        /// <param name="columnName">
-        /// The column name.
-        /// Serialized Name: SensitivityLabel.properties.columnName
-        /// </param>
-        /// <param name="labelName">
-        /// The label name.
-        /// Serialized Name: SensitivityLabel.properties.labelName
-        /// </param>
-        /// <param name="labelId">
-        /// The label ID.
-        /// Serialized Name: SensitivityLabel.properties.labelId
-        /// </param>
-        /// <param name="informationType">
-        /// The information type.
-        /// Serialized Name: SensitivityLabel.properties.informationType
-        /// </param>
-        /// <param name="informationTypeId">
-        /// The information type ID.
-        /// Serialized Name: SensitivityLabel.properties.informationTypeId
-        /// </param>
-        /// <param name="isDisabled">
-        /// Is sensitivity recommendation disabled. Applicable for recommended sensitivity label only. Specifies whether the sensitivity recommendation on this column is disabled (dismissed) or not.
-        /// Serialized Name: SensitivityLabel.properties.isDisabled
-        /// </param>
-        /// <param name="rank"> Serialized Name: SensitivityLabel.properties.rank. </param>
-        internal SynapseSensitivityLabelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedBy, string schemaName, string tableName, string columnName, string labelName, string labelId, string informationType, string informationTypeId, bool? isDisabled, SynapseSensitivityLabelRank? rank) : base(id, name, resourceType, systemData)
+        /// <param name="managedBy"> managed by. </param>
+        /// <param name="schemaName"> The schema name. </param>
+        /// <param name="tableName"> The table name. </param>
+        /// <param name="columnName"> The column name. </param>
+        /// <param name="labelName"> The label name. </param>
+        /// <param name="labelId"> The label ID. </param>
+        /// <param name="informationType"> The information type. </param>
+        /// <param name="informationTypeId"> The information type ID. </param>
+        /// <param name="isDisabled"> Is sensitivity recommendation disabled. Applicable for recommended sensitivity label only. Specifies whether the sensitivity recommendation on this column is disabled (dismissed) or not. </param>
+        /// <param name="rank"></param>
+        internal SynapseSensitivityLabelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedBy, string schemaName, string tableName, string columnName, string labelName, Guid? labelId, string informationType, Guid? informationTypeId, bool? isDisabled, SynapseSensitivityLabelRank? rank) : base(id, name, resourceType, systemData)
         {
             ManagedBy = managedBy;
             SchemaName = schemaName;
@@ -75,52 +49,25 @@ namespace Azure.ResourceManager.Synapse
             Rank = rank;
         }
 
-        /// <summary>
-        /// managed by
-        /// Serialized Name: SensitivityLabel.managedBy
-        /// </summary>
+        /// <summary> managed by. </summary>
         public string ManagedBy { get; }
-        /// <summary>
-        /// The schema name.
-        /// Serialized Name: SensitivityLabel.properties.schemaName
-        /// </summary>
+        /// <summary> The schema name. </summary>
         public string SchemaName { get; }
-        /// <summary>
-        /// The table name.
-        /// Serialized Name: SensitivityLabel.properties.tableName
-        /// </summary>
+        /// <summary> The table name. </summary>
         public string TableName { get; }
-        /// <summary>
-        /// The column name.
-        /// Serialized Name: SensitivityLabel.properties.columnName
-        /// </summary>
+        /// <summary> The column name. </summary>
         public string ColumnName { get; }
-        /// <summary>
-        /// The label name.
-        /// Serialized Name: SensitivityLabel.properties.labelName
-        /// </summary>
+        /// <summary> The label name. </summary>
         public string LabelName { get; set; }
-        /// <summary>
-        /// The label ID.
-        /// Serialized Name: SensitivityLabel.properties.labelId
-        /// </summary>
-        public string LabelId { get; set; }
-        /// <summary>
-        /// The information type.
-        /// Serialized Name: SensitivityLabel.properties.informationType
-        /// </summary>
+        /// <summary> The label ID. </summary>
+        public Guid? LabelId { get; set; }
+        /// <summary> The information type. </summary>
         public string InformationType { get; set; }
-        /// <summary>
-        /// The information type ID.
-        /// Serialized Name: SensitivityLabel.properties.informationTypeId
-        /// </summary>
-        public string InformationTypeId { get; set; }
-        /// <summary>
-        /// Is sensitivity recommendation disabled. Applicable for recommended sensitivity label only. Specifies whether the sensitivity recommendation on this column is disabled (dismissed) or not.
-        /// Serialized Name: SensitivityLabel.properties.isDisabled
-        /// </summary>
+        /// <summary> The information type ID. </summary>
+        public Guid? InformationTypeId { get; set; }
+        /// <summary> Is sensitivity recommendation disabled. Applicable for recommended sensitivity label only. Specifies whether the sensitivity recommendation on this column is disabled (dismissed) or not. </summary>
         public bool? IsDisabled { get; }
-        /// <summary> Serialized Name: SensitivityLabel.properties.rank. </summary>
+        /// <summary> Gets or sets the rank. </summary>
         public SynapseSensitivityLabelRank? Rank { get; set; }
     }
 }

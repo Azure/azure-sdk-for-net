@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The data format of the message. Optionally the data format can be added to each message.
-    /// Serialized Name: IotHubDataFormat
-    /// </summary>
+    /// <summary> The data format of the message. Optionally the data format can be added to each message. </summary>
     public readonly partial struct SynapseIotHubDataFormat : IEquatable<SynapseIotHubDataFormat>
     {
         private readonly string _value;
@@ -42,85 +39,37 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string ApacheAvroValue = "APACHEAVRO";
         private const string W3CLogfileValue = "W3CLOGFILE";
 
-        /// <summary>
-        /// MULTIJSON
-        /// Serialized Name: IotHubDataFormat.MULTIJSON
-        /// </summary>
+        /// <summary> MULTIJSON. </summary>
         public static SynapseIotHubDataFormat MultiJson { get; } = new SynapseIotHubDataFormat(MultiJsonValue);
-        /// <summary>
-        /// JSON
-        /// Serialized Name: IotHubDataFormat.JSON
-        /// </summary>
+        /// <summary> JSON. </summary>
         public static SynapseIotHubDataFormat Json { get; } = new SynapseIotHubDataFormat(JsonValue);
-        /// <summary>
-        /// CSV
-        /// Serialized Name: IotHubDataFormat.CSV
-        /// </summary>
+        /// <summary> CSV. </summary>
         public static SynapseIotHubDataFormat Csv { get; } = new SynapseIotHubDataFormat(CsvValue);
-        /// <summary>
-        /// TSV
-        /// Serialized Name: IotHubDataFormat.TSV
-        /// </summary>
+        /// <summary> TSV. </summary>
         public static SynapseIotHubDataFormat Tsv { get; } = new SynapseIotHubDataFormat(TsvValue);
-        /// <summary>
-        /// SCSV
-        /// Serialized Name: IotHubDataFormat.SCSV
-        /// </summary>
+        /// <summary> SCSV. </summary>
         public static SynapseIotHubDataFormat Scsv { get; } = new SynapseIotHubDataFormat(ScsvValue);
-        /// <summary>
-        /// SOHSV
-        /// Serialized Name: IotHubDataFormat.SOHSV
-        /// </summary>
+        /// <summary> SOHSV. </summary>
         public static SynapseIotHubDataFormat Sohsv { get; } = new SynapseIotHubDataFormat(SohsvValue);
-        /// <summary>
-        /// PSV
-        /// Serialized Name: IotHubDataFormat.PSV
-        /// </summary>
+        /// <summary> PSV. </summary>
         public static SynapseIotHubDataFormat Psv { get; } = new SynapseIotHubDataFormat(PsvValue);
-        /// <summary>
-        /// TXT
-        /// Serialized Name: IotHubDataFormat.TXT
-        /// </summary>
+        /// <summary> TXT. </summary>
         public static SynapseIotHubDataFormat Txt { get; } = new SynapseIotHubDataFormat(TxtValue);
-        /// <summary>
-        /// RAW
-        /// Serialized Name: IotHubDataFormat.RAW
-        /// </summary>
+        /// <summary> RAW. </summary>
         public static SynapseIotHubDataFormat Raw { get; } = new SynapseIotHubDataFormat(RawValue);
-        /// <summary>
-        /// SINGLEJSON
-        /// Serialized Name: IotHubDataFormat.SINGLEJSON
-        /// </summary>
+        /// <summary> SINGLEJSON. </summary>
         public static SynapseIotHubDataFormat SingleJson { get; } = new SynapseIotHubDataFormat(SingleJsonValue);
-        /// <summary>
-        /// AVRO
-        /// Serialized Name: IotHubDataFormat.AVRO
-        /// </summary>
+        /// <summary> AVRO. </summary>
         public static SynapseIotHubDataFormat Avro { get; } = new SynapseIotHubDataFormat(AvroValue);
-        /// <summary>
-        /// TSVE
-        /// Serialized Name: IotHubDataFormat.TSVE
-        /// </summary>
+        /// <summary> TSVE. </summary>
         public static SynapseIotHubDataFormat Tsve { get; } = new SynapseIotHubDataFormat(TsveValue);
-        /// <summary>
-        /// PARQUET
-        /// Serialized Name: IotHubDataFormat.PARQUET
-        /// </summary>
+        /// <summary> PARQUET. </summary>
         public static SynapseIotHubDataFormat Parquet { get; } = new SynapseIotHubDataFormat(ParquetValue);
-        /// <summary>
-        /// ORC
-        /// Serialized Name: IotHubDataFormat.ORC
-        /// </summary>
+        /// <summary> ORC. </summary>
         public static SynapseIotHubDataFormat Orc { get; } = new SynapseIotHubDataFormat(OrcValue);
-        /// <summary>
-        /// APACHEAVRO
-        /// Serialized Name: IotHubDataFormat.APACHEAVRO
-        /// </summary>
+        /// <summary> APACHEAVRO. </summary>
         public static SynapseIotHubDataFormat ApacheAvro { get; } = new SynapseIotHubDataFormat(ApacheAvroValue);
-        /// <summary>
-        /// W3CLOGFILE
-        /// Serialized Name: IotHubDataFormat.W3CLOGFILE
-        /// </summary>
+        /// <summary> W3CLOGFILE. </summary>
         public static SynapseIotHubDataFormat W3CLogfile { get; } = new SynapseIotHubDataFormat(W3CLogfileValue);
         /// <summary> Determines if two <see cref="SynapseIotHubDataFormat"/> values are the same. </summary>
         public static bool operator ==(SynapseIotHubDataFormat left, SynapseIotHubDataFormat right) => left.Equals(right);

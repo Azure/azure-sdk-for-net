@@ -29,29 +29,17 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState">
-        /// PrivateLinkHub provisioning state
-        /// Serialized Name: PrivateLinkHub.properties.provisioningState
-        /// </param>
-        /// <param name="privateEndpointConnections">
-        /// List of private endpoint connections
-        /// Serialized Name: PrivateLinkHub.properties.privateEndpointConnections
-        /// </param>
+        /// <param name="provisioningState"> PrivateLinkHub provisioning state. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         internal SynapsePrivateLinkHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, IReadOnlyList<PrivateEndpointConnectionForPrivateLinkHubBasic> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             PrivateEndpointConnections = privateEndpointConnections;
         }
 
-        /// <summary>
-        /// PrivateLinkHub provisioning state
-        /// Serialized Name: PrivateLinkHub.properties.provisioningState
-        /// </summary>
+        /// <summary> PrivateLinkHub provisioning state. </summary>
         public string ProvisioningState { get; set; }
-        /// <summary>
-        /// List of private endpoint connections
-        /// Serialized Name: PrivateLinkHub.properties.privateEndpointConnections
-        /// </summary>
+        /// <summary> List of private endpoint connections. </summary>
         public IReadOnlyList<PrivateEndpointConnectionForPrivateLinkHubBasic> PrivateEndpointConnections { get; }
     }
 }

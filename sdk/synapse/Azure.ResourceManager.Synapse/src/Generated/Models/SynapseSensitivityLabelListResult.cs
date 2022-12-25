@@ -11,10 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// A list of sensitivity labels.
-    /// Serialized Name: SensitivityLabelListResult
-    /// </summary>
+    /// <summary> A list of sensitivity labels. </summary>
     internal partial class SynapseSensitivityLabelListResult
     {
         /// <summary> Initializes a new instance of SynapseSensitivityLabelListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseSensitivityLabelListResult. </summary>
-        /// <param name="value">
-        /// Array of results.
-        /// Serialized Name: SensitivityLabelListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to retrieve next page of results.
-        /// Serialized Name: SensitivityLabelListResult.nextLink
-        /// </param>
+        /// <param name="value"> Array of results. </param>
+        /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SynapseSensitivityLabelListResult(IReadOnlyList<SynapseSensitivityLabelData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Array of results.
-        /// Serialized Name: SensitivityLabelListResult.value
-        /// </summary>
+        /// <summary> Array of results. </summary>
         public IReadOnlyList<SynapseSensitivityLabelData> Value { get; }
-        /// <summary>
-        /// Link to retrieve next page of results.
-        /// Serialized Name: SensitivityLabelListResult.nextLink
-        /// </summary>
+        /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }
 }

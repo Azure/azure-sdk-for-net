@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The type of resource, Microsoft.Synapse/workspaces/kustoPools/principalAssignments.
-    /// Serialized Name: PrincipalAssignmentType
-    /// </summary>
+    /// <summary> The type of resource, Microsoft.Synapse/workspaces/kustoPools/principalAssignments. </summary>
     public readonly partial struct SynapsePrincipalAssignmentType : IEquatable<SynapsePrincipalAssignmentType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         private const string MicrosoftSynapseWorkspacesKustoPoolsPrincipalAssignmentsValue = "Microsoft.Synapse/workspaces/kustoPools/principalAssignments";
 
-        /// <summary>
-        /// Microsoft.Synapse/workspaces/kustoPools/principalAssignments
-        /// Serialized Name: PrincipalAssignmentType.Microsoft.Synapse/workspaces/kustoPools/principalAssignments
-        /// </summary>
+        /// <summary> Microsoft.Synapse/workspaces/kustoPools/principalAssignments. </summary>
         public static SynapsePrincipalAssignmentType MicrosoftSynapseWorkspacesKustoPoolsPrincipalAssignments { get; } = new SynapsePrincipalAssignmentType(MicrosoftSynapseWorkspacesKustoPoolsPrincipalAssignmentsValue);
         /// <summary> Determines if two <see cref="SynapsePrincipalAssignmentType"/> values are the same. </summary>
         public static bool operator ==(SynapsePrincipalAssignmentType left, SynapsePrincipalAssignmentType right) => left.Equals(right);

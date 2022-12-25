@@ -27,18 +27,9 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="predicateExpression">
-        /// Specifies condition of where clause when creating an audit.
-        /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.predicateExpression
-        /// </param>
-        /// <param name="state">
-        /// Specifies the state of the policy. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required.
-        /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.state
-        /// </param>
-        /// <param name="storageEndpoint">
-        /// Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required.
-        /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.storageEndpoint
-        /// </param>
+        /// <param name="predicateExpression"> Specifies condition of where clause when creating an audit. </param>
+        /// <param name="state"> Specifies the state of the policy. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </param>
+        /// <param name="storageEndpoint"> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </param>
         /// <param name="storageAccountAccessKey">
         /// Specifies the identifier key of the auditing storage account. 
         /// If state is Enabled and storageEndpoint is specified, not specifying the storageAccountAccessKey will use SQL server system-assigned managed identity to access the storage.
@@ -46,12 +37,8 @@ namespace Azure.ResourceManager.Synapse
         /// 1. Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).
         /// 2. Grant SQL Server identity access to the storage account by adding &apos;Storage Blob Data Contributor&apos; RBAC role to the server identity.
         /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
-        /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.storageAccountAccessKey
         /// </param>
-        /// <param name="retentionDays">
-        /// Specifies the number of days to keep in the audit logs in the storage account.
-        /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.retentionDays
-        /// </param>
+        /// <param name="retentionDays"> Specifies the number of days to keep in the audit logs in the storage account. </param>
         /// <param name="auditActionsAndGroups">
         /// Specifies the Actions-Groups and Actions to audit.
         /// 
@@ -110,16 +97,9 @@ namespace Azure.ResourceManager.Synapse
         /// SELECT on SCHEMA::mySchema by public
         /// 
         /// For more information, see [Database-Level Audit Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
-        /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.auditActionsAndGroups
         /// </param>
-        /// <param name="storageAccountSubscriptionId">
-        /// Specifies the blob storage subscription Id.
-        /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.storageAccountSubscriptionId
-        /// </param>
-        /// <param name="isStorageSecondaryKeyInUse">
-        /// Specifies whether storageAccountAccessKey value is the storage&apos;s secondary key.
-        /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.isStorageSecondaryKeyInUse
-        /// </param>
+        /// <param name="storageAccountSubscriptionId"> Specifies the blob storage subscription Id. </param>
+        /// <param name="isStorageSecondaryKeyInUse"> Specifies whether storageAccountAccessKey value is the storage&apos;s secondary key. </param>
         /// <param name="isAzureMonitorTargetEnabled">
         /// Specifies whether audit events are sent to Azure Monitor. 
         /// In order to send the events to Azure Monitor, specify &apos;state&apos; as &apos;Enabled&apos; and &apos;isAzureMonitorTargetEnabled&apos; as true.
@@ -133,12 +113,10 @@ namespace Azure.ResourceManager.Synapse
         /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
         /// 
-        /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.isAzureMonitorTargetEnabled
         /// </param>
         /// <param name="queueDelayMs">
         /// Specifies the amount of time in milliseconds that can elapse before audit actions are forced to be processed.
         /// The default minimum value is 1000 (1 second). The maximum is 2,147,483,647.
-        /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.queueDelayMs
         /// </param>
         /// <param name="isDevopsAuditEnabled">
         /// Specifies the state of devops audit. If state is Enabled, devops logs will be sent to Azure Monitor.
@@ -152,7 +130,6 @@ namespace Azure.ResourceManager.Synapse
         /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
         /// 
-        /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.isDevopsAuditEnabled
         /// </param>
         internal SynapseExtendedServerBlobAuditingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string predicateExpression, SynapseBlobAuditingPolicyState? state, string storageEndpoint, string storageAccountAccessKey, int? retentionDays, IList<string> auditActionsAndGroups, Guid? storageAccountSubscriptionId, bool? isStorageSecondaryKeyInUse, bool? isAzureMonitorTargetEnabled, int? queueDelayMs, bool? isDevopsAuditEnabled) : base(id, name, resourceType, systemData)
         {
@@ -169,20 +146,11 @@ namespace Azure.ResourceManager.Synapse
             IsDevopsAuditEnabled = isDevopsAuditEnabled;
         }
 
-        /// <summary>
-        /// Specifies condition of where clause when creating an audit.
-        /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.predicateExpression
-        /// </summary>
+        /// <summary> Specifies condition of where clause when creating an audit. </summary>
         public string PredicateExpression { get; set; }
-        /// <summary>
-        /// Specifies the state of the policy. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required.
-        /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.state
-        /// </summary>
+        /// <summary> Specifies the state of the policy. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </summary>
         public SynapseBlobAuditingPolicyState? State { get; set; }
-        /// <summary>
-        /// Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required.
-        /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.storageEndpoint
-        /// </summary>
+        /// <summary> Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled is required. </summary>
         public string StorageEndpoint { get; set; }
         /// <summary>
         /// Specifies the identifier key of the auditing storage account. 
@@ -191,13 +159,9 @@ namespace Azure.ResourceManager.Synapse
         /// 1. Assign SQL Server a system-assigned managed identity in Azure Active Directory (AAD).
         /// 2. Grant SQL Server identity access to the storage account by adding &apos;Storage Blob Data Contributor&apos; RBAC role to the server identity.
         /// For more information, see [Auditing to storage using Managed Identity authentication](https://go.microsoft.com/fwlink/?linkid=2114355)
-        /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.storageAccountAccessKey
         /// </summary>
         public string StorageAccountAccessKey { get; set; }
-        /// <summary>
-        /// Specifies the number of days to keep in the audit logs in the storage account.
-        /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.retentionDays
-        /// </summary>
+        /// <summary> Specifies the number of days to keep in the audit logs in the storage account. </summary>
         public int? RetentionDays { get; set; }
         /// <summary>
         /// Specifies the Actions-Groups and Actions to audit.
@@ -257,18 +221,11 @@ namespace Azure.ResourceManager.Synapse
         /// SELECT on SCHEMA::mySchema by public
         /// 
         /// For more information, see [Database-Level Audit Actions](https://docs.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-action-groups-and-actions#database-level-audit-actions)
-        /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.auditActionsAndGroups
         /// </summary>
         public IList<string> AuditActionsAndGroups { get; }
-        /// <summary>
-        /// Specifies the blob storage subscription Id.
-        /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.storageAccountSubscriptionId
-        /// </summary>
+        /// <summary> Specifies the blob storage subscription Id. </summary>
         public Guid? StorageAccountSubscriptionId { get; set; }
-        /// <summary>
-        /// Specifies whether storageAccountAccessKey value is the storage&apos;s secondary key.
-        /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.isStorageSecondaryKeyInUse
-        /// </summary>
+        /// <summary> Specifies whether storageAccountAccessKey value is the storage&apos;s secondary key. </summary>
         public bool? IsStorageSecondaryKeyInUse { get; set; }
         /// <summary>
         /// Specifies whether audit events are sent to Azure Monitor. 
@@ -283,13 +240,11 @@ namespace Azure.ResourceManager.Synapse
         /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
         /// 
-        /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.isAzureMonitorTargetEnabled
         /// </summary>
         public bool? IsAzureMonitorTargetEnabled { get; set; }
         /// <summary>
         /// Specifies the amount of time in milliseconds that can elapse before audit actions are forced to be processed.
         /// The default minimum value is 1000 (1 second). The maximum is 2,147,483,647.
-        /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.queueDelayMs
         /// </summary>
         public int? QueueDelayMs { get; set; }
         /// <summary>
@@ -304,7 +259,6 @@ namespace Azure.ResourceManager.Synapse
         /// For more information, see [Diagnostic Settings REST API](https://go.microsoft.com/fwlink/?linkid=2033207)
         /// or [Diagnostic Settings PowerShell](https://go.microsoft.com/fwlink/?linkid=2033043)
         /// 
-        /// Serialized Name: ExtendedServerBlobAuditingPolicy.properties.isDevopsAuditEnabled
         /// </summary>
         public bool? IsDevopsAuditEnabled { get; set; }
     }

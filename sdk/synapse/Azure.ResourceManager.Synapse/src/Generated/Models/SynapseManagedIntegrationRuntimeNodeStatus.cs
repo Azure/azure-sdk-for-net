@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The managed integration runtime node status.
-    /// Serialized Name: ManagedIntegrationRuntimeNodeStatus
-    /// </summary>
+    /// <summary> The managed integration runtime node status. </summary>
     public readonly partial struct SynapseManagedIntegrationRuntimeNodeStatus : IEquatable<SynapseManagedIntegrationRuntimeNodeStatus>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string RecyclingValue = "Recycling";
         private const string UnavailableValue = "Unavailable";
 
-        /// <summary>
-        /// Starting
-        /// Serialized Name: ManagedIntegrationRuntimeNodeStatus.Starting
-        /// </summary>
+        /// <summary> Starting. </summary>
         public static SynapseManagedIntegrationRuntimeNodeStatus Starting { get; } = new SynapseManagedIntegrationRuntimeNodeStatus(StartingValue);
-        /// <summary>
-        /// Available
-        /// Serialized Name: ManagedIntegrationRuntimeNodeStatus.Available
-        /// </summary>
+        /// <summary> Available. </summary>
         public static SynapseManagedIntegrationRuntimeNodeStatus Available { get; } = new SynapseManagedIntegrationRuntimeNodeStatus(AvailableValue);
-        /// <summary>
-        /// Recycling
-        /// Serialized Name: ManagedIntegrationRuntimeNodeStatus.Recycling
-        /// </summary>
+        /// <summary> Recycling. </summary>
         public static SynapseManagedIntegrationRuntimeNodeStatus Recycling { get; } = new SynapseManagedIntegrationRuntimeNodeStatus(RecyclingValue);
-        /// <summary>
-        /// Unavailable
-        /// Serialized Name: ManagedIntegrationRuntimeNodeStatus.Unavailable
-        /// </summary>
+        /// <summary> Unavailable. </summary>
         public static SynapseManagedIntegrationRuntimeNodeStatus Unavailable { get; } = new SynapseManagedIntegrationRuntimeNodeStatus(UnavailableValue);
         /// <summary> Determines if two <see cref="SynapseManagedIntegrationRuntimeNodeStatus"/> values are the same. </summary>
         public static bool operator ==(SynapseManagedIntegrationRuntimeNodeStatus left, SynapseManagedIntegrationRuntimeNodeStatus right) => left.Equals(right);

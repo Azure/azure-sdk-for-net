@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The endpoint for Azure-SSIS integration runtime outbound network dependency.
-    /// Serialized Name: IntegrationRuntimeOutboundNetworkDependenciesEndpoint
-    /// </summary>
+    /// <summary> The endpoint for Azure-SSIS integration runtime outbound network dependency. </summary>
     public partial class SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint
     {
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint. </summary>
-        /// <param name="domainName">
-        /// The domain name of endpoint.
-        /// Serialized Name: IntegrationRuntimeOutboundNetworkDependenciesEndpoint.domainName
-        /// </param>
-        /// <param name="endpointDetails">
-        /// The details of endpoint.
-        /// Serialized Name: IntegrationRuntimeOutboundNetworkDependenciesEndpoint.endpointDetails
-        /// </param>
+        /// <param name="domainName"> The domain name of endpoint. </param>
+        /// <param name="endpointDetails"> The details of endpoint. </param>
         internal SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint(string domainName, IReadOnlyList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> endpointDetails)
         {
             DomainName = domainName;
             EndpointDetails = endpointDetails;
         }
 
-        /// <summary>
-        /// The domain name of endpoint.
-        /// Serialized Name: IntegrationRuntimeOutboundNetworkDependenciesEndpoint.domainName
-        /// </summary>
+        /// <summary> The domain name of endpoint. </summary>
         public string DomainName { get; }
-        /// <summary>
-        /// The details of endpoint.
-        /// Serialized Name: IntegrationRuntimeOutboundNetworkDependenciesEndpoint.endpointDetails
-        /// </summary>
+        /// <summary> The details of endpoint. </summary>
         public IReadOnlyList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> EndpointDetails { get; }
     }
 }

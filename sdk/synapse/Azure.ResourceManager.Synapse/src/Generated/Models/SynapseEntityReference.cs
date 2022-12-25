@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The entity reference.
-    /// Serialized Name: EntityReference
-    /// </summary>
+    /// <summary> The entity reference. </summary>
     public partial class SynapseEntityReference
     {
         /// <summary> Initializes a new instance of SynapseEntityReference. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseEntityReference. </summary>
-        /// <param name="integrationRuntimeEntityReferenceType">
-        /// The type of this referenced entity.
-        /// Serialized Name: EntityReference.type
-        /// </param>
-        /// <param name="referenceName">
-        /// The name of this referenced entity.
-        /// Serialized Name: EntityReference.referenceName
-        /// </param>
+        /// <param name="integrationRuntimeEntityReferenceType"> The type of this referenced entity. </param>
+        /// <param name="referenceName"> The name of this referenced entity. </param>
         internal SynapseEntityReference(SynapseIntegrationRuntimeEntityReferenceType? integrationRuntimeEntityReferenceType, string referenceName)
         {
             IntegrationRuntimeEntityReferenceType = integrationRuntimeEntityReferenceType;
             ReferenceName = referenceName;
         }
 
-        /// <summary>
-        /// The type of this referenced entity.
-        /// Serialized Name: EntityReference.type
-        /// </summary>
+        /// <summary> The type of this referenced entity. </summary>
         public SynapseIntegrationRuntimeEntityReferenceType? IntegrationRuntimeEntityReferenceType { get; set; }
-        /// <summary>
-        /// The name of this referenced entity.
-        /// Serialized Name: EntityReference.referenceName
-        /// </summary>
+        /// <summary> The name of this referenced entity. </summary>
         public string ReferenceName { get; set; }
     }
 }

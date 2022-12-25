@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary>
     /// The base definition of the custom setup.
-    /// Serialized Name: CustomSetupBase
     /// Please note <see cref="SynapseCustomSetupBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SynapseCmdkeySetup"/>, <see cref="SynapseComponentSetup"/> and <see cref="SynapseEnvironmentVariableSetup"/>.
     /// </summary>
@@ -21,19 +20,13 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseCustomSetupBase. </summary>
-        /// <param name="customSetupBaseType">
-        /// The type of custom setup.
-        /// Serialized Name: CustomSetupBase.type
-        /// </param>
+        /// <param name="customSetupBaseType"> The type of custom setup. </param>
         internal SynapseCustomSetupBase(string customSetupBaseType)
         {
             CustomSetupBaseType = customSetupBaseType;
         }
 
-        /// <summary>
-        /// The type of custom setup.
-        /// Serialized Name: CustomSetupBase.type
-        /// </summary>
+        /// <summary> The type of custom setup. </summary>
         internal string CustomSetupBaseType { get; set; }
     }
 }

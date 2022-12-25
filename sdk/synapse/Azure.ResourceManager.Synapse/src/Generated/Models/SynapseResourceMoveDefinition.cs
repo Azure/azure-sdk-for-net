@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Contains the information necessary to perform a resource move (rename).
-    /// Serialized Name: ResourceMoveDefinition
-    /// </summary>
+    /// <summary> Contains the information necessary to perform a resource move (rename). </summary>
     public partial class SynapseResourceMoveDefinition
     {
         /// <summary> Initializes a new instance of SynapseResourceMoveDefinition. </summary>
-        /// <param name="id">
-        /// The target ID for the resource
-        /// Serialized Name: ResourceMoveDefinition.id
-        /// </param>
+        /// <param name="id"> The target ID for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public SynapseResourceMoveDefinition(ResourceIdentifier id)
         {
@@ -29,10 +23,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Id = id;
         }
 
-        /// <summary>
-        /// The target ID for the resource
-        /// Serialized Name: ResourceMoveDefinition.id
-        /// </summary>
+        /// <summary> The target ID for the resource. </summary>
         public ResourceIdentifier Id { get; }
     }
 }

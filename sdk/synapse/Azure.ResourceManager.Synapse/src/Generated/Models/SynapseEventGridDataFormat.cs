@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The data format of the message. Optionally the data format can be added to each message.
-    /// Serialized Name: EventGridDataFormat
-    /// </summary>
+    /// <summary> The data format of the message. Optionally the data format can be added to each message. </summary>
     public readonly partial struct SynapseEventGridDataFormat : IEquatable<SynapseEventGridDataFormat>
     {
         private readonly string _value;
@@ -42,85 +39,37 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string ApacheAvroValue = "APACHEAVRO";
         private const string W3CLogfileValue = "W3CLOGFILE";
 
-        /// <summary>
-        /// MULTIJSON
-        /// Serialized Name: EventGridDataFormat.MULTIJSON
-        /// </summary>
+        /// <summary> MULTIJSON. </summary>
         public static SynapseEventGridDataFormat MultiJson { get; } = new SynapseEventGridDataFormat(MultiJsonValue);
-        /// <summary>
-        /// JSON
-        /// Serialized Name: EventGridDataFormat.JSON
-        /// </summary>
+        /// <summary> JSON. </summary>
         public static SynapseEventGridDataFormat Json { get; } = new SynapseEventGridDataFormat(JsonValue);
-        /// <summary>
-        /// CSV
-        /// Serialized Name: EventGridDataFormat.CSV
-        /// </summary>
+        /// <summary> CSV. </summary>
         public static SynapseEventGridDataFormat Csv { get; } = new SynapseEventGridDataFormat(CsvValue);
-        /// <summary>
-        /// TSV
-        /// Serialized Name: EventGridDataFormat.TSV
-        /// </summary>
+        /// <summary> TSV. </summary>
         public static SynapseEventGridDataFormat Tsv { get; } = new SynapseEventGridDataFormat(TsvValue);
-        /// <summary>
-        /// SCSV
-        /// Serialized Name: EventGridDataFormat.SCSV
-        /// </summary>
+        /// <summary> SCSV. </summary>
         public static SynapseEventGridDataFormat Scsv { get; } = new SynapseEventGridDataFormat(ScsvValue);
-        /// <summary>
-        /// SOHSV
-        /// Serialized Name: EventGridDataFormat.SOHSV
-        /// </summary>
+        /// <summary> SOHSV. </summary>
         public static SynapseEventGridDataFormat Sohsv { get; } = new SynapseEventGridDataFormat(SohsvValue);
-        /// <summary>
-        /// PSV
-        /// Serialized Name: EventGridDataFormat.PSV
-        /// </summary>
+        /// <summary> PSV. </summary>
         public static SynapseEventGridDataFormat Psv { get; } = new SynapseEventGridDataFormat(PsvValue);
-        /// <summary>
-        /// TXT
-        /// Serialized Name: EventGridDataFormat.TXT
-        /// </summary>
+        /// <summary> TXT. </summary>
         public static SynapseEventGridDataFormat Txt { get; } = new SynapseEventGridDataFormat(TxtValue);
-        /// <summary>
-        /// RAW
-        /// Serialized Name: EventGridDataFormat.RAW
-        /// </summary>
+        /// <summary> RAW. </summary>
         public static SynapseEventGridDataFormat Raw { get; } = new SynapseEventGridDataFormat(RawValue);
-        /// <summary>
-        /// SINGLEJSON
-        /// Serialized Name: EventGridDataFormat.SINGLEJSON
-        /// </summary>
+        /// <summary> SINGLEJSON. </summary>
         public static SynapseEventGridDataFormat SingleJson { get; } = new SynapseEventGridDataFormat(SingleJsonValue);
-        /// <summary>
-        /// AVRO
-        /// Serialized Name: EventGridDataFormat.AVRO
-        /// </summary>
+        /// <summary> AVRO. </summary>
         public static SynapseEventGridDataFormat Avro { get; } = new SynapseEventGridDataFormat(AvroValue);
-        /// <summary>
-        /// TSVE
-        /// Serialized Name: EventGridDataFormat.TSVE
-        /// </summary>
+        /// <summary> TSVE. </summary>
         public static SynapseEventGridDataFormat Tsve { get; } = new SynapseEventGridDataFormat(TsveValue);
-        /// <summary>
-        /// PARQUET
-        /// Serialized Name: EventGridDataFormat.PARQUET
-        /// </summary>
+        /// <summary> PARQUET. </summary>
         public static SynapseEventGridDataFormat Parquet { get; } = new SynapseEventGridDataFormat(ParquetValue);
-        /// <summary>
-        /// ORC
-        /// Serialized Name: EventGridDataFormat.ORC
-        /// </summary>
+        /// <summary> ORC. </summary>
         public static SynapseEventGridDataFormat Orc { get; } = new SynapseEventGridDataFormat(OrcValue);
-        /// <summary>
-        /// APACHEAVRO
-        /// Serialized Name: EventGridDataFormat.APACHEAVRO
-        /// </summary>
+        /// <summary> APACHEAVRO. </summary>
         public static SynapseEventGridDataFormat ApacheAvro { get; } = new SynapseEventGridDataFormat(ApacheAvroValue);
-        /// <summary>
-        /// W3CLOGFILE
-        /// Serialized Name: EventGridDataFormat.W3CLOGFILE
-        /// </summary>
+        /// <summary> W3CLOGFILE. </summary>
         public static SynapseEventGridDataFormat W3CLogfile { get; } = new SynapseEventGridDataFormat(W3CLogfileValue);
         /// <summary> Determines if two <see cref="SynapseEventGridDataFormat"/> values are the same. </summary>
         public static bool operator ==(SynapseEventGridDataFormat left, SynapseEventGridDataFormat right) => left.Equals(right);

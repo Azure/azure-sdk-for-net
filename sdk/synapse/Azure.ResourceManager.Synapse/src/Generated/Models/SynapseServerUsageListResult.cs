@@ -12,17 +12,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Represents the response to a list server metrics request.
-    /// Serialized Name: ServerUsageListResult
-    /// </summary>
+    /// <summary> Represents the response to a list server metrics request. </summary>
     internal partial class SynapseServerUsageListResult
     {
         /// <summary> Initializes a new instance of SynapseServerUsageListResult. </summary>
-        /// <param name="value">
-        /// The list of server metrics for the server.
-        /// Serialized Name: ServerUsageListResult.value
-        /// </param>
+        /// <param name="value"> The list of server metrics for the server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SynapseServerUsageListResult(IEnumerable<SynapseServerUsage> value)
         {
@@ -32,29 +26,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseServerUsageListResult. </summary>
-        /// <param name="value">
-        /// The list of server metrics for the server.
-        /// Serialized Name: ServerUsageListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to retrieve next page of results.
-        /// Serialized Name: ServerUsageListResult.nextLink
-        /// </param>
+        /// <param name="value"> The list of server metrics for the server. </param>
+        /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SynapseServerUsageListResult(IReadOnlyList<SynapseServerUsage> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of server metrics for the server.
-        /// Serialized Name: ServerUsageListResult.value
-        /// </summary>
+        /// <summary> The list of server metrics for the server. </summary>
         public IReadOnlyList<SynapseServerUsage> Value { get; }
-        /// <summary>
-        /// Link to retrieve next page of results.
-        /// Serialized Name: ServerUsageListResult.nextLink
-        /// </summary>
+        /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }
 }

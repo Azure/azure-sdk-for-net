@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The state of integration runtime auto update.
-    /// Serialized Name: IntegrationRuntimeAutoUpdate
-    /// </summary>
+    /// <summary> The state of integration runtime auto update. </summary>
     public readonly partial struct SynapseIntegrationRuntimeAutoUpdate : IEquatable<SynapseIntegrationRuntimeAutoUpdate>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string OnValue = "On";
         private const string OffValue = "Off";
 
-        /// <summary>
-        /// On
-        /// Serialized Name: IntegrationRuntimeAutoUpdate.On
-        /// </summary>
+        /// <summary> On. </summary>
         public static SynapseIntegrationRuntimeAutoUpdate On { get; } = new SynapseIntegrationRuntimeAutoUpdate(OnValue);
-        /// <summary>
-        /// Off
-        /// Serialized Name: IntegrationRuntimeAutoUpdate.Off
-        /// </summary>
+        /// <summary> Off. </summary>
         public static SynapseIntegrationRuntimeAutoUpdate Off { get; } = new SynapseIntegrationRuntimeAutoUpdate(OffValue);
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeAutoUpdate"/> values are the same. </summary>
         public static bool operator ==(SynapseIntegrationRuntimeAutoUpdate left, SynapseIntegrationRuntimeAutoUpdate right) => left.Equals(right);

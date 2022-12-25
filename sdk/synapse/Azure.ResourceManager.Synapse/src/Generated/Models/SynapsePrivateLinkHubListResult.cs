@@ -11,10 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// List of privateLinkHubs
-    /// Serialized Name: PrivateLinkHubInfoListResult
-    /// </summary>
+    /// <summary> List of privateLinkHubs. </summary>
     internal partial class SynapsePrivateLinkHubListResult
     {
         /// <summary> Initializes a new instance of SynapsePrivateLinkHubListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapsePrivateLinkHubListResult. </summary>
-        /// <param name="nextLink">
-        /// Link to the next page of results
-        /// Serialized Name: PrivateLinkHubInfoListResult.nextLink
-        /// </param>
-        /// <param name="value">
-        /// List of privateLinkHubs
-        /// Serialized Name: PrivateLinkHubInfoListResult.value
-        /// </param>
+        /// <param name="nextLink"> Link to the next page of results. </param>
+        /// <param name="value"> List of privateLinkHubs. </param>
         internal SynapsePrivateLinkHubListResult(string nextLink, IReadOnlyList<SynapsePrivateLinkHubData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary>
-        /// Link to the next page of results
-        /// Serialized Name: PrivateLinkHubInfoListResult.nextLink
-        /// </summary>
+        /// <summary> Link to the next page of results. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// List of privateLinkHubs
-        /// Serialized Name: PrivateLinkHubInfoListResult.value
-        /// </summary>
+        /// <summary> List of privateLinkHubs. </summary>
         public IReadOnlyList<SynapsePrivateLinkHubData> Value { get; }
     }
 }

@@ -24,19 +24,13 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="grantSqlControlToManagedIdentity">
-        /// Grant sql control to managed identity
-        /// Serialized Name: ManagedIdentitySqlControlSettingsModel.properties.grantSqlControlToManagedIdentity
-        /// </param>
+        /// <param name="grantSqlControlToManagedIdentity"> Grant sql control to managed identity. </param>
         internal SynapseManagedIdentitySqlControlSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynapseGrantSqlControlToManagedIdentity grantSqlControlToManagedIdentity) : base(id, name, resourceType, systemData)
         {
             GrantSqlControlToManagedIdentity = grantSqlControlToManagedIdentity;
         }
 
-        /// <summary>
-        /// Grant sql control to managed identity
-        /// Serialized Name: ManagedIdentitySqlControlSettingsModel.properties.grantSqlControlToManagedIdentity
-        /// </summary>
+        /// <summary> Grant sql control to managed identity. </summary>
         public SynapseGrantSqlControlToManagedIdentity GrantSqlControlToManagedIdentity { get; set; }
     }
 }

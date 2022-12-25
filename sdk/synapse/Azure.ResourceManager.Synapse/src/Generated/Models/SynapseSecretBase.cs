@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary>
     /// The base definition of a secret type.
-    /// Serialized Name: SecretBase
     /// Please note <see cref="SynapseSecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SynapseSecureString"/>.
     /// </summary>
@@ -21,19 +20,13 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseSecretBase. </summary>
-        /// <param name="secretBaseType">
-        /// Type of the secret.
-        /// Serialized Name: SecretBase.type
-        /// </param>
+        /// <param name="secretBaseType"> Type of the secret. </param>
         internal SynapseSecretBase(string secretBaseType)
         {
             SecretBaseType = secretBaseType;
         }
 
-        /// <summary>
-        /// Type of the secret.
-        /// Serialized Name: SecretBase.type
-        /// </summary>
+        /// <summary> Type of the secret. </summary>
         internal string SecretBaseType { get; set; }
     }
 }

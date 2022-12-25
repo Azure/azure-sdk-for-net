@@ -23,30 +23,12 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="memberName">
-        /// The workload classifier member name.
-        /// Serialized Name: WorkloadClassifier.properties.memberName
-        /// </param>
-        /// <param name="label">
-        /// The workload classifier label.
-        /// Serialized Name: WorkloadClassifier.properties.label
-        /// </param>
-        /// <param name="context">
-        /// The workload classifier context.
-        /// Serialized Name: WorkloadClassifier.properties.context
-        /// </param>
-        /// <param name="startTime">
-        /// The workload classifier start time for classification.
-        /// Serialized Name: WorkloadClassifier.properties.startTime
-        /// </param>
-        /// <param name="endTime">
-        /// The workload classifier end time for classification.
-        /// Serialized Name: WorkloadClassifier.properties.endTime
-        /// </param>
-        /// <param name="importance">
-        /// The workload classifier importance.
-        /// Serialized Name: WorkloadClassifier.properties.importance
-        /// </param>
+        /// <param name="memberName"> The workload classifier member name. </param>
+        /// <param name="label"> The workload classifier label. </param>
+        /// <param name="context"> The workload classifier context. </param>
+        /// <param name="startTime"> The workload classifier start time for classification. </param>
+        /// <param name="endTime"> The workload classifier end time for classification. </param>
+        /// <param name="importance"> The workload classifier importance. </param>
         internal SynapseWorkloadClassifierData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string memberName, string label, string context, string startTime, string endTime, string importance) : base(id, name, resourceType, systemData)
         {
             MemberName = memberName;
@@ -57,35 +39,17 @@ namespace Azure.ResourceManager.Synapse
             Importance = importance;
         }
 
-        /// <summary>
-        /// The workload classifier member name.
-        /// Serialized Name: WorkloadClassifier.properties.memberName
-        /// </summary>
+        /// <summary> The workload classifier member name. </summary>
         public string MemberName { get; set; }
-        /// <summary>
-        /// The workload classifier label.
-        /// Serialized Name: WorkloadClassifier.properties.label
-        /// </summary>
+        /// <summary> The workload classifier label. </summary>
         public string Label { get; set; }
-        /// <summary>
-        /// The workload classifier context.
-        /// Serialized Name: WorkloadClassifier.properties.context
-        /// </summary>
+        /// <summary> The workload classifier context. </summary>
         public string Context { get; set; }
-        /// <summary>
-        /// The workload classifier start time for classification.
-        /// Serialized Name: WorkloadClassifier.properties.startTime
-        /// </summary>
+        /// <summary> The workload classifier start time for classification. </summary>
         public string StartTime { get; set; }
-        /// <summary>
-        /// The workload classifier end time for classification.
-        /// Serialized Name: WorkloadClassifier.properties.endTime
-        /// </summary>
+        /// <summary> The workload classifier end time for classification. </summary>
         public string EndTime { get; set; }
-        /// <summary>
-        /// The workload classifier importance.
-        /// Serialized Name: WorkloadClassifier.properties.importance
-        /// </summary>
+        /// <summary> The workload classifier importance. </summary>
         public string Importance { get; set; }
     }
 }

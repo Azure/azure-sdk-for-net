@@ -24,29 +24,17 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location">
-        /// Resource location.
-        /// Serialized Name: TransparentDataEncryption.location
-        /// </param>
-        /// <param name="status">
-        /// The status of the database transparent data encryption.
-        /// Serialized Name: TransparentDataEncryption.properties.status
-        /// </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="status"> The status of the database transparent data encryption. </param>
         internal SynapseTransparentDataEncryptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseTransparentDataEncryptionStatus? status) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Status = status;
         }
 
-        /// <summary>
-        /// Resource location.
-        /// Serialized Name: TransparentDataEncryption.location
-        /// </summary>
+        /// <summary> Resource location. </summary>
         public AzureLocation? Location { get; }
-        /// <summary>
-        /// The status of the database transparent data encryption.
-        /// Serialized Name: TransparentDataEncryption.properties.status
-        /// </summary>
+        /// <summary> The status of the database transparent data encryption. </summary>
         public SynapseTransparentDataEncryptionStatus? Status { get; set; }
     }
 }

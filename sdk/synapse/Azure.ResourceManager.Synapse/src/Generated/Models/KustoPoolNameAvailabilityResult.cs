@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The result returned from a check name availability request.
-    /// Serialized Name: CheckNameResult
-    /// </summary>
+    /// <summary> The result returned from a check name availability request. </summary>
     public partial class KustoPoolNameAvailabilityResult
     {
         /// <summary> Initializes a new instance of KustoPoolNameAvailabilityResult. </summary>
@@ -19,22 +16,10 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of KustoPoolNameAvailabilityResult. </summary>
-        /// <param name="isNameAvailable">
-        /// Specifies a Boolean value that indicates if the name is available.
-        /// Serialized Name: CheckNameResult.nameAvailable
-        /// </param>
-        /// <param name="name">
-        /// The name that was checked.
-        /// Serialized Name: CheckNameResult.name
-        /// </param>
-        /// <param name="message">
-        /// Message indicating an unavailable name due to a conflict, or a description of the naming rules that are violated.
-        /// Serialized Name: CheckNameResult.message
-        /// </param>
-        /// <param name="reason">
-        /// Message providing the reason why the given name is invalid.
-        /// Serialized Name: CheckNameResult.reason
-        /// </param>
+        /// <param name="isNameAvailable"> Specifies a Boolean value that indicates if the name is available. </param>
+        /// <param name="name"> The name that was checked. </param>
+        /// <param name="message"> Message indicating an unavailable name due to a conflict, or a description of the naming rules that are violated. </param>
+        /// <param name="reason"> Message providing the reason why the given name is invalid. </param>
         internal KustoPoolNameAvailabilityResult(bool? isNameAvailable, string name, string message, KustoPoolNameUnavailableReason? reason)
         {
             IsNameAvailable = isNameAvailable;
@@ -43,25 +28,13 @@ namespace Azure.ResourceManager.Synapse.Models
             Reason = reason;
         }
 
-        /// <summary>
-        /// Specifies a Boolean value that indicates if the name is available.
-        /// Serialized Name: CheckNameResult.nameAvailable
-        /// </summary>
+        /// <summary> Specifies a Boolean value that indicates if the name is available. </summary>
         public bool? IsNameAvailable { get; }
-        /// <summary>
-        /// The name that was checked.
-        /// Serialized Name: CheckNameResult.name
-        /// </summary>
+        /// <summary> The name that was checked. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Message indicating an unavailable name due to a conflict, or a description of the naming rules that are violated.
-        /// Serialized Name: CheckNameResult.message
-        /// </summary>
+        /// <summary> Message indicating an unavailable name due to a conflict, or a description of the naming rules that are violated. </summary>
         public string Message { get; }
-        /// <summary>
-        /// Message providing the reason why the given name is invalid.
-        /// Serialized Name: CheckNameResult.reason
-        /// </summary>
+        /// <summary> Message providing the reason why the given name is invalid. </summary>
         public KustoPoolNameUnavailableReason? Reason { get; }
     }
 }

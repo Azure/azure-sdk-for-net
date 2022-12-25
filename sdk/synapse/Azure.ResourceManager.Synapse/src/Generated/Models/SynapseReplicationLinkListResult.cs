@@ -11,10 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Represents the response to a List Sql pool replication link request.
-    /// Serialized Name: ReplicationLinkListResult
-    /// </summary>
+    /// <summary> Represents the response to a List Sql pool replication link request. </summary>
     internal partial class SynapseReplicationLinkListResult
     {
         /// <summary> Initializes a new instance of SynapseReplicationLinkListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseReplicationLinkListResult. </summary>
-        /// <param name="value">
-        /// The list of Sql pool replication links housed in the Sql pool.
-        /// Serialized Name: ReplicationLinkListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to retrieve next page of results.
-        /// Serialized Name: ReplicationLinkListResult.nextLink
-        /// </param>
+        /// <param name="value"> The list of Sql pool replication links housed in the Sql pool. </param>
+        /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SynapseReplicationLinkListResult(IReadOnlyList<SynapseReplicationLinkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of Sql pool replication links housed in the Sql pool.
-        /// Serialized Name: ReplicationLinkListResult.value
-        /// </summary>
+        /// <summary> The list of Sql pool replication links housed in the Sql pool. </summary>
         public IReadOnlyList<SynapseReplicationLinkData> Value { get; }
-        /// <summary>
-        /// Link to retrieve next page of results.
-        /// Serialized Name: ReplicationLinkListResult.nextLink
-        /// </summary>
+        /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }
 }

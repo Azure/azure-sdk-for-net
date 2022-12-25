@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// It is used to set the encryption mode for node-node communication channel (when more than 2 self-hosted integration runtime nodes exist).
-    /// Serialized Name: IntegrationRuntimeInternalChannelEncryptionMode
-    /// </summary>
+    /// <summary> It is used to set the encryption mode for node-node communication channel (when more than 2 self-hosted integration runtime nodes exist). </summary>
     public readonly partial struct SynapseIntegrationRuntimeInternalChannelEncryptionMode : IEquatable<SynapseIntegrationRuntimeInternalChannelEncryptionMode>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string SslEncryptedValue = "SslEncrypted";
         private const string NotEncryptedValue = "NotEncrypted";
 
-        /// <summary>
-        /// NotSet
-        /// Serialized Name: IntegrationRuntimeInternalChannelEncryptionMode.NotSet
-        /// </summary>
+        /// <summary> NotSet. </summary>
         public static SynapseIntegrationRuntimeInternalChannelEncryptionMode NotSet { get; } = new SynapseIntegrationRuntimeInternalChannelEncryptionMode(NotSetValue);
-        /// <summary>
-        /// SslEncrypted
-        /// Serialized Name: IntegrationRuntimeInternalChannelEncryptionMode.SslEncrypted
-        /// </summary>
+        /// <summary> SslEncrypted. </summary>
         public static SynapseIntegrationRuntimeInternalChannelEncryptionMode SslEncrypted { get; } = new SynapseIntegrationRuntimeInternalChannelEncryptionMode(SslEncryptedValue);
-        /// <summary>
-        /// NotEncrypted
-        /// Serialized Name: IntegrationRuntimeInternalChannelEncryptionMode.NotEncrypted
-        /// </summary>
+        /// <summary> NotEncrypted. </summary>
         public static SynapseIntegrationRuntimeInternalChannelEncryptionMode NotEncrypted { get; } = new SynapseIntegrationRuntimeInternalChannelEncryptionMode(NotEncryptedValue);
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeInternalChannelEncryptionMode"/> values are the same. </summary>
         public static bool operator ==(SynapseIntegrationRuntimeInternalChannelEncryptionMode left, SynapseIntegrationRuntimeInternalChannelEncryptionMode right) => left.Equals(right);

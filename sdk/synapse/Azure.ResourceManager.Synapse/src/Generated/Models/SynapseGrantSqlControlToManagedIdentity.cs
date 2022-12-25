@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Grant sql control to managed identity
-    /// Serialized Name: ManagedIdentitySqlControlSettingsModelPropertiesGrantSqlControlToManagedIdentity
-    /// </summary>
+    /// <summary> Grant sql control to managed identity. </summary>
     public partial class SynapseGrantSqlControlToManagedIdentity
     {
         /// <summary> Initializes a new instance of SynapseGrantSqlControlToManagedIdentity. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseGrantSqlControlToManagedIdentity. </summary>
-        /// <param name="desiredState">
-        /// Desired state
-        /// Serialized Name: ManagedIdentitySqlControlSettingsModelPropertiesGrantSqlControlToManagedIdentity.desiredState
-        /// </param>
-        /// <param name="actualState">
-        /// Actual state
-        /// Serialized Name: ManagedIdentitySqlControlSettingsModelPropertiesGrantSqlControlToManagedIdentity.actualState
-        /// </param>
+        /// <param name="desiredState"> Desired state. </param>
+        /// <param name="actualState"> Actual state. </param>
         internal SynapseGrantSqlControlToManagedIdentity(SynapseDesiredState? desiredState, SynapseGrantSqlControlToManagedIdentityState? actualState)
         {
             DesiredState = desiredState;
             ActualState = actualState;
         }
 
-        /// <summary>
-        /// Desired state
-        /// Serialized Name: ManagedIdentitySqlControlSettingsModelPropertiesGrantSqlControlToManagedIdentity.desiredState
-        /// </summary>
+        /// <summary> Desired state. </summary>
         public SynapseDesiredState? DesiredState { get; set; }
-        /// <summary>
-        /// Actual state
-        /// Serialized Name: ManagedIdentitySqlControlSettingsModelPropertiesGrantSqlControlToManagedIdentity.actualState
-        /// </summary>
+        /// <summary> Actual state. </summary>
         public SynapseGrantSqlControlToManagedIdentityState? ActualState { get; }
     }
 }

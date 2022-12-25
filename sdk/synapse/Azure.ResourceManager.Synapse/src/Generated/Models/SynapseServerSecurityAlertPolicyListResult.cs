@@ -11,10 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// A list of the workspace managed sql server&apos;s security alert policies.
-    /// Serialized Name: ServerSecurityAlertPolicyListResult
-    /// </summary>
+    /// <summary> A list of the workspace managed sql server&apos;s security alert policies. </summary>
     internal partial class SynapseServerSecurityAlertPolicyListResult
     {
         /// <summary> Initializes a new instance of SynapseServerSecurityAlertPolicyListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseServerSecurityAlertPolicyListResult. </summary>
-        /// <param name="value">
-        /// Array of results.
-        /// Serialized Name: ServerSecurityAlertPolicyListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to retrieve next page of results.
-        /// Serialized Name: ServerSecurityAlertPolicyListResult.nextLink
-        /// </param>
+        /// <param name="value"> Array of results. </param>
+        /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SynapseServerSecurityAlertPolicyListResult(IReadOnlyList<SynapseServerSecurityAlertPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Array of results.
-        /// Serialized Name: ServerSecurityAlertPolicyListResult.value
-        /// </summary>
+        /// <summary> Array of results. </summary>
         public IReadOnlyList<SynapseServerSecurityAlertPolicyData> Value { get; }
-        /// <summary>
-        /// Link to retrieve next page of results.
-        /// Serialized Name: ServerSecurityAlertPolicyListResult.nextLink
-        /// </summary>
+        /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }
 }

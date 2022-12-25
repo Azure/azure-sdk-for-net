@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Principal type.
-    /// Serialized Name: PrincipalType
-    /// </summary>
+    /// <summary> Principal type. </summary>
     public readonly partial struct SynapsePrincipalType : IEquatable<SynapsePrincipalType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string GroupValue = "Group";
         private const string UserValue = "User";
 
-        /// <summary>
-        /// App
-        /// Serialized Name: PrincipalType.App
-        /// </summary>
+        /// <summary> App. </summary>
         public static SynapsePrincipalType App { get; } = new SynapsePrincipalType(AppValue);
-        /// <summary>
-        /// Group
-        /// Serialized Name: PrincipalType.Group
-        /// </summary>
+        /// <summary> Group. </summary>
         public static SynapsePrincipalType Group { get; } = new SynapsePrincipalType(GroupValue);
-        /// <summary>
-        /// User
-        /// Serialized Name: PrincipalType.User
-        /// </summary>
+        /// <summary> User. </summary>
         public static SynapsePrincipalType User { get; } = new SynapsePrincipalType(UserValue);
         /// <summary> Determines if two <see cref="SynapsePrincipalType"/> values are the same. </summary>
         public static bool operator ==(SynapsePrincipalType left, SynapsePrincipalType right) => left.Equals(right);

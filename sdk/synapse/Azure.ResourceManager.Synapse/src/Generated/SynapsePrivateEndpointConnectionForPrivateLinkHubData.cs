@@ -24,19 +24,13 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Properties of a private endpoint connection.
-        /// Serialized Name: PrivateEndpointConnectionForPrivateLinkHubBasic.properties
-        /// </param>
+        /// <param name="properties"> Properties of a private endpoint connection. </param>
         internal SynapsePrivateEndpointConnectionForPrivateLinkHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynapsePrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary>
-        /// Properties of a private endpoint connection.
-        /// Serialized Name: PrivateEndpointConnectionForPrivateLinkHubBasic.properties
-        /// </summary>
+        /// <summary> Properties of a private endpoint connection. </summary>
         public SynapsePrivateEndpointConnectionProperties Properties { get; }
     }
 }

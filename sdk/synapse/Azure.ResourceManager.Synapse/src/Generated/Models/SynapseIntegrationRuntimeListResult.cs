@@ -13,17 +13,11 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// A list of integration runtime resources.
-    /// Serialized Name: IntegrationRuntimeListResponse
-    /// </summary>
+    /// <summary> A list of integration runtime resources. </summary>
     internal partial class SynapseIntegrationRuntimeListResult
     {
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeListResult. </summary>
-        /// <param name="value">
-        /// List of integration runtimes.
-        /// Serialized Name: IntegrationRuntimeListResponse.value
-        /// </param>
+        /// <param name="value"> List of integration runtimes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SynapseIntegrationRuntimeListResult(IEnumerable<SynapseIntegrationRuntimeData> value)
         {
@@ -33,29 +27,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeListResult. </summary>
-        /// <param name="value">
-        /// List of integration runtimes.
-        /// Serialized Name: IntegrationRuntimeListResponse.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of results, if any remaining results exist.
-        /// Serialized Name: IntegrationRuntimeListResponse.nextLink
-        /// </param>
+        /// <param name="value"> List of integration runtimes. </param>
+        /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal SynapseIntegrationRuntimeListResult(IReadOnlyList<SynapseIntegrationRuntimeData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// List of integration runtimes.
-        /// Serialized Name: IntegrationRuntimeListResponse.value
-        /// </summary>
+        /// <summary> List of integration runtimes. </summary>
         public IReadOnlyList<SynapseIntegrationRuntimeData> Value { get; }
-        /// <summary>
-        /// The link to the next page of results, if any remaining results exist.
-        /// Serialized Name: IntegrationRuntimeListResponse.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of results, if any remaining results exist. </summary>
         public string NextLink { get; }
     }
 }

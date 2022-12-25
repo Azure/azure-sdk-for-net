@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary>
     /// Integration runtime status.
-    /// Serialized Name: IntegrationRuntimeStatus
     /// Please note <see cref="SynapseIntegrationRuntimeStatus"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SynapseManagedIntegrationRuntimeStatus"/> and <see cref="SynapseSelfHostedIntegrationRuntimeStatus"/>.
     /// </summary>
@@ -26,18 +25,9 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeStatus. </summary>
-        /// <param name="runtimeType">
-        /// Type of integration runtime.
-        /// Serialized Name: IntegrationRuntimeStatus.type
-        /// </param>
-        /// <param name="dataFactoryName">
-        /// The workspace name which the integration runtime belong to.
-        /// Serialized Name: IntegrationRuntimeStatus.dataFactoryName
-        /// </param>
-        /// <param name="state">
-        /// The state of integration runtime.
-        /// Serialized Name: IntegrationRuntimeStatus.state
-        /// </param>
+        /// <param name="runtimeType"> Type of integration runtime. </param>
+        /// <param name="dataFactoryName"> The workspace name which the integration runtime belong to. </param>
+        /// <param name="state"> The state of integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal SynapseIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, SynapseIntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
@@ -47,20 +37,11 @@ namespace Azure.ResourceManager.Synapse.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// Type of integration runtime.
-        /// Serialized Name: IntegrationRuntimeStatus.type
-        /// </summary>
+        /// <summary> Type of integration runtime. </summary>
         internal IntegrationRuntimeType RuntimeType { get; set; }
-        /// <summary>
-        /// The workspace name which the integration runtime belong to.
-        /// Serialized Name: IntegrationRuntimeStatus.dataFactoryName
-        /// </summary>
+        /// <summary> The workspace name which the integration runtime belong to. </summary>
         public string DataFactoryName { get; }
-        /// <summary>
-        /// The state of integration runtime.
-        /// Serialized Name: IntegrationRuntimeStatus.state
-        /// </summary>
+        /// <summary> The state of integration runtime. </summary>
         public SynapseIntegrationRuntimeState? State { get; }
         /// <summary>
         /// Additional Properties

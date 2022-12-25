@@ -121,15 +121,15 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("cspWorkspaceAdminProperties");
                 writer.WriteObjectValue(CspWorkspaceAdminProperties);
             }
-            if (Optional.IsDefined(AzureADOnlyAuthentication))
+            if (Optional.IsDefined(IsAadOnlyAuthenticationEnabled))
             {
                 writer.WritePropertyName("azureADOnlyAuthentication");
-                writer.WriteBooleanValue(AzureADOnlyAuthentication.Value);
+                writer.WriteBooleanValue(IsAadOnlyAuthenticationEnabled.Value);
             }
-            if (Optional.IsDefined(TrustedServiceBypassEnabled))
+            if (Optional.IsDefined(IsTrustedServiceBypassEnabled))
             {
                 writer.WritePropertyName("trustedServiceBypassEnabled");
-                writer.WriteBooleanValue(TrustedServiceBypassEnabled.Value);
+                writer.WriteBooleanValue(IsTrustedServiceBypassEnabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Synapse
             Optional<SynapseManagedVirtualNetworkSettings> managedVirtualNetworkSettings = default;
             Optional<SynapseWorkspaceRepositoryConfiguration> workspaceRepositoryConfiguration = default;
             Optional<PurviewConfiguration> purviewConfiguration = default;
-            Optional<string> adlaResourceId = default;
+            Optional<ResourceIdentifier> adlaResourceId = default;
             Optional<WorkspacePublicNetworkAccess> publicNetworkAccess = default;
             Optional<CspWorkspaceAdminProperties> cspWorkspaceAdminProperties = default;
             Optional<IReadOnlyDictionary<string, BinaryData>> settings = default;
@@ -374,7 +374,12 @@ namespace Azure.ResourceManager.Synapse
                         }
                         if (property0.NameEquals("adlaResourceId"))
                         {
-                            adlaResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            adlaResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"))

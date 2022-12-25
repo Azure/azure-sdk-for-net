@@ -11,10 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Collection of Big Data pool information
-    /// Serialized Name: BigDataPoolResourceInfoListResult
-    /// </summary>
+    /// <summary> Collection of Big Data pool information. </summary>
     internal partial class SynapseBigDataPoolInfoListResult
     {
         /// <summary> Initializes a new instance of SynapseBigDataPoolInfoListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseBigDataPoolInfoListResult. </summary>
-        /// <param name="nextLink">
-        /// Link to the next page of results
-        /// Serialized Name: BigDataPoolResourceInfoListResult.nextLink
-        /// </param>
-        /// <param name="value">
-        /// List of Big Data pools
-        /// Serialized Name: BigDataPoolResourceInfoListResult.value
-        /// </param>
+        /// <param name="nextLink"> Link to the next page of results. </param>
+        /// <param name="value"> List of Big Data pools. </param>
         internal SynapseBigDataPoolInfoListResult(string nextLink, IReadOnlyList<SynapseBigDataPoolInfoData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary>
-        /// Link to the next page of results
-        /// Serialized Name: BigDataPoolResourceInfoListResult.nextLink
-        /// </summary>
+        /// <summary> Link to the next page of results. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// List of Big Data pools
-        /// Serialized Name: BigDataPoolResourceInfoListResult.value
-        /// </summary>
+        /// <summary> List of Big Data pools. </summary>
         public IReadOnlyList<SynapseBigDataPoolInfoData> Value { get; }
     }
 }

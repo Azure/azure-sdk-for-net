@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/
-    /// Serialized Name: IntegrationRuntimeSsisCatalogPricingTier
-    /// </summary>
+    /// <summary> The pricing tier for the catalog database. The valid values could be found in https://azure.microsoft.com/en-us/pricing/details/sql-database/. </summary>
     public readonly partial struct SynapseIntegrationRuntimeSsisCatalogPricingTier : IEquatable<SynapseIntegrationRuntimeSsisCatalogPricingTier>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string PremiumValue = "Premium";
         private const string PremiumRSValue = "PremiumRS";
 
-        /// <summary>
-        /// Basic
-        /// Serialized Name: IntegrationRuntimeSsisCatalogPricingTier.Basic
-        /// </summary>
+        /// <summary> Basic. </summary>
         public static SynapseIntegrationRuntimeSsisCatalogPricingTier Basic { get; } = new SynapseIntegrationRuntimeSsisCatalogPricingTier(BasicValue);
-        /// <summary>
-        /// Standard
-        /// Serialized Name: IntegrationRuntimeSsisCatalogPricingTier.Standard
-        /// </summary>
+        /// <summary> Standard. </summary>
         public static SynapseIntegrationRuntimeSsisCatalogPricingTier Standard { get; } = new SynapseIntegrationRuntimeSsisCatalogPricingTier(StandardValue);
-        /// <summary>
-        /// Premium
-        /// Serialized Name: IntegrationRuntimeSsisCatalogPricingTier.Premium
-        /// </summary>
+        /// <summary> Premium. </summary>
         public static SynapseIntegrationRuntimeSsisCatalogPricingTier Premium { get; } = new SynapseIntegrationRuntimeSsisCatalogPricingTier(PremiumValue);
-        /// <summary>
-        /// PremiumRS
-        /// Serialized Name: IntegrationRuntimeSsisCatalogPricingTier.PremiumRS
-        /// </summary>
+        /// <summary> PremiumRS. </summary>
         public static SynapseIntegrationRuntimeSsisCatalogPricingTier PremiumRS { get; } = new SynapseIntegrationRuntimeSsisCatalogPricingTier(PremiumRSValue);
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeSsisCatalogPricingTier"/> values are the same. </summary>
         public static bool operator ==(SynapseIntegrationRuntimeSsisCatalogPricingTier left, SynapseIntegrationRuntimeSsisCatalogPricingTier right) => left.Equals(right);

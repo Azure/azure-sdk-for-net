@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The data format of the message. Optionally the data format can be added to each message.
-    /// Serialized Name: EventHubDataFormat
-    /// </summary>
+    /// <summary> The data format of the message. Optionally the data format can be added to each message. </summary>
     public readonly partial struct SynapseEventHubDataFormat : IEquatable<SynapseEventHubDataFormat>
     {
         private readonly string _value;
@@ -42,85 +39,37 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string ApacheAvroValue = "APACHEAVRO";
         private const string W3CLogfileValue = "W3CLOGFILE";
 
-        /// <summary>
-        /// MULTIJSON
-        /// Serialized Name: EventHubDataFormat.MULTIJSON
-        /// </summary>
+        /// <summary> MULTIJSON. </summary>
         public static SynapseEventHubDataFormat MultiJson { get; } = new SynapseEventHubDataFormat(MultiJsonValue);
-        /// <summary>
-        /// JSON
-        /// Serialized Name: EventHubDataFormat.JSON
-        /// </summary>
+        /// <summary> JSON. </summary>
         public static SynapseEventHubDataFormat Json { get; } = new SynapseEventHubDataFormat(JsonValue);
-        /// <summary>
-        /// CSV
-        /// Serialized Name: EventHubDataFormat.CSV
-        /// </summary>
+        /// <summary> CSV. </summary>
         public static SynapseEventHubDataFormat Csv { get; } = new SynapseEventHubDataFormat(CsvValue);
-        /// <summary>
-        /// TSV
-        /// Serialized Name: EventHubDataFormat.TSV
-        /// </summary>
+        /// <summary> TSV. </summary>
         public static SynapseEventHubDataFormat Tsv { get; } = new SynapseEventHubDataFormat(TsvValue);
-        /// <summary>
-        /// SCSV
-        /// Serialized Name: EventHubDataFormat.SCSV
-        /// </summary>
+        /// <summary> SCSV. </summary>
         public static SynapseEventHubDataFormat Scsv { get; } = new SynapseEventHubDataFormat(ScsvValue);
-        /// <summary>
-        /// SOHSV
-        /// Serialized Name: EventHubDataFormat.SOHSV
-        /// </summary>
+        /// <summary> SOHSV. </summary>
         public static SynapseEventHubDataFormat Sohsv { get; } = new SynapseEventHubDataFormat(SohsvValue);
-        /// <summary>
-        /// PSV
-        /// Serialized Name: EventHubDataFormat.PSV
-        /// </summary>
+        /// <summary> PSV. </summary>
         public static SynapseEventHubDataFormat Psv { get; } = new SynapseEventHubDataFormat(PsvValue);
-        /// <summary>
-        /// TXT
-        /// Serialized Name: EventHubDataFormat.TXT
-        /// </summary>
+        /// <summary> TXT. </summary>
         public static SynapseEventHubDataFormat Txt { get; } = new SynapseEventHubDataFormat(TxtValue);
-        /// <summary>
-        /// RAW
-        /// Serialized Name: EventHubDataFormat.RAW
-        /// </summary>
+        /// <summary> RAW. </summary>
         public static SynapseEventHubDataFormat Raw { get; } = new SynapseEventHubDataFormat(RawValue);
-        /// <summary>
-        /// SINGLEJSON
-        /// Serialized Name: EventHubDataFormat.SINGLEJSON
-        /// </summary>
+        /// <summary> SINGLEJSON. </summary>
         public static SynapseEventHubDataFormat SingleJson { get; } = new SynapseEventHubDataFormat(SingleJsonValue);
-        /// <summary>
-        /// AVRO
-        /// Serialized Name: EventHubDataFormat.AVRO
-        /// </summary>
+        /// <summary> AVRO. </summary>
         public static SynapseEventHubDataFormat Avro { get; } = new SynapseEventHubDataFormat(AvroValue);
-        /// <summary>
-        /// TSVE
-        /// Serialized Name: EventHubDataFormat.TSVE
-        /// </summary>
+        /// <summary> TSVE. </summary>
         public static SynapseEventHubDataFormat Tsve { get; } = new SynapseEventHubDataFormat(TsveValue);
-        /// <summary>
-        /// PARQUET
-        /// Serialized Name: EventHubDataFormat.PARQUET
-        /// </summary>
+        /// <summary> PARQUET. </summary>
         public static SynapseEventHubDataFormat Parquet { get; } = new SynapseEventHubDataFormat(ParquetValue);
-        /// <summary>
-        /// ORC
-        /// Serialized Name: EventHubDataFormat.ORC
-        /// </summary>
+        /// <summary> ORC. </summary>
         public static SynapseEventHubDataFormat Orc { get; } = new SynapseEventHubDataFormat(OrcValue);
-        /// <summary>
-        /// APACHEAVRO
-        /// Serialized Name: EventHubDataFormat.APACHEAVRO
-        /// </summary>
+        /// <summary> APACHEAVRO. </summary>
         public static SynapseEventHubDataFormat ApacheAvro { get; } = new SynapseEventHubDataFormat(ApacheAvroValue);
-        /// <summary>
-        /// W3CLOGFILE
-        /// Serialized Name: EventHubDataFormat.W3CLOGFILE
-        /// </summary>
+        /// <summary> W3CLOGFILE. </summary>
         public static SynapseEventHubDataFormat W3CLogfile { get; } = new SynapseEventHubDataFormat(W3CLogfileValue);
         /// <summary> Determines if two <see cref="SynapseEventHubDataFormat"/> values are the same. </summary>
         public static bool operator ==(SynapseEventHubDataFormat left, SynapseEventHubDataFormat right) => left.Equals(right);

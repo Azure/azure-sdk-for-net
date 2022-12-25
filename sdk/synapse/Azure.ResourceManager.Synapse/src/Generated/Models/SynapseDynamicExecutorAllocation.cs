@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Dynamic Executor Allocation Properties
-    /// Serialized Name: DynamicExecutorAllocation
-    /// </summary>
+    /// <summary> Dynamic Executor Allocation Properties. </summary>
     public partial class SynapseDynamicExecutorAllocation
     {
         /// <summary> Initializes a new instance of SynapseDynamicExecutorAllocation. </summary>
@@ -19,39 +16,21 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseDynamicExecutorAllocation. </summary>
-        /// <param name="enabled">
-        /// Indicates whether Dynamic Executor Allocation is enabled or not.
-        /// Serialized Name: DynamicExecutorAllocation.enabled
-        /// </param>
-        /// <param name="minExecutors">
-        /// The minimum number of executors alloted
-        /// Serialized Name: DynamicExecutorAllocation.minExecutors
-        /// </param>
-        /// <param name="maxExecutors">
-        /// The maximum number of executors alloted
-        /// Serialized Name: DynamicExecutorAllocation.maxExecutors
-        /// </param>
-        internal SynapseDynamicExecutorAllocation(bool? enabled, int? minExecutors, int? maxExecutors)
+        /// <param name="isEnabled"> Indicates whether Dynamic Executor Allocation is enabled or not. </param>
+        /// <param name="minExecutors"> The minimum number of executors alloted. </param>
+        /// <param name="maxExecutors"> The maximum number of executors alloted. </param>
+        internal SynapseDynamicExecutorAllocation(bool? isEnabled, int? minExecutors, int? maxExecutors)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             MinExecutors = minExecutors;
             MaxExecutors = maxExecutors;
         }
 
-        /// <summary>
-        /// Indicates whether Dynamic Executor Allocation is enabled or not.
-        /// Serialized Name: DynamicExecutorAllocation.enabled
-        /// </summary>
-        public bool? Enabled { get; set; }
-        /// <summary>
-        /// The minimum number of executors alloted
-        /// Serialized Name: DynamicExecutorAllocation.minExecutors
-        /// </summary>
+        /// <summary> Indicates whether Dynamic Executor Allocation is enabled or not. </summary>
+        public bool? IsEnabled { get; set; }
+        /// <summary> The minimum number of executors alloted. </summary>
         public int? MinExecutors { get; set; }
-        /// <summary>
-        /// The maximum number of executors alloted
-        /// Serialized Name: DynamicExecutorAllocation.maxExecutors
-        /// </summary>
+        /// <summary> The maximum number of executors alloted. </summary>
         public int? MaxExecutors { get; set; }
     }
 }

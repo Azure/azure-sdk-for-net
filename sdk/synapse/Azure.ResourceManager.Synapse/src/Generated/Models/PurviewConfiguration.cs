@@ -5,12 +5,11 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Purview Configuration
-    /// Serialized Name: PurviewConfiguration
-    /// </summary>
+    /// <summary> Purview Configuration. </summary>
     internal partial class PurviewConfiguration
     {
         /// <summary> Initializes a new instance of PurviewConfiguration. </summary>
@@ -19,19 +18,13 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of PurviewConfiguration. </summary>
-        /// <param name="purviewResourceId">
-        /// Purview Resource ID
-        /// Serialized Name: PurviewConfiguration.purviewResourceId
-        /// </param>
-        internal PurviewConfiguration(string purviewResourceId)
+        /// <param name="purviewResourceId"> Purview Resource ID. </param>
+        internal PurviewConfiguration(ResourceIdentifier purviewResourceId)
         {
             PurviewResourceId = purviewResourceId;
         }
 
-        /// <summary>
-        /// Purview Resource ID
-        /// Serialized Name: PurviewConfiguration.purviewResourceId
-        /// </summary>
-        public string PurviewResourceId { get; set; }
+        /// <summary> Purview Resource ID. </summary>
+        public ResourceIdentifier PurviewResourceId { get; set; }
     }
 }

@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("dataFlowProperties");
                 writer.WriteObjectValue(DataFlowProperties);
             }
-            if (Optional.IsDefined(VNetProperties))
+            if (Optional.IsDefined(VnetProperties))
             {
                 writer.WritePropertyName("vNetProperties");
-                writer.WriteObjectValue(VNetProperties);
+                writer.WriteObjectValue(VnetProperties);
             }
             foreach (var item in AdditionalProperties)
             {

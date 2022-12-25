@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The level of compute power that each node in the Big Data pool has.
-    /// Serialized Name: NodeSize
-    /// </summary>
+    /// <summary> The level of compute power that each node in the Big Data pool has. </summary>
     public readonly partial struct BigDataPoolNodeSize : IEquatable<BigDataPoolNodeSize>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string XXLargeValue = "XXLarge";
         private const string XXXLargeValue = "XXXLarge";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: NodeSize.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static BigDataPoolNodeSize None { get; } = new BigDataPoolNodeSize(NoneValue);
-        /// <summary>
-        /// Small
-        /// Serialized Name: NodeSize.Small
-        /// </summary>
+        /// <summary> Small. </summary>
         public static BigDataPoolNodeSize Small { get; } = new BigDataPoolNodeSize(SmallValue);
-        /// <summary>
-        /// Medium
-        /// Serialized Name: NodeSize.Medium
-        /// </summary>
+        /// <summary> Medium. </summary>
         public static BigDataPoolNodeSize Medium { get; } = new BigDataPoolNodeSize(MediumValue);
-        /// <summary>
-        /// Large
-        /// Serialized Name: NodeSize.Large
-        /// </summary>
+        /// <summary> Large. </summary>
         public static BigDataPoolNodeSize Large { get; } = new BigDataPoolNodeSize(LargeValue);
-        /// <summary>
-        /// XLarge
-        /// Serialized Name: NodeSize.XLarge
-        /// </summary>
+        /// <summary> XLarge. </summary>
         public static BigDataPoolNodeSize XLarge { get; } = new BigDataPoolNodeSize(XLargeValue);
-        /// <summary>
-        /// XXLarge
-        /// Serialized Name: NodeSize.XXLarge
-        /// </summary>
+        /// <summary> XXLarge. </summary>
         public static BigDataPoolNodeSize XXLarge { get; } = new BigDataPoolNodeSize(XXLargeValue);
-        /// <summary>
-        /// XXXLarge
-        /// Serialized Name: NodeSize.XXXLarge
-        /// </summary>
+        /// <summary> XXXLarge. </summary>
         public static BigDataPoolNodeSize XXXLarge { get; } = new BigDataPoolNodeSize(XXXLargeValue);
         /// <summary> Determines if two <see cref="BigDataPoolNodeSize"/> values are the same. </summary>
         public static bool operator ==(BigDataPoolNodeSize left, BigDataPoolNodeSize right) => left.Equals(right);

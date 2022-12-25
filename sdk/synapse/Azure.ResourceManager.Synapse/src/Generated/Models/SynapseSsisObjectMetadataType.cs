@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The type of SSIS object metadata.
-    /// Serialized Name: SsisObjectMetadataType
-    /// </summary>
+    /// <summary> The type of SSIS object metadata. </summary>
     internal readonly partial struct SynapseSsisObjectMetadataType : IEquatable<SynapseSsisObjectMetadataType>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string PackageValue = "Package";
         private const string EnvironmentValue = "Environment";
 
-        /// <summary>
-        /// Folder
-        /// Serialized Name: SsisObjectMetadataType.Folder
-        /// </summary>
+        /// <summary> Folder. </summary>
         public static SynapseSsisObjectMetadataType Folder { get; } = new SynapseSsisObjectMetadataType(FolderValue);
-        /// <summary>
-        /// Project
-        /// Serialized Name: SsisObjectMetadataType.Project
-        /// </summary>
+        /// <summary> Project. </summary>
         public static SynapseSsisObjectMetadataType Project { get; } = new SynapseSsisObjectMetadataType(ProjectValue);
-        /// <summary>
-        /// Package
-        /// Serialized Name: SsisObjectMetadataType.Package
-        /// </summary>
+        /// <summary> Package. </summary>
         public static SynapseSsisObjectMetadataType Package { get; } = new SynapseSsisObjectMetadataType(PackageValue);
-        /// <summary>
-        /// Environment
-        /// Serialized Name: SsisObjectMetadataType.Environment
-        /// </summary>
+        /// <summary> Environment. </summary>
         public static SynapseSsisObjectMetadataType Environment { get; } = new SynapseSsisObjectMetadataType(EnvironmentValue);
         /// <summary> Determines if two <see cref="SynapseSsisObjectMetadataType"/> values are the same. </summary>
         public static bool operator ==(SynapseSsisObjectMetadataType left, SynapseSsisObjectMetadataType right) => left.Equals(right);

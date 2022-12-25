@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// A class that contains database statistics information.
-    /// Serialized Name: DatabaseStatistics
-    /// </summary>
+    /// <summary> A class that contains database statistics information. </summary>
     internal partial class DatabaseStatistics
     {
         /// <summary> Initializes a new instance of DatabaseStatistics. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of DatabaseStatistics. </summary>
-        /// <param name="size">
-        /// The database size - the total size of compressed data and index in bytes.
-        /// Serialized Name: DatabaseStatistics.size
-        /// </param>
+        /// <param name="size"> The database size - the total size of compressed data and index in bytes. </param>
         internal DatabaseStatistics(float? size)
         {
             Size = size;
         }
 
-        /// <summary>
-        /// The database size - the total size of compressed data and index in bytes.
-        /// Serialized Name: DatabaseStatistics.size
-        /// </summary>
+        /// <summary> The database size - the total size of compressed data and index in bytes. </summary>
         public float? Size { get; }
     }
 }

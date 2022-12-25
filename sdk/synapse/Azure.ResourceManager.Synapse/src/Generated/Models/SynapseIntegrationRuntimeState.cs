@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The state of integration runtime.
-    /// Serialized Name: IntegrationRuntimeState
-    /// </summary>
+    /// <summary> The state of integration runtime. </summary>
     public readonly partial struct SynapseIntegrationRuntimeState : IEquatable<SynapseIntegrationRuntimeState>
     {
         private readonly string _value;
@@ -36,55 +33,25 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string OfflineValue = "Offline";
         private const string AccessDeniedValue = "AccessDenied";
 
-        /// <summary>
-        /// Initial
-        /// Serialized Name: IntegrationRuntimeState.Initial
-        /// </summary>
+        /// <summary> Initial. </summary>
         public static SynapseIntegrationRuntimeState Initial { get; } = new SynapseIntegrationRuntimeState(InitialValue);
-        /// <summary>
-        /// Stopped
-        /// Serialized Name: IntegrationRuntimeState.Stopped
-        /// </summary>
+        /// <summary> Stopped. </summary>
         public static SynapseIntegrationRuntimeState Stopped { get; } = new SynapseIntegrationRuntimeState(StoppedValue);
-        /// <summary>
-        /// Started
-        /// Serialized Name: IntegrationRuntimeState.Started
-        /// </summary>
+        /// <summary> Started. </summary>
         public static SynapseIntegrationRuntimeState Started { get; } = new SynapseIntegrationRuntimeState(StartedValue);
-        /// <summary>
-        /// Starting
-        /// Serialized Name: IntegrationRuntimeState.Starting
-        /// </summary>
+        /// <summary> Starting. </summary>
         public static SynapseIntegrationRuntimeState Starting { get; } = new SynapseIntegrationRuntimeState(StartingValue);
-        /// <summary>
-        /// Stopping
-        /// Serialized Name: IntegrationRuntimeState.Stopping
-        /// </summary>
+        /// <summary> Stopping. </summary>
         public static SynapseIntegrationRuntimeState Stopping { get; } = new SynapseIntegrationRuntimeState(StoppingValue);
-        /// <summary>
-        /// NeedRegistration
-        /// Serialized Name: IntegrationRuntimeState.NeedRegistration
-        /// </summary>
+        /// <summary> NeedRegistration. </summary>
         public static SynapseIntegrationRuntimeState NeedRegistration { get; } = new SynapseIntegrationRuntimeState(NeedRegistrationValue);
-        /// <summary>
-        /// Online
-        /// Serialized Name: IntegrationRuntimeState.Online
-        /// </summary>
+        /// <summary> Online. </summary>
         public static SynapseIntegrationRuntimeState Online { get; } = new SynapseIntegrationRuntimeState(OnlineValue);
-        /// <summary>
-        /// Limited
-        /// Serialized Name: IntegrationRuntimeState.Limited
-        /// </summary>
+        /// <summary> Limited. </summary>
         public static SynapseIntegrationRuntimeState Limited { get; } = new SynapseIntegrationRuntimeState(LimitedValue);
-        /// <summary>
-        /// Offline
-        /// Serialized Name: IntegrationRuntimeState.Offline
-        /// </summary>
+        /// <summary> Offline. </summary>
         public static SynapseIntegrationRuntimeState Offline { get; } = new SynapseIntegrationRuntimeState(OfflineValue);
-        /// <summary>
-        /// AccessDenied
-        /// Serialized Name: IntegrationRuntimeState.AccessDenied
-        /// </summary>
+        /// <summary> AccessDenied. </summary>
         public static SynapseIntegrationRuntimeState AccessDenied { get; } = new SynapseIntegrationRuntimeState(AccessDeniedValue);
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeState"/> values are the same. </summary>
         public static bool operator ==(SynapseIntegrationRuntimeState left, SynapseIntegrationRuntimeState right) => left.Equals(right);

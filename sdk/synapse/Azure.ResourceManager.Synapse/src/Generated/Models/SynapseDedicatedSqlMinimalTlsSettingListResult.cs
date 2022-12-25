@@ -11,10 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// A list of the server&apos;s dedicated sql minimal tls settings.
-    /// Serialized Name: DedicatedSQLminimalTlsSettingsListResult
-    /// </summary>
+    /// <summary> A list of the server&apos;s dedicated sql minimal tls settings. </summary>
     internal partial class SynapseDedicatedSqlMinimalTlsSettingListResult
     {
         /// <summary> Initializes a new instance of SynapseDedicatedSqlMinimalTlsSettingListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseDedicatedSqlMinimalTlsSettingListResult. </summary>
-        /// <param name="value">
-        /// Array of results.
-        /// Serialized Name: DedicatedSQLminimalTlsSettingsListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to retrieve next page of results.
-        /// Serialized Name: DedicatedSQLminimalTlsSettingsListResult.nextLink
-        /// </param>
+        /// <param name="value"> Array of results. </param>
+        /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SynapseDedicatedSqlMinimalTlsSettingListResult(IReadOnlyList<SynapseDedicatedSqlMinimalTlsSettingData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Array of results.
-        /// Serialized Name: DedicatedSQLminimalTlsSettingsListResult.value
-        /// </summary>
+        /// <summary> Array of results. </summary>
         public IReadOnlyList<SynapseDedicatedSqlMinimalTlsSettingData> Value { get; }
-        /// <summary>
-        /// Link to retrieve next page of results.
-        /// Serialized Name: DedicatedSQLminimalTlsSettingsListResult.nextLink
-        /// </summary>
+        /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }
 }

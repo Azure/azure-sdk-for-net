@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The replication state for the replication link.
-    /// Serialized Name: ReplicationState
-    /// </summary>
+    /// <summary> The replication state for the replication link. </summary>
     public readonly partial struct SynapseReplicationState : IEquatable<SynapseReplicationState>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string CatchUpValue = "CATCH_UP";
         private const string SuspendedValue = "SUSPENDED";
 
-        /// <summary>
-        /// PENDING
-        /// Serialized Name: ReplicationState.PENDING
-        /// </summary>
+        /// <summary> PENDING. </summary>
         public static SynapseReplicationState Pending { get; } = new SynapseReplicationState(PendingValue);
-        /// <summary>
-        /// SEEDING
-        /// Serialized Name: ReplicationState.SEEDING
-        /// </summary>
+        /// <summary> SEEDING. </summary>
         public static SynapseReplicationState Seeding { get; } = new SynapseReplicationState(SeedingValue);
-        /// <summary>
-        /// CATCH_UP
-        /// Serialized Name: ReplicationState.CATCH_UP
-        /// </summary>
+        /// <summary> CATCH_UP. </summary>
         public static SynapseReplicationState CatchUp { get; } = new SynapseReplicationState(CatchUpValue);
-        /// <summary>
-        /// SUSPENDED
-        /// Serialized Name: ReplicationState.SUSPENDED
-        /// </summary>
+        /// <summary> SUSPENDED. </summary>
         public static SynapseReplicationState Suspended { get; } = new SynapseReplicationState(SuspendedValue);
         /// <summary> Determines if two <see cref="SynapseReplicationState"/> values are the same. </summary>
         public static bool operator ==(SynapseReplicationState left, SynapseReplicationState right) => left.Equals(right);

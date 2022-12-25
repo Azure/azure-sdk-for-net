@@ -11,10 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Class representing an Event Grid data connection.
-    /// Serialized Name: EventGridDataConnection
-    /// </summary>
+    /// <summary> Class representing an Event Grid data connection. </summary>
     public partial class SynapseEventGridDataConnection : SynapseDataConnectionData
     {
         /// <summary> Initializes a new instance of SynapseEventGridDataConnection. </summary>
@@ -28,51 +25,18 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location">
-        /// Resource location.
-        /// Serialized Name: DataConnection.location
-        /// </param>
-        /// <param name="kind">
-        /// Kind of the endpoint for the data connection
-        /// Serialized Name: DataConnection.kind
-        /// </param>
-        /// <param name="storageAccountResourceId">
-        /// The resource ID of the storage account where the data resides.
-        /// Serialized Name: EventGridDataConnection.properties.storageAccountResourceId
-        /// </param>
-        /// <param name="eventHubResourceId">
-        /// The resource ID where the event grid is configured to send events.
-        /// Serialized Name: EventGridDataConnection.properties.eventHubResourceId
-        /// </param>
-        /// <param name="consumerGroup">
-        /// The event hub consumer group.
-        /// Serialized Name: EventGridDataConnection.properties.consumerGroup
-        /// </param>
-        /// <param name="tableName">
-        /// The table where the data should be ingested. Optionally the table information can be added to each message.
-        /// Serialized Name: EventGridDataConnection.properties.tableName
-        /// </param>
-        /// <param name="mappingRuleName">
-        /// The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message.
-        /// Serialized Name: EventGridDataConnection.properties.mappingRuleName
-        /// </param>
-        /// <param name="dataFormat">
-        /// The data format of the message. Optionally the data format can be added to each message.
-        /// Serialized Name: EventGridDataConnection.properties.dataFormat
-        /// </param>
-        /// <param name="ignoreFirstRecord">
-        /// A Boolean value that, if set to true, indicates that ingestion should ignore the first record of every file
-        /// Serialized Name: EventGridDataConnection.properties.ignoreFirstRecord
-        /// </param>
-        /// <param name="blobStorageEventType">
-        /// The name of blob storage event type to process.
-        /// Serialized Name: EventGridDataConnection.properties.blobStorageEventType
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioned state of the resource.
-        /// Serialized Name: EventGridDataConnection.properties.provisioningState
-        /// </param>
-        internal SynapseEventGridDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseDataConnectionKind kind, string storageAccountResourceId, string eventHubResourceId, string consumerGroup, string tableName, string mappingRuleName, SynapseEventGridDataFormat? dataFormat, bool? ignoreFirstRecord, SynapseBlobStorageEventType? blobStorageEventType, ResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind)
+        /// <param name="location"> Resource location. </param>
+        /// <param name="kind"> Kind of the endpoint for the data connection. </param>
+        /// <param name="storageAccountResourceId"> The resource ID of the storage account where the data resides. </param>
+        /// <param name="eventHubResourceId"> The resource ID where the event grid is configured to send events. </param>
+        /// <param name="consumerGroup"> The event hub consumer group. </param>
+        /// <param name="tableName"> The table where the data should be ingested. Optionally the table information can be added to each message. </param>
+        /// <param name="mappingRuleName"> The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message. </param>
+        /// <param name="dataFormat"> The data format of the message. Optionally the data format can be added to each message. </param>
+        /// <param name="ignoreFirstRecord"> A Boolean value that, if set to true, indicates that ingestion should ignore the first record of every file. </param>
+        /// <param name="blobStorageEventType"> The name of blob storage event type to process. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        internal SynapseEventGridDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseDataConnectionKind kind, ResourceIdentifier storageAccountResourceId, ResourceIdentifier eventHubResourceId, string consumerGroup, string tableName, string mappingRuleName, SynapseEventGridDataFormat? dataFormat, bool? ignoreFirstRecord, SynapseBlobStorageEventType? blobStorageEventType, ResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind)
         {
             StorageAccountResourceId = storageAccountResourceId;
             EventHubResourceId = eventHubResourceId;
@@ -86,50 +50,23 @@ namespace Azure.ResourceManager.Synapse.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// The resource ID of the storage account where the data resides.
-        /// Serialized Name: EventGridDataConnection.properties.storageAccountResourceId
-        /// </summary>
-        public string StorageAccountResourceId { get; set; }
-        /// <summary>
-        /// The resource ID where the event grid is configured to send events.
-        /// Serialized Name: EventGridDataConnection.properties.eventHubResourceId
-        /// </summary>
-        public string EventHubResourceId { get; set; }
-        /// <summary>
-        /// The event hub consumer group.
-        /// Serialized Name: EventGridDataConnection.properties.consumerGroup
-        /// </summary>
+        /// <summary> The resource ID of the storage account where the data resides. </summary>
+        public ResourceIdentifier StorageAccountResourceId { get; set; }
+        /// <summary> The resource ID where the event grid is configured to send events. </summary>
+        public ResourceIdentifier EventHubResourceId { get; set; }
+        /// <summary> The event hub consumer group. </summary>
         public string ConsumerGroup { get; set; }
-        /// <summary>
-        /// The table where the data should be ingested. Optionally the table information can be added to each message.
-        /// Serialized Name: EventGridDataConnection.properties.tableName
-        /// </summary>
+        /// <summary> The table where the data should be ingested. Optionally the table information can be added to each message. </summary>
         public string TableName { get; set; }
-        /// <summary>
-        /// The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message.
-        /// Serialized Name: EventGridDataConnection.properties.mappingRuleName
-        /// </summary>
+        /// <summary> The mapping rule to be used to ingest the data. Optionally the mapping information can be added to each message. </summary>
         public string MappingRuleName { get; set; }
-        /// <summary>
-        /// The data format of the message. Optionally the data format can be added to each message.
-        /// Serialized Name: EventGridDataConnection.properties.dataFormat
-        /// </summary>
+        /// <summary> The data format of the message. Optionally the data format can be added to each message. </summary>
         public SynapseEventGridDataFormat? DataFormat { get; set; }
-        /// <summary>
-        /// A Boolean value that, if set to true, indicates that ingestion should ignore the first record of every file
-        /// Serialized Name: EventGridDataConnection.properties.ignoreFirstRecord
-        /// </summary>
+        /// <summary> A Boolean value that, if set to true, indicates that ingestion should ignore the first record of every file. </summary>
         public bool? IgnoreFirstRecord { get; set; }
-        /// <summary>
-        /// The name of blob storage event type to process.
-        /// Serialized Name: EventGridDataConnection.properties.blobStorageEventType
-        /// </summary>
+        /// <summary> The name of blob storage event type to process. </summary>
         public SynapseBlobStorageEventType? BlobStorageEventType { get; set; }
-        /// <summary>
-        /// The provisioned state of the resource.
-        /// Serialized Name: EventGridDataConnection.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioned state of the resource. </summary>
         public ResourceProvisioningState? ProvisioningState { get; }
     }
 }

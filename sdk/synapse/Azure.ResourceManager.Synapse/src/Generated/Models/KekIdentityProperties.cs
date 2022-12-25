@@ -6,13 +6,11 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Key encryption key properties
-    /// Serialized Name: KekIdentityProperties
-    /// </summary>
+    /// <summary> Key encryption key properties. </summary>
     public partial class KekIdentityProperties
     {
         /// <summary> Initializes a new instance of KekIdentityProperties. </summary>
@@ -21,28 +19,18 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of KekIdentityProperties. </summary>
-        /// <param name="userAssignedIdentity">
-        /// User assigned identity resource Id
-        /// Serialized Name: KekIdentityProperties.userAssignedIdentity
-        /// </param>
-        /// <param name="useSystemAssignedIdentity">
-        /// Boolean specifying whether to use system assigned identity or not
-        /// Serialized Name: KekIdentityProperties.useSystemAssignedIdentity
-        /// </param>
-        internal KekIdentityProperties(string userAssignedIdentity, BinaryData useSystemAssignedIdentity)
+        /// <param name="userAssignedIdentityId"> User assigned identity resource Id. </param>
+        /// <param name="useSystemAssignedIdentity"> Boolean specifying whether to use system assigned identity or not. </param>
+        internal KekIdentityProperties(ResourceIdentifier userAssignedIdentityId, BinaryData useSystemAssignedIdentity)
         {
-            UserAssignedIdentity = userAssignedIdentity;
+            UserAssignedIdentityId = userAssignedIdentityId;
             UseSystemAssignedIdentity = useSystemAssignedIdentity;
         }
 
-        /// <summary>
-        /// User assigned identity resource Id
-        /// Serialized Name: KekIdentityProperties.userAssignedIdentity
-        /// </summary>
-        public string UserAssignedIdentity { get; set; }
+        /// <summary> User assigned identity resource Id. </summary>
+        public ResourceIdentifier UserAssignedIdentityId { get; set; }
         /// <summary>
         /// Boolean specifying whether to use system assigned identity or not
-        /// Serialized Name: KekIdentityProperties.useSystemAssignedIdentity
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -24,22 +24,10 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tenantId">
-        /// Tenant ID of the workspace active directory administrator
-        /// Serialized Name: WorkspaceAadAdminInfo.properties.tenantId
-        /// </param>
-        /// <param name="login">
-        /// Login of the workspace active directory administrator
-        /// Serialized Name: WorkspaceAadAdminInfo.properties.login
-        /// </param>
-        /// <param name="administratorType">
-        /// Workspace active directory administrator type
-        /// Serialized Name: WorkspaceAadAdminInfo.properties.administratorType
-        /// </param>
-        /// <param name="sid">
-        /// Object ID of the workspace active directory administrator
-        /// Serialized Name: WorkspaceAadAdminInfo.properties.sid
-        /// </param>
+        /// <param name="tenantId"> Tenant ID of the workspace active directory administrator. </param>
+        /// <param name="login"> Login of the workspace active directory administrator. </param>
+        /// <param name="administratorType"> Workspace active directory administrator type. </param>
+        /// <param name="sid"> Object ID of the workspace active directory administrator. </param>
         internal SynapseWorkspaceAadAdminInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, string login, string administratorType, string sid) : base(id, name, resourceType, systemData)
         {
             TenantId = tenantId;
@@ -48,25 +36,13 @@ namespace Azure.ResourceManager.Synapse
             Sid = sid;
         }
 
-        /// <summary>
-        /// Tenant ID of the workspace active directory administrator
-        /// Serialized Name: WorkspaceAadAdminInfo.properties.tenantId
-        /// </summary>
+        /// <summary> Tenant ID of the workspace active directory administrator. </summary>
         public Guid? TenantId { get; set; }
-        /// <summary>
-        /// Login of the workspace active directory administrator
-        /// Serialized Name: WorkspaceAadAdminInfo.properties.login
-        /// </summary>
+        /// <summary> Login of the workspace active directory administrator. </summary>
         public string Login { get; set; }
-        /// <summary>
-        /// Workspace active directory administrator type
-        /// Serialized Name: WorkspaceAadAdminInfo.properties.administratorType
-        /// </summary>
+        /// <summary> Workspace active directory administrator type. </summary>
         public string AdministratorType { get; set; }
-        /// <summary>
-        /// Object ID of the workspace active directory administrator
-        /// Serialized Name: WorkspaceAadAdminInfo.properties.sid
-        /// </summary>
+        /// <summary> Object ID of the workspace active directory administrator. </summary>
         public string Sid { get; set; }
     }
 }

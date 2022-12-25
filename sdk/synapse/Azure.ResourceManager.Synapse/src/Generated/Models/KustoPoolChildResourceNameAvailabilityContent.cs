@@ -10,21 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The result returned from a database check name availability request.
-    /// Serialized Name: DatabaseCheckNameRequest
-    /// </summary>
+    /// <summary> The result returned from a database check name availability request. </summary>
     public partial class KustoPoolChildResourceNameAvailabilityContent
     {
         /// <summary> Initializes a new instance of KustoPoolChildResourceNameAvailabilityContent. </summary>
-        /// <param name="name">
-        /// Resource name.
-        /// Serialized Name: DatabaseCheckNameRequest.name
-        /// </param>
-        /// <param name="resourceType">
-        /// The type of resource, for instance Microsoft.Synapse/workspaces/kustoPools/databases.
-        /// Serialized Name: DatabaseCheckNameRequest.type
-        /// </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> The type of resource, for instance Microsoft.Synapse/workspaces/kustoPools/databases. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoPoolChildResourceNameAvailabilityContent(string name, KustoPoolDatabaseType resourceType)
         {
@@ -34,15 +25,9 @@ namespace Azure.ResourceManager.Synapse.Models
             ResourceType = resourceType;
         }
 
-        /// <summary>
-        /// Resource name.
-        /// Serialized Name: DatabaseCheckNameRequest.name
-        /// </summary>
+        /// <summary> Resource name. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The type of resource, for instance Microsoft.Synapse/workspaces/kustoPools/databases.
-        /// Serialized Name: DatabaseCheckNameRequest.type
-        /// </summary>
+        /// <summary> The type of resource, for instance Microsoft.Synapse/workspaces/kustoPools/databases. </summary>
         public KustoPoolDatabaseType ResourceType { get; }
     }
 }

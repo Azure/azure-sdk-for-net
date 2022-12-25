@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The SynapseEncryptionProtectorName.
-    /// Serialized Name: EncryptionProtectorName
-    /// </summary>
+    /// <summary> The SynapseEncryptionProtectorName. </summary>
     public readonly partial struct SynapseEncryptionProtectorName : IEquatable<SynapseEncryptionProtectorName>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         private const string CurrentValue = "current";
 
-        /// <summary>
-        /// current
-        /// Serialized Name: EncryptionProtectorName.current
-        /// </summary>
+        /// <summary> current. </summary>
         public static SynapseEncryptionProtectorName Current { get; } = new SynapseEncryptionProtectorName(CurrentValue);
         /// <summary> Determines if two <see cref="SynapseEncryptionProtectorName"/> values are the same. </summary>
         public static bool operator ==(SynapseEncryptionProtectorName left, SynapseEncryptionProtectorName right) => left.Equals(right);

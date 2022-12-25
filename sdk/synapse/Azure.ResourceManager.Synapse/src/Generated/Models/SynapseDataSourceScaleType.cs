@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Scale type.
-    /// Serialized Name: AzureScaleType
-    /// </summary>
+    /// <summary> Scale type. </summary>
     public readonly partial struct SynapseDataSourceScaleType : IEquatable<SynapseDataSourceScaleType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string ManualValue = "manual";
         private const string NoneValue = "none";
 
-        /// <summary>
-        /// automatic
-        /// Serialized Name: AzureScaleType.automatic
-        /// </summary>
+        /// <summary> automatic. </summary>
         public static SynapseDataSourceScaleType Automatic { get; } = new SynapseDataSourceScaleType(AutomaticValue);
-        /// <summary>
-        /// manual
-        /// Serialized Name: AzureScaleType.manual
-        /// </summary>
+        /// <summary> manual. </summary>
         public static SynapseDataSourceScaleType Manual { get; } = new SynapseDataSourceScaleType(ManualValue);
-        /// <summary>
-        /// none
-        /// Serialized Name: AzureScaleType.none
-        /// </summary>
+        /// <summary> none. </summary>
         public static SynapseDataSourceScaleType None { get; } = new SynapseDataSourceScaleType(NoneValue);
         /// <summary> Determines if two <see cref="SynapseDataSourceScaleType"/> values are the same. </summary>
         public static bool operator ==(SynapseDataSourceScaleType left, SynapseDataSourceScaleType right) => left.Equals(right);

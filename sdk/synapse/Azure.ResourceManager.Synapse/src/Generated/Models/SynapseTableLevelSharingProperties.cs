@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Tables that will be included and excluded in the follower database
-    /// Serialized Name: TableLevelSharingProperties
-    /// </summary>
+    /// <summary> Tables that will be included and excluded in the follower database. </summary>
     public partial class SynapseTableLevelSharingProperties
     {
         /// <summary> Initializes a new instance of SynapseTableLevelSharingProperties. </summary>
@@ -28,30 +25,12 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseTableLevelSharingProperties. </summary>
-        /// <param name="tablesToInclude">
-        /// List of tables to include in the follower database
-        /// Serialized Name: TableLevelSharingProperties.tablesToInclude
-        /// </param>
-        /// <param name="tablesToExclude">
-        /// List of tables to exclude from the follower database
-        /// Serialized Name: TableLevelSharingProperties.tablesToExclude
-        /// </param>
-        /// <param name="externalTablesToInclude">
-        /// List of external tables to include in the follower database
-        /// Serialized Name: TableLevelSharingProperties.externalTablesToInclude
-        /// </param>
-        /// <param name="externalTablesToExclude">
-        /// List of external tables exclude from the follower database
-        /// Serialized Name: TableLevelSharingProperties.externalTablesToExclude
-        /// </param>
-        /// <param name="materializedViewsToInclude">
-        /// List of materialized views to include in the follower database
-        /// Serialized Name: TableLevelSharingProperties.materializedViewsToInclude
-        /// </param>
-        /// <param name="materializedViewsToExclude">
-        /// List of materialized views exclude from the follower database
-        /// Serialized Name: TableLevelSharingProperties.materializedViewsToExclude
-        /// </param>
+        /// <param name="tablesToInclude"> List of tables to include in the follower database. </param>
+        /// <param name="tablesToExclude"> List of tables to exclude from the follower database. </param>
+        /// <param name="externalTablesToInclude"> List of external tables to include in the follower database. </param>
+        /// <param name="externalTablesToExclude"> List of external tables exclude from the follower database. </param>
+        /// <param name="materializedViewsToInclude"> List of materialized views to include in the follower database. </param>
+        /// <param name="materializedViewsToExclude"> List of materialized views exclude from the follower database. </param>
         internal SynapseTableLevelSharingProperties(IList<string> tablesToInclude, IList<string> tablesToExclude, IList<string> externalTablesToInclude, IList<string> externalTablesToExclude, IList<string> materializedViewsToInclude, IList<string> materializedViewsToExclude)
         {
             TablesToInclude = tablesToInclude;
@@ -62,35 +41,17 @@ namespace Azure.ResourceManager.Synapse.Models
             MaterializedViewsToExclude = materializedViewsToExclude;
         }
 
-        /// <summary>
-        /// List of tables to include in the follower database
-        /// Serialized Name: TableLevelSharingProperties.tablesToInclude
-        /// </summary>
+        /// <summary> List of tables to include in the follower database. </summary>
         public IList<string> TablesToInclude { get; }
-        /// <summary>
-        /// List of tables to exclude from the follower database
-        /// Serialized Name: TableLevelSharingProperties.tablesToExclude
-        /// </summary>
+        /// <summary> List of tables to exclude from the follower database. </summary>
         public IList<string> TablesToExclude { get; }
-        /// <summary>
-        /// List of external tables to include in the follower database
-        /// Serialized Name: TableLevelSharingProperties.externalTablesToInclude
-        /// </summary>
+        /// <summary> List of external tables to include in the follower database. </summary>
         public IList<string> ExternalTablesToInclude { get; }
-        /// <summary>
-        /// List of external tables exclude from the follower database
-        /// Serialized Name: TableLevelSharingProperties.externalTablesToExclude
-        /// </summary>
+        /// <summary> List of external tables exclude from the follower database. </summary>
         public IList<string> ExternalTablesToExclude { get; }
-        /// <summary>
-        /// List of materialized views to include in the follower database
-        /// Serialized Name: TableLevelSharingProperties.materializedViewsToInclude
-        /// </summary>
+        /// <summary> List of materialized views to include in the follower database. </summary>
         public IList<string> MaterializedViewsToInclude { get; }
-        /// <summary>
-        /// List of materialized views exclude from the follower database
-        /// Serialized Name: TableLevelSharingProperties.materializedViewsToExclude
-        /// </summary>
+        /// <summary> List of materialized views exclude from the follower database. </summary>
         public IList<string> MaterializedViewsToExclude { get; }
     }
 }

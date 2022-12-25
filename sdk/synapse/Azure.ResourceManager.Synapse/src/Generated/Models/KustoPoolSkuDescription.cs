@@ -11,46 +11,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The Kusto SKU description of given resource type
-    /// Serialized Name: SkuDescription
-    /// </summary>
+    /// <summary> The Kusto SKU description of given resource type. </summary>
     public partial class KustoPoolSkuDescription
     {
         /// <summary> Initializes a new instance of KustoPoolSkuDescription. </summary>
         internal KustoPoolSkuDescription()
         {
-            Locations = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
             LocationInfo = new ChangeTrackingList<KustoPoolSkuLocationInfoItem>();
             Restrictions = new ChangeTrackingList<BinaryData>();
         }
 
         /// <summary> Initializes a new instance of KustoPoolSkuDescription. </summary>
-        /// <param name="resourceType">
-        /// The resource type
-        /// Serialized Name: SkuDescription.resourceType
-        /// </param>
-        /// <param name="name">
-        /// The name of the SKU
-        /// Serialized Name: SkuDescription.name
-        /// </param>
-        /// <param name="size">
-        /// The size of the SKU
-        /// Serialized Name: SkuDescription.size
-        /// </param>
-        /// <param name="locations">
-        /// The set of locations that the SKU is available
-        /// Serialized Name: SkuDescription.locations
-        /// </param>
-        /// <param name="locationInfo">
-        /// Locations and zones
-        /// Serialized Name: SkuDescription.locationInfo
-        /// </param>
-        /// <param name="restrictions">
-        /// The restrictions because of which SKU cannot be used
-        /// Serialized Name: SkuDescription.restrictions
-        /// </param>
-        internal KustoPoolSkuDescription(string resourceType, string name, string size, IReadOnlyList<string> locations, IReadOnlyList<KustoPoolSkuLocationInfoItem> locationInfo, IReadOnlyList<BinaryData> restrictions)
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="name"> The name of the SKU. </param>
+        /// <param name="size"> The size of the SKU. </param>
+        /// <param name="locations"> The set of locations that the SKU is available. </param>
+        /// <param name="locationInfo"> Locations and zones. </param>
+        /// <param name="restrictions"> The restrictions because of which SKU cannot be used. </param>
+        internal KustoPoolSkuDescription(string resourceType, string name, string size, IReadOnlyList<AzureLocation> locations, IReadOnlyList<KustoPoolSkuLocationInfoItem> locationInfo, IReadOnlyList<BinaryData> restrictions)
         {
             ResourceType = resourceType;
             Name = name;
@@ -60,34 +39,18 @@ namespace Azure.ResourceManager.Synapse.Models
             Restrictions = restrictions;
         }
 
-        /// <summary>
-        /// The resource type
-        /// Serialized Name: SkuDescription.resourceType
-        /// </summary>
+        /// <summary> The resource type. </summary>
         public string ResourceType { get; }
-        /// <summary>
-        /// The name of the SKU
-        /// Serialized Name: SkuDescription.name
-        /// </summary>
+        /// <summary> The name of the SKU. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The size of the SKU
-        /// Serialized Name: SkuDescription.size
-        /// </summary>
+        /// <summary> The size of the SKU. </summary>
         public string Size { get; }
-        /// <summary>
-        /// The set of locations that the SKU is available
-        /// Serialized Name: SkuDescription.locations
-        /// </summary>
-        public IReadOnlyList<string> Locations { get; }
-        /// <summary>
-        /// Locations and zones
-        /// Serialized Name: SkuDescription.locationInfo
-        /// </summary>
+        /// <summary> The set of locations that the SKU is available. </summary>
+        public IReadOnlyList<AzureLocation> Locations { get; }
+        /// <summary> Locations and zones. </summary>
         public IReadOnlyList<KustoPoolSkuLocationInfoItem> LocationInfo { get; }
         /// <summary>
         /// The restrictions because of which SKU cannot be used
-        /// Serialized Name: SkuDescription.restrictions
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

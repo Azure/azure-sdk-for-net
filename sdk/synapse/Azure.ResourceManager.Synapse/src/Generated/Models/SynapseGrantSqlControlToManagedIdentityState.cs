@@ -7,36 +7,18 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Actual state
-    /// Serialized Name: ActualState
-    /// </summary>
+    /// <summary> Actual state. </summary>
     public enum SynapseGrantSqlControlToManagedIdentityState
     {
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: ActualState.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         Unknown,
-        /// <summary>
-        /// Enabling
-        /// Serialized Name: ActualState.Enabling
-        /// </summary>
+        /// <summary> Enabling. </summary>
         Enabling,
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: ActualState.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         Enabled,
-        /// <summary>
-        /// Disabling
-        /// Serialized Name: ActualState.Disabling
-        /// </summary>
+        /// <summary> Disabling. </summary>
         Disabling,
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: ActualState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         Disabled
     }
 }

@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Synapse.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> storageAccountResourceId = default;
-            Optional<string> eventHubResourceId = default;
+            Optional<ResourceIdentifier> storageAccountResourceId = default;
+            Optional<ResourceIdentifier> eventHubResourceId = default;
             Optional<string> consumerGroup = default;
             Optional<string> tableName = default;
             Optional<string> mappingRuleName = default;
@@ -139,12 +139,22 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         if (property0.NameEquals("storageAccountResourceId"))
                         {
-                            storageAccountResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            storageAccountResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("eventHubResourceId"))
                         {
-                            eventHubResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            eventHubResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("consumerGroup"))

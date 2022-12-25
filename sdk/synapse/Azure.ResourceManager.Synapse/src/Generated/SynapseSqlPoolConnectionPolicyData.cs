@@ -23,42 +23,15 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Resource kind.
-        /// Serialized Name: SqlPoolConnectionPolicy.kind
-        /// </param>
-        /// <param name="location">
-        /// Resource location.
-        /// Serialized Name: SqlPoolConnectionPolicy.location
-        /// </param>
-        /// <param name="securityEnabledAccess">
-        /// The state of security access.
-        /// Serialized Name: SqlPoolConnectionPolicy.properties.securityEnabledAccess
-        /// </param>
-        /// <param name="proxyDnsName">
-        /// The fully qualified host name of the auditing proxy.
-        /// Serialized Name: SqlPoolConnectionPolicy.properties.proxyDnsName
-        /// </param>
-        /// <param name="proxyPort">
-        /// The port number of the auditing proxy.
-        /// Serialized Name: SqlPoolConnectionPolicy.properties.proxyPort
-        /// </param>
-        /// <param name="visibility">
-        /// The visibility of the auditing proxy.
-        /// Serialized Name: SqlPoolConnectionPolicy.properties.visibility
-        /// </param>
-        /// <param name="useServerDefault">
-        /// Whether server default is enabled or disabled.
-        /// Serialized Name: SqlPoolConnectionPolicy.properties.useServerDefault
-        /// </param>
-        /// <param name="redirectionState">
-        /// The state of proxy redirection.
-        /// Serialized Name: SqlPoolConnectionPolicy.properties.redirectionState
-        /// </param>
-        /// <param name="state">
-        /// The connection policy state.
-        /// Serialized Name: SqlPoolConnectionPolicy.properties.state
-        /// </param>
+        /// <param name="kind"> Resource kind. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="securityEnabledAccess"> The state of security access. </param>
+        /// <param name="proxyDnsName"> The fully qualified host name of the auditing proxy. </param>
+        /// <param name="proxyPort"> The port number of the auditing proxy. </param>
+        /// <param name="visibility"> The visibility of the auditing proxy. </param>
+        /// <param name="useServerDefault"> Whether server default is enabled or disabled. </param>
+        /// <param name="redirectionState"> The state of proxy redirection. </param>
+        /// <param name="state"> The connection policy state. </param>
         internal SynapseSqlPoolConnectionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string securityEnabledAccess, string proxyDnsName, string proxyPort, string visibility, string useServerDefault, string redirectionState, string state) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
@@ -72,50 +45,23 @@ namespace Azure.ResourceManager.Synapse
             State = state;
         }
 
-        /// <summary>
-        /// Resource kind.
-        /// Serialized Name: SqlPoolConnectionPolicy.kind
-        /// </summary>
+        /// <summary> Resource kind. </summary>
         public string Kind { get; }
-        /// <summary>
-        /// Resource location.
-        /// Serialized Name: SqlPoolConnectionPolicy.location
-        /// </summary>
+        /// <summary> Resource location. </summary>
         public AzureLocation? Location { get; }
-        /// <summary>
-        /// The state of security access.
-        /// Serialized Name: SqlPoolConnectionPolicy.properties.securityEnabledAccess
-        /// </summary>
+        /// <summary> The state of security access. </summary>
         public string SecurityEnabledAccess { get; set; }
-        /// <summary>
-        /// The fully qualified host name of the auditing proxy.
-        /// Serialized Name: SqlPoolConnectionPolicy.properties.proxyDnsName
-        /// </summary>
+        /// <summary> The fully qualified host name of the auditing proxy. </summary>
         public string ProxyDnsName { get; set; }
-        /// <summary>
-        /// The port number of the auditing proxy.
-        /// Serialized Name: SqlPoolConnectionPolicy.properties.proxyPort
-        /// </summary>
+        /// <summary> The port number of the auditing proxy. </summary>
         public string ProxyPort { get; set; }
-        /// <summary>
-        /// The visibility of the auditing proxy.
-        /// Serialized Name: SqlPoolConnectionPolicy.properties.visibility
-        /// </summary>
+        /// <summary> The visibility of the auditing proxy. </summary>
         public string Visibility { get; set; }
-        /// <summary>
-        /// Whether server default is enabled or disabled.
-        /// Serialized Name: SqlPoolConnectionPolicy.properties.useServerDefault
-        /// </summary>
+        /// <summary> Whether server default is enabled or disabled. </summary>
         public string UseServerDefault { get; set; }
-        /// <summary>
-        /// The state of proxy redirection.
-        /// Serialized Name: SqlPoolConnectionPolicy.properties.redirectionState
-        /// </summary>
+        /// <summary> The state of proxy redirection. </summary>
         public string RedirectionState { get; set; }
-        /// <summary>
-        /// The connection policy state.
-        /// Serialized Name: SqlPoolConnectionPolicy.properties.state
-        /// </summary>
+        /// <summary> The connection policy state. </summary>
         public string State { get; set; }
     }
 }

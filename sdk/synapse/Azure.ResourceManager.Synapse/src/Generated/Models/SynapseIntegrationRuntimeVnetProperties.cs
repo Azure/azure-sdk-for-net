@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// VNet properties for managed integration runtime.
-    /// Serialized Name: IntegrationRuntimeVNetProperties
-    /// </summary>
+    /// <summary> VNet properties for managed integration runtime. </summary>
     public partial class SynapseIntegrationRuntimeVnetProperties
     {
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeVnetProperties. </summary>
@@ -25,52 +22,28 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeVnetProperties. </summary>
-        /// <param name="vNetId">
-        /// The ID of the VNet that this integration runtime will join.
-        /// Serialized Name: IntegrationRuntimeVNetProperties.vNetId
-        /// </param>
-        /// <param name="subnet">
-        /// The name of the subnet this integration runtime will join.
-        /// Serialized Name: IntegrationRuntimeVNetProperties.subnet
-        /// </param>
-        /// <param name="publicIPs">
-        /// Resource IDs of the public IP addresses that this integration runtime will use.
-        /// Serialized Name: IntegrationRuntimeVNetProperties.publicIPs
-        /// </param>
-        /// <param name="subnetId">
-        /// The ID of subnet, to which this Azure-SSIS integration runtime will be joined.
-        /// Serialized Name: IntegrationRuntimeVNetProperties.subnetId
-        /// </param>
+        /// <param name="vnetId"> The ID of the VNet that this integration runtime will join. </param>
+        /// <param name="subnet"> The name of the subnet this integration runtime will join. </param>
+        /// <param name="publicIPs"> Resource IDs of the public IP addresses that this integration runtime will use. </param>
+        /// <param name="subnetId"> The ID of subnet, to which this Azure-SSIS integration runtime will be joined. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal SynapseIntegrationRuntimeVnetProperties(string vNetId, string subnet, IList<string> publicIPs, string subnetId, IDictionary<string, BinaryData> additionalProperties)
+        internal SynapseIntegrationRuntimeVnetProperties(Guid? vnetId, string subnet, IList<string> publicIPs, ResourceIdentifier subnetId, IDictionary<string, BinaryData> additionalProperties)
         {
-            VNetId = vNetId;
+            VnetId = vnetId;
             Subnet = subnet;
             PublicIPs = publicIPs;
             SubnetId = subnetId;
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary>
-        /// The ID of the VNet that this integration runtime will join.
-        /// Serialized Name: IntegrationRuntimeVNetProperties.vNetId
-        /// </summary>
-        public string VNetId { get; set; }
-        /// <summary>
-        /// The name of the subnet this integration runtime will join.
-        /// Serialized Name: IntegrationRuntimeVNetProperties.subnet
-        /// </summary>
+        /// <summary> The ID of the VNet that this integration runtime will join. </summary>
+        public Guid? VnetId { get; set; }
+        /// <summary> The name of the subnet this integration runtime will join. </summary>
         public string Subnet { get; set; }
-        /// <summary>
-        /// Resource IDs of the public IP addresses that this integration runtime will use.
-        /// Serialized Name: IntegrationRuntimeVNetProperties.publicIPs
-        /// </summary>
+        /// <summary> Resource IDs of the public IP addresses that this integration runtime will use. </summary>
         public IList<string> PublicIPs { get; }
-        /// <summary>
-        /// The ID of subnet, to which this Azure-SSIS integration runtime will be joined.
-        /// Serialized Name: IntegrationRuntimeVNetProperties.subnetId
-        /// </summary>
-        public string SubnetId { get; set; }
+        /// <summary> The ID of subnet, to which this Azure-SSIS integration runtime will be joined. </summary>
+        public ResourceIdentifier SubnetId { get; set; }
         /// <summary>
         /// Additional Properties
         /// <para>

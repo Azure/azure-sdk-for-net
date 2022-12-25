@@ -25,39 +25,21 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="azureADOnlyAuthentication">
-        /// Azure Active Directory only Authentication enabled.
-        /// Serialized Name: AzureADOnlyAuthentication.properties.azureADOnlyAuthentication
-        /// </param>
-        /// <param name="state">
-        /// property configuration state
-        /// Serialized Name: AzureADOnlyAuthentication.properties.state
-        /// </param>
-        /// <param name="createdOn">
-        /// property configuration date
-        /// Serialized Name: AzureADOnlyAuthentication.properties.creationDate
-        /// </param>
-        internal SynapseAadOnlyAuthenticationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? azureADOnlyAuthentication, AadAuthenticationState? state, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData)
+        /// <param name="isAadOnlyAuthenticationEnabled"> Azure Active Directory only Authentication enabled. </param>
+        /// <param name="state"> property configuration state. </param>
+        /// <param name="createdOn"> property configuration date. </param>
+        internal SynapseAadOnlyAuthenticationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isAadOnlyAuthenticationEnabled, AadAuthenticationState? state, DateTimeOffset? createdOn) : base(id, name, resourceType, systemData)
         {
-            AzureADOnlyAuthentication = azureADOnlyAuthentication;
+            IsAadOnlyAuthenticationEnabled = isAadOnlyAuthenticationEnabled;
             State = state;
             CreatedOn = createdOn;
         }
 
-        /// <summary>
-        /// Azure Active Directory only Authentication enabled.
-        /// Serialized Name: AzureADOnlyAuthentication.properties.azureADOnlyAuthentication
-        /// </summary>
-        public bool? AzureADOnlyAuthentication { get; set; }
-        /// <summary>
-        /// property configuration state
-        /// Serialized Name: AzureADOnlyAuthentication.properties.state
-        /// </summary>
+        /// <summary> Azure Active Directory only Authentication enabled. </summary>
+        public bool? IsAadOnlyAuthenticationEnabled { get; set; }
+        /// <summary> property configuration state. </summary>
         public AadAuthenticationState? State { get; }
-        /// <summary>
-        /// property configuration date
-        /// Serialized Name: AzureADOnlyAuthentication.properties.creationDate
-        /// </summary>
+        /// <summary> property configuration date. </summary>
         public DateTimeOffset? CreatedOn { get; }
     }
 }

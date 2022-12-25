@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The SynapseAadOnlyAuthenticationName.
-    /// Serialized Name: AzureADOnlyAuthenticationName
-    /// </summary>
+    /// <summary> The SynapseAadOnlyAuthenticationName. </summary>
     public readonly partial struct SynapseAadOnlyAuthenticationName : IEquatable<SynapseAadOnlyAuthenticationName>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         private const string DefaultValue = "default";
 
-        /// <summary>
-        /// default
-        /// Serialized Name: AzureADOnlyAuthenticationName.default
-        /// </summary>
+        /// <summary> default. </summary>
         public static SynapseAadOnlyAuthenticationName Default { get; } = new SynapseAadOnlyAuthenticationName(DefaultValue);
         /// <summary> Determines if two <see cref="SynapseAadOnlyAuthenticationName"/> values are the same. </summary>
         public static bool operator ==(SynapseAadOnlyAuthenticationName left, SynapseAadOnlyAuthenticationName right) => left.Equals(right);

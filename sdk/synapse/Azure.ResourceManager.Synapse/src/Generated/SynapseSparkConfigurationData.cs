@@ -17,10 +17,7 @@ namespace Azure.ResourceManager.Synapse
     public partial class SynapseSparkConfigurationData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseSparkConfigurationData. </summary>
-        /// <param name="configs">
-        /// SparkConfiguration configs.
-        /// Serialized Name: SparkConfigurationResource.properties.configs
-        /// </param>
+        /// <param name="configs"> SparkConfiguration configs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configs"/> is null. </exception>
         public SynapseSparkConfigurationData(IDictionary<string, string> configs)
         {
@@ -36,89 +33,41 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="description">
-        /// Description about the SparkConfiguration.
-        /// Serialized Name: SparkConfigurationResource.properties.description
-        /// </param>
-        /// <param name="configs">
-        /// SparkConfiguration configs.
-        /// Serialized Name: SparkConfigurationResource.properties.configs
-        /// </param>
-        /// <param name="annotations">
-        /// Annotations for SparkConfiguration.
-        /// Serialized Name: SparkConfigurationResource.properties.annotations
-        /// </param>
-        /// <param name="notes">
-        /// additional Notes.
-        /// Serialized Name: SparkConfigurationResource.properties.notes
-        /// </param>
-        /// <param name="createdBy">
-        /// The identity that created the resource.
-        /// Serialized Name: SparkConfigurationResource.properties.createdBy
-        /// </param>
-        /// <param name="created">
-        /// The timestamp of resource creation.
-        /// Serialized Name: SparkConfigurationResource.properties.created
-        /// </param>
-        /// <param name="configMergeRule">
-        /// SparkConfiguration merge configs.
-        /// Serialized Name: SparkConfigurationResource.properties.configMergeRule
-        /// </param>
-        /// <param name="etag">
-        /// Resource Etag.
-        /// Serialized Name: AzureEntityResource.etag
-        /// </param>
-        internal SynapseSparkConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IDictionary<string, string> configs, IList<string> annotations, string notes, string createdBy, DateTimeOffset? created, IDictionary<string, string> configMergeRule, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="description"> Description about the SparkConfiguration. </param>
+        /// <param name="configs"> SparkConfiguration configs. </param>
+        /// <param name="annotations"> Annotations for SparkConfiguration. </param>
+        /// <param name="notes"> additional Notes. </param>
+        /// <param name="createdBy"> The identity that created the resource. </param>
+        /// <param name="createdOn"> The timestamp of resource creation. </param>
+        /// <param name="configMergeRule"> SparkConfiguration merge configs. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        internal SynapseSparkConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IDictionary<string, string> configs, IList<string> annotations, string notes, string createdBy, DateTimeOffset? createdOn, IDictionary<string, string> configMergeRule, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Description = description;
             Configs = configs;
             Annotations = annotations;
             Notes = notes;
             CreatedBy = createdBy;
-            Created = created;
+            CreatedOn = createdOn;
             ConfigMergeRule = configMergeRule;
             ETag = etag;
         }
 
-        /// <summary>
-        /// Description about the SparkConfiguration.
-        /// Serialized Name: SparkConfigurationResource.properties.description
-        /// </summary>
+        /// <summary> Description about the SparkConfiguration. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// SparkConfiguration configs.
-        /// Serialized Name: SparkConfigurationResource.properties.configs
-        /// </summary>
+        /// <summary> SparkConfiguration configs. </summary>
         public IDictionary<string, string> Configs { get; }
-        /// <summary>
-        /// Annotations for SparkConfiguration.
-        /// Serialized Name: SparkConfigurationResource.properties.annotations
-        /// </summary>
+        /// <summary> Annotations for SparkConfiguration. </summary>
         public IList<string> Annotations { get; }
-        /// <summary>
-        /// additional Notes.
-        /// Serialized Name: SparkConfigurationResource.properties.notes
-        /// </summary>
+        /// <summary> additional Notes. </summary>
         public string Notes { get; set; }
-        /// <summary>
-        /// The identity that created the resource.
-        /// Serialized Name: SparkConfigurationResource.properties.createdBy
-        /// </summary>
+        /// <summary> The identity that created the resource. </summary>
         public string CreatedBy { get; set; }
-        /// <summary>
-        /// The timestamp of resource creation.
-        /// Serialized Name: SparkConfigurationResource.properties.created
-        /// </summary>
-        public DateTimeOffset? Created { get; set; }
-        /// <summary>
-        /// SparkConfiguration merge configs.
-        /// Serialized Name: SparkConfigurationResource.properties.configMergeRule
-        /// </summary>
+        /// <summary> The timestamp of resource creation. </summary>
+        public DateTimeOffset? CreatedOn { get; set; }
+        /// <summary> SparkConfiguration merge configs. </summary>
         public IDictionary<string, string> ConfigMergeRule { get; }
-        /// <summary>
-        /// Resource Etag.
-        /// Serialized Name: AzureEntityResource.etag
-        /// </summary>
+        /// <summary> Resource Etag. </summary>
         public ETag? ETag { get; }
     }
 }

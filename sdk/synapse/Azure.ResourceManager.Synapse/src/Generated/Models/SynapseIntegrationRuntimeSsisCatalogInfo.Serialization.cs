@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(CatalogServerEndpoint))
             {
                 writer.WritePropertyName("catalogServerEndpoint");
-                writer.WriteStringValue(CatalogServerEndpoint);
+                writer.WriteStringValue(CatalogServerEndpoint.AbsoluteUri);
             }
             if (Optional.IsDefined(CatalogAdminUserName))
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseIntegrationRuntimeSsisCatalogInfo DeserializeSynapseIntegrationRuntimeSsisCatalogInfo(JsonElement element)
         {
-            Optional<string> catalogServerEndpoint = default;
+            Optional<Uri> catalogServerEndpoint = default;
             Optional<string> catalogAdminUserName = default;
             Optional<SynapseSecureString> catalogAdminPassword = default;
             Optional<SynapseIntegrationRuntimeSsisCatalogPricingTier> catalogPricingTier = default;
@@ -61,7 +61,12 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 if (property.NameEquals("catalogServerEndpoint"))
                 {
-                    catalogServerEndpoint = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        catalogServerEndpoint = null;
+                        continue;
+                    }
+                    catalogServerEndpoint = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("catalogAdminUserName"))

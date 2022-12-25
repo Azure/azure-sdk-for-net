@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The locations and zones info for SKU.
-    /// Serialized Name: SkuLocationInfoItem
-    /// </summary>
+    /// <summary> The locations and zones info for SKU. </summary>
     public partial class KustoPoolSkuLocationInfoItem
     {
         /// <summary> Initializes a new instance of KustoPoolSkuLocationInfoItem. </summary>
-        /// <param name="location">
-        /// The available location of the SKU.
-        /// Serialized Name: SkuLocationInfoItem.location
-        /// </param>
+        /// <param name="location"> The available location of the SKU. </param>
         internal KustoPoolSkuLocationInfoItem(AzureLocation location)
         {
             Location = location;
@@ -28,29 +22,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of KustoPoolSkuLocationInfoItem. </summary>
-        /// <param name="location">
-        /// The available location of the SKU.
-        /// Serialized Name: SkuLocationInfoItem.location
-        /// </param>
-        /// <param name="zones">
-        /// The available zone of the SKU.
-        /// Serialized Name: SkuLocationInfoItem.zones
-        /// </param>
+        /// <param name="location"> The available location of the SKU. </param>
+        /// <param name="zones"> The available zone of the SKU. </param>
         internal KustoPoolSkuLocationInfoItem(AzureLocation location, IReadOnlyList<string> zones)
         {
             Location = location;
             Zones = zones;
         }
 
-        /// <summary>
-        /// The available location of the SKU.
-        /// Serialized Name: SkuLocationInfoItem.location
-        /// </summary>
+        /// <summary> The available location of the SKU. </summary>
         public AzureLocation Location { get; }
-        /// <summary>
-        /// The available zone of the SKU.
-        /// Serialized Name: SkuLocationInfoItem.zones
-        /// </summary>
+        /// <summary> The available zone of the SKU. </summary>
         public IReadOnlyList<string> Zones { get; }
     }
 }

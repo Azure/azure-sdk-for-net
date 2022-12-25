@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The list of language extension objects.
-    /// Serialized Name: LanguageExtensionsList
-    /// </summary>
+    /// <summary> The list of language extension objects. </summary>
     public partial class SynapseLanguageExtensionsList
     {
         /// <summary> Initializes a new instance of SynapseLanguageExtensionsList. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseLanguageExtensionsList. </summary>
-        /// <param name="value">
-        /// The list of language extensions.
-        /// Serialized Name: LanguageExtensionsList.value
-        /// </param>
+        /// <param name="value"> The list of language extensions. </param>
         internal SynapseLanguageExtensionsList(IList<SynapseLanguageExtension> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// The list of language extensions.
-        /// Serialized Name: LanguageExtensionsList.value
-        /// </summary>
+        /// <summary> The list of language extensions. </summary>
         public IList<SynapseLanguageExtension> Value { get; }
     }
 }

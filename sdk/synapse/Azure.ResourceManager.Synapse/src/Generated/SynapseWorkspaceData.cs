@@ -33,95 +33,29 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity">
-        /// Identity of the workspace
-        /// Serialized Name: Workspace.identity. Current supported identity types: None, SystemAssigned, SystemAssigned,UserAssigned
-        /// </param>
-        /// <param name="defaultDataLakeStorage">
-        /// Workspace default data lake storage account details
-        /// Serialized Name: Workspace.properties.defaultDataLakeStorage
-        /// </param>
-        /// <param name="sqlAdministratorLoginPassword">
-        /// SQL administrator login password
-        /// Serialized Name: Workspace.properties.sqlAdministratorLoginPassword
-        /// </param>
-        /// <param name="managedResourceGroupName">
-        /// Workspace managed resource group. The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name must be no longer than 90 characters long, and must be alphanumeric characters (Char.IsLetterOrDigit()) and &apos;-&apos;, &apos;_&apos;, &apos;(&apos;, &apos;)&apos; and&apos;.&apos;. Note that the name cannot end with &apos;.&apos;
-        /// Serialized Name: Workspace.properties.managedResourceGroupName
-        /// </param>
-        /// <param name="provisioningState">
-        /// Resource provisioning state
-        /// Serialized Name: Workspace.properties.provisioningState
-        /// </param>
-        /// <param name="sqlAdministratorLogin">
-        /// Login for workspace SQL active directory administrator
-        /// Serialized Name: Workspace.properties.sqlAdministratorLogin
-        /// </param>
-        /// <param name="virtualNetworkProfile">
-        /// Virtual Network profile
-        /// Serialized Name: Workspace.properties.virtualNetworkProfile
-        /// </param>
-        /// <param name="connectivityEndpoints">
-        /// Connectivity endpoints
-        /// Serialized Name: Workspace.properties.connectivityEndpoints
-        /// </param>
-        /// <param name="managedVirtualNetwork">
-        /// Setting this to &apos;default&apos; will ensure that all compute for this workspace is in a virtual network managed on behalf of the user.
-        /// Serialized Name: Workspace.properties.managedVirtualNetwork
-        /// </param>
-        /// <param name="privateEndpointConnections">
-        /// Private endpoint connections to the workspace
-        /// Serialized Name: Workspace.properties.privateEndpointConnections
-        /// </param>
-        /// <param name="encryption">
-        /// The encryption details of the workspace
-        /// Serialized Name: Workspace.properties.encryption
-        /// </param>
-        /// <param name="workspaceUID">
-        /// The workspace unique identifier
-        /// Serialized Name: Workspace.properties.workspaceUID
-        /// </param>
-        /// <param name="extraProperties">
-        /// Workspace level configs and feature flags
-        /// Serialized Name: Workspace.properties.extraProperties
-        /// </param>
-        /// <param name="managedVirtualNetworkSettings">
-        /// Managed Virtual Network Settings
-        /// Serialized Name: Workspace.properties.managedVirtualNetworkSettings
-        /// </param>
-        /// <param name="workspaceRepositoryConfiguration">
-        /// Git integration settings
-        /// Serialized Name: Workspace.properties.workspaceRepositoryConfiguration
-        /// </param>
-        /// <param name="purviewConfiguration">
-        /// Purview Configuration
-        /// Serialized Name: Workspace.properties.purviewConfiguration
-        /// </param>
-        /// <param name="adlaResourceId">
-        /// The ADLA resource ID.
-        /// Serialized Name: Workspace.properties.adlaResourceId
-        /// </param>
-        /// <param name="publicNetworkAccess">
-        /// Enable or Disable public network access to workspace
-        /// Serialized Name: Workspace.properties.publicNetworkAccess
-        /// </param>
-        /// <param name="cspWorkspaceAdminProperties">
-        /// Initial workspace AAD admin properties for a CSP subscription
-        /// Serialized Name: Workspace.properties.cspWorkspaceAdminProperties
-        /// </param>
-        /// <param name="settings">
-        /// Workspace settings
-        /// Serialized Name: Workspace.properties.settings
-        /// </param>
-        /// <param name="azureADOnlyAuthentication">
-        /// Enable or Disable AzureADOnlyAuthentication on All Workspace subresource
-        /// Serialized Name: Workspace.properties.azureADOnlyAuthentication
-        /// </param>
-        /// <param name="trustedServiceBypassEnabled">
-        /// Is trustedServiceBypassEnabled for the workspace
-        /// Serialized Name: Workspace.properties.trustedServiceBypassEnabled
-        /// </param>
-        internal SynapseWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, SynapseDataLakeStorageAccountDetails defaultDataLakeStorage, string sqlAdministratorLoginPassword, string managedResourceGroupName, string provisioningState, string sqlAdministratorLogin, VirtualNetworkProfile virtualNetworkProfile, IDictionary<string, string> connectivityEndpoints, string managedVirtualNetwork, IList<SynapsePrivateEndpointConnectionData> privateEndpointConnections, SynapseEncryptionDetails encryption, Guid? workspaceUID, IReadOnlyDictionary<string, BinaryData> extraProperties, SynapseManagedVirtualNetworkSettings managedVirtualNetworkSettings, SynapseWorkspaceRepositoryConfiguration workspaceRepositoryConfiguration, PurviewConfiguration purviewConfiguration, string adlaResourceId, WorkspacePublicNetworkAccess? publicNetworkAccess, CspWorkspaceAdminProperties cspWorkspaceAdminProperties, IReadOnlyDictionary<string, BinaryData> settings, bool? azureADOnlyAuthentication, bool? trustedServiceBypassEnabled) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity"> Identity of the workspace. Current supported identity types: None, SystemAssigned, SystemAssigned,UserAssigned. </param>
+        /// <param name="defaultDataLakeStorage"> Workspace default data lake storage account details. </param>
+        /// <param name="sqlAdministratorLoginPassword"> SQL administrator login password. </param>
+        /// <param name="managedResourceGroupName"> Workspace managed resource group. The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name must be no longer than 90 characters long, and must be alphanumeric characters (Char.IsLetterOrDigit()) and &apos;-&apos;, &apos;_&apos;, &apos;(&apos;, &apos;)&apos; and&apos;.&apos;. Note that the name cannot end with &apos;.&apos;. </param>
+        /// <param name="provisioningState"> Resource provisioning state. </param>
+        /// <param name="sqlAdministratorLogin"> Login for workspace SQL active directory administrator. </param>
+        /// <param name="virtualNetworkProfile"> Virtual Network profile. </param>
+        /// <param name="connectivityEndpoints"> Connectivity endpoints. </param>
+        /// <param name="managedVirtualNetwork"> Setting this to &apos;default&apos; will ensure that all compute for this workspace is in a virtual network managed on behalf of the user. </param>
+        /// <param name="privateEndpointConnections"> Private endpoint connections to the workspace. </param>
+        /// <param name="encryption"> The encryption details of the workspace. </param>
+        /// <param name="workspaceUid"> The workspace unique identifier. </param>
+        /// <param name="extraProperties"> Workspace level configs and feature flags. </param>
+        /// <param name="managedVirtualNetworkSettings"> Managed Virtual Network Settings. </param>
+        /// <param name="workspaceRepositoryConfiguration"> Git integration settings. </param>
+        /// <param name="purviewConfiguration"> Purview Configuration. </param>
+        /// <param name="adlaResourceId"> The ADLA resource ID. </param>
+        /// <param name="publicNetworkAccess"> Enable or Disable public network access to workspace. </param>
+        /// <param name="cspWorkspaceAdminProperties"> Initial workspace AAD admin properties for a CSP subscription. </param>
+        /// <param name="settings"> Workspace settings. </param>
+        /// <param name="isAadOnlyAuthenticationEnabled"> Enable or Disable AzureADOnlyAuthentication on All Workspace subresource. </param>
+        /// <param name="isTrustedServiceBypassEnabled"> Is trustedServiceBypassEnabled for the workspace. </param>
+        internal SynapseWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, SynapseDataLakeStorageAccountDetails defaultDataLakeStorage, string sqlAdministratorLoginPassword, string managedResourceGroupName, string provisioningState, string sqlAdministratorLogin, VirtualNetworkProfile virtualNetworkProfile, IDictionary<string, string> connectivityEndpoints, string managedVirtualNetwork, IList<SynapsePrivateEndpointConnectionData> privateEndpointConnections, SynapseEncryptionDetails encryption, Guid? workspaceUid, IReadOnlyDictionary<string, BinaryData> extraProperties, SynapseManagedVirtualNetworkSettings managedVirtualNetworkSettings, SynapseWorkspaceRepositoryConfiguration workspaceRepositoryConfiguration, PurviewConfiguration purviewConfiguration, ResourceIdentifier adlaResourceId, WorkspacePublicNetworkAccess? publicNetworkAccess, CspWorkspaceAdminProperties cspWorkspaceAdminProperties, IReadOnlyDictionary<string, BinaryData> settings, bool? isAadOnlyAuthenticationEnabled, bool? isTrustedServiceBypassEnabled) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             DefaultDataLakeStorage = defaultDataLakeStorage;
@@ -134,7 +68,7 @@ namespace Azure.ResourceManager.Synapse
             ManagedVirtualNetwork = managedVirtualNetwork;
             PrivateEndpointConnections = privateEndpointConnections;
             Encryption = encryption;
-            WorkspaceUID = workspaceUID;
+            WorkspaceUid = workspaceUid;
             ExtraProperties = extraProperties;
             ManagedVirtualNetworkSettings = managedVirtualNetworkSettings;
             WorkspaceRepositoryConfiguration = workspaceRepositoryConfiguration;
@@ -143,49 +77,25 @@ namespace Azure.ResourceManager.Synapse
             PublicNetworkAccess = publicNetworkAccess;
             CspWorkspaceAdminProperties = cspWorkspaceAdminProperties;
             Settings = settings;
-            AzureADOnlyAuthentication = azureADOnlyAuthentication;
-            TrustedServiceBypassEnabled = trustedServiceBypassEnabled;
+            IsAadOnlyAuthenticationEnabled = isAadOnlyAuthenticationEnabled;
+            IsTrustedServiceBypassEnabled = isTrustedServiceBypassEnabled;
         }
 
-        /// <summary>
-        /// Identity of the workspace
-        /// Serialized Name: Workspace.identity. Current supported identity types: None, SystemAssigned, SystemAssigned,UserAssigned
-        /// </summary>
+        /// <summary> Identity of the workspace. Current supported identity types: None, SystemAssigned, SystemAssigned,UserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary>
-        /// Workspace default data lake storage account details
-        /// Serialized Name: Workspace.properties.defaultDataLakeStorage
-        /// </summary>
+        /// <summary> Workspace default data lake storage account details. </summary>
         public SynapseDataLakeStorageAccountDetails DefaultDataLakeStorage { get; set; }
-        /// <summary>
-        /// SQL administrator login password
-        /// Serialized Name: Workspace.properties.sqlAdministratorLoginPassword
-        /// </summary>
+        /// <summary> SQL administrator login password. </summary>
         public string SqlAdministratorLoginPassword { get; set; }
-        /// <summary>
-        /// Workspace managed resource group. The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name must be no longer than 90 characters long, and must be alphanumeric characters (Char.IsLetterOrDigit()) and &apos;-&apos;, &apos;_&apos;, &apos;(&apos;, &apos;)&apos; and&apos;.&apos;. Note that the name cannot end with &apos;.&apos;
-        /// Serialized Name: Workspace.properties.managedResourceGroupName
-        /// </summary>
+        /// <summary> Workspace managed resource group. The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name must be no longer than 90 characters long, and must be alphanumeric characters (Char.IsLetterOrDigit()) and &apos;-&apos;, &apos;_&apos;, &apos;(&apos;, &apos;)&apos; and&apos;.&apos;. Note that the name cannot end with &apos;.&apos;. </summary>
         public string ManagedResourceGroupName { get; set; }
-        /// <summary>
-        /// Resource provisioning state
-        /// Serialized Name: Workspace.properties.provisioningState
-        /// </summary>
+        /// <summary> Resource provisioning state. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// Login for workspace SQL active directory administrator
-        /// Serialized Name: Workspace.properties.sqlAdministratorLogin
-        /// </summary>
+        /// <summary> Login for workspace SQL active directory administrator. </summary>
         public string SqlAdministratorLogin { get; set; }
-        /// <summary>
-        /// Virtual Network profile
-        /// Serialized Name: Workspace.properties.virtualNetworkProfile
-        /// </summary>
+        /// <summary> Virtual Network profile. </summary>
         internal VirtualNetworkProfile VirtualNetworkProfile { get; set; }
-        /// <summary>
-        /// Subnet ID used for computes in workspace
-        /// Serialized Name: VirtualNetworkProfile.computeSubnetId
-        /// </summary>
+        /// <summary> Subnet ID used for computes in workspace. </summary>
         public string VirtualNetworkComputeSubnetId
         {
             get => VirtualNetworkProfile is null ? default : VirtualNetworkProfile.ComputeSubnetId;
@@ -197,34 +107,18 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary>
-        /// Connectivity endpoints
-        /// Serialized Name: Workspace.properties.connectivityEndpoints
-        /// </summary>
+        /// <summary> Connectivity endpoints. </summary>
         public IDictionary<string, string> ConnectivityEndpoints { get; }
-        /// <summary>
-        /// Setting this to &apos;default&apos; will ensure that all compute for this workspace is in a virtual network managed on behalf of the user.
-        /// Serialized Name: Workspace.properties.managedVirtualNetwork
-        /// </summary>
+        /// <summary> Setting this to &apos;default&apos; will ensure that all compute for this workspace is in a virtual network managed on behalf of the user. </summary>
         public string ManagedVirtualNetwork { get; set; }
-        /// <summary>
-        /// Private endpoint connections to the workspace
-        /// Serialized Name: Workspace.properties.privateEndpointConnections
-        /// </summary>
+        /// <summary> Private endpoint connections to the workspace. </summary>
         public IList<SynapsePrivateEndpointConnectionData> PrivateEndpointConnections { get; }
-        /// <summary>
-        /// The encryption details of the workspace
-        /// Serialized Name: Workspace.properties.encryption
-        /// </summary>
+        /// <summary> The encryption details of the workspace. </summary>
         public SynapseEncryptionDetails Encryption { get; set; }
-        /// <summary>
-        /// The workspace unique identifier
-        /// Serialized Name: Workspace.properties.workspaceUID
-        /// </summary>
-        public Guid? WorkspaceUID { get; }
+        /// <summary> The workspace unique identifier. </summary>
+        public Guid? WorkspaceUid { get; }
         /// <summary>
         /// Workspace level configs and feature flags
-        /// Serialized Name: Workspace.properties.extraProperties
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -254,26 +148,14 @@ namespace Azure.ResourceManager.Synapse
         /// </para>
         /// </summary>
         public IReadOnlyDictionary<string, BinaryData> ExtraProperties { get; }
-        /// <summary>
-        /// Managed Virtual Network Settings
-        /// Serialized Name: Workspace.properties.managedVirtualNetworkSettings
-        /// </summary>
+        /// <summary> Managed Virtual Network Settings. </summary>
         public SynapseManagedVirtualNetworkSettings ManagedVirtualNetworkSettings { get; set; }
-        /// <summary>
-        /// Git integration settings
-        /// Serialized Name: Workspace.properties.workspaceRepositoryConfiguration
-        /// </summary>
+        /// <summary> Git integration settings. </summary>
         public SynapseWorkspaceRepositoryConfiguration WorkspaceRepositoryConfiguration { get; set; }
-        /// <summary>
-        /// Purview Configuration
-        /// Serialized Name: Workspace.properties.purviewConfiguration
-        /// </summary>
+        /// <summary> Purview Configuration. </summary>
         internal PurviewConfiguration PurviewConfiguration { get; set; }
-        /// <summary>
-        /// Purview Resource ID
-        /// Serialized Name: PurviewConfiguration.purviewResourceId
-        /// </summary>
-        public string PurviewResourceId
+        /// <summary> Purview Resource ID. </summary>
+        public ResourceIdentifier PurviewResourceId
         {
             get => PurviewConfiguration is null ? default : PurviewConfiguration.PurviewResourceId;
             set
@@ -284,26 +166,14 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary>
-        /// The ADLA resource ID.
-        /// Serialized Name: Workspace.properties.adlaResourceId
-        /// </summary>
-        public string AdlaResourceId { get; }
-        /// <summary>
-        /// Enable or Disable public network access to workspace
-        /// Serialized Name: Workspace.properties.publicNetworkAccess
-        /// </summary>
+        /// <summary> The ADLA resource ID. </summary>
+        public ResourceIdentifier AdlaResourceId { get; }
+        /// <summary> Enable or Disable public network access to workspace. </summary>
         public WorkspacePublicNetworkAccess? PublicNetworkAccess { get; set; }
-        /// <summary>
-        /// Initial workspace AAD admin properties for a CSP subscription
-        /// Serialized Name: Workspace.properties.cspWorkspaceAdminProperties
-        /// </summary>
+        /// <summary> Initial workspace AAD admin properties for a CSP subscription. </summary>
         internal CspWorkspaceAdminProperties CspWorkspaceAdminProperties { get; set; }
-        /// <summary>
-        /// AAD object ID of initial workspace admin
-        /// Serialized Name: CspWorkspaceAdminProperties.initialWorkspaceAdminObjectId
-        /// </summary>
-        public string InitialWorkspaceAdminObjectId
+        /// <summary> AAD object ID of initial workspace admin. </summary>
+        public Guid? InitialWorkspaceAdminObjectId
         {
             get => CspWorkspaceAdminProperties is null ? default : CspWorkspaceAdminProperties.InitialWorkspaceAdminObjectId;
             set
@@ -316,7 +186,6 @@ namespace Azure.ResourceManager.Synapse
 
         /// <summary>
         /// Workspace settings
-        /// Serialized Name: Workspace.properties.settings
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -346,15 +215,9 @@ namespace Azure.ResourceManager.Synapse
         /// </para>
         /// </summary>
         public IReadOnlyDictionary<string, BinaryData> Settings { get; }
-        /// <summary>
-        /// Enable or Disable AzureADOnlyAuthentication on All Workspace subresource
-        /// Serialized Name: Workspace.properties.azureADOnlyAuthentication
-        /// </summary>
-        public bool? AzureADOnlyAuthentication { get; set; }
-        /// <summary>
-        /// Is trustedServiceBypassEnabled for the workspace
-        /// Serialized Name: Workspace.properties.trustedServiceBypassEnabled
-        /// </summary>
-        public bool? TrustedServiceBypassEnabled { get; set; }
+        /// <summary> Enable or Disable AzureADOnlyAuthentication on All Workspace subresource. </summary>
+        public bool? IsAadOnlyAuthenticationEnabled { get; set; }
+        /// <summary> Is trustedServiceBypassEnabled for the workspace. </summary>
+        public bool? IsTrustedServiceBypassEnabled { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Message providing the reason why the given name is invalid.
-    /// Serialized Name: Reason
-    /// </summary>
+    /// <summary> Message providing the reason why the given name is invalid. </summary>
     public readonly partial struct KustoPoolNameUnavailableReason : IEquatable<KustoPoolNameUnavailableReason>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string InvalidValue = "Invalid";
         private const string AlreadyExistsValue = "AlreadyExists";
 
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: Reason.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static KustoPoolNameUnavailableReason Invalid { get; } = new KustoPoolNameUnavailableReason(InvalidValue);
-        /// <summary>
-        /// AlreadyExists
-        /// Serialized Name: Reason.AlreadyExists
-        /// </summary>
+        /// <summary> AlreadyExists. </summary>
         public static KustoPoolNameUnavailableReason AlreadyExists { get; } = new KustoPoolNameUnavailableReason(AlreadyExistsValue);
         /// <summary> Determines if two <see cref="KustoPoolNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(KustoPoolNameUnavailableReason left, KustoPoolNameUnavailableReason right) => left.Equals(right);

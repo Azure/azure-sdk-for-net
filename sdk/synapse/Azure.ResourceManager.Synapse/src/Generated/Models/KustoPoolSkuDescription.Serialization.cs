@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<string> resourceType = default;
             Optional<string> name = default;
             Optional<string> size = default;
-            Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<AzureLocation>> locations = default;
             Optional<IReadOnlyList<KustoPoolSkuLocationInfoItem>> locationInfo = default;
             Optional<IReadOnlyList<BinaryData>> restrictions = default;
             foreach (var property in element.EnumerateObject())
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.Synapse.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;

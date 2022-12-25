@@ -9,10 +9,7 @@ using System.Net;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// IP firewall rule properties
-    /// Serialized Name: IpFirewallRuleProperties
-    /// </summary>
+    /// <summary> IP firewall rule properties. </summary>
     public partial class SynapseIPFirewallRuleProperties
     {
         /// <summary> Initializes a new instance of SynapseIPFirewallRuleProperties. </summary>
@@ -20,20 +17,11 @@ namespace Azure.ResourceManager.Synapse.Models
         {
         }
 
-        /// <summary>
-        /// The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress
-        /// Serialized Name: IpFirewallRuleProperties.endIpAddress
-        /// </summary>
+        /// <summary> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. </summary>
         public IPAddress EndIPAddress { get; set; }
-        /// <summary>
-        /// Resource provisioning state
-        /// Serialized Name: IpFirewallRuleProperties.provisioningState
-        /// </summary>
+        /// <summary> Resource provisioning state. </summary>
         public SynapseProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// The start IP address of the firewall rule. Must be IPv4 format
-        /// Serialized Name: IpFirewallRuleProperties.startIpAddress
-        /// </summary>
+        /// <summary> The start IP address of the firewall rule. Must be IPv4 format. </summary>
         public IPAddress StartIPAddress { get; set; }
     }
 }

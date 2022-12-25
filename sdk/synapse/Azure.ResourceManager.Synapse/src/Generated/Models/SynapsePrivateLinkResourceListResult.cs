@@ -11,10 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// A list of private link resources
-    /// Serialized Name: PrivateLinkResourceListResult
-    /// </summary>
+    /// <summary> A list of private link resources. </summary>
     internal partial class SynapsePrivateLinkResourceListResult
     {
         /// <summary> Initializes a new instance of SynapsePrivateLinkResourceListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapsePrivateLinkResourceListResult. </summary>
-        /// <param name="value">
-        /// Array of results.
-        /// Serialized Name: PrivateLinkResourceListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to retrieve next page of results.
-        /// Serialized Name: PrivateLinkResourceListResult.nextLink
-        /// </param>
+        /// <param name="value"> Array of results. </param>
+        /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SynapsePrivateLinkResourceListResult(IReadOnlyList<SynapsePrivateLinkResourceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Array of results.
-        /// Serialized Name: PrivateLinkResourceListResult.value
-        /// </summary>
+        /// <summary> Array of results. </summary>
         public IReadOnlyList<SynapsePrivateLinkResourceData> Value { get; }
-        /// <summary>
-        /// Link to retrieve next page of results.
-        /// Serialized Name: PrivateLinkResourceListResult.nextLink
-        /// </summary>
+        /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }
 }

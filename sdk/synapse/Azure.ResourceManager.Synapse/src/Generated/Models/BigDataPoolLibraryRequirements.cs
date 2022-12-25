@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Library requirements for a Big Data pool powered by Apache Spark
-    /// Serialized Name: LibraryRequirements
-    /// </summary>
+    /// <summary> Library requirements for a Big Data pool powered by Apache Spark. </summary>
     public partial class BigDataPoolLibraryRequirements
     {
         /// <summary> Initializes a new instance of BigDataPoolLibraryRequirements. </summary>
@@ -21,39 +18,21 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of BigDataPoolLibraryRequirements. </summary>
-        /// <param name="time">
-        /// The last update time of the library requirements file.
-        /// Serialized Name: LibraryRequirements.time
-        /// </param>
-        /// <param name="content">
-        /// The library requirements.
-        /// Serialized Name: LibraryRequirements.content
-        /// </param>
-        /// <param name="filename">
-        /// The filename of the library requirements file.
-        /// Serialized Name: LibraryRequirements.filename
-        /// </param>
-        internal BigDataPoolLibraryRequirements(DateTimeOffset? time, string content, string filename)
+        /// <param name="updatedOn"> The last update time of the library requirements file. </param>
+        /// <param name="content"> The library requirements. </param>
+        /// <param name="filename"> The filename of the library requirements file. </param>
+        internal BigDataPoolLibraryRequirements(DateTimeOffset? updatedOn, string content, string filename)
         {
-            Time = time;
+            UpdatedOn = updatedOn;
             Content = content;
             Filename = filename;
         }
 
-        /// <summary>
-        /// The last update time of the library requirements file.
-        /// Serialized Name: LibraryRequirements.time
-        /// </summary>
-        public DateTimeOffset? Time { get; }
-        /// <summary>
-        /// The library requirements.
-        /// Serialized Name: LibraryRequirements.content
-        /// </summary>
+        /// <summary> The last update time of the library requirements file. </summary>
+        public DateTimeOffset? UpdatedOn { get; }
+        /// <summary> The library requirements. </summary>
         public string Content { get; set; }
-        /// <summary>
-        /// The filename of the library requirements file.
-        /// Serialized Name: LibraryRequirements.filename
-        /// </summary>
+        /// <summary> The filename of the library requirements file. </summary>
         public string Filename { get; set; }
     }
 }

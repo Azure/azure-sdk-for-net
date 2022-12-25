@@ -7,29 +7,14 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// A class that contains the optimized auto scale definition.
-    /// Serialized Name: OptimizedAutoscale
-    /// </summary>
+    /// <summary> A class that contains the optimized auto scale definition. </summary>
     public partial class SynapseOptimizedAutoscale
     {
         /// <summary> Initializes a new instance of SynapseOptimizedAutoscale. </summary>
-        /// <param name="version">
-        /// The version of the template defined, for instance 1.
-        /// Serialized Name: OptimizedAutoscale.version
-        /// </param>
-        /// <param name="isEnabled">
-        /// A boolean value that indicate if the optimized autoscale feature is enabled or not.
-        /// Serialized Name: OptimizedAutoscale.isEnabled
-        /// </param>
-        /// <param name="minimum">
-        /// Minimum allowed instances count.
-        /// Serialized Name: OptimizedAutoscale.minimum
-        /// </param>
-        /// <param name="maximum">
-        /// Maximum allowed instances count.
-        /// Serialized Name: OptimizedAutoscale.maximum
-        /// </param>
+        /// <param name="version"> The version of the template defined, for instance 1. </param>
+        /// <param name="isEnabled"> A boolean value that indicate if the optimized autoscale feature is enabled or not. </param>
+        /// <param name="minimum"> Minimum allowed instances count. </param>
+        /// <param name="maximum"> Maximum allowed instances count. </param>
         public SynapseOptimizedAutoscale(int version, bool isEnabled, int minimum, int maximum)
         {
             Version = version;
@@ -38,25 +23,13 @@ namespace Azure.ResourceManager.Synapse.Models
             Maximum = maximum;
         }
 
-        /// <summary>
-        /// The version of the template defined, for instance 1.
-        /// Serialized Name: OptimizedAutoscale.version
-        /// </summary>
+        /// <summary> The version of the template defined, for instance 1. </summary>
         public int Version { get; set; }
-        /// <summary>
-        /// A boolean value that indicate if the optimized autoscale feature is enabled or not.
-        /// Serialized Name: OptimizedAutoscale.isEnabled
-        /// </summary>
+        /// <summary> A boolean value that indicate if the optimized autoscale feature is enabled or not. </summary>
         public bool IsEnabled { get; set; }
-        /// <summary>
-        /// Minimum allowed instances count.
-        /// Serialized Name: OptimizedAutoscale.minimum
-        /// </summary>
+        /// <summary> Minimum allowed instances count. </summary>
         public int Minimum { get; set; }
-        /// <summary>
-        /// Maximum allowed instances count.
-        /// Serialized Name: OptimizedAutoscale.maximum
-        /// </summary>
+        /// <summary> Maximum allowed instances count. </summary>
         public int Maximum { get; set; }
     }
 }

@@ -7,36 +7,18 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The SynapseSensitivityLabelRank.
-    /// Serialized Name: SensitivityLabelRank
-    /// </summary>
+    /// <summary> The SynapseSensitivityLabelRank. </summary>
     public enum SynapseSensitivityLabelRank
     {
-        /// <summary>
-        /// None
-        /// Serialized Name: SensitivityLabelRank.None
-        /// </summary>
+        /// <summary> None. </summary>
         None,
-        /// <summary>
-        /// Low
-        /// Serialized Name: SensitivityLabelRank.Low
-        /// </summary>
+        /// <summary> Low. </summary>
         Low,
-        /// <summary>
-        /// Medium
-        /// Serialized Name: SensitivityLabelRank.Medium
-        /// </summary>
+        /// <summary> Medium. </summary>
         Medium,
-        /// <summary>
-        /// High
-        /// Serialized Name: SensitivityLabelRank.High
-        /// </summary>
+        /// <summary> High. </summary>
         High,
-        /// <summary>
-        /// Critical
-        /// Serialized Name: SensitivityLabelRank.Critical
-        /// </summary>
+        /// <summary> Critical. </summary>
         Critical
     }
 }

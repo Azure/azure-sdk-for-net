@@ -11,10 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// A list of workload groups.
-    /// Serialized Name: WorkloadGroupListResult
-    /// </summary>
+    /// <summary> A list of workload groups. </summary>
     internal partial class SynapseWorkloadGroupListResult
     {
         /// <summary> Initializes a new instance of SynapseWorkloadGroupListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseWorkloadGroupListResult. </summary>
-        /// <param name="value">
-        /// Array of results.
-        /// Serialized Name: WorkloadGroupListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to retrieve next page of results.
-        /// Serialized Name: WorkloadGroupListResult.nextLink
-        /// </param>
+        /// <param name="value"> Array of results. </param>
+        /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SynapseWorkloadGroupListResult(IReadOnlyList<SynapseWorkloadGroupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Array of results.
-        /// Serialized Name: WorkloadGroupListResult.value
-        /// </summary>
+        /// <summary> Array of results. </summary>
         public IReadOnlyList<SynapseWorkloadGroupData> Value { get; }
-        /// <summary>
-        /// Link to retrieve next page of results.
-        /// Serialized Name: WorkloadGroupListResult.nextLink
-        /// </summary>
+        /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }
 }

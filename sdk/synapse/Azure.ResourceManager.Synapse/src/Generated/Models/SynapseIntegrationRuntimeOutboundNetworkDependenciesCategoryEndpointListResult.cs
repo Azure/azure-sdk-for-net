@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Azure-SSIS integration runtime outbound network dependency endpoints.
-    /// Serialized Name: IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse
-    /// </summary>
+    /// <summary> Azure-SSIS integration runtime outbound network dependency endpoints. </summary>
     internal partial class SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult
     {
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult. </summary>
@@ -23,19 +20,13 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult. </summary>
-        /// <param name="value">
-        /// The list of outbound network dependency endpoints.
-        /// Serialized Name: IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse.value
-        /// </param>
+        /// <param name="value"> The list of outbound network dependency endpoints. </param>
         internal SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpointListResult(IReadOnlyList<SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> value)
         {
             Value = value;
         }
 
-        /// <summary>
-        /// The list of outbound network dependency endpoints.
-        /// Serialized Name: IntegrationRuntimeOutboundNetworkDependenciesEndpointsResponse.value
-        /// </summary>
+        /// <summary> The list of outbound network dependency endpoints. </summary>
         public IReadOnlyList<SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> Value { get; }
     }
 }

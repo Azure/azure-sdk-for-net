@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.Synapse
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EmailAccountAdmins))
+            if (Optional.IsDefined(EnableEmailToAccountAdmins))
             {
                 writer.WritePropertyName("emailAccountAdmins");
-                writer.WriteBooleanValue(EmailAccountAdmins.Value);
+                writer.WriteBooleanValue(EnableEmailToAccountAdmins.Value);
             }
             if (Optional.IsDefined(StorageEndpoint))
             {

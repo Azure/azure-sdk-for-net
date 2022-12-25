@@ -13,17 +13,11 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// A list of Library resources.
-    /// Serialized Name: LibraryListResponse
-    /// </summary>
+    /// <summary> A list of Library resources. </summary>
     internal partial class BigDataPoolLibraryListResult
     {
         /// <summary> Initializes a new instance of BigDataPoolLibraryListResult. </summary>
-        /// <param name="value">
-        /// List of Library.
-        /// Serialized Name: LibraryListResponse.value
-        /// </param>
+        /// <param name="value"> List of Library. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal BigDataPoolLibraryListResult(IEnumerable<SynapseLibraryData> value)
         {
@@ -33,29 +27,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of BigDataPoolLibraryListResult. </summary>
-        /// <param name="value">
-        /// List of Library.
-        /// Serialized Name: LibraryListResponse.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to the next page of results, if any remaining results exist.
-        /// Serialized Name: LibraryListResponse.nextLink
-        /// </param>
+        /// <param name="value"> List of Library. </param>
+        /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal BigDataPoolLibraryListResult(IReadOnlyList<SynapseLibraryData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// List of Library.
-        /// Serialized Name: LibraryListResponse.value
-        /// </summary>
+        /// <summary> List of Library. </summary>
         public IReadOnlyList<SynapseLibraryData> Value { get; }
-        /// <summary>
-        /// The link to the next page of results, if any remaining results exist.
-        /// Serialized Name: LibraryListResponse.nextLink
-        /// </summary>
+        /// <summary> The link to the next page of results, if any remaining results exist. </summary>
         public string NextLink { get; }
     }
 }

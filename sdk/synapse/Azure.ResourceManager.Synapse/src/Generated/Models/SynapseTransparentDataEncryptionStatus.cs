@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The status of the database transparent data encryption.
-    /// Serialized Name: TransparentDataEncryptionStatus
-    /// </summary>
+    /// <summary> The status of the database transparent data encryption. </summary>
     public enum SynapseTransparentDataEncryptionStatus
     {
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: TransparentDataEncryptionStatus.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         Enabled,
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: TransparentDataEncryptionStatus.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         Disabled
     }
 }

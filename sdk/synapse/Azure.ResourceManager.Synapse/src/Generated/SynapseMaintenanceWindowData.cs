@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="timeRanges"> Serialized Name: MaintenanceWindows.properties.timeRanges. </param>
+        /// <param name="timeRanges"></param>
         internal SynapseMaintenanceWindowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<SynapseMaintenanceWindowTimeRange> timeRanges) : base(id, name, resourceType, systemData)
         {
             TimeRanges = timeRanges;
         }
 
-        /// <summary> Serialized Name: MaintenanceWindows.properties.timeRanges. </summary>
+        /// <summary> Gets the time ranges. </summary>
         public IList<SynapseMaintenanceWindowTimeRange> TimeRanges { get; }
     }
 }

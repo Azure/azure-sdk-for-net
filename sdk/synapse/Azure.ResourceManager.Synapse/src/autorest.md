@@ -18,9 +18,6 @@ modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true   # Mitigate the duplication schema 'ErrorResponse' issue
 
-mgmt-debug: 
-  show-serialized-names: true
-
 rename-mapping:
   AzureADOnlyAuthentication: SynapseAadOnlyAuthentication
   AzureADOnlyAuthenticationListResult: SynapseAadOnlyAuthenticationListResult
@@ -119,6 +116,59 @@ rename-mapping:
   AutoScaleProperties.enabled: IsEnabled
   ReplicationState.CATCH_UP: CatchUp
   ResourceMoveDefinition.id: -|arm-id
+  AzureADOnlyAuthentication.properties.azureADOnlyAuthentication: IsAadOnlyAuthenticationEnabled
+  BigDataPoolResourceInfo.properties.sessionLevelPackagesEnabled: IsSessionLevelPackagesEnabled
+  MetadataSyncConfig.properties.enabled: IsEnabled
+  ServerSecurityAlertPolicy.properties.emailAccountAdmins: EnableEmailToAccountAdmins
+  SqlPoolSecurityAlertPolicy.properties.emailAccountAdmins: EnableEmailToAccountAdmins
+  Workspace.properties.azureADOnlyAuthentication: IsAadOnlyAuthenticationEnabled
+  Workspace.properties.trustedServiceBypassEnabled: IsTrustedServiceBypassEnabled
+  DynamicExecutorAllocation.enabled: IsEnabled
+  EncryptionDetails.doubleEncryptionEnabled: IsDoubleEncryptionEnabled
+  SsisParameter.required: IsRequired
+  SsisParameter.sensitive: IsSensitive
+  SsisVariable.sensitive: IsSensitive
+  VulnerabilityAssessmentRecurringScansProperties.emailSubscriptionAdmins: EnableEmailToAccountAdmins
+  DataLakeStorageAccountDetails.resourceId: -|arm-id
+  LinkedIntegrationRuntimeRbacAuthorization.resourceId: -|arm-id
+  LibraryRequirements.time: UpdatedOn
+  SparkConfigProperties.time: UpdatedOn
+  CspWorkspaceAdminProperties.initialWorkspaceAdminObjectId: -|uuid
+  KekIdentityProperties.userAssignedIdentity: UserAssignedIdentityId|arm-id
+  SkuDescription.locations: -|azure-location
+  PurviewConfiguration.purviewResourceId: -|arm-id
+  DataMaskingFunction.CCN: Ccn
+  DataMaskingFunction.SSN: Ssn
+  EventGridDataConnection.properties.storageAccountResourceId: -|arm-id
+  EventGridDataConnection.properties.eventHubResourceId: -|arm-id
+  EventHubDataConnection.properties.eventHubResourceId: -|arm-id
+  EventHubDataConnection.properties.managedIdentityResourceId: -|arm-id
+  FollowerDatabaseDefinition.clusterResourceId: -|arm-id
+  IntegrationRuntimeComputeProperties.vNetProperties: VnetProperties
+  IntegrationRuntimeConnectionInfo.identityCertThumbprint: -|any
+  IntegrationRuntimeSsisCatalogInfo.catalogServerEndpoint: -|uri
+  IntegrationRuntimeVNetProperties.vNetId: VnetId|uuid
+  IntegrationRuntimeVNetProperties.subnetId: -|arm-id
+  IotHubDataConnection.properties.iotHubResourceId: -|arm-id
+  SelfHostedIntegrationRuntimeNode.lastConnectTime: LastConnectedOn
+  SelfHostedIntegrationRuntimeNode.expiryTime: ExpireOn
+  SelfHostedIntegrationRuntimeNode.lastStartTime: LastStartedOn
+  AttachedDatabaseConfiguration.properties.clusterResourceId: -|arm-id
+  BigDataPoolResourceInfo.properties.lastSucceededTimestamp: LastSucceededOn
+  ClusterPrincipalAssignment.properties.aadObjectId: -|uuid
+  DatabasePrincipalAssignment.properties.aadObjectId: -|uuid
+  DataMaskingRule.properties.id: ruleId
+  EncryptionProtector.properties.thumbprint: -|any
+  Key.properties.isActiveCMK: IsActiveCmk
+  KustoPool.properties.workspaceUID: WorkspaceUid|uuid
+  LibraryResource.properties.uploadedTimestamp: UploadedOn
+  ReplicationLink.properties.partnerLocation: -|azure-location
+  SensitivityLabel.properties.labelId: -|uuid
+  SensitivityLabel.properties.informationTypeId: -|uuid
+  SparkConfigurationResource.properties.created: CreatedOn
+  Workspace.properties.workspaceUID: WorkspaceUid|uuid
+  Workspace.properties.adlaResourceId: -|arm-id
+  KustoPoolUpdate.properties.workspaceUID: WorkspaceUid|uuid
 
 prepend-rp-prefix:
   - AttachedDatabaseConfiguration
@@ -313,6 +363,8 @@ override-operation-name:
   KustoPoolChildResource_CheckNameAvailability: CheckKustoPoolChildResourceNameAvailability
   KustoPoolPrincipalAssignments_CheckNameAvailability: CheckKustoPoolPrincipalAssignmentNameAvailability
   KustoPools_CheckNameAvailability: CheckKustoPoolNameAvailability
+  KustoPoolDataConnections_dataConnectionValidation: ValidateDataConnection
+  IntegrationRuntimeNodeIpAddress_Get: GetIntegrationRuntimeNodeIPAddress
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}/privateLinkResources/{privateLinkResourceName}: SynapsePrivateLinkResource
@@ -361,6 +413,8 @@ rename-rules:
   W3Clogfile: W3CLogfile
   GRS: Grs
   LRS: Lrs
+  GPU: Gpu
+  ETA: Eta
 
 list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}
@@ -374,6 +428,7 @@ directive:
   - remove-operation: Operations_GetAzureAsyncHeaderResult
   - remove-operation: KustoOperations_List
   - remove-operation: SqlPoolOperations_List
+  - remove-operation: SqlPoolOperationResults_GetLocationHeaderResult
   - from: operations.json
     where: $.definitions
     transform: >

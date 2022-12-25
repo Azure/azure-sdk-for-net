@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Specifies the state of the policy. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required.
-    /// Serialized Name: BlobAuditingPolicyState
-    /// </summary>
+    /// <summary> Specifies the state of the policy. If state is Enabled, storageEndpoint or isAzureMonitorTargetEnabled are required. </summary>
     public enum SynapseBlobAuditingPolicyState
     {
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: BlobAuditingPolicyState.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         Enabled,
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: BlobAuditingPolicyState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         Disabled
     }
 }

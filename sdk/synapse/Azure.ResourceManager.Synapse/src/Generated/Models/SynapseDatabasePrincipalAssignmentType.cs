@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The type of resource, Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments.
-    /// Serialized Name: DatabasePrincipalAssignmentType
-    /// </summary>
+    /// <summary> The type of resource, Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments. </summary>
     public readonly partial struct SynapseDatabasePrincipalAssignmentType : IEquatable<SynapseDatabasePrincipalAssignmentType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         private const string MicrosoftSynapseWorkspacesKustoPoolsDatabasesPrincipalAssignmentsValue = "Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments";
 
-        /// <summary>
-        /// Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments
-        /// Serialized Name: DatabasePrincipalAssignmentType.Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments
-        /// </summary>
+        /// <summary> Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments. </summary>
         public static SynapseDatabasePrincipalAssignmentType MicrosoftSynapseWorkspacesKustoPoolsDatabasesPrincipalAssignments { get; } = new SynapseDatabasePrincipalAssignmentType(MicrosoftSynapseWorkspacesKustoPoolsDatabasesPrincipalAssignmentsValue);
         /// <summary> Determines if two <see cref="SynapseDatabasePrincipalAssignmentType"/> values are the same. </summary>
         public static bool operator ==(SynapseDatabasePrincipalAssignmentType left, SynapseDatabasePrincipalAssignmentType right) => left.Equals(right);

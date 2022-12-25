@@ -24,29 +24,17 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="isActiveCMK">
-        /// Used to activate the workspace after a customer managed key is provided.
-        /// Serialized Name: Key.properties.isActiveCMK
-        /// </param>
-        /// <param name="keyVaultUri">
-        /// The Key Vault Url of the workspace key.
-        /// Serialized Name: Key.properties.keyVaultUrl
-        /// </param>
-        internal SynapseKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isActiveCMK, Uri keyVaultUri) : base(id, name, resourceType, systemData)
+        /// <param name="isActiveCmk"> Used to activate the workspace after a customer managed key is provided. </param>
+        /// <param name="keyVaultUri"> The Key Vault Url of the workspace key. </param>
+        internal SynapseKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isActiveCmk, Uri keyVaultUri) : base(id, name, resourceType, systemData)
         {
-            IsActiveCMK = isActiveCMK;
+            IsActiveCmk = isActiveCmk;
             KeyVaultUri = keyVaultUri;
         }
 
-        /// <summary>
-        /// Used to activate the workspace after a customer managed key is provided.
-        /// Serialized Name: Key.properties.isActiveCMK
-        /// </summary>
-        public bool? IsActiveCMK { get; set; }
-        /// <summary>
-        /// The Key Vault Url of the workspace key.
-        /// Serialized Name: Key.properties.keyVaultUrl
-        /// </summary>
+        /// <summary> Used to activate the workspace after a customer managed key is provided. </summary>
+        public bool? IsActiveCmk { get; set; }
+        /// <summary> The Key Vault Url of the workspace key. </summary>
         public Uri KeyVaultUri { get; set; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// A list of Sql pool auditing settings.
-    /// Serialized Name: SqlPoolBlobAuditingPolicyListResult
-    /// </summary>
+    /// <summary> A list of Sql pool auditing settings. </summary>
     internal partial class SynapseSqlPoolBlobAuditingPolicyListResult
     {
         /// <summary> Initializes a new instance of SynapseSqlPoolBlobAuditingPolicyListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseSqlPoolBlobAuditingPolicyListResult. </summary>
-        /// <param name="value">
-        /// Array of results.
-        /// Serialized Name: SqlPoolBlobAuditingPolicyListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to retrieve next page of results.
-        /// Serialized Name: SqlPoolBlobAuditingPolicyListResult.nextLink
-        /// </param>
+        /// <param name="value"> Array of results. </param>
+        /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SynapseSqlPoolBlobAuditingPolicyListResult(IReadOnlyList<SynapseSqlPoolBlobAuditingPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Array of results.
-        /// Serialized Name: SqlPoolBlobAuditingPolicyListResult.value
-        /// </summary>
+        /// <summary> Array of results. </summary>
         public IReadOnlyList<SynapseSqlPoolBlobAuditingPolicyData> Value { get; }
-        /// <summary>
-        /// Link to retrieve next page of results.
-        /// Serialized Name: SqlPoolBlobAuditingPolicyListResult.nextLink
-        /// </summary>
+        /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }
 }

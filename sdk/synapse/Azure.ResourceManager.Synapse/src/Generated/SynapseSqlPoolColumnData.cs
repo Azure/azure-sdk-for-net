@@ -24,29 +24,17 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="columnType">
-        /// The column data type.
-        /// Serialized Name: SqlPoolColumn.properties.columnType
-        /// </param>
-        /// <param name="isComputed">
-        /// Indicates whether column value is computed or not
-        /// Serialized Name: SqlPoolColumn.properties.isComputed
-        /// </param>
+        /// <param name="columnType"> The column data type. </param>
+        /// <param name="isComputed"> Indicates whether column value is computed or not. </param>
         internal SynapseSqlPoolColumnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlPoolColumnDataType? columnType, bool? isComputed) : base(id, name, resourceType, systemData)
         {
             ColumnType = columnType;
             IsComputed = isComputed;
         }
 
-        /// <summary>
-        /// The column data type.
-        /// Serialized Name: SqlPoolColumn.properties.columnType
-        /// </summary>
+        /// <summary> The column data type. </summary>
         public SqlPoolColumnDataType? ColumnType { get; set; }
-        /// <summary>
-        /// Indicates whether column value is computed or not
-        /// Serialized Name: SqlPoolColumn.properties.isComputed
-        /// </summary>
+        /// <summary> Indicates whether column value is computed or not. </summary>
         public bool? IsComputed { get; }
     }
 }

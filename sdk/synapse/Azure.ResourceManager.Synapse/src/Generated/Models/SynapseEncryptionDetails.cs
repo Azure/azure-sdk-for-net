@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Details of the encryption associated with the workspace
-    /// Serialized Name: EncryptionDetails
-    /// </summary>
+    /// <summary> Details of the encryption associated with the workspace. </summary>
     public partial class SynapseEncryptionDetails
     {
         /// <summary> Initializes a new instance of SynapseEncryptionDetails. </summary>
@@ -19,29 +16,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseEncryptionDetails. </summary>
-        /// <param name="doubleEncryptionEnabled">
-        /// Double Encryption enabled
-        /// Serialized Name: EncryptionDetails.doubleEncryptionEnabled
-        /// </param>
-        /// <param name="cmk">
-        /// Customer Managed Key Details
-        /// Serialized Name: EncryptionDetails.cmk
-        /// </param>
-        internal SynapseEncryptionDetails(bool? doubleEncryptionEnabled, WorkspaceCustomerManagedKeyDetails cmk)
+        /// <param name="isDoubleEncryptionEnabled"> Double Encryption enabled. </param>
+        /// <param name="cmk"> Customer Managed Key Details. </param>
+        internal SynapseEncryptionDetails(bool? isDoubleEncryptionEnabled, WorkspaceCustomerManagedKeyDetails cmk)
         {
-            DoubleEncryptionEnabled = doubleEncryptionEnabled;
+            IsDoubleEncryptionEnabled = isDoubleEncryptionEnabled;
             Cmk = cmk;
         }
 
-        /// <summary>
-        /// Double Encryption enabled
-        /// Serialized Name: EncryptionDetails.doubleEncryptionEnabled
-        /// </summary>
-        public bool? DoubleEncryptionEnabled { get; }
-        /// <summary>
-        /// Customer Managed Key Details
-        /// Serialized Name: EncryptionDetails.cmk
-        /// </summary>
+        /// <summary> Double Encryption enabled. </summary>
+        public bool? IsDoubleEncryptionEnabled { get; }
+        /// <summary> Customer Managed Key Details. </summary>
         public WorkspaceCustomerManagedKeyDetails Cmk { get; set; }
     }
 }

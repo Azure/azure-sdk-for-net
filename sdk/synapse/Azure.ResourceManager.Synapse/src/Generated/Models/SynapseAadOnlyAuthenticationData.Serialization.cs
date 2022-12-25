@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Synapse
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureADOnlyAuthentication))
+            if (Optional.IsDefined(IsAadOnlyAuthenticationEnabled))
             {
                 writer.WritePropertyName("azureADOnlyAuthentication");
-                writer.WriteBooleanValue(AzureADOnlyAuthentication.Value);
+                writer.WriteBooleanValue(IsAadOnlyAuthenticationEnabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

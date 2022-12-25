@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Properties of a private link resource.
-    /// Serialized Name: PrivateLinkResourceProperties
-    /// </summary>
+    /// <summary> Properties of a private link resource. </summary>
     public partial class SynapsePrivateLinkResourceProperties
     {
         /// <summary> Initializes a new instance of SynapsePrivateLinkResourceProperties. </summary>
@@ -24,18 +21,9 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapsePrivateLinkResourceProperties. </summary>
-        /// <param name="groupId">
-        /// The private link resource group id.
-        /// Serialized Name: PrivateLinkResourceProperties.groupId
-        /// </param>
-        /// <param name="requiredMembers">
-        /// The private link resource required member names.
-        /// Serialized Name: PrivateLinkResourceProperties.requiredMembers
-        /// </param>
-        /// <param name="requiredZoneNames">
-        /// Required DNS zone names of the the private link resource.
-        /// Serialized Name: PrivateLinkResourceProperties.requiredZoneNames
-        /// </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
         internal SynapsePrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames)
         {
             GroupId = groupId;
@@ -43,20 +31,11 @@ namespace Azure.ResourceManager.Synapse.Models
             RequiredZoneNames = requiredZoneNames;
         }
 
-        /// <summary>
-        /// The private link resource group id.
-        /// Serialized Name: PrivateLinkResourceProperties.groupId
-        /// </summary>
+        /// <summary> The private link resource group id. </summary>
         public string GroupId { get; }
-        /// <summary>
-        /// The private link resource required member names.
-        /// Serialized Name: PrivateLinkResourceProperties.requiredMembers
-        /// </summary>
+        /// <summary> The private link resource required member names. </summary>
         public IReadOnlyList<string> RequiredMembers { get; }
-        /// <summary>
-        /// Required DNS zone names of the the private link resource.
-        /// Serialized Name: PrivateLinkResourceProperties.requiredZoneNames
-        /// </summary>
+        /// <summary> Required DNS zone names of the the private link resource. </summary>
         public IReadOnlyList<string> RequiredZoneNames { get; }
     }
 }

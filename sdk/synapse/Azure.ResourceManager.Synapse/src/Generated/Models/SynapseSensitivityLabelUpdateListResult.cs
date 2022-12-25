@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// A list of sensitivity label update operations.
-    /// Serialized Name: SensitivityLabelUpdateList
-    /// </summary>
+    /// <summary> A list of sensitivity label update operations. </summary>
     public partial class SynapseSensitivityLabelUpdateListResult
     {
         /// <summary> Initializes a new instance of SynapseSensitivityLabelUpdateListResult. </summary>
@@ -22,7 +19,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Operations = new ChangeTrackingList<SynapseSensitivityLabelUpdate>();
         }
 
-        /// <summary> Serialized Name: SensitivityLabelUpdateList.operations. </summary>
+        /// <summary> Gets the operations. </summary>
         public IList<SynapseSensitivityLabelUpdate> Operations { get; }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The PrivateEndpointConnectionForPrivateLinkHubBasic.
-    /// Serialized Name: PrivateEndpointConnectionForPrivateLinkHubBasic
-    /// </summary>
+    /// <summary> The PrivateEndpointConnectionForPrivateLinkHubBasic. </summary>
     public partial class PrivateEndpointConnectionForPrivateLinkHubBasic
     {
         /// <summary> Initializes a new instance of PrivateEndpointConnectionForPrivateLinkHubBasic. </summary>
@@ -19,23 +16,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionForPrivateLinkHubBasic. </summary>
-        /// <param name="id"> Serialized Name: PrivateEndpointConnectionForPrivateLinkHubBasic.id. </param>
-        /// <param name="properties">
-        /// Properties of a private endpoint connection.
-        /// Serialized Name: PrivateEndpointConnectionForPrivateLinkHubBasic.properties
-        /// </param>
+        /// <param name="id"></param>
+        /// <param name="properties"> Properties of a private endpoint connection. </param>
         internal PrivateEndpointConnectionForPrivateLinkHubBasic(string id, SynapsePrivateEndpointConnectionProperties properties)
         {
             Id = id;
             Properties = properties;
         }
 
-        /// <summary> Serialized Name: PrivateEndpointConnectionForPrivateLinkHubBasic.id. </summary>
+        /// <summary> Gets the id. </summary>
         public string Id { get; }
-        /// <summary>
-        /// Properties of a private endpoint connection.
-        /// Serialized Name: PrivateEndpointConnectionForPrivateLinkHubBasic.properties
-        /// </summary>
+        /// <summary> Properties of a private endpoint connection. </summary>
         public SynapsePrivateEndpointConnectionProperties Properties { get; }
     }
 }

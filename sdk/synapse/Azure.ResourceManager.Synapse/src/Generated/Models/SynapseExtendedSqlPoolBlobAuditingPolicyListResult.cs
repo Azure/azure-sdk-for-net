@@ -11,10 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// A list of sql pool extended auditing settings.
-    /// Serialized Name: ExtendedSqlPoolBlobAuditingPolicyListResult
-    /// </summary>
+    /// <summary> A list of sql pool extended auditing settings. </summary>
     internal partial class SynapseExtendedSqlPoolBlobAuditingPolicyListResult
     {
         /// <summary> Initializes a new instance of SynapseExtendedSqlPoolBlobAuditingPolicyListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseExtendedSqlPoolBlobAuditingPolicyListResult. </summary>
-        /// <param name="value">
-        /// Array of results.
-        /// Serialized Name: ExtendedSqlPoolBlobAuditingPolicyListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to retrieve next page of results.
-        /// Serialized Name: ExtendedSqlPoolBlobAuditingPolicyListResult.nextLink
-        /// </param>
+        /// <param name="value"> Array of results. </param>
+        /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SynapseExtendedSqlPoolBlobAuditingPolicyListResult(IReadOnlyList<SynapseExtendedSqlPoolBlobAuditingPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Array of results.
-        /// Serialized Name: ExtendedSqlPoolBlobAuditingPolicyListResult.value
-        /// </summary>
+        /// <summary> Array of results. </summary>
         public IReadOnlyList<SynapseExtendedSqlPoolBlobAuditingPolicyData> Value { get; }
-        /// <summary>
-        /// Link to retrieve next page of results.
-        /// Serialized Name: ExtendedSqlPoolBlobAuditingPolicyListResult.nextLink
-        /// </summary>
+        /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }
 }

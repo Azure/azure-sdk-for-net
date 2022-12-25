@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Custom setup script properties for a managed dedicated integration runtime.
-    /// Serialized Name: IntegrationRuntimeCustomSetupScriptProperties
-    /// </summary>
+    /// <summary> Custom setup script properties for a managed dedicated integration runtime. </summary>
     public partial class SynapseIntegrationRuntimeCustomSetupScriptProperties
     {
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeCustomSetupScriptProperties. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeCustomSetupScriptProperties. </summary>
-        /// <param name="blobContainerUri">
-        /// The URI of the Azure blob container that contains the custom setup script.
-        /// Serialized Name: IntegrationRuntimeCustomSetupScriptProperties.blobContainerUri
-        /// </param>
-        /// <param name="sasToken">
-        /// The SAS token of the Azure blob container.
-        /// Serialized Name: IntegrationRuntimeCustomSetupScriptProperties.sasToken
-        /// </param>
+        /// <param name="blobContainerUri"> The URI of the Azure blob container that contains the custom setup script. </param>
+        /// <param name="sasToken"> The SAS token of the Azure blob container. </param>
         internal SynapseIntegrationRuntimeCustomSetupScriptProperties(Uri blobContainerUri, SynapseSecureString sasToken)
         {
             BlobContainerUri = blobContainerUri;
             SasToken = sasToken;
         }
 
-        /// <summary>
-        /// The URI of the Azure blob container that contains the custom setup script.
-        /// Serialized Name: IntegrationRuntimeCustomSetupScriptProperties.blobContainerUri
-        /// </summary>
+        /// <summary> The URI of the Azure blob container that contains the custom setup script. </summary>
         public Uri BlobContainerUri { get; set; }
-        /// <summary>
-        /// The SAS token of the Azure blob container.
-        /// Serialized Name: IntegrationRuntimeCustomSetupScriptProperties.sasToken
-        /// </summary>
+        /// <summary> The SAS token of the Azure blob container. </summary>
         public SynapseSecureString SasToken { get; set; }
     }
 }

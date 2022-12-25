@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The provisioned state of the resource.
-    /// Serialized Name: ResourceProvisioningState
-    /// </summary>
+    /// <summary> The provisioned state of the resource. </summary>
     public readonly partial struct ResourceProvisioningState : IEquatable<ResourceProvisioningState>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string MovingValue = "Moving";
         private const string CanceledValue = "Canceled";
 
-        /// <summary>
-        /// Running
-        /// Serialized Name: ResourceProvisioningState.Running
-        /// </summary>
+        /// <summary> Running. </summary>
         public static ResourceProvisioningState Running { get; } = new ResourceProvisioningState(RunningValue);
-        /// <summary>
-        /// Creating
-        /// Serialized Name: ResourceProvisioningState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static ResourceProvisioningState Creating { get; } = new ResourceProvisioningState(CreatingValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: ResourceProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static ResourceProvisioningState Deleting { get; } = new ResourceProvisioningState(DeletingValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ResourceProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static ResourceProvisioningState Succeeded { get; } = new ResourceProvisioningState(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ResourceProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static ResourceProvisioningState Failed { get; } = new ResourceProvisioningState(FailedValue);
-        /// <summary>
-        /// Moving
-        /// Serialized Name: ResourceProvisioningState.Moving
-        /// </summary>
+        /// <summary> Moving. </summary>
         public static ResourceProvisioningState Moving { get; } = new ResourceProvisioningState(MovingValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: ResourceProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static ResourceProvisioningState Canceled { get; } = new ResourceProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="ResourceProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ResourceProvisioningState left, ResourceProvisioningState right) => left.Equals(right);

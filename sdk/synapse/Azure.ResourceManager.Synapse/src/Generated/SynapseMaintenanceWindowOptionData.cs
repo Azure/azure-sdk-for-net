@@ -26,34 +26,13 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="isEnabled">
-        /// Whether maintenance windows are enabled for the database.
-        /// Serialized Name: MaintenanceWindowOptions.properties.isEnabled
-        /// </param>
-        /// <param name="maintenanceWindowCycles">
-        /// Available maintenance cycles e.g. {Saturday, 0, 48*60}, {Wednesday, 0, 24*60}.
-        /// Serialized Name: MaintenanceWindowOptions.properties.maintenanceWindowCycles
-        /// </param>
-        /// <param name="minDurationInMinutes">
-        /// Minimum duration of maintenance window.
-        /// Serialized Name: MaintenanceWindowOptions.properties.minDurationInMinutes
-        /// </param>
-        /// <param name="defaultDurationInMinutes">
-        /// Default duration for maintenance window.
-        /// Serialized Name: MaintenanceWindowOptions.properties.defaultDurationInMinutes
-        /// </param>
-        /// <param name="minCycles">
-        /// Minimum number of maintenance windows cycles to be set on the database.
-        /// Serialized Name: MaintenanceWindowOptions.properties.minCycles
-        /// </param>
-        /// <param name="timeGranularityInMinutes">
-        /// Time granularity in minutes for maintenance windows.
-        /// Serialized Name: MaintenanceWindowOptions.properties.timeGranularityInMinutes
-        /// </param>
-        /// <param name="allowMultipleMaintenanceWindowsPerCycle">
-        /// Whether we allow multiple maintenance windows per cycle.
-        /// Serialized Name: MaintenanceWindowOptions.properties.allowMultipleMaintenanceWindowsPerCycle
-        /// </param>
+        /// <param name="isEnabled"> Whether maintenance windows are enabled for the database. </param>
+        /// <param name="maintenanceWindowCycles"> Available maintenance cycles e.g. {Saturday, 0, 48*60}, {Wednesday, 0, 24*60}. </param>
+        /// <param name="minDurationInMinutes"> Minimum duration of maintenance window. </param>
+        /// <param name="defaultDurationInMinutes"> Default duration for maintenance window. </param>
+        /// <param name="minCycles"> Minimum number of maintenance windows cycles to be set on the database. </param>
+        /// <param name="timeGranularityInMinutes"> Time granularity in minutes for maintenance windows. </param>
+        /// <param name="allowMultipleMaintenanceWindowsPerCycle"> Whether we allow multiple maintenance windows per cycle. </param>
         internal SynapseMaintenanceWindowOptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, IList<SynapseMaintenanceWindowTimeRange> maintenanceWindowCycles, int? minDurationInMinutes, int? defaultDurationInMinutes, int? minCycles, int? timeGranularityInMinutes, bool? allowMultipleMaintenanceWindowsPerCycle) : base(id, name, resourceType, systemData)
         {
             IsEnabled = isEnabled;
@@ -65,40 +44,19 @@ namespace Azure.ResourceManager.Synapse
             AllowMultipleMaintenanceWindowsPerCycle = allowMultipleMaintenanceWindowsPerCycle;
         }
 
-        /// <summary>
-        /// Whether maintenance windows are enabled for the database.
-        /// Serialized Name: MaintenanceWindowOptions.properties.isEnabled
-        /// </summary>
+        /// <summary> Whether maintenance windows are enabled for the database. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// Available maintenance cycles e.g. {Saturday, 0, 48*60}, {Wednesday, 0, 24*60}.
-        /// Serialized Name: MaintenanceWindowOptions.properties.maintenanceWindowCycles
-        /// </summary>
+        /// <summary> Available maintenance cycles e.g. {Saturday, 0, 48*60}, {Wednesday, 0, 24*60}. </summary>
         public IList<SynapseMaintenanceWindowTimeRange> MaintenanceWindowCycles { get; }
-        /// <summary>
-        /// Minimum duration of maintenance window.
-        /// Serialized Name: MaintenanceWindowOptions.properties.minDurationInMinutes
-        /// </summary>
+        /// <summary> Minimum duration of maintenance window. </summary>
         public int? MinDurationInMinutes { get; set; }
-        /// <summary>
-        /// Default duration for maintenance window.
-        /// Serialized Name: MaintenanceWindowOptions.properties.defaultDurationInMinutes
-        /// </summary>
+        /// <summary> Default duration for maintenance window. </summary>
         public int? DefaultDurationInMinutes { get; set; }
-        /// <summary>
-        /// Minimum number of maintenance windows cycles to be set on the database.
-        /// Serialized Name: MaintenanceWindowOptions.properties.minCycles
-        /// </summary>
+        /// <summary> Minimum number of maintenance windows cycles to be set on the database. </summary>
         public int? MinCycles { get; set; }
-        /// <summary>
-        /// Time granularity in minutes for maintenance windows.
-        /// Serialized Name: MaintenanceWindowOptions.properties.timeGranularityInMinutes
-        /// </summary>
+        /// <summary> Time granularity in minutes for maintenance windows. </summary>
         public int? TimeGranularityInMinutes { get; set; }
-        /// <summary>
-        /// Whether we allow multiple maintenance windows per cycle.
-        /// Serialized Name: MaintenanceWindowOptions.properties.allowMultipleMaintenanceWindowsPerCycle
-        /// </summary>
+        /// <summary> Whether we allow multiple maintenance windows per cycle. </summary>
         public bool? AllowMultipleMaintenanceWindowsPerCycle { get; set; }
     }
 }

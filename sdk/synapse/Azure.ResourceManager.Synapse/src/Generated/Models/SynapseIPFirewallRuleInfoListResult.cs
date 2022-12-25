@@ -11,10 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// List of IP firewall rules
-    /// Serialized Name: IpFirewallRuleInfoListResult
-    /// </summary>
+    /// <summary> List of IP firewall rules. </summary>
     internal partial class SynapseIPFirewallRuleInfoListResult
     {
         /// <summary> Initializes a new instance of SynapseIPFirewallRuleInfoListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseIPFirewallRuleInfoListResult. </summary>
-        /// <param name="nextLink">
-        /// Link to next page of results
-        /// Serialized Name: IpFirewallRuleInfoListResult.nextLink
-        /// </param>
-        /// <param name="value">
-        /// List of IP firewall rules
-        /// Serialized Name: IpFirewallRuleInfoListResult.value
-        /// </param>
+        /// <param name="nextLink"> Link to next page of results. </param>
+        /// <param name="value"> List of IP firewall rules. </param>
         internal SynapseIPFirewallRuleInfoListResult(string nextLink, IReadOnlyList<SynapseIPFirewallRuleInfoData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary>
-        /// Link to next page of results
-        /// Serialized Name: IpFirewallRuleInfoListResult.nextLink
-        /// </summary>
+        /// <summary> Link to next page of results. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// List of IP firewall rules
-        /// Serialized Name: IpFirewallRuleInfoListResult.value
-        /// </summary>
+        /// <summary> List of IP firewall rules. </summary>
         public IReadOnlyList<SynapseIPFirewallRuleInfoData> Value { get; }
     }
 }

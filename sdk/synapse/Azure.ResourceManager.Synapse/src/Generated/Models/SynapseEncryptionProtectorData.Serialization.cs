@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Synapse
             Optional<string> serverKeyName = default;
             Optional<SynapseServerKeyType> serverKeyType = default;
             Optional<Uri> uri = default;
-            Optional<string> thumbprint = default;
+            Optional<BinaryData> thumbprint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -130,7 +130,12 @@ namespace Azure.ResourceManager.Synapse
                         }
                         if (property0.NameEquals("thumbprint"))
                         {
-                            thumbprint = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            thumbprint = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }

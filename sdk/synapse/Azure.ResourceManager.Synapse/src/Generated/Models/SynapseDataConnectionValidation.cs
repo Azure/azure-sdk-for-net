@@ -9,10 +9,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Class representing an data connection validation.
-    /// Serialized Name: DataConnectionValidation
-    /// </summary>
+    /// <summary> Class representing an data connection validation. </summary>
     public partial class SynapseDataConnectionValidation
     {
         /// <summary> Initializes a new instance of SynapseDataConnectionValidation. </summary>
@@ -20,14 +17,10 @@ namespace Azure.ResourceManager.Synapse.Models
         {
         }
 
-        /// <summary>
-        /// The name of the data connection.
-        /// Serialized Name: DataConnectionValidation.dataConnectionName
-        /// </summary>
+        /// <summary> The name of the data connection. </summary>
         public string DataConnectionName { get; set; }
         /// <summary>
         /// The data connection properties to validate.
-        /// Serialized Name: DataConnectionValidation.properties
         /// Please note <see cref="SynapseDataConnectionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SynapseEventGridDataConnection"/>, <see cref="SynapseEventHubDataConnection"/> and <see cref="SynapseIotHubDataConnection"/>.
         /// </summary>

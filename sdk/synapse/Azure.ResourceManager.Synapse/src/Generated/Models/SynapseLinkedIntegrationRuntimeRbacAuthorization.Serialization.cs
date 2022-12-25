@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseLinkedIntegrationRuntimeRbacAuthorization DeserializeSynapseLinkedIntegrationRuntimeRbacAuthorization(JsonElement element)
         {
-            string resourceId = default;
+            ResourceIdentifier resourceId = default;
             string authorizationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"))
                 {
-                    resourceId = property.Value.GetString();
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("authorizationType"))

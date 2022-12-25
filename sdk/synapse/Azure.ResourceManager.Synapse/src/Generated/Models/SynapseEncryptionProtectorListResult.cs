@@ -11,10 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// A list of server encryption protectors.
-    /// Serialized Name: EncryptionProtectorListResult
-    /// </summary>
+    /// <summary> A list of server encryption protectors. </summary>
     internal partial class SynapseEncryptionProtectorListResult
     {
         /// <summary> Initializes a new instance of SynapseEncryptionProtectorListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseEncryptionProtectorListResult. </summary>
-        /// <param name="value">
-        /// Array of results.
-        /// Serialized Name: EncryptionProtectorListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to retrieve next page of results.
-        /// Serialized Name: EncryptionProtectorListResult.nextLink
-        /// </param>
+        /// <param name="value"> Array of results. </param>
+        /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SynapseEncryptionProtectorListResult(IReadOnlyList<SynapseEncryptionProtectorData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Array of results.
-        /// Serialized Name: EncryptionProtectorListResult.value
-        /// </summary>
+        /// <summary> Array of results. </summary>
         public IReadOnlyList<SynapseEncryptionProtectorData> Value { get; }
-        /// <summary>
-        /// Link to retrieve next page of results.
-        /// Serialized Name: EncryptionProtectorListResult.nextLink
-        /// </summary>
+        /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }
 }

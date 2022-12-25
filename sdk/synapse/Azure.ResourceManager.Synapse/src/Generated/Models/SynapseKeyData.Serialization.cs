@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Synapse
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsActiveCMK))
+            if (Optional.IsDefined(IsActiveCmk))
             {
                 writer.WritePropertyName("isActiveCMK");
-                writer.WriteBooleanValue(IsActiveCMK.Value);
+                writer.WriteBooleanValue(IsActiveCmk.Value);
             }
             if (Optional.IsDefined(KeyVaultUri))
             {

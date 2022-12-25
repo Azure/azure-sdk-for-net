@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Synapse
             Optional<SystemData> systemData = default;
             Optional<ResourceProvisioningState> provisioningState = default;
             Optional<string> databaseName = default;
-            Optional<string> clusterResourceId = default;
+            Optional<ResourceIdentifier> clusterResourceId = default;
             Optional<IReadOnlyList<string>> attachedDatabaseNames = default;
             Optional<SynapseDefaultPrincipalsModificationKind> defaultPrincipalsModificationKind = default;
             Optional<SynapseTableLevelSharingProperties> tableLevelSharingProperties = default;
@@ -125,7 +125,12 @@ namespace Azure.ResourceManager.Synapse
                         }
                         if (property0.NameEquals("clusterResourceId"))
                         {
-                            clusterResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            clusterResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("attachedDatabaseNames"))

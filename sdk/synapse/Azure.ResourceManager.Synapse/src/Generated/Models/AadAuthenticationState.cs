@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// property configuration state
-    /// Serialized Name: StateValue
-    /// </summary>
+    /// <summary> property configuration state. </summary>
     public readonly partial struct AadAuthenticationState : IEquatable<AadAuthenticationState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string InConsistentValue = "InConsistent";
         private const string UpdatingValue = "Updating";
 
-        /// <summary>
-        /// Consistent
-        /// Serialized Name: StateValue.Consistent
-        /// </summary>
+        /// <summary> Consistent. </summary>
         public static AadAuthenticationState Consistent { get; } = new AadAuthenticationState(ConsistentValue);
-        /// <summary>
-        /// InConsistent
-        /// Serialized Name: StateValue.InConsistent
-        /// </summary>
+        /// <summary> InConsistent. </summary>
         public static AadAuthenticationState InConsistent { get; } = new AadAuthenticationState(InConsistentValue);
-        /// <summary>
-        /// Updating
-        /// Serialized Name: StateValue.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static AadAuthenticationState Updating { get; } = new AadAuthenticationState(UpdatingValue);
         /// <summary> Determines if two <see cref="AadAuthenticationState"/> values are the same. </summary>
         public static bool operator ==(AadAuthenticationState left, AadAuthenticationState right) => left.Equals(right);

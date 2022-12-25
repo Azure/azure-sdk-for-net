@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Properties patch for a Big Data pool
-    /// Serialized Name: BigDataPoolPatchInfo
-    /// </summary>
+    /// <summary> Properties patch for a Big Data pool. </summary>
     public partial class SynapseBigDataPoolInfoPatch
     {
         /// <summary> Initializes a new instance of SynapseBigDataPoolInfoPatch. </summary>
@@ -22,10 +19,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// Updated tags for the Big Data pool
-        /// Serialized Name: BigDataPoolPatchInfo.tags
-        /// </summary>
+        /// <summary> Updated tags for the Big Data pool. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

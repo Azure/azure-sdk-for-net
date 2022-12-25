@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Ssis variable.
-    /// Serialized Name: SsisVariable
-    /// </summary>
+    /// <summary> Ssis variable. </summary>
     public partial class SynapseSsisVariable
     {
         /// <summary> Initializes a new instance of SynapseSsisVariable. </summary>
@@ -19,79 +16,37 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseSsisVariable. </summary>
-        /// <param name="id">
-        /// Variable id.
-        /// Serialized Name: SsisVariable.id
-        /// </param>
-        /// <param name="name">
-        /// Variable name.
-        /// Serialized Name: SsisVariable.name
-        /// </param>
-        /// <param name="description">
-        /// Variable description.
-        /// Serialized Name: SsisVariable.description
-        /// </param>
-        /// <param name="dataType">
-        /// Variable type.
-        /// Serialized Name: SsisVariable.dataType
-        /// </param>
-        /// <param name="sensitive">
-        /// Whether variable is sensitive.
-        /// Serialized Name: SsisVariable.sensitive
-        /// </param>
-        /// <param name="value">
-        /// Variable value.
-        /// Serialized Name: SsisVariable.value
-        /// </param>
-        /// <param name="sensitiveValue">
-        /// Variable sensitive value.
-        /// Serialized Name: SsisVariable.sensitiveValue
-        /// </param>
-        internal SynapseSsisVariable(long? id, string name, string description, string dataType, bool? sensitive, string value, string sensitiveValue)
+        /// <param name="id"> Variable id. </param>
+        /// <param name="name"> Variable name. </param>
+        /// <param name="description"> Variable description. </param>
+        /// <param name="dataType"> Variable type. </param>
+        /// <param name="isSensitive"> Whether variable is sensitive. </param>
+        /// <param name="value"> Variable value. </param>
+        /// <param name="sensitiveValue"> Variable sensitive value. </param>
+        internal SynapseSsisVariable(long? id, string name, string description, string dataType, bool? isSensitive, string value, string sensitiveValue)
         {
             Id = id;
             Name = name;
             Description = description;
             DataType = dataType;
-            Sensitive = sensitive;
+            IsSensitive = isSensitive;
             Value = value;
             SensitiveValue = sensitiveValue;
         }
 
-        /// <summary>
-        /// Variable id.
-        /// Serialized Name: SsisVariable.id
-        /// </summary>
+        /// <summary> Variable id. </summary>
         public long? Id { get; }
-        /// <summary>
-        /// Variable name.
-        /// Serialized Name: SsisVariable.name
-        /// </summary>
+        /// <summary> Variable name. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Variable description.
-        /// Serialized Name: SsisVariable.description
-        /// </summary>
+        /// <summary> Variable description. </summary>
         public string Description { get; }
-        /// <summary>
-        /// Variable type.
-        /// Serialized Name: SsisVariable.dataType
-        /// </summary>
+        /// <summary> Variable type. </summary>
         public string DataType { get; }
-        /// <summary>
-        /// Whether variable is sensitive.
-        /// Serialized Name: SsisVariable.sensitive
-        /// </summary>
-        public bool? Sensitive { get; }
-        /// <summary>
-        /// Variable value.
-        /// Serialized Name: SsisVariable.value
-        /// </summary>
+        /// <summary> Whether variable is sensitive. </summary>
+        public bool? IsSensitive { get; }
+        /// <summary> Variable value. </summary>
         public string Value { get; }
-        /// <summary>
-        /// Variable sensitive value.
-        /// Serialized Name: SsisVariable.sensitiveValue
-        /// </summary>
+        /// <summary> Variable sensitive value. </summary>
         public string SensitiveValue { get; }
     }
 }

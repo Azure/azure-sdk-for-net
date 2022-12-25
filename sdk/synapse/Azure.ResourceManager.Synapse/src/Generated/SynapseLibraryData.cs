@@ -25,89 +25,41 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="namePropertiesName">
-        /// Name of the library.
-        /// Serialized Name: LibraryResource.properties.name
-        /// </param>
-        /// <param name="path">
-        /// Storage blob path of library.
-        /// Serialized Name: LibraryResource.properties.path
-        /// </param>
-        /// <param name="containerName">
-        /// Storage blob container name.
-        /// Serialized Name: LibraryResource.properties.containerName
-        /// </param>
-        /// <param name="uploadedTimestamp">
-        /// The last update time of the library.
-        /// Serialized Name: LibraryResource.properties.uploadedTimestamp
-        /// </param>
-        /// <param name="typePropertiesType">
-        /// Type of the library.
-        /// Serialized Name: LibraryResource.properties.type
-        /// </param>
-        /// <param name="provisioningStatus">
-        /// Provisioning status of the library/package.
-        /// Serialized Name: LibraryResource.properties.provisioningStatus
-        /// </param>
-        /// <param name="creatorId">
-        /// Creator Id of the library/package.
-        /// Serialized Name: LibraryResource.properties.creatorId
-        /// </param>
-        /// <param name="etag">
-        /// Resource Etag.
-        /// Serialized Name: AzureEntityResource.etag
-        /// </param>
-        internal SynapseLibraryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string namePropertiesName, string path, string containerName, DateTimeOffset? uploadedTimestamp, string typePropertiesType, string provisioningStatus, string creatorId, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="namePropertiesName"> Name of the library. </param>
+        /// <param name="path"> Storage blob path of library. </param>
+        /// <param name="containerName"> Storage blob container name. </param>
+        /// <param name="uploadedOn"> The last update time of the library. </param>
+        /// <param name="typePropertiesType"> Type of the library. </param>
+        /// <param name="provisioningStatus"> Provisioning status of the library/package. </param>
+        /// <param name="creatorId"> Creator Id of the library/package. </param>
+        /// <param name="etag"> Resource Etag. </param>
+        internal SynapseLibraryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string namePropertiesName, string path, string containerName, DateTimeOffset? uploadedOn, string typePropertiesType, string provisioningStatus, string creatorId, ETag? etag) : base(id, name, resourceType, systemData)
         {
             NamePropertiesName = namePropertiesName;
             Path = path;
             ContainerName = containerName;
-            UploadedTimestamp = uploadedTimestamp;
+            UploadedOn = uploadedOn;
             TypePropertiesType = typePropertiesType;
             ProvisioningStatus = provisioningStatus;
             CreatorId = creatorId;
             ETag = etag;
         }
 
-        /// <summary>
-        /// Name of the library.
-        /// Serialized Name: LibraryResource.properties.name
-        /// </summary>
+        /// <summary> Name of the library. </summary>
         public string NamePropertiesName { get; set; }
-        /// <summary>
-        /// Storage blob path of library.
-        /// Serialized Name: LibraryResource.properties.path
-        /// </summary>
+        /// <summary> Storage blob path of library. </summary>
         public string Path { get; set; }
-        /// <summary>
-        /// Storage blob container name.
-        /// Serialized Name: LibraryResource.properties.containerName
-        /// </summary>
+        /// <summary> Storage blob container name. </summary>
         public string ContainerName { get; set; }
-        /// <summary>
-        /// The last update time of the library.
-        /// Serialized Name: LibraryResource.properties.uploadedTimestamp
-        /// </summary>
-        public DateTimeOffset? UploadedTimestamp { get; set; }
-        /// <summary>
-        /// Type of the library.
-        /// Serialized Name: LibraryResource.properties.type
-        /// </summary>
+        /// <summary> The last update time of the library. </summary>
+        public DateTimeOffset? UploadedOn { get; set; }
+        /// <summary> Type of the library. </summary>
         public string TypePropertiesType { get; set; }
-        /// <summary>
-        /// Provisioning status of the library/package.
-        /// Serialized Name: LibraryResource.properties.provisioningStatus
-        /// </summary>
+        /// <summary> Provisioning status of the library/package. </summary>
         public string ProvisioningStatus { get; }
-        /// <summary>
-        /// Creator Id of the library/package.
-        /// Serialized Name: LibraryResource.properties.creatorId
-        /// </summary>
+        /// <summary> Creator Id of the library/package. </summary>
         public string CreatorId { get; }
-        /// <summary>
-        /// Resource Etag.
-        /// Serialized Name: AzureEntityResource.etag
-        /// </summary>
+        /// <summary> Resource Etag. </summary>
         public ETag? ETag { get; }
     }
 }

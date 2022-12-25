@@ -20,7 +20,6 @@ namespace Azure.ResourceManager.Synapse.Models
     /// Recovery: Creates a sql pool by a geo-replicated backup. sourceDatabaseId  must be specified as the recoverableDatabaseId to restore.
     /// 
     /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool&apos;s original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
-    /// Serialized Name: CreateMode
     /// </summary>
     public readonly partial struct SqlPoolCreateMode : IEquatable<SqlPoolCreateMode>
     {
@@ -38,25 +37,13 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string RecoveryValue = "Recovery";
         private const string RestoreValue = "Restore";
 
-        /// <summary>
-        /// Default
-        /// Serialized Name: CreateMode.Default
-        /// </summary>
+        /// <summary> Default. </summary>
         public static SqlPoolCreateMode Default { get; } = new SqlPoolCreateMode(DefaultValue);
-        /// <summary>
-        /// PointInTimeRestore
-        /// Serialized Name: CreateMode.PointInTimeRestore
-        /// </summary>
+        /// <summary> PointInTimeRestore. </summary>
         public static SqlPoolCreateMode PointInTimeRestore { get; } = new SqlPoolCreateMode(PointInTimeRestoreValue);
-        /// <summary>
-        /// Recovery
-        /// Serialized Name: CreateMode.Recovery
-        /// </summary>
+        /// <summary> Recovery. </summary>
         public static SqlPoolCreateMode Recovery { get; } = new SqlPoolCreateMode(RecoveryValue);
-        /// <summary>
-        /// Restore
-        /// Serialized Name: CreateMode.Restore
-        /// </summary>
+        /// <summary> Restore. </summary>
         public static SqlPoolCreateMode Restore { get; } = new SqlPoolCreateMode(RestoreValue);
         /// <summary> Determines if two <see cref="SqlPoolCreateMode"/> values are the same. </summary>
         public static bool operator ==(SqlPoolCreateMode left, SqlPoolCreateMode right) => left.Equals(right);

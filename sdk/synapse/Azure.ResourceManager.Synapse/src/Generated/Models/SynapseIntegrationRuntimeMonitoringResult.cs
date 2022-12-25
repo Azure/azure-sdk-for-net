@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Get monitoring data response.
-    /// Serialized Name: IntegrationRuntimeMonitoringData
-    /// </summary>
+    /// <summary> Get monitoring data response. </summary>
     public partial class SynapseIntegrationRuntimeMonitoringResult
     {
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeMonitoringResult. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeMonitoringResult. </summary>
-        /// <param name="name">
-        /// Integration runtime name.
-        /// Serialized Name: IntegrationRuntimeMonitoringData.name
-        /// </param>
-        /// <param name="nodes">
-        /// Integration runtime node monitoring data.
-        /// Serialized Name: IntegrationRuntimeMonitoringData.nodes
-        /// </param>
+        /// <param name="name"> Integration runtime name. </param>
+        /// <param name="nodes"> Integration runtime node monitoring data. </param>
         internal SynapseIntegrationRuntimeMonitoringResult(string name, IReadOnlyList<SynapseIntegrationRuntimeNodeMonitoringResult> nodes)
         {
             Name = name;
             Nodes = nodes;
         }
 
-        /// <summary>
-        /// Integration runtime name.
-        /// Serialized Name: IntegrationRuntimeMonitoringData.name
-        /// </summary>
+        /// <summary> Integration runtime name. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Integration runtime node monitoring data.
-        /// Serialized Name: IntegrationRuntimeMonitoringData.nodes
-        /// </summary>
+        /// <summary> Integration runtime node monitoring data. </summary>
         public IReadOnlyList<SynapseIntegrationRuntimeNodeMonitoringResult> Nodes { get; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// A list of server auditing settings.
-    /// Serialized Name: ServerBlobAuditingPolicyListResult
-    /// </summary>
+    /// <summary> A list of server auditing settings. </summary>
     internal partial class SynapseServerBlobAuditingPolicyListResult
     {
         /// <summary> Initializes a new instance of SynapseServerBlobAuditingPolicyListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseServerBlobAuditingPolicyListResult. </summary>
-        /// <param name="value">
-        /// Array of results.
-        /// Serialized Name: ServerBlobAuditingPolicyListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to retrieve next page of results.
-        /// Serialized Name: ServerBlobAuditingPolicyListResult.nextLink
-        /// </param>
+        /// <param name="value"> Array of results. </param>
+        /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SynapseServerBlobAuditingPolicyListResult(IReadOnlyList<SynapseServerBlobAuditingPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Array of results.
-        /// Serialized Name: ServerBlobAuditingPolicyListResult.value
-        /// </summary>
+        /// <summary> Array of results. </summary>
         public IReadOnlyList<SynapseServerBlobAuditingPolicyData> Value { get; }
-        /// <summary>
-        /// Link to retrieve next page of results.
-        /// Serialized Name: ServerBlobAuditingPolicyListResult.nextLink
-        /// </summary>
+        /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }
 }

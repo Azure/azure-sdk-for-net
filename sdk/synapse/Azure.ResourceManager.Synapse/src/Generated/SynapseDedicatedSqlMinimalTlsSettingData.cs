@@ -23,29 +23,17 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location">
-        /// Resource location.
-        /// Serialized Name: DedicatedSQLminimalTlsSettings.location
-        /// </param>
-        /// <param name="minimalTlsVersion">
-        /// The minimal tls version of the sql server.
-        /// Serialized Name: DedicatedSQLminimalTlsSettings.properties.minimalTlsVersion
-        /// </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="minimalTlsVersion"> The minimal tls version of the sql server. </param>
         internal SynapseDedicatedSqlMinimalTlsSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string minimalTlsVersion) : base(id, name, resourceType, systemData)
         {
             Location = location;
             MinimalTlsVersion = minimalTlsVersion;
         }
 
-        /// <summary>
-        /// Resource location.
-        /// Serialized Name: DedicatedSQLminimalTlsSettings.location
-        /// </summary>
+        /// <summary> Resource location. </summary>
         public AzureLocation? Location { get; }
-        /// <summary>
-        /// The minimal tls version of the sql server.
-        /// Serialized Name: DedicatedSQLminimalTlsSettings.properties.minimalTlsVersion
-        /// </summary>
+        /// <summary> The minimal tls version of the sql server. </summary>
         public string MinimalTlsVersion { get; set; }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Ssis folder.
-    /// Serialized Name: SsisFolder
-    /// </summary>
+    /// <summary> Ssis folder. </summary>
     public partial class SynapseSsisFolder : SynapseSsisObjectMetadata
     {
         /// <summary> Initializes a new instance of SynapseSsisFolder. </summary>
@@ -20,22 +17,10 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseSsisFolder. </summary>
-        /// <param name="metadataType">
-        /// Type of metadata.
-        /// Serialized Name: SsisObjectMetadata.type
-        /// </param>
-        /// <param name="id">
-        /// Metadata id.
-        /// Serialized Name: SsisObjectMetadata.id
-        /// </param>
-        /// <param name="name">
-        /// Metadata name.
-        /// Serialized Name: SsisObjectMetadata.name
-        /// </param>
-        /// <param name="description">
-        /// Metadata description.
-        /// Serialized Name: SsisObjectMetadata.description
-        /// </param>
+        /// <param name="metadataType"> Type of metadata. </param>
+        /// <param name="id"> Metadata id. </param>
+        /// <param name="name"> Metadata name. </param>
+        /// <param name="description"> Metadata description. </param>
         internal SynapseSsisFolder(SynapseSsisObjectMetadataType metadataType, long? id, string name, string description) : base(metadataType, id, name, description)
         {
             MetadataType = metadataType;

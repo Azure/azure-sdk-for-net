@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// SKU size.
-    /// Serialized Name: SkuSize
-    /// </summary>
+    /// <summary> SKU size. </summary>
     public readonly partial struct KustoPoolSkuSize : IEquatable<KustoPoolSkuSize>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string MediumValue = "Medium";
         private const string LargeValue = "Large";
 
-        /// <summary>
-        /// Extra small
-        /// Serialized Name: SkuSize.Extra small
-        /// </summary>
+        /// <summary> Extra small. </summary>
         public static KustoPoolSkuSize ExtraSmall { get; } = new KustoPoolSkuSize(ExtraSmallValue);
-        /// <summary>
-        /// Small
-        /// Serialized Name: SkuSize.Small
-        /// </summary>
+        /// <summary> Small. </summary>
         public static KustoPoolSkuSize Small { get; } = new KustoPoolSkuSize(SmallValue);
-        /// <summary>
-        /// Medium
-        /// Serialized Name: SkuSize.Medium
-        /// </summary>
+        /// <summary> Medium. </summary>
         public static KustoPoolSkuSize Medium { get; } = new KustoPoolSkuSize(MediumValue);
-        /// <summary>
-        /// Large
-        /// Serialized Name: SkuSize.Large
-        /// </summary>
+        /// <summary> Large. </summary>
         public static KustoPoolSkuSize Large { get; } = new KustoPoolSkuSize(LargeValue);
         /// <summary> Determines if two <see cref="KustoPoolSkuSize"/> values are the same. </summary>
         public static bool operator ==(KustoPoolSkuSize left, KustoPoolSkuSize right) => left.Equals(right);

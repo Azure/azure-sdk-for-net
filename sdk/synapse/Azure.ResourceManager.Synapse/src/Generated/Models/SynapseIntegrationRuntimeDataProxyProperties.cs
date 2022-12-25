@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Data proxy properties for a managed dedicated integration runtime.
-    /// Serialized Name: IntegrationRuntimeDataProxyProperties
-    /// </summary>
+    /// <summary> Data proxy properties for a managed dedicated integration runtime. </summary>
     public partial class SynapseIntegrationRuntimeDataProxyProperties
     {
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeDataProxyProperties. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeDataProxyProperties. </summary>
-        /// <param name="connectVia">
-        /// The self-hosted integration runtime reference.
-        /// Serialized Name: IntegrationRuntimeDataProxyProperties.connectVia
-        /// </param>
-        /// <param name="stagingLinkedService">
-        /// The staging linked service reference.
-        /// Serialized Name: IntegrationRuntimeDataProxyProperties.stagingLinkedService
-        /// </param>
-        /// <param name="path">
-        /// The path to contain the staged data in the Blob storage.
-        /// Serialized Name: IntegrationRuntimeDataProxyProperties.path
-        /// </param>
+        /// <param name="connectVia"> The self-hosted integration runtime reference. </param>
+        /// <param name="stagingLinkedService"> The staging linked service reference. </param>
+        /// <param name="path"> The path to contain the staged data in the Blob storage. </param>
         internal SynapseIntegrationRuntimeDataProxyProperties(SynapseEntityReference connectVia, SynapseEntityReference stagingLinkedService, string path)
         {
             ConnectVia = connectVia;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.Synapse.Models
             Path = path;
         }
 
-        /// <summary>
-        /// The self-hosted integration runtime reference.
-        /// Serialized Name: IntegrationRuntimeDataProxyProperties.connectVia
-        /// </summary>
+        /// <summary> The self-hosted integration runtime reference. </summary>
         public SynapseEntityReference ConnectVia { get; set; }
-        /// <summary>
-        /// The staging linked service reference.
-        /// Serialized Name: IntegrationRuntimeDataProxyProperties.stagingLinkedService
-        /// </summary>
+        /// <summary> The staging linked service reference. </summary>
         public SynapseEntityReference StagingLinkedService { get; set; }
-        /// <summary>
-        /// The path to contain the staged data in the Blob storage.
-        /// Serialized Name: IntegrationRuntimeDataProxyProperties.path
-        /// </summary>
+        /// <summary> The path to contain the staged data in the Blob storage. </summary>
         public string Path { get; set; }
     }
 }

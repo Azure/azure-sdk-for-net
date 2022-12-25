@@ -10,19 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The role based access control (RBAC) authorization type integration runtime.
-    /// Serialized Name: LinkedIntegrationRuntimeRbacAuthorization
-    /// </summary>
+    /// <summary> The role based access control (RBAC) authorization type integration runtime. </summary>
     public partial class SynapseLinkedIntegrationRuntimeRbacAuthorization : SynapseLinkedIntegrationRuntimeType
     {
         /// <summary> Initializes a new instance of SynapseLinkedIntegrationRuntimeRbacAuthorization. </summary>
-        /// <param name="resourceId">
-        /// The resource identifier of the integration runtime to be shared.
-        /// Serialized Name: LinkedIntegrationRuntimeRbacAuthorization.resourceId
-        /// </param>
+        /// <param name="resourceId"> The resource identifier of the integration runtime to be shared. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public SynapseLinkedIntegrationRuntimeRbacAuthorization(string resourceId)
+        public SynapseLinkedIntegrationRuntimeRbacAuthorization(ResourceIdentifier resourceId)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
@@ -31,24 +25,15 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseLinkedIntegrationRuntimeRbacAuthorization. </summary>
-        /// <param name="authorizationType">
-        /// The authorization type for integration runtime sharing.
-        /// Serialized Name: LinkedIntegrationRuntimeType.authorizationType
-        /// </param>
-        /// <param name="resourceId">
-        /// The resource identifier of the integration runtime to be shared.
-        /// Serialized Name: LinkedIntegrationRuntimeRbacAuthorization.resourceId
-        /// </param>
-        internal SynapseLinkedIntegrationRuntimeRbacAuthorization(string authorizationType, string resourceId) : base(authorizationType)
+        /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
+        /// <param name="resourceId"> The resource identifier of the integration runtime to be shared. </param>
+        internal SynapseLinkedIntegrationRuntimeRbacAuthorization(string authorizationType, ResourceIdentifier resourceId) : base(authorizationType)
         {
             ResourceId = resourceId;
             AuthorizationType = authorizationType ?? "RBAC";
         }
 
-        /// <summary>
-        /// The resource identifier of the integration runtime to be shared.
-        /// Serialized Name: LinkedIntegrationRuntimeRbacAuthorization.resourceId
-        /// </summary>
-        public string ResourceId { get; set; }
+        /// <summary> The resource identifier of the integration runtime to be shared. </summary>
+        public ResourceIdentifier ResourceId { get; set; }
     }
 }

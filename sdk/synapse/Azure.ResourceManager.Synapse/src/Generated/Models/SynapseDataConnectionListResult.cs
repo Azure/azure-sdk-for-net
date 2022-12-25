@@ -11,10 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The list Kusto data connections operation response.
-    /// Serialized Name: DataConnectionListResult
-    /// </summary>
+    /// <summary> The list Kusto data connections operation response. </summary>
     internal partial class SynapseDataConnectionListResult
     {
         /// <summary> Initializes a new instance of SynapseDataConnectionListResult. </summary>
@@ -26,7 +23,6 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseDataConnectionListResult. </summary>
         /// <param name="value">
         /// The list of Kusto data connections.
-        /// Serialized Name: DataConnectionListResult.value
         /// Please note <see cref="SynapseDataConnectionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SynapseEventGridDataConnection"/>, <see cref="SynapseEventHubDataConnection"/> and <see cref="SynapseIotHubDataConnection"/>.
         /// </param>
@@ -37,7 +33,6 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary>
         /// The list of Kusto data connections.
-        /// Serialized Name: DataConnectionListResult.value
         /// Please note <see cref="SynapseDataConnectionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SynapseEventGridDataConnection"/>, <see cref="SynapseEventHubDataConnection"/> and <see cref="SynapseIotHubDataConnection"/>.
         /// </summary>

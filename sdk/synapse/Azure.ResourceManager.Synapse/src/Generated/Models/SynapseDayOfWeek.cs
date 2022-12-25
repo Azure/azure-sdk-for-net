@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Day of maintenance window.
-    /// Serialized Name: DayOfWeek
-    /// </summary>
+    /// <summary> Day of maintenance window. </summary>
     public readonly partial struct SynapseDayOfWeek : IEquatable<SynapseDayOfWeek>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string FridayValue = "Friday";
         private const string SaturdayValue = "Saturday";
 
-        /// <summary>
-        /// Sunday
-        /// Serialized Name: DayOfWeek.Sunday
-        /// </summary>
+        /// <summary> Sunday. </summary>
         public static SynapseDayOfWeek Sunday { get; } = new SynapseDayOfWeek(SundayValue);
-        /// <summary>
-        /// Monday
-        /// Serialized Name: DayOfWeek.Monday
-        /// </summary>
+        /// <summary> Monday. </summary>
         public static SynapseDayOfWeek Monday { get; } = new SynapseDayOfWeek(MondayValue);
-        /// <summary>
-        /// Tuesday
-        /// Serialized Name: DayOfWeek.Tuesday
-        /// </summary>
+        /// <summary> Tuesday. </summary>
         public static SynapseDayOfWeek Tuesday { get; } = new SynapseDayOfWeek(TuesdayValue);
-        /// <summary>
-        /// Wednesday
-        /// Serialized Name: DayOfWeek.Wednesday
-        /// </summary>
+        /// <summary> Wednesday. </summary>
         public static SynapseDayOfWeek Wednesday { get; } = new SynapseDayOfWeek(WednesdayValue);
-        /// <summary>
-        /// Thursday
-        /// Serialized Name: DayOfWeek.Thursday
-        /// </summary>
+        /// <summary> Thursday. </summary>
         public static SynapseDayOfWeek Thursday { get; } = new SynapseDayOfWeek(ThursdayValue);
-        /// <summary>
-        /// Friday
-        /// Serialized Name: DayOfWeek.Friday
-        /// </summary>
+        /// <summary> Friday. </summary>
         public static SynapseDayOfWeek Friday { get; } = new SynapseDayOfWeek(FridayValue);
-        /// <summary>
-        /// Saturday
-        /// Serialized Name: DayOfWeek.Saturday
-        /// </summary>
+        /// <summary> Saturday. </summary>
         public static SynapseDayOfWeek Saturday { get; } = new SynapseDayOfWeek(SaturdayValue);
         /// <summary> Determines if two <see cref="SynapseDayOfWeek"/> values are the same. </summary>
         public static bool operator ==(SynapseDayOfWeek left, SynapseDayOfWeek right) => left.Equals(right);

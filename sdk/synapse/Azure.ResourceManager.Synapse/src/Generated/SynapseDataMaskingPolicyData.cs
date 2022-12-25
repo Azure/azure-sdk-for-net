@@ -24,34 +24,13 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location">
-        /// The location of the data masking policy.
-        /// Serialized Name: DataMaskingPolicy.location
-        /// </param>
-        /// <param name="kind">
-        /// The kind of data masking policy. Metadata, used for Azure portal.
-        /// Serialized Name: DataMaskingPolicy.kind
-        /// </param>
-        /// <param name="managedBy">
-        /// Fully qualified resource ID of the sql pool
-        /// Serialized Name: DataMaskingPolicy.managedBy
-        /// </param>
-        /// <param name="dataMaskingState">
-        /// The state of the data masking policy.
-        /// Serialized Name: DataMaskingPolicy.properties.dataMaskingState
-        /// </param>
-        /// <param name="exemptPrincipals">
-        /// The list of the exempt principals. Specifies the semicolon-separated list of database users for which the data masking policy does not apply. The specified users receive data results without masking for all of the database queries.
-        /// Serialized Name: DataMaskingPolicy.properties.exemptPrincipals
-        /// </param>
-        /// <param name="applicationPrincipals">
-        /// The list of the application principals. This is a legacy parameter and is no longer used.
-        /// Serialized Name: DataMaskingPolicy.properties.applicationPrincipals
-        /// </param>
-        /// <param name="maskingLevel">
-        /// The masking level. This is a legacy parameter and is no longer used.
-        /// Serialized Name: DataMaskingPolicy.properties.maskingLevel
-        /// </param>
+        /// <param name="location"> The location of the data masking policy. </param>
+        /// <param name="kind"> The kind of data masking policy. Metadata, used for Azure portal. </param>
+        /// <param name="managedBy"> Fully qualified resource ID of the sql pool. </param>
+        /// <param name="dataMaskingState"> The state of the data masking policy. </param>
+        /// <param name="exemptPrincipals"> The list of the exempt principals. Specifies the semicolon-separated list of database users for which the data masking policy does not apply. The specified users receive data results without masking for all of the database queries. </param>
+        /// <param name="applicationPrincipals"> The list of the application principals. This is a legacy parameter and is no longer used. </param>
+        /// <param name="maskingLevel"> The masking level. This is a legacy parameter and is no longer used. </param>
         internal SynapseDataMaskingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string kind, string managedBy, SynapseDataMaskingState? dataMaskingState, string exemptPrincipals, string applicationPrincipals, string maskingLevel) : base(id, name, resourceType, systemData)
         {
             Location = location;
@@ -63,40 +42,19 @@ namespace Azure.ResourceManager.Synapse
             MaskingLevel = maskingLevel;
         }
 
-        /// <summary>
-        /// The location of the data masking policy.
-        /// Serialized Name: DataMaskingPolicy.location
-        /// </summary>
+        /// <summary> The location of the data masking policy. </summary>
         public AzureLocation? Location { get; }
-        /// <summary>
-        /// The kind of data masking policy. Metadata, used for Azure portal.
-        /// Serialized Name: DataMaskingPolicy.kind
-        /// </summary>
+        /// <summary> The kind of data masking policy. Metadata, used for Azure portal. </summary>
         public string Kind { get; }
-        /// <summary>
-        /// Fully qualified resource ID of the sql pool
-        /// Serialized Name: DataMaskingPolicy.managedBy
-        /// </summary>
+        /// <summary> Fully qualified resource ID of the sql pool. </summary>
         public string ManagedBy { get; }
-        /// <summary>
-        /// The state of the data masking policy.
-        /// Serialized Name: DataMaskingPolicy.properties.dataMaskingState
-        /// </summary>
+        /// <summary> The state of the data masking policy. </summary>
         public SynapseDataMaskingState? DataMaskingState { get; set; }
-        /// <summary>
-        /// The list of the exempt principals. Specifies the semicolon-separated list of database users for which the data masking policy does not apply. The specified users receive data results without masking for all of the database queries.
-        /// Serialized Name: DataMaskingPolicy.properties.exemptPrincipals
-        /// </summary>
+        /// <summary> The list of the exempt principals. Specifies the semicolon-separated list of database users for which the data masking policy does not apply. The specified users receive data results without masking for all of the database queries. </summary>
         public string ExemptPrincipals { get; set; }
-        /// <summary>
-        /// The list of the application principals. This is a legacy parameter and is no longer used.
-        /// Serialized Name: DataMaskingPolicy.properties.applicationPrincipals
-        /// </summary>
+        /// <summary> The list of the application principals. This is a legacy parameter and is no longer used. </summary>
         public string ApplicationPrincipals { get; }
-        /// <summary>
-        /// The masking level. This is a legacy parameter and is no longer used.
-        /// Serialized Name: DataMaskingPolicy.properties.maskingLevel
-        /// </summary>
+        /// <summary> The masking level. This is a legacy parameter and is no longer used. </summary>
         public string MaskingLevel { get; }
     }
 }

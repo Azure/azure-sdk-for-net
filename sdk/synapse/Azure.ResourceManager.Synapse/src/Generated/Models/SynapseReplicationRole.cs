@@ -7,36 +7,18 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The role of the Sql pool in the replication link.
-    /// Serialized Name: ReplicationRole
-    /// </summary>
+    /// <summary> The role of the Sql pool in the replication link. </summary>
     public enum SynapseReplicationRole
     {
-        /// <summary>
-        /// Primary
-        /// Serialized Name: ReplicationRole.Primary
-        /// </summary>
+        /// <summary> Primary. </summary>
         Primary,
-        /// <summary>
-        /// Secondary
-        /// Serialized Name: ReplicationRole.Secondary
-        /// </summary>
+        /// <summary> Secondary. </summary>
         Secondary,
-        /// <summary>
-        /// NonReadableSecondary
-        /// Serialized Name: ReplicationRole.NonReadableSecondary
-        /// </summary>
+        /// <summary> NonReadableSecondary. </summary>
         NonReadableSecondary,
-        /// <summary>
-        /// Source
-        /// Serialized Name: ReplicationRole.Source
-        /// </summary>
+        /// <summary> Source. </summary>
         Source,
-        /// <summary>
-        /// Copy
-        /// Serialized Name: ReplicationRole.Copy
-        /// </summary>
+        /// <summary> Copy. </summary>
         Copy
     }
 }

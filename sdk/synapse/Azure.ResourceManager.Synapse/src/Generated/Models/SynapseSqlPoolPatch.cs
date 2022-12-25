@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// A SQL Analytics pool patch info
-    /// Serialized Name: SqlPoolPatchInfo
-    /// </summary>
+    /// <summary> A SQL Analytics pool patch info. </summary>
     public partial class SynapseSqlPoolPatch
     {
         /// <summary> Initializes a new instance of SynapseSqlPoolPatch. </summary>
@@ -23,55 +20,25 @@ namespace Azure.ResourceManager.Synapse.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// Resource tags.
-        /// Serialized Name: SqlPoolPatchInfo.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// The geo-location where the resource lives
-        /// Serialized Name: SqlPoolPatchInfo.location
-        /// </summary>
+        /// <summary> The geo-location where the resource lives. </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary>
-        /// SQL pool SKU
-        /// Serialized Name: SqlPoolPatchInfo.sku
-        /// </summary>
+        /// <summary> SQL pool SKU. </summary>
         public SynapseSku Sku { get; set; }
-        /// <summary>
-        /// Maximum size in bytes
-        /// Serialized Name: SqlPoolPatchInfo.properties.maxSizeBytes
-        /// </summary>
+        /// <summary> Maximum size in bytes. </summary>
         public long? MaxSizeBytes { get; set; }
-        /// <summary>
-        /// Collation mode
-        /// Serialized Name: SqlPoolPatchInfo.properties.collation
-        /// </summary>
+        /// <summary> Collation mode. </summary>
         public string Collation { get; set; }
-        /// <summary>
-        /// Source database to create from
-        /// Serialized Name: SqlPoolPatchInfo.properties.sourceDatabaseId
-        /// </summary>
+        /// <summary> Source database to create from. </summary>
         public string SourceDatabaseId { get; set; }
-        /// <summary>
-        /// Backup database to restore from
-        /// Serialized Name: SqlPoolPatchInfo.properties.recoverableDatabaseId
-        /// </summary>
+        /// <summary> Backup database to restore from. </summary>
         public string RecoverableDatabaseId { get; set; }
-        /// <summary>
-        /// Resource state
-        /// Serialized Name: SqlPoolPatchInfo.properties.provisioningState
-        /// </summary>
+        /// <summary> Resource state. </summary>
         public string ProvisioningState { get; set; }
-        /// <summary>
-        /// Resource status
-        /// Serialized Name: SqlPoolPatchInfo.properties.status
-        /// </summary>
+        /// <summary> Resource status. </summary>
         public string Status { get; }
-        /// <summary>
-        /// Snapshot time to restore
-        /// Serialized Name: SqlPoolPatchInfo.properties.restorePointInTime
-        /// </summary>
+        /// <summary> Snapshot time to restore. </summary>
         public DateTimeOffset? RestorePointInTime { get; set; }
         /// <summary>
         /// Specifies the mode of sql pool creation.
@@ -83,23 +50,13 @@ namespace Azure.ResourceManager.Synapse.Models
         /// Recovery: Creates a sql pool by a geo-replicated backup. sourceDatabaseId  must be specified as the recoverableDatabaseId to restore.
         /// 
         /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool&apos;s original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
-        /// Serialized Name: SqlPoolPatchInfo.properties.createMode
         /// </summary>
         public SqlPoolCreateMode? CreateMode { get; set; }
-        /// <summary>
-        /// Date the SQL pool was created
-        /// Serialized Name: SqlPoolPatchInfo.properties.creationDate
-        /// </summary>
+        /// <summary> Date the SQL pool was created. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The storage account type used to store backups for this sql pool.
-        /// Serialized Name: SqlPoolPatchInfo.properties.storageAccountType
-        /// </summary>
+        /// <summary> The storage account type used to store backups for this sql pool. </summary>
         public SqlPoolStorageAccountType? StorageAccountType { get; set; }
-        /// <summary>
-        /// Specifies the time that the sql pool was deleted
-        /// Serialized Name: SqlPoolPatchInfo.properties.sourceDatabaseDeletionDate
-        /// </summary>
+        /// <summary> Specifies the time that the sql pool was deleted. </summary>
         public DateTimeOffset? SourceDatabaseDeletionOn { get; set; }
     }
 }

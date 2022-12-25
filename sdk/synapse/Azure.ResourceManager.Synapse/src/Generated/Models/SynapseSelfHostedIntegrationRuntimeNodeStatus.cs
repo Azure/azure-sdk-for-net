@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Status of the integration runtime node.
-    /// Serialized Name: SelfHostedIntegrationRuntimeNodeStatus
-    /// </summary>
+    /// <summary> Status of the integration runtime node. </summary>
     public readonly partial struct SynapseSelfHostedIntegrationRuntimeNodeStatus : IEquatable<SynapseSelfHostedIntegrationRuntimeNodeStatus>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string InitializingValue = "Initializing";
         private const string InitializeFailedValue = "InitializeFailed";
 
-        /// <summary>
-        /// NeedRegistration
-        /// Serialized Name: SelfHostedIntegrationRuntimeNodeStatus.NeedRegistration
-        /// </summary>
+        /// <summary> NeedRegistration. </summary>
         public static SynapseSelfHostedIntegrationRuntimeNodeStatus NeedRegistration { get; } = new SynapseSelfHostedIntegrationRuntimeNodeStatus(NeedRegistrationValue);
-        /// <summary>
-        /// Online
-        /// Serialized Name: SelfHostedIntegrationRuntimeNodeStatus.Online
-        /// </summary>
+        /// <summary> Online. </summary>
         public static SynapseSelfHostedIntegrationRuntimeNodeStatus Online { get; } = new SynapseSelfHostedIntegrationRuntimeNodeStatus(OnlineValue);
-        /// <summary>
-        /// Limited
-        /// Serialized Name: SelfHostedIntegrationRuntimeNodeStatus.Limited
-        /// </summary>
+        /// <summary> Limited. </summary>
         public static SynapseSelfHostedIntegrationRuntimeNodeStatus Limited { get; } = new SynapseSelfHostedIntegrationRuntimeNodeStatus(LimitedValue);
-        /// <summary>
-        /// Offline
-        /// Serialized Name: SelfHostedIntegrationRuntimeNodeStatus.Offline
-        /// </summary>
+        /// <summary> Offline. </summary>
         public static SynapseSelfHostedIntegrationRuntimeNodeStatus Offline { get; } = new SynapseSelfHostedIntegrationRuntimeNodeStatus(OfflineValue);
-        /// <summary>
-        /// Upgrading
-        /// Serialized Name: SelfHostedIntegrationRuntimeNodeStatus.Upgrading
-        /// </summary>
+        /// <summary> Upgrading. </summary>
         public static SynapseSelfHostedIntegrationRuntimeNodeStatus Upgrading { get; } = new SynapseSelfHostedIntegrationRuntimeNodeStatus(UpgradingValue);
-        /// <summary>
-        /// Initializing
-        /// Serialized Name: SelfHostedIntegrationRuntimeNodeStatus.Initializing
-        /// </summary>
+        /// <summary> Initializing. </summary>
         public static SynapseSelfHostedIntegrationRuntimeNodeStatus Initializing { get; } = new SynapseSelfHostedIntegrationRuntimeNodeStatus(InitializingValue);
-        /// <summary>
-        /// InitializeFailed
-        /// Serialized Name: SelfHostedIntegrationRuntimeNodeStatus.InitializeFailed
-        /// </summary>
+        /// <summary> InitializeFailed. </summary>
         public static SynapseSelfHostedIntegrationRuntimeNodeStatus InitializeFailed { get; } = new SynapseSelfHostedIntegrationRuntimeNodeStatus(InitializeFailedValue);
         /// <summary> Determines if two <see cref="SynapseSelfHostedIntegrationRuntimeNodeStatus"/> values are the same. </summary>
         public static bool operator ==(SynapseSelfHostedIntegrationRuntimeNodeStatus left, SynapseSelfHostedIntegrationRuntimeNodeStatus right) => left.Equals(right);

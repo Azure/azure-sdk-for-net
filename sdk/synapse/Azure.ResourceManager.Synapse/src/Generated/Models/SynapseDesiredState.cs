@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Desired state
-    /// Serialized Name: DesiredState
-    /// </summary>
+    /// <summary> Desired state. </summary>
     public enum SynapseDesiredState
     {
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: DesiredState.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         Enabled,
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: DesiredState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         Disabled
     }
 }

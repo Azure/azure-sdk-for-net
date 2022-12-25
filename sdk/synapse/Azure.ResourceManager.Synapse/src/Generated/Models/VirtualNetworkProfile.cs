@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Virtual Network Profile
-    /// Serialized Name: VirtualNetworkProfile
-    /// </summary>
+    /// <summary> Virtual Network Profile. </summary>
     internal partial class VirtualNetworkProfile
     {
         /// <summary> Initializes a new instance of VirtualNetworkProfile. </summary>
@@ -19,19 +16,13 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkProfile. </summary>
-        /// <param name="computeSubnetId">
-        /// Subnet ID used for computes in workspace
-        /// Serialized Name: VirtualNetworkProfile.computeSubnetId
-        /// </param>
+        /// <param name="computeSubnetId"> Subnet ID used for computes in workspace. </param>
         internal VirtualNetworkProfile(string computeSubnetId)
         {
             ComputeSubnetId = computeSubnetId;
         }
 
-        /// <summary>
-        /// Subnet ID used for computes in workspace
-        /// Serialized Name: VirtualNetworkProfile.computeSubnetId
-        /// </summary>
+        /// <summary> Subnet ID used for computes in workspace. </summary>
         public string ComputeSubnetId { get; set; }
     }
 }

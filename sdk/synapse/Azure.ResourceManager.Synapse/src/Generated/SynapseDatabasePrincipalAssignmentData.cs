@@ -25,39 +25,15 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="principalId">
-        /// The principal ID assigned to the database principal. It can be a user email, application ID, or security group name.
-        /// Serialized Name: DatabasePrincipalAssignment.properties.principalId
-        /// </param>
-        /// <param name="role">
-        /// Database principal role.
-        /// Serialized Name: DatabasePrincipalAssignment.properties.role
-        /// </param>
-        /// <param name="tenantId">
-        /// The tenant id of the principal
-        /// Serialized Name: DatabasePrincipalAssignment.properties.tenantId
-        /// </param>
-        /// <param name="principalType">
-        /// Principal type.
-        /// Serialized Name: DatabasePrincipalAssignment.properties.principalType
-        /// </param>
-        /// <param name="tenantName">
-        /// The tenant name of the principal
-        /// Serialized Name: DatabasePrincipalAssignment.properties.tenantName
-        /// </param>
-        /// <param name="principalName">
-        /// The principal name
-        /// Serialized Name: DatabasePrincipalAssignment.properties.principalName
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioned state of the resource.
-        /// Serialized Name: DatabasePrincipalAssignment.properties.provisioningState
-        /// </param>
-        /// <param name="aadObjectId">
-        /// The service principal object id in AAD (Azure active directory)
-        /// Serialized Name: DatabasePrincipalAssignment.properties.aadObjectId
-        /// </param>
-        internal SynapseDatabasePrincipalAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string principalId, SynapseDatabasePrincipalRole? role, Guid? tenantId, SynapsePrincipalType? principalType, string tenantName, string principalName, ResourceProvisioningState? provisioningState, string aadObjectId) : base(id, name, resourceType, systemData)
+        /// <param name="principalId"> The principal ID assigned to the database principal. It can be a user email, application ID, or security group name. </param>
+        /// <param name="role"> Database principal role. </param>
+        /// <param name="tenantId"> The tenant id of the principal. </param>
+        /// <param name="principalType"> Principal type. </param>
+        /// <param name="tenantName"> The tenant name of the principal. </param>
+        /// <param name="principalName"> The principal name. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="aadObjectId"> The service principal object id in AAD (Azure active directory). </param>
+        internal SynapseDatabasePrincipalAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string principalId, SynapseDatabasePrincipalRole? role, Guid? tenantId, SynapsePrincipalType? principalType, string tenantName, string principalName, ResourceProvisioningState? provisioningState, Guid? aadObjectId) : base(id, name, resourceType, systemData)
         {
             PrincipalId = principalId;
             Role = role;
@@ -69,45 +45,21 @@ namespace Azure.ResourceManager.Synapse
             AadObjectId = aadObjectId;
         }
 
-        /// <summary>
-        /// The principal ID assigned to the database principal. It can be a user email, application ID, or security group name.
-        /// Serialized Name: DatabasePrincipalAssignment.properties.principalId
-        /// </summary>
+        /// <summary> The principal ID assigned to the database principal. It can be a user email, application ID, or security group name. </summary>
         public string PrincipalId { get; set; }
-        /// <summary>
-        /// Database principal role.
-        /// Serialized Name: DatabasePrincipalAssignment.properties.role
-        /// </summary>
+        /// <summary> Database principal role. </summary>
         public SynapseDatabasePrincipalRole? Role { get; set; }
-        /// <summary>
-        /// The tenant id of the principal
-        /// Serialized Name: DatabasePrincipalAssignment.properties.tenantId
-        /// </summary>
+        /// <summary> The tenant id of the principal. </summary>
         public Guid? TenantId { get; set; }
-        /// <summary>
-        /// Principal type.
-        /// Serialized Name: DatabasePrincipalAssignment.properties.principalType
-        /// </summary>
+        /// <summary> Principal type. </summary>
         public SynapsePrincipalType? PrincipalType { get; set; }
-        /// <summary>
-        /// The tenant name of the principal
-        /// Serialized Name: DatabasePrincipalAssignment.properties.tenantName
-        /// </summary>
+        /// <summary> The tenant name of the principal. </summary>
         public string TenantName { get; }
-        /// <summary>
-        /// The principal name
-        /// Serialized Name: DatabasePrincipalAssignment.properties.principalName
-        /// </summary>
+        /// <summary> The principal name. </summary>
         public string PrincipalName { get; }
-        /// <summary>
-        /// The provisioned state of the resource.
-        /// Serialized Name: DatabasePrincipalAssignment.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioned state of the resource. </summary>
         public ResourceProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// The service principal object id in AAD (Azure active directory)
-        /// Serialized Name: DatabasePrincipalAssignment.properties.aadObjectId
-        /// </summary>
-        public string AadObjectId { get; }
+        /// <summary> The service principal object id in AAD (Azure active directory). </summary>
+        public Guid? AadObjectId { get; }
     }
 }

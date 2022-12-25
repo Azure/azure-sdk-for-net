@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// License type for bringing your own license scenario.
-    /// Serialized Name: IntegrationRuntimeLicenseType
-    /// </summary>
+    /// <summary> License type for bringing your own license scenario. </summary>
     public readonly partial struct SynapseIntegrationRuntimeLicenseType : IEquatable<SynapseIntegrationRuntimeLicenseType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string BasePriceValue = "BasePrice";
         private const string LicenseIncludedValue = "LicenseIncluded";
 
-        /// <summary>
-        /// BasePrice
-        /// Serialized Name: IntegrationRuntimeLicenseType.BasePrice
-        /// </summary>
+        /// <summary> BasePrice. </summary>
         public static SynapseIntegrationRuntimeLicenseType BasePrice { get; } = new SynapseIntegrationRuntimeLicenseType(BasePriceValue);
-        /// <summary>
-        /// LicenseIncluded
-        /// Serialized Name: IntegrationRuntimeLicenseType.LicenseIncluded
-        /// </summary>
+        /// <summary> LicenseIncluded. </summary>
         public static SynapseIntegrationRuntimeLicenseType LicenseIncluded { get; } = new SynapseIntegrationRuntimeLicenseType(LicenseIncludedValue);
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeLicenseType"/> values are the same. </summary>
         public static bool operator ==(SynapseIntegrationRuntimeLicenseType left, SynapseIntegrationRuntimeLicenseType right) => left.Equals(right);

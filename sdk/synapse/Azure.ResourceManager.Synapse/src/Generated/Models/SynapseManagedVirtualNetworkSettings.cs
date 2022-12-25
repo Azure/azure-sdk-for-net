@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Managed Virtual Network Settings
-    /// Serialized Name: ManagedVirtualNetworkSettings
-    /// </summary>
+    /// <summary> Managed Virtual Network Settings. </summary>
     public partial class SynapseManagedVirtualNetworkSettings
     {
         /// <summary> Initializes a new instance of SynapseManagedVirtualNetworkSettings. </summary>
@@ -23,18 +20,9 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseManagedVirtualNetworkSettings. </summary>
-        /// <param name="preventDataExfiltration">
-        /// Prevent Data Exfiltration
-        /// Serialized Name: ManagedVirtualNetworkSettings.preventDataExfiltration
-        /// </param>
-        /// <param name="enableLinkedAccessCheckOnTargetResource">
-        /// Linked Access Check On Target Resource
-        /// Serialized Name: ManagedVirtualNetworkSettings.linkedAccessCheckOnTargetResource
-        /// </param>
-        /// <param name="allowedAadTenantIdsForLinking">
-        /// Allowed Aad Tenant Ids For Linking
-        /// Serialized Name: ManagedVirtualNetworkSettings.allowedAadTenantIdsForLinking
-        /// </param>
+        /// <param name="preventDataExfiltration"> Prevent Data Exfiltration. </param>
+        /// <param name="enableLinkedAccessCheckOnTargetResource"> Linked Access Check On Target Resource. </param>
+        /// <param name="allowedAadTenantIdsForLinking"> Allowed Aad Tenant Ids For Linking. </param>
         internal SynapseManagedVirtualNetworkSettings(bool? preventDataExfiltration, bool? enableLinkedAccessCheckOnTargetResource, IList<string> allowedAadTenantIdsForLinking)
         {
             PreventDataExfiltration = preventDataExfiltration;
@@ -42,20 +30,11 @@ namespace Azure.ResourceManager.Synapse.Models
             AllowedAadTenantIdsForLinking = allowedAadTenantIdsForLinking;
         }
 
-        /// <summary>
-        /// Prevent Data Exfiltration
-        /// Serialized Name: ManagedVirtualNetworkSettings.preventDataExfiltration
-        /// </summary>
+        /// <summary> Prevent Data Exfiltration. </summary>
         public bool? PreventDataExfiltration { get; set; }
-        /// <summary>
-        /// Linked Access Check On Target Resource
-        /// Serialized Name: ManagedVirtualNetworkSettings.linkedAccessCheckOnTargetResource
-        /// </summary>
+        /// <summary> Linked Access Check On Target Resource. </summary>
         public bool? EnableLinkedAccessCheckOnTargetResource { get; set; }
-        /// <summary>
-        /// Allowed Aad Tenant Ids For Linking
-        /// Serialized Name: ManagedVirtualNetworkSettings.allowedAadTenantIdsForLinking
-        /// </summary>
+        /// <summary> Allowed Aad Tenant Ids For Linking. </summary>
         public IList<string> AllowedAadTenantIdsForLinking { get; }
     }
 }

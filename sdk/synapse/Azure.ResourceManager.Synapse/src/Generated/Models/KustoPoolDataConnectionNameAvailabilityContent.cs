@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// A data connection check name availability request.
-    /// Serialized Name: DataConnectionCheckNameRequest
-    /// </summary>
+    /// <summary> A data connection check name availability request. </summary>
     public partial class KustoPoolDataConnectionNameAvailabilityContent
     {
         /// <summary> Initializes a new instance of KustoPoolDataConnectionNameAvailabilityContent. </summary>
-        /// <param name="name">
-        /// Data Connection name.
-        /// Serialized Name: DataConnectionCheckNameRequest.name
-        /// </param>
+        /// <param name="name"> Data Connection name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoPoolDataConnectionNameAvailabilityContent(string name)
         {
@@ -30,15 +24,9 @@ namespace Azure.ResourceManager.Synapse.Models
             ResourceType = SynapseDataConnectionType.MicrosoftSynapseWorkspacesKustoPoolsDatabasesDataConnections;
         }
 
-        /// <summary>
-        /// Data Connection name.
-        /// Serialized Name: DataConnectionCheckNameRequest.name
-        /// </summary>
+        /// <summary> Data Connection name. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The type of resource, Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections.
-        /// Serialized Name: DataConnectionCheckNameRequest.type
-        /// </summary>
+        /// <summary> The type of resource, Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections. </summary>
         public SynapseDataConnectionType ResourceType { get; }
     }
 }

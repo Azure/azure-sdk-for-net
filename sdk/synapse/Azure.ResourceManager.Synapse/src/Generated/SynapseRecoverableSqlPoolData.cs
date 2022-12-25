@@ -24,22 +24,10 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="edition">
-        /// The edition of the database
-        /// Serialized Name: RecoverableSqlPool.properties.edition
-        /// </param>
-        /// <param name="serviceLevelObjective">
-        /// The service level objective name of the database
-        /// Serialized Name: RecoverableSqlPool.properties.serviceLevelObjective
-        /// </param>
-        /// <param name="elasticPoolName">
-        /// The elastic pool name of the database
-        /// Serialized Name: RecoverableSqlPool.properties.elasticPoolName
-        /// </param>
-        /// <param name="lastAvailableBackupOn">
-        /// The last available backup date of the database (ISO8601 format)
-        /// Serialized Name: RecoverableSqlPool.properties.lastAvailableBackupDate
-        /// </param>
+        /// <param name="edition"> The edition of the database. </param>
+        /// <param name="serviceLevelObjective"> The service level objective name of the database. </param>
+        /// <param name="elasticPoolName"> The elastic pool name of the database. </param>
+        /// <param name="lastAvailableBackupOn"> The last available backup date of the database (ISO8601 format). </param>
         internal SynapseRecoverableSqlPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string edition, string serviceLevelObjective, string elasticPoolName, DateTimeOffset? lastAvailableBackupOn) : base(id, name, resourceType, systemData)
         {
             Edition = edition;
@@ -48,25 +36,13 @@ namespace Azure.ResourceManager.Synapse
             LastAvailableBackupOn = lastAvailableBackupOn;
         }
 
-        /// <summary>
-        /// The edition of the database
-        /// Serialized Name: RecoverableSqlPool.properties.edition
-        /// </summary>
+        /// <summary> The edition of the database. </summary>
         public string Edition { get; }
-        /// <summary>
-        /// The service level objective name of the database
-        /// Serialized Name: RecoverableSqlPool.properties.serviceLevelObjective
-        /// </summary>
+        /// <summary> The service level objective name of the database. </summary>
         public string ServiceLevelObjective { get; }
-        /// <summary>
-        /// The elastic pool name of the database
-        /// Serialized Name: RecoverableSqlPool.properties.elasticPoolName
-        /// </summary>
+        /// <summary> The elastic pool name of the database. </summary>
         public string ElasticPoolName { get; }
-        /// <summary>
-        /// The last available backup date of the database (ISO8601 format)
-        /// Serialized Name: RecoverableSqlPool.properties.lastAvailableBackupDate
-        /// </summary>
+        /// <summary> The last available backup date of the database (ISO8601 format). </summary>
         public DateTimeOffset? LastAvailableBackupOn { get; }
     }
 }

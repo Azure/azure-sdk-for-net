@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(LabelId))
             {
                 writer.WritePropertyName("labelId");
-                writer.WriteStringValue(LabelId);
+                writer.WriteStringValue(LabelId.Value);
             }
             if (Optional.IsDefined(InformationType))
             {
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(InformationTypeId))
             {
                 writer.WritePropertyName("informationTypeId");
-                writer.WriteStringValue(InformationTypeId);
+                writer.WriteStringValue(InformationTypeId.Value);
             }
             if (Optional.IsDefined(Rank))
             {
@@ -59,9 +60,9 @@ namespace Azure.ResourceManager.Synapse
             Optional<string> tableName = default;
             Optional<string> columnName = default;
             Optional<string> labelName = default;
-            Optional<string> labelId = default;
+            Optional<Guid> labelId = default;
             Optional<string> informationType = default;
-            Optional<string> informationTypeId = default;
+            Optional<Guid> informationTypeId = default;
             Optional<bool> isDisabled = default;
             Optional<SynapseSensitivityLabelRank> rank = default;
             foreach (var property in element.EnumerateObject())
@@ -127,7 +128,12 @@ namespace Azure.ResourceManager.Synapse
                         }
                         if (property0.NameEquals("labelId"))
                         {
-                            labelId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            labelId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("informationType"))
@@ -137,7 +143,12 @@ namespace Azure.ResourceManager.Synapse
                         }
                         if (property0.NameEquals("informationTypeId"))
                         {
-                            informationTypeId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            informationTypeId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("isDisabled"))
@@ -164,7 +175,7 @@ namespace Azure.ResourceManager.Synapse
                     continue;
                 }
             }
-            return new SynapseSensitivityLabelData(id, name, type, systemData.Value, managedBy.Value, schemaName.Value, tableName.Value, columnName.Value, labelName.Value, labelId.Value, informationType.Value, informationTypeId.Value, Optional.ToNullable(isDisabled), Optional.ToNullable(rank));
+            return new SynapseSensitivityLabelData(id, name, type, systemData.Value, managedBy.Value, schemaName.Value, tableName.Value, columnName.Value, labelName.Value, Optional.ToNullable(labelId), informationType.Value, Optional.ToNullable(informationTypeId), Optional.ToNullable(isDisabled), Optional.ToNullable(rank));
         }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The SynapseBlobAuditingPolicyName.
-    /// Serialized Name: BlobAuditingPolicyName
-    /// </summary>
+    /// <summary> The SynapseBlobAuditingPolicyName. </summary>
     public readonly partial struct SynapseBlobAuditingPolicyName : IEquatable<SynapseBlobAuditingPolicyName>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         private const string DefaultValue = "default";
 
-        /// <summary>
-        /// default
-        /// Serialized Name: BlobAuditingPolicyName.default
-        /// </summary>
+        /// <summary> default. </summary>
         public static SynapseBlobAuditingPolicyName Default { get; } = new SynapseBlobAuditingPolicyName(DefaultValue);
         /// <summary> Determines if two <see cref="SynapseBlobAuditingPolicyName"/> values are the same. </summary>
         public static bool operator ==(SynapseBlobAuditingPolicyName left, SynapseBlobAuditingPolicyName right) => left.Equals(right);

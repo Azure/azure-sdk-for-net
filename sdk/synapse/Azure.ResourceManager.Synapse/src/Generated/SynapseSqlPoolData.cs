@@ -29,38 +29,14 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="sku">
-        /// SQL pool SKU
-        /// Serialized Name: SqlPool.sku
-        /// </param>
-        /// <param name="maxSizeBytes">
-        /// Maximum size in bytes
-        /// Serialized Name: SqlPool.properties.maxSizeBytes
-        /// </param>
-        /// <param name="collation">
-        /// Collation mode
-        /// Serialized Name: SqlPool.properties.collation
-        /// </param>
-        /// <param name="sourceDatabaseId">
-        /// Source database to create from
-        /// Serialized Name: SqlPool.properties.sourceDatabaseId
-        /// </param>
-        /// <param name="recoverableDatabaseId">
-        /// Backup database to restore from
-        /// Serialized Name: SqlPool.properties.recoverableDatabaseId
-        /// </param>
-        /// <param name="provisioningState">
-        /// Resource state
-        /// Serialized Name: SqlPool.properties.provisioningState
-        /// </param>
-        /// <param name="status">
-        /// Resource status
-        /// Serialized Name: SqlPool.properties.status
-        /// </param>
-        /// <param name="restorePointInTime">
-        /// Snapshot time to restore
-        /// Serialized Name: SqlPool.properties.restorePointInTime
-        /// </param>
+        /// <param name="sku"> SQL pool SKU. </param>
+        /// <param name="maxSizeBytes"> Maximum size in bytes. </param>
+        /// <param name="collation"> Collation mode. </param>
+        /// <param name="sourceDatabaseId"> Source database to create from. </param>
+        /// <param name="recoverableDatabaseId"> Backup database to restore from. </param>
+        /// <param name="provisioningState"> Resource state. </param>
+        /// <param name="status"> Resource status. </param>
+        /// <param name="restorePointInTime"> Snapshot time to restore. </param>
         /// <param name="createMode">
         /// Specifies the mode of sql pool creation.
         /// 
@@ -71,20 +47,10 @@ namespace Azure.ResourceManager.Synapse
         /// Recovery: Creates a sql pool by a geo-replicated backup. sourceDatabaseId  must be specified as the recoverableDatabaseId to restore.
         /// 
         /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool&apos;s original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
-        /// Serialized Name: SqlPool.properties.createMode
         /// </param>
-        /// <param name="createdOn">
-        /// Date the SQL pool was created
-        /// Serialized Name: SqlPool.properties.creationDate
-        /// </param>
-        /// <param name="storageAccountType">
-        /// The storage account type used to store backups for this sql pool.
-        /// Serialized Name: SqlPool.properties.storageAccountType
-        /// </param>
-        /// <param name="sourceDatabaseDeletionOn">
-        /// Specifies the time that the sql pool was deleted
-        /// Serialized Name: SqlPool.properties.sourceDatabaseDeletionDate
-        /// </param>
+        /// <param name="createdOn"> Date the SQL pool was created. </param>
+        /// <param name="storageAccountType"> The storage account type used to store backups for this sql pool. </param>
+        /// <param name="sourceDatabaseDeletionOn"> Specifies the time that the sql pool was deleted. </param>
         internal SynapseSqlPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SynapseSku sku, long? maxSizeBytes, string collation, string sourceDatabaseId, string recoverableDatabaseId, string provisioningState, string status, DateTimeOffset? restorePointInTime, SqlPoolCreateMode? createMode, DateTimeOffset? createdOn, SqlPoolStorageAccountType? storageAccountType, DateTimeOffset? sourceDatabaseDeletionOn) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
@@ -101,45 +67,21 @@ namespace Azure.ResourceManager.Synapse
             SourceDatabaseDeletionOn = sourceDatabaseDeletionOn;
         }
 
-        /// <summary>
-        /// SQL pool SKU
-        /// Serialized Name: SqlPool.sku
-        /// </summary>
+        /// <summary> SQL pool SKU. </summary>
         public SynapseSku Sku { get; set; }
-        /// <summary>
-        /// Maximum size in bytes
-        /// Serialized Name: SqlPool.properties.maxSizeBytes
-        /// </summary>
+        /// <summary> Maximum size in bytes. </summary>
         public long? MaxSizeBytes { get; set; }
-        /// <summary>
-        /// Collation mode
-        /// Serialized Name: SqlPool.properties.collation
-        /// </summary>
+        /// <summary> Collation mode. </summary>
         public string Collation { get; set; }
-        /// <summary>
-        /// Source database to create from
-        /// Serialized Name: SqlPool.properties.sourceDatabaseId
-        /// </summary>
+        /// <summary> Source database to create from. </summary>
         public string SourceDatabaseId { get; set; }
-        /// <summary>
-        /// Backup database to restore from
-        /// Serialized Name: SqlPool.properties.recoverableDatabaseId
-        /// </summary>
+        /// <summary> Backup database to restore from. </summary>
         public string RecoverableDatabaseId { get; set; }
-        /// <summary>
-        /// Resource state
-        /// Serialized Name: SqlPool.properties.provisioningState
-        /// </summary>
+        /// <summary> Resource state. </summary>
         public string ProvisioningState { get; set; }
-        /// <summary>
-        /// Resource status
-        /// Serialized Name: SqlPool.properties.status
-        /// </summary>
+        /// <summary> Resource status. </summary>
         public string Status { get; }
-        /// <summary>
-        /// Snapshot time to restore
-        /// Serialized Name: SqlPool.properties.restorePointInTime
-        /// </summary>
+        /// <summary> Snapshot time to restore. </summary>
         public DateTimeOffset? RestorePointInTime { get; set; }
         /// <summary>
         /// Specifies the mode of sql pool creation.
@@ -151,23 +93,13 @@ namespace Azure.ResourceManager.Synapse
         /// Recovery: Creates a sql pool by a geo-replicated backup. sourceDatabaseId  must be specified as the recoverableDatabaseId to restore.
         /// 
         /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool&apos;s original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
-        /// Serialized Name: SqlPool.properties.createMode
         /// </summary>
         public SqlPoolCreateMode? CreateMode { get; set; }
-        /// <summary>
-        /// Date the SQL pool was created
-        /// Serialized Name: SqlPool.properties.creationDate
-        /// </summary>
+        /// <summary> Date the SQL pool was created. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The storage account type used to store backups for this sql pool.
-        /// Serialized Name: SqlPool.properties.storageAccountType
-        /// </summary>
+        /// <summary> The storage account type used to store backups for this sql pool. </summary>
         public SqlPoolStorageAccountType? StorageAccountType { get; set; }
-        /// <summary>
-        /// Specifies the time that the sql pool was deleted
-        /// Serialized Name: SqlPool.properties.sourceDatabaseDeletionDate
-        /// </summary>
+        /// <summary> Specifies the time that the sql pool was deleted. </summary>
         public DateTimeOffset? SourceDatabaseDeletionOn { get; set; }
     }
 }

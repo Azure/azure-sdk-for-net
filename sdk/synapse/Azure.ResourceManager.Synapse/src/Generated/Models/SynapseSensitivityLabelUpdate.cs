@@ -11,10 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// A sensitivity label update operation.
-    /// Serialized Name: SensitivityLabelUpdate
-    /// </summary>
+    /// <summary> A sensitivity label update operation. </summary>
     public partial class SynapseSensitivityLabelUpdate : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseSensitivityLabelUpdate. </summary>
@@ -27,23 +24,11 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="op"> Serialized Name: SensitivityLabelUpdate.properties.op. </param>
-        /// <param name="schema">
-        /// Schema name of the column to update.
-        /// Serialized Name: SensitivityLabelUpdate.properties.schema
-        /// </param>
-        /// <param name="table">
-        /// Table name of the column to update.
-        /// Serialized Name: SensitivityLabelUpdate.properties.table
-        /// </param>
-        /// <param name="column">
-        /// Column name to update.
-        /// Serialized Name: SensitivityLabelUpdate.properties.column
-        /// </param>
-        /// <param name="sensitivityLabel">
-        /// The sensitivity label information to apply on a column.
-        /// Serialized Name: SensitivityLabelUpdate.properties.sensitivityLabel
-        /// </param>
+        /// <param name="op"></param>
+        /// <param name="schema"> Schema name of the column to update. </param>
+        /// <param name="table"> Table name of the column to update. </param>
+        /// <param name="column"> Column name to update. </param>
+        /// <param name="sensitivityLabel"> The sensitivity label information to apply on a column. </param>
         internal SynapseSensitivityLabelUpdate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynapseSensitivityLabelUpdateKind? op, string schema, string table, string column, SynapseSensitivityLabelData sensitivityLabel) : base(id, name, resourceType, systemData)
         {
             Op = op;
@@ -53,27 +38,15 @@ namespace Azure.ResourceManager.Synapse.Models
             SensitivityLabel = sensitivityLabel;
         }
 
-        /// <summary> Serialized Name: SensitivityLabelUpdate.properties.op. </summary>
+        /// <summary> Gets or sets the op. </summary>
         public SynapseSensitivityLabelUpdateKind? Op { get; set; }
-        /// <summary>
-        /// Schema name of the column to update.
-        /// Serialized Name: SensitivityLabelUpdate.properties.schema
-        /// </summary>
+        /// <summary> Schema name of the column to update. </summary>
         public string Schema { get; set; }
-        /// <summary>
-        /// Table name of the column to update.
-        /// Serialized Name: SensitivityLabelUpdate.properties.table
-        /// </summary>
+        /// <summary> Table name of the column to update. </summary>
         public string Table { get; set; }
-        /// <summary>
-        /// Column name to update.
-        /// Serialized Name: SensitivityLabelUpdate.properties.column
-        /// </summary>
+        /// <summary> Column name to update. </summary>
         public string Column { get; set; }
-        /// <summary>
-        /// The sensitivity label information to apply on a column.
-        /// Serialized Name: SensitivityLabelUpdate.properties.sensitivityLabel
-        /// </summary>
+        /// <summary> The sensitivity label information to apply on a column. </summary>
         public SynapseSensitivityLabelData SensitivityLabel { get; set; }
     }
 }

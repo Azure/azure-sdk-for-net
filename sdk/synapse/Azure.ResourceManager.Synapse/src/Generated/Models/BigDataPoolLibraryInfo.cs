@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Library/package information of a Big Data pool powered by Apache Spark
-    /// Serialized Name: LibraryInfo
-    /// </summary>
+    /// <summary> Library/package information of a Big Data pool powered by Apache Spark. </summary>
     public partial class BigDataPoolLibraryInfo
     {
         /// <summary> Initializes a new instance of BigDataPoolLibraryInfo. </summary>
@@ -21,34 +18,13 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of BigDataPoolLibraryInfo. </summary>
-        /// <param name="name">
-        /// Name of the library.
-        /// Serialized Name: LibraryInfo.name
-        /// </param>
-        /// <param name="path">
-        /// Storage blob path of library.
-        /// Serialized Name: LibraryInfo.path
-        /// </param>
-        /// <param name="containerName">
-        /// Storage blob container name.
-        /// Serialized Name: LibraryInfo.containerName
-        /// </param>
-        /// <param name="uploadedOn">
-        /// The last update time of the library.
-        /// Serialized Name: LibraryInfo.uploadedTimestamp
-        /// </param>
-        /// <param name="libraryInfoType">
-        /// Type of the library.
-        /// Serialized Name: LibraryInfo.type
-        /// </param>
-        /// <param name="provisioningStatus">
-        /// Provisioning status of the library/package.
-        /// Serialized Name: LibraryInfo.provisioningStatus
-        /// </param>
-        /// <param name="creatorId">
-        /// Creator Id of the library/package.
-        /// Serialized Name: LibraryInfo.creatorId
-        /// </param>
+        /// <param name="name"> Name of the library. </param>
+        /// <param name="path"> Storage blob path of library. </param>
+        /// <param name="containerName"> Storage blob container name. </param>
+        /// <param name="uploadedOn"> The last update time of the library. </param>
+        /// <param name="libraryInfoType"> Type of the library. </param>
+        /// <param name="provisioningStatus"> Provisioning status of the library/package. </param>
+        /// <param name="creatorId"> Creator Id of the library/package. </param>
         internal BigDataPoolLibraryInfo(string name, string path, string containerName, DateTimeOffset? uploadedOn, string libraryInfoType, string provisioningStatus, string creatorId)
         {
             Name = name;
@@ -60,40 +36,19 @@ namespace Azure.ResourceManager.Synapse.Models
             CreatorId = creatorId;
         }
 
-        /// <summary>
-        /// Name of the library.
-        /// Serialized Name: LibraryInfo.name
-        /// </summary>
+        /// <summary> Name of the library. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Storage blob path of library.
-        /// Serialized Name: LibraryInfo.path
-        /// </summary>
+        /// <summary> Storage blob path of library. </summary>
         public string Path { get; set; }
-        /// <summary>
-        /// Storage blob container name.
-        /// Serialized Name: LibraryInfo.containerName
-        /// </summary>
+        /// <summary> Storage blob container name. </summary>
         public string ContainerName { get; set; }
-        /// <summary>
-        /// The last update time of the library.
-        /// Serialized Name: LibraryInfo.uploadedTimestamp
-        /// </summary>
+        /// <summary> The last update time of the library. </summary>
         public DateTimeOffset? UploadedOn { get; set; }
-        /// <summary>
-        /// Type of the library.
-        /// Serialized Name: LibraryInfo.type
-        /// </summary>
+        /// <summary> Type of the library. </summary>
         public string LibraryInfoType { get; set; }
-        /// <summary>
-        /// Provisioning status of the library/package.
-        /// Serialized Name: LibraryInfo.provisioningStatus
-        /// </summary>
+        /// <summary> Provisioning status of the library/package. </summary>
         public string ProvisioningStatus { get; }
-        /// <summary>
-        /// Creator Id of the library/package.
-        /// Serialized Name: LibraryInfo.creatorId
-        /// </summary>
+        /// <summary> Creator Id of the library/package. </summary>
         public string CreatorId { get; }
     }
 }

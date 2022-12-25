@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Synapse.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> eventHubResourceId = default;
+            Optional<ResourceIdentifier> eventHubResourceId = default;
             Optional<string> consumerGroup = default;
             Optional<string> tableName = default;
             Optional<string> mappingRuleName = default;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<IList<string>> eventSystemProperties = default;
             Optional<KustoPoolCompressionType> compression = default;
             Optional<ResourceProvisioningState> provisioningState = default;
-            Optional<string> managedIdentityResourceId = default;
+            Optional<ResourceIdentifier> managedIdentityResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -145,7 +145,12 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         if (property0.NameEquals("eventHubResourceId"))
                         {
-                            eventHubResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            eventHubResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("consumerGroup"))
@@ -210,7 +215,12 @@ namespace Azure.ResourceManager.Synapse.Models
                         }
                         if (property0.NameEquals("managedIdentityResourceId"))
                         {
-                            managedIdentityResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            managedIdentityResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }

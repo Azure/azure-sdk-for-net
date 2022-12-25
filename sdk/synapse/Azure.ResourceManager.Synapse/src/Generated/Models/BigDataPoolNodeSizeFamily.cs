@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The kind of nodes that the Big Data pool provides.
-    /// Serialized Name: NodeSizeFamily
-    /// </summary>
+    /// <summary> The kind of nodes that the Big Data pool provides. </summary>
     public readonly partial struct BigDataPoolNodeSizeFamily : IEquatable<BigDataPoolNodeSizeFamily>
     {
         private readonly string _value;
@@ -28,28 +25,16 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string NoneValue = "None";
         private const string MemoryOptimizedValue = "MemoryOptimized";
         private const string HardwareAcceleratedFpgaValue = "HardwareAcceleratedFPGA";
-        private const string HardwareAcceleratedGPUValue = "HardwareAcceleratedGPU";
+        private const string HardwareAcceleratedGpuValue = "HardwareAcceleratedGPU";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: NodeSizeFamily.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static BigDataPoolNodeSizeFamily None { get; } = new BigDataPoolNodeSizeFamily(NoneValue);
-        /// <summary>
-        /// MemoryOptimized
-        /// Serialized Name: NodeSizeFamily.MemoryOptimized
-        /// </summary>
+        /// <summary> MemoryOptimized. </summary>
         public static BigDataPoolNodeSizeFamily MemoryOptimized { get; } = new BigDataPoolNodeSizeFamily(MemoryOptimizedValue);
-        /// <summary>
-        /// HardwareAcceleratedFPGA
-        /// Serialized Name: NodeSizeFamily.HardwareAcceleratedFPGA
-        /// </summary>
+        /// <summary> HardwareAcceleratedFPGA. </summary>
         public static BigDataPoolNodeSizeFamily HardwareAcceleratedFpga { get; } = new BigDataPoolNodeSizeFamily(HardwareAcceleratedFpgaValue);
-        /// <summary>
-        /// HardwareAcceleratedGPU
-        /// Serialized Name: NodeSizeFamily.HardwareAcceleratedGPU
-        /// </summary>
-        public static BigDataPoolNodeSizeFamily HardwareAcceleratedGPU { get; } = new BigDataPoolNodeSizeFamily(HardwareAcceleratedGPUValue);
+        /// <summary> HardwareAcceleratedGPU. </summary>
+        public static BigDataPoolNodeSizeFamily HardwareAcceleratedGpu { get; } = new BigDataPoolNodeSizeFamily(HardwareAcceleratedGpuValue);
         /// <summary> Determines if two <see cref="BigDataPoolNodeSizeFamily"/> values are the same. </summary>
         public static bool operator ==(BigDataPoolNodeSizeFamily left, BigDataPoolNodeSizeFamily right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BigDataPoolNodeSizeFamily"/> values are not the same. </summary>

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Details of the customer managed key associated with the workspace
-    /// Serialized Name: CustomerManagedKeyDetails
-    /// </summary>
+    /// <summary> Details of the customer managed key associated with the workspace. </summary>
     public partial class WorkspaceCustomerManagedKeyDetails
     {
         /// <summary> Initializes a new instance of WorkspaceCustomerManagedKeyDetails. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of WorkspaceCustomerManagedKeyDetails. </summary>
-        /// <param name="status">
-        /// The customer managed key status on the workspace
-        /// Serialized Name: CustomerManagedKeyDetails.status
-        /// </param>
-        /// <param name="key">
-        /// The key object of the workspace
-        /// Serialized Name: CustomerManagedKeyDetails.key
-        /// </param>
-        /// <param name="kekIdentity">
-        /// Key encryption key
-        /// Serialized Name: CustomerManagedKeyDetails.kekIdentity
-        /// </param>
+        /// <param name="status"> The customer managed key status on the workspace. </param>
+        /// <param name="key"> The key object of the workspace. </param>
+        /// <param name="kekIdentity"> Key encryption key. </param>
         internal WorkspaceCustomerManagedKeyDetails(string status, SynapseWorkspaceKeyDetails key, KekIdentityProperties kekIdentity)
         {
             Status = status;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.Synapse.Models
             KekIdentity = kekIdentity;
         }
 
-        /// <summary>
-        /// The customer managed key status on the workspace
-        /// Serialized Name: CustomerManagedKeyDetails.status
-        /// </summary>
+        /// <summary> The customer managed key status on the workspace. </summary>
         public string Status { get; }
-        /// <summary>
-        /// The key object of the workspace
-        /// Serialized Name: CustomerManagedKeyDetails.key
-        /// </summary>
+        /// <summary> The key object of the workspace. </summary>
         public SynapseWorkspaceKeyDetails Key { get; set; }
-        /// <summary>
-        /// Key encryption key
-        /// Serialized Name: CustomerManagedKeyDetails.kekIdentity
-        /// </summary>
+        /// <summary> Key encryption key. </summary>
         public KekIdentityProperties KekIdentity { get; set; }
     }
 }

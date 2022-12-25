@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The object sent for a kusto pool check name availability request.
-    /// Serialized Name: KustoPoolCheckNameRequest
-    /// </summary>
+    /// <summary> The object sent for a kusto pool check name availability request. </summary>
     public partial class KustoPoolNameAvailabilityContent
     {
         /// <summary> Initializes a new instance of KustoPoolNameAvailabilityContent. </summary>
-        /// <param name="name">
-        /// Kusto Pool name.
-        /// Serialized Name: KustoPoolCheckNameRequest.name
-        /// </param>
+        /// <param name="name"> Kusto Pool name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public KustoPoolNameAvailabilityContent(string name)
         {
@@ -30,15 +24,9 @@ namespace Azure.ResourceManager.Synapse.Models
             ResourceType = KustoPoolType.MicrosoftSynapseWorkspacesKustoPools;
         }
 
-        /// <summary>
-        /// Kusto Pool name.
-        /// Serialized Name: KustoPoolCheckNameRequest.name
-        /// </summary>
+        /// <summary> Kusto Pool name. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The type of resource, Microsoft.Synapse/workspaces/kustoPools.
-        /// Serialized Name: KustoPoolCheckNameRequest.type
-        /// </summary>
+        /// <summary> The type of resource, Microsoft.Synapse/workspaces/kustoPools. </summary>
         public KustoPoolType ResourceType { get; }
     }
 }

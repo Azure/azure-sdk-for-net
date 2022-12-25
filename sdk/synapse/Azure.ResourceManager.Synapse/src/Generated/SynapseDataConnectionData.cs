@@ -30,29 +30,17 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location">
-        /// Resource location.
-        /// Serialized Name: DataConnection.location
-        /// </param>
-        /// <param name="kind">
-        /// Kind of the endpoint for the data connection
-        /// Serialized Name: DataConnection.kind
-        /// </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="kind"> Kind of the endpoint for the data connection. </param>
         internal SynapseDataConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, SynapseDataConnectionKind kind) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Kind = kind;
         }
 
-        /// <summary>
-        /// Resource location.
-        /// Serialized Name: DataConnection.location
-        /// </summary>
+        /// <summary> Resource location. </summary>
         public AzureLocation? Location { get; set; }
-        /// <summary>
-        /// Kind of the endpoint for the data connection
-        /// Serialized Name: DataConnection.kind
-        /// </summary>
+        /// <summary> Kind of the endpoint for the data connection. </summary>
         internal SynapseDataConnectionKind Kind { get; set; }
     }
 }

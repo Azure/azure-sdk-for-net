@@ -11,10 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// List of SQL pools
-    /// Serialized Name: SqlPoolInfoListResult
-    /// </summary>
+    /// <summary> List of SQL pools. </summary>
     internal partial class SqlPoolInfoListResult
     {
         /// <summary> Initializes a new instance of SqlPoolInfoListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SqlPoolInfoListResult. </summary>
-        /// <param name="nextLink">
-        /// Link to the next page of results
-        /// Serialized Name: SqlPoolInfoListResult.nextLink
-        /// </param>
-        /// <param name="value">
-        /// List of SQL pools
-        /// Serialized Name: SqlPoolInfoListResult.value
-        /// </param>
+        /// <param name="nextLink"> Link to the next page of results. </param>
+        /// <param name="value"> List of SQL pools. </param>
         internal SqlPoolInfoListResult(string nextLink, IReadOnlyList<SynapseSqlPoolData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary>
-        /// Link to the next page of results
-        /// Serialized Name: SqlPoolInfoListResult.nextLink
-        /// </summary>
+        /// <summary> Link to the next page of results. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// List of SQL pools
-        /// Serialized Name: SqlPoolInfoListResult.value
-        /// </summary>
+        /// <summary> List of SQL pools. </summary>
         public IReadOnlyList<SynapseSqlPoolData> Value { get; }
     }
 }

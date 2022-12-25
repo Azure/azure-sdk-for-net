@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The compression type
-    /// Serialized Name: Compression
-    /// </summary>
+    /// <summary> The compression type. </summary>
     public readonly partial struct KustoPoolCompressionType : IEquatable<KustoPoolCompressionType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string NoneValue = "None";
         private const string GZipValue = "GZip";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: Compression.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static KustoPoolCompressionType None { get; } = new KustoPoolCompressionType(NoneValue);
-        /// <summary>
-        /// GZip
-        /// Serialized Name: Compression.GZip
-        /// </summary>
+        /// <summary> GZip. </summary>
         public static KustoPoolCompressionType GZip { get; } = new KustoPoolCompressionType(GZipValue);
         /// <summary> Determines if two <see cref="KustoPoolCompressionType"/> values are the same. </summary>
         public static bool operator ==(KustoPoolCompressionType left, KustoPoolCompressionType right) => left.Equals(right);

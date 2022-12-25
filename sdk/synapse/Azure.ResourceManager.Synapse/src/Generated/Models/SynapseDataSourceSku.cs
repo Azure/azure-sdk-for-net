@@ -7,21 +7,12 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Azure SKU definition.
-    /// Serialized Name: AzureSku
-    /// </summary>
+    /// <summary> Azure SKU definition. </summary>
     public partial class SynapseDataSourceSku
     {
         /// <summary> Initializes a new instance of SynapseDataSourceSku. </summary>
-        /// <param name="name">
-        /// SKU name.
-        /// Serialized Name: AzureSku.name
-        /// </param>
-        /// <param name="size">
-        /// SKU size.
-        /// Serialized Name: AzureSku.size
-        /// </param>
+        /// <param name="name"> SKU name. </param>
+        /// <param name="size"> SKU size. </param>
         public SynapseDataSourceSku(SynapseSkuName name, KustoPoolSkuSize size)
         {
             Name = name;
@@ -29,18 +20,9 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseDataSourceSku. </summary>
-        /// <param name="name">
-        /// SKU name.
-        /// Serialized Name: AzureSku.name
-        /// </param>
-        /// <param name="capacity">
-        /// The number of instances of the cluster.
-        /// Serialized Name: AzureSku.capacity
-        /// </param>
-        /// <param name="size">
-        /// SKU size.
-        /// Serialized Name: AzureSku.size
-        /// </param>
+        /// <param name="name"> SKU name. </param>
+        /// <param name="capacity"> The number of instances of the cluster. </param>
+        /// <param name="size"> SKU size. </param>
         internal SynapseDataSourceSku(SynapseSkuName name, int? capacity, KustoPoolSkuSize size)
         {
             Name = name;
@@ -48,20 +30,11 @@ namespace Azure.ResourceManager.Synapse.Models
             Size = size;
         }
 
-        /// <summary>
-        /// SKU name.
-        /// Serialized Name: AzureSku.name
-        /// </summary>
+        /// <summary> SKU name. </summary>
         public SynapseSkuName Name { get; set; }
-        /// <summary>
-        /// The number of instances of the cluster.
-        /// Serialized Name: AzureSku.capacity
-        /// </summary>
+        /// <summary> The number of instances of the cluster. </summary>
         public int? Capacity { get; set; }
-        /// <summary>
-        /// SKU size.
-        /// Serialized Name: AzureSku.size
-        /// </summary>
+        /// <summary> SKU size. </summary>
         public KustoPoolSkuSize Size { get; set; }
     }
 }

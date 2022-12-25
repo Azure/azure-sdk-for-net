@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The storage account type used to store backups for this sql pool.
-    /// Serialized Name: StorageAccountType
-    /// </summary>
+    /// <summary> The storage account type used to store backups for this sql pool. </summary>
     public readonly partial struct SqlPoolStorageAccountType : IEquatable<SqlPoolStorageAccountType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string GrsValue = "GRS";
         private const string LrsValue = "LRS";
 
-        /// <summary>
-        /// GRS
-        /// Serialized Name: StorageAccountType.GRS
-        /// </summary>
+        /// <summary> GRS. </summary>
         public static SqlPoolStorageAccountType Grs { get; } = new SqlPoolStorageAccountType(GrsValue);
-        /// <summary>
-        /// LRS
-        /// Serialized Name: StorageAccountType.LRS
-        /// </summary>
+        /// <summary> LRS. </summary>
         public static SqlPoolStorageAccountType Lrs { get; } = new SqlPoolStorageAccountType(LrsValue);
         /// <summary> Determines if two <see cref="SqlPoolStorageAccountType"/> values are the same. </summary>
         public static bool operator ==(SqlPoolStorageAccountType left, SqlPoolStorageAccountType right) => left.Equals(right);

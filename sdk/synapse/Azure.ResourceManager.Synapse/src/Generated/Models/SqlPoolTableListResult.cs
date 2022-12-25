@@ -11,10 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// A list of Sql pool tables.
-    /// Serialized Name: SqlPoolTableListResult
-    /// </summary>
+    /// <summary> A list of Sql pool tables. </summary>
     internal partial class SqlPoolTableListResult
     {
         /// <summary> Initializes a new instance of SqlPoolTableListResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SqlPoolTableListResult. </summary>
-        /// <param name="value">
-        /// Array of results.
-        /// Serialized Name: SqlPoolTableListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// Link to retrieve next page of results.
-        /// Serialized Name: SqlPoolTableListResult.nextLink
-        /// </param>
+        /// <param name="value"> Array of results. </param>
+        /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SqlPoolTableListResult(IReadOnlyList<SynapseSqlPoolTableData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// Array of results.
-        /// Serialized Name: SqlPoolTableListResult.value
-        /// </summary>
+        /// <summary> Array of results. </summary>
         public IReadOnlyList<SynapseSqlPoolTableData> Value { get; }
-        /// <summary>
-        /// Link to retrieve next page of results.
-        /// Serialized Name: SqlPoolTableListResult.nextLink
-        /// </summary>
+        /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }
 }

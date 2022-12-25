@@ -24,42 +24,15 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location">
-        /// The geo-location where the resource lives
-        /// Serialized Name: RestorableDroppedSqlPool.location
-        /// </param>
-        /// <param name="databaseName">
-        /// The name of the database
-        /// Serialized Name: RestorableDroppedSqlPool.properties.databaseName
-        /// </param>
-        /// <param name="edition">
-        /// The edition of the database
-        /// Serialized Name: RestorableDroppedSqlPool.properties.edition
-        /// </param>
-        /// <param name="maxSizeBytes">
-        /// The max size in bytes of the database
-        /// Serialized Name: RestorableDroppedSqlPool.properties.maxSizeBytes
-        /// </param>
-        /// <param name="serviceLevelObjective">
-        /// The service level objective name of the database
-        /// Serialized Name: RestorableDroppedSqlPool.properties.serviceLevelObjective
-        /// </param>
-        /// <param name="elasticPoolName">
-        /// The elastic pool name of the database
-        /// Serialized Name: RestorableDroppedSqlPool.properties.elasticPoolName
-        /// </param>
-        /// <param name="createdOn">
-        /// The creation date of the database (ISO8601 format)
-        /// Serialized Name: RestorableDroppedSqlPool.properties.creationDate
-        /// </param>
-        /// <param name="deletedOn">
-        /// The deletion date of the database (ISO8601 format)
-        /// Serialized Name: RestorableDroppedSqlPool.properties.deletionDate
-        /// </param>
-        /// <param name="earliestRestoreOn">
-        /// The earliest restore date of the database (ISO8601 format)
-        /// Serialized Name: RestorableDroppedSqlPool.properties.earliestRestoreDate
-        /// </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="edition"> The edition of the database. </param>
+        /// <param name="maxSizeBytes"> The max size in bytes of the database. </param>
+        /// <param name="serviceLevelObjective"> The service level objective name of the database. </param>
+        /// <param name="elasticPoolName"> The elastic pool name of the database. </param>
+        /// <param name="createdOn"> The creation date of the database (ISO8601 format). </param>
+        /// <param name="deletedOn"> The deletion date of the database (ISO8601 format). </param>
+        /// <param name="earliestRestoreOn"> The earliest restore date of the database (ISO8601 format). </param>
         internal SynapseRestorableDroppedSqlPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string databaseName, string edition, string maxSizeBytes, string serviceLevelObjective, string elasticPoolName, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, DateTimeOffset? earliestRestoreOn) : base(id, name, resourceType, systemData)
         {
             Location = location;
@@ -73,50 +46,23 @@ namespace Azure.ResourceManager.Synapse
             EarliestRestoreOn = earliestRestoreOn;
         }
 
-        /// <summary>
-        /// The geo-location where the resource lives
-        /// Serialized Name: RestorableDroppedSqlPool.location
-        /// </summary>
+        /// <summary> The geo-location where the resource lives. </summary>
         public AzureLocation? Location { get; }
-        /// <summary>
-        /// The name of the database
-        /// Serialized Name: RestorableDroppedSqlPool.properties.databaseName
-        /// </summary>
+        /// <summary> The name of the database. </summary>
         public string DatabaseName { get; }
-        /// <summary>
-        /// The edition of the database
-        /// Serialized Name: RestorableDroppedSqlPool.properties.edition
-        /// </summary>
+        /// <summary> The edition of the database. </summary>
         public string Edition { get; }
-        /// <summary>
-        /// The max size in bytes of the database
-        /// Serialized Name: RestorableDroppedSqlPool.properties.maxSizeBytes
-        /// </summary>
+        /// <summary> The max size in bytes of the database. </summary>
         public string MaxSizeBytes { get; }
-        /// <summary>
-        /// The service level objective name of the database
-        /// Serialized Name: RestorableDroppedSqlPool.properties.serviceLevelObjective
-        /// </summary>
+        /// <summary> The service level objective name of the database. </summary>
         public string ServiceLevelObjective { get; }
-        /// <summary>
-        /// The elastic pool name of the database
-        /// Serialized Name: RestorableDroppedSqlPool.properties.elasticPoolName
-        /// </summary>
+        /// <summary> The elastic pool name of the database. </summary>
         public string ElasticPoolName { get; }
-        /// <summary>
-        /// The creation date of the database (ISO8601 format)
-        /// Serialized Name: RestorableDroppedSqlPool.properties.creationDate
-        /// </summary>
+        /// <summary> The creation date of the database (ISO8601 format). </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// The deletion date of the database (ISO8601 format)
-        /// Serialized Name: RestorableDroppedSqlPool.properties.deletionDate
-        /// </summary>
+        /// <summary> The deletion date of the database (ISO8601 format). </summary>
         public DateTimeOffset? DeletedOn { get; }
-        /// <summary>
-        /// The earliest restore date of the database (ISO8601 format)
-        /// Serialized Name: RestorableDroppedSqlPool.properties.earliestRestoreDate
-        /// </summary>
+        /// <summary> The earliest restore date of the database (ISO8601 format). </summary>
         public DateTimeOffset? EarliestRestoreOn { get; }
     }
 }

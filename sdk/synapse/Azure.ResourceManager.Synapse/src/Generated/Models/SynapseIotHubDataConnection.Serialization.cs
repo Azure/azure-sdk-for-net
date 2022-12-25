@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Synapse.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> iotHubResourceId = default;
+            Optional<ResourceIdentifier> iotHubResourceId = default;
             Optional<string> consumerGroup = default;
             Optional<string> tableName = default;
             Optional<string> mappingRuleName = default;
@@ -139,7 +139,12 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         if (property0.NameEquals("iotHubResourceId"))
                         {
-                            iotHubResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            iotHubResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("consumerGroup"))

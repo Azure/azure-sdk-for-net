@@ -10,17 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The custom setup of installing 3rd party components.
-    /// Serialized Name: ComponentSetup
-    /// </summary>
+    /// <summary> The custom setup of installing 3rd party components. </summary>
     public partial class SynapseComponentSetup : SynapseCustomSetupBase
     {
         /// <summary> Initializes a new instance of SynapseComponentSetup. </summary>
-        /// <param name="componentName">
-        /// The name of the 3rd party component.
-        /// Serialized Name: ComponentSetup.typeProperties.componentName
-        /// </param>
+        /// <param name="componentName"> The name of the 3rd party component. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public SynapseComponentSetup(string componentName)
         {
@@ -31,17 +25,10 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseComponentSetup. </summary>
-        /// <param name="customSetupBaseType">
-        /// The type of custom setup.
-        /// Serialized Name: CustomSetupBase.type
-        /// </param>
-        /// <param name="componentName">
-        /// The name of the 3rd party component.
-        /// Serialized Name: ComponentSetup.typeProperties.componentName
-        /// </param>
+        /// <param name="customSetupBaseType"> The type of custom setup. </param>
+        /// <param name="componentName"> The name of the 3rd party component. </param>
         /// <param name="licenseKey">
         /// The license key to activate the component.
-        /// Serialized Name: ComponentSetup.typeProperties.licenseKey
         /// Please note <see cref="SynapseSecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SynapseSecureString"/>.
         /// </param>
@@ -52,14 +39,10 @@ namespace Azure.ResourceManager.Synapse.Models
             CustomSetupBaseType = customSetupBaseType ?? "ComponentSetup";
         }
 
-        /// <summary>
-        /// The name of the 3rd party component.
-        /// Serialized Name: ComponentSetup.typeProperties.componentName
-        /// </summary>
+        /// <summary> The name of the 3rd party component. </summary>
         public string ComponentName { get; set; }
         /// <summary>
         /// The license key to activate the component.
-        /// Serialized Name: ComponentSetup.typeProperties.licenseKey
         /// Please note <see cref="SynapseSecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SynapseSecureString"/>.
         /// </summary>

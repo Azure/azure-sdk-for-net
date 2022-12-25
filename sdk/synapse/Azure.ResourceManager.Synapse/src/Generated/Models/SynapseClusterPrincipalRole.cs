@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Cluster principal role.
-    /// Serialized Name: ClusterPrincipalRole
-    /// </summary>
+    /// <summary> Cluster principal role. </summary>
     public readonly partial struct SynapseClusterPrincipalRole : IEquatable<SynapseClusterPrincipalRole>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string AllDatabasesAdminValue = "AllDatabasesAdmin";
         private const string AllDatabasesViewerValue = "AllDatabasesViewer";
 
-        /// <summary>
-        /// AllDatabasesAdmin
-        /// Serialized Name: ClusterPrincipalRole.AllDatabasesAdmin
-        /// </summary>
+        /// <summary> AllDatabasesAdmin. </summary>
         public static SynapseClusterPrincipalRole AllDatabasesAdmin { get; } = new SynapseClusterPrincipalRole(AllDatabasesAdminValue);
-        /// <summary>
-        /// AllDatabasesViewer
-        /// Serialized Name: ClusterPrincipalRole.AllDatabasesViewer
-        /// </summary>
+        /// <summary> AllDatabasesViewer. </summary>
         public static SynapseClusterPrincipalRole AllDatabasesViewer { get; } = new SynapseClusterPrincipalRole(AllDatabasesViewerValue);
         /// <summary> Determines if two <see cref="SynapseClusterPrincipalRole"/> values are the same. </summary>
         public static bool operator ==(SynapseClusterPrincipalRole left, SynapseClusterPrincipalRole right) => left.Equals(right);

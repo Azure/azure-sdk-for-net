@@ -10,21 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The custom setup of setting environment variable.
-    /// Serialized Name: EnvironmentVariableSetup
-    /// </summary>
+    /// <summary> The custom setup of setting environment variable. </summary>
     public partial class SynapseEnvironmentVariableSetup : SynapseCustomSetupBase
     {
         /// <summary> Initializes a new instance of SynapseEnvironmentVariableSetup. </summary>
-        /// <param name="variableName">
-        /// The name of the environment variable.
-        /// Serialized Name: EnvironmentVariableSetup.typeProperties.variableName
-        /// </param>
-        /// <param name="variableValue">
-        /// The value of the environment variable.
-        /// Serialized Name: EnvironmentVariableSetup.typeProperties.variableValue
-        /// </param>
+        /// <param name="variableName"> The name of the environment variable. </param>
+        /// <param name="variableValue"> The value of the environment variable. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="variableName"/> or <paramref name="variableValue"/> is null. </exception>
         public SynapseEnvironmentVariableSetup(string variableName, string variableValue)
         {
@@ -37,18 +28,9 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseEnvironmentVariableSetup. </summary>
-        /// <param name="customSetupBaseType">
-        /// The type of custom setup.
-        /// Serialized Name: CustomSetupBase.type
-        /// </param>
-        /// <param name="variableName">
-        /// The name of the environment variable.
-        /// Serialized Name: EnvironmentVariableSetup.typeProperties.variableName
-        /// </param>
-        /// <param name="variableValue">
-        /// The value of the environment variable.
-        /// Serialized Name: EnvironmentVariableSetup.typeProperties.variableValue
-        /// </param>
+        /// <param name="customSetupBaseType"> The type of custom setup. </param>
+        /// <param name="variableName"> The name of the environment variable. </param>
+        /// <param name="variableValue"> The value of the environment variable. </param>
         internal SynapseEnvironmentVariableSetup(string customSetupBaseType, string variableName, string variableValue) : base(customSetupBaseType)
         {
             VariableName = variableName;
@@ -56,15 +38,9 @@ namespace Azure.ResourceManager.Synapse.Models
             CustomSetupBaseType = customSetupBaseType ?? "EnvironmentVariableSetup";
         }
 
-        /// <summary>
-        /// The name of the environment variable.
-        /// Serialized Name: EnvironmentVariableSetup.typeProperties.variableName
-        /// </summary>
+        /// <summary> The name of the environment variable. </summary>
         public string VariableName { get; set; }
-        /// <summary>
-        /// The value of the environment variable.
-        /// Serialized Name: EnvironmentVariableSetup.typeProperties.variableValue
-        /// </summary>
+        /// <summary> The value of the environment variable. </summary>
         public string VariableValue { get; set; }
     }
 }

@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.Synapse
     {
         /// <summary> Initializes a new instance of SynapseKustoPoolData. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="sku">
-        /// The SKU of the kusto pool.
-        /// Serialized Name: KustoPool.sku
-        /// </param>
+        /// <param name="sku"> The SKU of the kusto pool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public SynapseKustoPoolData(AzureLocation location, SynapseDataSourceSku sku) : base(location)
         {
@@ -38,55 +35,19 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="sku">
-        /// The SKU of the kusto pool.
-        /// Serialized Name: KustoPool.sku
-        /// </param>
-        /// <param name="etag">
-        /// A unique read-only string that changes whenever the resource is updated.
-        /// Serialized Name: KustoPool.etag
-        /// </param>
-        /// <param name="state">
-        /// The state of the resource.
-        /// Serialized Name: KustoPool.properties.state
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioned state of the resource.
-        /// Serialized Name: KustoPool.properties.provisioningState
-        /// </param>
-        /// <param name="uri">
-        /// The Kusto Pool URI.
-        /// Serialized Name: KustoPool.properties.uri
-        /// </param>
-        /// <param name="dataIngestionUri">
-        /// The Kusto Pool data ingestion URI.
-        /// Serialized Name: KustoPool.properties.dataIngestionUri
-        /// </param>
-        /// <param name="stateReason">
-        /// The reason for the Kusto Pool&apos;s current state.
-        /// Serialized Name: KustoPool.properties.stateReason
-        /// </param>
-        /// <param name="optimizedAutoscale">
-        /// Optimized auto scale definition.
-        /// Serialized Name: KustoPool.properties.optimizedAutoscale
-        /// </param>
-        /// <param name="enableStreamingIngest">
-        /// A boolean value that indicates if the streaming ingest is enabled.
-        /// Serialized Name: KustoPool.properties.enableStreamingIngest
-        /// </param>
-        /// <param name="enablePurge">
-        /// A boolean value that indicates if the purge operations are enabled.
-        /// Serialized Name: KustoPool.properties.enablePurge
-        /// </param>
-        /// <param name="languageExtensions">
-        /// List of the Kusto Pool&apos;s language extensions.
-        /// Serialized Name: KustoPool.properties.languageExtensions
-        /// </param>
-        /// <param name="workspaceUID">
-        /// The workspace unique identifier.
-        /// Serialized Name: KustoPool.properties.workspaceUID
-        /// </param>
-        internal SynapseKustoPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SynapseDataSourceSku sku, ETag? etag, KustoPoolState? state, ResourceProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, SynapseOptimizedAutoscale optimizedAutoscale, bool? enableStreamingIngest, bool? enablePurge, SynapseLanguageExtensionsList languageExtensions, string workspaceUID) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="sku"> The SKU of the kusto pool. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="state"> The state of the resource. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="uri"> The Kusto Pool URI. </param>
+        /// <param name="dataIngestionUri"> The Kusto Pool data ingestion URI. </param>
+        /// <param name="stateReason"> The reason for the Kusto Pool&apos;s current state. </param>
+        /// <param name="optimizedAutoscale"> Optimized auto scale definition. </param>
+        /// <param name="enableStreamingIngest"> A boolean value that indicates if the streaming ingest is enabled. </param>
+        /// <param name="enablePurge"> A boolean value that indicates if the purge operations are enabled. </param>
+        /// <param name="languageExtensions"> List of the Kusto Pool&apos;s language extensions. </param>
+        /// <param name="workspaceUid"> The workspace unique identifier. </param>
+        internal SynapseKustoPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SynapseDataSourceSku sku, ETag? etag, KustoPoolState? state, ResourceProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, SynapseOptimizedAutoscale optimizedAutoscale, bool? enableStreamingIngest, bool? enablePurge, SynapseLanguageExtensionsList languageExtensions, Guid? workspaceUid) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ETag = etag;
@@ -99,77 +60,38 @@ namespace Azure.ResourceManager.Synapse
             EnableStreamingIngest = enableStreamingIngest;
             EnablePurge = enablePurge;
             LanguageExtensions = languageExtensions;
-            WorkspaceUID = workspaceUID;
+            WorkspaceUid = workspaceUid;
         }
 
-        /// <summary>
-        /// The SKU of the kusto pool.
-        /// Serialized Name: KustoPool.sku
-        /// </summary>
+        /// <summary> The SKU of the kusto pool. </summary>
         public SynapseDataSourceSku Sku { get; set; }
-        /// <summary>
-        /// A unique read-only string that changes whenever the resource is updated.
-        /// Serialized Name: KustoPool.etag
-        /// </summary>
+        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
-        /// <summary>
-        /// The state of the resource.
-        /// Serialized Name: KustoPool.properties.state
-        /// </summary>
+        /// <summary> The state of the resource. </summary>
         public KustoPoolState? State { get; }
-        /// <summary>
-        /// The provisioned state of the resource.
-        /// Serialized Name: KustoPool.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioned state of the resource. </summary>
         public ResourceProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// The Kusto Pool URI.
-        /// Serialized Name: KustoPool.properties.uri
-        /// </summary>
+        /// <summary> The Kusto Pool URI. </summary>
         public Uri Uri { get; }
-        /// <summary>
-        /// The Kusto Pool data ingestion URI.
-        /// Serialized Name: KustoPool.properties.dataIngestionUri
-        /// </summary>
+        /// <summary> The Kusto Pool data ingestion URI. </summary>
         public Uri DataIngestionUri { get; }
-        /// <summary>
-        /// The reason for the Kusto Pool&apos;s current state.
-        /// Serialized Name: KustoPool.properties.stateReason
-        /// </summary>
+        /// <summary> The reason for the Kusto Pool&apos;s current state. </summary>
         public string StateReason { get; }
-        /// <summary>
-        /// Optimized auto scale definition.
-        /// Serialized Name: KustoPool.properties.optimizedAutoscale
-        /// </summary>
+        /// <summary> Optimized auto scale definition. </summary>
         public SynapseOptimizedAutoscale OptimizedAutoscale { get; set; }
-        /// <summary>
-        /// A boolean value that indicates if the streaming ingest is enabled.
-        /// Serialized Name: KustoPool.properties.enableStreamingIngest
-        /// </summary>
+        /// <summary> A boolean value that indicates if the streaming ingest is enabled. </summary>
         public bool? EnableStreamingIngest { get; set; }
-        /// <summary>
-        /// A boolean value that indicates if the purge operations are enabled.
-        /// Serialized Name: KustoPool.properties.enablePurge
-        /// </summary>
+        /// <summary> A boolean value that indicates if the purge operations are enabled. </summary>
         public bool? EnablePurge { get; set; }
-        /// <summary>
-        /// List of the Kusto Pool&apos;s language extensions.
-        /// Serialized Name: KustoPool.properties.languageExtensions
-        /// </summary>
+        /// <summary> List of the Kusto Pool&apos;s language extensions. </summary>
         internal SynapseLanguageExtensionsList LanguageExtensions { get; }
-        /// <summary>
-        /// The list of language extensions.
-        /// Serialized Name: LanguageExtensionsList.value
-        /// </summary>
+        /// <summary> The list of language extensions. </summary>
         public IList<SynapseLanguageExtension> LanguageExtensionsValue
         {
             get => LanguageExtensions?.Value;
         }
 
-        /// <summary>
-        /// The workspace unique identifier.
-        /// Serialized Name: KustoPool.properties.workspaceUID
-        /// </summary>
-        public string WorkspaceUID { get; set; }
+        /// <summary> The workspace unique identifier. </summary>
+        public Guid? WorkspaceUid { get; set; }
     }
 }

@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary>
     /// The base definition of a linked integration runtime.
-    /// Serialized Name: LinkedIntegrationRuntimeType
     /// Please note <see cref="SynapseLinkedIntegrationRuntimeType"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SynapseLinkedIntegrationRuntimeKeyAuthorization"/> and <see cref="SynapseLinkedIntegrationRuntimeRbacAuthorization"/>.
     /// </summary>
@@ -21,19 +20,13 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseLinkedIntegrationRuntimeType. </summary>
-        /// <param name="authorizationType">
-        /// The authorization type for integration runtime sharing.
-        /// Serialized Name: LinkedIntegrationRuntimeType.authorizationType
-        /// </param>
+        /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
         internal SynapseLinkedIntegrationRuntimeType(string authorizationType)
         {
             AuthorizationType = authorizationType;
         }
 
-        /// <summary>
-        /// The authorization type for integration runtime sharing.
-        /// Serialized Name: LinkedIntegrationRuntimeType.authorizationType
-        /// </summary>
+        /// <summary> The authorization type for integration runtime sharing. </summary>
         internal string AuthorizationType { get; set; }
     }
 }

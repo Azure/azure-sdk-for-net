@@ -11,10 +11,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Workspace patch details
-    /// Serialized Name: WorkspacePatchInfo
-    /// </summary>
+    /// <summary> Workspace patch details. </summary>
     public partial class SynapseWorkspacePatch
     {
         /// <summary> Initializes a new instance of SynapseWorkspacePatch. </summary>
@@ -23,41 +20,20 @@ namespace Azure.ResourceManager.Synapse.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// Resource tags
-        /// Serialized Name: WorkspacePatchInfo.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// The identity of the workspace
-        /// Serialized Name: WorkspacePatchInfo.identity. Current supported identity types: None, SystemAssigned, SystemAssigned,UserAssigned
-        /// </summary>
+        /// <summary> The identity of the workspace. Current supported identity types: None, SystemAssigned, SystemAssigned,UserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary>
-        /// SQL administrator login password
-        /// Serialized Name: WorkspacePatchInfo.properties.sqlAdministratorLoginPassword
-        /// </summary>
+        /// <summary> SQL administrator login password. </summary>
         public string SqlAdministratorLoginPassword { get; set; }
-        /// <summary>
-        /// Managed Virtual Network Settings
-        /// Serialized Name: WorkspacePatchInfo.properties.managedVirtualNetworkSettings
-        /// </summary>
+        /// <summary> Managed Virtual Network Settings. </summary>
         public SynapseManagedVirtualNetworkSettings ManagedVirtualNetworkSettings { get; set; }
-        /// <summary>
-        /// Git integration settings
-        /// Serialized Name: WorkspacePatchInfo.properties.workspaceRepositoryConfiguration
-        /// </summary>
+        /// <summary> Git integration settings. </summary>
         public SynapseWorkspaceRepositoryConfiguration WorkspaceRepositoryConfiguration { get; set; }
-        /// <summary>
-        /// Purview Configuration
-        /// Serialized Name: WorkspacePatchInfo.properties.purviewConfiguration
-        /// </summary>
+        /// <summary> Purview Configuration. </summary>
         internal PurviewConfiguration PurviewConfiguration { get; set; }
-        /// <summary>
-        /// Purview Resource ID
-        /// Serialized Name: PurviewConfiguration.purviewResourceId
-        /// </summary>
-        public string PurviewResourceId
+        /// <summary> Purview Resource ID. </summary>
+        public ResourceIdentifier PurviewResourceId
         {
             get => PurviewConfiguration is null ? default : PurviewConfiguration.PurviewResourceId;
             set
@@ -68,20 +44,11 @@ namespace Azure.ResourceManager.Synapse.Models
             }
         }
 
-        /// <summary>
-        /// Resource provisioning state
-        /// Serialized Name: WorkspacePatchInfo.properties.provisioningState
-        /// </summary>
+        /// <summary> Resource provisioning state. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// The encryption details of the workspace
-        /// Serialized Name: WorkspacePatchInfo.properties.encryption
-        /// </summary>
+        /// <summary> The encryption details of the workspace. </summary>
         public SynapseEncryptionDetails Encryption { get; set; }
-        /// <summary>
-        /// Enable or Disable public network access to workspace
-        /// Serialized Name: WorkspacePatchInfo.properties.publicNetworkAccess
-        /// </summary>
+        /// <summary> Enable or Disable public network access to workspace. </summary>
         public WorkspacePublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

@@ -11,10 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// The list Kusto databases operation response.
-    /// Serialized Name: DatabaseListResult
-    /// </summary>
+    /// <summary> The list Kusto databases operation response. </summary>
     internal partial class SynapseDatabaseListResult
     {
         /// <summary> Initializes a new instance of SynapseDatabaseListResult. </summary>
@@ -26,7 +23,6 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <summary> Initializes a new instance of SynapseDatabaseListResult. </summary>
         /// <param name="value">
         /// The list of Kusto databases.
-        /// Serialized Name: DatabaseListResult.value
         /// Please note <see cref="SynapseDatabaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SynapseReadOnlyFollowingDatabase"/> and <see cref="SynapseReadWriteDatabase"/>.
         /// </param>
@@ -37,7 +33,6 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary>
         /// The list of Kusto databases.
-        /// Serialized Name: DatabaseListResult.value
         /// Please note <see cref="SynapseDatabaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SynapseReadOnlyFollowingDatabase"/> and <see cref="SynapseReadWriteDatabase"/>.
         /// </summary>

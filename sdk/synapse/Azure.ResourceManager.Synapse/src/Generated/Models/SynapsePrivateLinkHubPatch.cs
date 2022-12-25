@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// PrivateLinkHub patch details
-    /// Serialized Name: PrivateLinkHubPatchInfo
-    /// </summary>
+    /// <summary> PrivateLinkHub patch details. </summary>
     public partial class SynapsePrivateLinkHubPatch
     {
         /// <summary> Initializes a new instance of SynapsePrivateLinkHubPatch. </summary>
@@ -22,10 +19,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// Resource tags
-        /// Serialized Name: PrivateLinkHubPatchInfo.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

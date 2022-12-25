@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Azure resource SKU definition.
-    /// Serialized Name: AzureResourceSku
-    /// </summary>
+    /// <summary> Azure resource SKU definition. </summary>
     public partial class SynapseDataSourceResourceSku
     {
         /// <summary> Initializes a new instance of SynapseDataSourceResourceSku. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.Synapse.Models
         }
 
         /// <summary> Initializes a new instance of SynapseDataSourceResourceSku. </summary>
-        /// <param name="resourceType">
-        /// Resource Namespace and Type.
-        /// Serialized Name: AzureResourceSku.resourceType
-        /// </param>
-        /// <param name="sku">
-        /// The SKU details.
-        /// Serialized Name: AzureResourceSku.sku
-        /// </param>
-        /// <param name="capacity">
-        /// The number of instances of the cluster.
-        /// Serialized Name: AzureResourceSku.capacity
-        /// </param>
+        /// <param name="resourceType"> Resource Namespace and Type. </param>
+        /// <param name="sku"> The SKU details. </param>
+        /// <param name="capacity"> The number of instances of the cluster. </param>
         internal SynapseDataSourceResourceSku(string resourceType, SynapseDataSourceSku sku, SynapseDataSourceCapacity capacity)
         {
             ResourceType = resourceType;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.Synapse.Models
             Capacity = capacity;
         }
 
-        /// <summary>
-        /// Resource Namespace and Type.
-        /// Serialized Name: AzureResourceSku.resourceType
-        /// </summary>
+        /// <summary> Resource Namespace and Type. </summary>
         public string ResourceType { get; }
-        /// <summary>
-        /// The SKU details.
-        /// Serialized Name: AzureResourceSku.sku
-        /// </summary>
+        /// <summary> The SKU details. </summary>
         public SynapseDataSourceSku Sku { get; }
-        /// <summary>
-        /// The number of instances of the cluster.
-        /// Serialized Name: AzureResourceSku.capacity
-        /// </summary>
+        /// <summary> The number of instances of the cluster. </summary>
         public SynapseDataSourceCapacity Capacity { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary>
-    /// Resource provisioning state
-    /// Serialized Name: ProvisioningState
-    /// </summary>
+    /// <summary> Resource provisioning state. </summary>
     public readonly partial struct SynapseProvisioningState : IEquatable<SynapseProvisioningState>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.Synapse.Models
         private const string FailedValue = "Failed";
         private const string DeleteErrorValue = "DeleteError";
 
-        /// <summary>
-        /// Provisioning
-        /// Serialized Name: ProvisioningState.Provisioning
-        /// </summary>
+        /// <summary> Provisioning. </summary>
         public static SynapseProvisioningState Provisioning { get; } = new SynapseProvisioningState(ProvisioningValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: ProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static SynapseProvisioningState Succeeded { get; } = new SynapseProvisioningState(SucceededValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: ProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static SynapseProvisioningState Deleting { get; } = new SynapseProvisioningState(DeletingValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: ProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static SynapseProvisioningState Failed { get; } = new SynapseProvisioningState(FailedValue);
-        /// <summary>
-        /// DeleteError
-        /// Serialized Name: ProvisioningState.DeleteError
-        /// </summary>
+        /// <summary> DeleteError. </summary>
         public static SynapseProvisioningState DeleteError { get; } = new SynapseProvisioningState(DeleteErrorValue);
         /// <summary> Determines if two <see cref="SynapseProvisioningState"/> values are the same. </summary>
         public static bool operator ==(SynapseProvisioningState left, SynapseProvisioningState right) => left.Equals(right);

@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseFollowerDatabaseDefinition DeserializeSynapseFollowerDatabaseDefinition(JsonElement element)
         {
-            string clusterResourceId = default;
+            ResourceIdentifier clusterResourceId = default;
             string attachedDatabaseConfigurationName = default;
             Optional<string> databaseName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterResourceId"))
                 {
-                    clusterResourceId = property.Value.GetString();
+                    clusterResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("attachedDatabaseConfigurationName"))
