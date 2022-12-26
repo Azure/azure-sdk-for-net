@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources
 
         private static Dictionary<string, string> GetVersionsFromResult(ResourceProviderResource results)
         {
-            Dictionary<string, string> resourceVersions = new Dictionary<string, string>();
+            Dictionary<string, string> resourceVersions = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             foreach (var type in results.Data.ResourceTypes)
             {
                 if (type.ApiVersions.Count == 0)
