@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubsApplicationGroupPolicy : IUtf8JsonSerializable
+    public partial class ApplicationGroupPolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -18,20 +18,20 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
-            writer.WriteStringValue(ApplicationGroupPolicyType.ToString());
+            writer.WriteStringValue(PolicyType.ToString());
             writer.WriteEndObject();
         }
 
-        internal static EventHubsApplicationGroupPolicy DeserializeEventHubsApplicationGroupPolicy(JsonElement element)
+        internal static ApplicationGroupPolicy DeserializeApplicationGroupPolicy(JsonElement element)
         {
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "ThrottlingPolicy": return EventHubsThrottlingPolicy.DeserializeEventHubsThrottlingPolicy(element);
+                    case "ThrottlingPolicy": return ThrottlingPolicy.DeserializeThrottlingPolicy(element);
                 }
             }
-            return UnknownEventHubsApplicationGroupPolicy.DeserializeUnknownEventHubsApplicationGroupPolicy(element);
+            return UnknownApplicationGroupPolicy.DeserializeUnknownApplicationGroupPolicy(element);
         }
     }
 }

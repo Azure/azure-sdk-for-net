@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.EventHubs
             EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
 
             // get the collection of this ApplicationGroupResource
-            EventHubsApplicationGroupCollection collection = eventHubsNamespace.GetEventHubsApplicationGroups();
+            ApplicationGroupCollection collection = eventHubsNamespace.GetApplicationGroups();
 
             // invoke the operation and iterate over the result
-            await foreach (EventHubsApplicationGroupResource item in collection.GetAllAsync())
+            await foreach (ApplicationGroupResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                EventHubsApplicationGroupData resourceData = item.Data;
+                ApplicationGroupData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -72,25 +72,25 @@ namespace Azure.ResourceManager.EventHubs
             EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
 
             // get the collection of this ApplicationGroupResource
-            EventHubsApplicationGroupCollection collection = eventHubsNamespace.GetEventHubsApplicationGroups();
+            ApplicationGroupCollection collection = eventHubsNamespace.GetApplicationGroups();
 
             // invoke the operation
             string applicationGroupName = "appGroup1";
-            EventHubsApplicationGroupData data = new EventHubsApplicationGroupData()
+            ApplicationGroupData data = new ApplicationGroupData()
             {
                 IsEnabled = true,
                 ClientAppGroupIdentifier = "SASKeyName=KeyName",
                 Policies =
 {
-new EventHubsThrottlingPolicy("ThrottlingPolicy1",7912,MetricId.IncomingMessages),new EventHubsThrottlingPolicy("ThrottlingPolicy2",3951729,MetricId.IncomingBytes),new EventHubsThrottlingPolicy("ThrottlingPolicy3",245175,MetricId.OutgoingBytes)
+new ThrottlingPolicy("ThrottlingPolicy1",7912,MetricId.IncomingMessages),new ThrottlingPolicy("ThrottlingPolicy2",3951729,MetricId.IncomingBytes),new ThrottlingPolicy("ThrottlingPolicy3",245175,MetricId.OutgoingBytes)
 },
             };
-            ArmOperation<EventHubsApplicationGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, applicationGroupName, data);
-            EventHubsApplicationGroupResource result = lro.Value;
+            ArmOperation<ApplicationGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, applicationGroupName, data);
+            ApplicationGroupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            EventHubsApplicationGroupData resourceData = result.Data;
+            ApplicationGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -115,15 +115,15 @@ new EventHubsThrottlingPolicy("ThrottlingPolicy1",7912,MetricId.IncomingMessages
             EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
 
             // get the collection of this ApplicationGroupResource
-            EventHubsApplicationGroupCollection collection = eventHubsNamespace.GetEventHubsApplicationGroups();
+            ApplicationGroupCollection collection = eventHubsNamespace.GetApplicationGroups();
 
             // invoke the operation
             string applicationGroupName = "appGroup1";
-            EventHubsApplicationGroupResource result = await collection.GetAsync(applicationGroupName);
+            ApplicationGroupResource result = await collection.GetAsync(applicationGroupName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            EventHubsApplicationGroupData resourceData = result.Data;
+            ApplicationGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -148,7 +148,7 @@ new EventHubsThrottlingPolicy("ThrottlingPolicy1",7912,MetricId.IncomingMessages
             EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
 
             // get the collection of this ApplicationGroupResource
-            EventHubsApplicationGroupCollection collection = eventHubsNamespace.GetEventHubsApplicationGroups();
+            ApplicationGroupCollection collection = eventHubsNamespace.GetApplicationGroups();
 
             // invoke the operation
             string applicationGroupName = "appGroup1";

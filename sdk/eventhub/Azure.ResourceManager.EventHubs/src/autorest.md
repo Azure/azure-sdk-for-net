@@ -21,7 +21,6 @@ request-path-to-resource-name:
     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/authorizationRules/{authorizationRuleName}: EventHubAuthorizationRule
     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}: EventHubsNamespaceAuthorizationRule
     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/consumergroups/{consumerGroupName}: EventHubsConsumerGroup
-    /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/applicationGroups/{applicationGroupName}: EventHubsApplicationGroup
 override-operation-name:
     Namespaces_CheckNameAvailability: CheckEventHubsNamespaceNameAvailability
     DisasterRecoveryConfigs_CheckNameAvailability: CheckEventHubsDisasterRecoveryNameAvailability
@@ -63,13 +62,6 @@ rename-mapping:
   UnavailableReason: EventHubsNameUnavailableReason
 
 directive:
-    - from: ApplicationGroups.json
-      where: $.definitions
-      transform: >
-        $.ApplicationGroup['x-ms-client-name'] = 'EventHubsApplicationGroup';
-        $.ApplicationGroupPolicy['x-ms-client-name'] = 'EventHubsApplicationGroupPolicy';
-        $.ApplicationGroupListResult['x-ms-client-name'] = 'EventHubsApplicationGroupListResult';
-        $.ThrottlingPolicy['x-ms-client-name'] = 'EventHubsThrottlingPolicy';
     - from: AuthorizationRules.json
       where: $.definitions
       transform: >

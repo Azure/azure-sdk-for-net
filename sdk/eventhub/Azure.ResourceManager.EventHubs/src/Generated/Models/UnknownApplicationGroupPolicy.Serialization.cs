@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    internal partial class UnknownEventHubsApplicationGroupPolicy : IUtf8JsonSerializable
+    internal partial class UnknownApplicationGroupPolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
-            writer.WriteStringValue(ApplicationGroupPolicyType.ToString());
+            writer.WriteStringValue(PolicyType.ToString());
             writer.WriteEndObject();
         }
 
-        internal static UnknownEventHubsApplicationGroupPolicy DeserializeUnknownEventHubsApplicationGroupPolicy(JsonElement element)
+        internal static UnknownApplicationGroupPolicy DeserializeUnknownApplicationGroupPolicy(JsonElement element)
         {
             string name = default;
             ApplicationGroupPolicyType type = "Unknown";
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new UnknownEventHubsApplicationGroupPolicy(name, type);
+            return new UnknownApplicationGroupPolicy(name, type);
         }
     }
 }

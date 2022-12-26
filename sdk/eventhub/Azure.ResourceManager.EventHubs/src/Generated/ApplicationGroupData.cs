@@ -12,16 +12,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the EventHubsApplicationGroup data model. </summary>
-    public partial class EventHubsApplicationGroupData : ResourceData
+    /// <summary> A class representing the ApplicationGroup data model. </summary>
+    public partial class ApplicationGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventHubsApplicationGroupData. </summary>
-        public EventHubsApplicationGroupData()
+        /// <summary> Initializes a new instance of ApplicationGroupData. </summary>
+        public ApplicationGroupData()
         {
-            Policies = new ChangeTrackingList<EventHubsApplicationGroupPolicy>();
+            Policies = new ChangeTrackingList<ApplicationGroupPolicy>();
         }
 
-        /// <summary> Initializes a new instance of EventHubsApplicationGroupData. </summary>
+        /// <summary> Initializes a new instance of ApplicationGroupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="clientAppGroupIdentifier"> The Unique identifier for application group.Supports SAS(SASKeyName=KeyName) or AAD(AADAppID=Guid). </param>
         /// <param name="policies">
         /// List of group policies that define the behavior of application group. The policies can support resource governance scenarios such as limiting ingress or egress traffic.
-        /// Please note <see cref="EventHubsApplicationGroupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="EventHubsThrottlingPolicy"/>.
+        /// Please note <see cref="ApplicationGroupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ThrottlingPolicy"/>.
         /// </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal EventHubsApplicationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, string clientAppGroupIdentifier, IList<EventHubsApplicationGroupPolicy> policies, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal ApplicationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isEnabled, string clientAppGroupIdentifier, IList<ApplicationGroupPolicy> policies, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             IsEnabled = isEnabled;
             ClientAppGroupIdentifier = clientAppGroupIdentifier;
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.EventHubs
         public string ClientAppGroupIdentifier { get; set; }
         /// <summary>
         /// List of group policies that define the behavior of application group. The policies can support resource governance scenarios such as limiting ingress or egress traffic.
-        /// Please note <see cref="EventHubsApplicationGroupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="EventHubsThrottlingPolicy"/>.
+        /// Please note <see cref="ApplicationGroupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ThrottlingPolicy"/>.
         /// </summary>
-        public IList<EventHubsApplicationGroupPolicy> Policies { get; }
+        public IList<ApplicationGroupPolicy> Policies { get; }
         /// <summary> The geo-location where the resource lives. </summary>
         public AzureLocation? Location { get; }
     }

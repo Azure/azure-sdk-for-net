@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EventHubsApplicationGroupListResult>> ListByNamespaceAsync(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationGroupListResult>> ListByNamespaceAsync(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.EventHubs
             {
                 case 200:
                     {
-                        EventHubsApplicationGroupListResult value = default;
+                        ApplicationGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EventHubsApplicationGroupListResult.DeserializeEventHubsApplicationGroupListResult(document.RootElement);
+                        value = ApplicationGroupListResult.DeserializeApplicationGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EventHubsApplicationGroupListResult> ListByNamespace(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public Response<ApplicationGroupListResult> ListByNamespace(string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.EventHubs
             {
                 case 200:
                     {
-                        EventHubsApplicationGroupListResult value = default;
+                        ApplicationGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EventHubsApplicationGroupListResult.DeserializeEventHubsApplicationGroupListResult(document.RootElement);
+                        value = ApplicationGroupListResult.DeserializeApplicationGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateApplicationGroupRequest(string subscriptionId, string resourceGroupName, string namespaceName, string applicationGroupName, EventHubsApplicationGroupData data)
+        internal HttpMessage CreateCreateOrUpdateApplicationGroupRequest(string subscriptionId, string resourceGroupName, string namespaceName, string applicationGroupName, ApplicationGroupData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="applicationGroupName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EventHubsApplicationGroupData>> CreateOrUpdateApplicationGroupAsync(string subscriptionId, string resourceGroupName, string namespaceName, string applicationGroupName, EventHubsApplicationGroupData data, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationGroupData>> CreateOrUpdateApplicationGroupAsync(string subscriptionId, string resourceGroupName, string namespaceName, string applicationGroupName, ApplicationGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.EventHubs
             {
                 case 200:
                     {
-                        EventHubsApplicationGroupData value = default;
+                        ApplicationGroupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EventHubsApplicationGroupData.DeserializeEventHubsApplicationGroupData(document.RootElement);
+                        value = ApplicationGroupData.DeserializeApplicationGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/>, <paramref name="applicationGroupName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EventHubsApplicationGroupData> CreateOrUpdateApplicationGroup(string subscriptionId, string resourceGroupName, string namespaceName, string applicationGroupName, EventHubsApplicationGroupData data, CancellationToken cancellationToken = default)
+        public Response<ApplicationGroupData> CreateOrUpdateApplicationGroup(string subscriptionId, string resourceGroupName, string namespaceName, string applicationGroupName, ApplicationGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.EventHubs
             {
                 case 200:
                     {
-                        EventHubsApplicationGroupData value = default;
+                        ApplicationGroupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EventHubsApplicationGroupData.DeserializeEventHubsApplicationGroupData(document.RootElement);
+                        value = ApplicationGroupData.DeserializeApplicationGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="applicationGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EventHubsApplicationGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string namespaceName, string applicationGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string namespaceName, string applicationGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -327,13 +327,13 @@ namespace Azure.ResourceManager.EventHubs
             {
                 case 200:
                     {
-                        EventHubsApplicationGroupData value = default;
+                        ApplicationGroupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EventHubsApplicationGroupData.DeserializeEventHubsApplicationGroupData(document.RootElement);
+                        value = ApplicationGroupData.DeserializeApplicationGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EventHubsApplicationGroupData)null, message.Response);
+                    return Response.FromValue((ApplicationGroupData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="applicationGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EventHubsApplicationGroupData> Get(string subscriptionId, string resourceGroupName, string namespaceName, string applicationGroupName, CancellationToken cancellationToken = default)
+        public Response<ApplicationGroupData> Get(string subscriptionId, string resourceGroupName, string namespaceName, string applicationGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -360,13 +360,13 @@ namespace Azure.ResourceManager.EventHubs
             {
                 case 200:
                     {
-                        EventHubsApplicationGroupData value = default;
+                        ApplicationGroupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EventHubsApplicationGroupData.DeserializeEventHubsApplicationGroupData(document.RootElement);
+                        value = ApplicationGroupData.DeserializeApplicationGroupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EventHubsApplicationGroupData)null, message.Response);
+                    return Response.FromValue((ApplicationGroupData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EventHubsApplicationGroupListResult>> ListByNamespaceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<ApplicationGroupListResult>> ListByNamespaceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -407,9 +407,9 @@ namespace Azure.ResourceManager.EventHubs
             {
                 case 200:
                     {
-                        EventHubsApplicationGroupListResult value = default;
+                        ApplicationGroupListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = EventHubsApplicationGroupListResult.DeserializeEventHubsApplicationGroupListResult(document.RootElement);
+                        value = ApplicationGroupListResult.DeserializeApplicationGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EventHubsApplicationGroupListResult> ListByNamespaceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
+        public Response<ApplicationGroupListResult> ListByNamespaceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -438,9 +438,9 @@ namespace Azure.ResourceManager.EventHubs
             {
                 case 200:
                     {
-                        EventHubsApplicationGroupListResult value = default;
+                        ApplicationGroupListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = EventHubsApplicationGroupListResult.DeserializeEventHubsApplicationGroupListResult(document.RootElement);
+                        value = ApplicationGroupListResult.DeserializeApplicationGroupListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

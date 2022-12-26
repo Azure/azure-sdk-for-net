@@ -12,25 +12,25 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The response from the List Application Groups operation. </summary>
-    internal partial class EventHubsApplicationGroupListResult
+    internal partial class ApplicationGroupListResult
     {
-        /// <summary> Initializes a new instance of EventHubsApplicationGroupListResult. </summary>
-        internal EventHubsApplicationGroupListResult()
+        /// <summary> Initializes a new instance of ApplicationGroupListResult. </summary>
+        internal ApplicationGroupListResult()
         {
-            Value = new ChangeTrackingList<EventHubsApplicationGroupData>();
+            Value = new ChangeTrackingList<ApplicationGroupData>();
         }
 
-        /// <summary> Initializes a new instance of EventHubsApplicationGroupListResult. </summary>
+        /// <summary> Initializes a new instance of ApplicationGroupListResult. </summary>
         /// <param name="value"> Result of the List Application Groups operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains an incomplete list of Authorization Rules. </param>
-        internal EventHubsApplicationGroupListResult(IReadOnlyList<EventHubsApplicationGroupData> value, string nextLink)
+        internal ApplicationGroupListResult(IReadOnlyList<ApplicationGroupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Result of the List Application Groups operation. </summary>
-        public IReadOnlyList<EventHubsApplicationGroupData> Value { get; }
+        public IReadOnlyList<ApplicationGroupData> Value { get; }
         /// <summary> Link to the next set of results. Not empty if Value contains an incomplete list of Authorization Rules. </summary>
         public string NextLink { get; }
     }

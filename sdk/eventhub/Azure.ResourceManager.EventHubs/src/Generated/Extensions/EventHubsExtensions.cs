@@ -436,20 +436,20 @@ namespace Azure.ResourceManager.EventHubs
         }
         #endregion
 
-        #region EventHubsApplicationGroupResource
+        #region ApplicationGroupResource
         /// <summary>
-        /// Gets an object representing an <see cref="EventHubsApplicationGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EventHubsApplicationGroupResource.CreateResourceIdentifier" /> to create an <see cref="EventHubsApplicationGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApplicationGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApplicationGroupResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EventHubsApplicationGroupResource" /> object. </returns>
-        public static EventHubsApplicationGroupResource GetEventHubsApplicationGroupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApplicationGroupResource" /> object. </returns>
+        public static ApplicationGroupResource GetApplicationGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                EventHubsApplicationGroupResource.ValidateResourceId(id);
-                return new EventHubsApplicationGroupResource(client, id);
+                ApplicationGroupResource.ValidateResourceId(id);
+                return new ApplicationGroupResource(client, id);
             }
             );
         }

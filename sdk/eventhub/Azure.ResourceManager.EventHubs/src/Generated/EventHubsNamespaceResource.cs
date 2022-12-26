@@ -295,11 +295,11 @@ namespace Azure.ResourceManager.EventHubs
             return GetEventHubsSchemaGroups().Get(schemaGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of EventHubsApplicationGroupResources in the EventHubsNamespace. </summary>
-        /// <returns> An object representing collection of EventHubsApplicationGroupResources and their operations over a EventHubsApplicationGroupResource. </returns>
-        public virtual EventHubsApplicationGroupCollection GetEventHubsApplicationGroups()
+        /// <summary> Gets a collection of ApplicationGroupResources in the EventHubsNamespace. </summary>
+        /// <returns> An object representing collection of ApplicationGroupResources and their operations over a ApplicationGroupResource. </returns>
+        public virtual ApplicationGroupCollection GetApplicationGroups()
         {
-            return GetCachedClient(Client => new EventHubsApplicationGroupCollection(Client, Id));
+            return GetCachedClient(Client => new ApplicationGroupCollection(Client, Id));
         }
 
         /// <summary>
@@ -312,9 +312,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EventHubsApplicationGroupResource>> GetEventHubsApplicationGroupAsync(string applicationGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationGroupResource>> GetApplicationGroupAsync(string applicationGroupName, CancellationToken cancellationToken = default)
         {
-            return await GetEventHubsApplicationGroups().GetAsync(applicationGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetApplicationGroups().GetAsync(applicationGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -327,9 +327,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EventHubsApplicationGroupResource> GetEventHubsApplicationGroup(string applicationGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationGroupResource> GetApplicationGroup(string applicationGroupName, CancellationToken cancellationToken = default)
         {
-            return GetEventHubsApplicationGroups().Get(applicationGroupName, cancellationToken);
+            return GetApplicationGroups().Get(applicationGroupName, cancellationToken);
         }
 
         /// <summary>
