@@ -56,6 +56,8 @@ namespace Azure.ResourceManager.Sql
         private readonly DatabaseSqlVulnerabilityAssessmentExecuteScanRestOperations _databaseSqlVulnerabilityAssessmentExecuteScanRestClient;
         private readonly ClientDiagnostics _synapseLinkWorkspacesClientDiagnostics;
         private readonly SynapseLinkWorkspacesRestOperations _synapseLinkWorkspacesRestClient;
+        private readonly ClientDiagnostics _databaseEncryptionProtectorsClientDiagnostics;
+        private readonly DatabaseEncryptionProtectorsRestOperations _databaseEncryptionProtectorsRestClient;
         private readonly SqlDatabaseData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SqlDatabaseResource"/> class for mocking. </summary>
@@ -103,6 +105,8 @@ namespace Azure.ResourceManager.Sql
             _databaseSqlVulnerabilityAssessmentExecuteScanRestClient = new DatabaseSqlVulnerabilityAssessmentExecuteScanRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _synapseLinkWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _synapseLinkWorkspacesRestClient = new SynapseLinkWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _databaseEncryptionProtectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _databaseEncryptionProtectorsRestClient = new DatabaseEncryptionProtectorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -2450,6 +2454,114 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Revalidates an existing encryption protector for a particular database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/encryptionProtector/{encryptionProtectorName}/revalidate
+        /// Operation Id: DatabaseEncryptionProtectors_Revalidate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="encryptionProtectorName"> The name of the encryption protector to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> RevalidateDatabaseEncryptionProtectorAsync(WaitUntil waitUntil, EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _databaseEncryptionProtectorsClientDiagnostics.CreateScope("SqlDatabaseResource.RevalidateDatabaseEncryptionProtector");
+            scope.Start();
+            try
+            {
+                var response = await _databaseEncryptionProtectorsRestClient.RevalidateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation(_databaseEncryptionProtectorsClientDiagnostics, Pipeline, _databaseEncryptionProtectorsRestClient.CreateRevalidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Revalidates an existing encryption protector for a particular database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/encryptionProtector/{encryptionProtectorName}/revalidate
+        /// Operation Id: DatabaseEncryptionProtectors_Revalidate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="encryptionProtectorName"> The name of the encryption protector to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation RevalidateDatabaseEncryptionProtector(WaitUntil waitUntil, EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _databaseEncryptionProtectorsClientDiagnostics.CreateScope("SqlDatabaseResource.RevalidateDatabaseEncryptionProtector");
+            scope.Start();
+            try
+            {
+                var response = _databaseEncryptionProtectorsRestClient.Revalidate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName, cancellationToken);
+                var operation = new SqlArmOperation(_databaseEncryptionProtectorsClientDiagnostics, Pipeline, _databaseEncryptionProtectorsRestClient.CreateRevalidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reverts an existing encryption protector for a particular database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/encryptionProtector/{encryptionProtectorName}/revert
+        /// Operation Id: DatabaseEncryptionProtectors_Revert
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="encryptionProtectorName"> The name of the encryption protector to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> RevertDatabaseEncryptionProtectorAsync(WaitUntil waitUntil, EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _databaseEncryptionProtectorsClientDiagnostics.CreateScope("SqlDatabaseResource.RevertDatabaseEncryptionProtector");
+            scope.Start();
+            try
+            {
+                var response = await _databaseEncryptionProtectorsRestClient.RevertAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation(_databaseEncryptionProtectorsClientDiagnostics, Pipeline, _databaseEncryptionProtectorsRestClient.CreateRevertRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reverts an existing encryption protector for a particular database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/encryptionProtector/{encryptionProtectorName}/revert
+        /// Operation Id: DatabaseEncryptionProtectors_Revert
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="encryptionProtectorName"> The name of the encryption protector to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation RevertDatabaseEncryptionProtector(WaitUntil waitUntil, EncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _databaseEncryptionProtectorsClientDiagnostics.CreateScope("SqlDatabaseResource.RevertDatabaseEncryptionProtector");
+            scope.Start();
+            try
+            {
+                var response = _databaseEncryptionProtectorsRestClient.Revert(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName, cancellationToken);
+                var operation = new SqlArmOperation(_databaseEncryptionProtectorsClientDiagnostics, Pipeline, _databaseEncryptionProtectorsRestClient.CreateRevertRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, encryptionProtectorName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

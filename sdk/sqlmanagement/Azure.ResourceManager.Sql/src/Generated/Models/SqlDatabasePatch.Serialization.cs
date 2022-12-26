@@ -158,6 +158,37 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("federatedClientId");
                 writer.WriteStringValue(FederatedClientId.Value);
             }
+            if (Optional.IsCollectionDefined(Keys))
+            {
+                writer.WritePropertyName("keys");
+                writer.WriteStartObject();
+                foreach (var item in Keys)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(EncryptionProtector))
+            {
+                writer.WritePropertyName("encryptionProtector");
+                writer.WriteStringValue(EncryptionProtector);
+            }
+            if (Optional.IsDefined(PreferredEnclaveType))
+            {
+                writer.WritePropertyName("preferredEnclaveType");
+                writer.WriteStringValue(PreferredEnclaveType.Value.ToString());
+            }
+            if (Optional.IsDefined(ManualCutover))
+            {
+                writer.WritePropertyName("manualCutover");
+                writer.WriteBooleanValue(ManualCutover.Value);
+            }
+            if (Optional.IsDefined(PerformCutover))
+            {
+                writer.WritePropertyName("performCutover");
+                writer.WriteBooleanValue(PerformCutover.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

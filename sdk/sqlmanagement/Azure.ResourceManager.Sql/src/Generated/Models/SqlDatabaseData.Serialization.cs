@@ -164,10 +164,46 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("federatedClientId");
                 writer.WriteStringValue(FederatedClientId.Value);
             }
+            if (Optional.IsCollectionDefined(Keys))
+            {
+                writer.WritePropertyName("keys");
+                writer.WriteStartObject();
+                foreach (var item in Keys)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(EncryptionProtector))
+            {
+                writer.WritePropertyName("encryptionProtector");
+                writer.WriteStringValue(EncryptionProtector);
+            }
+            if (Optional.IsDefined(PreferredEnclaveType))
+            {
+                writer.WritePropertyName("preferredEnclaveType");
+                writer.WriteStringValue(PreferredEnclaveType.Value.ToString());
+            }
             if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId");
                 writer.WriteStringValue(SourceResourceId);
+            }
+            if (Optional.IsDefined(ManualCutover))
+            {
+                writer.WritePropertyName("manualCutover");
+                writer.WriteBooleanValue(ManualCutover.Value);
+            }
+            if (Optional.IsDefined(PerformCutover))
+            {
+                writer.WritePropertyName("performCutover");
+                writer.WriteBooleanValue(PerformCutover.Value);
+            }
+            if (Optional.IsDefined(AvailabilityZone))
+            {
+                writer.WritePropertyName("availabilityZone");
+                writer.WriteStringValue(AvailabilityZone.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -223,7 +259,13 @@ namespace Azure.ResourceManager.Sql
             Optional<bool> isLedgerOn = default;
             Optional<bool> isInfraEncryptionEnabled = default;
             Optional<Guid> federatedClientId = default;
+            Optional<IDictionary<string, DatabaseKey>> keys = default;
+            Optional<string> encryptionProtector = default;
+            Optional<AlwaysEncryptedEnclaveType> preferredEnclaveType = default;
             Optional<ResourceIdentifier> sourceResourceId = default;
+            Optional<bool> manualCutover = default;
+            Optional<bool> performCutover = default;
+            Optional<AvailabilityZoneType> availabilityZone = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -675,6 +717,36 @@ namespace Azure.ResourceManager.Sql
                             federatedClientId = property0.Value.GetGuid();
                             continue;
                         }
+                        if (property0.NameEquals("keys"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            Dictionary<string, DatabaseKey> dictionary = new Dictionary<string, DatabaseKey>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, DatabaseKey.DeserializeDatabaseKey(property1.Value));
+                            }
+                            keys = dictionary;
+                            continue;
+                        }
+                        if (property0.NameEquals("encryptionProtector"))
+                        {
+                            encryptionProtector = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("preferredEnclaveType"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            preferredEnclaveType = new AlwaysEncryptedEnclaveType(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("sourceResourceId"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -685,11 +757,41 @@ namespace Azure.ResourceManager.Sql
                             sourceResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("manualCutover"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            manualCutover = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("performCutover"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            performCutover = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("availabilityZone"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            availabilityZone = new AvailabilityZoneType(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new SqlDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, managedBy.Value, identity.Value, Optional.ToNullable(createMode), collation.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(sampleName), elasticPoolId.Value, sourceDatabaseId.Value, Optional.ToNullable(status), Optional.ToNullable(databaseId), Optional.ToNullable(creationDate), currentServiceObjectiveName.Value, requestedServiceObjectiveName.Value, Optional.ToNullable(defaultSecondaryLocation), failoverGroupId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(sourceDatabaseDeletionDate), recoveryServicesRecoveryPointId.Value, longTermRetentionBackupResourceId.Value, recoverableDatabaseId.Value, restorableDroppedDatabaseId.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), Optional.ToNullable(maxLogSizeBytes), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(readScale), Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(secondaryType), currentSku.Value, Optional.ToNullable(autoPauseDelay), Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(minCapacity), Optional.ToNullable(pausedDate), Optional.ToNullable(resumedDate), maintenanceConfigurationId.Value, Optional.ToNullable(isLedgerOn), Optional.ToNullable(isInfraEncryptionEnabled), Optional.ToNullable(federatedClientId), sourceResourceId.Value);
+            return new SqlDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, managedBy.Value, identity.Value, Optional.ToNullable(createMode), collation.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(sampleName), elasticPoolId.Value, sourceDatabaseId.Value, Optional.ToNullable(status), Optional.ToNullable(databaseId), Optional.ToNullable(creationDate), currentServiceObjectiveName.Value, requestedServiceObjectiveName.Value, Optional.ToNullable(defaultSecondaryLocation), failoverGroupId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(sourceDatabaseDeletionDate), recoveryServicesRecoveryPointId.Value, longTermRetentionBackupResourceId.Value, recoverableDatabaseId.Value, restorableDroppedDatabaseId.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), Optional.ToNullable(maxLogSizeBytes), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(readScale), Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(secondaryType), currentSku.Value, Optional.ToNullable(autoPauseDelay), Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(minCapacity), Optional.ToNullable(pausedDate), Optional.ToNullable(resumedDate), maintenanceConfigurationId.Value, Optional.ToNullable(isLedgerOn), Optional.ToNullable(isInfraEncryptionEnabled), Optional.ToNullable(federatedClientId), Optional.ToDictionary(keys), encryptionProtector.Value, Optional.ToNullable(preferredEnclaveType), sourceResourceId.Value, Optional.ToNullable(manualCutover), Optional.ToNullable(performCutover), Optional.ToNullable(availabilityZone));
         }
     }
 }
