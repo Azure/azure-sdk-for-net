@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
-    /// A Class representing an ApplicationGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApplicationGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApplicationGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource" /> using the GetApplicationGroup method.
+    /// A Class representing an EventHubsApplicationGroup along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventHubsApplicationGroupResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetEventHubsApplicationGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource" /> using the GetEventHubsApplicationGroup method.
     /// </summary>
-    public partial class ApplicationGroupResource : ArmResource
+    public partial class EventHubsApplicationGroupResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ApplicationGroupResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="EventHubsApplicationGroupResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string applicationGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/applicationGroups/{applicationGroupName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _applicationGroupClientDiagnostics;
-        private readonly ApplicationGroupRestOperations _applicationGroupRestClient;
-        private readonly ApplicationGroupData _data;
+        private readonly ClientDiagnostics _eventHubsApplicationGroupApplicationGroupClientDiagnostics;
+        private readonly ApplicationGroupRestOperations _eventHubsApplicationGroupApplicationGroupRestClient;
+        private readonly EventHubsApplicationGroupData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="ApplicationGroupResource"/> class for mocking. </summary>
-        protected ApplicationGroupResource()
+        /// <summary> Initializes a new instance of the <see cref="EventHubsApplicationGroupResource"/> class for mocking. </summary>
+        protected EventHubsApplicationGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApplicationGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "EventHubsApplicationGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApplicationGroupResource(ArmClient client, ApplicationGroupData data) : this(client, data.Id)
+        internal EventHubsApplicationGroupResource(ArmClient client, EventHubsApplicationGroupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApplicationGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventHubsApplicationGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ApplicationGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal EventHubsApplicationGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _applicationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string applicationGroupApiVersion);
-            _applicationGroupRestClient = new ApplicationGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, applicationGroupApiVersion);
+            _eventHubsApplicationGroupApplicationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string eventHubsApplicationGroupApplicationGroupApiVersion);
+            _eventHubsApplicationGroupApplicationGroupRestClient = new ApplicationGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubsApplicationGroupApplicationGroupApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ApplicationGroupData Data
+        public virtual EventHubsApplicationGroupData Data
         {
             get
             {
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: ApplicationGroup_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApplicationGroupResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubsApplicationGroupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _applicationGroupClientDiagnostics.CreateScope("ApplicationGroupResource.Get");
+            using var scope = _eventHubsApplicationGroupApplicationGroupClientDiagnostics.CreateScope("EventHubsApplicationGroupResource.Get");
             scope.Start();
             try
             {
-                var response = await _applicationGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _eventHubsApplicationGroupApplicationGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApplicationGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubsApplicationGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: ApplicationGroup_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApplicationGroupResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<EventHubsApplicationGroupResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _applicationGroupClientDiagnostics.CreateScope("ApplicationGroupResource.Get");
+            using var scope = _eventHubsApplicationGroupApplicationGroupClientDiagnostics.CreateScope("EventHubsApplicationGroupResource.Get");
             scope.Start();
             try
             {
-                var response = _applicationGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _eventHubsApplicationGroupApplicationGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApplicationGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubsApplicationGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,11 +143,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _applicationGroupClientDiagnostics.CreateScope("ApplicationGroupResource.Delete");
+            using var scope = _eventHubsApplicationGroupApplicationGroupClientDiagnostics.CreateScope("EventHubsApplicationGroupResource.Delete");
             scope.Start();
             try
             {
-                var response = await _applicationGroupRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _eventHubsApplicationGroupApplicationGroupRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new EventHubsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _applicationGroupClientDiagnostics.CreateScope("ApplicationGroupResource.Delete");
+            using var scope = _eventHubsApplicationGroupApplicationGroupClientDiagnostics.CreateScope("EventHubsApplicationGroupResource.Delete");
             scope.Start();
             try
             {
-                var response = _applicationGroupRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _eventHubsApplicationGroupApplicationGroupRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new EventHubsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -195,16 +195,16 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="data"> The ApplicationGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApplicationGroupResource>> UpdateAsync(WaitUntil waitUntil, ApplicationGroupData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EventHubsApplicationGroupResource>> UpdateAsync(WaitUntil waitUntil, EventHubsApplicationGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _applicationGroupClientDiagnostics.CreateScope("ApplicationGroupResource.Update");
+            using var scope = _eventHubsApplicationGroupApplicationGroupClientDiagnostics.CreateScope("EventHubsApplicationGroupResource.Update");
             scope.Start();
             try
             {
-                var response = await _applicationGroupRestClient.CreateOrUpdateApplicationGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventHubsArmOperation<ApplicationGroupResource>(Response.FromValue(new ApplicationGroupResource(Client, response), response.GetRawResponse()));
+                var response = await _eventHubsApplicationGroupApplicationGroupRestClient.CreateOrUpdateApplicationGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new EventHubsArmOperation<EventHubsApplicationGroupResource>(Response.FromValue(new EventHubsApplicationGroupResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -225,16 +225,16 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="data"> The ApplicationGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ApplicationGroupResource> Update(WaitUntil waitUntil, ApplicationGroupData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EventHubsApplicationGroupResource> Update(WaitUntil waitUntil, EventHubsApplicationGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _applicationGroupClientDiagnostics.CreateScope("ApplicationGroupResource.Update");
+            using var scope = _eventHubsApplicationGroupApplicationGroupClientDiagnostics.CreateScope("EventHubsApplicationGroupResource.Update");
             scope.Start();
             try
             {
-                var response = _applicationGroupRestClient.CreateOrUpdateApplicationGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new EventHubsArmOperation<ApplicationGroupResource>(Response.FromValue(new ApplicationGroupResource(Client, response), response.GetRawResponse()));
+                var response = _eventHubsApplicationGroupApplicationGroupRestClient.CreateOrUpdateApplicationGroup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new EventHubsArmOperation<EventHubsApplicationGroupResource>(Response.FromValue(new EventHubsApplicationGroupResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

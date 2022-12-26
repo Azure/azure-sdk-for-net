@@ -12,11 +12,11 @@ using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    internal partial class ApplicationGroupListResult
+    internal partial class EventHubsApplicationGroupListResult
     {
-        internal static ApplicationGroupListResult DeserializeApplicationGroupListResult(JsonElement element)
+        internal static EventHubsApplicationGroupListResult DeserializeEventHubsApplicationGroupListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ApplicationGroupData>> value = default;
+            Optional<IReadOnlyList<EventHubsApplicationGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ApplicationGroupData> array = new List<ApplicationGroupData>();
+                    List<EventHubsApplicationGroupData> array = new List<EventHubsApplicationGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGroupData.DeserializeApplicationGroupData(item));
+                        array.Add(EventHubsApplicationGroupData.DeserializeEventHubsApplicationGroupData(item));
                     }
                     value = array;
                     continue;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new ApplicationGroupListResult(Optional.ToList(value), nextLink.Value);
+            return new EventHubsApplicationGroupListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }

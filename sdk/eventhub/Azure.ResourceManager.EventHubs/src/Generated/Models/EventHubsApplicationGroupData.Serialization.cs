@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class ApplicationGroupData : IUtf8JsonSerializable
+    public partial class EventHubsApplicationGroupData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventHubs
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGroupData DeserializeApplicationGroupData(JsonElement element)
+        internal static EventHubsApplicationGroupData DeserializeEventHubsApplicationGroupData(JsonElement element)
         {
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventHubs
             Optional<SystemData> systemData = default;
             Optional<bool> isEnabled = default;
             Optional<string> clientAppGroupIdentifier = default;
-            Optional<IList<ApplicationGroupPolicy>> policies = default;
+            Optional<IList<EventHubsApplicationGroupPolicy>> policies = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ApplicationGroupPolicy> array = new List<ApplicationGroupPolicy>();
+                            List<EventHubsApplicationGroupPolicy> array = new List<EventHubsApplicationGroupPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGroupPolicy.DeserializeApplicationGroupPolicy(item));
+                                array.Add(EventHubsApplicationGroupPolicy.DeserializeEventHubsApplicationGroupPolicy(item));
                             }
                             policies = array;
                             continue;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.EventHubs
                     continue;
                 }
             }
-            return new ApplicationGroupData(id, name, type, systemData.Value, Optional.ToNullable(isEnabled), clientAppGroupIdentifier.Value, Optional.ToList(policies), Optional.ToNullable(location));
+            return new EventHubsApplicationGroupData(id, name, type, systemData.Value, Optional.ToNullable(isEnabled), clientAppGroupIdentifier.Value, Optional.ToList(policies), Optional.ToNullable(location));
         }
     }
 }
