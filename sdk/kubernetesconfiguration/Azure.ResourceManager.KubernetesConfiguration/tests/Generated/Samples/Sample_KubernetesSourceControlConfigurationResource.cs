@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetSourceControlConfiguration()
         {
-            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-07-01/examples/GetSourceControlConfiguration.json
+            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-11-01/examples/GetSourceControlConfiguration.json
             // this example is just showing the usage of "SourceControlConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateSourceControlConfiguration()
         {
-            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-07-01/examples/CreateSourceControlConfiguration.json
+            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-11-01/examples/CreateSourceControlConfiguration.json
             // this example is just showing the usage of "SourceControlConfigurations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteSourceControlConfiguration()
         {
-            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-07-01/examples/DeleteSourceControlConfiguration.json
+            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-11-01/examples/DeleteSourceControlConfiguration.json
             // this example is just showing the usage of "SourceControlConfigurations_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
