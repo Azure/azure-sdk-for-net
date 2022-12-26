@@ -28,5 +28,7 @@ extends:
     BuildSnippets: true
     ArtifactName: packages
     Artifacts:
+    - name: Azure.AI.TextAnalytics.Authoring
+      safeName: AzureAITextAnalyticsAuthoring
     - name: Azure.AI.TextAnalytics
       safeName: AzureAITextAnalytics
