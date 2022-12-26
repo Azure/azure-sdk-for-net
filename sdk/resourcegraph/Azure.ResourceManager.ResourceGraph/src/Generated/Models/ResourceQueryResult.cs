@@ -12,15 +12,15 @@ using Azure.Core;
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
     /// <summary> Query result. </summary>
-    public partial class QueryResponse
+    public partial class ResourceQueryResult
     {
-        /// <summary> Initializes a new instance of QueryResponse. </summary>
+        /// <summary> Initializes a new instance of ResourceQueryResult. </summary>
         /// <param name="totalRecords"> Number of total records matching the query. </param>
         /// <param name="count"> Number of records returned in the current response. In the case of paging, this is the number of records in the current page. </param>
         /// <param name="resultTruncated"> Indicates whether the query results are truncated. </param>
         /// <param name="data"> Query output in JObject array or Table format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        internal QueryResponse(long totalRecords, long count, ResultTruncated resultTruncated, BinaryData data)
+        internal ResourceQueryResult(long totalRecords, long count, ResultTruncated resultTruncated, BinaryData data)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             Facets = new ChangeTrackingList<Facet>();
         }
 
-        /// <summary> Initializes a new instance of QueryResponse. </summary>
+        /// <summary> Initializes a new instance of ResourceQueryResult. </summary>
         /// <param name="totalRecords"> Number of total records matching the query. </param>
         /// <param name="count"> Number of records returned in the current response. In the case of paging, this is the number of records in the current page. </param>
         /// <param name="resultTruncated"> Indicates whether the query results are truncated. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// Please note <see cref="Facet"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FacetError"/> and <see cref="FacetResult"/>.
         /// </param>
-        internal QueryResponse(long totalRecords, long count, ResultTruncated resultTruncated, string skipToken, BinaryData data, IReadOnlyList<Facet> facets)
+        internal ResourceQueryResult(long totalRecords, long count, ResultTruncated resultTruncated, string skipToken, BinaryData data, IReadOnlyList<Facet> facets)
         {
             TotalRecords = totalRecords;
             Count = count;

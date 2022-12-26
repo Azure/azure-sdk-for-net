@@ -12,12 +12,12 @@ using Azure.Core;
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
     /// <summary> Describes a query to be executed. </summary>
-    public partial class QueryContent
+    public partial class ResourceQueryContent
     {
-        /// <summary> Initializes a new instance of QueryContent. </summary>
+        /// <summary> Initializes a new instance of ResourceQueryContent. </summary>
         /// <param name="query"> The resources query. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public QueryContent(string query)
+        public ResourceQueryContent(string query)
         {
             Argument.AssertNotNull(query, nameof(query));
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <summary> The resources query. </summary>
         public string Query { get; }
         /// <summary> The query evaluation options. </summary>
-        public QueryRequestOptions Options { get; set; }
+        public ResourceQueryRequestOptions Options { get; set; }
         /// <summary> An array of facet requests to be computed against the query result. </summary>
         public IList<FacetRequest> Facets { get; }
     }
