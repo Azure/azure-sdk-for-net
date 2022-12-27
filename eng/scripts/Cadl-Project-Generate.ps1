@@ -42,15 +42,6 @@ $npmWorkingDir = Resolve-Path $tempFolder/$innerFolder
 $mainCadlFile = If (Test-Path "$npmWorkingDir/client.cadl") { Resolve-Path "$npmWorkingDir/client.cadl" } Else { Resolve-Path "$npmWorkingDir/main.cadl"}
 $resolvedProjectDirectory = Resolve-Path "$ProjectDirectory/src"
 
-# if (Test-Path "$npmWorkingDir/cadl-project.yaml") {
-#     $cadlProjectYaml = Get-Content -Path "$npmWorkingDir/cadl-project.yaml" -Raw
-#     $yml = ConvertFrom-YAML $cadlProjectYaml
-#     if ( $yml["emitters"]["@azure-tools/cadl-csharp"]["sdk-folder"]) {
-#         $yml["emitters"]["@azure-tools/cadl-csharp"]["sdk-folder"] = ""
-#     }
-#     (ConvertTo-Yaml $yml) | Out-File "$npmWorkingDir/cadl-project.yaml"
-# }
-
 $HasEmitterOutputDir = $false;
 if (Test-Path "$npmWorkingDir/cadl-project.yaml") {
     $cadlProjectYaml = Get-Content -Path "$npmWorkingDir/cadl-project.yaml" -Raw
@@ -63,8 +54,6 @@ if (Test-Path "$npmWorkingDir/cadl-project.yaml") {
 try {
     Push-Location $npmWorkingDir
     NpmInstallForProject $npmWorkingDir
-    # Write-Host("npx cadl compile $mainCadlFile --emit `"`@azure-tools/cadl-csharp`" --output-path `"$resolvedProjectDirectory`"")
-    # npx cadl compile $mainCadlFile --emit "@azure-tools/cadl-csharp" --output-path "$resolvedProjectDirectory"
     if ($HasEmitterOutputDir) {
         $csharpSdkFolder = (Join-Path $ProjectDirectory ".." ".." "..")
         $csharpSdkFolder = Resolve-Path $csharpSdkFolder

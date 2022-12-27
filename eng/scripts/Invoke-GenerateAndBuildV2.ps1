@@ -119,16 +119,6 @@ if ($relatedCadlProjectFolder) {
 
         Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
         $yml = ConvertFrom-YAML $cadlProjectYaml
-        # $sdkFolder = $yml["emitters"]["@azure-tools/cadl-csharp"]["sdk-folder"]
-        # $projectFolder = (Join-Path $sdkPath $sdkFolder)
-        # # $projectFolder = $projectFolder -replace "\\", "/"
-        # if ($projectFolder) {
-        #     $directories = $projectFolder -split "/|\\"
-        #     $count = $directories.Count
-        #     $projectFolder = $directories[0 .. ($count-2)] -join "/"
-        #     $service = $directories[-3];
-        #     $namespace = $directories[-2];
-        # }
         $service = ""
         $namespace = ""
         if ($yml) {
