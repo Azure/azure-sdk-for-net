@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Authoring.Tests.Samples
     {
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Samples/Sample1.HelloWorld.cs to write samples. */
         #region Snippet:Azure_AI_TextAnalytics_Authoring_Scenario
-
+        //Console.WriteLine("Hello, World");
         #endregion
     }
 }

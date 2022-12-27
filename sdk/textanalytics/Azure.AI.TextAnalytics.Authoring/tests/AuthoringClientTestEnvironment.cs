@@ -7,8 +7,7 @@ namespace Azure.AI.TextAnalytics.Authoring.Tests
 {
     public class AuthoringClientTestEnvironment : TestEnvironment
     {
-        public string Endpoint => GetRecordedVariable("Authoring_ENDPOINT");
-
-        // Add other client paramters here as above.
+        public string Endpoint => GetRecordedVariable("AZURE_TEXT_AUTHORING_ENDPOINT");
+        public string ApiKey => GetRecordedVariable("AZURE_TEXT_AUTHORING_KEY", options => options.IsSecret());
     }
 }
