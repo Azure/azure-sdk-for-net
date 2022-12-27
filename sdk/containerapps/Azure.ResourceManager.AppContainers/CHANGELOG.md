@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.1 (2022-12-27)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fix the incorrect format of the `ContainerAppData.OutboundIPAddresses` by deprecating this property and adding new property `ContainerAppData.OutboundIPAddressList`.
 
 ## 1.0.0 (2022-12-23)
 
