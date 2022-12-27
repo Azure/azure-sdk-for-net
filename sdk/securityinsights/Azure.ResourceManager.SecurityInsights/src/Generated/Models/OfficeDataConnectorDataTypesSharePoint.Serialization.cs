@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static OfficeDataConnectorDataTypesSharePoint DeserializeOfficeDataConnectorDataTypesSharePoint(JsonElement element)
         {
-            Optional<DataTypeState> state = default;
+            Optional<SecurityInsightsDataTypeConnectionState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    state = new DataTypeState(property.Value.GetString());
+                    state = new SecurityInsightsDataTypeConnectionState(property.Value.GetString());
                     continue;
                 }
             }

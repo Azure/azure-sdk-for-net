@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.SecurityInsights
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ActionResponseResources in the SecurityInsightsAlertRule. </summary>
-        /// <returns> An object representing collection of ActionResponseResources and their operations over a ActionResponseResource. </returns>
-        public virtual ActionResponseCollection GetActionResponses()
+        /// <summary> Gets a collection of SecurityInsightsAlertRuleActionResources in the SecurityInsightsAlertRule. </summary>
+        /// <returns> An object representing collection of SecurityInsightsAlertRuleActionResources and their operations over a SecurityInsightsAlertRuleActionResource. </returns>
+        public virtual SecurityInsightsAlertRuleActionCollection GetSecurityInsightsAlertRuleActions()
         {
-            return GetCachedClient(Client => new ActionResponseCollection(Client, Id));
+            return GetCachedClient(Client => new SecurityInsightsAlertRuleActionCollection(Client, Id));
         }
 
         /// <summary>
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="actionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="actionId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ActionResponseResource>> GetActionResponseAsync(string actionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsAlertRuleActionResource>> GetSecurityInsightsAlertRuleActionAsync(string actionId, CancellationToken cancellationToken = default)
         {
-            return await GetActionResponses().GetAsync(actionId, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityInsightsAlertRuleActions().GetAsync(actionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="actionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="actionId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ActionResponseResource> GetActionResponse(string actionId, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsAlertRuleActionResource> GetSecurityInsightsAlertRuleAction(string actionId, CancellationToken cancellationToken = default)
         {
-            return GetActionResponses().Get(actionId, cancellationToken);
+            return GetSecurityInsightsAlertRuleActions().Get(actionId, cancellationToken);
         }
 
         /// <summary>

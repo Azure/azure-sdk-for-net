@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string RegistryKeyValue = "RegistryKey";
         private const string RegistryValueValue = "RegistryValue";
         private const string SecurityGroupValue = "SecurityGroup";
-        private const string UrlValue = "Url";
-        private const string IoTDeviceValue = "IoTDevice";
+        private const string UriValue = "Url";
+        private const string IotDeviceValue = "IoTDevice";
         private const string SecurityAlertValue = "SecurityAlert";
         private const string BookmarkValue = "Bookmark";
         private const string MailClusterValue = "MailCluster";
@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Entity represents security group in the system. </summary>
         public static SecurityInsightsEntityKind SecurityGroup { get; } = new SecurityInsightsEntityKind(SecurityGroupValue);
         /// <summary> Entity represents url in the system. </summary>
-        public static SecurityInsightsEntityKind Url { get; } = new SecurityInsightsEntityKind(UrlValue);
+        public static SecurityInsightsEntityKind Uri { get; } = new SecurityInsightsEntityKind(UriValue);
         /// <summary> Entity represents IoT device in the system. </summary>
-        public static SecurityInsightsEntityKind IoTDevice { get; } = new SecurityInsightsEntityKind(IoTDeviceValue);
+        public static SecurityInsightsEntityKind IotDevice { get; } = new SecurityInsightsEntityKind(IotDeviceValue);
         /// <summary> Entity represents security alert in the system. </summary>
         public static SecurityInsightsEntityKind SecurityAlert { get; } = new SecurityInsightsEntityKind(SecurityAlertValue);
         /// <summary> Entity represents bookmark in the system. </summary>

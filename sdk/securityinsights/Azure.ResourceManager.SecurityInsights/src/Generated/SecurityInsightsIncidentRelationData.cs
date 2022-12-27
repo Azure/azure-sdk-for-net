@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="relatedResourceType"> The resource type of the related resource. </param>
         /// <param name="relatedResourceKind"> The resource kind of the related resource. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        internal SecurityInsightsIncidentRelationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string relatedResourceId, string relatedResourceName, string relatedResourceType, string relatedResourceKind, ETag? etag) : base(id, name, resourceType, systemData)
+        internal SecurityInsightsIncidentRelationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier relatedResourceId, string relatedResourceName, ResourceType? relatedResourceType, string relatedResourceKind, ETag? etag) : base(id, name, resourceType, systemData)
         {
             RelatedResourceId = relatedResourceId;
             RelatedResourceName = relatedResourceName;
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary> The resource ID of the related resource. </summary>
-        public string RelatedResourceId { get; set; }
+        public ResourceIdentifier RelatedResourceId { get; set; }
         /// <summary> The name of the related resource. </summary>
         public string RelatedResourceName { get; }
         /// <summary> The resource type of the related resource. </summary>
-        public string RelatedResourceType { get; }
+        public ResourceType? RelatedResourceType { get; }
         /// <summary> The resource kind of the related resource. </summary>
         public string RelatedResourceKind { get; }
         /// <summary> Etag of the azure resource. </summary>

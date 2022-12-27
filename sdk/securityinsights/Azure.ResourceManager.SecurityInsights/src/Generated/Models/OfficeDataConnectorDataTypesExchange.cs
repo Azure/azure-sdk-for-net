@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Initializes a new instance of OfficeDataConnectorDataTypesExchange. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        internal OfficeDataConnectorDataTypesExchange(DataTypeState? state) : base(state)
+        internal OfficeDataConnectorDataTypesExchange(SecurityInsightsDataTypeConnectionState? state) : base(state)
         {
         }
     }

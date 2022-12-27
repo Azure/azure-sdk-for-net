@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.SecurityInsights
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> relatedResourceId = default;
+            Optional<ResourceIdentifier> relatedResourceId = default;
             Optional<string> relatedResourceName = default;
-            Optional<string> relatedResourceType = default;
+            Optional<ResourceType> relatedResourceType = default;
             Optional<string> relatedResourceKind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -92,7 +92,12 @@ namespace Azure.ResourceManager.SecurityInsights
                     {
                         if (property0.NameEquals("relatedResourceId"))
                         {
-                            relatedResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            relatedResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("relatedResourceName"))
@@ -102,7 +107,12 @@ namespace Azure.ResourceManager.SecurityInsights
                         }
                         if (property0.NameEquals("relatedResourceType"))
                         {
-                            relatedResourceType = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            relatedResourceType = new ResourceType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("relatedResourceKind"))
@@ -114,7 +124,7 @@ namespace Azure.ResourceManager.SecurityInsights
                     continue;
                 }
             }
-            return new SecurityInsightsIncidentRelationData(id, name, type, systemData.Value, relatedResourceId.Value, relatedResourceName.Value, relatedResourceType.Value, relatedResourceKind.Value, Optional.ToNullable(etag));
+            return new SecurityInsightsIncidentRelationData(id, name, type, systemData.Value, relatedResourceId.Value, relatedResourceName.Value, Optional.ToNullable(relatedResourceType), relatedResourceKind.Value, Optional.ToNullable(etag));
         }
     }
 }

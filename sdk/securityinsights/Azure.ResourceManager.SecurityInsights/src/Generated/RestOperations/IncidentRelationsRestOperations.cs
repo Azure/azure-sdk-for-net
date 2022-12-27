@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string filter, string orderby, int? top, string skipToken)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string filter, string orderBy, int? top, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (orderby != null)
+            if (orderBy != null)
             {
-                uri.AppendQuery("$orderby", orderby, true);
+                uri.AppendQuery("$orderby", orderBy, true);
             }
             if (top != null)
             {
@@ -82,20 +82,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="incidentId"> Incident ID. </param>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
-        /// <param name="orderby"> Sorts the results. Optional. </param>
+        /// <param name="orderBy"> Sorts the results. Optional. </param>
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RelationList>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string filter = null, string orderby = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RelationList>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, incidentId, filter, orderby, top, skipToken);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, incidentId, filter, orderBy, top, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -117,20 +117,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="incidentId"> Incident ID. </param>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
-        /// <param name="orderby"> Sorts the results. Optional. </param>
+        /// <param name="orderBy"> Sorts the results. Optional. </param>
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RelationList> List(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string filter = null, string orderby = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<RelationList> List(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, incidentId, filter, orderby, top, skipToken);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, incidentId, filter, orderBy, top, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string filter, string orderby, int? top, string skipToken)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string filter, string orderBy, int? top, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -443,13 +443,13 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="incidentId"> Incident ID. </param>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
-        /// <param name="orderby"> Sorts the results. Optional. </param>
+        /// <param name="orderBy"> Sorts the results. Optional. </param>
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RelationList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string filter = null, string orderby = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RelationList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.SecurityInsights
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, incidentId, filter, orderby, top, skipToken);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, incidentId, filter, orderBy, top, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -480,13 +480,13 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="incidentId"> Incident ID. </param>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
-        /// <param name="orderby"> Sorts the results. Optional. </param>
+        /// <param name="orderBy"> Sorts the results. Optional. </param>
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RelationList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string filter = null, string orderby = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<RelationList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.SecurityInsights
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, incidentId, filter, orderby, top, skipToken);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, incidentId, filter, orderBy, top, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

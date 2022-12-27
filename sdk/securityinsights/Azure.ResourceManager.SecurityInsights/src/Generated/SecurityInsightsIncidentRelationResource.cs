@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// A Class representing a SecurityInsightsIncidentRelation along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityInsightsIncidentRelationResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetSecurityInsightsIncidentRelationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IncidentResource" /> using the GetSecurityInsightsIncidentRelation method.
+    /// Otherwise you can get one from its parent resource <see cref="SecurityInsightsIncidentResource" /> using the GetSecurityInsightsIncidentRelation method.
     /// </summary>
     public partial class SecurityInsightsIncidentRelationResource : ArmResource
     {

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A class representing a collection of <see cref="SecurityInsightsIncidentRelationResource" /> and their operations.
-    /// Each <see cref="SecurityInsightsIncidentRelationResource" /> in the collection will belong to the same instance of <see cref="IncidentResource" />.
-    /// To get a <see cref="SecurityInsightsIncidentRelationCollection" /> instance call the GetSecurityInsightsIncidentRelations method from an instance of <see cref="IncidentResource" />.
+    /// Each <see cref="SecurityInsightsIncidentRelationResource" /> in the collection will belong to the same instance of <see cref="SecurityInsightsIncidentResource" />.
+    /// To get a <see cref="SecurityInsightsIncidentRelationCollection" /> instance call the GetSecurityInsightsIncidentRelations method from an instance of <see cref="SecurityInsightsIncidentResource" />.
     /// </summary>
     public partial class SecurityInsightsIncidentRelationCollection : ArmCollection, IEnumerable<SecurityInsightsIncidentRelationResource>, IAsyncEnumerable<SecurityInsightsIncidentRelationResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != IncidentResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, IncidentResource.ResourceType), nameof(id));
+            if (id.ResourceType != SecurityInsightsIncidentResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SecurityInsightsIncidentResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Operation Id: IncidentRelations_List
         /// </summary>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
-        /// <param name="orderby"> Sorts the results. Optional. </param>
+        /// <param name="orderBy"> Sorts the results. Optional. </param>
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityInsightsIncidentRelationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityInsightsIncidentRelationResource> GetAllAsync(string filter = null, string orderby = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecurityInsightsIncidentRelationResource> GetAllAsync(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SecurityInsightsIncidentRelationResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 scope.Start();
                 try
                 {
-                    var response = await _securityInsightsIncidentRelationIncidentRelationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderby, top, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _securityInsightsIncidentRelationIncidentRelationsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SecurityInsightsIncidentRelationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 scope.Start();
                 try
                 {
-                    var response = await _securityInsightsIncidentRelationIncidentRelationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderby, top, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _securityInsightsIncidentRelationIncidentRelationsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SecurityInsightsIncidentRelationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -229,12 +229,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Operation Id: IncidentRelations_List
         /// </summary>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
-        /// <param name="orderby"> Sorts the results. Optional. </param>
+        /// <param name="orderBy"> Sorts the results. Optional. </param>
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityInsightsIncidentRelationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityInsightsIncidentRelationResource> GetAll(string filter = null, string orderby = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SecurityInsightsIncidentRelationResource> GetAll(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Page<SecurityInsightsIncidentRelationResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 scope.Start();
                 try
                 {
-                    var response = _securityInsightsIncidentRelationIncidentRelationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderby, top, skipToken, cancellationToken: cancellationToken);
+                    var response = _securityInsightsIncidentRelationIncidentRelationsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SecurityInsightsIncidentRelationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 scope.Start();
                 try
                 {
-                    var response = _securityInsightsIncidentRelationIncidentRelationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderby, top, skipToken, cancellationToken: cancellationToken);
+                    var response = _securityInsightsIncidentRelationIncidentRelationsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SecurityInsightsIncidentRelationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

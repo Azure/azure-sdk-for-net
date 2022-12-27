@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<string> description = default;
             Optional<string> displayName = default;
             Optional<IList<AlertRuleTemplateDataSource>> requiredDataConnectors = default;
-            Optional<TemplateStatus> status = default;
+            Optional<SecurityInsightsAlertRuleTemplateStatus> status = default;
             Optional<IList<string>> displayNamesFilter = default;
             Optional<IList<string>> displayNamesExcludeFilter = default;
             Optional<MicrosoftSecurityProductName> productFilter = default;
-            Optional<IList<AlertSeverity>> severitiesFilter = default;
+            Optional<IList<SecurityInsightsAlertSeverity>> severitiesFilter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new TemplateStatus(property0.Value.GetString());
+                            status = new SecurityInsightsAlertRuleTemplateStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("displayNamesFilter"))
@@ -262,10 +262,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AlertSeverity> array = new List<AlertSeverity>();
+                            List<SecurityInsightsAlertSeverity> array = new List<SecurityInsightsAlertSeverity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new AlertSeverity(item.GetString()));
+                                array.Add(new SecurityInsightsAlertSeverity(item.GetString()));
                             }
                             severitiesFilter = array;
                             continue;
