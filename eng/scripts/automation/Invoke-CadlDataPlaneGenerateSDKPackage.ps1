@@ -81,9 +81,9 @@ if ($LASTEXITCODE) {
 }
 # Build
 dotnet build $projectFolder
-if ( !$? ) {
-  Write-Error "Failed to build sdk. exit code: $?"
-  exit 1
+if ($LASTEXITCODE) {
+  Write-Error "Failed to build sdk. exit code: $LASTEXITCODE"
+  exit $LASTEXITCODE
 }
 # Generate APIs
 $repoRoot = (Join-Path $PSScriptRoot .. .. ..)
