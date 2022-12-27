@@ -75,9 +75,9 @@ Remove-Item $outputJsonFile
 # Generate Code
 $srcPath = Join-Path $projectFolder 'src'
 dotnet build /t:GenerateCode $srcPath
-if ( !$? ) {
+if ($LASTEXITCODE) {
   Write-Error "Failed to generate sdk."
-  exit 1
+  exit $LASTEXITCODE
 }
 # Build
 dotnet build $projectFolder
