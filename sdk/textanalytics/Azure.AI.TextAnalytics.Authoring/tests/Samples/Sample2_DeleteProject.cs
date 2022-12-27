@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics.Authoring.Tests.Samples
             TextAuthoringClient client = new TextAuthoringClient(new Uri(Endpoint), new AzureKeyCredential(ApiKey));
 
             #region Snippet:Delete a project
-            var operation = client.DeleteProject(WaitUntil.Completed, "Project_Name");
+            var operation = client.DeleteProject(WaitUntil.Completed, TestEnvironment.ProjectName);
 
             BinaryData response = operation.WaitForCompletion();
             JsonElement result = JsonDocument.Parse(response.ToStream()).RootElement;

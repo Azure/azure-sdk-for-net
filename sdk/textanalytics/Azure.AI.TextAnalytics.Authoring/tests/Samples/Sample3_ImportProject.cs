@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Authoring.Tests.Samples
             string arr = data.ToString();
             var content = RequestContent.Create(data);
 
-            var operation = client.ImportProject(WaitUntil.Completed, "LoanAgreements", content);
+            var operation = client.ImportProject(WaitUntil.Completed, TestEnvironment.ProjectName, content);
 
             BinaryData response = operation.WaitForCompletion();
             JsonElement result = JsonDocument.Parse(response.ToStream()).RootElement;

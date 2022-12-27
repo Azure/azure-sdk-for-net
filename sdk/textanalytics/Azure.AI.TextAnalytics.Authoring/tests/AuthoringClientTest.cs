@@ -20,12 +20,10 @@ namespace Azure.AI.TextAnalytics.Authoring.Tests
         {
         }
 
-        /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
-
         public TextAuthoringClient GetClient()
         {
-            string Endpoint = Environment.GetEnvironmentVariable("AZURE_TEXT_AUTHORING_ENDPOINT");
-            string ApiKey = Environment.GetEnvironmentVariable("AZURE_TEXT_AUTHORING_KEY");
+            string Endpoint = TestEnvironment.Endpoint;
+            string ApiKey = TestEnvironment.ApiKey;
             return new TextAuthoringClient(new Uri(Endpoint), new AzureKeyCredential(ApiKey));
         }
 
@@ -36,18 +34,17 @@ namespace Azure.AI.TextAnalytics.Authoring.Tests
             var data = new
             {
                 projectKind = "CustomSingleLabelClassification",
-                storageInputContainerName = "ct-data-assets",
-                projectName = "Project_Name",
+                storageInputContainerName = TestEnvironment.ContainerName,
+                projectName = TestEnvironment.ProjectName,
                 multilingual = true,
                 description = "A Test for .NET SDK",
                 language = "en",
             };
 
-            Response response = client.CreateProject("Project_Name", RequestContent.Create(data));
+            Response response = client.CreateProject(TestEnvironment.ProjectName, RequestContent.Create(data));
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 
-            // Reaching here means no exception was thrown so test passes
-            Assert.IsTrue(true);
+            Assert.IsTrue(response.Status == 200 || response.Status == 201);
         }
 
         [RecordedTest]
@@ -55,7 +52,7 @@ namespace Azure.AI.TextAnalytics.Authoring.Tests
         {
             TextAuthoringClient client = GetClient();
 
-            var operation = client.DeleteProject(WaitUntil.Completed, "Project_Name");
+            var operation = client.DeleteProject(WaitUntil.Completed, TestEnvironment.ProjectName);
 
             BinaryData response = operation.WaitForCompletion();
             JsonElement result = JsonDocument.Parse(response.ToStream()).RootElement;
@@ -67,7 +64,7 @@ namespace Azure.AI.TextAnalytics.Authoring.Tests
         {
             TextAuthoringClient client = GetClient();
 
-            var operation = client.ExportProject(WaitUntil.Completed, "Project_Name", "Utf16CodeUnit");
+            var operation = client.ExportProject(WaitUntil.Completed, TestEnvironment.ProjectName, "Utf16CodeUnit");
             BinaryData response = operation.WaitForCompletion();
             JsonElement result = JsonDocument.Parse(response.ToStream()).RootElement;
 
@@ -83,7 +80,7 @@ namespace Azure.AI.TextAnalytics.Authoring.Tests
             string arr = data.ToString();
             var content = RequestContent.Create(data);
 
-            var operation = client.ImportProject(WaitUntil.Completed, "LoanAgreements", content);
+            var operation = client.ImportProject(WaitUntil.Completed, TestEnvironment.ProjectName, content);
 
             BinaryData response = operation.WaitForCompletion();
             JsonElement result = JsonDocument.Parse(response.ToStream()).RootElement;
@@ -105,7 +102,7 @@ namespace Azure.AI.TextAnalytics.Authoring.Tests
                 }
             };
 
-            var operation = client.Train(WaitUntil.Completed, "Emails", RequestContent.Create(training_parameters));
+            var operation = client.Train(WaitUntil.Completed, TestEnvironment.ProjectName, RequestContent.Create(training_parameters));
             BinaryData response = operation.WaitForCompletion();
             JsonElement result = JsonDocument.Parse(response.ToStream()).RootElement;
             Assert.AreEqual(result.GetProperty("status").ToString(), "succeeded");
@@ -121,7 +118,7 @@ namespace Azure.AI.TextAnalytics.Authoring.Tests
                 trainedModelLabel = "v1"
             };
 
-            var operation = client.DeployProject(WaitUntil.Completed, "Emails", deployment.trainedModelLabel, RequestContent.Create(deployment));
+            var operation = client.DeployProject(WaitUntil.Completed, TestEnvironment.ProjectName, deployment.trainedModelLabel, RequestContent.Create(deployment));
             BinaryData response = operation.WaitForCompletion();
             JsonElement result = JsonDocument.Parse(response.ToStream()).RootElement;
             Assert.AreEqual(result.GetProperty("deploymentName").ToString(), deployment.trainedModelLabel);

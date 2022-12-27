@@ -25,10 +25,10 @@ namespace Azure.AI.TextAnalytics.Authoring.Tests.Samples
             #region Snippet:Deploy a project
             var deployment = new
             {
-                trainedModelLabel = "v1"
+                trainedModelLabel = "model1"
             };
 
-            var operation = client.DeployProject(WaitUntil.Completed, "Emails", deployment.trainedModelLabel, RequestContent.Create(deployment));
+            var operation = client.DeployProject(WaitUntil.Completed, TestEnvironment.ProjectName, deployment.trainedModelLabel, RequestContent.Create(deployment));
             BinaryData response = operation.WaitForCompletion();
             JsonElement result = JsonDocument.Parse(response.ToStream()).RootElement;
 

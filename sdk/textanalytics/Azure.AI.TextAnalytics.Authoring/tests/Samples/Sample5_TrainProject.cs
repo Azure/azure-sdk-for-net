@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Authoring.Tests.Samples
                 }
             };
 
-            var operation = client.Train(WaitUntil.Completed, "Emails", RequestContent.Create(training_parameters));
+            var operation = client.Train(WaitUntil.Completed, TestEnvironment.ProjectName, RequestContent.Create(training_parameters));
             BinaryData response = operation.WaitForCompletion();
             JsonElement result = JsonDocument.Parse(response.ToStream()).RootElement;
 

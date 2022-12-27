@@ -23,7 +23,7 @@ namespace Azure.AI.TextAnalytics.Authoring.Tests.Samples
             TextAuthoringClient client = new TextAuthoringClient(new Uri(Endpoint), new AzureKeyCredential(ApiKey));
 
             #region Snippet:Export a project
-            var operation = client.ExportProject(WaitUntil.Completed, "LoanAgreements", "Utf16CodeUnit");
+            var operation = client.ExportProject(WaitUntil.Completed, TestEnvironment.ProjectName, "Utf16CodeUnit");
             BinaryData response = operation.WaitForCompletion();
             JsonElement result = JsonDocument.Parse(response.ToStream()).RootElement;
 

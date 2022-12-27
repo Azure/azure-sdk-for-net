@@ -26,21 +26,22 @@ namespace Azure.AI.TextAnalytics.Authoring.Tests.Samples
             var data = new
             {
                 projectKind = "CustomSingleLabelClassification",
-                storageInputContainerName = "ct-data-assets",
-                projectName = "Project_Name",
+                storageInputContainerName = TestEnvironment.ContainerName,
+                projectName = TestEnvironment.ProjectName,
                 multilingual = true,
                 description = "A Test for .NET SDK",
                 language = "en",
             };
 
-            Response response = client.CreateProject("Project_Name", RequestContent.Create(data));
+            Response response = client.CreateProject(TestEnvironment.ProjectName, RequestContent.Create(data));
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 
-            Console.WriteLine(result.GetProperty("jobId").ToString());
             Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("projectKind").ToString());
+            Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
+            Console.WriteLine(result.GetProperty("projectName").ToString());
+            Console.WriteLine(result.GetProperty("language").ToString());
             #endregion
         }
     }
