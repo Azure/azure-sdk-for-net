@@ -124,7 +124,7 @@ namespace Azure.AI.TextAnalytics.Authoring.Tests
             var operation = client.DeployProject(WaitUntil.Completed, "Emails", deployment.trainedModelLabel, RequestContent.Create(deployment));
             BinaryData response = operation.WaitForCompletion();
             JsonElement result = JsonDocument.Parse(response.ToStream()).RootElement;
-            Assert.AreEqual(result.GetProperty("status").ToString(), "succeeded");
+            Assert.AreEqual(result.GetProperty("deploymentName").ToString(), deployment.trainedModelLabel);
         }
     }
 }
