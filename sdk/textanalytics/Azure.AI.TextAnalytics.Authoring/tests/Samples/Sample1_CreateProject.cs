@@ -36,6 +36,11 @@ namespace Azure.AI.TextAnalytics.Authoring.Tests.Samples
             Response response = client.CreateProject("Project_Name", RequestContent.Create(data));
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
             #endregion
         }
     }
