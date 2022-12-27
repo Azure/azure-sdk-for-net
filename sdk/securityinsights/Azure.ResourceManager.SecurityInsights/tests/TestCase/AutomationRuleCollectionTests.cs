@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
     public class AutomationRuleCollectionTests : SecurityInsightsManagementTestBase
     {
         public AutomationRuleCollectionTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
         private async Task<ResourceGroupResource> GetResourceGroupAsync()

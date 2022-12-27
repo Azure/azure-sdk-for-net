@@ -99,6 +99,14 @@ namespace Azure.ResourceManager.SecurityInsights
             return new SentinelOnboardingStateCollection(Client, Id, workspaceName);
         }
 
+        /// <summary> Gets a collection of SecurityMLAnalyticsSettingResources in the ResourceGroupResource. </summary>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <returns> An object representing collection of SecurityMLAnalyticsSettingResources and their operations over a SecurityMLAnalyticsSettingResource. </returns>
+        public virtual SecurityMLAnalyticsSettingCollection GetSecurityMLAnalyticsSettings(string workspaceName)
+        {
+            return new SecurityMLAnalyticsSettingCollection(Client, Id, workspaceName);
+        }
+
         /// <summary> Gets a collection of ThreatIntelligenceIndicatorResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ThreatIntelligenceIndicatorResources and their operations over a ThreatIntelligenceIndicatorResource. </returns>
         public virtual ThreatIntelligenceIndicatorCollection GetThreatIntelligenceIndicators()

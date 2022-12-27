@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
     public class DataConnectorResourceTests : SecurityInsightsManagementTestBase
     {
         public DataConnectorResourceTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 

@@ -23,9 +23,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         private const string CreatedValue = "Created";
+        private const string UpdatedValue = "Updated";
 
         /// <summary> Trigger on created objects. </summary>
         public static TriggersWhen Created { get; } = new TriggersWhen(CreatedValue);
+        /// <summary> Trigger on updated objects. </summary>
+        public static TriggersWhen Updated { get; } = new TriggersWhen(UpdatedValue);
         /// <summary> Determines if two <see cref="TriggersWhen"/> values are the same. </summary>
         public static bool operator ==(TriggersWhen left, TriggersWhen right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TriggersWhen"/> values are not the same. </summary>

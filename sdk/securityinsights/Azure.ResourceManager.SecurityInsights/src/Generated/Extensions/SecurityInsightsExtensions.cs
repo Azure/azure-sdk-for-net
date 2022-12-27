@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets the automation rule
+        /// Gets the automation rule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/automationRules/{automationRuleId}
         /// Operation Id: AutomationRules_Get
         /// </summary>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets the automation rule
+        /// Gets the automation rule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/automationRules/{automationRuleId}
         /// Operation Id: AutomationRules_Get
         /// </summary>
@@ -355,6 +355,53 @@ namespace Azure.ResourceManager.SecurityInsights
         public static Response<SentinelOnboardingStateResource> GetSentinelOnboardingState(this ResourceGroupResource resourceGroupResource, string workspaceName, string sentinelOnboardingStateName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetSentinelOnboardingStates(workspaceName).Get(sentinelOnboardingStateName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityMLAnalyticsSettingResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <returns> An object representing collection of SecurityMLAnalyticsSettingResources and their operations over a SecurityMLAnalyticsSettingResource. </returns>
+        public static SecurityMLAnalyticsSettingCollection GetSecurityMLAnalyticsSettings(this ResourceGroupResource resourceGroupResource, string workspaceName)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            return GetExtensionClient(resourceGroupResource).GetSecurityMLAnalyticsSettings(workspaceName);
+        }
+
+        /// <summary>
+        /// Gets the Security ML Analytics Settings.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/securityMLAnalyticsSettings/{settingsResourceName}
+        /// Operation Id: SecurityMLAnalyticsSettings_Get
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <param name="settingsResourceName"> Security ML Analytics Settings resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="settingsResourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SecurityMLAnalyticsSettingResource>> GetSecurityMLAnalyticsSettingAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, string settingsResourceName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetSecurityMLAnalyticsSettings(workspaceName).GetAsync(settingsResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the Security ML Analytics Settings.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/securityMLAnalyticsSettings/{settingsResourceName}
+        /// Operation Id: SecurityMLAnalyticsSettings_Get
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <param name="settingsResourceName"> Security ML Analytics Settings resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> or <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="settingsResourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SecurityMLAnalyticsSettingResource> GetSecurityMLAnalyticsSetting(this ResourceGroupResource resourceGroupResource, string workspaceName, string settingsResourceName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetSecurityMLAnalyticsSettings(workspaceName).Get(settingsResourceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ThreatIntelligenceIndicatorResources in the ResourceGroupResource. </summary>
@@ -745,6 +792,25 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 SentinelOnboardingStateResource.ValidateResourceId(id);
                 return new SentinelOnboardingStateResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SecurityMLAnalyticsSettingResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityMLAnalyticsSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityMLAnalyticsSettingResource.CreateResourceIdentifier" /> to create a <see cref="SecurityMLAnalyticsSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecurityMLAnalyticsSettingResource" /> object. </returns>
+        public static SecurityMLAnalyticsSettingResource GetSecurityMLAnalyticsSettingResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SecurityMLAnalyticsSettingResource.ValidateResourceId(id);
+                return new SecurityMLAnalyticsSettingResource(client, id);
             }
             );
         }

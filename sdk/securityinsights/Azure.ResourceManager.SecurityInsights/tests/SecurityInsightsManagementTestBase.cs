@@ -9,6 +9,7 @@ using Azure.ResourceManager.OperationalInsights;
 using NUnit.Framework;
 using System.Threading.Tasks;
 using Azure.ResourceManager.OperationalInsights.Models;
+using System;
 
 namespace Azure.ResourceManager.SecurityInsights.Tests
 {
@@ -39,7 +40,6 @@ namespace Azure.ResourceManager.SecurityInsights.Tests
         protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
         {
             var resourceGroupName = Recording.GenerateAssetName("testRG-");
-            groupName = resourceGroupName;
             var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 resourceGroupName,
@@ -50,6 +50,17 @@ namespace Azure.ResourceManager.SecurityInsights.Tests
                         { "test", "env" }
                     }
                 });
+            if (Mode == RecordedTestMode.Playback)
+            {
+                groupName = resourceGroupName;
+            }
+            else
+            {
+                using (Recording.DisableRecording())
+                {
+                    groupName = rgOp.Value.Data.Name;
+                }
+            }
             return rgOp.Value;
         }
         #region workspace

@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string IncidentTacticsValue = "IncidentTactics";
         private const string IncidentLabelValue = "IncidentLabel";
         private const string IncidentProviderNameValue = "IncidentProviderName";
+        private const string IncidentUpdatedBySourceValue = "IncidentUpdatedBySource";
         private const string AccountAadTenantIdValue = "AccountAadTenantId";
         private const string AccountAadUserIdValue = "AccountAadUserId";
         private const string AccountNameValue = "AccountName";
@@ -39,6 +40,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string AccountObjectGuidValue = "AccountObjectGuid";
         private const string AccountUPNSuffixValue = "AccountUPNSuffix";
         private const string AlertProductNamesValue = "AlertProductNames";
+        private const string AlertAnalyticRuleIdsValue = "AlertAnalyticRuleIds";
         private const string AzureResourceResourceIdValue = "AzureResourceResourceId";
         private const string AzureResourceSubscriptionIdValue = "AzureResourceSubscriptionId";
         private const string CloudApplicationAppIdValue = "CloudApplicationAppId";
@@ -93,6 +95,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static AutomationRulePropertyConditionSupportedProperty IncidentLabel { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentLabelValue);
         /// <summary> The provider name of the incident. </summary>
         public static AutomationRulePropertyConditionSupportedProperty IncidentProviderName { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentProviderNameValue);
+        /// <summary> The update source of the incident. </summary>
+        public static AutomationRulePropertyConditionSupportedProperty IncidentUpdatedBySource { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentUpdatedBySourceValue);
         /// <summary> The account Azure Active Directory tenant id. </summary>
         public static AutomationRulePropertyConditionSupportedProperty AccountAadTenantId { get; } = new AutomationRulePropertyConditionSupportedProperty(AccountAadTenantIdValue);
         /// <summary> The account Azure Active Directory user id. </summary>
@@ -111,6 +115,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static AutomationRulePropertyConditionSupportedProperty AccountUPNSuffix { get; } = new AutomationRulePropertyConditionSupportedProperty(AccountUPNSuffixValue);
         /// <summary> The name of the product of the alert. </summary>
         public static AutomationRulePropertyConditionSupportedProperty AlertProductNames { get; } = new AutomationRulePropertyConditionSupportedProperty(AlertProductNamesValue);
+        /// <summary> The analytic rule ids of the alert. </summary>
+        public static AutomationRulePropertyConditionSupportedProperty AlertAnalyticRuleIds { get; } = new AutomationRulePropertyConditionSupportedProperty(AlertAnalyticRuleIdsValue);
         /// <summary> The Azure resource id. </summary>
         public static AutomationRulePropertyConditionSupportedProperty AzureResourceResourceId { get; } = new AutomationRulePropertyConditionSupportedProperty(AzureResourceResourceIdValue);
         /// <summary> The Azure resource subscription id. </summary>
