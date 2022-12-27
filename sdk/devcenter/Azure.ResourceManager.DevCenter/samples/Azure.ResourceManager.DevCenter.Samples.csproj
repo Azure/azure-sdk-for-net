@@ -1,14 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-
-    <!-- We don't care about XML doc comments on test types and members -->
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
-  </PropertyGroup>
-  
   <ItemGroup>
-    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <PackageReference Include="Azure.Identity"/>
+    <PackageReference Include="NUnit"  />
+    <PackageReference Include="NUnit3TestAdapter"  />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.DevCenter.csproj" />
   </ItemGroup>
-  
 </Project>
