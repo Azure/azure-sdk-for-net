@@ -7,6 +7,8 @@ Project("{832596A1-F25E-4052-8C45-B38BF2644F44}") = "Azure.ResourceManager.Confi
 EndProject
 Project("{832596A1-F25E-4052-8C45-B38BF2644F44}") = "Azure.ResourceManager.ConfidentialLedger.Tests", "tests\Azure.ResourceManager.ConfidentialLedger.Tests.csproj", "{3388DC44-29FC-46C1-8511-290407806AEB}"
 EndProject
+Project("{832596A1-F25E-4052-8C45-B38BF2644F44}") = "Azure.ResourceManager.ConfidentialLedger.Samplets", "samples\Azure.ResourceManager.ConfidentialLedger.Samplets.csproj", "{A457952B-285F-4584-83AD-958A7E808E65}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
