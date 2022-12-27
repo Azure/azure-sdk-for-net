@@ -377,7 +377,6 @@ function CreateOrUpdateCadlConfigFile() {
     Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
     $configuration = Get-Content -Path $cadlConfigurationFile -Raw | ConvertFrom-Yaml
     if ( !$configuration) {
-        # $configuration = [System.Collections.Generic.Dictionary[string,string]](New-Object 'System.Collections.Generic.Dictionary[string,string]')
         $configuration = @{}
     }
     $configuration["directory"] = $directory

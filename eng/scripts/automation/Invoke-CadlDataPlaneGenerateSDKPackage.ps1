@@ -4,37 +4,44 @@
 script for creating a getting started project in a branch of `azure-sdk-for-net` repo.
 
 .PARAMETER service
-The Azure client service directory name. ie. purview. It equals to the name of the directory in the specification folder of the azure-rest-api-specs repo that contains the REST API definition file.
+The Azure client service directory name. ie. purview. It is the same as the name of the directory in the specification folder of the azure-rest-api-specs repo that contains the REST API definition file.
 
 .PARAMETER namespace
 The SDK package namespace. This value will also provide the name for the shipped package, and should be of the form `Azure.<group>.<service>`.
 
 .PARAMETER sdkPath
-The address of the root directory of sdk repo. e.g. /home/azure-sdk-for-net
+The address of the root directory of sdk repo. e.g. `/home/azure-sdk-for-net`
 
-.PARAMETER inputfiles
-The address of the Open API spec files,  separated by semicolon if there is more than one file. 
-The Open API spec file can be local file, or the web address of the file in the `azure-rest-api-specs` repo.
-When pointing to a local file, make sure to use **absolute path**, i.e. /home/swagger/compute.json.
-When pointing to a file in the `azure-rest-api-specs` repo, make sure to include the commit id in the URI, i.e. `https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json`. This ensures that you can choose the time to upgrade to new swagger file versions.
+.PARAMETER cadlRelativeFolder
+The relative path of the cadl project folder in spec repo. e.g. `specification/cognitiveservices/AnomalyDetector`
 
- .PARAMETER readme
-The address of the readme configuration file. The configuration can be local file, e.g. ./swagger/readme.md or the web address of the file in the `azure-rest-api-specs` repo, i.e. `https://github.com/Azure/azure-rest-api-specs/blob/23dc68e5b20a0e49dd3443a4ab177d9f2fcc4c2b/specification/deviceupdate/data-plane/readme.md`
-You need to provide one of `-inputfiles` and `-readme` parameters. If you provide both, `-inputfiles` will be ignored.
+ .PARAMETER specRoot
+The file system path of the spec repo. e.g. `/home/azure-rest-api-specs`
 
-.PARAMETER securityScope
-The authentication scope to use if your library supports **Token Credential** authentication.
+ .PARAMETER repo
+The `<owner>/<repo>` of the spec repo. e.g. `Azure/azure-rest-api-specs`
 
-.PARAMETER securityHeaderName
-The key to use if your library supports **Azure Key Credential** authentication.
+.PARAMETER commit
+The commit of the github hash, e.g. ac8e06a2ed0fc1c54663c98f12c8a073f8026b90
+
+.PARAMETER additionalSubDirectories
+The relative paths of the additional directories needed by the cadl project, such as share library folder, separated by semicolon if there is more than one folder.
 
 .EXAMPLE
 Run script with default parameters.
 
-Invoke-DataPlaneGenerateSDKPackage.ps1 -service <servicename> -namespace Azure.<group>.<service> -sdkPath <sdkrepoRootPath> [-inputfiles <inputfilelink>] [-readme <readmeFilelink>] [-securityScope <securityScope>] [-securityHeaderName <securityHeaderName>]
+Invoke-CadlDataPlaneGenerateSDKPackage.ps1 -service <servicename> -namespace Azure.<group>.<service> -sdkPath <sdkrepoRootPath> -cadlRelativeFolder <relativeCadlProjectFolderPath> [-commit <commitId>] [-repo <specRepo>] [-specRoot <specRepoRootPath>] [-additionalSubDirectories <relativeFolders>]
 
 e.g.
-Invoke-DataPlaneGenerateSDKPackage.ps1 -service webpubsub -namespace Azure.Messaging.WebPubSub -sdkPath /home/azure-sdk-for-net -inputfiles https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json -securityScope https://sample/.default
+
+Use git url
+
+Invoke-CadlDataPlaneGenerateSDKPackage.ps1 -service anomalydetector -namespace Azure.AI.AnomalyDetector -sdkPath /home/azure-sdk-for-net -cadlRelativeFolder specification/cognitiveservices/AnomalyDetector -commit ac8e06a2ed0fc1c54663c98f12c8a073f8026b90 -repo Azure/azure-rest-api-specs
+
+or
+Use local Cadl project
+
+Invoke-CadlDataPlaneGenerateSDKPackage.ps1 -service anomalydetector -namespace Azure.AI.AnomalyDetector -sdkPath /home/azure-sdk-for-net -cadlRelativeFolder specification/cognitiveservices/AnomalyDetector -specRoot /home/azure-rest-api-specs
 
 #>
 param (
@@ -62,9 +69,9 @@ New-CADLPackageFolder `
   -additionalSubDirectories $additionalSubDirectories `
   -outputJsonFile $outputJsonFile
 
-if ( $? -ne $True) {
-  Write-Error "Failed to create sdk project folder. exit code: $?"
-  exit 1
+if ( $LASTEXITCODE ) {
+  Write-Error "Failed to create sdk project folder. exit code: $LASTEXITCODE"
+  exit $LASTEXITCODE
 }
 $outputJson = Get-Content $outputJsonFile | Out-String | ConvertFrom-Json
 $projectFolder = $outputJson.projectFolder
