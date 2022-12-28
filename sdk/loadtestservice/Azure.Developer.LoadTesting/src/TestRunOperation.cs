@@ -5,12 +5,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
-using System.Text.Json.Nodes;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
@@ -117,10 +114,8 @@ namespace Azure.Developer.LoadTesting
             string status;
             try
             {
-                JsonNode jsonDocument = JsonNode.Parse(_value.ToString());
-                JsonNode validationStatus = jsonDocument!["status"]!;
-
-                status = validationStatus.ToString();
+                JsonDocument jsonDocument = JsonDocument.Parse(_value.ToString());
+                status = jsonDocument.RootElement.GetProperty("status").GetString();
             }
             catch
             {
