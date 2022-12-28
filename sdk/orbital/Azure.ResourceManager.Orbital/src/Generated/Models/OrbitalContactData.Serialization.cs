@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Orbital
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Orbital
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            contactProfile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            contactProfile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                     }

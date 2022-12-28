@@ -159,10 +159,26 @@ Content = "aaaaaaaaaaaaaaaaaaaa",
                             EnableHotpatching = true,
                             AssessmentMode = WindowsPatchAssessmentMode.ImageDefault,
                         },
+                        WinRMListeners =
+{
+new WinRMListener()
+{
+Protocol = WinRMListenerProtocolType.Http,
+CertificateUri = new Uri("aaaaaaaaaaaaaaaaaaaaaa"),
+}
+},
                     },
                     LinuxConfiguration = new LinuxConfiguration()
                     {
                         DisablePasswordAuthentication = true,
+                        SshPublicKeys =
+{
+new SshPublicKeyConfiguration()
+{
+Path = "aaa",
+KeyData = "aaaaaa",
+}
+},
                         ProvisionVmAgent = true,
                         PatchSettings = new LinuxPatchSettings()
                         {
@@ -208,6 +224,10 @@ EnableAcceleratedNetworking = true,
 EnableFpga = true,
 EnableIPForwarding = true,
 NetworkSecurityGroupId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
+DnsServers =
+{
+"aaaaaa"
+},
 IPConfigurations =
 {
 new VirtualMachineNetworkInterfaceIPConfiguration("aa")
@@ -264,6 +284,81 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
                 },
+                NetworkInterfaceConfigurations =
+{
+new VirtualMachineScaleSetNetworkConfiguration("vmsstestnetconfig5415")
+{
+Primary = true,
+EnableAcceleratedNetworking = true,
+EnableFpga = true,
+NetworkSecurityGroupId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
+DnsServers =
+{
+},
+IPConfigurations =
+{
+new VirtualMachineScaleSetIPConfiguration("vmsstestnetconfig9693")
+{
+SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/vn4071/subnets/sn5503"),
+Primary = true,
+PublicIPAddressConfiguration = new VirtualMachineScaleSetPublicIPAddressConfiguration("aaaaaaaaaaaaaaaaaa")
+{
+Sku = new ComputePublicIPAddressSku()
+{
+Name = ComputePublicIPAddressSkuName.Basic,
+Tier = ComputePublicIPAddressSkuTier.Regional,
+},
+IdleTimeoutInMinutes = 18,
+DnsDomainNameLabel = "aaaaaaaaaaaaaaaaaa",
+IPTags =
+{
+new VirtualMachineScaleSetIPTag()
+{
+IPTagType = "aaaaaaa",
+Tag = "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
+}
+},
+PublicIPPrefixId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
+PublicIPAddressVersion = IPVersion.IPv4,
+DeleteOption = ComputeDeleteOption.Delete,
+},
+PrivateIPAddressVersion = IPVersion.IPv4,
+ApplicationGatewayBackendAddressPools =
+{
+new WritableSubResource()
+{
+Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
+}
+},
+ApplicationSecurityGroups =
+{
+new WritableSubResource()
+{
+Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
+}
+},
+LoadBalancerBackendAddressPools =
+{
+new WritableSubResource()
+{
+Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
+}
+},
+LoadBalancerInboundNatPools =
+{
+new WritableSubResource()
+{
+Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
+}
+},
+Id = new ResourceIdentifier("aaaaaaaaa"),
+}
+},
+EnableIPForwarding = true,
+DeleteOption = ComputeDeleteOption.Delete,
+Id = new ResourceIdentifier("aaaaaaaa"),
+}
+},
                 BootDiagnostics = new BootDiagnostics()
                 {
                     Enabled = true,

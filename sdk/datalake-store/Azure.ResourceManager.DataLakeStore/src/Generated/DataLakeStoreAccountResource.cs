@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.DataLakeStore
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of FirewallRuleResources in the DataLakeStoreAccount. </summary>
-        /// <returns> An object representing collection of FirewallRuleResources and their operations over a FirewallRuleResource. </returns>
-        public virtual FirewallRuleCollection GetFirewallRules()
+        /// <summary> Gets a collection of DataLakeStoreFirewallRuleResources in the DataLakeStoreAccount. </summary>
+        /// <returns> An object representing collection of DataLakeStoreFirewallRuleResources and their operations over a DataLakeStoreFirewallRuleResource. </returns>
+        public virtual DataLakeStoreFirewallRuleCollection GetDataLakeStoreFirewallRules()
         {
-            return GetCachedClient(Client => new FirewallRuleCollection(Client, Id));
+            return GetCachedClient(Client => new DataLakeStoreFirewallRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FirewallRuleResource>> GetFirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataLakeStoreFirewallRuleResource>> GetDataLakeStoreFirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            return await GetFirewallRules().GetAsync(firewallRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetDataLakeStoreFirewallRules().GetAsync(firewallRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -120,31 +120,16 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FirewallRuleResource> GetFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<DataLakeStoreFirewallRuleResource> GetDataLakeStoreFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            return GetFirewallRules().Get(firewallRuleName, cancellationToken);
+            return GetDataLakeStoreFirewallRules().Get(firewallRuleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualNetworkRuleResources in the DataLakeStoreAccount. </summary>
-        /// <returns> An object representing collection of VirtualNetworkRuleResources and their operations over a VirtualNetworkRuleResource. </returns>
-        public virtual VirtualNetworkRuleCollection GetVirtualNetworkRules()
+        /// <summary> Gets a collection of DataLakeStoreVirtualNetworkRuleResources in the DataLakeStoreAccount. </summary>
+        /// <returns> An object representing collection of DataLakeStoreVirtualNetworkRuleResources and their operations over a DataLakeStoreVirtualNetworkRuleResource. </returns>
+        public virtual DataLakeStoreVirtualNetworkRuleCollection GetDataLakeStoreVirtualNetworkRules()
         {
-            return GetCachedClient(Client => new VirtualNetworkRuleCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified Data Lake Store virtual network rule.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/virtualNetworkRules/{virtualNetworkRuleName}
-        /// Operation Id: VirtualNetworkRules_Get
-        /// </summary>
-        /// <param name="virtualNetworkRuleName"> The name of the virtual network rule to retrieve. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualNetworkRuleResource>> GetVirtualNetworkRuleAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
-        {
-            return await GetVirtualNetworkRules().GetAsync(virtualNetworkRuleName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new DataLakeStoreVirtualNetworkRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -157,16 +142,31 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VirtualNetworkRuleResource> GetVirtualNetworkRule(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataLakeStoreVirtualNetworkRuleResource>> GetDataLakeStoreVirtualNetworkRuleAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            return GetVirtualNetworkRules().Get(virtualNetworkRuleName, cancellationToken);
+            return await GetDataLakeStoreVirtualNetworkRules().GetAsync(virtualNetworkRuleName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of TrustedIdProviderResources in the DataLakeStoreAccount. </summary>
-        /// <returns> An object representing collection of TrustedIdProviderResources and their operations over a TrustedIdProviderResource. </returns>
-        public virtual TrustedIdProviderCollection GetTrustedIdProviders()
+        /// <summary>
+        /// Gets the specified Data Lake Store virtual network rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}/virtualNetworkRules/{virtualNetworkRuleName}
+        /// Operation Id: VirtualNetworkRules_Get
+        /// </summary>
+        /// <param name="virtualNetworkRuleName"> The name of the virtual network rule to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataLakeStoreVirtualNetworkRuleResource> GetDataLakeStoreVirtualNetworkRule(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new TrustedIdProviderCollection(Client, Id));
+            return GetDataLakeStoreVirtualNetworkRules().Get(virtualNetworkRuleName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DataLakeStoreTrustedIdProviderResources in the DataLakeStoreAccount. </summary>
+        /// <returns> An object representing collection of DataLakeStoreTrustedIdProviderResources and their operations over a DataLakeStoreTrustedIdProviderResource. </returns>
+        public virtual DataLakeStoreTrustedIdProviderCollection GetDataLakeStoreTrustedIdProviders()
+        {
+            return GetCachedClient(Client => new DataLakeStoreTrustedIdProviderCollection(Client, Id));
         }
 
         /// <summary>
@@ -179,9 +179,9 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentException"> <paramref name="trustedIdProviderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trustedIdProviderName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<TrustedIdProviderResource>> GetTrustedIdProviderAsync(string trustedIdProviderName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataLakeStoreTrustedIdProviderResource>> GetDataLakeStoreTrustedIdProviderAsync(string trustedIdProviderName, CancellationToken cancellationToken = default)
         {
-            return await GetTrustedIdProviders().GetAsync(trustedIdProviderName, cancellationToken).ConfigureAwait(false);
+            return await GetDataLakeStoreTrustedIdProviders().GetAsync(trustedIdProviderName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -194,9 +194,9 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <exception cref="ArgumentException"> <paramref name="trustedIdProviderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trustedIdProviderName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<TrustedIdProviderResource> GetTrustedIdProvider(string trustedIdProviderName, CancellationToken cancellationToken = default)
+        public virtual Response<DataLakeStoreTrustedIdProviderResource> GetDataLakeStoreTrustedIdProvider(string trustedIdProviderName, CancellationToken cancellationToken = default)
         {
-            return GetTrustedIdProviders().Get(trustedIdProviderName, cancellationToken);
+            return GetDataLakeStoreTrustedIdProviders().Get(trustedIdProviderName, cancellationToken);
         }
 
         /// <summary>

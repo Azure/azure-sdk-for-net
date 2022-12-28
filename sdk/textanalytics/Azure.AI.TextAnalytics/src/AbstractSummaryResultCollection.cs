@@ -26,8 +26,8 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// The statistics associated with the results and how these were produced by the service. The value is null
-        /// unless <see cref="TextAnalyticsRequestOptions.IncludeStatistics"/> or
+        /// The statistics associated with the results and how these were produced by the service. The value is
+        /// <c>null</c> unless <see cref="TextAnalyticsRequestOptions.IncludeStatistics"/> or
         /// <see cref="AnalyzeActionsOptions.IncludeStatistics"/> was used to explicitly request that these were
         /// included as part of the results.
         /// </summary>

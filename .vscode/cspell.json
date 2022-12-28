@@ -90,6 +90,7 @@
     "skus",
     "structs",
     "uints",
+    "unbilled",
     "unencrypted",
     "unformattable",
     "unhold",
@@ -175,6 +176,12 @@
       ]
     },
     {
+      "filename": "**/sdk/billingbenefits/**/*.cs",
+      "words": [
+        "Hana"
+      ]
+    },
+    {
       "filename": "**/sdk/botservice/**/*.cs",
       "words": [
         "Alexa",
@@ -255,7 +262,8 @@
         "sysctls",
         "tcpkeepalive",
         "wasi",
-        "wmem"
+        "wmem",
+        "Oidc"
       ]
     },
     {
@@ -819,6 +827,12 @@
       "filename": "**/sdk/storagecache/**/*.cs",
       "words": [
         "Clfs"
+      ]
+    },
+    {
+      "filename": "**/sdk/storagemover/**/*.cs",
+      "words": [
+        "Unregistering"
       ]
     },
     {

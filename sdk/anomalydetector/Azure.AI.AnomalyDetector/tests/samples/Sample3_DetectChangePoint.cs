@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.AI.AnomalyDetector.Models;
+using Azure.AI.AnomalyDetector;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -25,10 +25,9 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
 
             var endpointUri = new Uri(endpoint);
             var credential = new AzureKeyCredential(apiKey);
-            String apiVersion = "v1.1";
 
             //create client
-            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, apiVersion, credential);
+            AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
 
             #region Snippet:ReadSeriesDataForChangePoint
 
@@ -42,7 +41,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
                 .Select(e => new TimeSeriesPoint(float.Parse(e[1])){ Timestamp = DateTime.Parse(e[0])}).ToList();
 
             //create request
-            ChangePointDetectRequest request = new ChangePointDetectRequest(list, TimeGranularity.Daily);
+            UnivariateChangePointDetectionOptions request = new UnivariateChangePointDetectionOptions(list, TimeGranularity.Daily);
 
             #endregion
 
@@ -51,7 +50,7 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             //detect
             Console.WriteLine("Detecting the change point in the series.");
 
-            ChangePointDetectResponse result = client.DetectUnivariateChangePoint(request);
+            UnivariateChangePointDetectionResult result = client.DetectUnivariateChangePoint(request);
 
             if (result.IsChangePoint.Contains(true))
             {
