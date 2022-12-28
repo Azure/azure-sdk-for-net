@@ -76,10 +76,10 @@ if ($relatedCadlProjectFolder) {
   $service = ""
   $namespace = ""
   if ($yml) {
-      if ($yml["parameters"] && $yml["parameters"]["service-directory-name"]) {
+      if ($yml["parameters"] -And $yml["parameters"]["service-directory-name"]) {
           $service = $yml["parameters"]["service-directory-name"]["default"];
       }
-      if ($yml["options"] && $yml["options"]["@azure-tools/cadl-csharp"] && $yml["options"]["@azure-tools/cadl-csharp"]["namespace"]) {
+      if ($yml["options"] -And $yml["options"]["@azure-tools/cadl-csharp"] -And $yml["options"]["@azure-tools/cadl-csharp"]["namespace"]) {
           $namespace = $yml["options"]["@azure-tools/cadl-csharp"]["namespace"]
       }
   }
