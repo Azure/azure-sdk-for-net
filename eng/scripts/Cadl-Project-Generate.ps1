@@ -56,6 +56,7 @@ try {
     NpmInstallForProject $npmWorkingDir
     Write-Host("npx cadl compile $mainCadlFile --emit `"`@azure-tools/cadl-csharp`" --output-path `"$resolvedProjectDirectory`"")
     npx cadl compile $mainCadlFile --emit "@azure-tools/cadl-csharp" --output-path "$resolvedProjectDirectory"
+    if ($LASTEXITCODE) { exit $LASTEXITCODE }
 }
 finally {
     Pop-Location
