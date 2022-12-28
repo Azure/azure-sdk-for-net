@@ -11,21 +11,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoSkuLocationInfoItem
+    public partial class ResourceSkuZoneDetails
     {
-        internal static KustoSkuLocationInfoItem DeserializeKustoSkuLocationInfoItem(JsonElement element)
+        internal static ResourceSkuZoneDetails DeserializeResourceSkuZoneDetails(JsonElement element)
         {
-            AzureLocation location = default;
-            Optional<IReadOnlyList<string>> zones = default;
-            Optional<IReadOnlyList<ResourceSkuZoneDetails>> zoneDetails = default;
+            Optional<IReadOnlyList<string>> name = default;
+            Optional<IReadOnlyList<ResourceSkuCapabilities>> capabilities = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
-                {
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("name"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -37,26 +31,26 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         array.Add(item.GetString());
                     }
-                    zones = array;
+                    name = array;
                     continue;
                 }
-                if (property.NameEquals("zoneDetails"))
+                if (property.NameEquals("capabilities"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ResourceSkuZoneDetails> array = new List<ResourceSkuZoneDetails>();
+                    List<ResourceSkuCapabilities> array = new List<ResourceSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuZoneDetails.DeserializeResourceSkuZoneDetails(item));
+                        array.Add(ResourceSkuCapabilities.DeserializeResourceSkuCapabilities(item));
                     }
-                    zoneDetails = array;
+                    capabilities = array;
                     continue;
                 }
             }
-            return new KustoSkuLocationInfoItem(location, Optional.ToList(zones), Optional.ToList(zoneDetails));
+            return new ResourceSkuZoneDetails(Optional.ToList(name), Optional.ToList(capabilities));
         }
     }
 }
