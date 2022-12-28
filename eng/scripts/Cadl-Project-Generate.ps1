@@ -46,7 +46,7 @@ $HasEmitterOutputDir = $false;
 if (Test-Path "$npmWorkingDir/cadl-project.yaml") {
     $cadlProjectYaml = Get-Content -Path "$npmWorkingDir/cadl-project.yaml" -Raw
     $yml = ConvertFrom-YAML $cadlProjectYaml
-    if ($yml["options"] && $yml["options"]["@azure-tools/cadl-csharp"] && $yml["options"]["@azure-tools/cadl-csharp"]["emitter-output-dir"]) {
+    if ($yml && $yml["options"] && $yml["options"]["@azure-tools/cadl-csharp"] && $yml["options"]["@azure-tools/cadl-csharp"]["emitter-output-dir"]) {
         $HasEmitterOutputDir = $true
     }
 }
