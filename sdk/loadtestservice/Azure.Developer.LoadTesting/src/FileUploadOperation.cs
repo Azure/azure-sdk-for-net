@@ -117,18 +117,18 @@ namespace Azure.Developer.LoadTesting
 
         private Response GetCompletionResponse()
         {
-            string status;
+            string fileValidationStatus;
             try
             {
                 JsonDocument jsonDocument = JsonDocument.Parse(_value.ToString());
-                status = jsonDocument.RootElement.GetProperty("status").GetString();
+                fileValidationStatus = jsonDocument.RootElement.GetProperty("status").GetString();
             }
             catch
             {
                 throw new Exception($"Validation status not found for file {_fileName} in test {_testId}");
             }
 
-            if (_terminalStatus.Contains(status))
+            if (_terminalStatus.Contains(fileValidationStatus))
             {
                 _completed = true;
             }

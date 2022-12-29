@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Developer.LoadTesting
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Developer.LoadTesting.Tests", "tests\Azure.Developer.LoadTesting.Tests.csproj", "{40264874-2DF3-44F5-B600-D0C986A8989D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hero", "Hero\Hero.csproj", "{82CF46E6-01EF-4476-91E9-B971E575A601}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,10 +39,6 @@ Global
 		{40264874-2DF3-44F5-B600-D0C986A8989D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40264874-2DF3-44F5-B600-D0C986A8989D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40264874-2DF3-44F5-B600-D0C986A8989D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{82CF46E6-01EF-4476-91E9-B971E575A601}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{82CF46E6-01EF-4476-91E9-B971E575A601}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{82CF46E6-01EF-4476-91E9-B971E575A601}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{82CF46E6-01EF-4476-91E9-B971E575A601}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
