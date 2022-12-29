@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -16,14 +19,13 @@ namespace Azure.Developer.LoadTesting.Tests
         private string _testId;
         private string _fileName;
         //private string testRunId;
-        //private string resourceId;
+        private string resourceId;
         private TestHelper _testHelper;
 
         public LoadTestAdministrationClientTest(bool isAsync) : base(isAsync) {
             _testId = "test-from-csharp-sdk-testing-framework";
             _fileName = "sample.jmx";
             //testRunId = "test-run-from-csharp-sdk";
-            //resourceId = TestEnvironment.ResourceId;
 
             _testHelper = new TestHelper();
 
@@ -109,6 +111,142 @@ namespace Azure.Developer.LoadTesting.Tests
 
             Response response = await loadTestAdministrationClient.GetTestFileAsync(_testId, _fileName);
             Assert.NotNull(response);
+        }
+
+        [Test]
+        public async Task DeleteTestFile()
+        {
+            LoadTestAdministrationClient loadTestAdministrationClient = CreateAdministrationClient();
+            await _testHelper.SetupTestingLoadTestResourceAsync(loadTestAdministrationClient, _testId);
+            await _testHelper.SetupTestScriptAsync(loadTestAdministrationClient, _testId, _fileName);
+
+            Response response = await loadTestAdministrationClient.DeleteTestFileAsync(_testId, _fileName);
+            Assert.NotNull(response);
+        }
+
+        [Test]
+        public async Task ListTestFiles()
+        {
+            LoadTestAdministrationClient loadTestAdministrationClient = CreateAdministrationClient();
+            await _testHelper.SetupTestingLoadTestResourceAsync(loadTestAdministrationClient, _testId);
+            await _testHelper.SetupTestScriptAsync(loadTestAdministrationClient, _testId, _fileName);
+
+            AsyncPageable<BinaryData> response = loadTestAdministrationClient.GetTestFilesAsync(_testId);
+            Assert.NotNull(response);
+        }
+
+        [Test]
+        public async Task CreateOrUpdateAppComponents()
+        {
+            LoadTestAdministrationClient loadTestAdministrationClient = CreateAdministrationClient();
+            await _testHelper.SetupTestingLoadTestResourceAsync(loadTestAdministrationClient, _testId);
+            resourceId = TestEnvironment.ResourceId;
+
+            Response response = await loadTestAdministrationClient.CreateOrUpdateAppComponentsAsync(
+                    _testId,
+                    RequestContent.Create(
+                        new Dictionary<string, Dictionary<string, Dictionary<string, string>>>
+                        {
+                            { "components",  new Dictionary<string, Dictionary<string, string>>
+                                {
+                                    { resourceId, new Dictionary<string, string>
+                                        {
+                                            { "resourceId", resourceId },
+                                            { "resourceName", "App-Service-Sample-Demo" },
+                                            { "resourceType", "Microsoft.Web/sites" },
+                                            { "kind", "web" }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    )
+                );
+        }
+
+        [Test]
+        public async Task GetAppComponents()
+        {
+            LoadTestAdministrationClient loadTestAdministrationClient = CreateAdministrationClient();
+            await _testHelper.SetupTestingLoadTestResourceAsync(loadTestAdministrationClient, _testId);
+
+            Response response = await loadTestAdministrationClient.GetAppComponentsAsync(_testId);
+            Assert.IsNotNull(response);
+        }
+
+        [Test]
+        public async Task CreateOrUpdateServerMetricsConfig()
+        {
+            LoadTestAdministrationClient loadTestAdministrationClient = CreateAdministrationClient();
+            await _testHelper.SetupTestingLoadTestResourceAsync(loadTestAdministrationClient, _testId);
+            resourceId = TestEnvironment.ResourceId;
+
+            Response response = await loadTestAdministrationClient.CreateOrUpdateServerMetricsConfigAsync(
+                    _testId,
+                    RequestContent.Create(
+                        new Dictionary<string, Dictionary<string, Dictionary<string, string>>>
+                        {
+                            {
+                                "metrics", new Dictionary<string, Dictionary<string, string>>
+                                {
+                                    {
+                                        resourceId, new Dictionary<string, string>
+                                        {
+                                            {"resourceId", resourceId },
+                                            {"metricNamespace", "microsoft.insights/components"},
+                                            {"displayDescription", "sample description"},
+                                            {"name",  "requests/duration"},
+                                            {"aggregation", "Average"},
+                                            {"unit", ""},
+                                            {"resourceType", "microsoft.insights/components"}
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    )
+                );
+        }
+
+        [Test]
+        public async Task GetServerMetricsConfig()
+        {
+            LoadTestAdministrationClient loadTestAdministrationClient = CreateAdministrationClient();
+            await _testHelper.SetupTestingLoadTestResourceAsync(loadTestAdministrationClient, _testId);
+
+            Response response = await loadTestAdministrationClient.GetServerMetricsConfigAsync(_testId);
+            Assert.NotNull(response);
+        }
+
+        [Test]
+        public async Task BeginUploadTestFile()
+        {
+            LoadTestAdministrationClient loadTestAdministrationClient = CreateAdministrationClient();
+            await _testHelper.SetupTestingLoadTestResourceAsync(loadTestAdministrationClient, _testId);
+
+            FileUploadOperation fileUploadOperation = await loadTestAdministrationClient.BeginUploadTestFileAsync(
+                _testId, _fileName, RequestContent.Create(
+                    File.OpenRead(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), _fileName))
+                    ), waitUntil: WaitUntil.Completed
+                );
+
+            Assert.IsTrue(fileUploadOperation.HasValue);
+            Assert.NotNull(fileUploadOperation.Value);
+            Assert.IsTrue(fileUploadOperation.HasCompleted);
+
+            await loadTestAdministrationClient.DeleteTestAsync(_testId);
+
+            await _testHelper.SetupTestingLoadTestResourceAsync(loadTestAdministrationClient, _testId);
+            fileUploadOperation = await loadTestAdministrationClient.BeginUploadTestFileAsync(
+                   _testId, _fileName, RequestContent.Create(
+                        File.OpenRead(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), _fileName))
+                    )
+                );
+
+            await fileUploadOperation.WaitForCompletionAsync();
+            Assert.IsTrue(fileUploadOperation.HasValue);
+            Assert.NotNull(fileUploadOperation.Value);
+            Assert.IsTrue(fileUploadOperation.HasCompleted);
         }
     }
 }
