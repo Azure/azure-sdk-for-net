@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -41,11 +42,11 @@ namespace Azure.ResourceManager.StorageMover
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             Optional<string> agentVersion = default;
-            string arcResourceId = default;
-            string arcVmUuid = default;
+            ResourceIdentifier arcResourceId = default;
+            Guid arcVmUuid = default;
             Optional<StorageMoverAgentStatus> agentStatus = default;
             Optional<DateTimeOffset> lastStatusUpdate = default;
-            Optional<string> localIPAddress = default;
+            Optional<IPAddress> localIPAddress = default;
             Optional<long> memoryInMB = default;
             Optional<long> numberOfCores = default;
             Optional<long> uptimeInSeconds = default;
@@ -99,12 +100,12 @@ namespace Azure.ResourceManager.StorageMover
                         }
                         if (property0.NameEquals("arcResourceId"))
                         {
-                            arcResourceId = property0.Value.GetString();
+                            arcResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("arcVmUuid"))
                         {
-                            arcVmUuid = property0.Value.GetString();
+                            arcVmUuid = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("agentStatus"))
@@ -129,7 +130,12 @@ namespace Azure.ResourceManager.StorageMover
                         }
                         if (property0.NameEquals("localIPAddress"))
                         {
-                            localIPAddress = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            localIPAddress = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("memoryInMB"))

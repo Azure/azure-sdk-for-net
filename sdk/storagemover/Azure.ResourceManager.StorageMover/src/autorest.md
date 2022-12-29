@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: StorageMover
 namespace: Azure.ResourceManager.StorageMover
-require: https://github.com/Azure/azure-rest-api-specs/blob/e99a45d498a1c7fadc18229ecba5d84a471a8771/specification/storagemover/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/ac3e8f0fdda32a4ea0f20d67c8a23547cd21f3f8/specification/storagemover/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -30,6 +30,9 @@ rename-mapping:
   JobRun.properties.sourceResourceId: -|arm-id
   JobRun.properties.targetResourceId: -|arm-id
   JobRunResourceId.jobRunResourceId: -|arm-id
+  Agent.properties.arcResourceId: -|arm-id
+  Agent.properties.arcVmUuid: -|uuid
+  Agent.properties.localIPAddress: -|ip-address
 
 format-by-name-rules:
   'tenantId': 'uuid'

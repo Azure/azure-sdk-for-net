@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageMover.Models;
@@ -18,11 +19,10 @@ namespace Azure.ResourceManager.StorageMover
         /// <summary> Initializes a new instance of StorageMoverAgentData. </summary>
         /// <param name="arcResourceId"> The fully qualified resource ID of the Hybrid Compute resource for the Agent. </param>
         /// <param name="arcVmUuid"> The VM UUID of the Hybrid Compute resource for the Agent. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="arcResourceId"/> or <paramref name="arcVmUuid"/> is null. </exception>
-        public StorageMoverAgentData(string arcResourceId, string arcVmUuid)
+        /// <exception cref="ArgumentNullException"> <paramref name="arcResourceId"/> is null. </exception>
+        public StorageMoverAgentData(ResourceIdentifier arcResourceId, Guid arcVmUuid)
         {
             Argument.AssertNotNull(arcResourceId, nameof(arcResourceId));
-            Argument.AssertNotNull(arcVmUuid, nameof(arcVmUuid));
 
             ArcResourceId = arcResourceId;
             ArcVmUuid = arcVmUuid;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="uptimeInSeconds"> Uptime of the Agent in seconds. </param>
         /// <param name="errorDetails"></param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        internal StorageMoverAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string agentVersion, string arcResourceId, string arcVmUuid, StorageMoverAgentStatus? agentStatus, DateTimeOffset? lastStatusUpdate, string localIPAddress, long? memoryInMB, long? numberOfCores, long? uptimeInSeconds, StorageMoverAgentPropertiesErrorDetails errorDetails, StorageMoverProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal StorageMoverAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string agentVersion, ResourceIdentifier arcResourceId, Guid arcVmUuid, StorageMoverAgentStatus? agentStatus, DateTimeOffset? lastStatusUpdate, IPAddress localIPAddress, long? memoryInMB, long? numberOfCores, long? uptimeInSeconds, StorageMoverAgentPropertiesErrorDetails errorDetails, StorageMoverProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Description = description;
             AgentVersion = agentVersion;
@@ -66,15 +66,15 @@ namespace Azure.ResourceManager.StorageMover
         /// <summary> The Agent version. </summary>
         public string AgentVersion { get; }
         /// <summary> The fully qualified resource ID of the Hybrid Compute resource for the Agent. </summary>
-        public string ArcResourceId { get; set; }
+        public ResourceIdentifier ArcResourceId { get; set; }
         /// <summary> The VM UUID of the Hybrid Compute resource for the Agent. </summary>
-        public string ArcVmUuid { get; set; }
+        public Guid ArcVmUuid { get; set; }
         /// <summary> The Agent status. </summary>
         public StorageMoverAgentStatus? AgentStatus { get; }
         /// <summary> The last updated time of the Agent status. </summary>
         public DateTimeOffset? LastStatusUpdate { get; }
         /// <summary> Local IP address reported by the Agent. </summary>
-        public string LocalIPAddress { get; }
+        public IPAddress LocalIPAddress { get; }
         /// <summary> Available memory reported by the Agent, in MB. </summary>
         public long? MemoryInMB { get; }
         /// <summary> Available compute cores reported by the Agent. </summary>

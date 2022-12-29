@@ -1,20 +1,19 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (Unreleased)
+
+This release is the first stable release of the Storage Mover Management library.
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+-
+- Upgraded API version to 2021-01-01.
 
 ## 1.0.0-beta.1 (2022-12-09)
 
 ### Breaking Changes
 
 New design of track 2 initial commit.
+
 - Corrected the format of all `uuid` type properties / parameters.
 - Corrected all acronyms that don't follow [Microsoft .NET Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
 - Prepended `StorageMover` prefix to all single / simple model names
