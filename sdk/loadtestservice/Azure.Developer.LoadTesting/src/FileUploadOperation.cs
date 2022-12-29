@@ -121,7 +121,7 @@ namespace Azure.Developer.LoadTesting
             try
             {
                 JsonDocument jsonDocument = JsonDocument.Parse(_value.ToString());
-                fileValidationStatus = jsonDocument.RootElement.GetProperty("status").GetString();
+                fileValidationStatus = jsonDocument.RootElement.GetProperty("validationStatus").GetString();
             }
             catch
             {

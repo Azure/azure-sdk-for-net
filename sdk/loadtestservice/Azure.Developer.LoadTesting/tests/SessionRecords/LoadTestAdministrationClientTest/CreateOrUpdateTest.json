@@ -1,17 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://f3395a15-535c-46ea-aaf4-db52915c248b.eastus2euap.cnt-canary.loadtesting.azure.com/tests/nivedit-jain-csharp-sdk-testing-id?api-version=2022-11-01",
+      "RequestUri": "https://f3395a15-535c-46ea-aaf4-db52915c248b.eastus2euap.cnt-canary.loadtesting.azure.com/tests/test-from-csharp-sdk-testing-framework?api-version=2022-11-01",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Connection": "keep-alive",
         "Content-Length": "256",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-5c0d3692ca76da40b3d38855d8726881-57e8a95bbd478f43-00",
-        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20221229.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "ef8090e9caf07b7a73276424b1233e3e",
+        "traceparent": "00-e98332dfb60b2a02f868625c09ffd94f-9bc626edff07b7b6-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20221229.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9505174f13c62182aedf6b0613c11854",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -27,17 +26,18 @@
           "passFailMetrics": {}
         }
       },
-      "StatusCode": 200,
+      "StatusCode": 201,
       "ResponseHeaders": {
         "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview, 2022-11-01",
         "Connection": "keep-alive",
-        "Content-Length": "432",
+        "Content-Length": "436",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 29 Dec 2022 10:25:09 GMT",
-        "mise-correlation-id": "b6037ee9-b9d2-43e3-96ef-16fd1e4bcc86",
+        "Date": "Thu, 29 Dec 2022 13:28:12 GMT",
+        "Location": "https://f3395a15-535c-46ea-aaf4-db52915c248b.eastus2euap.cnt-canary.loadtesting.azure.com/tests/test-from-csharp-sdk-testing-framework?api-version=2022-11-01",
+        "mise-correlation-id": "d40f7285-2119-4efe-b67f-0c2398421c7c",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1d596c03-e7ee-4227-bde8-11e8b8470e82"
+        "x-ms-correlation-request-id": "fa23bad8-b245-4bae-bca0-4d0354b05dfa"
       },
       "ResponseBody": {
         "passFailCriteria": {
@@ -51,18 +51,17 @@
         "inputArtifacts": {
           "additionalFileInfo": []
         },
-        "testId": "nivedit-jain-csharp-sdk-testing-id",
+        "testId": "test-from-csharp-sdk-testing-framework",
         "description": "This test was created through loadtesting C# SDK",
         "displayName": "Dotnet Testing Framework Loadtest",
-        "createdDateTime": "2022-12-29T10:06:29.293Z",
-        "lastModifiedDateTime": "2022-12-29T10:25:09.839Z"
+        "createdDateTime": "2022-12-29T13:28:12.831Z",
+        "lastModifiedDateTime": "2022-12-29T13:28:12.831Z"
       }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "LOADTESTSERVICE_ENDPOINT": "f3395a15-535c-46ea-aaf4-db52915c248b.eastus2euap.cnt-canary.loadtesting.azure.com",
-    "LOADTESTSERVICE_TEST_ID": "nivedit-jain-csharp-sdk-testing-id",
-    "RandomSeed": "353646720"
+    "RandomSeed": "2023056900"
   }
 }
