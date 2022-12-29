@@ -19,6 +19,28 @@ namespace Azure.Communication.Email.Tests.Samples
 
         [Test]
         [AsyncOnly]
+        public async Task SendEmailSimpleAsync()
+        {
+            EmailClient client = CreateEmailClient();
+
+            #region Snippet:Azure_Communication_Email_Send_SimpleAsync
+            SendEmailResult sendResult = await client.SendAsync(
+                //@@ senderEmail: "<Send email address>" // The email address of the domain registered with the Communication Services resource
+                TestEnvironment.SenderAddress,
+                //@@ toRecpient: "<to recipient email address>"
+                TestEnvironment.RecipientAddress,
+                "This is the subject",
+                "<h1>This is the body</h1>"
+            );
+
+            Console.WriteLine($"Email id: {sendResult.MessageId}");
+            #endregion Snippet:Azure_Communication_Email_Send_SimpleAsync
+
+            Assert.False(string.IsNullOrEmpty(sendResult.MessageId));
+        }
+
+        [Test]
+        [AsyncOnly]
         public async Task SendEmailAsync()
         {
             EmailClient client = CreateEmailClient();

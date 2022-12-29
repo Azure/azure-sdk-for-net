@@ -3,6 +3,7 @@
 ## 1.0.0-beta.2 (Unreleased)
 
 ### Features Added
+- Adding overloads for the Send and SendAsync methods
 
 ### Breaking Changes
 

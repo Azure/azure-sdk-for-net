@@ -139,6 +139,36 @@ namespace Azure.Communication.Email
         }
 
         /// <summary> Queues an email message to be sent to one or more recipients. </summary>
+        /// <param name="senderEmail"> The sender email address from a verified domain. </param>
+        /// <param name="toRecipient"> The to email recipient address. </param>
+        /// <param name="subject"> The email subject. </param>
+        /// <param name="html"> The html version of the email message. </param>
+        /// <param name="plainText"> The plain text version of the email message. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SendEmailResult>> SendAsync(
+            string senderEmail,
+            string toRecipient,
+            string subject,
+            string html,
+            string plainText = "",
+            CancellationToken cancellationToken = default)
+        {
+            var emailContent = new EmailContent(subject);
+            emailContent.Html = html;
+            emailContent.PlainText = plainText;
+
+            var toRecipients = new List<EmailAddress>
+            {
+                new EmailAddress(toRecipient)
+            };
+
+            var emailRecipients = new EmailRecipients(toRecipients);
+            var emailMessage = new EmailMessage(senderEmail, emailContent, emailRecipients);
+
+            return await SendAsync(emailMessage, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Queues an email message to be sent to one or more recipients. </summary>
         /// <param name="emailMessage"> Message payload for sending an email. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SendEmailResult>> SendAsync(
@@ -169,6 +199,36 @@ namespace Azure.Communication.Email
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Queues an email message to be sent to one or more recipients. </summary>
+        /// <param name="senderEmail"> The sender email address from a verified domain. </param>
+        /// <param name="toRecipient"> The to email recipient address. </param>
+        /// <param name="subject"> The email subject. </param>
+        /// <param name="html"> The html version of the email message. </param>
+        /// <param name="plainText"> The plain text version of the email message. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SendEmailResult> Send(
+            string senderEmail,
+            string toRecipient,
+            string subject,
+            string html,
+            string plainText = "",
+            CancellationToken cancellationToken = default)
+        {
+            var emailContent = new EmailContent(subject);
+            emailContent.Html = html;
+            emailContent.PlainText = plainText;
+
+            var toRecipients = new List<EmailAddress>
+            {
+                new EmailAddress(toRecipient)
+            };
+
+            var emailRecipients = new EmailRecipients(toRecipients);
+            var emailMessage = new EmailMessage(senderEmail, emailContent, emailRecipients);
+
+            return Send(emailMessage, cancellationToken);
         }
 
         /// <summary> Queues an email message to be sent to one or more recipients. </summary>

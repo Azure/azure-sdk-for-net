@@ -45,7 +45,21 @@ EmailClient client = new EmailClient(new Uri(endpoint), tokenCredential);
 ```
 ## Examples
 ### Send an Email Message
-To send an email message, call the `Send` or `SendAsync` function from the `EmailClient`.
+To send an email message, call the `Send` or `SendAsync` function from the `EmailClient`. To send a simple email, you can pass the email parameters into the `Send` method directly.
+
+```C# Snippet:Azure_Communication_Email_Send_Simple
+SendEmailResult sendResult = client.Send(
+    "<Send email address>",
+    "<to recipient email address>",
+    "This is the subject",
+    "<h1>This is the body</h1>"
+);
+
+Console.WriteLine($"Email id: {sendResult.MessageId}");
+```
+
+To customize the email message further, you can instantiate the `EmailMessage` object and pass that into the `Send` or `SendAsync` method.
+
 ```C# Snippet:Azure_Communication_Email_Send
 // Create the email content
 var emailContent = new EmailContent("This is the subject");
