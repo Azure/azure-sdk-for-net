@@ -195,6 +195,11 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("capacity");
                 writer.WriteObjectValue(Capacity);
             }
+            if (Optional.IsDefined(EnablePartitionMerge))
+            {
+                writer.WritePropertyName("enablePartitionMerge");
+                writer.WriteBooleanValue(EnablePartitionMerge.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -243,6 +248,8 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<IList<ResourceIdentifier>> networkAclBypassResourceIds = default;
             Optional<bool> disableLocalAuth = default;
             Optional<CosmosDBAccountCapacity> capacity = default;
+            Optional<DatabaseAccountKeysMetadata> keysMetadata = default;
+            Optional<bool> enablePartitionMerge = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -263,7 +270,7 @@ namespace Azure.ResourceManager.CosmosDB
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString(), serializeOptions);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -308,7 +315,7 @@ namespace Azure.ResourceManager.CosmosDB
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -695,11 +702,31 @@ namespace Azure.ResourceManager.CosmosDB
                             capacity = CosmosDBAccountCapacity.DeserializeCosmosDBAccountCapacity(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("keysMetadata"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            keysMetadata = DatabaseAccountKeysMetadata.DeserializeDatabaseAccountKeysMetadata(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("enablePartitionMerge"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            enablePartitionMerge = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new CosmosDBAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), identity, provisioningState.Value, documentEndpoint.Value, Optional.ToNullable(databaseAccountOfferType), Optional.ToList(ipRules), Optional.ToNullable(isVirtualNetworkFilterEnabled), Optional.ToNullable(enableAutomaticFailover), consistencyPolicy.Value, Optional.ToList(capabilities), Optional.ToList(writeLocations), Optional.ToList(readLocations), Optional.ToList(locations), Optional.ToList(failoverPolicies), Optional.ToList(virtualNetworkRules), Optional.ToList(privateEndpointConnections), Optional.ToNullable(enableMultipleWriteLocations), Optional.ToNullable(enableCassandraConnector), Optional.ToNullable(connectorOffer), Optional.ToNullable(disableKeyBasedMetadataWriteAccess), keyVaultKeyUri.Value, defaultIdentity.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(enableFreeTier), apiProperties.Value, Optional.ToNullable(enableAnalyticalStorage), analyticalStorageConfiguration.Value, Optional.ToNullable(instanceId), Optional.ToNullable(createMode), restoreParameters.Value, backupPolicy.Value, Optional.ToList(cors), Optional.ToNullable(networkAclBypass), Optional.ToList(networkAclBypassResourceIds), Optional.ToNullable(disableLocalAuth), capacity.Value);
+            return new CosmosDBAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), identity, provisioningState.Value, documentEndpoint.Value, Optional.ToNullable(databaseAccountOfferType), Optional.ToList(ipRules), Optional.ToNullable(isVirtualNetworkFilterEnabled), Optional.ToNullable(enableAutomaticFailover), consistencyPolicy.Value, Optional.ToList(capabilities), Optional.ToList(writeLocations), Optional.ToList(readLocations), Optional.ToList(locations), Optional.ToList(failoverPolicies), Optional.ToList(virtualNetworkRules), Optional.ToList(privateEndpointConnections), Optional.ToNullable(enableMultipleWriteLocations), Optional.ToNullable(enableCassandraConnector), Optional.ToNullable(connectorOffer), Optional.ToNullable(disableKeyBasedMetadataWriteAccess), keyVaultKeyUri.Value, defaultIdentity.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(enableFreeTier), apiProperties.Value, Optional.ToNullable(enableAnalyticalStorage), analyticalStorageConfiguration.Value, Optional.ToNullable(instanceId), Optional.ToNullable(createMode), restoreParameters.Value, backupPolicy.Value, Optional.ToList(cors), Optional.ToNullable(networkAclBypass), Optional.ToList(networkAclBypassResourceIds), Optional.ToNullable(disableLocalAuth), capacity.Value, keysMetadata.Value, Optional.ToNullable(enablePartitionMerge));
         }
     }
 }

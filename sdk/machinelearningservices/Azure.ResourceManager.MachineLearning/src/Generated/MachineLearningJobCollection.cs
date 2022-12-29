@@ -183,20 +183,21 @@ namespace Azure.ResourceManager.MachineLearning
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/jobs
         /// Operation Id: Jobs_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="jobType"> Type of job to be returned. </param>
+        /// <param name="tag"> Jobs returned will have this tag key. </param>
+        /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningJobResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningJobResource> GetAllAsync(MachineLearningJobGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MachineLearningJobResource> GetAllAsync(string skip = null, string jobType = null, string tag = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
-            options ??= new MachineLearningJobGetAllOptions();
-
             async Task<Page<MachineLearningJobResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _machineLearningJobJobsClientDiagnostics.CreateScope("MachineLearningJobCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _machineLearningJobJobsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.JobType, options.Tag, options.ListViewType, options.Scheduled, options.ScheduleId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _machineLearningJobJobsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, jobType, tag, listViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.MachineLearning
                 scope.Start();
                 try
                 {
-                    var response = await _machineLearningJobJobsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.JobType, options.Tag, options.ListViewType, options.Scheduled, options.ScheduleId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _machineLearningJobJobsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, jobType, tag, listViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -228,20 +229,21 @@ namespace Azure.ResourceManager.MachineLearning
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/jobs
         /// Operation Id: Jobs_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="jobType"> Type of job to be returned. </param>
+        /// <param name="tag"> Jobs returned will have this tag key. </param>
+        /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningJobResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningJobResource> GetAll(MachineLearningJobGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<MachineLearningJobResource> GetAll(string skip = null, string jobType = null, string tag = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
-            options ??= new MachineLearningJobGetAllOptions();
-
             Page<MachineLearningJobResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _machineLearningJobJobsClientDiagnostics.CreateScope("MachineLearningJobCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _machineLearningJobJobsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.JobType, options.Tag, options.ListViewType, options.Scheduled, options.ScheduleId, cancellationToken: cancellationToken);
+                    var response = _machineLearningJobJobsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, jobType, tag, listViewType, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -256,7 +258,7 @@ namespace Azure.ResourceManager.MachineLearning
                 scope.Start();
                 try
                 {
-                    var response = _machineLearningJobJobsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.JobType, options.Tag, options.ListViewType, options.Scheduled, options.ScheduleId, cancellationToken: cancellationToken);
+                    var response = _machineLearningJobJobsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, jobType, tag, listViewType, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningJobResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -324,17 +326,17 @@ namespace Azure.ResourceManager.MachineLearning
 
         IEnumerator<MachineLearningJobResource> IEnumerable<MachineLearningJobResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IAsyncEnumerator<MachineLearningJobResource> IAsyncEnumerable<MachineLearningJobResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

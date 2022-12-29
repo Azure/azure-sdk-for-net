@@ -24,15 +24,15 @@ dotnet add package Azure.ResourceManager.Nginx --prerelease
 
 ### Prerequisites
 
-* You must have an [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/)
+* You must have an [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
 ### Authenticate the Client
 
-To create an authenticated client and start interacting with Microsoft Azure resources, please see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
+To create an authenticated client and start interacting with Microsoft Azure resources, see the [quickstart guide here](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
 
 ## Key concepts
 
-Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html)
+Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
 ## Documentation
 
@@ -49,16 +49,12 @@ Code samples for using the management library for .NET can be found in the follo
 
 ## Troubleshooting
 
--   File an issue via [Github
-    Issues](https://github.com/Azure/azure-sdk-for-net/issues)
--   Check [previous
-    questions](https://stackoverflow.com/questions/tagged/azure+.net)
-    or ask new ones on Stack Overflow using azure and .net tags.
-
+-   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
+-   Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
 
 ## Next steps
 
-For more information about Microsoft Azure SDK, see [this website](https://azure.github.io/azure-sdk/)
+For more information about Microsoft Azure SDK, see [this website](https://azure.github.io/azure-sdk/).
 
 ## Contributing
 

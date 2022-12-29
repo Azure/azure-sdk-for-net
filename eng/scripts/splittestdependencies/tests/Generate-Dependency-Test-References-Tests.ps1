@@ -80,25 +80,21 @@ Describe "Write-Project-Files-To-Matrix" -Tag "UnitTest" {
         @{ TestFolderName = "$PSScriptRoot/testFolder3"; ProjectFiles = "1.txt", "2.txt", "3.txt"; MatrixJsonPath = "$PSScriptRoot/inputs/platform-matrix2.json"; expectOutput="$PSScriptRoot/expectOutputs/expect-matrix3.json" }
     ) {
         Backup-File -targetPath $MatrixJsonPath -backupFolder $TestFolderName
-        Write-Project-Files-To-Matrix -ProjectFiles $ProjectFiles -MatrixJsonPath $MatrixJsonPath -MatrixOutputFolder $TestFolderName -ProjectFileConfigName "OverrideFiles"
-        Get-Content $MatrixJsonPath | Should -Be (Get-Content $expectOutput)
-        Reset-File -targetPath $MatrixJsonPath -backupFolder $TestFolderName
-    }
-    # Failed cases
-    It "More include agents than project files" -TestCases @(
-        @{ MatrixJsonPath = "$PSScriptRoot/inputs/platform_2_include_agents.json"; ProjectFiles = "1.txt", "2.txt"; }
-        @{ MatrixJsonPath = "$PSScriptRoot/inputs/platform_2_include_agents.json"; ProjectFiles = "1.txt"; }
-    ) {
-        { Write-Project-Files-To-Matrix -ProjectFiles $ProjectFiles -MatrixJsonPath $MatrixJsonPath -MatrixOutputFolder "$PSScriptRoot/testFolder3" -ProjectFileConfigName "OverrideFiles"} 
-            | Should -Throw -ExceptionType ([System.Management.Automation.RuntimeException])
+        try {
+            Write-Project-Files-To-Matrix -ProjectFiles $ProjectFiles -MatrixJsonPath $MatrixJsonPath -MatrixOutputFolder $TestFolderName -ProjectFileConfigName "OverrideFiles"
+            Get-Content $MatrixJsonPath | Should -Be (Get-Content $expectOutput)
+        }
+        finally {
+            Reset-File -targetPath $MatrixJsonPath -backupFolder $TestFolderName
+        }
     }
 }
 
 Describe "Generate-Dependency-Test-References" -Tag "IntegrationTest" {
     # Passed cases
     It "Populate the project file properties into matrix json" -TestCases @(
-        @{ projectFile = "$PSScriptRoot/inputs/projects.txt"; TestFolderName = "$PSScriptRoot/testFolder4"; MatrixInputJsonFile = "$PSScriptRoot/inputs/sync-platform-matrix.json"; NumOfTestProjectsPerJob = 20; ExpectMatrixPropertyLength = 8}
-        @{ projectFile = "$PSScriptRoot/inputs/projects.txt"; TestFolderName = "$PSScriptRoot/testFolder5"; MatrixInputJsonFile = "$PSScriptRoot/inputs/sync-platform-matrix.json"; NumOfTestProjectsPerJob = 89; ExpectMatrixPropertyLength = 1}
+        @{ projectFile = "$PSScriptRoot/inputs/projects.txt"; TestFolderName = "$PSScriptRoot/testFolder4"; MatrixInputJsonFile = "$PSScriptRoot/inputs/sync-platform-matrix.json"; NumOfTestProjectsPerJob = 20; ExpectMatrixPropertyLength = 9}
+        @{ projectFile = "$PSScriptRoot/inputs/projects.txt"; TestFolderName = "$PSScriptRoot/testFolder5"; MatrixInputJsonFile = "$PSScriptRoot/inputs/sync-platform-matrix.json"; NumOfTestProjectsPerJob = 89; ExpectMatrixPropertyLength = 2}
     ) {
         Backup-File -targetPath $MatrixInputJsonFile -backupFolder $TestFolderName
         & "$PSScriptRoot/../Generate-Dependency-Test-References.ps1" -ProjectListFilePath $projectFile -NumOfTestProjectsPerJob $NumOfTestProjectsPerJob `

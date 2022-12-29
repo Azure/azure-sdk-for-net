@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Relay
         /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
         /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
-        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
+        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. DO NOT USE PublicNetworkAccess on Namespace API. Please use the NetworkRuleSet API to enable or disable PublicNetworkAccess. </param>
         internal RelayNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RelaySku sku, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IList<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
@@ -68,7 +68,5 @@ namespace Azure.ResourceManager.Relay
         public string MetricId { get; }
         /// <summary> List of private endpoint connections. </summary>
         public IList<RelayPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
-        /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
-        public RelayPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

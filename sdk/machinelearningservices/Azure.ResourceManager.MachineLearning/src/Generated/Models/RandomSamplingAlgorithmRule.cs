@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The specific type of random algorithm. </summary>
+    /// <summary>
+    /// The specific type of random algorithm
+    /// Serialized Name: RandomSamplingAlgorithmRule
+    /// </summary>
     public readonly partial struct RandomSamplingAlgorithmRule : IEquatable<RandomSamplingAlgorithmRule>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string RandomValue = "Random";
         private const string SobolValue = "Sobol";
 
-        /// <summary> Random. </summary>
+        /// <summary>
+        /// Random
+        /// Serialized Name: RandomSamplingAlgorithmRule.Random
+        /// </summary>
         public static RandomSamplingAlgorithmRule Random { get; } = new RandomSamplingAlgorithmRule(RandomValue);
-        /// <summary> Sobol. </summary>
+        /// <summary>
+        /// Sobol
+        /// Serialized Name: RandomSamplingAlgorithmRule.Sobol
+        /// </summary>
         public static RandomSamplingAlgorithmRule Sobol { get; } = new RandomSamplingAlgorithmRule(SobolValue);
         /// <summary> Determines if two <see cref="RandomSamplingAlgorithmRule"/> values are the same. </summary>
         public static bool operator ==(RandomSamplingAlgorithmRule left, RandomSamplingAlgorithmRule right) => left.Equals(right);

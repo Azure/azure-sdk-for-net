@@ -77,6 +77,11 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WritePropertyName("databaseRouting");
                 writer.WriteStringValue(DatabaseRouting.Value.ToString());
             }
+            if (Optional.IsDefined(RetrievalStartOn))
+            {
+                writer.WritePropertyName("retrievalStartDate");
+                writer.WriteStringValue(RetrievalStartOn.Value, "O");
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -100,6 +105,7 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<ResourceIdentifier> managedIdentityResourceId = default;
             Optional<Guid> managedIdentityObjectId = default;
             Optional<KustoDatabaseRouting> databaseRouting = default;
+            Optional<DateTimeOffset> retrievalStartDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -139,7 +145,7 @@ namespace Azure.ResourceManager.Kusto.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -251,11 +257,21 @@ namespace Azure.ResourceManager.Kusto.Models
                             databaseRouting = new KustoDatabaseRouting(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("retrievalStartDate"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            retrievalStartDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new KustoEventHubDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, eventHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), Optional.ToList(eventSystemProperties), Optional.ToNullable(compression), Optional.ToNullable(provisioningState), managedIdentityResourceId.Value, Optional.ToNullable(managedIdentityObjectId), Optional.ToNullable(databaseRouting));
+            return new KustoEventHubDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, eventHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), Optional.ToList(eventSystemProperties), Optional.ToNullable(compression), Optional.ToNullable(provisioningState), managedIdentityResourceId.Value, Optional.ToNullable(managedIdentityObjectId), Optional.ToNullable(databaseRouting), Optional.ToNullable(retrievalStartDate));
         }
     }
 }

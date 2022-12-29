@@ -154,10 +154,11 @@ namespace Azure.Communication.CallAutomation
         /// In case of cancel operation the this field is not set and is returned empty
         /// </param>
         /// <param name="collectTonesResult"> Defines the result for RecognitionType = Dtmf. </param>
+        /// <param name="choiceResult"> Defines the result for RecognitionType = Choices. </param>
         /// <returns> A new <see cref="CallAutomation.RecognizeCompleted"/> instance for mocking. </returns>
-        public static RecognizeCompleted RecognizeCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, CollectTonesResult collectTonesResult = null)
+        public static RecognizeCompleted RecognizeCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, CollectTonesResult collectTonesResult = null, ChoiceResult choiceResult = null)
         {
-            return new RecognizeCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, collectTonesResult);
+            return new RecognizeCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, collectTonesResult, choiceResult);
         }
 
         /// <summary> Initializes a new instance of CollectTonesResult. </summary>
@@ -168,6 +169,18 @@ namespace Azure.Communication.CallAutomation
             tones ??= new List<DtmfTone>();
 
             return new CollectTonesResult(tones?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of ChoiceResult. </summary>
+        /// <param name="label"> Label is the primary identifier for the choice detected. </param>
+        /// <param name="recognizedPhrase">
+        /// Phrases are set to the value if choice is selected via phrase detection.
+        /// If Dtmf input is recognized, then Label will be the identifier for the choice detected and phrases will be set to null
+        /// </param>
+        /// <returns> A new <see cref="CallAutomation.ChoiceResult"/> instance for mocking. </returns>
+        public static ChoiceResult ChoiceResult(string label = null, string recognizedPhrase = null)
+        {
+            return new ChoiceResult(label, recognizedPhrase);
         }
 
         /// <summary> Initializes a new instance of RecognizeFailed. </summary>

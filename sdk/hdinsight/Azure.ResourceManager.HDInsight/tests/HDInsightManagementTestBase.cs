@@ -29,11 +29,13 @@ namespace Azure.ResourceManager.HDInsight.Tests
         protected HDInsightManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            JsonPathSanitizers.Add("$..key");
         }
 
         protected HDInsightManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            JsonPathSanitizers.Add("$..key");
         }
 
         [SetUp]
@@ -42,64 +44,45 @@ namespace Azure.ResourceManager.HDInsight.Tests
             Client = GetArmClient();
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup()
+        protected async Task<ResourceGroupResource> CreateResourceGroup(string rgName)
         {
             var subscription = await Client.GetDefaultSubscriptionAsync();
-            string rgName = Recording.GenerateAssetName(DefaultResourceGroupPrefix);
             var input = new ResourceGroupData(DefaultLocation);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
         }
 
-        protected async Task<StorageAccountResource> CreateStorageAccount(ResourceGroupResource resourceGroup, string storageAccountName)
+        protected async Task<string> CreateStorageResources(ResourceGroupResource resourceGroup, string storageAccountName, string containerName)
         {
             StorageSku sku = new StorageSku(StorageSkuName.StandardGrs);
             StorageKind kind = StorageKind.Storage;
-            var location = resourceGroup.Data.Location;
-            StorageAccountCreateOrUpdateContent storagedata = new StorageAccountCreateOrUpdateContent(sku, kind, location)
-            {
-            };
-            var storage = await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, storagedata);
-            return storage.Value;
+            var location = DefaultLocation;
+            StorageAccountCreateOrUpdateContent storagedata = new StorageAccountCreateOrUpdateContent(sku, kind, location);
+            var lro = await resourceGroup.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, storagedata);
+            var storageAccount = lro.Value;
+            await storageAccount.GetBlobService().GetBlobContainers().CreateOrUpdateAsync(WaitUntil.Completed, containerName, new BlobContainerData());
+            return (await storageAccount.GetKeysAsync().ToEnumerableAsync()).FirstOrDefault().Value;
         }
 
-        protected async Task<VirtualNetworkResource> CreateDefaultNetwork(ResourceGroupResource resourceGroup, string vnetName)
+        protected async Task<HDInsightClusterResource> CreateDefaultHadoopCluster(ResourceGroupResource resourceGroup, string clusterName, string storageAccountName, string containerName, string accessKey)
         {
-            // Create a NSG
-            string nsgName = Recording.GenerateAssetName("ngs");
-            var nsgData = new NetworkSecurityGroupData() { Location = resourceGroup.Data.Location, };
-            var nsg = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(WaitUntil.Completed, nsgName, nsgData);
-
-            VirtualNetworkData data = new VirtualNetworkData() {Location = resourceGroup.Data.Location,};
-            data.AddressPrefixes.Add("10.10.0.0/16");
-            data.Subnets.Add(new SubnetData() { Name = "subnet1", AddressPrefix = "10.10.1.0/24", PrivateLinkServiceNetworkPolicy = VirtualNetworkPrivateLinkServiceNetworkPolicy.Disabled,NetworkSecurityGroup = nsg.Value.Data });
-            data.Subnets.Add(new SubnetData() { Name = "subnet2", AddressPrefix = "10.10.2.0/24" });
-            var vnet = await resourceGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, vnetName, data);
-            return vnet.Value;
-        }
-
-        protected async Task<HDInsightClusterResource> CreateDefaultHadoopCluster(ResourceGroupResource resourceGroup, StorageAccountResource storageAccount, string clusterName)
-        {
-            var properties = await PrepareClusterCreateParams(storageAccount);
+            var properties = PrepareClusterCreateParams(storageAccountName, containerName, accessKey);
             var data = new HDInsightClusterCreateOrUpdateContent()
             {
                 Properties = properties,
-                Location = resourceGroup.Data.Location,
+                Location = DefaultLocation,
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
-            var cluster = await resourceGroup.GetHDInsightClusters().CreateOrUpdateAsync(Azure.WaitUntil.Completed, clusterName, data);
+            var cluster = await resourceGroup.GetHDInsightClusters().CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             return cluster.Value;
         }
 
-        protected async Task<HDInsightClusterCreateOrUpdateProperties> PrepareClusterCreateParams(StorageAccountResource storageAccount)
+        protected HDInsightClusterCreateOrUpdateProperties PrepareClusterCreateParams(string storageAccountName, string containerName, string accessKey)
         {
-            string containerName = Recording.GenerateAssetName("container");
-            string accessKey = (await storageAccount.GetKeysAsync().ToEnumerableAsync()).FirstOrDefault().Value;
-            await storageAccount.GetBlobService().GetBlobContainers().CreateOrUpdateAsync(WaitUntil.Completed, containerName, new BlobContainerData());
             string clusterDeifnitionConfigurations = "{         \"gateway\": {             \"restAuthCredential.isEnabled\": \"true\",             \"restAuthCredential.username\": \"admin4468\",             \"restAuthCredential.password\": \"Password1!9688\"         }     } ";
             var properties = new HDInsightClusterCreateOrUpdateProperties()
             {
-                ClusterVersion = "3.6",
+                ClusterVersion = "4.0",
                 OSType = HDInsightOSType.Linux,
                 Tier = HDInsightTier.Standard,
                 ClusterDefinition = new HDInsightClusterDefinition()
@@ -144,7 +127,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             });
             properties.StorageAccounts.Add(new HDInsightStorageAccountInfo()
             {
-                Name = $"{storageAccount.Data.Name}.blob.core.windows.net",
+                Name = $"{storageAccountName}.blob.core.windows.net",
                 IsDefault = true,
                 Container = containerName,
                 Key = accessKey,

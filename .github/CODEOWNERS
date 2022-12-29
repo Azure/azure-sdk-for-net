@@ -21,7 +21,7 @@
 /sdk/core/                                      @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina
 
 # PRLabel: %Azure.Identity
-/sdk/identity/                                  @schaabs @christothes @ShivangiReja
+/sdk/identity/                                  @schaabs @christothes
 
 # Extensions
 /sdk/extensions/                                @jsquire
@@ -202,16 +202,16 @@
 /sdk/communication/Azure.Communication.Chat/   @LuChen-Microsoft
 
 # PRLabel: %Communication - Common
-/sdk/communication/Azure.Communication.Common/          @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @ostoliarova-msft
+/sdk/communication/Azure.Communication.Common/          @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @ostoliarova-msft @mjafferi-msft
 
 # PRLabel: %Communication - Identity
-/sdk/communication/Azure.Communication.Identity/        @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @ostoliarova-msft
+/sdk/communication/Azure.Communication.Identity/        @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @ostoliarova-msft @mjafferi-msft
 
 # PRLabel: %Communication - Network Traversal
 /sdk/communication/Azure.Communication.NetworkTraversal/ @ajpeacock0 @nathpete-msft
 
 # PRLabel: %Communication - Phone Numbers
-/sdk/communication/Azure.Communication.PhoneNumbers/    @miguhern @whisper6284 @lucasrsant @RoyHerrod @danielav7
+/sdk/communication/Azure.Communication.PhoneNumbers/    @miguhern @whisper6284 @RoyHerrod @danielav7
 
 # PRLabel: %Communication - Short Codes
 /sdk/communication/Azure.Communication.ShortCodes/      @guilhermeluizsp @danielav7

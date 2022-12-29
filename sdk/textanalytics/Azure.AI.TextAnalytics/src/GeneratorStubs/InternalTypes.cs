@@ -7,9 +7,6 @@ namespace Azure.AI.TextAnalytics.Models
 {
 #pragma warning disable SA1402 // File may only contain a single type
 
-    [CodeGenModel("AbstractiveSummarizationResultBaseDocumentsItem")]
-    internal partial class AbstractiveSummarizationResultBaseDocumentsItem { }
-
     [CodeGenModel("CustomEntitiesResultDocumentsItem")]
     internal partial class CustomEntitiesResultDocumentsItem { }
 
@@ -19,23 +16,8 @@ namespace Azure.AI.TextAnalytics.Models
     [CodeGenModel("DynamicClassificationResultDocumentsItem")]
     internal partial class DynamicClassificationResultDocumentsItem { }
 
-    [CodeGenModel("EntitiesResultDocumentsItem")]
-    internal partial class EntitiesResultDocumentsItem { }
-
-    [CodeGenModel("EntityLinkingResultDocumentsItem")]
-    internal partial class EntityLinkingResultDocumentsItem { }
-
-    [CodeGenModel("ExtractiveSummarizationResultDocumentsItem")]
-    internal partial class ExtractiveSummarizationResultDocumentsItem {  }
-
-    [CodeGenModel("HealthcareResultDocumentsItem")]
-    internal partial class HealthcareResultDocumentsItem { }
-
     [CodeGenModel("KeyPhraseResultDocumentsItem")]
     internal partial class KeyPhraseResultDocumentsItem { }
-
-    [CodeGenModel("PiiResultDocumentsItem")]
-    internal partial class PiiResultDocumentsItem { }
 
     [CodeGenModel("SentimentResponseDocumentsItem")]
     internal partial class SentimentResponseDocumentsItem { }

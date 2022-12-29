@@ -14,13 +14,24 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly LinkedEntityCollection _linkedEntities;
 
-        internal RecognizeLinkedEntitiesResult(string id, TextDocumentStatistics statistics, LinkedEntityCollection linkedEntities)
+        internal RecognizeLinkedEntitiesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            LinkedEntityCollection linkedEntities,
+            DetectedLanguage? detectedLanguage)
             : base(id, statistics)
         {
             _linkedEntities = linkedEntities;
+            DetectedLanguage = detectedLanguage;
         }
 
         internal RecognizeLinkedEntitiesResult(string id, TextAnalyticsError error) : base(id, error) { }
+
+        /// <summary>
+        /// The language of the input document as detected by the service when requested to perform automatic language
+        /// detection, which is possible by specifying "auto" as the language of the input document.
+        /// </summary>
+        public DetectedLanguage? DetectedLanguage { get; }
 
         /// <summary>
         /// Gets the collection of linked entities identified in the document.

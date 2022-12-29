@@ -247,6 +247,8 @@ namespace Azure.ResourceManager.Peering
         public virtual Azure.Pageable<Azure.ResourceManager.Peering.Models.PeeringReceivedRoute> GetReceivedRoutes(string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.PeeringReceivedRoute> GetReceivedRoutesAsync(Azure.ResourceManager.Peering.Models.PeeringGetReceivedRoutesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.PeeringReceivedRoute> GetReceivedRoutesAsync(string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Peering.Models.RoutingPreferenceUnbilledPrefix> GetRpUnbilledPrefixes(bool? consolidate = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.RoutingPreferenceUnbilledPrefix> GetRpUnbilledPrefixesAsync(bool? consolidate = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -974,5 +976,12 @@ namespace Azure.ResourceManager.Peering.Models
         public static implicit operator Azure.ResourceManager.Peering.Models.PeeringTier (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Peering.Models.PeeringTier left, Azure.ResourceManager.Peering.Models.PeeringTier right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class RoutingPreferenceUnbilledPrefix
+    {
+        internal RoutingPreferenceUnbilledPrefix() { }
+        public Azure.Core.AzureLocation? AzureRegion { get { throw null; } }
+        public int? PeerAsn { get { throw null; } }
+        public string Prefix { get { throw null; } }
     }
 }

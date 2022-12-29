@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
+using Azure.Communication.CallAutomation.Models;
 
 namespace Azure.Communication.CallAutomation.Tests.CallMedias
 {
@@ -17,12 +18,35 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             new CommunicationUserIdentifier("id")
         };
         private static readonly FileSource _fileSource = new FileSource(new System.Uri("file://path/to/file"));
+        private static readonly TextSource _textSource = new TextSource("PlayTTS test text.")
+        {
+            SourceLocale = "en-US",
+            VoiceGender = GenderType.Female,
+            VoiceName = "LULU"
+        };
         private static readonly PlayOptions _options = new PlayOptions()
         {
             Loop = false,
             OperationContext = "context"
         };
-        private static readonly CallMediaRecognizeOptions _fullRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 5)
+
+        private static List<string> s_strings = new List<string>()
+        {
+            "The first test string to be recognized by cognition service.",
+            "The second test string to be recognized by cognition service",
+            "The third test string to be recognized by cognition service"
+        };
+
+        private static RecognizeChoice _recognizeChoice1 = new RecognizeChoice("testLabel1", s_strings);
+        private static RecognizeChoice _recognizeChoice2 = new RecognizeChoice("testLabel2", s_strings);
+
+        private static readonly List<RecognizeChoice> s_recognizeChoices = new List<RecognizeChoice>()
+        {
+            _recognizeChoice1,
+            _recognizeChoice2
+        };
+
+        private static readonly CallMediaRecognizeOptions _dmtfRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 5)
         {
             InterruptCallMediaOperation = true,
             InterToneTimeout = TimeSpan.FromSeconds(10),
@@ -32,6 +56,20 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             OperationContext = "operationContext",
             Prompt = new FileSource(new Uri("https://localhost"))
         };
+        private static CallMediaRecognizeOptions _choiceRecognizeOptions = new CallMediaRecognizeChoiceOptions(new CommunicationUserIdentifier("targetUserId"), s_recognizeChoices)
+        {
+            InterruptCallMediaOperation = true,
+            InitialSilenceTimeout = TimeSpan.FromSeconds(5),
+            InterruptPrompt = true,
+            OperationContext = "operationContext",
+            Prompt = new TextSource("PlayTTS test text.")
+            {
+                SourceLocale = "en-US",
+                VoiceGender = GenderType.Female,
+                VoiceName = "LULU"
+            }
+        };
+
         private static readonly CallMediaRecognizeOptions _emptyRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 1);
 
         private static CallMedia? _callMedia;
@@ -106,11 +144,23 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
+                   callMedia => callMedia.PlayAsync(_textSource, _target, _options)
+                },
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.PlayToAllAsync(_textSource, _options)
+                },
+                new Func<CallMedia, Task<Response>>?[]
+                {
                    callMedia => callMedia.CancelAllMediaOperationsAsync()
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.StartRecognizingAsync(_fullRecognizeOptions)
+                   callMedia => callMedia.StartRecognizingAsync(_dmtfRecognizeOptions)
+                },
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.StartRecognizingAsync(_choiceRecognizeOptions)
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
@@ -133,11 +183,23 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 },
                 new Func<CallMedia, Response>?[]
                 {
+                   callMedia => callMedia.Play(_textSource, _target, _options)
+                },
+                new Func<CallMedia, Response>?[]
+                {
+                   callMedia => callMedia.PlayToAll(_textSource, _options)
+                },
+                new Func<CallMedia, Response>?[]
+                {
                    callMedia => callMedia.CancelAllMediaOperations()
                 },
                 new Func<CallMedia, Response>?[]
                 {
-                   callMedia => callMedia.StartRecognizing(_fullRecognizeOptions)
+                   callMedia => callMedia.StartRecognizing(_dmtfRecognizeOptions)
+                },
+                new Func<CallMedia, Response>?[]
+                {
+                   callMedia => callMedia.StartRecognizing(_choiceRecognizeOptions)
                 },
                 new Func<CallMedia, Response>?[]
                 {

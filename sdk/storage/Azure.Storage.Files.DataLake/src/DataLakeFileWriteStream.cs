@@ -48,6 +48,9 @@ namespace Azure.Storage.Files.DataLake
                     offset: _writeIndex,
                     validationOptionsOverride: _validationOptions,
                     leaseId: _conditions.LeaseId,
+                    leaseAction: null,
+                    leaseDuration: null,
+                    proposedLeaseId: null,
                     progressHandler: _progressHandler,
                     flush: null,
                     async: async,
@@ -69,6 +72,9 @@ namespace Azure.Storage.Files.DataLake
                 close: _closeEvent,
                 httpHeaders: default,
                 conditions: _conditions,
+                leaseAction: null,
+                leaseDuration: null,
+                proposedLeaseId: null,
                 async: async,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
