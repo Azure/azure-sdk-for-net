@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-517f1773a727bba770da08a8bf0795f6-fc4caabf99f7403e-00",
+        "traceparent": "00-715a107b38fb9d278f0eedf1ae9fe30b-68f15ea63b4c8b7a-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "e064437691ef0db07cfb1a80d4a78f79",
+        "x-ms-client-request-id": "2e291cfd422df02c9ac1327e573d736d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "409",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 22 Dec 2022 05:54:55 GMT",
+        "Date": "Thu, 29 Dec 2022 01:48:25 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "da38286b-6b9d-4dcb-a7f2-dd573c117fce",
+        "x-ms-correlation-request-id": "e275295f-3170-492f-aa0f-380eab8b7ab1",
         "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "da38286b-6b9d-4dcb-a7f2-dd573c117fce",
-        "x-ms-routing-request-id": "WESTUS:20221222T055455Z:da38286b-6b9d-4dcb-a7f2-dd573c117fce"
+        "x-ms-request-id": "e275295f-3170-492f-aa0f-380eab8b7ab1",
+        "x-ms-routing-request-id": "WESTCENTRALUS:20221229T014825Z:e275295f-3170-492f-aa0f-380eab8b7ab1"
       },
       "ResponseBody": {
         "id": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29",
@@ -43,16 +43,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourcegroups/Sql-ViditGupta-RG-5736?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourcegroups/Sql-RG-5228?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "26",
         "Content-Type": "application/json",
-        "traceparent": "00-0c66666829b42ad92e91404e0fd6b495-e2b421d67c51600b-00",
+        "traceparent": "00-a337fb2c99e04fd6121afbfcbe1bce08-90d8f63e463ec70e-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.2 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "0d3115b436725eda3358a6926622b1a1",
+        "x-ms-client-request-id": "7411f9c5bd725028d23a14604d741970",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -61,21 +61,21 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "246",
+        "Content-Length": "224",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 22 Dec 2022 05:54:56 GMT",
+        "Date": "Thu, 29 Dec 2022 01:48:26 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "a56b0f7b-a70c-4df3-a750-c2d46e8f131e",
+        "x-ms-correlation-request-id": "0d8aa3b3-849c-4ada-905c-56ffef85cd29",
         "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "a56b0f7b-a70c-4df3-a750-c2d46e8f131e",
-        "x-ms-routing-request-id": "WESTUS:20221222T055456Z:a56b0f7b-a70c-4df3-a750-c2d46e8f131e"
+        "x-ms-request-id": "0d8aa3b3-849c-4ada-905c-56ffef85cd29",
+        "x-ms-routing-request-id": "WESTCENTRALUS:20221229T014826Z:0d8aa3b3-849c-4ada-905c-56ffef85cd29"
       },
       "ResponseBody": {
-        "id": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-ViditGupta-RG-5736",
-        "name": "Sql-ViditGupta-RG-5736",
+        "id": "/subscriptions/2c647056-bab2-4175-b172-493ff049eb29/resourceGroups/Sql-RG-5228",
+        "name": "Sql-RG-5228",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "eastus2euap",
         "properties": {
@@ -86,7 +86,7 @@
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "1039479385",
+    "RandomSeed": "1012944261",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "2c647056-bab2-4175-b172-493ff049eb29"
   }
