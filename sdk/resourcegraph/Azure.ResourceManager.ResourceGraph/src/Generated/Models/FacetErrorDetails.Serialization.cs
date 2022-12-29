@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
-    public partial class ErrorDetails
+    public partial class FacetErrorDetails
     {
-        internal static ErrorDetails DeserializeErrorDetails(JsonElement element)
+        internal static FacetErrorDetails DeserializeFacetErrorDetails(JsonElement element)
         {
             string code = default;
             string message = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ErrorDetails(code, message, additionalProperties);
+            return new FacetErrorDetails(code, message, additionalProperties);
         }
     }
 }

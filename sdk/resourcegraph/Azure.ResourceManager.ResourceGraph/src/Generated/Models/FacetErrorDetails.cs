@@ -12,13 +12,13 @@ using Azure.Core;
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
     /// <summary> Error details. </summary>
-    public partial class ErrorDetails
+    public partial class FacetErrorDetails
     {
-        /// <summary> Initializes a new instance of ErrorDetails. </summary>
+        /// <summary> Initializes a new instance of FacetErrorDetails. </summary>
         /// <param name="code"> Error code identifying the specific error. </param>
         /// <param name="message"> A human readable error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
-        internal ErrorDetails(string code, string message)
+        internal FacetErrorDetails(string code, string message)
         {
             Argument.AssertNotNull(code, nameof(code));
             Argument.AssertNotNull(message, nameof(message));
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ErrorDetails. </summary>
+        /// <summary> Initializes a new instance of FacetErrorDetails. </summary>
         /// <param name="code"> Error code identifying the specific error. </param>
         /// <param name="message"> A human readable error message. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ErrorDetails(string code, string message, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal FacetErrorDetails(string code, string message, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             Code = code;
             Message = message;

@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
-    public partial class QueryResponse
+    public partial class ResourceQueryResult
     {
-        internal static QueryResponse DeserializeQueryResponse(JsonElement element)
+        internal static ResourceQueryResult DeserializeResourceQueryResult(JsonElement element)
         {
             long totalRecords = default;
             long count = default;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     continue;
                 }
             }
-            return new QueryResponse(totalRecords, count, resultTruncated, skipToken.Value, data, Optional.ToList(facets));
+            return new ResourceQueryResult(totalRecords, count, resultTruncated, skipToken.Value, data, Optional.ToList(facets));
         }
     }
 }

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
-    public partial class QueryContent : IUtf8JsonSerializable
+    public partial class ResourceQueryContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
