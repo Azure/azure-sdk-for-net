@@ -18,14 +18,12 @@ namespace Azure.Developer.LoadTesting.Tests
     {
         private string _testId;
         private string _fileName;
-        //private string testRunId;
         private string resourceId;
         private TestHelper _testHelper;
 
         public LoadTestAdministrationClientTest(bool isAsync) : base(isAsync) {
             _testId = "test-from-csharp-sdk-testing-framework";
             _fileName = "sample.jmx";
-            //testRunId = "test-run-from-csharp-sdk";
 
             _testHelper = new TestHelper();
 

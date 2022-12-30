@@ -99,7 +99,7 @@ namespace Azure.Developer.LoadTesting.Tests.Helper
                     new
                     {
                         testId = testId,
-                        displayName = "My New Load test run created from dotnet testing framework"
+                        displayName = "Run created from dotnet testing framework"
                     }
                 ), waitUntil: waitUntil);
         }
@@ -112,7 +112,7 @@ namespace Azure.Developer.LoadTesting.Tests.Helper
                     new
                     {
                         testId = testId,
-                        displayName = "My New Load test run created from dotnet testing framework"
+                        displayName = "Run created from dotnet testing framework"
                     }
                 ), waitUntil: waitUntil);
         }

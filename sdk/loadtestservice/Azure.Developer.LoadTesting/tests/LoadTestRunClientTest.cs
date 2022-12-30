@@ -11,7 +11,6 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
 using Azure.Developer.LoadTesting.Tests.Helper;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Resources;
 using NUnit.Framework;
 
 namespace Azure.Developer.LoadTesting.Tests
@@ -30,7 +29,6 @@ namespace Azure.Developer.LoadTesting.Tests
             _testId = "test-from-csharp-sdk-testing-framework";
             _fileName = "sample.jmx";
             _testRunId = "test-run-from-csharp-sdk-testing-framework";
-            _loadTestAdministrationClient = CreateAdministrationClient();
             _testHelper = new TestHelper();
 
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"sig=(?<group>.*?)(?=\s+)", SanitizeValue)
@@ -54,6 +52,7 @@ namespace Azure.Developer.LoadTesting.Tests
         public async Task BeginCreateOrUpdateTestRun()
         {
             LoadTestRunClient loadTestRunClient = CreateRunClient();
+            _loadTestAdministrationClient = CreateAdministrationClient();
             await _testHelper.SetupLoadTestResourceAndTestScriptAsync(_loadTestAdministrationClient, _testId, _fileName);
 
             TestRunOperation testRunOperation = await loadTestRunClient.BeginCreateOrUpdateTestRunAsync(
@@ -61,7 +60,7 @@ namespace Azure.Developer.LoadTesting.Tests
                     new
                     {
                         testId = _testId,
-                        displayName = "My New Load test run created from dotnet testing framework"
+                        displayName = "Run created from dotnet testing framework"
                     }
                 ), waitUntil: WaitUntil.Completed);
 
@@ -75,7 +74,7 @@ namespace Azure.Developer.LoadTesting.Tests
                         new
                         {
                             testId = _testId,
-                            displayName = "My New Load test run created from dotnet testing framework"
+                            displayName = "Run created from dotnet testing framework"
                         }
                    ));
 
@@ -89,6 +88,8 @@ namespace Azure.Developer.LoadTesting.Tests
         public async Task GetTestRun()
         {
             LoadTestRunClient loadTestRunClient = CreateRunClient();
+            _loadTestAdministrationClient = CreateAdministrationClient();
+
             Response response = await loadTestRunClient.GetTestRunAsync(_testRunId);
             Assert.NotNull(response);
         }
@@ -97,6 +98,8 @@ namespace Azure.Developer.LoadTesting.Tests
         public async Task GetTestRunFile()
         {
             LoadTestRunClient loadTestRunClient = CreateRunClient();
+            _loadTestAdministrationClient = CreateAdministrationClient();
+
             Response response = await loadTestRunClient.GetTestRunFileAsync(_testRunId, _fileName);
             Assert.NotNull(response);
         }
@@ -105,6 +108,8 @@ namespace Azure.Developer.LoadTesting.Tests
         public async Task ListTestRuns()
         {
             LoadTestRunClient loadTestRunClient = CreateRunClient();
+            _loadTestAdministrationClient = CreateAdministrationClient();
+
             await _testHelper.SetupTestRunWithLoadTestAsync(_loadTestAdministrationClient, _testId, _fileName, loadTestRunClient, _testRunId, waitUntil: WaitUntil.Started);
             AsyncPageable<BinaryData> reponse = loadTestRunClient.GetTestRunsAsync();
 
@@ -115,6 +120,8 @@ namespace Azure.Developer.LoadTesting.Tests
         public async Task DeleteTestRun()
         {
             LoadTestRunClient loadTestRunClient = CreateRunClient();
+            _loadTestAdministrationClient = CreateAdministrationClient();
+
             await _testHelper.SetupTestRunWithLoadTestAsync(_loadTestAdministrationClient, _testId, _fileName, loadTestRunClient, _testRunId, waitUntil: WaitUntil.Started);
             Response response = await loadTestRunClient.DeleteTestRunAsync(_testRunId);
 
@@ -125,6 +132,7 @@ namespace Azure.Developer.LoadTesting.Tests
         public async Task StopTestRun()
         {
             LoadTestRunClient loadTestRunClient = CreateRunClient();
+            _loadTestAdministrationClient = CreateAdministrationClient();
 
             await loadTestRunClient.DeleteTestRunAsync(_testRunId);
             await _testHelper.SetupTestRunWithLoadTestAsync(_loadTestAdministrationClient, _testId, _fileName, loadTestRunClient, _testRunId, waitUntil: WaitUntil.Started);
@@ -137,6 +145,8 @@ namespace Azure.Developer.LoadTesting.Tests
         public async Task CreateOrUpdateAppComponents()
         {
             LoadTestRunClient loadTestRunClient = CreateRunClient();
+            _loadTestAdministrationClient = CreateAdministrationClient();
+
             await _testHelper.SetupTestRunWithLoadTestAsync(_loadTestAdministrationClient, _testId, _fileName, loadTestRunClient, _testRunId, waitUntil: WaitUntil.Started);
 
             _resourceId = TestEnvironment.ResourceId;
@@ -169,6 +179,31 @@ namespace Azure.Developer.LoadTesting.Tests
         public async Task GetAppComponents()
         {
             LoadTestRunClient loadTestRunClient = CreateRunClient();
+            _loadTestAdministrationClient = CreateAdministrationClient();
+            await _testHelper.SetupTestRunWithLoadTestAsync(_loadTestAdministrationClient, _testId, _fileName, loadTestRunClient, _testRunId, waitUntil: WaitUntil.Started);
+            _resourceId = TestEnvironment.ResourceId;
+
+            await loadTestRunClient.CreateOrUpdateAppComponentsAsync(
+                    _testRunId,
+                    RequestContent.Create(
+                        new Dictionary<string, Dictionary<string, Dictionary<string, string>>>
+                        {
+                            { "components",  new Dictionary<string, Dictionary<string, string>>
+                            {
+                                    { _resourceId, new Dictionary<string, string>
+                                    {
+                                            { "resourceId", _resourceId },
+                                            { "resourceName", "App-Service-Sample-Demo" },
+                                            { "resourceType", "Microsoft.Web/sites" },
+                                            { "kind", "web" }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    )
+                );
+
             Response response = await loadTestRunClient.GetAppComponentsAsync(_testRunId);
 
             Assert.NotNull(response);
@@ -178,6 +213,8 @@ namespace Azure.Developer.LoadTesting.Tests
         public async Task CreateOrUpdateServerMetricsConfig()
         {
             LoadTestRunClient loadTestRunClient = CreateRunClient();
+            _loadTestAdministrationClient = CreateAdministrationClient();
+
             await _testHelper.SetupTestRunWithLoadTestAsync(_loadTestAdministrationClient, _testId, _fileName, loadTestRunClient, _testRunId, waitUntil: WaitUntil.Started);
 
             _resourceId = TestEnvironment.ResourceId;
@@ -214,6 +251,38 @@ namespace Azure.Developer.LoadTesting.Tests
         public async Task GetServerMetricsConfig()
         {
             LoadTestRunClient loadTestRunClient = CreateRunClient();
+            _loadTestAdministrationClient = CreateAdministrationClient();
+
+            await _testHelper.SetupTestRunWithLoadTestAsync(_loadTestAdministrationClient, _testId, _fileName, loadTestRunClient, _testRunId, waitUntil: WaitUntil.Started);
+
+            _resourceId = TestEnvironment.ResourceId;
+
+            await loadTestRunClient.CreateOrUpdateServerMetricsConfigAsync(
+                    _testRunId,
+                    RequestContent.Create(
+                        new Dictionary<string, Dictionary<string, Dictionary<string, string>>>
+                        {
+                            {
+                                "metrics", new Dictionary<string, Dictionary<string, string>>
+                                {
+                                    {
+                                        _resourceId, new Dictionary<string, string>
+                                        {
+                                            {"resourceId", _resourceId },
+                                            {"metricNamespace", "microsoft.insights/components"},
+                                            {"displayDescription", "sample description"},
+                                            {"name",  "requests/duration"},
+                                            {"aggregation", "Average"},
+                                            {"unit", ""},
+                                            {"resourceType", "microsoft.insights/components"}
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    )
+                );
+
             Response response = await loadTestRunClient.GetServerMetricsConfigAsync(_testRunId);
 
             Assert.NotNull(response);
@@ -223,6 +292,8 @@ namespace Azure.Developer.LoadTesting.Tests
         public async Task GetMetrics()
         {
             LoadTestRunClient loadTestRunClient = CreateRunClient();
+            _loadTestAdministrationClient = CreateAdministrationClient();
+
             await _testHelper.SetupTestRunWithLoadTestAsync(_loadTestAdministrationClient, _testId, _fileName, loadTestRunClient, _testRunId, waitUntil: WaitUntil.Completed);
 
             Response getTestRunResponse = await loadTestRunClient.GetTestRunAsync(_testRunId);
@@ -239,11 +310,12 @@ namespace Azure.Developer.LoadTesting.Tests
             Assert.NotNull(getMetricDefinitions);
             JsonDocument metricDefinitionsJson = JsonDocument.Parse(getMetricDefinitions.Content.ToString());
 
-            Response metrics = await loadTestRunClient.GetMetricsAsync(
+            AsyncPageable<BinaryData> metrics = loadTestRunClient.GetMetricsAsync(
                     _testRunId,
                     metricNamespacesJson.RootElement.GetProperty("value")[0].GetProperty("name").GetString(),
                     metricDefinitionsJson.RootElement.GetProperty("value")[0].GetProperty("name").GetString(),
-                    testRunJson.RootElement.GetProperty("startDateTime").GetString()+"/"+testRunJson.RootElement.GetProperty("endDateTime")
+                    testRunJson.RootElement.GetProperty("startDateTime").GetString()+"/"+testRunJson.RootElement.GetProperty("endDateTime"),
+                    null
                 );
             Assert.NotNull(metrics);
         }
