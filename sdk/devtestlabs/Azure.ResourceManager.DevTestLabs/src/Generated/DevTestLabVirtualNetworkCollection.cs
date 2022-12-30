@@ -185,12 +185,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualnetworks
         /// Operation Id: VirtualNetworks_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevTestLabVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabVirtualNetworkResource> GetAllAsync(DevTestLabVirtualNetworkGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevTestLabVirtualNetworkResource> GetAllAsync(DevTestLabVirtualNetworkCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DevTestLabVirtualNetworkGetAllOptions();
+            options ??= new DevTestLabVirtualNetworkCollectionGetAllOptions();
 
             async Task<Page<DevTestLabVirtualNetworkResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -230,12 +230,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualnetworks
         /// Operation Id: VirtualNetworks_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabVirtualNetworkResource> GetAll(DevTestLabVirtualNetworkGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevTestLabVirtualNetworkResource> GetAll(DevTestLabVirtualNetworkCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DevTestLabVirtualNetworkGetAllOptions();
+            options ??= new DevTestLabVirtualNetworkCollectionGetAllOptions();
 
             Page<DevTestLabVirtualNetworkResource> FirstPageFunc(int? pageSizeHint)
             {

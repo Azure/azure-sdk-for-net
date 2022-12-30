@@ -328,12 +328,12 @@ namespace Azure.ResourceManager.Peering
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/receivedRoutes
         /// Operation Id: ReceivedRoutes_ListByPeering
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PeeringReceivedRoute" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PeeringReceivedRoute> GetReceivedRoutesAsync(PeeringGetReceivedRoutesOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PeeringReceivedRoute> GetReceivedRoutesAsync(PeeringResourceGetReceivedRoutesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new PeeringGetReceivedRoutesOptions();
+            options ??= new PeeringResourceGetReceivedRoutesOptions();
 
             async Task<Page<PeeringReceivedRoute>> FirstPageFunc(int? pageSizeHint)
             {
@@ -373,12 +373,12 @@ namespace Azure.ResourceManager.Peering
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/receivedRoutes
         /// Operation Id: ReceivedRoutes_ListByPeering
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PeeringReceivedRoute" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PeeringReceivedRoute> GetReceivedRoutes(PeeringGetReceivedRoutesOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<PeeringReceivedRoute> GetReceivedRoutes(PeeringResourceGetReceivedRoutesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new PeeringGetReceivedRoutesOptions();
+            options ??= new PeeringResourceGetReceivedRoutesOptions();
 
             Page<PeeringReceivedRoute> FirstPageFunc(int? pageSizeHint)
             {

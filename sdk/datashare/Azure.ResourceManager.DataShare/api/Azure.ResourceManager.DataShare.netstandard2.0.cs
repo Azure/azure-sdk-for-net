@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.DataShare
         public virtual Azure.Response<bool> Exists(string shareName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string shareName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataShare.DataShareResource> Get(string shareName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataShare.DataShareResource> GetAll(Azure.ResourceManager.DataShare.Models.DataShareGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataShare.DataShareResource> GetAll(Azure.ResourceManager.DataShare.Models.DataShareCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataShare.DataShareResource> GetAll(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.DataShareResource> GetAllAsync(Azure.ResourceManager.DataShare.Models.DataShareGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.DataShareResource> GetAllAsync(Azure.ResourceManager.DataShare.Models.DataShareCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.DataShareResource> GetAllAsync(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.DataShareResource>> GetAsync(string shareName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataShare.DataShareResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataShare.DataShareResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -155,9 +155,9 @@ namespace Azure.ResourceManager.DataShare
         public virtual Azure.Response<bool> Exists(string invitationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string invitationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataShare.DataShareInvitationResource> Get(string invitationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataShare.DataShareInvitationResource> GetAll(Azure.ResourceManager.DataShare.Models.DataShareInvitationGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataShare.DataShareInvitationResource> GetAll(Azure.ResourceManager.DataShare.Models.DataShareInvitationCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataShare.DataShareInvitationResource> GetAll(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.DataShareInvitationResource> GetAllAsync(Azure.ResourceManager.DataShare.Models.DataShareInvitationGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.DataShareInvitationResource> GetAllAsync(Azure.ResourceManager.DataShare.Models.DataShareInvitationCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.DataShareInvitationResource> GetAllAsync(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.DataShareInvitationResource>> GetAsync(string invitationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataShare.DataShareInvitationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataShare.DataShareInvitationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -215,13 +215,13 @@ namespace Azure.ResourceManager.DataShare
         public virtual Azure.Response<Azure.ResourceManager.DataShare.ShareDataSetResource> GetShareDataSet(string dataSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.ShareDataSetResource>> GetShareDataSetAsync(string dataSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DataShare.ShareDataSetCollection GetShareDataSets() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataShare.Models.SynchronizationDetails> GetSynchronizationDetails(Azure.ResourceManager.DataShare.Models.ShareSynchronization shareSynchronization, Azure.ResourceManager.DataShare.Models.DataShareGetSynchronizationDetailsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataShare.Models.SynchronizationDetails> GetSynchronizationDetails(Azure.ResourceManager.DataShare.Models.DataShareResourceGetSynchronizationDetailsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataShare.Models.SynchronizationDetails> GetSynchronizationDetails(Azure.ResourceManager.DataShare.Models.ShareSynchronization shareSynchronization, string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.Models.SynchronizationDetails> GetSynchronizationDetailsAsync(Azure.ResourceManager.DataShare.Models.ShareSynchronization shareSynchronization, Azure.ResourceManager.DataShare.Models.DataShareGetSynchronizationDetailsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.Models.SynchronizationDetails> GetSynchronizationDetailsAsync(Azure.ResourceManager.DataShare.Models.DataShareResourceGetSynchronizationDetailsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.Models.SynchronizationDetails> GetSynchronizationDetailsAsync(Azure.ResourceManager.DataShare.Models.ShareSynchronization shareSynchronization, string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataShare.Models.ShareSynchronization> GetSynchronizations(Azure.ResourceManager.DataShare.Models.DataShareGetSynchronizationsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataShare.Models.ShareSynchronization> GetSynchronizations(Azure.ResourceManager.DataShare.Models.DataShareResourceGetSynchronizationsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataShare.Models.ShareSynchronization> GetSynchronizations(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.Models.ShareSynchronization> GetSynchronizationsAsync(Azure.ResourceManager.DataShare.Models.DataShareGetSynchronizationsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.Models.ShareSynchronization> GetSynchronizationsAsync(Azure.ResourceManager.DataShare.Models.DataShareResourceGetSynchronizationsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.Models.ShareSynchronization> GetSynchronizationsAsync(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.DataShareResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.DataShareData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.DataShareResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.DataShareData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -343,9 +343,9 @@ namespace Azure.ResourceManager.DataShare
         public virtual Azure.Response<bool> Exists(string dataSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string dataSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataShare.ShareDataSetResource> Get(string dataSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataShare.ShareDataSetResource> GetAll(Azure.ResourceManager.DataShare.Models.ShareDataSetGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataShare.ShareDataSetResource> GetAll(Azure.ResourceManager.DataShare.Models.ShareDataSetCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataShare.ShareDataSetResource> GetAll(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.ShareDataSetResource> GetAllAsync(Azure.ResourceManager.DataShare.Models.ShareDataSetGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.ShareDataSetResource> GetAllAsync(Azure.ResourceManager.DataShare.Models.ShareDataSetCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.ShareDataSetResource> GetAllAsync(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.ShareDataSetResource>> GetAsync(string dataSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataShare.ShareDataSetResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataShare.ShareDataSetResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -364,9 +364,9 @@ namespace Azure.ResourceManager.DataShare
         public virtual Azure.Response<bool> Exists(string dataSetMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string dataSetMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataShare.ShareDataSetMappingResource> Get(string dataSetMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataShare.ShareDataSetMappingResource> GetAll(Azure.ResourceManager.DataShare.Models.ShareDataSetMappingGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataShare.ShareDataSetMappingResource> GetAll(Azure.ResourceManager.DataShare.Models.ShareDataSetMappingCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataShare.ShareDataSetMappingResource> GetAll(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.ShareDataSetMappingResource> GetAllAsync(Azure.ResourceManager.DataShare.Models.ShareDataSetMappingGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.ShareDataSetMappingResource> GetAllAsync(Azure.ResourceManager.DataShare.Models.ShareDataSetMappingCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.ShareDataSetMappingResource> GetAllAsync(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.ShareDataSetMappingResource>> GetAsync(string dataSetMappingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataShare.ShareDataSetMappingResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataShare.ShareDataSetMappingResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -413,9 +413,9 @@ namespace Azure.ResourceManager.DataShare
         public virtual Azure.Response<bool> Exists(string shareSubscriptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string shareSubscriptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataShare.ShareSubscriptionResource> Get(string shareSubscriptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataShare.ShareSubscriptionResource> GetAll(Azure.ResourceManager.DataShare.Models.ShareSubscriptionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataShare.ShareSubscriptionResource> GetAll(Azure.ResourceManager.DataShare.Models.ShareSubscriptionCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataShare.ShareSubscriptionResource> GetAll(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.ShareSubscriptionResource> GetAllAsync(Azure.ResourceManager.DataShare.Models.ShareSubscriptionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.ShareSubscriptionResource> GetAllAsync(Azure.ResourceManager.DataShare.Models.ShareSubscriptionCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.ShareSubscriptionResource> GetAllAsync(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.ShareSubscriptionResource>> GetAsync(string shareSubscriptionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataShare.ShareSubscriptionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataShare.ShareSubscriptionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -464,13 +464,13 @@ namespace Azure.ResourceManager.DataShare
         public virtual Azure.ResourceManager.DataShare.ShareDataSetMappingCollection GetShareDataSetMappings() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataShare.Models.SourceShareSynchronizationSetting> GetSourceShareSynchronizationSettings(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.Models.SourceShareSynchronizationSetting> GetSourceShareSynchronizationSettingsAsync(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataShare.Models.SynchronizationDetails> GetSynchronizationDetails(Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization shareSubscriptionSynchronization, Azure.ResourceManager.DataShare.Models.ShareSubscriptionGetSynchronizationDetailsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataShare.Models.SynchronizationDetails> GetSynchronizationDetails(Azure.ResourceManager.DataShare.Models.ShareSubscriptionResourceGetSynchronizationDetailsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataShare.Models.SynchronizationDetails> GetSynchronizationDetails(Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization shareSubscriptionSynchronization, string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.Models.SynchronizationDetails> GetSynchronizationDetailsAsync(Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization shareSubscriptionSynchronization, Azure.ResourceManager.DataShare.Models.ShareSubscriptionGetSynchronizationDetailsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.Models.SynchronizationDetails> GetSynchronizationDetailsAsync(Azure.ResourceManager.DataShare.Models.ShareSubscriptionResourceGetSynchronizationDetailsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.Models.SynchronizationDetails> GetSynchronizationDetailsAsync(Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization shareSubscriptionSynchronization, string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization> GetSynchronizations(Azure.ResourceManager.DataShare.Models.ShareSubscriptionGetSynchronizationsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization> GetSynchronizations(Azure.ResourceManager.DataShare.Models.ShareSubscriptionResourceGetSynchronizationsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization> GetSynchronizations(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization> GetSynchronizationsAsync(Azure.ResourceManager.DataShare.Models.ShareSubscriptionGetSynchronizationsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization> GetSynchronizationsAsync(Azure.ResourceManager.DataShare.Models.ShareSubscriptionResourceGetSynchronizationsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization> GetSynchronizationsAsync(string skipToken = null, string filter = null, string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization> Synchronize(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.Models.DataShareSynchronizeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization>> SynchronizeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataShare.Models.DataShareSynchronizeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -661,6 +661,13 @@ namespace Azure.ResourceManager.DataShare.Models
         public DataShareAccountPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
+    public partial class DataShareCollectionGetAllOptions
+    {
+        public DataShareCollectionGetAllOptions() { }
+        public string Filter { get { throw null; } set { } }
+        public string Orderby { get { throw null; } set { } }
+        public string SkipToken { get { throw null; } set { } }
+    }
     public partial class DataShareEmailRegistration
     {
         public DataShareEmailRegistration() { }
@@ -689,30 +696,9 @@ namespace Azure.ResourceManager.DataShare.Models
         public static bool operator !=(Azure.ResourceManager.DataShare.Models.DataShareEmailRegistrationStatus left, Azure.ResourceManager.DataShare.Models.DataShareEmailRegistrationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DataShareGetAllOptions
+    public partial class DataShareInvitationCollectionGetAllOptions
     {
-        public DataShareGetAllOptions() { }
-        public string Filter { get { throw null; } set { } }
-        public string Orderby { get { throw null; } set { } }
-        public string SkipToken { get { throw null; } set { } }
-    }
-    public partial class DataShareGetSynchronizationDetailsOptions
-    {
-        public DataShareGetSynchronizationDetailsOptions() { }
-        public string Filter { get { throw null; } set { } }
-        public string Orderby { get { throw null; } set { } }
-        public string SkipToken { get { throw null; } set { } }
-    }
-    public partial class DataShareGetSynchronizationsOptions
-    {
-        public DataShareGetSynchronizationsOptions() { }
-        public string Filter { get { throw null; } set { } }
-        public string Orderby { get { throw null; } set { } }
-        public string SkipToken { get { throw null; } set { } }
-    }
-    public partial class DataShareInvitationGetAllOptions
-    {
-        public DataShareInvitationGetAllOptions() { }
+        public DataShareInvitationCollectionGetAllOptions() { }
         public string Filter { get { throw null; } set { } }
         public string Orderby { get { throw null; } set { } }
         public string SkipToken { get { throw null; } set { } }
@@ -823,6 +809,21 @@ namespace Azure.ResourceManager.DataShare.Models
         public static implicit operator Azure.ResourceManager.DataShare.Models.DataShareProvisioningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DataShare.Models.DataShareProvisioningState left, Azure.ResourceManager.DataShare.Models.DataShareProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class DataShareResourceGetSynchronizationDetailsOptions
+    {
+        public DataShareResourceGetSynchronizationDetailsOptions(Azure.ResourceManager.DataShare.Models.ShareSynchronization shareSynchronization) { }
+        public string Filter { get { throw null; } set { } }
+        public string Orderby { get { throw null; } set { } }
+        public Azure.ResourceManager.DataShare.Models.ShareSynchronization ShareSynchronization { get { throw null; } }
+        public string SkipToken { get { throw null; } set { } }
+    }
+    public partial class DataShareResourceGetSynchronizationsOptions
+    {
+        public DataShareResourceGetSynchronizationsOptions() { }
+        public string Filter { get { throw null; } set { } }
+        public string Orderby { get { throw null; } set { } }
+        public string SkipToken { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataShareSynchronizationRecurrenceInterval : System.IEquatable<Azure.ResourceManager.DataShare.Models.DataShareSynchronizationRecurrenceInterval>
@@ -944,16 +945,16 @@ namespace Azure.ResourceManager.DataShare.Models
         public Azure.ResourceManager.DataShare.Models.DataShareTriggerStatus? TriggerStatus { get { throw null; } }
         public string UserName { get { throw null; } }
     }
-    public partial class ShareDataSetGetAllOptions
+    public partial class ShareDataSetCollectionGetAllOptions
     {
-        public ShareDataSetGetAllOptions() { }
+        public ShareDataSetCollectionGetAllOptions() { }
         public string Filter { get { throw null; } set { } }
         public string Orderby { get { throw null; } set { } }
         public string SkipToken { get { throw null; } set { } }
     }
-    public partial class ShareDataSetMappingGetAllOptions
+    public partial class ShareDataSetMappingCollectionGetAllOptions
     {
-        public ShareDataSetMappingGetAllOptions() { }
+        public ShareDataSetMappingCollectionGetAllOptions() { }
         public string Filter { get { throw null; } set { } }
         public string Orderby { get { throw null; } set { } }
         public string SkipToken { get { throw null; } set { } }
@@ -988,23 +989,24 @@ namespace Azure.ResourceManager.DataShare.Models
         public static bool operator !=(Azure.ResourceManager.DataShare.Models.ShareDataSetType left, Azure.ResourceManager.DataShare.Models.ShareDataSetType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ShareSubscriptionGetAllOptions
+    public partial class ShareSubscriptionCollectionGetAllOptions
     {
-        public ShareSubscriptionGetAllOptions() { }
+        public ShareSubscriptionCollectionGetAllOptions() { }
         public string Filter { get { throw null; } set { } }
         public string Orderby { get { throw null; } set { } }
         public string SkipToken { get { throw null; } set { } }
     }
-    public partial class ShareSubscriptionGetSynchronizationDetailsOptions
+    public partial class ShareSubscriptionResourceGetSynchronizationDetailsOptions
     {
-        public ShareSubscriptionGetSynchronizationDetailsOptions() { }
+        public ShareSubscriptionResourceGetSynchronizationDetailsOptions(Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization shareSubscriptionSynchronization) { }
         public string Filter { get { throw null; } set { } }
         public string Orderby { get { throw null; } set { } }
+        public Azure.ResourceManager.DataShare.Models.ShareSubscriptionSynchronization ShareSubscriptionSynchronization { get { throw null; } }
         public string SkipToken { get { throw null; } set { } }
     }
-    public partial class ShareSubscriptionGetSynchronizationsOptions
+    public partial class ShareSubscriptionResourceGetSynchronizationsOptions
     {
-        public ShareSubscriptionGetSynchronizationsOptions() { }
+        public ShareSubscriptionResourceGetSynchronizationsOptions() { }
         public string Filter { get { throw null; } set { } }
         public string Orderby { get { throw null; } set { } }
         public string SkipToken { get { throw null; } set { } }

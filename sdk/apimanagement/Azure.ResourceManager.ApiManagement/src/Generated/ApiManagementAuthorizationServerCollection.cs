@@ -185,12 +185,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers
         /// Operation Id: AuthorizationServer_ListByService
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiManagementAuthorizationServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementAuthorizationServerResource> GetAllAsync(ApiManagementAuthorizationServerGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiManagementAuthorizationServerResource> GetAllAsync(ApiManagementAuthorizationServerCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementAuthorizationServerGetAllOptions();
+            options ??= new ApiManagementAuthorizationServerCollectionGetAllOptions();
 
             async Task<Page<ApiManagementAuthorizationServerResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -230,12 +230,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationServers
         /// Operation Id: AuthorizationServer_ListByService
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementAuthorizationServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementAuthorizationServerResource> GetAll(ApiManagementAuthorizationServerGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApiManagementAuthorizationServerResource> GetAll(ApiManagementAuthorizationServerCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementAuthorizationServerGetAllOptions();
+            options ??= new ApiManagementAuthorizationServerCollectionGetAllOptions();
 
             Page<ApiManagementAuthorizationServerResource> FirstPageFunc(int? pageSizeHint)
             {

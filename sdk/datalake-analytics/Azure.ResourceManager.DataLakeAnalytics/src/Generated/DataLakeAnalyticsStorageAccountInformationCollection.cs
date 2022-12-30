@@ -183,23 +183,20 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts
         /// Operation Id: StorageAccounts_ListByAccount
         /// </summary>
-        /// <param name="filter"> The OData filter. Optional. </param>
-        /// <param name="top"> The number of items to return. Optional. </param>
-        /// <param name="skip"> The number of items to skip over before returning elements. Optional. </param>
-        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. Categories?$select=CategoryName,Description. Optional. </param>
-        /// <param name="orderby"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
-        /// <param name="count"> The Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataLakeAnalyticsStorageAccountInformationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataLakeAnalyticsStorageAccountInformationResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataLakeAnalyticsStorageAccountInformationResource> GetAllAsync(DataLakeAnalyticsStorageAccountInformationCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new DataLakeAnalyticsStorageAccountInformationCollectionGetAllOptions();
+
             async Task<Page<DataLakeAnalyticsStorageAccountInformationResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _dataLakeAnalyticsStorageAccountInformationStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageAccountInformationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.ListByAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.ListByAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, options.Select, options.Orderby, options.Count, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DataLakeAnalyticsStorageAccountInformationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -214,7 +211,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 scope.Start();
                 try
                 {
-                    var response = await _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.ListByAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.ListByAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, options.Select, options.Orderby, options.Count, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DataLakeAnalyticsStorageAccountInformationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -231,23 +228,20 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts/{accountName}/storageAccounts
         /// Operation Id: StorageAccounts_ListByAccount
         /// </summary>
-        /// <param name="filter"> The OData filter. Optional. </param>
-        /// <param name="top"> The number of items to return. Optional. </param>
-        /// <param name="skip"> The number of items to skip over before returning elements. Optional. </param>
-        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. Categories?$select=CategoryName,Description. Optional. </param>
-        /// <param name="orderby"> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </param>
-        /// <param name="count"> The Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataLakeAnalyticsStorageAccountInformationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataLakeAnalyticsStorageAccountInformationResource> GetAll(string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataLakeAnalyticsStorageAccountInformationResource> GetAll(DataLakeAnalyticsStorageAccountInformationCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new DataLakeAnalyticsStorageAccountInformationCollectionGetAllOptions();
+
             Page<DataLakeAnalyticsStorageAccountInformationResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _dataLakeAnalyticsStorageAccountInformationStorageAccountsClientDiagnostics.CreateScope("DataLakeAnalyticsStorageAccountInformationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.ListByAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken);
+                    var response = _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.ListByAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, options.Select, options.Orderby, options.Count, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DataLakeAnalyticsStorageAccountInformationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -262,7 +256,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 scope.Start();
                 try
                 {
-                    var response = _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.ListByAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, select, orderby, count, cancellationToken: cancellationToken);
+                    var response = _dataLakeAnalyticsStorageAccountInformationStorageAccountsRestClient.ListByAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, options.Select, options.Orderby, options.Count, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DataLakeAnalyticsStorageAccountInformationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -330,17 +324,17 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         IEnumerator<DataLakeAnalyticsStorageAccountInformationResource> IEnumerable<DataLakeAnalyticsStorageAccountInformationResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<DataLakeAnalyticsStorageAccountInformationResource> IAsyncEnumerable<DataLakeAnalyticsStorageAccountInformationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -257,18 +256,17 @@ namespace Azure.ResourceManager.DataFactory
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}/createRun
         /// Operation Id: Pipelines_CreateRun
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
-        /// <param name="parameterValueSpecification"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PipelineCreateRunResult>> CreateRunAsync(FactoryPipelineCreateRunOptions options, IDictionary<string, BinaryData> parameterValueSpecification = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PipelineCreateRunResult>> CreateRunAsync(FactoryPipelineResourceCreateRunOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new FactoryPipelineCreateRunOptions();
+            options ??= new FactoryPipelineResourceCreateRunOptions();
 
             using var scope = _factoryPipelinePipelinesClientDiagnostics.CreateScope("FactoryPipelineResource.CreateRun");
             scope.Start();
             try
             {
-                var response = await _factoryPipelinePipelinesRestClient.CreateRunAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameterValueSpecification, options.ReferencePipelineRunId, options.IsRecovery, options.StartActivityName, options.StartFromFailure, cancellationToken).ConfigureAwait(false);
+                var response = await _factoryPipelinePipelinesRestClient.CreateRunAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.ParameterValueSpecification, options.ReferencePipelineRunId, options.IsRecovery, options.StartActivityName, options.StartFromFailure, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -283,18 +281,17 @@ namespace Azure.ResourceManager.DataFactory
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelines/{pipelineName}/createRun
         /// Operation Id: Pipelines_CreateRun
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
-        /// <param name="parameterValueSpecification"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PipelineCreateRunResult> CreateRun(FactoryPipelineCreateRunOptions options, IDictionary<string, BinaryData> parameterValueSpecification = null, CancellationToken cancellationToken = default)
+        public virtual Response<PipelineCreateRunResult> CreateRun(FactoryPipelineResourceCreateRunOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new FactoryPipelineCreateRunOptions();
+            options ??= new FactoryPipelineResourceCreateRunOptions();
 
             using var scope = _factoryPipelinePipelinesClientDiagnostics.CreateScope("FactoryPipelineResource.CreateRun");
             scope.Start();
             try
             {
-                var response = _factoryPipelinePipelinesRestClient.CreateRun(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, parameterValueSpecification, options.ReferencePipelineRunId, options.IsRecovery, options.StartActivityName, options.StartFromFailure, cancellationToken);
+                var response = _factoryPipelinePipelinesRestClient.CreateRun(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.ParameterValueSpecification, options.ReferencePipelineRunId, options.IsRecovery, options.StartActivityName, options.StartFromFailure, cancellationToken);
                 return response;
             }
             catch (Exception e)

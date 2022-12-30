@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> A class representing the query and header parameters in GetPeeringsByLegacyPeering method. </summary>
+    /// <summary> The PeeringExtensionsGetPeeringsByLegacyPeeringOptions. </summary>
     public partial class PeeringExtensionsGetPeeringsByLegacyPeeringOptions
     {
         /// <summary> Initializes a new instance of PeeringExtensionsGetPeeringsByLegacyPeeringOptions. </summary>

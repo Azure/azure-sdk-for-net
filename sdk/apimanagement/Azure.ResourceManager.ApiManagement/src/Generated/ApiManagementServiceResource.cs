@@ -1319,12 +1319,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apisByTags
         /// Operation Id: Api_ListByTags
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TagResourceContractDetails> GetApisByTagsAsync(ApiManagementServiceGetApisByTagsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TagResourceContractDetails> GetApisByTagsAsync(ApiManagementServiceResourceGetApisByTagsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementServiceGetApisByTagsOptions();
+            options ??= new ApiManagementServiceResourceGetApisByTagsOptions();
 
             async Task<Page<TagResourceContractDetails>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1364,12 +1364,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apisByTags
         /// Operation Id: Api_ListByTags
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TagResourceContractDetails> GetApisByTags(ApiManagementServiceGetApisByTagsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<TagResourceContractDetails> GetApisByTags(ApiManagementServiceResourceGetApisByTagsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementServiceGetApisByTagsOptions();
+            options ??= new ApiManagementServiceResourceGetApisByTagsOptions();
 
             Page<TagResourceContractDetails> FirstPageFunc(int? pageSizeHint)
             {
@@ -2615,12 +2615,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/productsByTags
         /// Operation Id: Product_ListByTags
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TagResourceContractDetails> GetProductsByTagsAsync(ApiManagementServiceGetProductsByTagsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TagResourceContractDetails> GetProductsByTagsAsync(ApiManagementServiceResourceGetProductsByTagsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementServiceGetProductsByTagsOptions();
+            options ??= new ApiManagementServiceResourceGetProductsByTagsOptions();
 
             async Task<Page<TagResourceContractDetails>> FirstPageFunc(int? pageSizeHint)
             {
@@ -2660,12 +2660,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/productsByTags
         /// Operation Id: Product_ListByTags
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TagResourceContractDetails> GetProductsByTags(ApiManagementServiceGetProductsByTagsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<TagResourceContractDetails> GetProductsByTags(ApiManagementServiceResourceGetProductsByTagsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementServiceGetProductsByTagsOptions();
+            options ??= new ApiManagementServiceResourceGetProductsByTagsOptions();
 
             Page<TagResourceContractDetails> FirstPageFunc(int? pageSizeHint)
             {
@@ -3041,11 +3041,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byApi
         /// Operation Id: Reports_ListByApi
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportRecordContract> GetReportsByApiAsync(ApiManagementServiceGetReportsByApiOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportRecordContract> GetReportsByApiAsync(ApiManagementServiceResourceGetReportsByApiOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
@@ -3087,11 +3087,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byApi
         /// Operation Id: Reports_ListByApi
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportRecordContract> GetReportsByApi(ApiManagementServiceGetReportsByApiOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportRecordContract> GetReportsByApi(ApiManagementServiceResourceGetReportsByApiOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
@@ -3133,11 +3133,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byUser
         /// Operation Id: Reports_ListByUser
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportRecordContract> GetReportsByUserAsync(ApiManagementServiceGetReportsByUserOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportRecordContract> GetReportsByUserAsync(ApiManagementServiceResourceGetReportsByUserOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
@@ -3179,11 +3179,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byUser
         /// Operation Id: Reports_ListByUser
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportRecordContract> GetReportsByUser(ApiManagementServiceGetReportsByUserOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportRecordContract> GetReportsByUser(ApiManagementServiceResourceGetReportsByUserOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
@@ -3225,11 +3225,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byOperation
         /// Operation Id: Reports_ListByOperation
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportRecordContract> GetReportsByOperationAsync(ApiManagementServiceGetReportsByOperationOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportRecordContract> GetReportsByOperationAsync(ApiManagementServiceResourceGetReportsByOperationOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
@@ -3271,11 +3271,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byOperation
         /// Operation Id: Reports_ListByOperation
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportRecordContract> GetReportsByOperation(ApiManagementServiceGetReportsByOperationOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportRecordContract> GetReportsByOperation(ApiManagementServiceResourceGetReportsByOperationOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
@@ -3317,11 +3317,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byProduct
         /// Operation Id: Reports_ListByProduct
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportRecordContract> GetReportsByProductAsync(ApiManagementServiceGetReportsByProductOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportRecordContract> GetReportsByProductAsync(ApiManagementServiceResourceGetReportsByProductOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
@@ -3363,11 +3363,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byProduct
         /// Operation Id: Reports_ListByProduct
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportRecordContract> GetReportsByProduct(ApiManagementServiceGetReportsByProductOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportRecordContract> GetReportsByProduct(ApiManagementServiceResourceGetReportsByProductOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
@@ -3409,11 +3409,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byGeo
         /// Operation Id: Reports_ListByGeo
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportRecordContract> GetReportsByGeoAsync(ApiManagementServiceGetReportsByGeoOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportRecordContract> GetReportsByGeoAsync(ApiManagementServiceResourceGetReportsByGeoOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
@@ -3455,11 +3455,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byGeo
         /// Operation Id: Reports_ListByGeo
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportRecordContract> GetReportsByGeo(ApiManagementServiceGetReportsByGeoOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportRecordContract> GetReportsByGeo(ApiManagementServiceResourceGetReportsByGeoOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
@@ -3501,11 +3501,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/bySubscription
         /// Operation Id: Reports_ListBySubscription
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportRecordContract> GetReportsBySubscriptionAsync(ApiManagementServiceGetReportsBySubscriptionOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportRecordContract> GetReportsBySubscriptionAsync(ApiManagementServiceResourceGetReportsBySubscriptionOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
@@ -3547,11 +3547,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/bySubscription
         /// Operation Id: Reports_ListBySubscription
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportRecordContract> GetReportsBySubscription(ApiManagementServiceGetReportsBySubscriptionOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportRecordContract> GetReportsBySubscription(ApiManagementServiceResourceGetReportsBySubscriptionOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
@@ -3593,11 +3593,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byTime
         /// Operation Id: Reports_ListByTime
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportRecordContract> GetReportsByTimeAsync(ApiManagementServiceGetReportsByTimeOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportRecordContract> GetReportsByTimeAsync(ApiManagementServiceResourceGetReportsByTimeOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
@@ -3639,11 +3639,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byTime
         /// Operation Id: Reports_ListByTime
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="ReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportRecordContract> GetReportsByTime(ApiManagementServiceGetReportsByTimeOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportRecordContract> GetReportsByTime(ApiManagementServiceResourceGetReportsByTimeOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
@@ -3685,11 +3685,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byRequest
         /// Operation Id: Reports_ListByRequest
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="RequestReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RequestReportRecordContract> GetReportsByRequestAsync(ApiManagementServiceGetReportsByRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RequestReportRecordContract> GetReportsByRequestAsync(ApiManagementServiceResourceGetReportsByRequestOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
@@ -3716,11 +3716,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/reports/byRequest
         /// Operation Id: Reports_ListByRequest
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="RequestReportRecordContract" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RequestReportRecordContract> GetReportsByRequest(ApiManagementServiceGetReportsByRequestOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<RequestReportRecordContract> GetReportsByRequest(ApiManagementServiceResourceGetReportsByRequestOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
@@ -3747,12 +3747,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tagResources
         /// Operation Id: TagResource_ListByService
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TagResourceContractDetails> GetTagResourcesAsync(ApiManagementServiceGetTagResourcesOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TagResourceContractDetails> GetTagResourcesAsync(ApiManagementServiceResourceGetTagResourcesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementServiceGetTagResourcesOptions();
+            options ??= new ApiManagementServiceResourceGetTagResourcesOptions();
 
             async Task<Page<TagResourceContractDetails>> FirstPageFunc(int? pageSizeHint)
             {
@@ -3792,12 +3792,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tagResources
         /// Operation Id: TagResource_ListByService
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TagResourceContractDetails" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TagResourceContractDetails> GetTagResources(ApiManagementServiceGetTagResourcesOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<TagResourceContractDetails> GetTagResources(ApiManagementServiceResourceGetTagResourcesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementServiceGetTagResourcesOptions();
+            options ??= new ApiManagementServiceResourceGetTagResourcesOptions();
 
             Page<TagResourceContractDetails> FirstPageFunc(int? pageSizeHint)
             {

@@ -184,16 +184,13 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions
         /// Operation Id: VirtualMachineExtensionImages_ListVersions
         /// </summary>
-        /// <param name="type"> The String to use. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="type"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="VirtualMachineExtensionImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineExtensionImageResource> GetAllAsync(string type, VirtualMachineExtensionImageGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineExtensionImageResource> GetAllAsync(VirtualMachineExtensionImageCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(type, nameof(type));
-            options ??= new VirtualMachineExtensionImageGetAllOptions();
+            Argument.AssertNotNull(options, nameof(options));
 
             async Task<Page<VirtualMachineExtensionImageResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -201,7 +198,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = await _virtualMachineExtensionImageRestClient.ListVersionsAsync(Id.SubscriptionId, new AzureLocation(_location), _publisherName, type, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _virtualMachineExtensionImageRestClient.ListVersionsAsync(Id.SubscriptionId, new AzureLocation(_location), _publisherName, options.Type, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Select(value => new VirtualMachineExtensionImageResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -218,16 +215,13 @@ namespace Azure.ResourceManager.Compute
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions
         /// Operation Id: VirtualMachineExtensionImages_ListVersions
         /// </summary>
-        /// <param name="type"> The String to use. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="type"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineExtensionImageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineExtensionImageResource> GetAll(string type, VirtualMachineExtensionImageGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineExtensionImageResource> GetAll(VirtualMachineExtensionImageCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(type, nameof(type));
-            options ??= new VirtualMachineExtensionImageGetAllOptions();
+            Argument.AssertNotNull(options, nameof(options));
 
             Page<VirtualMachineExtensionImageResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -235,7 +229,7 @@ namespace Azure.ResourceManager.Compute
                 scope.Start();
                 try
                 {
-                    var response = _virtualMachineExtensionImageRestClient.ListVersions(Id.SubscriptionId, new AzureLocation(_location), _publisherName, type, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken);
+                    var response = _virtualMachineExtensionImageRestClient.ListVersions(Id.SubscriptionId, new AzureLocation(_location), _publisherName, options.Type, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Select(value => new VirtualMachineExtensionImageResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)

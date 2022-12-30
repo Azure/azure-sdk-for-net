@@ -16,7 +16,7 @@ modelerfour:
   flatten-payloads: false
 
 rename-property-bag:
-  PriceSheet_GetByBillingPeriod: SubscriptionBillingPeriodConsumptionGetPriceSheetOptions
+  PriceSheet_GetByBillingPeriod: SubscriptionBillingPeriodConsumptionResourceGetPriceSheetOptions
 
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/default

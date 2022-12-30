@@ -185,12 +185,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/notificationchannels
         /// Operation Id: NotificationChannels_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevTestLabNotificationChannelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabNotificationChannelResource> GetAllAsync(DevTestLabNotificationChannelGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevTestLabNotificationChannelResource> GetAllAsync(DevTestLabNotificationChannelCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DevTestLabNotificationChannelGetAllOptions();
+            options ??= new DevTestLabNotificationChannelCollectionGetAllOptions();
 
             async Task<Page<DevTestLabNotificationChannelResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -230,12 +230,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/notificationchannels
         /// Operation Id: NotificationChannels_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabNotificationChannelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabNotificationChannelResource> GetAll(DevTestLabNotificationChannelGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevTestLabNotificationChannelResource> GetAll(DevTestLabNotificationChannelCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DevTestLabNotificationChannelGetAllOptions();
+            options ??= new DevTestLabNotificationChannelCollectionGetAllOptions();
 
             Page<DevTestLabNotificationChannelResource> FirstPageFunc(int? pageSizeHint)
             {

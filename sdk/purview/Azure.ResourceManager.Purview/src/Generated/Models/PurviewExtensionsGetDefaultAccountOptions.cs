@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    /// <summary> A class representing the query and header parameters in GetDefaultAccount method. </summary>
+    /// <summary> The PurviewExtensionsGetDefaultAccountOptions. </summary>
     public partial class PurviewExtensionsGetDefaultAccountOptions
     {
         /// <summary> Initializes a new instance of PurviewExtensionsGetDefaultAccountOptions. </summary>

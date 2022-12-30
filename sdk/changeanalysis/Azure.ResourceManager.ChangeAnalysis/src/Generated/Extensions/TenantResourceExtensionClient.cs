@@ -48,11 +48,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// Request Path: /{resourceId}/providers/Microsoft.ChangeAnalysis/resourceChanges
         /// Operation Id: ResourceChanges_List
         /// </summary>
-        /// <param name="resourceId"> The identifier of the resource. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DetectedChangeData> GetResourceChangesAsync(string resourceId, ChangeAnalysisExtensionsGetResourceChangesOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DetectedChangeData> GetResourceChangesAsync(ChangeAnalysisExtensionsGetResourceChangesOptions options, CancellationToken cancellationToken = default)
         {
             async Task<Page<DetectedChangeData>> FirstPageFunc(int? pageSizeHint)
             {
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
                 scope.Start();
                 try
                 {
-                    var response = await ResourceChangesRestClient.ListAsync(resourceId, options.StartTime, options.EndTime, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await ResourceChangesRestClient.ListAsync(options.ResourceId, options.StartTime, options.EndTime, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
                 scope.Start();
                 try
                 {
-                    var response = await ResourceChangesRestClient.ListNextPageAsync(nextLink, resourceId, options.StartTime, options.EndTime, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await ResourceChangesRestClient.ListNextPageAsync(nextLink, options.ResourceId, options.StartTime, options.EndTime, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -92,11 +91,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// Request Path: /{resourceId}/providers/Microsoft.ChangeAnalysis/resourceChanges
         /// Operation Id: ResourceChanges_List
         /// </summary>
-        /// <param name="resourceId"> The identifier of the resource. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DetectedChangeData> GetResourceChanges(string resourceId, ChangeAnalysisExtensionsGetResourceChangesOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<DetectedChangeData> GetResourceChanges(ChangeAnalysisExtensionsGetResourceChangesOptions options, CancellationToken cancellationToken = default)
         {
             Page<DetectedChangeData> FirstPageFunc(int? pageSizeHint)
             {
@@ -104,7 +102,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
                 scope.Start();
                 try
                 {
-                    var response = ResourceChangesRestClient.List(resourceId, options.StartTime, options.EndTime, options.SkipToken, cancellationToken: cancellationToken);
+                    var response = ResourceChangesRestClient.List(options.ResourceId, options.StartTime, options.EndTime, options.SkipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -119,7 +117,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
                 scope.Start();
                 try
                 {
-                    var response = ResourceChangesRestClient.ListNextPage(nextLink, resourceId, options.StartTime, options.EndTime, options.SkipToken, cancellationToken: cancellationToken);
+                    var response = ResourceChangesRestClient.ListNextPage(nextLink, options.ResourceId, options.StartTime, options.EndTime, options.SkipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

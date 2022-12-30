@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    /// <summary> A class representing the query and header parameters in RemoveDefaultAccount method. </summary>
+    /// <summary> The PurviewExtensionsRemoveDefaultAccountOptions. </summary>
     public partial class PurviewExtensionsRemoveDefaultAccountOptions
     {
         /// <summary> Initializes a new instance of PurviewExtensionsRemoveDefaultAccountOptions. </summary>

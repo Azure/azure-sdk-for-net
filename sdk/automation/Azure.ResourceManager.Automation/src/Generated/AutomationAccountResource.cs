@@ -1771,12 +1771,12 @@ namespace Azure.ResourceManager.Automation
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationRuns
         /// Operation Id: SoftwareUpdateConfigurationRuns_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SoftwareUpdateConfigurationRun" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SoftwareUpdateConfigurationRun> GetSoftwareUpdateConfigurationRunsAsync(AutomationAccountGetSoftwareUpdateConfigurationRunsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SoftwareUpdateConfigurationRun> GetSoftwareUpdateConfigurationRunsAsync(AutomationAccountResourceGetSoftwareUpdateConfigurationRunsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new AutomationAccountGetSoftwareUpdateConfigurationRunsOptions();
+            options ??= new AutomationAccountResourceGetSoftwareUpdateConfigurationRunsOptions();
 
             async Task<Page<SoftwareUpdateConfigurationRun>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1801,12 +1801,12 @@ namespace Azure.ResourceManager.Automation
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationRuns
         /// Operation Id: SoftwareUpdateConfigurationRuns_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SoftwareUpdateConfigurationRun" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SoftwareUpdateConfigurationRun> GetSoftwareUpdateConfigurationRuns(AutomationAccountGetSoftwareUpdateConfigurationRunsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<SoftwareUpdateConfigurationRun> GetSoftwareUpdateConfigurationRuns(AutomationAccountResourceGetSoftwareUpdateConfigurationRunsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new AutomationAccountGetSoftwareUpdateConfigurationRunsOptions();
+            options ??= new AutomationAccountResourceGetSoftwareUpdateConfigurationRunsOptions();
 
             Page<SoftwareUpdateConfigurationRun> FirstPageFunc(int? pageSizeHint)
             {
@@ -1879,12 +1879,12 @@ namespace Azure.ResourceManager.Automation
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns
         /// Operation Id: SoftwareUpdateConfigurationMachineRuns_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SoftwareUpdateConfigurationMachineRun" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SoftwareUpdateConfigurationMachineRun> GetSoftwareUpdateConfigurationMachineRunsAsync(AutomationAccountGetSoftwareUpdateConfigurationMachineRunsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SoftwareUpdateConfigurationMachineRun> GetSoftwareUpdateConfigurationMachineRunsAsync(AutomationAccountResourceGetSoftwareUpdateConfigurationMachineRunsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new AutomationAccountGetSoftwareUpdateConfigurationMachineRunsOptions();
+            options ??= new AutomationAccountResourceGetSoftwareUpdateConfigurationMachineRunsOptions();
 
             async Task<Page<SoftwareUpdateConfigurationMachineRun>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1909,12 +1909,12 @@ namespace Azure.ResourceManager.Automation
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns
         /// Operation Id: SoftwareUpdateConfigurationMachineRuns_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SoftwareUpdateConfigurationMachineRun" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SoftwareUpdateConfigurationMachineRun> GetSoftwareUpdateConfigurationMachineRuns(AutomationAccountGetSoftwareUpdateConfigurationMachineRunsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<SoftwareUpdateConfigurationMachineRun> GetSoftwareUpdateConfigurationMachineRuns(AutomationAccountResourceGetSoftwareUpdateConfigurationMachineRunsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new AutomationAccountGetSoftwareUpdateConfigurationMachineRunsOptions();
+            options ??= new AutomationAccountResourceGetSoftwareUpdateConfigurationMachineRunsOptions();
 
             Page<SoftwareUpdateConfigurationMachineRun> FirstPageFunc(int? pageSizeHint)
             {

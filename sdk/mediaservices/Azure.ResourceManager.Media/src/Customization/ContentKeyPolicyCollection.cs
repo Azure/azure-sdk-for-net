@@ -3,12 +3,9 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using Azure.Core;
+using Azure.ResourceManager.Media.Models;
 
 namespace Azure.ResourceManager.Media
 {
@@ -29,40 +26,13 @@ namespace Azure.ResourceManager.Media
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContentKeyPolicyResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContentKeyPolicyResource> GetAllAsync(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ContentKeyPolicyResource>> FirstPageFunc(int? pageSizeHint)
+        public virtual AsyncPageable<ContentKeyPolicyResource> GetAllAsync(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default) =>
+            GetAllAsync(new ContentKeyPolicyCollectionGetAllOptions
             {
-                using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _contentKeyPolicyRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContentKeyPolicyResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ContentKeyPolicyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _contentKeyPolicyRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContentKeyPolicyResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
+                Filter = filter,
+                Top = top,
+                Orderby = orderby
+            }, cancellationToken);
 
         /// <summary>
         /// Lists the Content Key Policies in the account
@@ -74,39 +44,12 @@ namespace Azure.ResourceManager.Media
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContentKeyPolicyResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContentKeyPolicyResource> GetAll(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
-        {
-            Page<ContentKeyPolicyResource> FirstPageFunc(int? pageSizeHint)
+        public virtual Pageable<ContentKeyPolicyResource> GetAll(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default) =>
+            GetAll(new ContentKeyPolicyCollectionGetAllOptions
             {
-                using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _contentKeyPolicyRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContentKeyPolicyResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ContentKeyPolicyResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _contentKeyPolicyClientDiagnostics.CreateScope("ContentKeyPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _contentKeyPolicyRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContentKeyPolicyResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+                Filter = filter,
+                Top = top,
+                Orderby = orderby
+            }, cancellationToken);
     }
 }

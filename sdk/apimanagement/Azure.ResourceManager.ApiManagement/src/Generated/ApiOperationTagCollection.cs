@@ -179,12 +179,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/tags
         /// Operation Id: Tag_ListByOperation
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiOperationTagResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiOperationTagResource> GetAllAsync(ApiOperationTagGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiOperationTagResource> GetAllAsync(ApiOperationTagCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiOperationTagGetAllOptions();
+            options ??= new ApiOperationTagCollectionGetAllOptions();
 
             async Task<Page<ApiOperationTagResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -224,12 +224,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/tags
         /// Operation Id: Tag_ListByOperation
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiOperationTagResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiOperationTagResource> GetAll(ApiOperationTagGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApiOperationTagResource> GetAll(ApiOperationTagCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiOperationTagGetAllOptions();
+            options ??= new ApiOperationTagCollectionGetAllOptions();
 
             Page<ApiOperationTagResource> FirstPageFunc(int? pageSizeHint)
             {

@@ -110,15 +110,13 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
         /// </summary>
-        /// <param name="detectorName"> Detector Resource Name. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<HostingEnvironmentDetectorResource>> GetHostingEnvironmentDetectorAsync(string detectorName, HostingEnvironmentDetectorGetOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostingEnvironmentDetectorResource>> GetHostingEnvironmentDetectorAsync(HostingEnvironmentDetectorCollectionGetOptions options, CancellationToken cancellationToken = default)
         {
-            return await GetHostingEnvironmentDetectors().GetAsync(detectorName, options, cancellationToken).ConfigureAwait(false);
+            return await GetHostingEnvironmentDetectors().GetAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -126,15 +124,13 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetHostingEnvironmentDetectorResponse
         /// </summary>
-        /// <param name="detectorName"> Detector Resource Name. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HostingEnvironmentDetectorResource> GetHostingEnvironmentDetector(string detectorName, HostingEnvironmentDetectorGetOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<HostingEnvironmentDetectorResource> GetHostingEnvironmentDetector(HostingEnvironmentDetectorCollectionGetOptions options, CancellationToken cancellationToken = default)
         {
-            return GetHostingEnvironmentDetectors().Get(detectorName, options, cancellationToken);
+            return GetHostingEnvironmentDetectors().Get(options, cancellationToken);
         }
 
         /// <summary> Gets an object representing a AseV3NetworkingConfigurationResource along with the instance operations that can be performed on it in the AppServiceEnvironment. </summary>

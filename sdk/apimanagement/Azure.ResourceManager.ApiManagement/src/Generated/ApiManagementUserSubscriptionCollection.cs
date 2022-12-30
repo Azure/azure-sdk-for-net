@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/subscriptions
         /// Operation Id: UserSubscription_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiManagementUserSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementUserSubscriptionResource> GetAllAsync(ApiManagementUserSubscriptionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiManagementUserSubscriptionResource> GetAllAsync(ApiManagementUserSubscriptionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementUserSubscriptionGetAllOptions();
+            options ??= new ApiManagementUserSubscriptionCollectionGetAllOptions();
 
             async Task<Page<ApiManagementUserSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -162,12 +162,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/subscriptions
         /// Operation Id: UserSubscription_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementUserSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementUserSubscriptionResource> GetAll(ApiManagementUserSubscriptionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApiManagementUserSubscriptionResource> GetAll(ApiManagementUserSubscriptionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementUserSubscriptionGetAllOptions();
+            options ??= new ApiManagementUserSubscriptionCollectionGetAllOptions();
 
             Page<ApiManagementUserSubscriptionResource> FirstPageFunc(int? pageSizeHint)
             {

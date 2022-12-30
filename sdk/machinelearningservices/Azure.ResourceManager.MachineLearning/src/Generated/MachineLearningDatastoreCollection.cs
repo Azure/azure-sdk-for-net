@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
@@ -184,24 +185,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores
         /// Operation Id: Datastores_List
         /// </summary>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="count"> Maximum number of results to return. </param>
-        /// <param name="isDefault"> Filter down to the workspace default datastore. </param>
-        /// <param name="names"> Names of datastores to return. </param>
-        /// <param name="searchText"> Text to search for in the datastore names. </param>
-        /// <param name="orderBy"> Order by property (createdtime | modifiedtime | name). </param>
-        /// <param name="orderByAsc"> Order by property in ascending order. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningDatastoreResource> GetAllAsync(string skip = null, int? count = null, bool? isDefault = null, IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MachineLearningDatastoreResource> GetAllAsync(MachineLearningDatastoreCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new MachineLearningDatastoreCollectionGetAllOptions();
+
             async Task<Page<MachineLearningDatastoreResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _machineLearningDatastoreDatastoresClientDiagnostics.CreateScope("MachineLearningDatastoreCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _machineLearningDatastoreDatastoresRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _machineLearningDatastoreDatastoresRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Count, options.IsDefault, options.Names, options.SearchText, options.OrderBy, options.OrderByAsc, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningDatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -216,7 +213,7 @@ namespace Azure.ResourceManager.MachineLearning
                 scope.Start();
                 try
                 {
-                    var response = await _machineLearningDatastoreDatastoresRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _machineLearningDatastoreDatastoresRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Count, options.IsDefault, options.Names, options.SearchText, options.OrderBy, options.OrderByAsc, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningDatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -233,24 +230,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/datastores
         /// Operation Id: Datastores_List
         /// </summary>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="count"> Maximum number of results to return. </param>
-        /// <param name="isDefault"> Filter down to the workspace default datastore. </param>
-        /// <param name="names"> Names of datastores to return. </param>
-        /// <param name="searchText"> Text to search for in the datastore names. </param>
-        /// <param name="orderBy"> Order by property (createdtime | modifiedtime | name). </param>
-        /// <param name="orderByAsc"> Order by property in ascending order. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningDatastoreResource> GetAll(string skip = null, int? count = null, bool? isDefault = null, IEnumerable<string> names = null, string searchText = null, string orderBy = null, bool? orderByAsc = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<MachineLearningDatastoreResource> GetAll(MachineLearningDatastoreCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new MachineLearningDatastoreCollectionGetAllOptions();
+
             Page<MachineLearningDatastoreResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _machineLearningDatastoreDatastoresClientDiagnostics.CreateScope("MachineLearningDatastoreCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _machineLearningDatastoreDatastoresRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken);
+                    var response = _machineLearningDatastoreDatastoresRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Count, options.IsDefault, options.Names, options.SearchText, options.OrderBy, options.OrderByAsc, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningDatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -265,7 +258,7 @@ namespace Azure.ResourceManager.MachineLearning
                 scope.Start();
                 try
                 {
-                    var response = _machineLearningDatastoreDatastoresRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, isDefault, names, searchText, orderBy, orderByAsc, cancellationToken: cancellationToken);
+                    var response = _machineLearningDatastoreDatastoresRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Count, options.IsDefault, options.Names, options.SearchText, options.OrderBy, options.OrderByAsc, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningDatastoreResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -333,17 +326,17 @@ namespace Azure.ResourceManager.MachineLearning
 
         IEnumerator<MachineLearningDatastoreResource> IEnumerable<MachineLearningDatastoreResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<MachineLearningDatastoreResource> IAsyncEnumerable<MachineLearningDatastoreResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

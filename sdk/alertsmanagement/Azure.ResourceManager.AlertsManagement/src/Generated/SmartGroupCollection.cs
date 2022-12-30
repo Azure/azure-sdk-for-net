@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.AlertsManagement
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/smartGroups
         /// Operation Id: SmartGroups_GetAll
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SmartGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SmartGroupResource> GetAllAsync(SmartGroupGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SmartGroupResource> GetAllAsync(SmartGroupCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SmartGroupGetAllOptions();
+            options ??= new SmartGroupCollectionGetAllOptions();
 
             async Task<Page<SmartGroupResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -155,12 +155,12 @@ namespace Azure.ResourceManager.AlertsManagement
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/smartGroups
         /// Operation Id: SmartGroups_GetAll
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SmartGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SmartGroupResource> GetAll(SmartGroupGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<SmartGroupResource> GetAll(SmartGroupCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SmartGroupGetAllOptions();
+            options ??= new SmartGroupCollectionGetAllOptions();
 
             Page<SmartGroupResource> FirstPageFunc(int? pageSizeHint)
             {

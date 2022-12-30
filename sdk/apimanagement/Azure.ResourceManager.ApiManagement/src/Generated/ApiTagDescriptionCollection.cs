@@ -185,12 +185,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tagDescriptions
         /// Operation Id: ApiTagDescription_ListByService
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiTagDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiTagDescriptionResource> GetAllAsync(ApiTagDescriptionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiTagDescriptionResource> GetAllAsync(ApiTagDescriptionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiTagDescriptionGetAllOptions();
+            options ??= new ApiTagDescriptionCollectionGetAllOptions();
 
             async Task<Page<ApiTagDescriptionResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -230,12 +230,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/tagDescriptions
         /// Operation Id: ApiTagDescription_ListByService
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiTagDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiTagDescriptionResource> GetAll(ApiTagDescriptionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApiTagDescriptionResource> GetAll(ApiTagDescriptionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiTagDescriptionGetAllOptions();
+            options ??= new ApiTagDescriptionCollectionGetAllOptions();
 
             Page<ApiTagDescriptionResource> FirstPageFunc(int? pageSizeHint)
             {

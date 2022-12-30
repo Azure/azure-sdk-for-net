@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orderItems
         /// Operation Id: ListOrderItemsAtSubscriptionLevel
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EdgeOrderItemResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeOrderItemResource> GetEdgeOrderItemsAsync(EdgeOrderExtensionsGetEdgeOrderItemsOptions options, CancellationToken cancellationToken = default)
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.EdgeOrder/orderItems
         /// Operation Id: ListOrderItemsAtSubscriptionLevel
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeOrderItemResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeOrderItemResource> GetEdgeOrderItems(EdgeOrderExtensionsGetEdgeOrderItemsOptions options, CancellationToken cancellationToken = default)

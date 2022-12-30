@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Purview
         /// Operation Id: DefaultAccounts_Get
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public static async Task<Response<DefaultPurviewAccountPayload>> GetDefaultAccountAsync(this TenantResource tenantResource, PurviewExtensionsGetDefaultAccountOptions options, CancellationToken cancellationToken = default)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Purview
         /// Operation Id: DefaultAccounts_Get
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public static Response<DefaultPurviewAccountPayload> GetDefaultAccount(this TenantResource tenantResource, PurviewExtensionsGetDefaultAccountOptions options, CancellationToken cancellationToken = default)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Purview
         /// Operation Id: DefaultAccounts_Remove
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public static async Task<Response> RemoveDefaultAccountAsync(this TenantResource tenantResource, PurviewExtensionsRemoveDefaultAccountOptions options, CancellationToken cancellationToken = default)
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Purview
         /// Operation Id: DefaultAccounts_Remove
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public static Response RemoveDefaultAccount(this TenantResource tenantResource, PurviewExtensionsRemoveDefaultAccountOptions options, CancellationToken cancellationToken = default)

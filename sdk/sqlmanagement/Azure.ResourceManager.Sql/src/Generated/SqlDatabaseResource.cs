@@ -1135,12 +1135,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/columns
         /// Operation Id: DatabaseColumns_ListByDatabase
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SqlDatabaseColumnResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlDatabaseColumnResource> GetDatabaseColumnsAsync(SqlDatabaseGetDatabaseColumnsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SqlDatabaseColumnResource> GetDatabaseColumnsAsync(SqlDatabaseResourceGetDatabaseColumnsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SqlDatabaseGetDatabaseColumnsOptions();
+            options ??= new SqlDatabaseResourceGetDatabaseColumnsOptions();
 
             async Task<Page<SqlDatabaseColumnResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1180,12 +1180,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/columns
         /// Operation Id: DatabaseColumns_ListByDatabase
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SqlDatabaseColumnResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlDatabaseColumnResource> GetDatabaseColumns(SqlDatabaseGetDatabaseColumnsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<SqlDatabaseColumnResource> GetDatabaseColumns(SqlDatabaseResourceGetDatabaseColumnsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SqlDatabaseGetDatabaseColumnsOptions();
+            options ??= new SqlDatabaseResourceGetDatabaseColumnsOptions();
 
             Page<SqlDatabaseColumnResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -1649,12 +1649,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/currentSensitivityLabels
         /// Operation Id: SensitivityLabels_ListCurrentByDatabase
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SqlDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlDatabaseSensitivityLabelResource> GetCurrentSensitivityLabelsAsync(SqlDatabaseGetCurrentSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SqlDatabaseSensitivityLabelResource> GetCurrentSensitivityLabelsAsync(SqlDatabaseResourceGetCurrentSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SqlDatabaseGetCurrentSensitivityLabelsOptions();
+            options ??= new SqlDatabaseResourceGetCurrentSensitivityLabelsOptions();
 
             async Task<Page<SqlDatabaseSensitivityLabelResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1694,12 +1694,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/currentSensitivityLabels
         /// Operation Id: SensitivityLabels_ListCurrentByDatabase
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SqlDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlDatabaseSensitivityLabelResource> GetCurrentSensitivityLabels(SqlDatabaseGetCurrentSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<SqlDatabaseSensitivityLabelResource> GetCurrentSensitivityLabels(SqlDatabaseResourceGetCurrentSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SqlDatabaseGetCurrentSensitivityLabelsOptions();
+            options ??= new SqlDatabaseResourceGetCurrentSensitivityLabelsOptions();
 
             Page<SqlDatabaseSensitivityLabelResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -1791,12 +1791,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/recommendedSensitivityLabels
         /// Operation Id: SensitivityLabels_ListRecommendedByDatabase
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SqlDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlDatabaseSensitivityLabelResource> GetRecommendedSensitivityLabelsAsync(SqlDatabaseGetRecommendedSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SqlDatabaseSensitivityLabelResource> GetRecommendedSensitivityLabelsAsync(SqlDatabaseResourceGetRecommendedSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SqlDatabaseGetRecommendedSensitivityLabelsOptions();
+            options ??= new SqlDatabaseResourceGetRecommendedSensitivityLabelsOptions();
 
             async Task<Page<SqlDatabaseSensitivityLabelResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1836,12 +1836,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/recommendedSensitivityLabels
         /// Operation Id: SensitivityLabels_ListRecommendedByDatabase
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SqlDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlDatabaseSensitivityLabelResource> GetRecommendedSensitivityLabels(SqlDatabaseGetRecommendedSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<SqlDatabaseSensitivityLabelResource> GetRecommendedSensitivityLabels(SqlDatabaseResourceGetRecommendedSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SqlDatabaseGetRecommendedSensitivityLabelsOptions();
+            options ??= new SqlDatabaseResourceGetRecommendedSensitivityLabelsOptions();
 
             Page<SqlDatabaseSensitivityLabelResource> FirstPageFunc(int? pageSizeHint)
             {

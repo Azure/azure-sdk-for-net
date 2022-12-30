@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Purview
         /// Request Path: /providers/Microsoft.Purview/getDefaultAccount
         /// Operation Id: DefaultAccounts_Get
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DefaultPurviewAccountPayload>> GetDefaultAccountAsync(PurviewExtensionsGetDefaultAccountOptions options, CancellationToken cancellationToken = default)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Purview
         /// Request Path: /providers/Microsoft.Purview/getDefaultAccount
         /// Operation Id: DefaultAccounts_Get
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DefaultPurviewAccountPayload> GetDefaultAccount(PurviewExtensionsGetDefaultAccountOptions options, CancellationToken cancellationToken = default)
         {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Purview
         /// Request Path: /providers/Microsoft.Purview/removeDefaultAccount
         /// Operation Id: DefaultAccounts_Remove
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> RemoveDefaultAccountAsync(PurviewExtensionsRemoveDefaultAccountOptions options, CancellationToken cancellationToken = default)
         {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Purview
         /// Request Path: /providers/Microsoft.Purview/removeDefaultAccount
         /// Operation Id: DefaultAccounts_Remove
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response RemoveDefaultAccount(PurviewExtensionsRemoveDefaultAccountOptions options, CancellationToken cancellationToken = default)
         {

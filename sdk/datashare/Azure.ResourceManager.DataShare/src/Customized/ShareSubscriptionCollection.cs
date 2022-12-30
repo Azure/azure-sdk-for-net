@@ -3,12 +3,9 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using Azure.Core;
+using Azure.ResourceManager.DataShare.Models;
 
 namespace Azure.ResourceManager.DataShare
 {
@@ -29,40 +26,13 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ShareSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ShareSubscriptionResource> GetAllAsync(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ShareSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
+        public virtual AsyncPageable<ShareSubscriptionResource> GetAllAsync(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default) =>
+            GetAllAsync(new ShareSubscriptionCollectionGetAllOptions
             {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _shareSubscriptionRestClient.ListByAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ShareSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ShareSubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _shareSubscriptionRestClient.ListByAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ShareSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
+                SkipToken = skipToken,
+                Filter = filter,
+                Orderby = orderby
+            }, cancellationToken);
 
         /// <summary>
         /// List share subscriptions in an account
@@ -74,39 +44,12 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ShareSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ShareSubscriptionResource> GetAll(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
-        {
-            Page<ShareSubscriptionResource> FirstPageFunc(int? pageSizeHint)
+        public virtual Pageable<ShareSubscriptionResource> GetAll(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default) =>
+            GetAll(new ShareSubscriptionCollectionGetAllOptions
             {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _shareSubscriptionRestClient.ListByAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ShareSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ShareSubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _shareSubscriptionClientDiagnostics.CreateScope("ShareSubscriptionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _shareSubscriptionRestClient.ListByAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ShareSubscriptionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+                SkipToken = skipToken,
+                Filter = filter,
+                Orderby = orderby
+            }, cancellationToken);
     }
 }

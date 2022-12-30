@@ -140,11 +140,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}/execute
         /// Operation Id: Diagnostics_ExecuteSiteAnalysisSlot
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DiagnosticAnalysis>> ExecuteSiteAnalysisSlotAsync(SiteSlotDiagnosticAnalysisExecuteSiteAnalysisSlotOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiagnosticAnalysis>> ExecuteSiteAnalysisSlotAsync(SiteSlotDiagnosticAnalysisResourceExecuteSiteAnalysisSlotOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SiteSlotDiagnosticAnalysisExecuteSiteAnalysisSlotOptions();
+            options ??= new SiteSlotDiagnosticAnalysisResourceExecuteSiteAnalysisSlotOptions();
 
             using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisResource.ExecuteSiteAnalysisSlot");
             scope.Start();
@@ -165,11 +165,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}/execute
         /// Operation Id: Diagnostics_ExecuteSiteAnalysisSlot
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DiagnosticAnalysis> ExecuteSiteAnalysisSlot(SiteSlotDiagnosticAnalysisExecuteSiteAnalysisSlotOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<DiagnosticAnalysis> ExecuteSiteAnalysisSlot(SiteSlotDiagnosticAnalysisResourceExecuteSiteAnalysisSlotOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SiteSlotDiagnosticAnalysisExecuteSiteAnalysisSlotOptions();
+            options ??= new SiteSlotDiagnosticAnalysisResourceExecuteSiteAnalysisSlotOptions();
 
             using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisResource.ExecuteSiteAnalysisSlot");
             scope.Start();

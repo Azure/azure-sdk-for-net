@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> A class representing the query and header parameters in GetCatalog method. </summary>
+    /// <summary> The ReservationsExtensionsGetCatalogOptions. </summary>
     public partial class ReservationsExtensionsGetCatalogOptions
     {
         /// <summary> Initializes a new instance of ReservationsExtensionsGetCatalogOptions. </summary>

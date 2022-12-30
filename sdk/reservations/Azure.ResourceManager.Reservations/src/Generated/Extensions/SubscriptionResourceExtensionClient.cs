@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Reservations
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs
         /// Operation Id: GetCatalog
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReservationCatalog> GetCatalogAsync(ReservationsExtensionsGetCatalogOptions options, CancellationToken cancellationToken = default)
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Reservations
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs
         /// Operation Id: GetCatalog
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReservationCatalog> GetCatalog(ReservationsExtensionsGetCatalogOptions options, CancellationToken cancellationToken = default)

@@ -32,40 +32,15 @@ namespace Azure.ResourceManager.Peering
         /// <param name="skipToken"> The optional page continuation token that is used in the event of paginated result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PeeringReceivedRoute" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PeeringReceivedRoute> GetReceivedRoutesAsync(string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<PeeringReceivedRoute>> FirstPageFunc(int? pageSizeHint)
+        public virtual AsyncPageable<PeeringReceivedRoute> GetReceivedRoutesAsync(string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, CancellationToken cancellationToken = default) =>
+            GetReceivedRoutesAsync(new PeeringResourceGetReceivedRoutesOptions
             {
-                using var scope = _receivedRoutesClientDiagnostics.CreateScope("PeeringResource.GetReceivedRoutes");
-                scope.Start();
-                try
-                {
-                    var response = await _receivedRoutesRestClient.ListByPeeringAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PeeringReceivedRoute>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _receivedRoutesClientDiagnostics.CreateScope("PeeringResource.GetReceivedRoutes");
-                scope.Start();
-                try
-                {
-                    var response = await _receivedRoutesRestClient.ListByPeeringNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
+                Prefix = prefix,
+                AsPath = asPath,
+                OriginAsValidationState = originAsValidationState,
+                RpkiValidationState = rpkiValidationState,
+                SkipToken = skipToken
+            }, cancellationToken);
 
         /// <summary>
         /// Lists the prefixes received over the specified peering under the given subscription and resource group.
@@ -79,39 +54,14 @@ namespace Azure.ResourceManager.Peering
         /// <param name="skipToken"> The optional page continuation token that is used in the event of paginated result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PeeringReceivedRoute" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PeeringReceivedRoute> GetReceivedRoutes(string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            Page<PeeringReceivedRoute> FirstPageFunc(int? pageSizeHint)
+        public virtual Pageable<PeeringReceivedRoute> GetReceivedRoutes(string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, CancellationToken cancellationToken = default) =>
+            GetReceivedRoutes(new PeeringResourceGetReceivedRoutesOptions
             {
-                using var scope = _receivedRoutesClientDiagnostics.CreateScope("PeeringResource.GetReceivedRoutes");
-                scope.Start();
-                try
-                {
-                    var response = _receivedRoutesRestClient.ListByPeering(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PeeringReceivedRoute> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _receivedRoutesClientDiagnostics.CreateScope("PeeringResource.GetReceivedRoutes");
-                scope.Start();
-                try
-                {
-                    var response = _receivedRoutesRestClient.ListByPeeringNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+                Prefix = prefix,
+                AsPath = asPath,
+                OriginAsValidationState = originAsValidationState,
+                RpkiValidationState = rpkiValidationState,
+                SkipToken = skipToken
+            }, cancellationToken);
     }
 }

@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alertsSummary
         /// Operation Id: Alerts_GetSummary
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServiceAlertSummary>> GetServiceAlertSummaryAsync(AlertsManagementExtensionsGetServiceAlertSummaryOptions options, CancellationToken cancellationToken = default)
         {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alertsSummary
         /// Operation Id: Alerts_GetSummary
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServiceAlertSummary> GetServiceAlertSummary(AlertsManagementExtensionsGetServiceAlertSummaryOptions options, CancellationToken cancellationToken = default)
         {

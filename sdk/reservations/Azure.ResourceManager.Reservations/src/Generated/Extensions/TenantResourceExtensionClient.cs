@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Reservations
         /// Request Path: /providers/Microsoft.Capacity/reservations
         /// Operation Id: Reservation_ListAll
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReservationDetailResource> GetReservationDetailsAsync(ReservationsExtensionsGetReservationDetailsOptions options, CancellationToken cancellationToken = default)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Reservations
         /// Request Path: /providers/Microsoft.Capacity/reservations
         /// Operation Id: Reservation_ListAll
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReservationDetailResource> GetReservationDetails(ReservationsExtensionsGetReservationDetailsOptions options, CancellationToken cancellationToken = default)

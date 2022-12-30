@@ -119,12 +119,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts
         /// Operation Id: Artifacts_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevTestLabArtifactResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabArtifactResource> GetAllAsync(DevTestLabArtifactGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevTestLabArtifactResource> GetAllAsync(DevTestLabArtifactCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DevTestLabArtifactGetAllOptions();
+            options ??= new DevTestLabArtifactCollectionGetAllOptions();
 
             async Task<Page<DevTestLabArtifactResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -164,12 +164,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts
         /// Operation Id: Artifacts_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabArtifactResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabArtifactResource> GetAll(DevTestLabArtifactGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevTestLabArtifactResource> GetAll(DevTestLabArtifactCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DevTestLabArtifactGetAllOptions();
+            options ??= new DevTestLabArtifactCollectionGetAllOptions();
 
             Page<DevTestLabArtifactResource> FirstPageFunc(int? pageSizeHint)
             {

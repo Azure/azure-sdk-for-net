@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Consumption
         /// Operation Id: PriceSheet_Get
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<PriceSheetResult>> GetPriceSheetAsync(this SubscriptionResource subscriptionResource, ConsumptionExtensionsGetPriceSheetOptions options, CancellationToken cancellationToken = default)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Consumption
         /// Operation Id: PriceSheet_Get
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<PriceSheetResult> GetPriceSheet(this SubscriptionResource subscriptionResource, ConsumptionExtensionsGetPriceSheetOptions options, CancellationToken cancellationToken = default)
         {

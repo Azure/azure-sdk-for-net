@@ -194,20 +194,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions/{sid}
         /// Operation Id: Subscription_Update
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
-        /// <param name="patch"> Update parameters. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> or <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ApiManagementSubscriptionResource>> UpdateAsync(ApiManagementSubscriptionUpdateOptions options, ApiManagementSubscriptionPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<ApiManagementSubscriptionResource>> UpdateAsync(ApiManagementSubscriptionResourceUpdateOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
-            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _apiManagementSubscriptionSubscriptionClientDiagnostics.CreateScope("ApiManagementSubscriptionResource.Update");
             scope.Start();
             try
             {
-                var response = await _apiManagementSubscriptionSubscriptionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.IfMatch, patch, options.Notify, options.AppType, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementSubscriptionSubscriptionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.IfMatch, options.Patch, options.Notify, options.AppType, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ApiManagementSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -222,20 +220,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions/{sid}
         /// Operation Id: Subscription_Update
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
-        /// <param name="patch"> Update parameters. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> or <paramref name="patch"/> is null. </exception>
-        public virtual Response<ApiManagementSubscriptionResource> Update(ApiManagementSubscriptionUpdateOptions options, ApiManagementSubscriptionPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<ApiManagementSubscriptionResource> Update(ApiManagementSubscriptionResourceUpdateOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
-            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _apiManagementSubscriptionSubscriptionClientDiagnostics.CreateScope("ApiManagementSubscriptionResource.Update");
             scope.Start();
             try
             {
-                var response = _apiManagementSubscriptionSubscriptionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.IfMatch, patch, options.Notify, options.AppType, cancellationToken);
+                var response = _apiManagementSubscriptionSubscriptionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.IfMatch, options.Patch, options.Notify, options.AppType, cancellationToken);
                 return Response.FromValue(new ApiManagementSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

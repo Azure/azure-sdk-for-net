@@ -252,12 +252,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}/users
         /// Operation Id: GroupUser_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiManagementGroupUserData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementGroupUserData> GetGroupUsersAsync(ApiManagementGroupGetGroupUsersOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiManagementGroupUserData> GetGroupUsersAsync(ApiManagementGroupResourceGetGroupUsersOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementGroupGetGroupUsersOptions();
+            options ??= new ApiManagementGroupResourceGetGroupUsersOptions();
 
             async Task<Page<ApiManagementGroupUserData>> FirstPageFunc(int? pageSizeHint)
             {
@@ -297,12 +297,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}/users
         /// Operation Id: GroupUser_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementGroupUserData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementGroupUserData> GetGroupUsers(ApiManagementGroupGetGroupUsersOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApiManagementGroupUserData> GetGroupUsers(ApiManagementGroupResourceGetGroupUsersOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementGroupGetGroupUsersOptions();
+            options ??= new ApiManagementGroupResourceGetGroupUsersOptions();
 
             Page<ApiManagementGroupUserData> FirstPageFunc(int? pageSizeHint)
             {

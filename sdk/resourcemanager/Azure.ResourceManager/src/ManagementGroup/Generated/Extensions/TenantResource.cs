@@ -30,15 +30,13 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_Get
         /// </summary>
-        /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ManagementGroupResource>> GetManagementGroupAsync(string groupId, ManagementGroupGetOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementGroupResource>> GetManagementGroupAsync(ManagementGroupCollectionGetOptions options, CancellationToken cancellationToken = default)
         {
-            return await GetManagementGroups().GetAsync(groupId, options, cancellationToken).ConfigureAwait(false);
+            return await GetManagementGroups().GetAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -47,15 +45,13 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_Get
         /// </summary>
-        /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ManagementGroupResource> GetManagementGroup(string groupId, ManagementGroupGetOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroupResource> GetManagementGroup(ManagementGroupCollectionGetOptions options, CancellationToken cancellationToken = default)
         {
-            return GetManagementGroups().Get(groupId, options, cancellationToken);
+            return GetManagementGroups().Get(options, cancellationToken);
         }
     }
 }

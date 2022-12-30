@@ -74,15 +74,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlans
         /// Operation Id: SavingsPlan_ListAll
         /// </summary>
-        /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
-        /// <param name="orderBy"> May be used to sort order by reservation properties. </param>
-        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </param>
-        /// <param name="skipToken"> The number of savings plans to skip from the list before returning results. </param>
-        /// <param name="selectedState"> The selected provisioning state. </param>
-        /// <param name="take"> To number of savings plans to return. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlansAsync(string filter = null, string orderBy = null, string refreshSummary = null, float? skipToken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlansAsync(BillingBenefitsExtensionsGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
         {
             async Task<Page<BillingBenefitsSavingsPlanResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -90,7 +85,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 scope.Start();
                 try
                 {
-                    var response = await BillingBenefitsSavingsPlanSavingsPlanRestClient.ListAllAsync(filter, orderBy, refreshSummary, skipToken, selectedState, take, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await BillingBenefitsSavingsPlanSavingsPlanRestClient.ListAllAsync(options.Filter, options.OrderBy, options.RefreshSummary, options.SkipToken, options.SelectedState, options.Take, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new BillingBenefitsSavingsPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -105,7 +100,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 scope.Start();
                 try
                 {
-                    var response = await BillingBenefitsSavingsPlanSavingsPlanRestClient.ListAllNextPageAsync(nextLink, filter, orderBy, refreshSummary, skipToken, selectedState, take, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await BillingBenefitsSavingsPlanSavingsPlanRestClient.ListAllNextPageAsync(nextLink, options.Filter, options.OrderBy, options.RefreshSummary, options.SkipToken, options.SelectedState, options.Take, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new BillingBenefitsSavingsPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -122,15 +117,10 @@ namespace Azure.ResourceManager.BillingBenefits
         /// Request Path: /providers/Microsoft.BillingBenefits/savingsPlans
         /// Operation Id: SavingsPlan_ListAll
         /// </summary>
-        /// <param name="filter"> May be used to filter by reservation properties. The filter supports &apos;eq&apos;, &apos;or&apos;, and &apos;and&apos;. It does not currently support &apos;ne&apos;, &apos;gt&apos;, &apos;le&apos;, &apos;ge&apos;, or &apos;not&apos;. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
-        /// <param name="orderBy"> May be used to sort order by reservation properties. </param>
-        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the savings plans group by provisioning states. </param>
-        /// <param name="skipToken"> The number of savings plans to skip from the list before returning results. </param>
-        /// <param name="selectedState"> The selected provisioning state. </param>
-        /// <param name="take"> To number of savings plans to return. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlans(string filter = null, string orderBy = null, string refreshSummary = null, float? skipToken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlans(BillingBenefitsExtensionsGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
         {
             Page<BillingBenefitsSavingsPlanResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -138,7 +128,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 scope.Start();
                 try
                 {
-                    var response = BillingBenefitsSavingsPlanSavingsPlanRestClient.ListAll(filter, orderBy, refreshSummary, skipToken, selectedState, take, cancellationToken: cancellationToken);
+                    var response = BillingBenefitsSavingsPlanSavingsPlanRestClient.ListAll(options.Filter, options.OrderBy, options.RefreshSummary, options.SkipToken, options.SelectedState, options.Take, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new BillingBenefitsSavingsPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -153,7 +143,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 scope.Start();
                 try
                 {
-                    var response = BillingBenefitsSavingsPlanSavingsPlanRestClient.ListAllNextPage(nextLink, filter, orderBy, refreshSummary, skipToken, selectedState, take, cancellationToken: cancellationToken);
+                    var response = BillingBenefitsSavingsPlanSavingsPlanRestClient.ListAllNextPage(nextLink, options.Filter, options.OrderBy, options.RefreshSummary, options.SkipToken, options.SelectedState, options.Take, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new BillingBenefitsSavingsPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

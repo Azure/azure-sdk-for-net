@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts
         /// Operation Id: Accounts_ListByResourceGroup
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataLakeAnalyticsAccountBasic" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataLakeAnalyticsAccountBasic> GetAllAsync(DataLakeAnalyticsAccountGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataLakeAnalyticsAccountBasic> GetAllAsync(DataLakeAnalyticsAccountCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DataLakeAnalyticsAccountGetAllOptions();
+            options ??= new DataLakeAnalyticsAccountCollectionGetAllOptions();
 
             async Task<Page<DataLakeAnalyticsAccountBasic>> FirstPageFunc(int? pageSizeHint)
             {
@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeAnalytics/accounts
         /// Operation Id: Accounts_ListByResourceGroup
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataLakeAnalyticsAccountBasic" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataLakeAnalyticsAccountBasic> GetAll(DataLakeAnalyticsAccountGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataLakeAnalyticsAccountBasic> GetAll(DataLakeAnalyticsAccountCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DataLakeAnalyticsAccountGetAllOptions();
+            options ??= new DataLakeAnalyticsAccountCollectionGetAllOptions();
 
             Page<DataLakeAnalyticsAccountBasic> FirstPageFunc(int? pageSizeHint)
             {

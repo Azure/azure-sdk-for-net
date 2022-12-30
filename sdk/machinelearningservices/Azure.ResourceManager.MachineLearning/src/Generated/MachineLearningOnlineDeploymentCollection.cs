@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
@@ -182,20 +183,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/onlineEndpoints/{endpointName}/deployments
         /// Operation Id: OnlineDeployments_List
         /// </summary>
-        /// <param name="orderBy"> Ordering of list. </param>
-        /// <param name="top"> Top of list. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningOnlineDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningOnlineDeploymentResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MachineLearningOnlineDeploymentResource> GetAllAsync(MachineLearningOnlineDeploymentCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new MachineLearningOnlineDeploymentCollectionGetAllOptions();
+
             async Task<Page<MachineLearningOnlineDeploymentResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics.CreateScope("MachineLearningOnlineDeploymentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.OrderBy, options.Top, options.Skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningOnlineDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -210,7 +211,7 @@ namespace Azure.ResourceManager.MachineLearning
                 scope.Start();
                 try
                 {
-                    var response = await _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.OrderBy, options.Top, options.Skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningOnlineDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -227,20 +228,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/onlineEndpoints/{endpointName}/deployments
         /// Operation Id: OnlineDeployments_List
         /// </summary>
-        /// <param name="orderBy"> Ordering of list. </param>
-        /// <param name="top"> Top of list. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningOnlineDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningOnlineDeploymentResource> GetAll(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<MachineLearningOnlineDeploymentResource> GetAll(MachineLearningOnlineDeploymentCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new MachineLearningOnlineDeploymentCollectionGetAllOptions();
+
             Page<MachineLearningOnlineDeploymentResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _machineLearningOnlineDeploymentOnlineDeploymentsClientDiagnostics.CreateScope("MachineLearningOnlineDeploymentCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken);
+                    var response = _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.OrderBy, options.Top, options.Skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningOnlineDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -255,7 +256,7 @@ namespace Azure.ResourceManager.MachineLearning
                 scope.Start();
                 try
                 {
-                    var response = _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, cancellationToken: cancellationToken);
+                    var response = _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.OrderBy, options.Top, options.Skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningOnlineDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -323,17 +324,17 @@ namespace Azure.ResourceManager.MachineLearning
 
         IEnumerator<MachineLearningOnlineDeploymentResource> IEnumerable<MachineLearningOnlineDeploymentResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<MachineLearningOnlineDeploymentResource> IAsyncEnumerable<MachineLearningOnlineDeploymentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

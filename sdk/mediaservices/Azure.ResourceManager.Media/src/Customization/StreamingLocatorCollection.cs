@@ -3,12 +3,9 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using Azure.Core;
+using Azure.ResourceManager.Media.Models;
 
 namespace Azure.ResourceManager.Media
 {
@@ -29,40 +26,13 @@ namespace Azure.ResourceManager.Media
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StreamingLocatorResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StreamingLocatorResource> GetAllAsync(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<StreamingLocatorResource>> FirstPageFunc(int? pageSizeHint)
+        public virtual AsyncPageable<StreamingLocatorResource> GetAllAsync(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default) =>
+            GetAllAsync(new StreamingLocatorCollectionGetAllOptions
             {
-                using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _streamingLocatorRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingLocatorResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StreamingLocatorResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _streamingLocatorRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingLocatorResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
+                Filter = filter,
+                Top = top,
+                Orderby = orderby
+            }, cancellationToken);
 
         /// <summary>
         /// Lists the Streaming Locators in the account
@@ -74,39 +44,12 @@ namespace Azure.ResourceManager.Media
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StreamingLocatorResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StreamingLocatorResource> GetAll(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
-        {
-            Page<StreamingLocatorResource> FirstPageFunc(int? pageSizeHint)
+        public virtual Pageable<StreamingLocatorResource> GetAll(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default) =>
+            GetAll(new StreamingLocatorCollectionGetAllOptions
             {
-                using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _streamingLocatorRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingLocatorResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StreamingLocatorResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _streamingLocatorRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StreamingLocatorResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+                Filter = filter,
+                Top = top,
+                Orderby = orderby
+            }, cancellationToken);
     }
 }

@@ -5,16 +5,45 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> A class representing the query and header parameters in GetVirtualMachineImagesEdgeZones method. </summary>
+    /// <summary> The ComputeExtensionsGetVirtualMachineImagesEdgeZonesOptions. </summary>
     public partial class ComputeExtensionsGetVirtualMachineImagesEdgeZonesOptions
     {
         /// <summary> Initializes a new instance of ComputeExtensionsGetVirtualMachineImagesEdgeZonesOptions. </summary>
-        public ComputeExtensionsGetVirtualMachineImagesEdgeZonesOptions()
+        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="edgeZone"> The name of the edge zone. </param>
+        /// <param name="publisherName"> A valid image publisher. </param>
+        /// <param name="offer"> A valid image publisher offer. </param>
+        /// <param name="skus"> A valid image SKU. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
+        public ComputeExtensionsGetVirtualMachineImagesEdgeZonesOptions(AzureLocation location, string edgeZone, string publisherName, string offer, string skus)
         {
+            Argument.AssertNotNull(edgeZone, nameof(edgeZone));
+            Argument.AssertNotNull(publisherName, nameof(publisherName));
+            Argument.AssertNotNull(offer, nameof(offer));
+            Argument.AssertNotNull(skus, nameof(skus));
+
+            Location = location;
+            EdgeZone = edgeZone;
+            PublisherName = publisherName;
+            Offer = offer;
+            Skus = skus;
         }
 
+        /// <summary> The name of a supported Azure region. </summary>
+        public AzureLocation Location { get; }
+        /// <summary> The name of the edge zone. </summary>
+        public string EdgeZone { get; }
+        /// <summary> A valid image publisher. </summary>
+        public string PublisherName { get; }
+        /// <summary> A valid image publisher offer. </summary>
+        public string Offer { get; }
+        /// <summary> A valid image SKU. </summary>
+        public string Skus { get; }
         /// <summary> The expand expression to apply on the operation. </summary>
         public string Expand { get; set; }
         /// <summary> An integer value specifying the number of images to return that matches supplied values. </summary>

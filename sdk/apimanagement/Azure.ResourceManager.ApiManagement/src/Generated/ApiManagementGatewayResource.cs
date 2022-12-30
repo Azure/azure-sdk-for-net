@@ -474,12 +474,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/apis
         /// Operation Id: GatewayApi_ListByService
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="GatewayApiData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GatewayApiData> GetGatewayApisByServiceAsync(ApiManagementGatewayGetGatewayApisByServiceOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GatewayApiData> GetGatewayApisByServiceAsync(ApiManagementGatewayResourceGetGatewayApisByServiceOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementGatewayGetGatewayApisByServiceOptions();
+            options ??= new ApiManagementGatewayResourceGetGatewayApisByServiceOptions();
 
             async Task<Page<GatewayApiData>> FirstPageFunc(int? pageSizeHint)
             {
@@ -519,12 +519,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/gateways/{gatewayId}/apis
         /// Operation Id: GatewayApi_ListByService
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GatewayApiData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GatewayApiData> GetGatewayApisByService(ApiManagementGatewayGetGatewayApisByServiceOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<GatewayApiData> GetGatewayApisByService(ApiManagementGatewayResourceGetGatewayApisByServiceOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementGatewayGetGatewayApisByServiceOptions();
+            options ??= new ApiManagementGatewayResourceGetGatewayApisByServiceOptions();
 
             Page<GatewayApiData> FirstPageFunc(int? pageSizeHint)
             {

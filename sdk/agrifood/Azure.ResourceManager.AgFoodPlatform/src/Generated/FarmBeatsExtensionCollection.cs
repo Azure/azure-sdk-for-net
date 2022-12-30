@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// Request Path: /providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions
         /// Operation Id: FarmBeatsExtensions_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FarmBeatsExtensionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FarmBeatsExtensionResource> GetAllAsync(FarmBeatsExtensionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FarmBeatsExtensionResource> GetAllAsync(FarmBeatsExtensionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new FarmBeatsExtensionGetAllOptions();
+            options ??= new FarmBeatsExtensionCollectionGetAllOptions();
 
             async Task<Page<FarmBeatsExtensionResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -163,12 +163,12 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// Request Path: /providers/Microsoft.AgFoodPlatform/farmBeatsExtensionDefinitions
         /// Operation Id: FarmBeatsExtensions_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FarmBeatsExtensionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FarmBeatsExtensionResource> GetAll(FarmBeatsExtensionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<FarmBeatsExtensionResource> GetAll(FarmBeatsExtensionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new FarmBeatsExtensionGetAllOptions();
+            options ??= new FarmBeatsExtensionCollectionGetAllOptions();
 
             Page<FarmBeatsExtensionResource> FirstPageFunc(int? pageSizeHint)
             {

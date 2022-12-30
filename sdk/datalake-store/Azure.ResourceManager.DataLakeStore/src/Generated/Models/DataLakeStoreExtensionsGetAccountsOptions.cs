@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    /// <summary> A class representing the query and header parameters in GetAccounts method. </summary>
+    /// <summary> The DataLakeStoreExtensionsGetAccountsOptions. </summary>
     public partial class DataLakeStoreExtensionsGetAccountsOptions
     {
         /// <summary> Initializes a new instance of DataLakeStoreExtensionsGetAccountsOptions. </summary>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <summary> OData Select statement. Limits the properties on each entry to just those requested, e.g. Categories?$select=CategoryName,Description. Optional. </summary>
         public string Select { get; set; }
         /// <summary> OrderBy clause. One or more comma-separated expressions with an optional &quot;asc&quot; (the default) or &quot;desc&quot; depending on the order you&apos;d like the values sorted, e.g. Categories?$orderby=CategoryName desc. Optional. </summary>
-        public string Orderby { get; set; }
+        public string OrderBy { get; set; }
         /// <summary> The Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </summary>
         public bool? Count { get; set; }
     }

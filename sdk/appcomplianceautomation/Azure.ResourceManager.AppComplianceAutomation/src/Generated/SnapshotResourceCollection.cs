@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Request Path: /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots
         /// Operation Id: Snapshots_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SnapshotResource> GetAllAsync(SnapshotGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SnapshotResource> GetAllAsync(SnapshotResourceCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SnapshotGetAllOptions();
+            options ??= new SnapshotResourceCollectionGetAllOptions();
 
             async Task<Page<SnapshotResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -167,12 +167,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Request Path: /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots
         /// Operation Id: Snapshots_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SnapshotResource> GetAll(SnapshotGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<SnapshotResource> GetAll(SnapshotResourceCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SnapshotGetAllOptions();
+            options ??= new SnapshotResourceCollectionGetAllOptions();
 
             Page<SnapshotResource> FirstPageFunc(int? pageSizeHint)
             {

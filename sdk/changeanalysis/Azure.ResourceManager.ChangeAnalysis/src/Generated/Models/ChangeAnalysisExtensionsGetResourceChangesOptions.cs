@@ -6,21 +6,29 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ChangeAnalysis.Models
 {
-    /// <summary> A class representing the query and header parameters in GetResourceChanges method. </summary>
+    /// <summary> The ChangeAnalysisExtensionsGetResourceChangesOptions. </summary>
     public partial class ChangeAnalysisExtensionsGetResourceChangesOptions
     {
         /// <summary> Initializes a new instance of ChangeAnalysisExtensionsGetResourceChangesOptions. </summary>
+        /// <param name="resourceId"> The identifier of the resource. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
         /// <param name="endTime"> Specifies the end time of the changes request. </param>
-        public ChangeAnalysisExtensionsGetResourceChangesOptions(DateTimeOffset startTime, DateTimeOffset endTime)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
+        public ChangeAnalysisExtensionsGetResourceChangesOptions(string resourceId, DateTimeOffset startTime, DateTimeOffset endTime)
         {
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+
+            ResourceId = resourceId;
             StartTime = startTime;
             EndTime = endTime;
         }
 
+        /// <summary> The identifier of the resource. </summary>
+        public string ResourceId { get; }
         /// <summary> Specifies the start time of the changes request. </summary>
         public DateTimeOffset StartTime { get; }
         /// <summary> Specifies the end time of the changes request. </summary>

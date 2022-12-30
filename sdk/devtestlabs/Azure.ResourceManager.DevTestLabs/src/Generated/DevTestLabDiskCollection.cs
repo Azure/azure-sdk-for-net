@@ -185,12 +185,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/disks
         /// Operation Id: Disks_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevTestLabDiskResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabDiskResource> GetAllAsync(DevTestLabDiskGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevTestLabDiskResource> GetAllAsync(DevTestLabDiskCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DevTestLabDiskGetAllOptions();
+            options ??= new DevTestLabDiskCollectionGetAllOptions();
 
             async Task<Page<DevTestLabDiskResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -230,12 +230,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/disks
         /// Operation Id: Disks_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabDiskResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabDiskResource> GetAll(DevTestLabDiskGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevTestLabDiskResource> GetAll(DevTestLabDiskCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DevTestLabDiskGetAllOptions();
+            options ??= new DevTestLabDiskCollectionGetAllOptions();
 
             Page<DevTestLabDiskResource> FirstPageFunc(int? pageSizeHint)
             {

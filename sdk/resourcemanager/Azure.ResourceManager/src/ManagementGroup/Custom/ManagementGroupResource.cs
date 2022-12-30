@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -32,23 +31,14 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagementGroupResource>> GetAsync(ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupResource.Get");
-            scope.Start();
-            try
+        public virtual async Task<Response<ManagementGroupResource>> GetAsync(ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default) =>
+            await GetAsync(new ManagementGroupResourceGetOptions
             {
-                var response = await _managementGroupRestClient.GetAsync(Id.Name, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementGroupResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+                Expand = expand,
+                Recurse = recurse,
+                Filter = filter,
+                CacheControl = cacheControl
+            }, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Get the details of the management group.
@@ -61,22 +51,13 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagementGroupResource> Get(ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupResource.Get");
-            scope.Start();
-            try
+        public virtual Response<ManagementGroupResource> Get(ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default) =>
+            Get(new ManagementGroupResourceGetOptions
             {
-                var response = _managementGroupRestClient.Get(Id.Name, expand, recurse, filter, cacheControl, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagementGroupResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+                Expand = expand,
+                Recurse = recurse,
+                Filter = filter,
+                CacheControl = cacheControl
+            }, cancellationToken);
     }
 }

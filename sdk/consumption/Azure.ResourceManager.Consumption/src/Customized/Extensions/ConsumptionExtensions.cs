@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.Consumption
     [CodeGenSuppress("GetLots", typeof(TenantResource), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetCreditAsync", typeof(TenantResource), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetCredit", typeof(TenantResource), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetPriceSheetAsync", typeof(SubscriptionResource), typeof(string), typeof(SubscriptionBillingPeriodConsumptionGetPriceSheetOptions), typeof(CancellationToken))]
-    [CodeGenSuppress("GetPriceSheet", typeof(SubscriptionResource), typeof(string), typeof(SubscriptionBillingPeriodConsumptionGetPriceSheetOptions), typeof(CancellationToken))]
+    [CodeGenSuppress("GetPriceSheetAsync", typeof(SubscriptionResource), typeof(SubscriptionBillingPeriodConsumptionResourceGetPriceSheetOptions), typeof(CancellationToken))]
+    [CodeGenSuppress("GetPriceSheet", typeof(SubscriptionResource), typeof(SubscriptionBillingPeriodConsumptionResourceGetPriceSheetOptions), typeof(CancellationToken))]
     [CodeGenSuppress("GetAggregatedCostWithBillingPeriodAsync", typeof(ManagementGroupResource), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetAggregatedCostWithBillingPeriod", typeof(ManagementGroupResource), typeof(string), typeof(CancellationToken))]
     public static partial class ConsumptionExtensions
@@ -60,17 +60,13 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the top N results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<PriceSheetResult>> GetPriceSheetAsync(this SubscriptionResource subscriptionResource, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            ConsumptionExtensionsGetPriceSheetOptions options = new ConsumptionExtensionsGetPriceSheetOptions
+        public static async Task<Response<PriceSheetResult>> GetPriceSheetAsync(this SubscriptionResource subscriptionResource, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default) =>
+            await GetPriceSheetAsync(subscriptionResource, new ConsumptionExtensionsGetPriceSheetOptions
             {
                 Expand = expand,
                 SkipToken = skipToken,
                 Top = top,
-            };
-
-            return await GetExtensionClient(subscriptionResource).GetPriceSheetAsync(options, cancellationToken).ConfigureAwait(false);
-        }
+            }, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Gets the price sheet for a subscription. Price sheet is available via this API only for May 1, 2014 or later.
@@ -82,17 +78,13 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the top N results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<PriceSheetResult> GetPriceSheet(this SubscriptionResource subscriptionResource, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            ConsumptionExtensionsGetPriceSheetOptions options = new ConsumptionExtensionsGetPriceSheetOptions
+        public static Response<PriceSheetResult> GetPriceSheet(this SubscriptionResource subscriptionResource, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default) =>
+            GetPriceSheet(subscriptionResource, new ConsumptionExtensionsGetPriceSheetOptions
             {
                 Expand = expand,
                 SkipToken = skipToken,
                 Top = top,
-            };
-
-            return GetExtensionClient(subscriptionResource).GetPriceSheet(options, cancellationToken);
-        }
+            }, cancellationToken);
 
         #region BillingAccountConsumptionResource
         /// <summary>

@@ -183,24 +183,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/onlineEndpoints
         /// Operation Id: OnlineEndpoints_List
         /// </summary>
-        /// <param name="name"> Name of the endpoint. </param>
-        /// <param name="count"> Number of endpoints to be retrieved in a page of results. </param>
-        /// <param name="computeType"> EndpointComputeType to be filtered by. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="tags"> A set of tags with which to filter the returned models. It is a comma separated string of tags key or tags key=value. Example: tagKey1,tagKey2,tagKey3=value3 . </param>
-        /// <param name="properties"> A set of properties with which to filter the returned models. It is a comma separated string of properties key and/or properties key=value Example: propKey1,propKey2,propKey3=value3 . </param>
-        /// <param name="orderBy"> The option to order the response. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningOnlineEndpointResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningOnlineEndpointResource> GetAllAsync(string name = null, int? count = null, MachineLearningEndpointComputeType? computeType = null, string skip = null, string tags = null, string properties = null, MachineLearningOrderString? orderBy = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MachineLearningOnlineEndpointResource> GetAllAsync(MachineLearningOnlineEndpointCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new MachineLearningOnlineEndpointCollectionGetAllOptions();
+
             async Task<Page<MachineLearningOnlineEndpointResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics.CreateScope("MachineLearningOnlineEndpointCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _machineLearningOnlineEndpointOnlineEndpointsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _machineLearningOnlineEndpointOnlineEndpointsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Name, options.Count, options.ComputeType, options.Skip, options.Tags, options.Properties, options.OrderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningOnlineEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -215,7 +211,7 @@ namespace Azure.ResourceManager.MachineLearning
                 scope.Start();
                 try
                 {
-                    var response = await _machineLearningOnlineEndpointOnlineEndpointsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _machineLearningOnlineEndpointOnlineEndpointsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Name, options.Count, options.ComputeType, options.Skip, options.Tags, options.Properties, options.OrderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningOnlineEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -232,24 +228,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/onlineEndpoints
         /// Operation Id: OnlineEndpoints_List
         /// </summary>
-        /// <param name="name"> Name of the endpoint. </param>
-        /// <param name="count"> Number of endpoints to be retrieved in a page of results. </param>
-        /// <param name="computeType"> EndpointComputeType to be filtered by. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="tags"> A set of tags with which to filter the returned models. It is a comma separated string of tags key or tags key=value. Example: tagKey1,tagKey2,tagKey3=value3 . </param>
-        /// <param name="properties"> A set of properties with which to filter the returned models. It is a comma separated string of properties key and/or properties key=value Example: propKey1,propKey2,propKey3=value3 . </param>
-        /// <param name="orderBy"> The option to order the response. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningOnlineEndpointResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningOnlineEndpointResource> GetAll(string name = null, int? count = null, MachineLearningEndpointComputeType? computeType = null, string skip = null, string tags = null, string properties = null, MachineLearningOrderString? orderBy = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<MachineLearningOnlineEndpointResource> GetAll(MachineLearningOnlineEndpointCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new MachineLearningOnlineEndpointCollectionGetAllOptions();
+
             Page<MachineLearningOnlineEndpointResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics.CreateScope("MachineLearningOnlineEndpointCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _machineLearningOnlineEndpointOnlineEndpointsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy, cancellationToken: cancellationToken);
+                    var response = _machineLearningOnlineEndpointOnlineEndpointsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Name, options.Count, options.ComputeType, options.Skip, options.Tags, options.Properties, options.OrderBy, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningOnlineEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -264,7 +256,7 @@ namespace Azure.ResourceManager.MachineLearning
                 scope.Start();
                 try
                 {
-                    var response = _machineLearningOnlineEndpointOnlineEndpointsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy, cancellationToken: cancellationToken);
+                    var response = _machineLearningOnlineEndpointOnlineEndpointsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Name, options.Count, options.ComputeType, options.Skip, options.Tags, options.Properties, options.OrderBy, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningOnlineEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -332,17 +324,17 @@ namespace Azure.ResourceManager.MachineLearning
 
         IEnumerator<MachineLearningOnlineEndpointResource> IEnumerable<MachineLearningOnlineEndpointResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<MachineLearningOnlineEndpointResource> IAsyncEnumerable<MachineLearningOnlineEndpointResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

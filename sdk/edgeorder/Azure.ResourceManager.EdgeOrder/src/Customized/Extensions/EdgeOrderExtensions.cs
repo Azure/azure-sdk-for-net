@@ -23,17 +23,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EdgeOrderItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EdgeOrderItemResource> GetEdgeOrderItemsAsync(this SubscriptionResource subscriptionResource, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            EdgeOrderExtensionsGetEdgeOrderItemsOptions options = new EdgeOrderExtensionsGetEdgeOrderItemsOptions
+        public static AsyncPageable<EdgeOrderItemResource> GetEdgeOrderItemsAsync(this SubscriptionResource subscriptionResource, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default) =>
+            GetEdgeOrderItemsAsync(subscriptionResource, new EdgeOrderExtensionsGetEdgeOrderItemsOptions
             {
                 Filter = filter,
                 Expand = expand,
                 SkipToken = skipToken
-            };
-
-            return GetExtensionClient(subscriptionResource).GetEdgeOrderItemsAsync(options, cancellationToken);
-        }
+            }, cancellationToken);
 
         /// <summary>
         /// Lists order item at subscription level.
@@ -46,16 +42,12 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeOrderItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EdgeOrderItemResource> GetEdgeOrderItems(this SubscriptionResource subscriptionResource, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            EdgeOrderExtensionsGetEdgeOrderItemsOptions options = new EdgeOrderExtensionsGetEdgeOrderItemsOptions
+        public static Pageable<EdgeOrderItemResource> GetEdgeOrderItems(this SubscriptionResource subscriptionResource, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default) =>
+            GetEdgeOrderItems(subscriptionResource, new EdgeOrderExtensionsGetEdgeOrderItemsOptions
             {
                 Filter = filter,
                 Expand = expand,
                 SkipToken = skipToken
-            };
-
-            return GetExtensionClient(subscriptionResource).GetEdgeOrderItems(options, cancellationToken);
-        }
+            }, cancellationToken);
     }
 }

@@ -3,12 +3,9 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using Azure.Core;
+using Azure.ResourceManager.Media.Models;
 
 namespace Azure.ResourceManager.Media
 {
@@ -29,40 +26,13 @@ namespace Azure.ResourceManager.Media
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MediaAssetResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MediaAssetResource> GetAllAsync(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<MediaAssetResource>> FirstPageFunc(int? pageSizeHint)
+        public virtual AsyncPageable<MediaAssetResource> GetAllAsync(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default) =>
+            GetAllAsync(new MediaAssetCollectionGetAllOptions
             {
-                using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mediaAssetAssetsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaAssetResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MediaAssetResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _mediaAssetAssetsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaAssetResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
+                Filter = filter,
+                Top = top,
+                Orderby = orderby
+            }, cancellationToken);
 
         /// <summary>
         /// List Assets in the Media Services account with optional filtering and ordering
@@ -74,39 +44,12 @@ namespace Azure.ResourceManager.Media
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MediaAssetResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MediaAssetResource> GetAll(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
-        {
-            Page<MediaAssetResource> FirstPageFunc(int? pageSizeHint)
+        public virtual Pageable<MediaAssetResource> GetAll(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default) =>
+            GetAll(new MediaAssetCollectionGetAllOptions
             {
-                using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mediaAssetAssetsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaAssetResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MediaAssetResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _mediaAssetAssetsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MediaAssetResource(Client, value)), response.Value.OdataNextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+                Filter = filter,
+                Top = top,
+                Orderby = orderby
+            }, cancellationToken);
     }
 }

@@ -39,22 +39,20 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/>, <paramref name="customDomains"/> or <paramref name="protocols"/> is null. </exception>
         public virtual async Task<Response<MetricsResponse>> GetLogAnalyticsMetricsAsync(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
-            Argument.AssertNotNull(customDomains, nameof(customDomains));
-            Argument.AssertNotNull(protocols, nameof(protocols));
-
-            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsMetrics");
-            scope.Start();
-            try
+            var input = new ProfileResourceGetLogAnalyticsMetricsOptions(metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols);
+            foreach (var item in groupBy)
             {
-                var response = await _logAnalyticsRestClient.GetLogAnalyticsMetricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions, cancellationToken).ConfigureAwait(false);
-                return response;
+                input.GroupBy.Add(item);
             }
-            catch (Exception e)
+            foreach (var item in continents)
             {
-                scope.Failed(e);
-                throw;
+                input.Continents.Add(item);
             }
+            foreach (var item in countryOrRegions)
+            {
+                input.CountryOrRegions.Add(item);
+            }
+            return await GetLogAnalyticsMetricsAsync(input, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -75,22 +73,20 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/>, <paramref name="customDomains"/> or <paramref name="protocols"/> is null. </exception>
         public virtual Response<MetricsResponse> GetLogAnalyticsMetrics(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
-            Argument.AssertNotNull(customDomains, nameof(customDomains));
-            Argument.AssertNotNull(protocols, nameof(protocols));
-
-            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsMetrics");
-            scope.Start();
-            try
+            var input = new ProfileResourceGetLogAnalyticsMetricsOptions(metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols);
+            foreach (var item in groupBy)
             {
-                var response = _logAnalyticsRestClient.GetLogAnalyticsMetrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions, cancellationToken);
-                return response;
+                input.GroupBy.Add(item);
             }
-            catch (Exception e)
+            foreach (var item in continents)
             {
-                scope.Failed(e);
-                throw;
+                input.Continents.Add(item);
             }
+            foreach (var item in countryOrRegions)
+            {
+                input.CountryOrRegions.Add(item);
+            }
+            return GetLogAnalyticsMetrics(input, cancellationToken);
         }
 
         /// <summary>
@@ -108,21 +104,12 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
         public virtual async Task<Response<RankingsResponse>> GetLogAnalyticsRankingsAsync(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(rankings, nameof(rankings));
-            Argument.AssertNotNull(metrics, nameof(metrics));
-
-            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsRankings");
-            scope.Start();
-            try
+            var input = new ProfileResourceGetLogAnalyticsRankingsOptions(rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd);
+            foreach (var item in customDomains)
             {
-                var response = await _logAnalyticsRestClient.GetLogAnalyticsRankingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, cancellationToken).ConfigureAwait(false);
-                return response;
+                input.CustomDomains.Add(item);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await GetLogAnalyticsRankingsAsync(input, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -140,21 +127,12 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
         public virtual Response<RankingsResponse> GetLogAnalyticsRankings(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(rankings, nameof(rankings));
-            Argument.AssertNotNull(metrics, nameof(metrics));
-
-            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetLogAnalyticsRankings");
-            scope.Start();
-            try
+            var input = new ProfileResourceGetLogAnalyticsRankingsOptions(rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd);
+            foreach (var item in customDomains)
             {
-                var response = _logAnalyticsRestClient.GetLogAnalyticsRankings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains, cancellationToken);
-                return response;
+                input.CustomDomains.Add(item);
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetLogAnalyticsRankings(input, cancellationToken);
         }
 
         /// <summary>
@@ -173,20 +151,20 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
         public virtual async Task<Response<WafMetricsResponse>> GetWafLogAnalyticsMetricsAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
-
-            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetWafLogAnalyticsMetrics");
-            scope.Start();
-            try
+            var input = new ProfileResourceGetWafLogAnalyticsMetricsOptions(metrics, dateTimeBegin, dateTimeEnd, granularity);
+            foreach (var item in actions)
             {
-                var response = await _logAnalyticsRestClient.GetWafLogAnalyticsMetricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, actions, groupBy, ruleTypes, cancellationToken).ConfigureAwait(false);
-                return response;
+                input.Actions.Add(item);
             }
-            catch (Exception e)
+            foreach (var item in groupBy)
             {
-                scope.Failed(e);
-                throw;
+                input.GroupBy.Add(item);
             }
+            foreach (var item in ruleTypes)
+            {
+                input.RuleTypes.Add(item);
+            }
+            return await GetWafLogAnalyticsMetricsAsync(input, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -205,20 +183,20 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
         public virtual Response<WafMetricsResponse> GetWafLogAnalyticsMetrics(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
-
-            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetWafLogAnalyticsMetrics");
-            scope.Start();
-            try
+            var input = new ProfileResourceGetWafLogAnalyticsMetricsOptions(metrics, dateTimeBegin, dateTimeEnd, granularity);
+            foreach (var item in actions)
             {
-                var response = _logAnalyticsRestClient.GetWafLogAnalyticsMetrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, granularity, actions, groupBy, ruleTypes, cancellationToken);
-                return response;
+                input.Actions.Add(item);
             }
-            catch (Exception e)
+            foreach (var item in groupBy)
             {
-                scope.Failed(e);
-                throw;
+                input.GroupBy.Add(item);
             }
+            foreach (var item in ruleTypes)
+            {
+                input.RuleTypes.Add(item);
+            }
+            return GetWafLogAnalyticsMetrics(input, cancellationToken);
         }
 
         /// <summary>
@@ -237,21 +215,16 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
         public virtual async Task<Response<WafRankingsResponse>> GetWafLogAnalyticsRankingsAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
-            Argument.AssertNotNull(rankings, nameof(rankings));
-
-            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetWafLogAnalyticsRankings");
-            scope.Start();
-            try
+            var input = new ProfileResourceGetWafLogAnalyticsRankingsOptions(metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings);
+            foreach (var item in actions)
             {
-                var response = await _logAnalyticsRestClient.GetWafLogAnalyticsRankingsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, cancellationToken).ConfigureAwait(false);
-                return response;
+                input.Actions.Add(item);
             }
-            catch (Exception e)
+            foreach (var item in ruleTypes)
             {
-                scope.Failed(e);
-                throw;
+                input.RuleTypes.Add(item);
             }
+            return await GetWafLogAnalyticsRankingsAsync(input, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -270,21 +243,16 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
         public virtual Response<WafRankingsResponse> GetWafLogAnalyticsRankings(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(metrics, nameof(metrics));
-            Argument.AssertNotNull(rankings, nameof(rankings));
-
-            using var scope = _logAnalyticsClientDiagnostics.CreateScope("ProfileResource.GetWafLogAnalyticsRankings");
-            scope.Start();
-            try
+            var input = new ProfileResourceGetWafLogAnalyticsRankingsOptions(metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings);
+            foreach (var item in actions)
             {
-                var response = _logAnalyticsRestClient.GetWafLogAnalyticsRankings(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes, cancellationToken);
-                return response;
+                input.Actions.Add(item);
             }
-            catch (Exception e)
+            foreach (var item in ruleTypes)
             {
-                scope.Failed(e);
-                throw;
+                input.RuleTypes.Add(item);
             }
+            return GetWafLogAnalyticsRankings(input, cancellationToken);
         }
     }
 }

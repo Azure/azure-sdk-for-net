@@ -185,12 +185,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases
         /// Operation Id: ApiRelease_ListByService
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiReleaseResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiReleaseResource> GetAllAsync(ApiReleaseGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiReleaseResource> GetAllAsync(ApiReleaseCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiReleaseGetAllOptions();
+            options ??= new ApiReleaseCollectionGetAllOptions();
 
             async Task<Page<ApiReleaseResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -230,12 +230,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/releases
         /// Operation Id: ApiRelease_ListByService
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiReleaseResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiReleaseResource> GetAll(ApiReleaseGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApiReleaseResource> GetAll(ApiReleaseCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiReleaseGetAllOptions();
+            options ??= new ApiReleaseCollectionGetAllOptions();
 
             Page<ApiReleaseResource> FirstPageFunc(int? pageSizeHint)
             {

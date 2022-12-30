@@ -1059,12 +1059,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/galleryimages
         /// Operation Id: GalleryImages_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevTestLabGalleryImage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabGalleryImage> GetGalleryImagesAsync(DevTestLabGetGalleryImagesOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevTestLabGalleryImage> GetGalleryImagesAsync(DevTestLabResourceGetGalleryImagesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DevTestLabGetGalleryImagesOptions();
+            options ??= new DevTestLabResourceGetGalleryImagesOptions();
 
             async Task<Page<DevTestLabGalleryImage>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1104,12 +1104,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/galleryimages
         /// Operation Id: GalleryImages_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabGalleryImage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabGalleryImage> GetGalleryImages(DevTestLabGetGalleryImagesOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevTestLabGalleryImage> GetGalleryImages(DevTestLabResourceGetGalleryImagesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DevTestLabGetGalleryImagesOptions();
+            options ??= new DevTestLabResourceGetGalleryImagesOptions();
 
             Page<DevTestLabGalleryImage> FirstPageFunc(int? pageSizeHint)
             {

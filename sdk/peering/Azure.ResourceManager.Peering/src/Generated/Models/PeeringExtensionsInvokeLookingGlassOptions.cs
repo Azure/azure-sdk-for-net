@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> A class representing the query and header parameters in InvokeLookingGlass method. </summary>
+    /// <summary> The PeeringExtensionsInvokeLookingGlassOptions. </summary>
     public partial class PeeringExtensionsInvokeLookingGlassOptions
     {
         /// <summary> Initializes a new instance of PeeringExtensionsInvokeLookingGlassOptions. </summary>

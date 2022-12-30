@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.DataShare
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/invitations
         /// Operation Id: Invitations_ListByShare
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataShareInvitationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataShareInvitationResource> GetAllAsync(DataShareInvitationGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataShareInvitationResource> GetAllAsync(DataShareInvitationCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DataShareInvitationGetAllOptions();
+            options ??= new DataShareInvitationCollectionGetAllOptions();
 
             async Task<Page<DataShareInvitationResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.DataShare
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/invitations
         /// Operation Id: Invitations_ListByShare
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataShareInvitationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataShareInvitationResource> GetAll(DataShareInvitationGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataShareInvitationResource> GetAll(DataShareInvitationCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DataShareInvitationGetAllOptions();
+            options ??= new DataShareInvitationCollectionGetAllOptions();
 
             Page<DataShareInvitationResource> FirstPageFunc(int? pageSizeHint)
             {

@@ -185,12 +185,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/openidConnectProviders
         /// Operation Id: OpenIdConnectProvider_ListByService
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiManagementOpenIdConnectProviderResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementOpenIdConnectProviderResource> GetAllAsync(ApiManagementOpenIdConnectProviderGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiManagementOpenIdConnectProviderResource> GetAllAsync(ApiManagementOpenIdConnectProviderCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementOpenIdConnectProviderGetAllOptions();
+            options ??= new ApiManagementOpenIdConnectProviderCollectionGetAllOptions();
 
             async Task<Page<ApiManagementOpenIdConnectProviderResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -230,12 +230,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/openidConnectProviders
         /// Operation Id: OpenIdConnectProvider_ListByService
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementOpenIdConnectProviderResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementOpenIdConnectProviderResource> GetAll(ApiManagementOpenIdConnectProviderGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApiManagementOpenIdConnectProviderResource> GetAll(ApiManagementOpenIdConnectProviderCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementOpenIdConnectProviderGetAllOptions();
+            options ??= new ApiManagementOpenIdConnectProviderCollectionGetAllOptions();
 
             Page<ApiManagementOpenIdConnectProviderResource> FirstPageFunc(int? pageSizeHint)
             {

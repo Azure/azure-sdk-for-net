@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Consumption
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default
         /// Operation Id: PriceSheet_Get
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PriceSheetResult>> GetPriceSheetAsync(ConsumptionExtensionsGetPriceSheetOptions options, CancellationToken cancellationToken = default)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Consumption
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default
         /// Operation Id: PriceSheet_Get
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PriceSheetResult> GetPriceSheet(ConsumptionExtensionsGetPriceSheetOptions options, CancellationToken cancellationToken = default)
         {
@@ -80,54 +80,6 @@ namespace Azure.ResourceManager.Consumption
             try
             {
                 var response = PriceSheetRestClient.Get(Id.SubscriptionId, options.Expand, options.SkipToken, options.Top, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the price sheet for a scope by subscriptionId and billing period. Price sheet is available via this API only for May 1, 2014 or later.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/default
-        /// Operation Id: PriceSheet_GetByBillingPeriod
-        /// </summary>
-        /// <param name="billingPeriodName"> Billing Period Name. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PriceSheetResult>> GetPriceSheetAsync(string billingPeriodName, SubscriptionBillingPeriodConsumptionGetPriceSheetOptions options, CancellationToken cancellationToken = default)
-        {
-            using var scope = PriceSheetClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPriceSheet");
-            scope.Start();
-            try
-            {
-                var response = await PriceSheetRestClient.GetByBillingPeriodAsync(Id.SubscriptionId, billingPeriodName, options.Expand, options.SkipToken, options.Top, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the price sheet for a scope by subscriptionId and billing period. Price sheet is available via this API only for May 1, 2014 or later.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/default
-        /// Operation Id: PriceSheet_GetByBillingPeriod
-        /// </summary>
-        /// <param name="billingPeriodName"> Billing Period Name. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PriceSheetResult> GetPriceSheet(string billingPeriodName, SubscriptionBillingPeriodConsumptionGetPriceSheetOptions options, CancellationToken cancellationToken = default)
-        {
-            using var scope = PriceSheetClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPriceSheet");
-            scope.Start();
-            try
-            {
-                var response = PriceSheetRestClient.GetByBillingPeriod(Id.SubscriptionId, billingPeriodName, options.Expand, options.SkipToken, options.Top, cancellationToken);
                 return response;
             }
             catch (Exception e)

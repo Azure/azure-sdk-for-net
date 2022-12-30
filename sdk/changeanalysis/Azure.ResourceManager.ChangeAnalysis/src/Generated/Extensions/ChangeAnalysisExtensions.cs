@@ -32,18 +32,15 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// Operation Id: ResourceChanges_List
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="resourceId"> The identifier of the resource. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DetectedChangeData> GetResourceChangesAsync(this TenantResource tenantResource, string resourceId, ChangeAnalysisExtensionsGetResourceChangesOptions options, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DetectedChangeData> GetResourceChangesAsync(this TenantResource tenantResource, ChangeAnalysisExtensionsGetResourceChangesOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
             Argument.AssertNotNull(options, nameof(options));
 
-            return GetExtensionClient(tenantResource).GetResourceChangesAsync(resourceId, options, cancellationToken);
+            return GetExtensionClient(tenantResource).GetResourceChangesAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -52,18 +49,15 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// Operation Id: ResourceChanges_List
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="resourceId"> The identifier of the resource. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DetectedChangeData> GetResourceChanges(this TenantResource tenantResource, string resourceId, ChangeAnalysisExtensionsGetResourceChangesOptions options, CancellationToken cancellationToken = default)
+        public static Pageable<DetectedChangeData> GetResourceChanges(this TenantResource tenantResource, ChangeAnalysisExtensionsGetResourceChangesOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
             Argument.AssertNotNull(options, nameof(options));
 
-            return GetExtensionClient(tenantResource).GetResourceChanges(resourceId, options, cancellationToken);
+            return GetExtensionClient(tenantResource).GetResourceChanges(options, cancellationToken);
         }
 
         private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
@@ -81,7 +75,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// Operation Id: Changes_ListChangesBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
@@ -98,7 +92,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// Operation Id: Changes_ListChangesBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
@@ -124,7 +118,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// Operation Id: Changes_ListChangesByResourceGroup
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
@@ -141,7 +135,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// Operation Id: Changes_ListChangesByResourceGroup
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>

@@ -16,6 +16,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
@@ -182,20 +183,20 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks/{queryPackName}/queries
         /// Operation Id: Queries_List
         /// </summary>
-        /// <param name="top"> Maximum items returned in page. </param>
-        /// <param name="includeBody"> Flag indicating whether or not to return the body of each applicable query. If false, only return the query information. </param>
-        /// <param name="skipToken"> Base64 encoded token used to fetch the next page of items. Default is null. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LogAnalyticsQueryResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LogAnalyticsQueryResource> GetAllAsync(long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LogAnalyticsQueryResource> GetAllAsync(LogAnalyticsQueryCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new LogAnalyticsQueryCollectionGetAllOptions();
+
             async Task<Page<LogAnalyticsQueryResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _logAnalyticsQueryQueriesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, includeBody, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _logAnalyticsQueryQueriesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Top, options.IncludeBody, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new LogAnalyticsQueryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -210,7 +211,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 scope.Start();
                 try
                 {
-                    var response = await _logAnalyticsQueryQueriesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, includeBody, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _logAnalyticsQueryQueriesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Top, options.IncludeBody, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new LogAnalyticsQueryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -227,20 +228,20 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks/{queryPackName}/queries
         /// Operation Id: Queries_List
         /// </summary>
-        /// <param name="top"> Maximum items returned in page. </param>
-        /// <param name="includeBody"> Flag indicating whether or not to return the body of each applicable query. If false, only return the query information. </param>
-        /// <param name="skipToken"> Base64 encoded token used to fetch the next page of items. Default is null. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LogAnalyticsQueryResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LogAnalyticsQueryResource> GetAll(long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<LogAnalyticsQueryResource> GetAll(LogAnalyticsQueryCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new LogAnalyticsQueryCollectionGetAllOptions();
+
             Page<LogAnalyticsQueryResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _logAnalyticsQueryQueriesClientDiagnostics.CreateScope("LogAnalyticsQueryCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _logAnalyticsQueryQueriesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, includeBody, skipToken, cancellationToken: cancellationToken);
+                    var response = _logAnalyticsQueryQueriesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Top, options.IncludeBody, options.SkipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new LogAnalyticsQueryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -255,7 +256,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 scope.Start();
                 try
                 {
-                    var response = _logAnalyticsQueryQueriesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, includeBody, skipToken, cancellationToken: cancellationToken);
+                    var response = _logAnalyticsQueryQueriesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Top, options.IncludeBody, options.SkipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new LogAnalyticsQueryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -323,17 +324,17 @@ namespace Azure.ResourceManager.OperationalInsights
 
         IEnumerator<LogAnalyticsQueryResource> IEnumerable<LogAnalyticsQueryResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<LogAnalyticsQueryResource> IAsyncEnumerable<LogAnalyticsQueryResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

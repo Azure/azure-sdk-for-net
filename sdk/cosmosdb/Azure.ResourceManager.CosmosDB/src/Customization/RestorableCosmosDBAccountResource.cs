@@ -3,9 +3,7 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 
@@ -29,25 +27,13 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="endTime"> The snapshot create timestamp before which snapshots need to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RestorableSqlContainer" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestorableSqlContainer> GetRestorableSqlContainersAsync(string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<RestorableSqlContainer>> FirstPageFunc(int? pageSizeHint)
+        public virtual AsyncPageable<RestorableSqlContainer> GetRestorableSqlContainersAsync(string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default) =>
+            GetRestorableSqlContainersAsync(new RestorableCosmosDBAccountResourceGetRestorableSqlContainersOptions
             {
-                using var scope = _restorableSqlContainersClientDiagnostics.CreateScope("RestorableCosmosDBAccountResource.GetRestorableSqlContainers");
-                scope.Start();
-                try
-                {
-                    var response = await _restorableSqlContainersRestClient.ListAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restorableSqlDatabaseRid, startTime, endTime, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
+                RestorableSqlDatabaseRid = restorableSqlDatabaseRid,
+                StartTime = startTime,
+                EndTime = endTime
+            }, cancellationToken);
 
         /// <summary>
         /// Show the event feed of all mutations done on all the Azure Cosmos DB SQL containers under a specific database.  This helps in scenario where container was accidentally deleted.  This API requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read&apos; permission
@@ -59,24 +45,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="endTime"> The snapshot create timestamp before which snapshots need to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RestorableSqlContainer" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestorableSqlContainer> GetRestorableSqlContainers(string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default)
-        {
-            Page<RestorableSqlContainer> FirstPageFunc(int? pageSizeHint)
+        public virtual Pageable<RestorableSqlContainer> GetRestorableSqlContainers(string restorableSqlDatabaseRid = null, string startTime = null, string endTime = null, CancellationToken cancellationToken = default) =>
+            GetRestorableSqlContainers(new RestorableCosmosDBAccountResourceGetRestorableSqlContainersOptions
             {
-                using var scope = _restorableSqlContainersClientDiagnostics.CreateScope("RestorableCosmosDBAccountResource.GetRestorableSqlContainers");
-                scope.Start();
-                try
-                {
-                    var response = _restorableSqlContainersRestClient.List(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Guid.Parse(Id.Name), restorableSqlDatabaseRid, startTime, endTime, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
+                RestorableSqlDatabaseRid = restorableSqlDatabaseRid,
+                StartTime = startTime,
+                EndTime = endTime
+            }, cancellationToken);
     }
 }

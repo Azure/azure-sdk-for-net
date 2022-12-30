@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> A class representing the query and header parameters in GetGeoRegions method. </summary>
+    /// <summary> The AppServiceExtensionsGetGeoRegionsOptions. </summary>
     public partial class AppServiceExtensionsGetGeoRegionsOptions
     {
         /// <summary> Initializes a new instance of AppServiceExtensionsGetGeoRegionsOptions. </summary>

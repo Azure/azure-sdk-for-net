@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.AgFoodPlatform
         public virtual Azure.Response<bool> Exists(string extensionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string extensionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AgFoodPlatform.ExtensionResource> Get(string extensionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.AgFoodPlatform.ExtensionResource> GetAll(Azure.ResourceManager.AgFoodPlatform.Models.ExtensionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.AgFoodPlatform.ExtensionResource> GetAllAsync(Azure.ResourceManager.AgFoodPlatform.Models.ExtensionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AgFoodPlatform.ExtensionResource> GetAll(Azure.ResourceManager.AgFoodPlatform.Models.ExtensionCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AgFoodPlatform.ExtensionResource> GetAllAsync(Azure.ResourceManager.AgFoodPlatform.Models.ExtensionCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AgFoodPlatform.ExtensionResource>> GetAsync(string extensionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AgFoodPlatform.ExtensionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AgFoodPlatform.ExtensionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.AgFoodPlatform.ExtensionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AgFoodPlatform.ExtensionResource>.GetEnumerator() { throw null; }
@@ -185,8 +185,8 @@ namespace Azure.ResourceManager.AgFoodPlatform
         public virtual Azure.Response<bool> Exists(string farmBeatsExtensionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string farmBeatsExtensionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AgFoodPlatform.FarmBeatsExtensionResource> Get(string farmBeatsExtensionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.AgFoodPlatform.FarmBeatsExtensionResource> GetAll(Azure.ResourceManager.AgFoodPlatform.Models.FarmBeatsExtensionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.AgFoodPlatform.FarmBeatsExtensionResource> GetAllAsync(Azure.ResourceManager.AgFoodPlatform.Models.FarmBeatsExtensionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AgFoodPlatform.FarmBeatsExtensionResource> GetAll(Azure.ResourceManager.AgFoodPlatform.Models.FarmBeatsExtensionCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AgFoodPlatform.FarmBeatsExtensionResource> GetAllAsync(Azure.ResourceManager.AgFoodPlatform.Models.FarmBeatsExtensionCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AgFoodPlatform.FarmBeatsExtensionResource>> GetAsync(string farmBeatsExtensionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AgFoodPlatform.FarmBeatsExtensionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AgFoodPlatform.FarmBeatsExtensionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.AgFoodPlatform.FarmBeatsExtensionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AgFoodPlatform.FarmBeatsExtensionResource>.GetEnumerator() { throw null; }
@@ -310,9 +310,9 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         public System.Collections.Generic.IReadOnlyList<string> PlatformParameters { get { throw null; } }
         public Azure.ResourceManager.AgFoodPlatform.Models.UnitSystemsInfo UnitsSupported { get { throw null; } }
     }
-    public partial class ExtensionGetAllOptions
+    public partial class ExtensionCollectionGetAllOptions
     {
-        public ExtensionGetAllOptions() { }
+        public ExtensionCollectionGetAllOptions() { }
         public System.Collections.Generic.IList<string> ExtensionCategories { get { throw null; } }
         public System.Collections.Generic.IList<string> ExtensionIds { get { throw null; } }
         public int? MaxPageSize { get { throw null; } set { } }
@@ -326,9 +326,9 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
         public Azure.ResourceManager.AgFoodPlatform.Models.FarmBeatsUpdateProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class FarmBeatsExtensionGetAllOptions
+    public partial class FarmBeatsExtensionCollectionGetAllOptions
     {
-        public FarmBeatsExtensionGetAllOptions() { }
+        public FarmBeatsExtensionCollectionGetAllOptions() { }
         public System.Collections.Generic.IList<string> ExtensionCategories { get { throw null; } }
         public System.Collections.Generic.IList<string> FarmBeatsExtensionIds { get { throw null; } }
         public System.Collections.Generic.IList<string> FarmBeatsExtensionNames { get { throw null; } }

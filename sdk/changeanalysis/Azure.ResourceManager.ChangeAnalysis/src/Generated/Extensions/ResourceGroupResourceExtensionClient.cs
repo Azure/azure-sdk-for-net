@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ChangeAnalysis/changes
         /// Operation Id: Changes_ListChangesByResourceGroup
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DetectedChangeData> GetChangesByResourceGroupAsync(ChangeAnalysisExtensionsGetChangesByResourceGroupOptions options, CancellationToken cancellationToken = default)
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ChangeAnalysis/changes
         /// Operation Id: Changes_ListChangesByResourceGroup
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DetectedChangeData> GetChangesByResourceGroup(ChangeAnalysisExtensionsGetChangesByResourceGroupOptions options, CancellationToken cancellationToken = default)

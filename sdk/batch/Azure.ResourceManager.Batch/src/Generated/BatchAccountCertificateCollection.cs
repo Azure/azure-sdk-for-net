@@ -187,12 +187,12 @@ namespace Azure.ResourceManager.Batch
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates
         /// Operation Id: Certificate_ListByBatchAccount
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BatchAccountCertificateResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BatchAccountCertificateResource> GetAllAsync(BatchAccountCertificateGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchAccountCertificateResource> GetAllAsync(BatchAccountCertificateCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new BatchAccountCertificateGetAllOptions();
+            options ??= new BatchAccountCertificateCollectionGetAllOptions();
 
             async Task<Page<BatchAccountCertificateResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -232,12 +232,12 @@ namespace Azure.ResourceManager.Batch
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates
         /// Operation Id: Certificate_ListByBatchAccount
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BatchAccountCertificateResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BatchAccountCertificateResource> GetAll(BatchAccountCertificateGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchAccountCertificateResource> GetAll(BatchAccountCertificateCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new BatchAccountCertificateGetAllOptions();
+            options ??= new BatchAccountCertificateCollectionGetAllOptions();
 
             Page<BatchAccountCertificateResource> FirstPageFunc(int? pageSizeHint)
             {

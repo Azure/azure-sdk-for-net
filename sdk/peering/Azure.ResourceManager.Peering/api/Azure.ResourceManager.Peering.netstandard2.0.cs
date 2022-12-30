@@ -243,9 +243,9 @@ namespace Azure.ResourceManager.Peering
         public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringRegisteredPrefixResource> GetPeeringRegisteredPrefix(string registeredPrefixName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringRegisteredPrefixResource>> GetPeeringRegisteredPrefixAsync(string registeredPrefixName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Peering.PeeringRegisteredPrefixCollection GetPeeringRegisteredPrefixes() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Peering.Models.PeeringReceivedRoute> GetReceivedRoutes(Azure.ResourceManager.Peering.Models.PeeringGetReceivedRoutesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Peering.Models.PeeringReceivedRoute> GetReceivedRoutes(Azure.ResourceManager.Peering.Models.PeeringResourceGetReceivedRoutesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Peering.Models.PeeringReceivedRoute> GetReceivedRoutes(string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.PeeringReceivedRoute> GetReceivedRoutesAsync(Azure.ResourceManager.Peering.Models.PeeringGetReceivedRoutesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.PeeringReceivedRoute> GetReceivedRoutesAsync(Azure.ResourceManager.Peering.Models.PeeringResourceGetReceivedRoutesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.PeeringReceivedRoute> GetReceivedRoutesAsync(string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Peering.Models.RoutingPreferenceUnbilledPrefix> GetRpUnbilledPrefixes(bool? consolidate = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.RoutingPreferenceUnbilledPrefix> GetRpUnbilledPrefixesAsync(bool? consolidate = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -622,15 +622,6 @@ namespace Azure.ResourceManager.Peering.Models
         public static bool operator !=(Azure.ResourceManager.Peering.Models.PeeringFamily left, Azure.ResourceManager.Peering.Models.PeeringFamily right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PeeringGetReceivedRoutesOptions
-    {
-        public PeeringGetReceivedRoutesOptions() { }
-        public string AsPath { get { throw null; } set { } }
-        public string OriginAsValidationState { get { throw null; } set { } }
-        public string Prefix { get { throw null; } set { } }
-        public string RpkiValidationState { get { throw null; } set { } }
-        public string SkipToken { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PeeringKind : System.IEquatable<Azure.ResourceManager.Peering.Models.PeeringKind>
     {
@@ -784,6 +775,15 @@ namespace Azure.ResourceManager.Peering.Models
         public string ReceivedTimestamp { get { throw null; } }
         public string RpkiValidationState { get { throw null; } }
         public string TrustAnchor { get { throw null; } }
+    }
+    public partial class PeeringResourceGetReceivedRoutesOptions
+    {
+        public PeeringResourceGetReceivedRoutesOptions() { }
+        public string AsPath { get { throw null; } set { } }
+        public string OriginAsValidationState { get { throw null; } set { } }
+        public string Prefix { get { throw null; } set { } }
+        public string RpkiValidationState { get { throw null; } set { } }
+        public string SkipToken { get { throw null; } set { } }
     }
     public partial class PeeringResourceTagsPatch
     {

@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.Media
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators
         /// Operation Id: StreamingLocators_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StreamingLocatorResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StreamingLocatorResource> GetAllAsync(StreamingLocatorGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<StreamingLocatorResource> GetAllAsync(StreamingLocatorCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new StreamingLocatorGetAllOptions();
+            options ??= new StreamingLocatorCollectionGetAllOptions();
 
             async Task<Page<StreamingLocatorResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.Media
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingLocators
         /// Operation Id: StreamingLocators_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StreamingLocatorResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StreamingLocatorResource> GetAll(StreamingLocatorGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<StreamingLocatorResource> GetAll(StreamingLocatorCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new StreamingLocatorGetAllOptions();
+            options ??= new StreamingLocatorCollectionGetAllOptions();
 
             Page<StreamingLocatorResource> FirstPageFunc(int? pageSizeHint)
             {

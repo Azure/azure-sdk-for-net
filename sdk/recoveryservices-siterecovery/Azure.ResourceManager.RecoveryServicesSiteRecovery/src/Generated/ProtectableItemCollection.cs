@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectableItems
         /// Operation Id: ReplicationProtectableItems_ListByReplicationProtectionContainers
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProtectableItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProtectableItemResource> GetAllAsync(ProtectableItemGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ProtectableItemResource> GetAllAsync(ProtectableItemCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ProtectableItemGetAllOptions();
+            options ??= new ProtectableItemCollectionGetAllOptions();
 
             async Task<Page<ProtectableItemResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -162,12 +162,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectableItems
         /// Operation Id: ReplicationProtectableItems_ListByReplicationProtectionContainers
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProtectableItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProtectableItemResource> GetAll(ProtectableItemGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ProtectableItemResource> GetAll(ProtectableItemCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ProtectableItemGetAllOptions();
+            options ??= new ProtectableItemCollectionGetAllOptions();
 
             Page<ProtectableItemResource> FirstPageFunc(int? pageSizeHint)
             {

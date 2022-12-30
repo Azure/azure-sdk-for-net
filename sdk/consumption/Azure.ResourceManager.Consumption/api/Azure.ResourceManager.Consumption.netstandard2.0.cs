@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.Consumption
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SubscriptionBillingPeriodConsumptionResource() { }
-        public virtual Azure.Response<Azure.ResourceManager.Consumption.Models.PriceSheetResult> GetPriceSheet(Azure.ResourceManager.Consumption.Models.SubscriptionBillingPeriodConsumptionGetPriceSheetOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Consumption.Models.PriceSheetResult> GetPriceSheet(Azure.ResourceManager.Consumption.Models.SubscriptionBillingPeriodConsumptionResourceGetPriceSheetOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Consumption.Models.PriceSheetResult> GetPriceSheet(string expand = null, string skipToken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.PriceSheetResult>> GetPriceSheetAsync(Azure.ResourceManager.Consumption.Models.SubscriptionBillingPeriodConsumptionGetPriceSheetOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.PriceSheetResult>> GetPriceSheetAsync(Azure.ResourceManager.Consumption.Models.SubscriptionBillingPeriodConsumptionResourceGetPriceSheetOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.PriceSheetResult>> GetPriceSheetAsync(string expand = null, string skipToken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TenantBillingPeriodConsumptionResource : Azure.ResourceManager.ArmResource
@@ -686,9 +686,9 @@ namespace Azure.ResourceManager.Consumption.Models
         public static bool operator !=(Azure.ResourceManager.Consumption.Models.ReservationSummaryDataGrain left, Azure.ResourceManager.Consumption.Models.ReservationSummaryDataGrain right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SubscriptionBillingPeriodConsumptionGetPriceSheetOptions
+    public partial class SubscriptionBillingPeriodConsumptionResourceGetPriceSheetOptions
     {
-        public SubscriptionBillingPeriodConsumptionGetPriceSheetOptions() { }
+        public SubscriptionBillingPeriodConsumptionResourceGetPriceSheetOptions() { }
         public string Expand { get { throw null; } set { } }
         public string SkipToken { get { throw null; } set { } }
         public int? Top { get { throw null; } set { } }

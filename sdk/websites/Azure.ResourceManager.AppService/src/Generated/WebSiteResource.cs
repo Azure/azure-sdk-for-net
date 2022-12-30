@@ -111,15 +111,13 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetSiteDetectorResponse
         /// </summary>
-        /// <param name="detectorName"> Detector Resource Name. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SiteDetectorResource>> GetSiteDetectorAsync(string detectorName, SiteDetectorGetOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteDetectorResource>> GetSiteDetectorAsync(SiteDetectorCollectionGetOptions options, CancellationToken cancellationToken = default)
         {
-            return await GetSiteDetectors().GetAsync(detectorName, options, cancellationToken).ConfigureAwait(false);
+            return await GetSiteDetectors().GetAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -127,15 +125,13 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetSiteDetectorResponse
         /// </summary>
-        /// <param name="detectorName"> Detector Resource Name. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SiteDetectorResource> GetSiteDetector(string detectorName, SiteDetectorGetOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<SiteDetectorResource> GetSiteDetector(SiteDetectorCollectionGetOptions options, CancellationToken cancellationToken = default)
         {
-            return GetSiteDetectors().Get(detectorName, options, cancellationToken);
+            return GetSiteDetectors().Get(options, cancellationToken);
         }
 
         /// <summary> Gets a collection of SitePrivateEndpointConnectionResources in the WebSite. </summary>
@@ -3277,11 +3273,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkTrace/start
         /// Operation Id: WebApps_StartWebSiteNetworkTrace
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<string>> StartWebSiteNetworkTraceAsync(WebSiteStartWebSiteNetworkTraceOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> StartWebSiteNetworkTraceAsync(WebSiteResourceStartWebSiteNetworkTraceOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new WebSiteStartWebSiteNetworkTraceOptions();
+            options ??= new WebSiteResourceStartWebSiteNetworkTraceOptions();
 
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.StartWebSiteNetworkTrace");
             scope.Start();
@@ -3302,11 +3298,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkTrace/start
         /// Operation Id: WebApps_StartWebSiteNetworkTrace
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<string> StartWebSiteNetworkTrace(WebSiteStartWebSiteNetworkTraceOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<string> StartWebSiteNetworkTrace(WebSiteResourceStartWebSiteNetworkTraceOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new WebSiteStartWebSiteNetworkTraceOptions();
+            options ??= new WebSiteResourceStartWebSiteNetworkTraceOptions();
 
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.StartWebSiteNetworkTrace");
             scope.Start();
@@ -3328,11 +3324,11 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_StartWebSiteNetworkTraceOperation
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<IList<WebAppNetworkTrace>>> StartWebSiteNetworkTraceOperationAsync(WaitUntil waitUntil, WebSiteStartWebSiteNetworkTraceOperationOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<IList<WebAppNetworkTrace>>> StartWebSiteNetworkTraceOperationAsync(WaitUntil waitUntil, WebSiteResourceStartWebSiteNetworkTraceOperationOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new WebSiteStartWebSiteNetworkTraceOperationOptions();
+            options ??= new WebSiteResourceStartWebSiteNetworkTraceOperationOptions();
 
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.StartWebSiteNetworkTraceOperation");
             scope.Start();
@@ -3357,11 +3353,11 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_StartWebSiteNetworkTraceOperation
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<IList<WebAppNetworkTrace>> StartWebSiteNetworkTraceOperation(WaitUntil waitUntil, WebSiteStartWebSiteNetworkTraceOperationOptions options, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<IList<WebAppNetworkTrace>> StartWebSiteNetworkTraceOperation(WaitUntil waitUntil, WebSiteResourceStartWebSiteNetworkTraceOperationOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new WebSiteStartWebSiteNetworkTraceOperationOptions();
+            options ??= new WebSiteResourceStartWebSiteNetworkTraceOperationOptions();
 
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.StartWebSiteNetworkTraceOperation");
             scope.Start();
@@ -4538,11 +4534,11 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_StartNetworkTrace
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<IList<WebAppNetworkTrace>>> StartNetworkTraceAsync(WaitUntil waitUntil, WebSiteStartNetworkTraceOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<IList<WebAppNetworkTrace>>> StartNetworkTraceAsync(WaitUntil waitUntil, WebSiteResourceStartNetworkTraceOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new WebSiteStartNetworkTraceOptions();
+            options ??= new WebSiteResourceStartNetworkTraceOptions();
 
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.StartNetworkTrace");
             scope.Start();
@@ -4567,11 +4563,11 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_StartNetworkTrace
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<IList<WebAppNetworkTrace>> StartNetworkTrace(WaitUntil waitUntil, WebSiteStartNetworkTraceOptions options, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<IList<WebAppNetworkTrace>> StartNetworkTrace(WaitUntil waitUntil, WebSiteResourceStartNetworkTraceOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new WebSiteStartNetworkTraceOptions();
+            options ??= new WebSiteResourceStartNetworkTraceOptions();
 
             using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.StartNetworkTrace");
             scope.Start();

@@ -24,15 +24,11 @@ namespace Azure.ResourceManager.Purview
         /// <param name="scopeType"> The scope for the default account. </param>
         /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<DefaultPurviewAccountPayload>> GetDefaultAccountAsync(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
-        {
-            PurviewExtensionsGetDefaultAccountOptions options = new PurviewExtensionsGetDefaultAccountOptions(scopeTenantId, scopeType)
+        public static async Task<Response<DefaultPurviewAccountPayload>> GetDefaultAccountAsync(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default) =>
+            await GetDefaultAccountAsync(tenantResource, new PurviewExtensionsGetDefaultAccountOptions(scopeTenantId, scopeType)
             {
                 Scope = scope
-            };
-
-            return await GetExtensionClient(tenantResource).GetDefaultAccountAsync(options, cancellationToken).ConfigureAwait(false);
-        }
+            }, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Get the default account for the scope.
@@ -44,15 +40,11 @@ namespace Azure.ResourceManager.Purview
         /// <param name="scopeType"> The scope for the default account. </param>
         /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<DefaultPurviewAccountPayload> GetDefaultAccount(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
-        {
-            PurviewExtensionsGetDefaultAccountOptions options = new PurviewExtensionsGetDefaultAccountOptions(scopeTenantId, scopeType)
+        public static Response<DefaultPurviewAccountPayload> GetDefaultAccount(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default) =>
+            GetDefaultAccount(tenantResource, new PurviewExtensionsGetDefaultAccountOptions(scopeTenantId, scopeType)
             {
                 Scope = scope
-            };
-
-            return GetExtensionClient(tenantResource).GetDefaultAccount(options, cancellationToken);
-        }
+            }, cancellationToken);
 
         /// <summary>
         /// Removes the default account from the scope.
@@ -64,15 +56,11 @@ namespace Azure.ResourceManager.Purview
         /// <param name="scopeType"> The scope for the default account. </param>
         /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response> RemoveDefaultAccountAsync(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
-        {
-            PurviewExtensionsRemoveDefaultAccountOptions options = new PurviewExtensionsRemoveDefaultAccountOptions(scopeTenantId, scopeType)
+        public static async Task<Response> RemoveDefaultAccountAsync(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default) =>
+            await RemoveDefaultAccountAsync(tenantResource, new PurviewExtensionsRemoveDefaultAccountOptions(scopeTenantId, scopeType)
             {
                 Scope = scope
-            };
-
-            return await GetExtensionClient(tenantResource).RemoveDefaultAccountAsync(options, cancellationToken).ConfigureAwait(false);
-        }
+            }, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Removes the default account from the scope.
@@ -84,14 +72,10 @@ namespace Azure.ResourceManager.Purview
         /// <param name="scopeType"> The scope for the default account. </param>
         /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response RemoveDefaultAccount(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
-        {
-            PurviewExtensionsRemoveDefaultAccountOptions options = new PurviewExtensionsRemoveDefaultAccountOptions(scopeTenantId, scopeType)
+        public static Response RemoveDefaultAccount(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default) =>
+            RemoveDefaultAccount(tenantResource, new PurviewExtensionsRemoveDefaultAccountOptions(scopeTenantId, scopeType)
             {
                 Scope = scope
-            };
-
-            return GetExtensionClient(tenantResource).RemoveDefaultAccount(options, cancellationToken);
-        }
+            }, cancellationToken);
     }
 }

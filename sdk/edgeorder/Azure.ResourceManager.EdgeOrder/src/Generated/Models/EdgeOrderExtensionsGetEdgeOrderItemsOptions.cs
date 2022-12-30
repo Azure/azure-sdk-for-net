@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    /// <summary> A class representing the query and header parameters in GetEdgeOrderItems method. </summary>
+    /// <summary> The EdgeOrderExtensionsGetEdgeOrderItemsOptions. </summary>
     public partial class EdgeOrderExtensionsGetEdgeOrderItemsOptions
     {
         /// <summary> Initializes a new instance of EdgeOrderExtensionsGetEdgeOrderItemsOptions. </summary>

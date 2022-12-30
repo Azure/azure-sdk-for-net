@@ -119,12 +119,12 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history
         /// Operation Id: HealthMonitors_ListStateChanges
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HealthMonitorStateChangeResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HealthMonitorStateChangeResource> GetAllAsync(HealthMonitorStateChangeGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<HealthMonitorStateChangeResource> GetAllAsync(HealthMonitorStateChangeCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new HealthMonitorStateChangeGetAllOptions();
+            options ??= new HealthMonitorStateChangeCollectionGetAllOptions();
 
             async Task<Page<HealthMonitorStateChangeResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -164,12 +164,12 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history
         /// Operation Id: HealthMonitors_ListStateChanges
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthMonitorStateChangeResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HealthMonitorStateChangeResource> GetAll(HealthMonitorStateChangeGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<HealthMonitorStateChangeResource> GetAll(HealthMonitorStateChangeCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new HealthMonitorStateChangeGetAllOptions();
+            options ??= new HealthMonitorStateChangeCollectionGetAllOptions();
 
             Page<HealthMonitorStateChangeResource> FirstPageFunc(int? pageSizeHint)
             {

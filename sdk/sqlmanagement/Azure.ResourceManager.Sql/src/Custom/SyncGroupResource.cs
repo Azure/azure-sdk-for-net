@@ -5,7 +5,6 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.Sql.Models;
 
@@ -31,43 +30,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startTime"/> or <paramref name="endTime"/> is null. </exception>
         /// <returns> An async collection of <see cref="SyncGroupLogProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SyncGroupLogProperties> GetLogsAsync(string startTime, string endTime, SyncGroupLogType type, string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(startTime, nameof(startTime));
-            Argument.AssertNotNull(endTime, nameof(endTime));
-
-            async Task<Page<SyncGroupLogProperties>> FirstPageFunc(int? pageSizeHint)
+        public virtual AsyncPageable<SyncGroupLogProperties> GetLogsAsync(string startTime, string endTime, SyncGroupLogType type, string continuationToken = null, CancellationToken cancellationToken = default) =>
+            GetLogsAsync(new SyncGroupResourceGetLogsOptions(startTime, endTime, type)
             {
-                using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupResource.GetLogs");
-                scope.Start();
-                try
-                {
-                    var response = await _syncGroupRestClient.ListLogsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, startTime, endTime, type, continuationToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SyncGroupLogProperties>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupResource.GetLogs");
-                scope.Start();
-                try
-                {
-                    var response = await _syncGroupRestClient.ListLogsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, startTime, endTime, type, continuationToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
+                ContinuationToken = continuationToken
+            }, cancellationToken);
 
         /// <summary>
         /// Gets a collection of sync group logs.
@@ -81,42 +48,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startTime"/> or <paramref name="endTime"/> is null. </exception>
         /// <returns> A collection of <see cref="SyncGroupLogProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SyncGroupLogProperties> GetLogs(string startTime, string endTime, SyncGroupLogType type, string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(startTime, nameof(startTime));
-            Argument.AssertNotNull(endTime, nameof(endTime));
-
-            Page<SyncGroupLogProperties> FirstPageFunc(int? pageSizeHint)
+        public virtual Pageable<SyncGroupLogProperties> GetLogs(string startTime, string endTime, SyncGroupLogType type, string continuationToken = null, CancellationToken cancellationToken = default) =>
+            GetLogs(new SyncGroupResourceGetLogsOptions(startTime, endTime, type)
             {
-                using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupResource.GetLogs");
-                scope.Start();
-                try
-                {
-                    var response = _syncGroupRestClient.ListLogs(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, startTime, endTime, type, continuationToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SyncGroupLogProperties> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _syncGroupClientDiagnostics.CreateScope("SyncGroupResource.GetLogs");
-                scope.Start();
-                try
-                {
-                    var response = _syncGroupRestClient.ListLogsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, startTime, endTime, type, continuationToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+                ContinuationToken = continuationToken
+            }, cancellationToken);
     }
 }

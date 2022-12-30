@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    /// <summary> A class representing the query and header parameters in GetAccounts method. </summary>
+    /// <summary> The DataLakeAnalyticsExtensionsGetAccountsOptions. </summary>
     public partial class DataLakeAnalyticsExtensionsGetAccountsOptions
     {
         /// <summary> Initializes a new instance of DataLakeAnalyticsExtensionsGetAccountsOptions. </summary>

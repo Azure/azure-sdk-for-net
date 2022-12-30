@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.AlertsManagement
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts
         /// Operation Id: Alerts_GetAll
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServiceAlertResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceAlertResource> GetAllAsync(ServiceAlertGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServiceAlertResource> GetAllAsync(ServiceAlertCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ServiceAlertGetAllOptions();
+            options ??= new ServiceAlertCollectionGetAllOptions();
 
             async Task<Page<ServiceAlertResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -155,12 +155,12 @@ namespace Azure.ResourceManager.AlertsManagement
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts
         /// Operation Id: Alerts_GetAll
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceAlertResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceAlertResource> GetAll(ServiceAlertGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ServiceAlertResource> GetAll(ServiceAlertCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ServiceAlertGetAllOptions();
+            options ??= new ServiceAlertCollectionGetAllOptions();
 
             Page<ServiceAlertResource> FirstPageFunc(int? pageSizeHint)
             {

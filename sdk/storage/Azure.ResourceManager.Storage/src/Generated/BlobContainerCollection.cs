@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers
         /// Operation Id: BlobContainers_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BlobContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BlobContainerResource> GetAllAsync(BlobContainerGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BlobContainerResource> GetAllAsync(BlobContainerCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new BlobContainerGetAllOptions();
+            options ??= new BlobContainerCollectionGetAllOptions();
 
             async Task<Page<BlobContainerResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers
         /// Operation Id: BlobContainers_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BlobContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BlobContainerResource> GetAll(BlobContainerGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<BlobContainerResource> GetAll(BlobContainerCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new BlobContainerGetAllOptions();
+            options ??= new BlobContainerCollectionGetAllOptions();
 
             Page<BlobContainerResource> FirstPageFunc(int? pageSizeHint)
             {

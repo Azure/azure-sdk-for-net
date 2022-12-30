@@ -609,12 +609,12 @@ namespace Azure.ResourceManager.ResourceMover
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/unresolvedDependencies
         /// Operation Id: UnresolvedDependencies_Get
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MoverUnresolvedDependency" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MoverUnresolvedDependency> GetUnresolvedDependenciesAsync(MoverResourceSetGetUnresolvedDependenciesOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MoverUnresolvedDependency> GetUnresolvedDependenciesAsync(MoverResourceSetResourceGetUnresolvedDependenciesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new MoverResourceSetGetUnresolvedDependenciesOptions();
+            options ??= new MoverResourceSetResourceGetUnresolvedDependenciesOptions();
 
             async Task<Page<MoverUnresolvedDependency>> FirstPageFunc(int? pageSizeHint)
             {
@@ -654,12 +654,12 @@ namespace Azure.ResourceManager.ResourceMover
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/unresolvedDependencies
         /// Operation Id: UnresolvedDependencies_Get
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MoverUnresolvedDependency" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MoverUnresolvedDependency> GetUnresolvedDependencies(MoverResourceSetGetUnresolvedDependenciesOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<MoverUnresolvedDependency> GetUnresolvedDependencies(MoverResourceSetResourceGetUnresolvedDependenciesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new MoverResourceSetGetUnresolvedDependenciesOptions();
+            options ??= new MoverResourceSetResourceGetUnresolvedDependenciesOptions();
 
             Page<MoverUnresolvedDependency> FirstPageFunc(int? pageSizeHint)
             {

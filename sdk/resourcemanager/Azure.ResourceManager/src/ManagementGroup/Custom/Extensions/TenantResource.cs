@@ -29,18 +29,14 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ManagementGroupResource>> GetManagementGroupAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
-        {
-            ManagementGroupGetOptions options = new ManagementGroupGetOptions
+        public virtual async Task<Response<ManagementGroupResource>> GetManagementGroupAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default) =>
+            await GetManagementGroupAsync(new ManagementGroupCollectionGetOptions(groupId)
             {
                 Expand = expand,
                 Recurse = recurse,
                 Filter = filter,
                 CacheControl = cacheControl
-            };
-
-            return await GetManagementGroups().GetAsync(groupId, options, cancellationToken).ConfigureAwait(false);
-        }
+            }, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Get the details of the management group.
@@ -57,17 +53,13 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ManagementGroupResource> GetManagementGroup(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
-        {
-            ManagementGroupGetOptions options = new ManagementGroupGetOptions
+        public virtual Response<ManagementGroupResource> GetManagementGroup(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default) =>
+            GetManagementGroup(new ManagementGroupCollectionGetOptions(groupId)
             {
                 Expand = expand,
                 Recurse = recurse,
                 Filter = filter,
                 CacheControl = cacheControl
-            };
-
-            return GetManagementGroups().Get(groupId, options, cancellationToken);
-        }
+            }, cancellationToken);
     }
 }

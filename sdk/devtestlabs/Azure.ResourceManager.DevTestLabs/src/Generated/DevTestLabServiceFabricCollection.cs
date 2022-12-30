@@ -185,12 +185,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics
         /// Operation Id: ServiceFabrics_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevTestLabServiceFabricResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabServiceFabricResource> GetAllAsync(DevTestLabServiceFabricGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevTestLabServiceFabricResource> GetAllAsync(DevTestLabServiceFabricCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DevTestLabServiceFabricGetAllOptions();
+            options ??= new DevTestLabServiceFabricCollectionGetAllOptions();
 
             async Task<Page<DevTestLabServiceFabricResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -230,12 +230,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics
         /// Operation Id: ServiceFabrics_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabServiceFabricResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabServiceFabricResource> GetAll(DevTestLabServiceFabricGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevTestLabServiceFabricResource> GetAll(DevTestLabServiceFabricCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DevTestLabServiceFabricGetAllOptions();
+            options ??= new DevTestLabServiceFabricCollectionGetAllOptions();
 
             Page<DevTestLabServiceFabricResource> FirstPageFunc(int? pageSizeHint)
             {

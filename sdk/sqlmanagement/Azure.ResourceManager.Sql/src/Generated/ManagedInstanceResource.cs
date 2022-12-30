@@ -1056,12 +1056,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/topqueries
         /// Operation Id: ManagedInstances_ListByManagedInstance
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TopQueries" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TopQueries> GetTopQueriesAsync(ManagedInstanceGetTopQueriesOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TopQueries> GetTopQueriesAsync(ManagedInstanceResourceGetTopQueriesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ManagedInstanceGetTopQueriesOptions();
+            options ??= new ManagedInstanceResourceGetTopQueriesOptions();
 
             async Task<Page<TopQueries>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1101,12 +1101,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/topqueries
         /// Operation Id: ManagedInstances_ListByManagedInstance
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TopQueries" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TopQueries> GetTopQueries(ManagedInstanceGetTopQueriesOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<TopQueries> GetTopQueries(ManagedInstanceResourceGetTopQueriesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ManagedInstanceGetTopQueriesOptions();
+            options ??= new ManagedInstanceResourceGetTopQueriesOptions();
 
             Page<TopQueries> FirstPageFunc(int? pageSizeHint)
             {

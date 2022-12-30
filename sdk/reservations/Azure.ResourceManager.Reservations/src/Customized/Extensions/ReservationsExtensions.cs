@@ -27,9 +27,8 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="take"> To number of reservations to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReservationDetailResource> GetReservationDetailsAsync(this TenantResource tenantResource, string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
-        {
-            ReservationsExtensionsGetReservationDetailsOptions options = new ReservationsExtensionsGetReservationDetailsOptions
+        public static AsyncPageable<ReservationDetailResource> GetReservationDetailsAsync(this TenantResource tenantResource, string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default) =>
+            GetReservationDetailsAsync(tenantResource, new ReservationsExtensionsGetReservationDetailsOptions
             {
                 Filter = filter,
                 Orderby = orderby,
@@ -37,10 +36,7 @@ namespace Azure.ResourceManager.Reservations
                 Skiptoken = skiptoken,
                 SelectedState = selectedState,
                 Take = take
-            };
-
-            return GetExtensionClient(tenantResource).GetReservationDetailsAsync(options, cancellationToken);
-        }
+            }, cancellationToken);
 
         /// <summary>
         /// List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant.
@@ -56,9 +52,8 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="take"> To number of reservations to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReservationDetailResource> GetReservationDetails(this TenantResource tenantResource, string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
-        {
-            ReservationsExtensionsGetReservationDetailsOptions options = new ReservationsExtensionsGetReservationDetailsOptions
+        public static Pageable<ReservationDetailResource> GetReservationDetails(this TenantResource tenantResource, string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default) =>
+            GetReservationDetails(tenantResource, new ReservationsExtensionsGetReservationDetailsOptions
             {
                 Filter = filter,
                 Orderby = orderby,
@@ -66,10 +61,7 @@ namespace Azure.ResourceManager.Reservations
                 Skiptoken = skiptoken,
                 SelectedState = selectedState,
                 Take = take
-            };
-
-            return GetExtensionClient(tenantResource).GetReservationDetails(options, cancellationToken);
-        }
+            }, cancellationToken);
 
         /// <summary>
         /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
@@ -84,19 +76,15 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="planId"> Plan id used to get the third party products. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReservationCatalog> GetCatalogAsync(this SubscriptionResource subscriptionResource, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
-        {
-            ReservationsExtensionsGetCatalogOptions options = new ReservationsExtensionsGetCatalogOptions
+        public static AsyncPageable<ReservationCatalog> GetCatalogAsync(this SubscriptionResource subscriptionResource, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default) =>
+            GetCatalogAsync(subscriptionResource, new ReservationsExtensionsGetCatalogOptions
             {
                 ReservedResourceType = reservedResourceType,
                 Location = location,
                 PublisherId = publisherId,
                 OfferId = offerId,
                 PlanId = planId
-            };
-
-            return GetExtensionClient(subscriptionResource).GetCatalogAsync(options, cancellationToken);
-        }
+            }, cancellationToken);
 
         /// <summary>
         /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
@@ -111,18 +99,14 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="planId"> Plan id used to get the third party products. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReservationCatalog> GetCatalog(this SubscriptionResource subscriptionResource, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
-        {
-            ReservationsExtensionsGetCatalogOptions options = new ReservationsExtensionsGetCatalogOptions
+        public static Pageable<ReservationCatalog> GetCatalog(this SubscriptionResource subscriptionResource, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default) =>
+            GetCatalog(subscriptionResource, new ReservationsExtensionsGetCatalogOptions
             {
                 ReservedResourceType = reservedResourceType,
                 Location = location,
                 PublisherId = publisherId,
                 OfferId = offerId,
                 PlanId = planId
-            };
-
-            return GetExtensionClient(subscriptionResource).GetCatalog(options, cancellationToken);
-        }
+            }, cancellationToken);
     }
 }

@@ -133,21 +133,18 @@ namespace Azure.ResourceManager.ManagementGroups
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_Get
         /// </summary>
-        /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual async Task<Response<ManagementGroupResource>> GetAsync(string groupId, ManagementGroupGetOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<ManagementGroupResource>> GetAsync(ManagementGroupCollectionGetOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            options ??= new ManagementGroupGetOptions();
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _managementGroupRestClient.GetAsync(groupId, options.Expand, options.Recurse, options.Filter, options.CacheControl, cancellationToken).ConfigureAwait(false);
+                var response = await _managementGroupRestClient.GetAsync(options.GroupId, options.Expand, options.Recurse, options.Filter, options.CacheControl, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagementGroupResource(Client, response.Value), response.GetRawResponse());
@@ -165,21 +162,18 @@ namespace Azure.ResourceManager.ManagementGroups
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_Get
         /// </summary>
-        /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual Response<ManagementGroupResource> Get(string groupId, ManagementGroupGetOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<ManagementGroupResource> Get(ManagementGroupCollectionGetOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            options ??= new ManagementGroupGetOptions();
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = _managementGroupRestClient.Get(groupId, options.Expand, options.Recurse, options.Filter, options.CacheControl, cancellationToken);
+                var response = _managementGroupRestClient.Get(options.GroupId, options.Expand, options.Recurse, options.Filter, options.CacheControl, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagementGroupResource(Client, response.Value), response.GetRawResponse());
@@ -346,21 +340,18 @@ namespace Azure.ResourceManager.ManagementGroups
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_Get
         /// </summary>
-        /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string groupId, ManagementGroupGetOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(ManagementGroupCollectionExistsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            options ??= new ManagementGroupGetOptions();
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _managementGroupRestClient.GetAsync(groupId, options.Expand, options.Recurse, options.Filter, options.CacheControl, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managementGroupRestClient.GetAsync(options.GroupId, options.Expand, options.Recurse, options.Filter, options.CacheControl, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -375,21 +366,18 @@ namespace Azure.ResourceManager.ManagementGroups
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_Get
         /// </summary>
-        /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual Response<bool> Exists(string groupId, ManagementGroupGetOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<bool> Exists(ManagementGroupCollectionExistsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            options ??= new ManagementGroupGetOptions();
+            Argument.AssertNotNull(options, nameof(options));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = _managementGroupRestClient.Get(groupId, options.Expand, options.Recurse, options.Filter, options.CacheControl, cancellationToken: cancellationToken);
+                var response = _managementGroupRestClient.Get(options.GroupId, options.Expand, options.Recurse, options.Filter, options.CacheControl, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

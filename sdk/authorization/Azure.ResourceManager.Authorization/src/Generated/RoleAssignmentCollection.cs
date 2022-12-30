@@ -171,12 +171,12 @@ namespace Azure.ResourceManager.Authorization
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments
         /// Operation Id: RoleAssignments_ListForScope
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RoleAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RoleAssignmentResource> GetAllAsync(RoleAssignmentGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RoleAssignmentResource> GetAllAsync(RoleAssignmentCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new RoleAssignmentGetAllOptions();
+            options ??= new RoleAssignmentCollectionGetAllOptions();
 
             async Task<Page<RoleAssignmentResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -216,12 +216,12 @@ namespace Azure.ResourceManager.Authorization
         /// Request Path: /{scope}/providers/Microsoft.Authorization/roleAssignments
         /// Operation Id: RoleAssignments_ListForScope
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RoleAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RoleAssignmentResource> GetAll(RoleAssignmentGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<RoleAssignmentResource> GetAll(RoleAssignmentCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new RoleAssignmentGetAllOptions();
+            options ??= new RoleAssignmentCollectionGetAllOptions();
 
             Page<RoleAssignmentResource> FirstPageFunc(int? pageSizeHint)
             {

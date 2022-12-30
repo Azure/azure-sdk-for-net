@@ -5,12 +5,7 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
-using System.Threading.Tasks;
-using Azure;
-using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DevTestLabs.Models;
 using Azure.ResourceManager.Resources;
 
@@ -31,18 +26,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevTestLabResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DevTestLabResource> GetDevTestLabsAsync(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
-        {
-            DevTestLabsExtensionsGetDevTestLabsOptions options = new DevTestLabsExtensionsGetDevTestLabsOptions
+        public static AsyncPageable<DevTestLabResource> GetDevTestLabsAsync(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default) =>
+            GetDevTestLabsAsync(subscriptionResource, new DevTestLabsExtensionsGetDevTestLabsOptions
             {
                 Expand = expand,
                 Filter = filter,
                 Top = top,
                 Orderby = orderby
-            };
-
-            return GetExtensionClient(subscriptionResource).GetDevTestLabsAsync(options, cancellationToken);
-        }
+            }, cancellationToken);
 
         /// <summary>
         /// List labs in a subscription.
@@ -56,18 +47,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DevTestLabResource> GetDevTestLabs(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
-        {
-            DevTestLabsExtensionsGetDevTestLabsOptions options = new DevTestLabsExtensionsGetDevTestLabsOptions
+        public static Pageable<DevTestLabResource> GetDevTestLabs(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default) =>
+            GetDevTestLabs(subscriptionResource, new DevTestLabsExtensionsGetDevTestLabsOptions
             {
                 Expand = expand,
                 Filter = filter,
                 Top = top,
                 Orderby = orderby
-            };
-
-            return GetExtensionClient(subscriptionResource).GetDevTestLabs(options, cancellationToken);
-        }
+            }, cancellationToken);
 
         /// <summary>
         /// List schedules in a subscription.
@@ -81,18 +68,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevTestLabGlobalScheduleResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedulesAsync(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
-        {
-            DevTestLabsExtensionsGetDevTestLabGlobalSchedulesOptions options = new DevTestLabsExtensionsGetDevTestLabGlobalSchedulesOptions
+        public static AsyncPageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedulesAsync(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default) =>
+            GetDevTestLabGlobalSchedulesAsync(subscriptionResource, new DevTestLabsExtensionsGetDevTestLabGlobalSchedulesOptions
             {
                 Expand = expand,
                 Filter = filter,
                 Top = top,
                 Orderby = orderby
-            };
-
-            return GetExtensionClient(subscriptionResource).GetDevTestLabGlobalSchedulesAsync(options, cancellationToken);
-        }
+            }, cancellationToken);
 
         /// <summary>
         /// List schedules in a subscription.
@@ -106,17 +89,13 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedules(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
-        {
-            DevTestLabsExtensionsGetDevTestLabGlobalSchedulesOptions options = new DevTestLabsExtensionsGetDevTestLabGlobalSchedulesOptions
+        public static Pageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedules(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default) =>
+            GetDevTestLabGlobalSchedules(subscriptionResource, new DevTestLabsExtensionsGetDevTestLabGlobalSchedulesOptions
             {
                 Expand = expand,
                 Filter = filter,
                 Top = top,
                 Orderby = orderby
-            };
-
-            return GetExtensionClient(subscriptionResource).GetDevTestLabGlobalSchedules(options, cancellationToken);
-        }
+            }, cancellationToken);
     }
 }

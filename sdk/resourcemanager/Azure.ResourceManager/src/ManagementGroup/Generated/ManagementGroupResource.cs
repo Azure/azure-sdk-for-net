@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.ManagementGroups
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_Get
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagementGroupResource>> GetAsync(ManagementGroupGetOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementGroupResource>> GetAsync(ManagementGroupResourceGetOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ManagementGroupGetOptions();
+            options ??= new ManagementGroupResourceGetOptions();
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupResource.Get");
             scope.Start();
@@ -122,11 +122,11 @@ namespace Azure.ResourceManager.ManagementGroups
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_Get
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagementGroupResource> Get(ManagementGroupGetOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroupResource> Get(ManagementGroupResourceGetOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ManagementGroupGetOptions();
+            options ??= new ManagementGroupResourceGetOptions();
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupResource.Get");
             scope.Start();

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataLakeAnalytics/accounts
         /// Operation Id: Accounts_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataLakeAnalyticsAccountBasic" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataLakeAnalyticsAccountBasic> GetAccountsAsync(DataLakeAnalyticsExtensionsGetAccountsOptions options, CancellationToken cancellationToken = default)
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataLakeAnalytics/accounts
         /// Operation Id: Accounts_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataLakeAnalyticsAccountBasic" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataLakeAnalyticsAccountBasic> GetAccounts(DataLakeAnalyticsExtensionsGetAccountsOptions options, CancellationToken cancellationToken = default)

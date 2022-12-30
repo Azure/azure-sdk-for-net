@@ -540,12 +540,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/columns
         /// Operation Id: ManagedDatabaseColumns_ListByDatabase
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedDatabaseColumnResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedDatabaseColumnResource> GetManagedDatabaseColumnsByDatabaseAsync(ManagedDatabaseGetManagedDatabaseColumnsByDatabaseOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagedDatabaseColumnResource> GetManagedDatabaseColumnsByDatabaseAsync(ManagedDatabaseResourceGetManagedDatabaseColumnsByDatabaseOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ManagedDatabaseGetManagedDatabaseColumnsByDatabaseOptions();
+            options ??= new ManagedDatabaseResourceGetManagedDatabaseColumnsByDatabaseOptions();
 
             async Task<Page<ManagedDatabaseColumnResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -585,12 +585,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/columns
         /// Operation Id: ManagedDatabaseColumns_ListByDatabase
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedDatabaseColumnResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedDatabaseColumnResource> GetManagedDatabaseColumnsByDatabase(ManagedDatabaseGetManagedDatabaseColumnsByDatabaseOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagedDatabaseColumnResource> GetManagedDatabaseColumnsByDatabase(ManagedDatabaseResourceGetManagedDatabaseColumnsByDatabaseOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ManagedDatabaseGetManagedDatabaseColumnsByDatabaseOptions();
+            options ??= new ManagedDatabaseResourceGetManagedDatabaseColumnsByDatabaseOptions();
 
             Page<ManagedDatabaseColumnResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -684,16 +684,13 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}/statistics
         /// Operation Id: ManagedDatabaseQueries_ListByQuery
         /// </summary>
-        /// <param name="queryId"> The String to use. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="queryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="QueryStatistics" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<QueryStatistics> GetQueryStatisticsAsync(string queryId, ManagedDatabaseGetQueryStatisticsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<QueryStatistics> GetQueryStatisticsAsync(ManagedDatabaseResourceGetQueryStatisticsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
-            options ??= new ManagedDatabaseGetQueryStatisticsOptions();
+            Argument.AssertNotNull(options, nameof(options));
 
             async Task<Page<QueryStatistics>> FirstPageFunc(int? pageSizeHint)
             {
@@ -701,7 +698,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await _managedDatabaseQueriesRestClient.ListByQueryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, options.StartTime, options.EndTime, options.Interval, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedDatabaseQueriesRestClient.ListByQueryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.QueryId, options.StartTime, options.EndTime, options.Interval, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -716,7 +713,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = await _managedDatabaseQueriesRestClient.ListByQueryNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, options.StartTime, options.EndTime, options.Interval, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedDatabaseQueriesRestClient.ListByQueryNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.QueryId, options.StartTime, options.EndTime, options.Interval, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -733,16 +730,13 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/queries/{queryId}/statistics
         /// Operation Id: ManagedDatabaseQueries_ListByQuery
         /// </summary>
-        /// <param name="queryId"> The String to use. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="queryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="QueryStatistics" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<QueryStatistics> GetQueryStatistics(string queryId, ManagedDatabaseGetQueryStatisticsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<QueryStatistics> GetQueryStatistics(ManagedDatabaseResourceGetQueryStatisticsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
-            options ??= new ManagedDatabaseGetQueryStatisticsOptions();
+            Argument.AssertNotNull(options, nameof(options));
 
             Page<QueryStatistics> FirstPageFunc(int? pageSizeHint)
             {
@@ -750,7 +744,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabaseQueriesRestClient.ListByQuery(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, options.StartTime, options.EndTime, options.Interval, cancellationToken: cancellationToken);
+                    var response = _managedDatabaseQueriesRestClient.ListByQuery(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.QueryId, options.StartTime, options.EndTime, options.Interval, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -765,7 +759,7 @@ namespace Azure.ResourceManager.Sql
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabaseQueriesRestClient.ListByQueryNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, options.StartTime, options.EndTime, options.Interval, cancellationToken: cancellationToken);
+                    var response = _managedDatabaseQueriesRestClient.ListByQueryNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.QueryId, options.StartTime, options.EndTime, options.Interval, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -782,12 +776,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityEvents
         /// Operation Id: ManagedDatabaseSecurityEvents_ListByDatabase
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityEvent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityEvent> GetManagedDatabaseSecurityEventsByDatabaseAsync(ManagedDatabaseGetManagedDatabaseSecurityEventsByDatabaseOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecurityEvent> GetManagedDatabaseSecurityEventsByDatabaseAsync(ManagedDatabaseResourceGetManagedDatabaseSecurityEventsByDatabaseOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ManagedDatabaseGetManagedDatabaseSecurityEventsByDatabaseOptions();
+            options ??= new ManagedDatabaseResourceGetManagedDatabaseSecurityEventsByDatabaseOptions();
 
             async Task<Page<SecurityEvent>> FirstPageFunc(int? pageSizeHint)
             {
@@ -827,12 +821,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/securityEvents
         /// Operation Id: ManagedDatabaseSecurityEvents_ListByDatabase
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityEvent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityEvent> GetManagedDatabaseSecurityEventsByDatabase(ManagedDatabaseGetManagedDatabaseSecurityEventsByDatabaseOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<SecurityEvent> GetManagedDatabaseSecurityEventsByDatabase(ManagedDatabaseResourceGetManagedDatabaseSecurityEventsByDatabaseOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ManagedDatabaseGetManagedDatabaseSecurityEventsByDatabaseOptions();
+            options ??= new ManagedDatabaseResourceGetManagedDatabaseSecurityEventsByDatabaseOptions();
 
             Page<SecurityEvent> FirstPageFunc(int? pageSizeHint)
             {
@@ -872,12 +866,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/currentSensitivityLabels
         /// Operation Id: ManagedDatabaseSensitivityLabels_ListCurrent
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedDatabaseSensitivityLabelResource> GetCurrentManagedDatabaseSensitivityLabelsAsync(ManagedDatabaseGetCurrentManagedDatabaseSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagedDatabaseSensitivityLabelResource> GetCurrentManagedDatabaseSensitivityLabelsAsync(ManagedDatabaseResourceGetCurrentManagedDatabaseSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ManagedDatabaseGetCurrentManagedDatabaseSensitivityLabelsOptions();
+            options ??= new ManagedDatabaseResourceGetCurrentManagedDatabaseSensitivityLabelsOptions();
 
             async Task<Page<ManagedDatabaseSensitivityLabelResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -917,12 +911,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/currentSensitivityLabels
         /// Operation Id: ManagedDatabaseSensitivityLabels_ListCurrent
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedDatabaseSensitivityLabelResource> GetCurrentManagedDatabaseSensitivityLabels(ManagedDatabaseGetCurrentManagedDatabaseSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagedDatabaseSensitivityLabelResource> GetCurrentManagedDatabaseSensitivityLabels(ManagedDatabaseResourceGetCurrentManagedDatabaseSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ManagedDatabaseGetCurrentManagedDatabaseSensitivityLabelsOptions();
+            options ??= new ManagedDatabaseResourceGetCurrentManagedDatabaseSensitivityLabelsOptions();
 
             Page<ManagedDatabaseSensitivityLabelResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -1014,12 +1008,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/recommendedSensitivityLabels
         /// Operation Id: ManagedDatabaseSensitivityLabels_ListRecommended
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ManagedDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedDatabaseSensitivityLabelResource> GetRecommendedManagedDatabaseSensitivityLabelsAsync(ManagedDatabaseGetRecommendedManagedDatabaseSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagedDatabaseSensitivityLabelResource> GetRecommendedManagedDatabaseSensitivityLabelsAsync(ManagedDatabaseResourceGetRecommendedManagedDatabaseSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ManagedDatabaseGetRecommendedManagedDatabaseSensitivityLabelsOptions();
+            options ??= new ManagedDatabaseResourceGetRecommendedManagedDatabaseSensitivityLabelsOptions();
 
             async Task<Page<ManagedDatabaseSensitivityLabelResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1059,12 +1053,12 @@ namespace Azure.ResourceManager.Sql
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/recommendedSensitivityLabels
         /// Operation Id: ManagedDatabaseSensitivityLabels_ListRecommended
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedDatabaseSensitivityLabelResource> GetRecommendedManagedDatabaseSensitivityLabels(ManagedDatabaseGetRecommendedManagedDatabaseSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagedDatabaseSensitivityLabelResource> GetRecommendedManagedDatabaseSensitivityLabels(ManagedDatabaseResourceGetRecommendedManagedDatabaseSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ManagedDatabaseGetRecommendedManagedDatabaseSensitivityLabelsOptions();
+            options ??= new ManagedDatabaseResourceGetRecommendedManagedDatabaseSensitivityLabelsOptions();
 
             Page<ManagedDatabaseSensitivityLabelResource> FirstPageFunc(int? pageSizeHint)
             {

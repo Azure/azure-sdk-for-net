@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.ChangeAnalysis.Models
 {
-    /// <summary> A class representing the query and header parameters in GetChangesByResourceGroup method. </summary>
+    /// <summary> The ChangeAnalysisExtensionsGetChangesByResourceGroupOptions. </summary>
     public partial class ChangeAnalysisExtensionsGetChangesByResourceGroupOptions
     {
         /// <summary> Initializes a new instance of ChangeAnalysisExtensionsGetChangesByResourceGroupOptions. </summary>

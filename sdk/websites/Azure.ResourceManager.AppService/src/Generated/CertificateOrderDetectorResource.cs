@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}
         /// Operation Id: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CertificateOrderDetectorResource>> GetAsync(CertificateOrderDetectorGetOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CertificateOrderDetectorResource>> GetAsync(CertificateOrderDetectorResourceGetOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new CertificateOrderDetectorGetOptions();
+            options ??= new CertificateOrderDetectorResourceGetOptions();
 
             using var scope = _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics.CreateScope("CertificateOrderDetectorResource.Get");
             scope.Start();
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}
         /// Operation Id: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CertificateOrderDetectorResource> Get(CertificateOrderDetectorGetOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<CertificateOrderDetectorResource> Get(CertificateOrderDetectorResourceGetOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new CertificateOrderDetectorGetOptions();
+            options ??= new CertificateOrderDetectorResourceGetOptions();
 
             using var scope = _certificateOrderDetectorCertificateOrdersDiagnosticsClientDiagnostics.CreateScope("CertificateOrderDetectorResource.Get");
             scope.Start();

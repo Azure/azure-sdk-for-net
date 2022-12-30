@@ -476,15 +476,13 @@ namespace Azure.ResourceManager.DataShare
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/listSynchronizationDetails
         /// Operation Id: ShareSubscriptions_ListSynchronizationDetails
         /// </summary>
-        /// <param name="shareSubscriptionSynchronization"> Share Subscription Synchronization payload. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="shareSubscriptionSynchronization"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="SynchronizationDetails" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SynchronizationDetails> GetSynchronizationDetailsAsync(ShareSubscriptionSynchronization shareSubscriptionSynchronization, ShareSubscriptionGetSynchronizationDetailsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SynchronizationDetails> GetSynchronizationDetailsAsync(ShareSubscriptionResourceGetSynchronizationDetailsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(shareSubscriptionSynchronization, nameof(shareSubscriptionSynchronization));
-            options ??= new ShareSubscriptionGetSynchronizationDetailsOptions();
+            Argument.AssertNotNull(options, nameof(options));
 
             async Task<Page<SynchronizationDetails>> FirstPageFunc(int? pageSizeHint)
             {
@@ -492,7 +490,7 @@ namespace Azure.ResourceManager.DataShare
                 scope.Start();
                 try
                 {
-                    var response = await _shareSubscriptionRestClient.ListSynchronizationDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _shareSubscriptionRestClient.ListSynchronizationDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.ShareSubscriptionSynchronization, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -507,7 +505,7 @@ namespace Azure.ResourceManager.DataShare
                 scope.Start();
                 try
                 {
-                    var response = await _shareSubscriptionRestClient.ListSynchronizationDetailsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _shareSubscriptionRestClient.ListSynchronizationDetailsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.ShareSubscriptionSynchronization, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -524,15 +522,13 @@ namespace Azure.ResourceManager.DataShare
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/listSynchronizationDetails
         /// Operation Id: ShareSubscriptions_ListSynchronizationDetails
         /// </summary>
-        /// <param name="shareSubscriptionSynchronization"> Share Subscription Synchronization payload. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="shareSubscriptionSynchronization"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="SynchronizationDetails" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SynchronizationDetails> GetSynchronizationDetails(ShareSubscriptionSynchronization shareSubscriptionSynchronization, ShareSubscriptionGetSynchronizationDetailsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<SynchronizationDetails> GetSynchronizationDetails(ShareSubscriptionResourceGetSynchronizationDetailsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(shareSubscriptionSynchronization, nameof(shareSubscriptionSynchronization));
-            options ??= new ShareSubscriptionGetSynchronizationDetailsOptions();
+            Argument.AssertNotNull(options, nameof(options));
 
             Page<SynchronizationDetails> FirstPageFunc(int? pageSizeHint)
             {
@@ -540,7 +536,7 @@ namespace Azure.ResourceManager.DataShare
                 scope.Start();
                 try
                 {
-                    var response = _shareSubscriptionRestClient.ListSynchronizationDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken);
+                    var response = _shareSubscriptionRestClient.ListSynchronizationDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.ShareSubscriptionSynchronization, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -555,7 +551,7 @@ namespace Azure.ResourceManager.DataShare
                 scope.Start();
                 try
                 {
-                    var response = _shareSubscriptionRestClient.ListSynchronizationDetailsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken);
+                    var response = _shareSubscriptionRestClient.ListSynchronizationDetailsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.ShareSubscriptionSynchronization, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -572,12 +568,12 @@ namespace Azure.ResourceManager.DataShare
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/listSynchronizations
         /// Operation Id: ShareSubscriptions_ListSynchronizations
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ShareSubscriptionSynchronization" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ShareSubscriptionSynchronization> GetSynchronizationsAsync(ShareSubscriptionGetSynchronizationsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ShareSubscriptionSynchronization> GetSynchronizationsAsync(ShareSubscriptionResourceGetSynchronizationsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ShareSubscriptionGetSynchronizationsOptions();
+            options ??= new ShareSubscriptionResourceGetSynchronizationsOptions();
 
             async Task<Page<ShareSubscriptionSynchronization>> FirstPageFunc(int? pageSizeHint)
             {
@@ -617,12 +613,12 @@ namespace Azure.ResourceManager.DataShare
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/listSynchronizations
         /// Operation Id: ShareSubscriptions_ListSynchronizations
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ShareSubscriptionSynchronization" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ShareSubscriptionSynchronization> GetSynchronizations(ShareSubscriptionGetSynchronizationsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ShareSubscriptionSynchronization> GetSynchronizations(ShareSubscriptionResourceGetSynchronizationsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ShareSubscriptionGetSynchronizationsOptions();
+            options ??= new ShareSubscriptionResourceGetSynchronizationsOptions();
 
             Page<ShareSubscriptionSynchronization> FirstPageFunc(int? pageSizeHint)
             {

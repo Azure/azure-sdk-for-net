@@ -185,12 +185,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}/attachments
         /// Operation Id: ApiIssueAttachment_ListByService
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiIssueAttachmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiIssueAttachmentResource> GetAllAsync(ApiIssueAttachmentGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiIssueAttachmentResource> GetAllAsync(ApiIssueAttachmentCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiIssueAttachmentGetAllOptions();
+            options ??= new ApiIssueAttachmentCollectionGetAllOptions();
 
             async Task<Page<ApiIssueAttachmentResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -230,12 +230,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}/attachments
         /// Operation Id: ApiIssueAttachment_ListByService
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiIssueAttachmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiIssueAttachmentResource> GetAll(ApiIssueAttachmentGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApiIssueAttachmentResource> GetAll(ApiIssueAttachmentCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiIssueAttachmentGetAllOptions();
+            options ??= new ApiIssueAttachmentCollectionGetAllOptions();
 
             Page<ApiIssueAttachmentResource> FirstPageFunc(int? pageSizeHint)
             {

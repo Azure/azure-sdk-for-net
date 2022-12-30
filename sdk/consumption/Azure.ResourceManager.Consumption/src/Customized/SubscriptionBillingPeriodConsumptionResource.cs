@@ -64,21 +64,13 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the top N results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PriceSheetResult>> GetPriceSheetAsync(string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _priceSheetClientDiagnostics.CreateScope("SubscriptionBillingPeriodConsumptionResource.GetPriceSheet");
-            scope.Start();
-            try
+        public virtual async Task<Response<PriceSheetResult>> GetPriceSheetAsync(string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default) =>
+            await GetPriceSheetAsync(new SubscriptionBillingPeriodConsumptionResourceGetPriceSheetOptions
             {
-                var response = await _priceSheetRestClient.GetByBillingPeriodAsync(Id.SubscriptionId, Id.Name, expand, skipToken, top, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+                Expand = expand,
+                SkipToken = skipToken,
+                Top = top
+            }, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Get the price sheet for a scope by subscriptionId and billing period. Price sheet is available via this API only for May 1, 2014 or later.
@@ -89,21 +81,13 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the top N results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PriceSheetResult> GetPriceSheet(string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _priceSheetClientDiagnostics.CreateScope("SubscriptionBillingPeriodConsumptionResource.GetPriceSheet");
-            scope.Start();
-            try
+        public virtual Response<PriceSheetResult> GetPriceSheet(string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default) =>
+            GetPriceSheet(new SubscriptionBillingPeriodConsumptionResourceGetPriceSheetOptions
             {
-                var response = _priceSheetRestClient.GetByBillingPeriod(Id.SubscriptionId, Id.Name, expand, skipToken, top, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+                Expand = expand,
+                SkipToken = skipToken,
+                Top = top
+            }, cancellationToken);
 
         /// <summary>
         /// Get the price sheet for a scope by subscriptionId and billing period. Price sheet is available via this API only for May 1, 2014 or later.
@@ -112,9 +96,9 @@ namespace Azure.ResourceManager.Consumption
         /// </summary>
         /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PriceSheetResult>> GetPriceSheetAsync(SubscriptionBillingPeriodConsumptionGetPriceSheetOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PriceSheetResult>> GetPriceSheetAsync(SubscriptionBillingPeriodConsumptionResourceGetPriceSheetOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SubscriptionBillingPeriodConsumptionGetPriceSheetOptions();
+            options ??= new SubscriptionBillingPeriodConsumptionResourceGetPriceSheetOptions();
 
             using var scope = _priceSheetClientDiagnostics.CreateScope("SubscriptionBillingPeriodConsumptionResource.GetPriceSheet");
             scope.Start();
@@ -137,9 +121,9 @@ namespace Azure.ResourceManager.Consumption
         /// </summary>
         /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PriceSheetResult> GetPriceSheet(SubscriptionBillingPeriodConsumptionGetPriceSheetOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<PriceSheetResult> GetPriceSheet(SubscriptionBillingPeriodConsumptionResourceGetPriceSheetOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SubscriptionBillingPeriodConsumptionGetPriceSheetOptions();
+            options ??= new SubscriptionBillingPeriodConsumptionResourceGetPriceSheetOptions();
 
             using var scope = _priceSheetClientDiagnostics.CreateScope("SubscriptionBillingPeriodConsumptionResource.GetPriceSheet");
             scope.Start();

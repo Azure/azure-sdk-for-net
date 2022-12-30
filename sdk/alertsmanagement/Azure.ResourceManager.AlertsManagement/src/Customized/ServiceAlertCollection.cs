@@ -45,40 +45,27 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)&apos;. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ServiceAlertResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceAlertResource> GetAllAsync(string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, string smartGroupId = null, bool? includeContext = null, bool? includeEgressConfig = null, long? pageCount = null, ListServiceAlertsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, string select = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ServiceAlertResource>> FirstPageFunc(int? pageSizeHint)
+        public virtual AsyncPageable<ServiceAlertResource> GetAllAsync(string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, string smartGroupId = null, bool? includeContext = null, bool? includeEgressConfig = null, long? pageCount = null, ListServiceAlertsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, string select = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default) =>
+            GetAllAsync(new ServiceAlertCollectionGetAllOptions
             {
-                using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serviceAlertAlertsRestClient.GetAllAsync(Id.SubscriptionId, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, smartGroupId, includeContext, includeEgressConfig, pageCount, sortBy, sortOrder, select, timeRange, customTimeRange, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ServiceAlertResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _serviceAlertAlertsRestClient.GetAllNextPageAsync(nextLink, Id.SubscriptionId, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, smartGroupId, includeContext, includeEgressConfig, pageCount, sortBy, sortOrder, select, timeRange, customTimeRange, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
+                TargetResource = targetResource,
+                TargetResourceType = targetResourceType,
+                TargetResourceGroup = targetResourceGroup,
+                MonitorService = monitorService,
+                MonitorCondition = monitorCondition,
+                Severity = severity,
+                AlertState = alertState,
+                AlertRule = alertRule,
+                SmartGroupId = smartGroupId,
+                IncludeContext = includeContext,
+                IncludeEgressConfig = includeEgressConfig,
+                PageCount = pageCount,
+                SortBy = sortBy,
+                SortOrder = sortOrder,
+                Select = select,
+                TimeRange = timeRange,
+                CustomTimeRange = customTimeRange
+            }, cancellationToken);
 
         /// <summary>
         /// List all existing alerts, where the results can be filtered on the basis of multiple parameters (e.g. time range). The results can then be sorted on the basis specific fields, with the default being lastModifiedDateTime.
@@ -104,39 +91,26 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)&apos;. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceAlertResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceAlertResource> GetAll(string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, string smartGroupId = null, bool? includeContext = null, bool? includeEgressConfig = null, long? pageCount = null, ListServiceAlertsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, string select = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default)
-        {
-            Page<ServiceAlertResource> FirstPageFunc(int? pageSizeHint)
+        public virtual Pageable<ServiceAlertResource> GetAll(string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, string smartGroupId = null, bool? includeContext = null, bool? includeEgressConfig = null, long? pageCount = null, ListServiceAlertsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, string select = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default) =>
+            GetAll(new ServiceAlertCollectionGetAllOptions
             {
-                using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serviceAlertAlertsRestClient.GetAll(Id.SubscriptionId, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, smartGroupId, includeContext, includeEgressConfig, pageCount, sortBy, sortOrder, select, timeRange, customTimeRange, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ServiceAlertResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _serviceAlertAlertsRestClient.GetAllNextPage(nextLink, Id.SubscriptionId, targetResource, targetResourceType, targetResourceGroup, monitorService, monitorCondition, severity, alertState, alertRule, smartGroupId, includeContext, includeEgressConfig, pageCount, sortBy, sortOrder, select, timeRange, customTimeRange, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ServiceAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+                TargetResource = targetResource,
+                TargetResourceType = targetResourceType,
+                TargetResourceGroup = targetResourceGroup,
+                MonitorService = monitorService,
+                MonitorCondition = monitorCondition,
+                Severity = severity,
+                AlertState = alertState,
+                AlertRule = alertRule,
+                SmartGroupId = smartGroupId,
+                IncludeContext = includeContext,
+                IncludeEgressConfig = includeEgressConfig,
+                PageCount = pageCount,
+                SortBy = sortBy,
+                SortOrder = sortOrder,
+                Select = select,
+                TimeRange = timeRange,
+                CustomTimeRange = customTimeRange
+            }, cancellationToken);
     }
 }

@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.Advisor
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations
         /// Operation Id: Recommendations_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceRecommendationBaseResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceRecommendationBaseResource> GetAllAsync(RecommendationBaseGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceRecommendationBaseResource> GetAllAsync(ResourceRecommendationBaseCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new RecommendationBaseGetAllOptions();
+            options ??= new ResourceRecommendationBaseCollectionGetAllOptions();
 
             async Task<Page<ResourceRecommendationBaseResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -152,12 +152,12 @@ namespace Azure.ResourceManager.Advisor
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations
         /// Operation Id: Recommendations_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceRecommendationBaseResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceRecommendationBaseResource> GetAll(RecommendationBaseGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceRecommendationBaseResource> GetAll(ResourceRecommendationBaseCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new RecommendationBaseGetAllOptions();
+            options ??= new ResourceRecommendationBaseCollectionGetAllOptions();
 
             Page<ResourceRecommendationBaseResource> FirstPageFunc(int? pageSizeHint)
             {

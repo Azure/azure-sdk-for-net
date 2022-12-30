@@ -140,11 +140,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/detectors/{detectorName}/execute
         /// Operation Id: Diagnostics_ExecuteSiteDetector
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DiagnosticDetectorResponse>> ExecuteAsync(SiteDiagnosticDetectorExecuteOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiagnosticDetectorResponse>> ExecuteAsync(SiteDiagnosticDetectorResourceExecuteOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SiteDiagnosticDetectorExecuteOptions();
+            options ??= new SiteDiagnosticDetectorResourceExecuteOptions();
 
             using var scope = _siteDiagnosticDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticDetectorResource.Execute");
             scope.Start();
@@ -165,11 +165,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}/detectors/{detectorName}/execute
         /// Operation Id: Diagnostics_ExecuteSiteDetector
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DiagnosticDetectorResponse> Execute(SiteDiagnosticDetectorExecuteOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<DiagnosticDetectorResponse> Execute(SiteDiagnosticDetectorResourceExecuteOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SiteDiagnosticDetectorExecuteOptions();
+            options ??= new SiteDiagnosticDetectorResourceExecuteOptions();
 
             using var scope = _siteDiagnosticDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticDetectorResource.Execute");
             scope.Start();

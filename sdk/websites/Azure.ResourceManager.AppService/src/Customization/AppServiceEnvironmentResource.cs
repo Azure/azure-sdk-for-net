@@ -119,17 +119,13 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<HostingEnvironmentDetectorResource>> GetHostingEnvironmentDetectorAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
-        {
-            HostingEnvironmentDetectorGetOptions options = new HostingEnvironmentDetectorGetOptions
+        public virtual async Task<Response<HostingEnvironmentDetectorResource>> GetHostingEnvironmentDetectorAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default) =>
+            await GetHostingEnvironmentDetectorAsync(new HostingEnvironmentDetectorCollectionGetOptions(detectorName)
             {
                 StartTime = startTime,
                 EndTime = endTime,
                 TimeGrain = timeGrain
-            };
-
-            return await GetHostingEnvironmentDetectors().GetAsync(detectorName, options, cancellationToken).ConfigureAwait(false);
-        }
+            }, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Description for Get Hosting Environment Detector Response
@@ -144,16 +140,12 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HostingEnvironmentDetectorResource> GetHostingEnvironmentDetector(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
-        {
-            HostingEnvironmentDetectorGetOptions options = new HostingEnvironmentDetectorGetOptions
+        public virtual Response<HostingEnvironmentDetectorResource> GetHostingEnvironmentDetector(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default) =>
+            GetHostingEnvironmentDetector(new HostingEnvironmentDetectorCollectionGetOptions(detectorName)
             {
                 StartTime = startTime,
                 EndTime = endTime,
                 TimeGrain = timeGrain
-            };
-
-            return GetHostingEnvironmentDetectors().Get(detectorName, options, cancellationToken);
-        }
+            }, cancellationToken);
     }
 }

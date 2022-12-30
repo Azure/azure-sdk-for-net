@@ -512,12 +512,12 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/sites
         /// Operation Id: AppServicePlans_ListWebApps
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebSiteData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebSiteData> GetWebAppsAsync(AppServicePlanGetWebAppsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WebSiteData> GetWebAppsAsync(AppServicePlanResourceGetWebAppsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new AppServicePlanGetWebAppsOptions();
+            options ??= new AppServicePlanResourceGetWebAppsOptions();
 
             async Task<Page<WebSiteData>> FirstPageFunc(int? pageSizeHint)
             {
@@ -557,12 +557,12 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/sites
         /// Operation Id: AppServicePlans_ListWebApps
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebSiteData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebSiteData> GetWebApps(AppServicePlanGetWebAppsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<WebSiteData> GetWebApps(AppServicePlanResourceGetWebAppsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new AppServicePlanGetWebAppsOptions();
+            options ??= new AppServicePlanResourceGetWebAppsOptions();
 
             Page<WebSiteData> FirstPageFunc(int? pageSizeHint)
             {

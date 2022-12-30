@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.DataShare
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions
         /// Operation Id: ShareSubscriptions_ListByAccount
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ShareSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ShareSubscriptionResource> GetAllAsync(ShareSubscriptionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ShareSubscriptionResource> GetAllAsync(ShareSubscriptionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ShareSubscriptionGetAllOptions();
+            options ??= new ShareSubscriptionCollectionGetAllOptions();
 
             async Task<Page<ShareSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.DataShare
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions
         /// Operation Id: ShareSubscriptions_ListByAccount
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ShareSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ShareSubscriptionResource> GetAll(ShareSubscriptionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ShareSubscriptionResource> GetAll(ShareSubscriptionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ShareSubscriptionGetAllOptions();
+            options ??= new ShareSubscriptionCollectionGetAllOptions();
 
             Page<ShareSubscriptionResource> FirstPageFunc(int? pageSizeHint)
             {

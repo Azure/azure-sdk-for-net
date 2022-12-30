@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> A class representing the query and header parameters in GetServiceAlertSummary method. </summary>
+    /// <summary> The AlertsManagementExtensionsGetServiceAlertSummaryOptions. </summary>
     public partial class AlertsManagementExtensionsGetServiceAlertSummaryOptions
     {
         /// <summary> Initializes a new instance of AlertsManagementExtensionsGetServiceAlertSummaryOptions. </summary>

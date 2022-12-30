@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> A class representing the query and header parameters in GetDevTestLabGlobalSchedules method. </summary>
+    /// <summary> The DevTestLabsExtensionsGetDevTestLabGlobalSchedulesOptions. </summary>
     public partial class DevTestLabsExtensionsGetDevTestLabGlobalSchedulesOptions
     {
         /// <summary> Initializes a new instance of DevTestLabsExtensionsGetDevTestLabGlobalSchedulesOptions. </summary>

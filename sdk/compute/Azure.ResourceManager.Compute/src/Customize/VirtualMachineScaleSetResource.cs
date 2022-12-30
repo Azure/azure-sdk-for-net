@@ -3,7 +3,6 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -29,21 +28,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="zone"> The zone in which the manual recovery walk is requested for cross zone virtual machine scale set. </param>
         /// <param name="placementGroupId"> The placement group id for which the manual recovery walk is requested. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RecoveryWalkResponse>> ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(int platformUpdateDomain, string zone = null, string placementGroupId = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSetResource.ForceRecoveryServiceFabricPlatformUpdateDomainWalk");
-            scope.Start();
-            try
+        public virtual async Task<Response<RecoveryWalkResponse>> ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(int platformUpdateDomain, string zone = null, string placementGroupId = null, CancellationToken cancellationToken = default) =>
+            await ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(new VirtualMachineScaleSetResourceForceRecoveryServiceFabricPlatformUpdateDomainWalkOptions(platformUpdateDomain)
             {
-                var response = await _virtualMachineScaleSetRestClient.ForceRecoveryServiceFabricPlatformUpdateDomainWalkAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, platformUpdateDomain, zone, placementGroupId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+                Zone = zone,
+                PlacementGroupId = placementGroupId
+            }, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Manual platform update domain walk to update virtual machines in a service fabric virtual machine scale set.
@@ -54,20 +44,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="zone"> The zone in which the manual recovery walk is requested for cross zone virtual machine scale set. </param>
         /// <param name="placementGroupId"> The placement group id for which the manual recovery walk is requested. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RecoveryWalkResponse> ForceRecoveryServiceFabricPlatformUpdateDomainWalk(int platformUpdateDomain, string zone = null, string placementGroupId = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _virtualMachineScaleSetClientDiagnostics.CreateScope("VirtualMachineScaleSetResource.ForceRecoveryServiceFabricPlatformUpdateDomainWalk");
-            scope.Start();
-            try
+        public virtual Response<RecoveryWalkResponse> ForceRecoveryServiceFabricPlatformUpdateDomainWalk(int platformUpdateDomain, string zone = null, string placementGroupId = null, CancellationToken cancellationToken = default) =>
+            ForceRecoveryServiceFabricPlatformUpdateDomainWalk(new VirtualMachineScaleSetResourceForceRecoveryServiceFabricPlatformUpdateDomainWalkOptions(platformUpdateDomain)
             {
-                var response = _virtualMachineScaleSetRestClient.ForceRecoveryServiceFabricPlatformUpdateDomainWalk(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, platformUpdateDomain, zone, placementGroupId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+                Zone = zone,
+                PlacementGroupId = placementGroupId
+            }, cancellationToken);
     }
 }

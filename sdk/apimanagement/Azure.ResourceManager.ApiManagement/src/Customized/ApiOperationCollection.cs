@@ -3,12 +3,9 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using Azure.Core;
+using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -30,40 +27,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="tags"> Include tags in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiOperationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiOperationResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, string tags = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ApiOperationResource>> FirstPageFunc(int? pageSizeHint)
+        public virtual AsyncPageable<ApiOperationResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, string tags = null, CancellationToken cancellationToken = default) =>
+            GetAllAsync(new ApiOperationCollectionGetAllOptions
             {
-                using var scope = _apiOperationClientDiagnostics.CreateScope("ApiOperationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _apiOperationRestClient.ListByApiAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, tags, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiOperationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ApiOperationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _apiOperationClientDiagnostics.CreateScope("ApiOperationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _apiOperationRestClient.ListByApiNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, tags, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiOperationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
+                Filter = filter,
+                Top = top,
+                Skip = skip,
+                Tags = tags
+            }, cancellationToken);
 
         /// <summary>
         /// Lists a collection of the operations for the specified API.
@@ -76,39 +47,13 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="tags"> Include tags in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiOperationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiOperationResource> GetAll(string filter = null, int? top = null, int? skip = null, string tags = null, CancellationToken cancellationToken = default)
-        {
-            Page<ApiOperationResource> FirstPageFunc(int? pageSizeHint)
+        public virtual Pageable<ApiOperationResource> GetAll(string filter = null, int? top = null, int? skip = null, string tags = null, CancellationToken cancellationToken = default) =>
+            GetAll(new ApiOperationCollectionGetAllOptions
             {
-                using var scope = _apiOperationClientDiagnostics.CreateScope("ApiOperationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _apiOperationRestClient.ListByApi(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, tags, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiOperationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ApiOperationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _apiOperationClientDiagnostics.CreateScope("ApiOperationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _apiOperationRestClient.ListByApiNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, tags, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiOperationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+                Filter = filter,
+                Top = top,
+                Skip = skip,
+                Tags = tags
+            }, cancellationToken);
     }
 }

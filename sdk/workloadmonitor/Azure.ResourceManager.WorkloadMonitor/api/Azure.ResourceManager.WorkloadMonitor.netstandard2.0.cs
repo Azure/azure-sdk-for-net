@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.WorkloadMonitor
         public virtual Azure.Response<bool> Exists(string timestampUnix, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string timestampUnix, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource> Get(string timestampUnix, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource> GetAll(Azure.ResourceManager.WorkloadMonitor.Models.HealthMonitorStateChangeGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource> GetAllAsync(Azure.ResourceManager.WorkloadMonitor.Models.HealthMonitorStateChangeGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource> GetAll(Azure.ResourceManager.WorkloadMonitor.Models.HealthMonitorStateChangeCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource> GetAllAsync(Azure.ResourceManager.WorkloadMonitor.Models.HealthMonitorStateChangeCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource>> GetAsync(string timestampUnix, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource>.GetEnumerator() { throw null; }
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.WorkloadMonitor
 }
 namespace Azure.ResourceManager.WorkloadMonitor.Models
 {
-    public partial class HealthMonitorStateChangeGetAllOptions
+    public partial class HealthMonitorStateChangeCollectionGetAllOptions
     {
-        public HealthMonitorStateChangeGetAllOptions() { }
+        public HealthMonitorStateChangeCollectionGetAllOptions() { }
         public System.DateTimeOffset? EndTimestampUtc { get { throw null; } set { } }
         public string Expand { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }

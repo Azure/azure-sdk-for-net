@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/issues
         /// Operation Id: Issue_ListByService
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiManagementIssueResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementIssueResource> GetAllAsync(ApiManagementIssueGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiManagementIssueResource> GetAllAsync(ApiManagementIssueCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementIssueGetAllOptions();
+            options ??= new ApiManagementIssueCollectionGetAllOptions();
 
             async Task<Page<ApiManagementIssueResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -162,12 +162,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/issues
         /// Operation Id: Issue_ListByService
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementIssueResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementIssueResource> GetAll(ApiManagementIssueGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApiManagementIssueResource> GetAll(ApiManagementIssueCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementIssueGetAllOptions();
+            options ??= new ApiManagementIssueCollectionGetAllOptions();
 
             Page<ApiManagementIssueResource> FirstPageFunc(int? pageSizeHint)
             {

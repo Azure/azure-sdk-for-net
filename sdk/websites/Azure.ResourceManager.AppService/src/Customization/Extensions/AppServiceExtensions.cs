@@ -86,18 +86,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceGeoRegion" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AppServiceGeoRegion> GetGeoRegionsAsync(this SubscriptionResource subscriptionResource, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
-        {
-            AppServiceExtensionsGetGeoRegionsOptions options = new AppServiceExtensionsGetGeoRegionsOptions
+        public static AsyncPageable<AppServiceGeoRegion> GetGeoRegionsAsync(this SubscriptionResource subscriptionResource, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default) =>
+            GetGeoRegionsAsync(subscriptionResource, new AppServiceExtensionsGetGeoRegionsOptions
             {
                 Sku = sku,
                 LinuxWorkersEnabled = linuxWorkersEnabled,
                 XenonWorkersEnabled = xenonWorkersEnabled,
                 LinuxDynamicWorkersEnabled = linuxDynamicWorkersEnabled
-            };
-
-            return GetExtensionClient(subscriptionResource).GetGeoRegionsAsync(options, cancellationToken);
-        }
+            }, cancellationToken);
 
         /// <summary>
         /// Description for Get a list of available geographical regions.
@@ -111,17 +107,13 @@ namespace Azure.ResourceManager.AppService
         /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceGeoRegion" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AppServiceGeoRegion> GetGeoRegions(this SubscriptionResource subscriptionResource, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
-        {
-            AppServiceExtensionsGetGeoRegionsOptions options = new AppServiceExtensionsGetGeoRegionsOptions
+        public static Pageable<AppServiceGeoRegion> GetGeoRegions(this SubscriptionResource subscriptionResource, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default) =>
+            GetGeoRegions(subscriptionResource, new AppServiceExtensionsGetGeoRegionsOptions
             {
                 Sku = sku,
                 LinuxWorkersEnabled = linuxWorkersEnabled,
                 XenonWorkersEnabled = xenonWorkersEnabled,
                 LinuxDynamicWorkersEnabled = linuxDynamicWorkersEnabled
-            };
-
-            return GetExtensionClient(subscriptionResource).GetGeoRegions(options, cancellationToken);
-        }
+            }, cancellationToken);
     }
 }

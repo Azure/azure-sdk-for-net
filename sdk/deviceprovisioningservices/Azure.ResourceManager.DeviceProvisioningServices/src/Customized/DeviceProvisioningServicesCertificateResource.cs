@@ -36,26 +36,18 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = null, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = null, DateTimeOffset? certificateCreatedOn = null, DateTimeOffset? certificateLastUpdatedOn = null, bool? certificateHasPrivateKey = null, string certificateNonce = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
-
-            using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.Delete");
-            scope.Start();
-            try
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = null, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = null, DateTimeOffset? certificateCreatedOn = null, DateTimeOffset? certificateLastUpdatedOn = null, bool? certificateHasPrivateKey = null, string certificateNonce = null, CancellationToken cancellationToken = default) =>
+            await DeleteAsync(waitUntil, new DeviceProvisioningServicesCertificateResourceDeleteOptions(ifMatch)
             {
-                var response = await _deviceProvisioningServicesCertificateDpsCertificateRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose, certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceProvisioningServicesArmOperation(response);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+                CertificateCommonName = certificateCommonName,
+                CertificateRawBytes = certificateRawBytes,
+                CertificateIsVerified = certificateIsVerified,
+                CertificatePurpose = certificatePurpose,
+                CertificateCreatedOn = certificateCreatedOn,
+                CertificateLastUpdatedOn = certificateLastUpdatedOn,
+                CertificateHasPrivateKey = certificateHasPrivateKey,
+                CertificateNonce = certificateNonce
+            }, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Deletes the specified certificate associated with the Provisioning Service
@@ -74,26 +66,18 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = null, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = null, DateTimeOffset? certificateCreatedOn = null, DateTimeOffset? certificateLastUpdatedOn = null, bool? certificateHasPrivateKey = null, string certificateNonce = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
-
-            using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.Delete");
-            scope.Start();
-            try
+        public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = null, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = null, DateTimeOffset? certificateCreatedOn = null, DateTimeOffset? certificateLastUpdatedOn = null, bool? certificateHasPrivateKey = null, string certificateNonce = null, CancellationToken cancellationToken = default) =>
+            Delete(waitUntil, new DeviceProvisioningServicesCertificateResourceDeleteOptions(ifMatch)
             {
-                var response = _deviceProvisioningServicesCertificateDpsCertificateRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose, certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, cancellationToken);
-                var operation = new DeviceProvisioningServicesArmOperation(response);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+                CertificateCommonName = certificateCommonName,
+                CertificateRawBytes = certificateRawBytes,
+                CertificateIsVerified = certificateIsVerified,
+                CertificatePurpose = certificatePurpose,
+                CertificateCreatedOn = certificateCreatedOn,
+                CertificateLastUpdatedOn = certificateLastUpdatedOn,
+                CertificateHasPrivateKey = certificateHasPrivateKey,
+                CertificateNonce = certificateNonce
+            }, cancellationToken);
 
         /// <summary>
         /// Generate verification code for Proof of Possession.
@@ -111,23 +95,18 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
-        public virtual async Task<Response<CertificateVerificationCodeResult>> GenerateVerificationCodeAsync(string ifMatch, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = null, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = null, DateTimeOffset? certificateCreatedOn = null, DateTimeOffset? certificateLastUpdatedOn = null, bool? certificateHasPrivateKey = null, string certificateNonce = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
-
-            using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.GenerateVerificationCode");
-            scope.Start();
-            try
+        public virtual async Task<Response<CertificateVerificationCodeResult>> GenerateVerificationCodeAsync(string ifMatch, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = null, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = null, DateTimeOffset? certificateCreatedOn = null, DateTimeOffset? certificateLastUpdatedOn = null, bool? certificateHasPrivateKey = null, string certificateNonce = null, CancellationToken cancellationToken = default) =>
+            await GenerateVerificationCodeAsync(new DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions(ifMatch)
             {
-                var response = await _deviceProvisioningServicesCertificateDpsCertificateRestClient.GenerateVerificationCodeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose, certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+                CertificateCommonName = certificateCommonName,
+                CertificateRawBytes = certificateRawBytes,
+                CertificateIsVerified = certificateIsVerified,
+                CertificatePurpose = certificatePurpose,
+                CertificateCreatedOn = certificateCreatedOn,
+                CertificateLastUpdatedOn = certificateLastUpdatedOn,
+                CertificateHasPrivateKey = certificateHasPrivateKey,
+                CertificateNonce = certificateNonce
+            }, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Generate verification code for Proof of Possession.
@@ -145,23 +124,18 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
-        public virtual Response<CertificateVerificationCodeResult> GenerateVerificationCode(string ifMatch, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = null, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = null, DateTimeOffset? certificateCreatedOn = null, DateTimeOffset? certificateLastUpdatedOn = null, bool? certificateHasPrivateKey = null, string certificateNonce = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
-
-            using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.GenerateVerificationCode");
-            scope.Start();
-            try
+        public virtual Response<CertificateVerificationCodeResult> GenerateVerificationCode(string ifMatch, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = null, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = null, DateTimeOffset? certificateCreatedOn = null, DateTimeOffset? certificateLastUpdatedOn = null, bool? certificateHasPrivateKey = null, string certificateNonce = null, CancellationToken cancellationToken = default) =>
+            GenerateVerificationCode(new DeviceProvisioningServicesCertificateResourceGenerateVerificationCodeOptions(ifMatch)
             {
-                var response = _deviceProvisioningServicesCertificateDpsCertificateRestClient.GenerateVerificationCode(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose, certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+                CertificateCommonName = certificateCommonName,
+                CertificateRawBytes = certificateRawBytes,
+                CertificateIsVerified = certificateIsVerified,
+                CertificatePurpose = certificatePurpose,
+                CertificateCreatedOn = certificateCreatedOn,
+                CertificateLastUpdatedOn = certificateLastUpdatedOn,
+                CertificateHasPrivateKey = certificateHasPrivateKey,
+                CertificateNonce = certificateNonce
+            }, cancellationToken);
 
         /// <summary>
         /// Verifies the certificate&apos;s private key possession by providing the leaf cert issued by the verifying pre uploaded certificate.
@@ -180,24 +154,18 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DeviceProvisioningServicesCertificateResource>> VerifyCertificateAsync(string ifMatch, CertificateVerificationCodeContent content, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = null, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = null, DateTimeOffset? certificateCreatedOn = null, DateTimeOffset? certificateLastUpdatedOn = null, bool? certificateHasPrivateKey = null, string certificateNonce = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.VerifyCertificate");
-            scope.Start();
-            try
+        public virtual async Task<Response<DeviceProvisioningServicesCertificateResource>> VerifyCertificateAsync(string ifMatch, CertificateVerificationCodeContent content, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = null, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = null, DateTimeOffset? certificateCreatedOn = null, DateTimeOffset? certificateLastUpdatedOn = null, bool? certificateHasPrivateKey = null, string certificateNonce = null, CancellationToken cancellationToken = default) =>
+            await VerifyCertificateAsync(new DeviceProvisioningServicesCertificateResourceVerifyCertificateOptions(ifMatch, content)
             {
-                var response = await _deviceProvisioningServicesCertificateDpsCertificateRestClient.VerifyCertificateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, content, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose, certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+                CertificateCommonName = certificateCommonName,
+                CertificateRawBytes = certificateRawBytes,
+                CertificateIsVerified = certificateIsVerified,
+                CertificatePurpose = certificatePurpose,
+                CertificateCreatedOn = certificateCreatedOn,
+                CertificateLastUpdatedOn = certificateLastUpdatedOn,
+                CertificateHasPrivateKey = certificateHasPrivateKey,
+                CertificateNonce = certificateNonce
+            }, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Verifies the certificate&apos;s private key possession by providing the leaf cert issued by the verifying pre uploaded certificate.
@@ -216,23 +184,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="certificateNonce"> Random number generated to indicate Proof of Possession. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<DeviceProvisioningServicesCertificateResource> VerifyCertificate(string ifMatch, CertificateVerificationCodeContent content, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = null, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = null, DateTimeOffset? certificateCreatedOn = null, DateTimeOffset? certificateLastUpdatedOn = null, bool? certificateHasPrivateKey = null, string certificateNonce = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics.CreateScope("DeviceProvisioningServicesCertificateResource.VerifyCertificate");
-            scope.Start();
-            try
+        public virtual Response<DeviceProvisioningServicesCertificateResource> VerifyCertificate(string ifMatch, CertificateVerificationCodeContent content, string certificateCommonName = null, byte[] certificateRawBytes = null, bool? certificateIsVerified = null, DeviceProvisioningServicesCertificatePurpose? certificatePurpose = null, DateTimeOffset? certificateCreatedOn = null, DateTimeOffset? certificateLastUpdatedOn = null, bool? certificateHasPrivateKey = null, string certificateNonce = null, CancellationToken cancellationToken = default) =>
+            VerifyCertificate(new DeviceProvisioningServicesCertificateResourceVerifyCertificateOptions(ifMatch, content)
             {
-                var response = _deviceProvisioningServicesCertificateDpsCertificateRestClient.VerifyCertificate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, content, certificateCommonName, certificateRawBytes, certificateIsVerified, certificatePurpose, certificateCreatedOn, certificateLastUpdatedOn, certificateHasPrivateKey, certificateNonce, cancellationToken);
-                return Response.FromValue(new DeviceProvisioningServicesCertificateResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+                CertificateCommonName = certificateCommonName,
+                CertificateRawBytes = certificateRawBytes,
+                CertificateIsVerified = certificateIsVerified,
+                CertificatePurpose = certificatePurpose,
+                CertificateCreatedOn = certificateCreatedOn,
+                CertificateLastUpdatedOn = certificateLastUpdatedOn,
+                CertificateHasPrivateKey = certificateHasPrivateKey,
+                CertificateNonce = certificateNonce
+            }, cancellationToken);
     }
 }

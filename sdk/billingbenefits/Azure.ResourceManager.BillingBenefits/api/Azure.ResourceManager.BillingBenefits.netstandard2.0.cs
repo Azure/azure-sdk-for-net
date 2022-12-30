@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.BillingBenefits
         public static Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderResource GetBillingBenefitsSavingsPlanOrderResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderCollection GetBillingBenefitsSavingsPlanOrders(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
         public static Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanResource GetBillingBenefitsSavingsPlanResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlans(this Azure.ResourceManager.Resources.TenantResource tenantResource, string filter = null, string orderBy = null, string refreshSummary = null, float? skipToken = default(float?), string selectedState = null, float? take = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlansAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string filter = null, string orderBy = null, string refreshSummary = null, float? skipToken = default(float?), string selectedState = null, float? take = default(float?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlans(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsExtensionsGetBillingBenefitsSavingsPlansOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlansAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsExtensionsGetBillingBenefitsSavingsPlansOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.BillingBenefits.Models.SavingsPlanValidateResult> ValidatePurchase(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.BillingBenefits.Models.SavingsPlanPurchaseValidateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.BillingBenefits.Models.SavingsPlanValidateResult> ValidatePurchaseAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.BillingBenefits.Models.SavingsPlanPurchaseValidateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -274,6 +274,16 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         internal BillingBenefitsExtendedStatusInfo() { }
         public string Message { get { throw null; } }
         public string StatusCode { get { throw null; } }
+    }
+    public partial class BillingBenefitsExtensionsGetBillingBenefitsSavingsPlansOptions
+    {
+        public BillingBenefitsExtensionsGetBillingBenefitsSavingsPlansOptions() { }
+        public string Filter { get { throw null; } set { } }
+        public string OrderBy { get { throw null; } set { } }
+        public string RefreshSummary { get { throw null; } set { } }
+        public string SelectedState { get { throw null; } set { } }
+        public float? SkipToken { get { throw null; } set { } }
+        public float? Take { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BillingBenefitsInstanceFlexibility : System.IEquatable<Azure.ResourceManager.BillingBenefits.Models.BillingBenefitsInstanceFlexibility>

@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.Automation
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodeConfigurations
         /// Operation Id: DscNodeConfiguration_ListByAutomationAccount
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DscNodeConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DscNodeConfigurationResource> GetAllAsync(DscNodeConfigurationGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DscNodeConfigurationResource> GetAllAsync(DscNodeConfigurationCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DscNodeConfigurationGetAllOptions();
+            options ??= new DscNodeConfigurationCollectionGetAllOptions();
 
             async Task<Page<DscNodeConfigurationResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.Automation
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodeConfigurations
         /// Operation Id: DscNodeConfiguration_ListByAutomationAccount
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DscNodeConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DscNodeConfigurationResource> GetAll(DscNodeConfigurationGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<DscNodeConfigurationResource> GetAll(DscNodeConfigurationCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DscNodeConfigurationGetAllOptions();
+            options ??= new DscNodeConfigurationCollectionGetAllOptions();
 
             Page<DscNodeConfigurationResource> FirstPageFunc(int? pageSizeHint)
             {

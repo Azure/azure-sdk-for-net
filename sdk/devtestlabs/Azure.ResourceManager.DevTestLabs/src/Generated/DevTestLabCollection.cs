@@ -186,12 +186,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs
         /// Operation Id: Labs_ListByResourceGroup
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevTestLabResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabResource> GetAllAsync(DevTestLabGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevTestLabResource> GetAllAsync(DevTestLabCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DevTestLabGetAllOptions();
+            options ??= new DevTestLabCollectionGetAllOptions();
 
             async Task<Page<DevTestLabResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -231,12 +231,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs
         /// Operation Id: Labs_ListByResourceGroup
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabResource> GetAll(DevTestLabGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevTestLabResource> GetAll(DevTestLabCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DevTestLabGetAllOptions();
+            options ??= new DevTestLabCollectionGetAllOptions();
 
             Page<DevTestLabResource> FirstPageFunc(int? pageSizeHint)
             {

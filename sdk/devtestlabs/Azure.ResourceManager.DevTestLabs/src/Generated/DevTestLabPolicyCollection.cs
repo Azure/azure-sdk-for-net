@@ -190,12 +190,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/policysets/{policySetName}/policies
         /// Operation Id: Policies_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevTestLabPolicyResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabPolicyResource> GetAllAsync(DevTestLabPolicyGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevTestLabPolicyResource> GetAllAsync(DevTestLabPolicyCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DevTestLabPolicyGetAllOptions();
+            options ??= new DevTestLabPolicyCollectionGetAllOptions();
 
             async Task<Page<DevTestLabPolicyResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -235,12 +235,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/policysets/{policySetName}/policies
         /// Operation Id: Policies_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabPolicyResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabPolicyResource> GetAll(DevTestLabPolicyGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevTestLabPolicyResource> GetAll(DevTestLabPolicyCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DevTestLabPolicyGetAllOptions();
+            options ??= new DevTestLabPolicyCollectionGetAllOptions();
 
             Page<DevTestLabPolicyResource> FirstPageFunc(int? pageSizeHint)
             {

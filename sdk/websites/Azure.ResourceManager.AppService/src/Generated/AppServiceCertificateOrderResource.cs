@@ -137,15 +137,13 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}
         /// Operation Id: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
         /// </summary>
-        /// <param name="detectorName"> The detector name which needs to be run. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CertificateOrderDetectorResource>> GetCertificateOrderDetectorAsync(string detectorName, CertificateOrderDetectorGetOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CertificateOrderDetectorResource>> GetCertificateOrderDetectorAsync(CertificateOrderDetectorCollectionGetOptions options, CancellationToken cancellationToken = default)
         {
-            return await GetCertificateOrderDetectors().GetAsync(detectorName, options, cancellationToken).ConfigureAwait(false);
+            return await GetCertificateOrderDetectors().GetAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -153,15 +151,13 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}
         /// Operation Id: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
         /// </summary>
-        /// <param name="detectorName"> The detector name which needs to be run. </param>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CertificateOrderDetectorResource> GetCertificateOrderDetector(string detectorName, CertificateOrderDetectorGetOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<CertificateOrderDetectorResource> GetCertificateOrderDetector(CertificateOrderDetectorCollectionGetOptions options, CancellationToken cancellationToken = default)
         {
-            return GetCertificateOrderDetectors().Get(detectorName, options, cancellationToken);
+            return GetCertificateOrderDetectors().Get(options, cancellationToken);
         }
 
         /// <summary>

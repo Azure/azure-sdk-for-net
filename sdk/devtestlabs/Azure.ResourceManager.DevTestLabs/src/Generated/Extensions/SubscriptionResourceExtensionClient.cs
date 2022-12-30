@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/labs
         /// Operation Id: Labs_ListBySubscription
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevTestLabResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevTestLabResource> GetDevTestLabsAsync(DevTestLabsExtensionsGetDevTestLabsOptions options, CancellationToken cancellationToken = default)
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/labs
         /// Operation Id: Labs_ListBySubscription
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevTestLabResource> GetDevTestLabs(DevTestLabsExtensionsGetDevTestLabsOptions options, CancellationToken cancellationToken = default)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/schedules
         /// Operation Id: GlobalSchedules_ListBySubscription
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevTestLabGlobalScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedulesAsync(DevTestLabsExtensionsGetDevTestLabGlobalSchedulesOptions options, CancellationToken cancellationToken = default)
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DevTestLab/schedules
         /// Operation Id: GlobalSchedules_ListBySubscription
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedules(DevTestLabsExtensionsGetDevTestLabGlobalSchedulesOptions options, CancellationToken cancellationToken = default)

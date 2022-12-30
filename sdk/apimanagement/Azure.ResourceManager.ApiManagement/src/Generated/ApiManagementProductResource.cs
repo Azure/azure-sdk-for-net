@@ -334,12 +334,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/apis
         /// Operation Id: ProductApi_ListByProduct
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProductApiData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProductApiData> GetProductApisAsync(ApiManagementProductGetProductApisOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ProductApiData> GetProductApisAsync(ApiManagementProductResourceGetProductApisOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementProductGetProductApisOptions();
+            options ??= new ApiManagementProductResourceGetProductApisOptions();
 
             async Task<Page<ProductApiData>> FirstPageFunc(int? pageSizeHint)
             {
@@ -379,12 +379,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/apis
         /// Operation Id: ProductApi_ListByProduct
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProductApiData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProductApiData> GetProductApis(ApiManagementProductGetProductApisOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ProductApiData> GetProductApis(ApiManagementProductResourceGetProductApisOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementProductGetProductApisOptions();
+            options ??= new ApiManagementProductResourceGetProductApisOptions();
 
             Page<ProductApiData> FirstPageFunc(int? pageSizeHint)
             {
@@ -586,12 +586,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/groups
         /// Operation Id: ProductGroup_ListByProduct
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProductGroupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProductGroupData> GetProductGroupsAsync(ApiManagementProductGetProductGroupsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ProductGroupData> GetProductGroupsAsync(ApiManagementProductResourceGetProductGroupsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementProductGetProductGroupsOptions();
+            options ??= new ApiManagementProductResourceGetProductGroupsOptions();
 
             async Task<Page<ProductGroupData>> FirstPageFunc(int? pageSizeHint)
             {
@@ -631,12 +631,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/groups
         /// Operation Id: ProductGroup_ListByProduct
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProductGroupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProductGroupData> GetProductGroups(ApiManagementProductGetProductGroupsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ProductGroupData> GetProductGroups(ApiManagementProductResourceGetProductGroupsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementProductGetProductGroupsOptions();
+            options ??= new ApiManagementProductResourceGetProductGroupsOptions();
 
             Page<ProductGroupData> FirstPageFunc(int? pageSizeHint)
             {
@@ -838,12 +838,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/subscriptions
         /// Operation Id: ProductSubscriptions_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SubscriptionContractData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionContractData> GetAllProductSubscriptionDataAsync(ApiManagementProductGetAllProductSubscriptionDataOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SubscriptionContractData> GetAllProductSubscriptionDataAsync(ApiManagementProductResourceGetAllProductSubscriptionDataOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementProductGetAllProductSubscriptionDataOptions();
+            options ??= new ApiManagementProductResourceGetAllProductSubscriptionDataOptions();
 
             async Task<Page<SubscriptionContractData>> FirstPageFunc(int? pageSizeHint)
             {
@@ -883,12 +883,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/subscriptions
         /// Operation Id: ProductSubscriptions_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SubscriptionContractData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionContractData> GetAllProductSubscriptionData(ApiManagementProductGetAllProductSubscriptionDataOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<SubscriptionContractData> GetAllProductSubscriptionData(ApiManagementProductResourceGetAllProductSubscriptionDataOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementProductGetAllProductSubscriptionDataOptions();
+            options ??= new ApiManagementProductResourceGetAllProductSubscriptionDataOptions();
 
             Page<SubscriptionContractData> FirstPageFunc(int? pageSizeHint)
             {

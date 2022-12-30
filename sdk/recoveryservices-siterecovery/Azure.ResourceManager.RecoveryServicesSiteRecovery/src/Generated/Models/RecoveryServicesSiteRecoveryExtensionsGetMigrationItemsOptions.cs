@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> A class representing the query and header parameters in GetMigrationItems method. </summary>
+    /// <summary> The RecoveryServicesSiteRecoveryExtensionsGetMigrationItemsOptions. </summary>
     public partial class RecoveryServicesSiteRecoveryExtensionsGetMigrationItemsOptions
     {
         /// <summary> Initializes a new instance of RecoveryServicesSiteRecoveryExtensionsGetMigrationItemsOptions. </summary>
-        public RecoveryServicesSiteRecoveryExtensionsGetMigrationItemsOptions()
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        public RecoveryServicesSiteRecoveryExtensionsGetMigrationItemsOptions(string resourceName)
         {
+            Argument.AssertNotNull(resourceName, nameof(resourceName));
+
+            ResourceName = resourceName;
         }
 
+        /// <summary> The name of the recovery services vault. </summary>
+        public string ResourceName { get; }
         /// <summary> The pagination token. </summary>
         public string SkipToken { get; set; }
         /// <summary> The page size. </summary>

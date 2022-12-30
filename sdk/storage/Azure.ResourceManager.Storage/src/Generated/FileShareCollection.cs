@@ -189,12 +189,12 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares
         /// Operation Id: FileShares_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="FileShareResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FileShareResource> GetAllAsync(FileShareGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FileShareResource> GetAllAsync(FileShareCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new FileShareGetAllOptions();
+            options ??= new FileShareCollectionGetAllOptions();
 
             async Task<Page<FileShareResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -234,12 +234,12 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/shares
         /// Operation Id: FileShares_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FileShareResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FileShareResource> GetAll(FileShareGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<FileShareResource> GetAll(FileShareCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new FileShareGetAllOptions();
+            options ??= new FileShareCollectionGetAllOptions();
 
             Page<FileShareResource> FirstPageFunc(int? pageSizeHint)
             {

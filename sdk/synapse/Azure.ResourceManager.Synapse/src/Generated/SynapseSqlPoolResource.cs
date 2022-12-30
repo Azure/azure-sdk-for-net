@@ -1090,20 +1090,20 @@ namespace Azure.ResourceManager.Synapse
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/recommendedSensitivityLabels
         /// Operation Id: SqlPoolSensitivityLabels_ListRecommended
         /// </summary>
-        /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
-        /// <param name="skipToken"> An OData query option to indicate how many elements to skip in the collection. </param>
-        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SynapseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SynapseSensitivityLabelResource> GetRecommendedSqlPoolSensitivityLabelsAsync(bool? includeDisabledRecommendations = null, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SynapseSensitivityLabelResource> GetRecommendedSqlPoolSensitivityLabelsAsync(SynapseSqlPoolResourceGetRecommendedSqlPoolSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new SynapseSqlPoolResourceGetRecommendedSqlPoolSensitivityLabelsOptions();
+
             async Task<Page<SynapseSensitivityLabelResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics.CreateScope("SynapseSqlPoolResource.GetRecommendedSqlPoolSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = await _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.ListRecommendedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, includeDisabledRecommendations, skipToken, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.ListRecommendedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.IncludeDisabledRecommendations, options.SkipToken, options.Filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SynapseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1118,7 +1118,7 @@ namespace Azure.ResourceManager.Synapse
                 scope.Start();
                 try
                 {
-                    var response = await _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.ListRecommendedNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, includeDisabledRecommendations, skipToken, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.ListRecommendedNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.IncludeDisabledRecommendations, options.SkipToken, options.Filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SynapseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1135,20 +1135,20 @@ namespace Azure.ResourceManager.Synapse
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/recommendedSensitivityLabels
         /// Operation Id: SqlPoolSensitivityLabels_ListRecommended
         /// </summary>
-        /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
-        /// <param name="skipToken"> An OData query option to indicate how many elements to skip in the collection. </param>
-        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SynapseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SynapseSensitivityLabelResource> GetRecommendedSqlPoolSensitivityLabels(bool? includeDisabledRecommendations = null, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SynapseSensitivityLabelResource> GetRecommendedSqlPoolSensitivityLabels(SynapseSqlPoolResourceGetRecommendedSqlPoolSensitivityLabelsOptions options, CancellationToken cancellationToken = default)
         {
+            options ??= new SynapseSqlPoolResourceGetRecommendedSqlPoolSensitivityLabelsOptions();
+
             Page<SynapseSensitivityLabelResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics.CreateScope("SynapseSqlPoolResource.GetRecommendedSqlPoolSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.ListRecommended(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, includeDisabledRecommendations, skipToken, filter, cancellationToken: cancellationToken);
+                    var response = _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.ListRecommended(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.IncludeDisabledRecommendations, options.SkipToken, options.Filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SynapseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1163,7 +1163,7 @@ namespace Azure.ResourceManager.Synapse
                 scope.Start();
                 try
                 {
-                    var response = _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.ListRecommendedNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, includeDisabledRecommendations, skipToken, filter, cancellationToken: cancellationToken);
+                    var response = _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.ListRecommendedNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.IncludeDisabledRecommendations, options.SkipToken, options.Filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SynapseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

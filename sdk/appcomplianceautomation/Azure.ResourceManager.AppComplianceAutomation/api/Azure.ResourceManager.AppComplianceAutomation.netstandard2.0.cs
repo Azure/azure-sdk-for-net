@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         public virtual Azure.Response<bool> Exists(string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppComplianceAutomation.ReportResource> Get(string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.AppComplianceAutomation.ReportResource> GetAll(Azure.ResourceManager.AppComplianceAutomation.Models.ReportGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppComplianceAutomation.ReportResource> GetAllAsync(Azure.ResourceManager.AppComplianceAutomation.Models.ReportGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppComplianceAutomation.ReportResource> GetAll(Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppComplianceAutomation.ReportResource> GetAllAsync(Azure.ResourceManager.AppComplianceAutomation.Models.ReportResourceCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppComplianceAutomation.ReportResource>> GetAsync(string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppComplianceAutomation.ReportResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppComplianceAutomation.ReportResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppComplianceAutomation.ReportResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppComplianceAutomation.ReportResource>.GetEnumerator() { throw null; }
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         public virtual Azure.Response<bool> Exists(string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppComplianceAutomation.SnapshotResource> Get(string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.AppComplianceAutomation.SnapshotResource> GetAll(Azure.ResourceManager.AppComplianceAutomation.Models.SnapshotGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppComplianceAutomation.SnapshotResource> GetAllAsync(Azure.ResourceManager.AppComplianceAutomation.Models.SnapshotGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppComplianceAutomation.SnapshotResource> GetAll(Azure.ResourceManager.AppComplianceAutomation.Models.SnapshotResourceCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppComplianceAutomation.SnapshotResource> GetAllAsync(Azure.ResourceManager.AppComplianceAutomation.Models.SnapshotResourceCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppComplianceAutomation.SnapshotResource>> GetAsync(string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppComplianceAutomation.SnapshotResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppComplianceAutomation.SnapshotResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppComplianceAutomation.SnapshotResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppComplianceAutomation.SnapshotResource>.GetEnumerator() { throw null; }
@@ -372,15 +372,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static bool operator !=(Azure.ResourceManager.AppComplianceAutomation.Models.ProvisioningState left, Azure.ResourceManager.AppComplianceAutomation.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ReportGetAllOptions
-    {
-        public ReportGetAllOptions() { }
-        public string OfferGuid { get { throw null; } set { } }
-        public string ReportCreatorTenantId { get { throw null; } set { } }
-        public string Select { get { throw null; } set { } }
-        public string SkipToken { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
-    }
     public partial class ReportProperties
     {
         public ReportProperties(string timeZone, System.DateTimeOffset triggerOn, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppComplianceAutomation.Models.ResourceMetadata> resources) { }
@@ -397,6 +388,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public System.Guid? TenantId { get { throw null; } }
         public string TimeZone { get { throw null; } set { } }
         public System.DateTimeOffset TriggerOn { get { throw null; } set { } }
+    }
+    public partial class ReportResourceCollectionGetAllOptions
+    {
+        public ReportResourceCollectionGetAllOptions() { }
+        public string OfferGuid { get { throw null; } set { } }
+        public string ReportCreatorTenantId { get { throw null; } set { } }
+        public string Select { get { throw null; } set { } }
+        public string SkipToken { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
     }
     public partial class ReportResourcePatch
     {
@@ -465,15 +465,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public string OfferGuid { get { throw null; } set { } }
         public string ReportCreatorTenantId { get { throw null; } set { } }
     }
-    public partial class SnapshotGetAllOptions
-    {
-        public SnapshotGetAllOptions() { }
-        public string OfferGuid { get { throw null; } set { } }
-        public string ReportCreatorTenantId { get { throw null; } set { } }
-        public string Select { get { throw null; } set { } }
-        public string SkipToken { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
-    }
     public partial class SnapshotProperties
     {
         internal SnapshotProperties() { }
@@ -484,5 +475,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public Azure.ResourceManager.AppComplianceAutomation.Models.ReportProperties ReportProperties { get { throw null; } }
         public Azure.ResourceManager.Models.SystemData ReportSystemData { get { throw null; } }
         public string SnapshotName { get { throw null; } }
+    }
+    public partial class SnapshotResourceCollectionGetAllOptions
+    {
+        public SnapshotResourceCollectionGetAllOptions() { }
+        public string OfferGuid { get { throw null; } set { } }
+        public string ReportCreatorTenantId { get { throw null; } set { } }
+        public string Select { get { throw null; } set { } }
+        public string SkipToken { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
     }
 }

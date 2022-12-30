@@ -189,12 +189,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Request Path: /providers/Microsoft.AppComplianceAutomation/reports
         /// Operation Id: Reports_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReportResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportResource> GetAllAsync(ReportGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportResource> GetAllAsync(ReportResourceCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ReportGetAllOptions();
+            options ??= new ReportResourceCollectionGetAllOptions();
 
             async Task<Page<ReportResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -234,12 +234,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Request Path: /providers/Microsoft.AppComplianceAutomation/reports
         /// Operation Id: Reports_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReportResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportResource> GetAll(ReportGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportResource> GetAll(ReportResourceCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ReportGetAllOptions();
+            options ??= new ReportResourceCollectionGetAllOptions();
 
             Page<ReportResource> FirstPageFunc(int? pageSizeHint)
             {

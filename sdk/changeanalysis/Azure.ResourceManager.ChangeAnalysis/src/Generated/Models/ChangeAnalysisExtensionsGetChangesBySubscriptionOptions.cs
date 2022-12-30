@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.ChangeAnalysis.Models
 {
-    /// <summary> A class representing the query and header parameters in GetChangesBySubscription method. </summary>
+    /// <summary> The ChangeAnalysisExtensionsGetChangesBySubscriptionOptions. </summary>
     public partial class ChangeAnalysisExtensionsGetChangesBySubscriptionOptions
     {
         /// <summary> Initializes a new instance of ChangeAnalysisExtensionsGetChangesBySubscriptionOptions. </summary>

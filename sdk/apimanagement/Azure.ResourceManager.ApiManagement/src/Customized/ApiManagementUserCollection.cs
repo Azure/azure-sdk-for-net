@@ -3,12 +3,9 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using Azure.Core;
+using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -30,40 +27,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="expandGroups"> Detailed Group in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiManagementUserResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementUserResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, bool? expandGroups = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ApiManagementUserResource>> FirstPageFunc(int? pageSizeHint)
+        public virtual AsyncPageable<ApiManagementUserResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, bool? expandGroups = null, CancellationToken cancellationToken = default) =>
+            GetAllAsync(new ApiManagementUserCollectionGetAllOptions
             {
-                using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _apiManagementUserUserRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, expandGroups, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementUserResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ApiManagementUserResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _apiManagementUserUserRestClient.ListByServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, expandGroups, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementUserResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
+                Filter = filter,
+                Top = top,
+                Skip = skip,
+                ExpandGroups = expandGroups
+            }, cancellationToken);
 
         /// <summary>
         /// Lists a collection of registered users in the specified service instance.
@@ -76,39 +47,13 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="expandGroups"> Detailed Group in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementUserResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementUserResource> GetAll(string filter = null, int? top = null, int? skip = null, bool? expandGroups = null, CancellationToken cancellationToken = default)
-        {
-            Page<ApiManagementUserResource> FirstPageFunc(int? pageSizeHint)
+        public virtual Pageable<ApiManagementUserResource> GetAll(string filter = null, int? top = null, int? skip = null, bool? expandGroups = null, CancellationToken cancellationToken = default) =>
+            GetAll(new ApiManagementUserCollectionGetAllOptions
             {
-                using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _apiManagementUserUserRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, expandGroups, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementUserResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ApiManagementUserResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _apiManagementUserUserClientDiagnostics.CreateScope("ApiManagementUserCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _apiManagementUserUserRestClient.ListByServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, expandGroups, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiManagementUserResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+                Filter = filter,
+                Top = top,
+                Skip = skip,
+                ExpandGroups = expandGroups
+            }, cancellationToken);
     }
 }

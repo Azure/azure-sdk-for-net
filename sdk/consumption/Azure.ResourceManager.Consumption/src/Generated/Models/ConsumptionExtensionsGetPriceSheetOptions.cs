@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary> A class representing the query and header parameters in GetPriceSheet method. </summary>
+    /// <summary> The ConsumptionExtensionsGetPriceSheetOptions. </summary>
     public partial class ConsumptionExtensionsGetPriceSheetOptions
     {
         /// <summary> Initializes a new instance of ConsumptionExtensionsGetPriceSheetOptions. </summary>

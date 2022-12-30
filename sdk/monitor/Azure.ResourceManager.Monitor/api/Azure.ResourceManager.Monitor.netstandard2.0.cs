@@ -192,9 +192,9 @@ namespace Azure.ResourceManager.Monitor
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Monitor.AutoscaleSettingResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.AutoscaleSettingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Monitor.Models.AutoscaleSettingPredicativeResult> GetPredictiveMetric(Azure.ResourceManager.Monitor.Models.AutoscaleSettingGetPredictiveMetricOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Monitor.Models.AutoscaleSettingPredicativeResult> GetPredictiveMetric(Azure.ResourceManager.Monitor.Models.AutoscaleSettingResourceGetPredictiveMetricOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Monitor.Models.AutoscaleSettingPredicativeResult> GetPredictiveMetric(string timespan, System.TimeSpan interval, string metricNamespace, string metricName, string aggregation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.Models.AutoscaleSettingPredicativeResult>> GetPredictiveMetricAsync(Azure.ResourceManager.Monitor.Models.AutoscaleSettingGetPredictiveMetricOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.Models.AutoscaleSettingPredicativeResult>> GetPredictiveMetricAsync(Azure.ResourceManager.Monitor.Models.AutoscaleSettingResourceGetPredictiveMetricOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.Models.AutoscaleSettingPredicativeResult>> GetPredictiveMetricAsync(string timespan, System.TimeSpan interval, string metricNamespace, string metricName, string aggregation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Monitor.AutoscaleSettingResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.AutoscaleSettingResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -946,15 +946,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public Azure.ResourceManager.Monitor.Models.ScaleRuleMetricDimensionOperationType Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
     }
-    public partial class AutoscaleSettingGetPredictiveMetricOptions
-    {
-        public AutoscaleSettingGetPredictiveMetricOptions(string timespan, System.TimeSpan interval, string metricNamespace, string metricName, string aggregation) { }
-        public string Aggregation { get { throw null; } }
-        public System.TimeSpan Interval { get { throw null; } }
-        public string MetricName { get { throw null; } }
-        public string MetricNamespace { get { throw null; } }
-        public string Timespan { get { throw null; } }
-    }
     public partial class AutoscaleSettingPatch
     {
         public AutoscaleSettingPatch() { }
@@ -974,6 +965,15 @@ namespace Azure.ResourceManager.Monitor.Models
         public System.TimeSpan? Interval { get { throw null; } }
         public string MetricName { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
+        public string Timespan { get { throw null; } }
+    }
+    public partial class AutoscaleSettingResourceGetPredictiveMetricOptions
+    {
+        public AutoscaleSettingResourceGetPredictiveMetricOptions(string timespan, System.TimeSpan interval, string metricNamespace, string metricName, string aggregation) { }
+        public string Aggregation { get { throw null; } }
+        public System.TimeSpan Interval { get { throw null; } }
+        public string MetricName { get { throw null; } }
+        public string MetricNamespace { get { throw null; } }
         public string Timespan { get { throw null; } }
     }
     public partial class ConditionFailingPeriods

@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems
         /// Operation Id: ReplicationMigrationItems_ListByReplicationProtectionContainers
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MigrationItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MigrationItemResource> GetAllAsync(MigrationItemGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MigrationItemResource> GetAllAsync(MigrationItemCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new MigrationItemGetAllOptions();
+            options ??= new MigrationItemCollectionGetAllOptions();
 
             async Task<Page<MigrationItemResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationMigrationItems
         /// Operation Id: ReplicationMigrationItems_ListByReplicationProtectionContainers
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MigrationItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MigrationItemResource> GetAll(MigrationItemGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<MigrationItemResource> GetAll(MigrationItemCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new MigrationItemGetAllOptions();
+            options ??= new MigrationItemCollectionGetAllOptions();
 
             Page<MigrationItemResource> FirstPageFunc(int? pageSizeHint)
             {

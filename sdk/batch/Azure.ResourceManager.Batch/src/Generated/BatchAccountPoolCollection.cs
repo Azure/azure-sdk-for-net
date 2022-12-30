@@ -187,12 +187,12 @@ namespace Azure.ResourceManager.Batch
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools
         /// Operation Id: Pool_ListByBatchAccount
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BatchAccountPoolResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BatchAccountPoolResource> GetAllAsync(BatchAccountPoolGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchAccountPoolResource> GetAllAsync(BatchAccountPoolCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new BatchAccountPoolGetAllOptions();
+            options ??= new BatchAccountPoolCollectionGetAllOptions();
 
             async Task<Page<BatchAccountPoolResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -232,12 +232,12 @@ namespace Azure.ResourceManager.Batch
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools
         /// Operation Id: Pool_ListByBatchAccount
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BatchAccountPoolResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BatchAccountPoolResource> GetAll(BatchAccountPoolGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchAccountPoolResource> GetAll(BatchAccountPoolCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new BatchAccountPoolGetAllOptions();
+            options ??= new BatchAccountPoolCollectionGetAllOptions();
 
             Page<BatchAccountPoolResource> FirstPageFunc(int? pageSizeHint)
             {

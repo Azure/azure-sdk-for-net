@@ -33,17 +33,13 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CertificateOrderDetectorResource>> GetCertificateOrderDetectorAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
-        {
-            CertificateOrderDetectorGetOptions options = new CertificateOrderDetectorGetOptions
+        public virtual async Task<Response<CertificateOrderDetectorResource>> GetCertificateOrderDetectorAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default) =>
+            await GetCertificateOrderDetectorAsync(new CertificateOrderDetectorCollectionGetOptions(detectorName)
             {
                 StartTime = startTime,
                 EndTime = endTime,
                 TimeGrain = timeGrain
-            };
-
-            return await GetCertificateOrderDetectors().GetAsync(detectorName, options, cancellationToken).ConfigureAwait(false);
-        }
+            }, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Description for Microsoft.CertificateRegistration call to get a detector response from App Lens.
@@ -58,16 +54,12 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CertificateOrderDetectorResource> GetCertificateOrderDetector(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
-        {
-            CertificateOrderDetectorGetOptions options = new CertificateOrderDetectorGetOptions
+        public virtual Response<CertificateOrderDetectorResource> GetCertificateOrderDetector(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default) =>
+            GetCertificateOrderDetector(new CertificateOrderDetectorCollectionGetOptions(detectorName)
             {
                 StartTime = startTime,
                 EndTime = endTime,
                 TimeGrain = timeGrain
-            };
-
-            return GetCertificateOrderDetectors().Get(detectorName, options, cancellationToken);
-        }
+            }, cancellationToken);
     }
 }

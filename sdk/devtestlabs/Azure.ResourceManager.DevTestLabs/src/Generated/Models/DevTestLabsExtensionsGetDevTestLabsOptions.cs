@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> A class representing the query and header parameters in GetDevTestLabs method. </summary>
+    /// <summary> The DevTestLabsExtensionsGetDevTestLabsOptions. </summary>
     public partial class DevTestLabsExtensionsGetDevTestLabsOptions
     {
         /// <summary> Initializes a new instance of DevTestLabsExtensionsGetDevTestLabsOptions. </summary>

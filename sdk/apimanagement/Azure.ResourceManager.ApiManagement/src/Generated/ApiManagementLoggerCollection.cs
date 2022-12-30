@@ -185,12 +185,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/loggers
         /// Operation Id: Logger_ListByService
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiManagementLoggerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementLoggerResource> GetAllAsync(ApiManagementLoggerGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiManagementLoggerResource> GetAllAsync(ApiManagementLoggerCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementLoggerGetAllOptions();
+            options ??= new ApiManagementLoggerCollectionGetAllOptions();
 
             async Task<Page<ApiManagementLoggerResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -230,12 +230,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/loggers
         /// Operation Id: Logger_ListByService
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementLoggerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementLoggerResource> GetAll(ApiManagementLoggerGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApiManagementLoggerResource> GetAll(ApiManagementLoggerCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementLoggerGetAllOptions();
+            options ??= new ApiManagementLoggerCollectionGetAllOptions();
 
             Page<ApiManagementLoggerResource> FirstPageFunc(int? pageSizeHint)
             {

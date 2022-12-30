@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.DataShare
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/dataSetMappings
         /// Operation Id: DataSetMappings_ListByShareSubscription
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ShareDataSetMappingResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ShareDataSetMappingResource> GetAllAsync(ShareDataSetMappingGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ShareDataSetMappingResource> GetAllAsync(ShareDataSetMappingCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ShareDataSetMappingGetAllOptions();
+            options ??= new ShareDataSetMappingCollectionGetAllOptions();
 
             async Task<Page<ShareDataSetMappingResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.DataShare
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/dataSetMappings
         /// Operation Id: DataSetMappings_ListByShareSubscription
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ShareDataSetMappingResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ShareDataSetMappingResource> GetAll(ShareDataSetMappingGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ShareDataSetMappingResource> GetAll(ShareDataSetMappingCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ShareDataSetMappingGetAllOptions();
+            options ??= new ShareDataSetMappingCollectionGetAllOptions();
 
             Page<ShareDataSetMappingResource> FirstPageFunc(int? pageSizeHint)
             {

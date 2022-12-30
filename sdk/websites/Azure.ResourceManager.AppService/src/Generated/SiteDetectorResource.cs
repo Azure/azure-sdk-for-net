@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetSiteDetectorResponse
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SiteDetectorResource>> GetAsync(SiteDetectorGetOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteDetectorResource>> GetAsync(SiteDetectorResourceGetOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SiteDetectorGetOptions();
+            options ??= new SiteDetectorResourceGetOptions();
 
             using var scope = _siteDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDetectorResource.Get");
             scope.Start();
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetSiteDetectorResponse
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SiteDetectorResource> Get(SiteDetectorGetOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<SiteDetectorResource> Get(SiteDetectorResourceGetOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SiteDetectorGetOptions();
+            options ??= new SiteDetectorResourceGetOptions();
 
             using var scope = _siteDetectorDiagnosticsClientDiagnostics.CreateScope("SiteDetectorResource.Get");
             scope.Start();

@@ -283,12 +283,12 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/listAssociatedResources
         /// Operation Id: UserAssignedIdentities_ListAssociatedResources
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="IdentityAssociatedResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IdentityAssociatedResourceData> GetAssociatedResourcesAsync(UserAssignedIdentityGetAssociatedResourcesOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IdentityAssociatedResourceData> GetAssociatedResourcesAsync(UserAssignedIdentityResourceGetAssociatedResourcesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new UserAssignedIdentityGetAssociatedResourcesOptions();
+            options ??= new UserAssignedIdentityResourceGetAssociatedResourcesOptions();
 
             async Task<Page<IdentityAssociatedResourceData>> FirstPageFunc(int? pageSizeHint)
             {
@@ -328,12 +328,12 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/listAssociatedResources
         /// Operation Id: UserAssignedIdentities_ListAssociatedResources
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IdentityAssociatedResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IdentityAssociatedResourceData> GetAssociatedResources(UserAssignedIdentityGetAssociatedResourcesOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<IdentityAssociatedResourceData> GetAssociatedResources(UserAssignedIdentityResourceGetAssociatedResourcesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new UserAssignedIdentityGetAssociatedResourcesOptions();
+            options ??= new UserAssignedIdentityResourceGetAssociatedResourcesOptions();
 
             Page<IdentityAssociatedResourceData> FirstPageFunc(int? pageSizeHint)
             {

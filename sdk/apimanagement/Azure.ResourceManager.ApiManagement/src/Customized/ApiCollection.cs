@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -31,40 +32,15 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="expandApiVersionSet"> Include full ApiVersionSet resource in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, string tags = null, bool? expandApiVersionSet = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<ApiResource>> FirstPageFunc(int? pageSizeHint)
+        public virtual AsyncPageable<ApiResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, string tags = null, bool? expandApiVersionSet = null, CancellationToken cancellationToken = default) =>
+            GetAllAsync(new ApiCollectionGetAllOptions
             {
-                using var scope = _apiClientDiagnostics.CreateScope("ApiCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _apiRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, tags, expandApiVersionSet, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ApiResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _apiClientDiagnostics.CreateScope("ApiCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _apiRestClient.ListByServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, tags, expandApiVersionSet, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
+                Filter = filter,
+                Top = top,
+                Skip = skip,
+                Tags = tags,
+                ExpandApiVersionSet = expandApiVersionSet
+            }, cancellationToken);
 
         /// <summary>
         /// Lists all APIs of the API Management service instance.
@@ -78,39 +54,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="expandApiVersionSet"> Include full ApiVersionSet resource in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiResource> GetAll(string filter = null, int? top = null, int? skip = null, string tags = null, bool? expandApiVersionSet = null, CancellationToken cancellationToken = default)
-        {
-            Page<ApiResource> FirstPageFunc(int? pageSizeHint)
+        public virtual Pageable<ApiResource> GetAll(string filter = null, int? top = null, int? skip = null, string tags = null, bool? expandApiVersionSet = null, CancellationToken cancellationToken = default) =>
+            GetAll(new ApiCollectionGetAllOptions
             {
-                using var scope = _apiClientDiagnostics.CreateScope("ApiCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _apiRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, tags, expandApiVersionSet, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ApiResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _apiClientDiagnostics.CreateScope("ApiCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _apiRestClient.ListByServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, tags, expandApiVersionSet, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+                Filter = filter,
+                Top = top,
+                Skip = skip,
+                Tags = tags,
+                ExpandApiVersionSet = expandApiVersionSet
+            }, cancellationToken);
     }
 }

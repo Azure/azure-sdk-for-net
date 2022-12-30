@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Peering
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/legacyPeerings
         /// Operation Id: LegacyPeerings_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PeeringResource> GetPeeringsByLegacyPeeringAsync(PeeringExtensionsGetPeeringsByLegacyPeeringOptions options, CancellationToken cancellationToken = default)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Peering
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/legacyPeerings
         /// Operation Id: LegacyPeerings_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PeeringResource> GetPeeringsByLegacyPeering(PeeringExtensionsGetPeeringsByLegacyPeeringOptions options, CancellationToken cancellationToken = default)
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Peering
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/lookingGlass
         /// Operation Id: LookingGlass_Invoke
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<LookingGlassOutput>> InvokeLookingGlassAsync(PeeringExtensionsInvokeLookingGlassOptions options, CancellationToken cancellationToken = default)
         {
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Peering
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Peering/lookingGlass
         /// Operation Id: LookingGlass_Invoke
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<LookingGlassOutput> InvokeLookingGlass(PeeringExtensionsInvokeLookingGlassOptions options, CancellationToken cancellationToken = default)
         {

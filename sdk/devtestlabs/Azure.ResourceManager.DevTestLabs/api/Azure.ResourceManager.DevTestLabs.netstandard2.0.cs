@@ -6,9 +6,9 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactSourceGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactSourceCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactSourceGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactSourceCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -142,9 +142,9 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -201,9 +201,9 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCustomImageCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -278,9 +278,9 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabDiskCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -334,9 +334,9 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnvironmentCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -381,9 +381,9 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabFormulaGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabFormulaCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabFormulaGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabFormulaCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -430,9 +430,9 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabGlobalScheduleCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -471,9 +471,9 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -522,9 +522,9 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -620,9 +620,9 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource> GetDevTestLabVm(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource>> GetDevTestLabVmAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabVmCollection GetDevTestLabVms() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage> GetGalleryImages(Azure.ResourceManager.DevTestLabs.Models.DevTestLabGetGalleryImagesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage> GetGalleryImages(Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourceGetGalleryImagesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage> GetGalleryImages(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage> GetGalleryImagesAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabGetGalleryImagesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage> GetGalleryImagesAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourceGetGalleryImagesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabGalleryImage> GetGalleryImagesAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.Models.SubResource> GetVhds(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.Models.SubResource> GetVhdsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -643,9 +643,9 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabScheduleCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> GetApplicable(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource> GetApplicableAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -699,9 +699,9 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSecretGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSecretCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSecretGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSecretCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -743,9 +743,9 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -798,9 +798,9 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricScheduleGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricScheduleCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricScheduleGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabServiceFabricScheduleCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -910,9 +910,9 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabUserCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabUserResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -968,9 +968,9 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVirtualNetworkGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVirtualNetworkCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVirtualNetworkGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVirtualNetworkCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -1017,9 +1017,9 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabVmResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -1122,9 +1122,9 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual Azure.Response<bool> Exists(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> Get(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmScheduleGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> GetAll(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmScheduleCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> GetAll(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmScheduleGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> GetAllAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabVmScheduleCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> GetAllAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>> GetAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -1206,9 +1206,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData LabVmsShutdown { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.DevTestLabScheduleData LabVmsStartup { get { throw null; } set { } }
     }
-    public partial class DevTestLabArmTemplateGetAllOptions
+    public partial class DevTestLabArmTemplateCollectionGetAllOptions
     {
-        public DevTestLabArmTemplateGetAllOptions() { }
+        public DevTestLabArmTemplateCollectionGetAllOptions() { }
         public string Expand { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }
         public string Orderby { get { throw null; } set { } }
@@ -1226,6 +1226,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
+    public partial class DevTestLabArtifactCollectionGetAllOptions
+    {
+        public DevTestLabArtifactCollectionGetAllOptions() { }
+        public string Expand { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public string Orderby { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
+    }
     public partial class DevTestLabArtifactDeploymentStatus
     {
         internal DevTestLabArtifactDeploymentStatus() { }
@@ -1240,14 +1248,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabParameter> Parameters { get { throw null; } }
         public string VmName { get { throw null; } set { } }
-    }
-    public partial class DevTestLabArtifactGetAllOptions
-    {
-        public DevTestLabArtifactGetAllOptions() { }
-        public string Expand { get { throw null; } set { } }
-        public string Filter { get { throw null; } set { } }
-        public string Orderby { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
     }
     public partial class DevTestLabArtifactInstallInfo
     {
@@ -1266,9 +1266,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
-    public partial class DevTestLabArtifactSourceGetAllOptions
+    public partial class DevTestLabArtifactSourceCollectionGetAllOptions
     {
-        public DevTestLabArtifactSourceGetAllOptions() { }
+        public DevTestLabArtifactSourceCollectionGetAllOptions() { }
         public string Expand { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }
         public string Orderby { get { throw null; } set { } }
@@ -1277,6 +1277,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabArtifactSourcePatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch
     {
         public DevTestLabArtifactSourcePatch() { }
+    }
+    public partial class DevTestLabCollectionGetAllOptions
+    {
+        public DevTestLabCollectionGetAllOptions() { }
+        public string Expand { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public string Orderby { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
     }
     public partial class DevTestLabCostDetails
     {
@@ -1331,9 +1339,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabCostType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DevTestLabCustomImageGetAllOptions
+    public partial class DevTestLabCustomImageCollectionGetAllOptions
     {
-        public DevTestLabCustomImageGetAllOptions() { }
+        public DevTestLabCustomImageCollectionGetAllOptions() { }
         public string Expand { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }
         public string Orderby { get { throw null; } set { } }
@@ -1401,18 +1409,18 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabDiskAttachContent() { }
         public Azure.Core.ResourceIdentifier LeasedByLabVmId { get { throw null; } set { } }
     }
-    public partial class DevTestLabDiskDetachContent
+    public partial class DevTestLabDiskCollectionGetAllOptions
     {
-        public DevTestLabDiskDetachContent() { }
-        public Azure.Core.ResourceIdentifier LeasedByLabVmId { get { throw null; } set { } }
-    }
-    public partial class DevTestLabDiskGetAllOptions
-    {
-        public DevTestLabDiskGetAllOptions() { }
+        public DevTestLabDiskCollectionGetAllOptions() { }
         public string Expand { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }
         public string Orderby { get { throw null; } set { } }
         public int? Top { get { throw null; } set { } }
+    }
+    public partial class DevTestLabDiskDetachContent
+    {
+        public DevTestLabDiskDetachContent() { }
+        public Azure.Core.ResourceIdentifier LeasedByLabVmId { get { throw null; } set { } }
     }
     public partial class DevTestLabDiskPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch
     {
@@ -1436,19 +1444,19 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabEnableStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DevTestLabEnvironmentCollectionGetAllOptions
+    {
+        public DevTestLabEnvironmentCollectionGetAllOptions() { }
+        public string Expand { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public string Orderby { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
+    }
     public partial class DevTestLabEnvironmentDeployment
     {
         public DevTestLabEnvironmentDeployment() { }
         public Azure.Core.ResourceIdentifier ArmTemplateId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArmTemplateParameter> Parameters { get { throw null; } }
-    }
-    public partial class DevTestLabEnvironmentGetAllOptions
-    {
-        public DevTestLabEnvironmentGetAllOptions() { }
-        public string Expand { get { throw null; } set { } }
-        public string Filter { get { throw null; } set { } }
-        public string Orderby { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
     }
     public partial class DevTestLabEnvironmentPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch
     {
@@ -1520,9 +1528,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabFileUploadOption right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DevTestLabFormulaGetAllOptions
+    public partial class DevTestLabFormulaCollectionGetAllOptions
     {
-        public DevTestLabFormulaGetAllOptions() { }
+        public DevTestLabFormulaCollectionGetAllOptions() { }
         public string Expand { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }
         public string Orderby { get { throw null; } set { } }
@@ -1563,25 +1571,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         internal DevTestLabGenerateUploadUriResult() { }
         public System.Uri UploadUri { get { throw null; } }
     }
-    public partial class DevTestLabGetAllOptions
+    public partial class DevTestLabGlobalScheduleCollectionGetAllOptions
     {
-        public DevTestLabGetAllOptions() { }
-        public string Expand { get { throw null; } set { } }
-        public string Filter { get { throw null; } set { } }
-        public string Orderby { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
-    }
-    public partial class DevTestLabGetGalleryImagesOptions
-    {
-        public DevTestLabGetGalleryImagesOptions() { }
-        public string Expand { get { throw null; } set { } }
-        public string Filter { get { throw null; } set { } }
-        public string Orderby { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
-    }
-    public partial class DevTestLabGlobalScheduleGetAllOptions
-    {
-        public DevTestLabGlobalScheduleGetAllOptions() { }
+        public DevTestLabGlobalScheduleCollectionGetAllOptions() { }
         public string Expand { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }
         public string Orderby { get { throw null; } set { } }
@@ -1665,6 +1657,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier VirtualNetworkId { get { throw null; } set { } }
     }
+    public partial class DevTestLabNotificationChannelCollectionGetAllOptions
+    {
+        public DevTestLabNotificationChannelCollectionGetAllOptions() { }
+        public string Expand { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public string Orderby { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
+    }
     public partial class DevTestLabNotificationChannelEvent
     {
         public DevTestLabNotificationChannelEvent() { }
@@ -1687,14 +1687,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabNotificationChannelEventType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class DevTestLabNotificationChannelGetAllOptions
-    {
-        public DevTestLabNotificationChannelGetAllOptions() { }
-        public string Expand { get { throw null; } set { } }
-        public string Filter { get { throw null; } set { } }
-        public string Orderby { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
     }
     public partial class DevTestLabNotificationChannelNotifyContent
     {
@@ -1730,6 +1722,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public partial class DevTestLabPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch
     {
         public DevTestLabPatch() { }
+    }
+    public partial class DevTestLabPolicyCollectionGetAllOptions
+    {
+        public DevTestLabPolicyCollectionGetAllOptions() { }
+        public string Expand { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public string Orderby { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DevTestLabPolicyEvaluatorType : System.IEquatable<Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyEvaluatorType>
@@ -1774,14 +1774,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static implicit operator Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabPolicyFactName right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class DevTestLabPolicyGetAllOptions
-    {
-        public DevTestLabPolicyGetAllOptions() { }
-        public string Expand { get { throw null; } set { } }
-        public string Filter { get { throw null; } set { } }
-        public string Orderby { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
     }
     public partial class DevTestLabPolicyPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch
     {
@@ -1877,10 +1869,26 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string ResourceType { get { throw null; } }
         public string ResourceUniqueId { get { throw null; } }
     }
+    public partial class DevTestLabResourceGetGalleryImagesOptions
+    {
+        public DevTestLabResourceGetGalleryImagesOptions() { }
+        public string Expand { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public string Orderby { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
+    }
     public partial class DevTestLabResourcePatch
     {
         public DevTestLabResourcePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    public partial class DevTestLabScheduleCollectionGetAllOptions
+    {
+        public DevTestLabScheduleCollectionGetAllOptions() { }
+        public string Expand { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public string Orderby { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
     }
     public partial class DevTestLabScheduleCreationParameter
     {
@@ -1897,21 +1905,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string TimeZoneId { get { throw null; } set { } }
         public Azure.ResourceManager.DevTestLabs.Models.DevTestLabWeekDetails WeeklyRecurrence { get { throw null; } set { } }
     }
-    public partial class DevTestLabScheduleGetAllOptions
-    {
-        public DevTestLabScheduleGetAllOptions() { }
-        public string Expand { get { throw null; } set { } }
-        public string Filter { get { throw null; } set { } }
-        public string Orderby { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
-    }
     public partial class DevTestLabSchedulePatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch
     {
         public DevTestLabSchedulePatch() { }
     }
-    public partial class DevTestLabSecretGetAllOptions
+    public partial class DevTestLabSecretCollectionGetAllOptions
     {
-        public DevTestLabSecretGetAllOptions() { }
+        public DevTestLabSecretCollectionGetAllOptions() { }
         public string Expand { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }
         public string Orderby { get { throw null; } set { } }
@@ -1921,9 +1921,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabSecretPatch() { }
     }
-    public partial class DevTestLabServiceFabricGetAllOptions
+    public partial class DevTestLabServiceFabricCollectionGetAllOptions
     {
-        public DevTestLabServiceFabricGetAllOptions() { }
+        public DevTestLabServiceFabricCollectionGetAllOptions() { }
         public string Expand { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }
         public string Orderby { get { throw null; } set { } }
@@ -1933,9 +1933,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabServiceFabricPatch() { }
     }
-    public partial class DevTestLabServiceFabricScheduleGetAllOptions
+    public partial class DevTestLabServiceFabricScheduleCollectionGetAllOptions
     {
-        public DevTestLabServiceFabricScheduleGetAllOptions() { }
+        public DevTestLabServiceFabricScheduleCollectionGetAllOptions() { }
         public string Expand { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }
         public string Orderby { get { throw null; } set { } }
@@ -2083,9 +2083,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static bool operator !=(Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType left, Azure.ResourceManager.DevTestLabs.Models.DevTestLabUsagePermissionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DevTestLabUserGetAllOptions
+    public partial class DevTestLabUserCollectionGetAllOptions
     {
-        public DevTestLabUserGetAllOptions() { }
+        public DevTestLabUserCollectionGetAllOptions() { }
         public string Expand { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }
         public string Orderby { get { throw null; } set { } }
@@ -2110,9 +2110,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public Azure.Core.ResourceIdentifier KeyVaultId { get { throw null; } set { } }
         public System.Uri KeyVaultUri { get { throw null; } set { } }
     }
-    public partial class DevTestLabVirtualNetworkGetAllOptions
+    public partial class DevTestLabVirtualNetworkCollectionGetAllOptions
     {
-        public DevTestLabVirtualNetworkGetAllOptions() { }
+        public DevTestLabVirtualNetworkCollectionGetAllOptions() { }
         public string Expand { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }
         public string Orderby { get { throw null; } set { } }
@@ -2126,6 +2126,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         public DevTestLabVmApplyArtifactsContent() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DevTestLabs.Models.DevTestLabArtifactInstallInfo> Artifacts { get { throw null; } }
+    }
+    public partial class DevTestLabVmCollectionGetAllOptions
+    {
+        public DevTestLabVmCollectionGetAllOptions() { }
+        public string Expand { get { throw null; } set { } }
+        public string Filter { get { throw null; } set { } }
+        public string Orderby { get { throw null; } set { } }
+        public int? Top { get { throw null; } set { } }
     }
     public partial class DevTestLabVmCreationContent
     {
@@ -2182,14 +2190,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabVmDetachDataDiskContent() { }
         public Azure.Core.ResourceIdentifier ExistingLabDiskId { get { throw null; } set { } }
     }
-    public partial class DevTestLabVmGetAllOptions
-    {
-        public DevTestLabVmGetAllOptions() { }
-        public string Expand { get { throw null; } set { } }
-        public string Filter { get { throw null; } set { } }
-        public string Orderby { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
-    }
     public partial class DevTestLabVmPatch : Azure.ResourceManager.DevTestLabs.Models.DevTestLabResourcePatch
     {
         public DevTestLabVmPatch() { }
@@ -2199,9 +2199,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabVmResizeContent() { }
         public string Size { get { throw null; } set { } }
     }
-    public partial class DevTestLabVmScheduleGetAllOptions
+    public partial class DevTestLabVmScheduleCollectionGetAllOptions
     {
-        public DevTestLabVmScheduleGetAllOptions() { }
+        public DevTestLabVmScheduleCollectionGetAllOptions() { }
         public string Expand { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }
         public string Orderby { get { throw null; } set { } }

@@ -185,12 +185,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules
         /// Operation Id: Schedules_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevTestLabScheduleResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabScheduleResource> GetAllAsync(DevTestLabScheduleGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevTestLabScheduleResource> GetAllAsync(DevTestLabScheduleCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DevTestLabScheduleGetAllOptions();
+            options ??= new DevTestLabScheduleCollectionGetAllOptions();
 
             async Task<Page<DevTestLabScheduleResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -230,12 +230,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/schedules
         /// Operation Id: Schedules_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabScheduleResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabScheduleResource> GetAll(DevTestLabScheduleGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevTestLabScheduleResource> GetAll(DevTestLabScheduleCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new DevTestLabScheduleGetAllOptions();
+            options ??= new DevTestLabScheduleCollectionGetAllOptions();
 
             Page<DevTestLabScheduleResource> FirstPageFunc(int? pageSizeHint)
             {

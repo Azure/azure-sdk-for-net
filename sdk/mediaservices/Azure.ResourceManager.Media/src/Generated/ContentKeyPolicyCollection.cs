@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.Media
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies
         /// Operation Id: ContentKeyPolicies_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ContentKeyPolicyResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContentKeyPolicyResource> GetAllAsync(ContentKeyPolicyGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ContentKeyPolicyResource> GetAllAsync(ContentKeyPolicyCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ContentKeyPolicyGetAllOptions();
+            options ??= new ContentKeyPolicyCollectionGetAllOptions();
 
             async Task<Page<ContentKeyPolicyResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.Media
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/contentKeyPolicies
         /// Operation Id: ContentKeyPolicies_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContentKeyPolicyResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContentKeyPolicyResource> GetAll(ContentKeyPolicyGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ContentKeyPolicyResource> GetAll(ContentKeyPolicyCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ContentKeyPolicyGetAllOptions();
+            options ??= new ContentKeyPolicyCollectionGetAllOptions();
 
             Page<ContentKeyPolicyResource> FirstPageFunc(int? pageSizeHint)
             {

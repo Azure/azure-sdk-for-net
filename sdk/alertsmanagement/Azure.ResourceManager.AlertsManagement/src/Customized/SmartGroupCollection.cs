@@ -39,40 +39,21 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="sortOrder"> Sort the query results order in either ascending or descending.  Default value is &apos;desc&apos; for time fields and &apos;asc&apos; for others. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SmartGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SmartGroupResource> GetAllAsync(string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? smartGroupState = null, TimeRangeFilter? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<SmartGroupResource>> FirstPageFunc(int? pageSizeHint)
+        public virtual AsyncPageable<SmartGroupResource> GetAllAsync(string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? smartGroupState = null, TimeRangeFilter? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, CancellationToken cancellationToken = default) =>
+            GetAllAsync(new SmartGroupCollectionGetAllOptions
             {
-                using var scope = _smartGroupClientDiagnostics.CreateScope("SmartGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _smartGroupRestClient.GetAllAsync(Id.SubscriptionId, targetResource, targetResourceGroup, targetResourceType, monitorService, monitorCondition, severity, smartGroupState, timeRange, pageCount, sortBy, sortOrder, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SmartGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SmartGroupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _smartGroupClientDiagnostics.CreateScope("SmartGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _smartGroupRestClient.GetAllNextPageAsync(nextLink, Id.SubscriptionId, targetResource, targetResourceGroup, targetResourceType, monitorService, monitorCondition, severity, smartGroupState, timeRange, pageCount, sortBy, sortOrder, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SmartGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
+                TargetResource = targetResource,
+                TargetResourceGroup = targetResourceGroup,
+                TargetResourceType = targetResourceType,
+                MonitorService = monitorService,
+                MonitorCondition = monitorCondition,
+                Severity = severity,
+                SmartGroupState = smartGroupState,
+                TimeRange = timeRange,
+                PageCount = pageCount,
+                SortBy = sortBy,
+                SortOrder = sortOrder
+            }, cancellationToken);
 
         /// <summary>
         /// List all the Smart Groups within a specified subscription.
@@ -92,39 +73,20 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="sortOrder"> Sort the query results order in either ascending or descending.  Default value is &apos;desc&apos; for time fields and &apos;asc&apos; for others. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SmartGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SmartGroupResource> GetAll(string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? smartGroupState = null, TimeRangeFilter? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, CancellationToken cancellationToken = default)
-        {
-            Page<SmartGroupResource> FirstPageFunc(int? pageSizeHint)
+        public virtual Pageable<SmartGroupResource> GetAll(string targetResource = null, string targetResourceGroup = null, string targetResourceType = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? smartGroupState = null, TimeRangeFilter? timeRange = null, long? pageCount = null, SmartGroupsSortByField? sortBy = null, AlertsManagementQuerySortOrder? sortOrder = null, CancellationToken cancellationToken = default) =>
+            GetAll(new SmartGroupCollectionGetAllOptions
             {
-                using var scope = _smartGroupClientDiagnostics.CreateScope("SmartGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _smartGroupRestClient.GetAll(Id.SubscriptionId, targetResource, targetResourceGroup, targetResourceType, monitorService, monitorCondition, severity, smartGroupState, timeRange, pageCount, sortBy, sortOrder, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SmartGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SmartGroupResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _smartGroupClientDiagnostics.CreateScope("SmartGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _smartGroupRestClient.GetAllNextPage(nextLink, Id.SubscriptionId, targetResource, targetResourceGroup, targetResourceType, monitorService, monitorCondition, severity, smartGroupState, timeRange, pageCount, sortBy, sortOrder, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SmartGroupResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
+                TargetResource = targetResource,
+                TargetResourceGroup = targetResourceGroup,
+                TargetResourceType = targetResourceType,
+                MonitorService = monitorService,
+                MonitorCondition = monitorCondition,
+                Severity = severity,
+                SmartGroupState = smartGroupState,
+                TimeRange = timeRange,
+                PageCount = pageCount,
+                SortBy = sortBy,
+                SortOrder = sortOrder
+            }, cancellationToken);
     }
 }

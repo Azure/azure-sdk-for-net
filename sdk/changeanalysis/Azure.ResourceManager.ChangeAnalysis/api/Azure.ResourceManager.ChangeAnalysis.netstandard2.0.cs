@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.ChangeAnalysis
         public static Azure.Pageable<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData> GetChangesBySubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.DateTimeOffset startTime, System.DateTimeOffset endTime, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData> GetChangesBySubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.ChangeAnalysis.Models.ChangeAnalysisExtensionsGetChangesBySubscriptionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData> GetChangesBySubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.DateTimeOffset startTime, System.DateTimeOffset endTime, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData> GetResourceChanges(this Azure.ResourceManager.Resources.TenantResource tenantResource, string resourceId, Azure.ResourceManager.ChangeAnalysis.Models.ChangeAnalysisExtensionsGetResourceChangesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData> GetResourceChanges(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.ChangeAnalysis.Models.ChangeAnalysisExtensionsGetResourceChangesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData> GetResourceChanges(this Azure.ResourceManager.Resources.TenantResource tenantResource, string resourceId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData> GetResourceChangesAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string resourceId, Azure.ResourceManager.ChangeAnalysis.Models.ChangeAnalysisExtensionsGetResourceChangesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData> GetResourceChangesAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.ChangeAnalysis.Models.ChangeAnalysisExtensionsGetResourceChangesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData> GetResourceChangesAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string resourceId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
@@ -34,8 +34,9 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
     }
     public partial class ChangeAnalysisExtensionsGetResourceChangesOptions
     {
-        public ChangeAnalysisExtensionsGetResourceChangesOptions(System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
+        public ChangeAnalysisExtensionsGetResourceChangesOptions(string resourceId, System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
         public System.DateTimeOffset EndTime { get { throw null; } }
+        public string ResourceId { get { throw null; } }
         public string SkipToken { get { throw null; } set { } }
         public System.DateTimeOffset StartTime { get { throw null; } }
     }

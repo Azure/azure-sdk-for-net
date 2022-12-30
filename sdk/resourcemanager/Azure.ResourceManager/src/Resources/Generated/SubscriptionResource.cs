@@ -306,12 +306,12 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /subscriptions/{subscriptionId}/resources
         /// Operation Id: Resources_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="GenericResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GenericResource> GetGenericResourcesAsync(SubscriptionGetGenericResourcesOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GenericResource> GetGenericResourcesAsync(SubscriptionResourceGetGenericResourcesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SubscriptionGetGenericResourcesOptions();
+            options ??= new SubscriptionResourceGetGenericResourcesOptions();
 
             async Task<Page<GenericResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -351,12 +351,12 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /subscriptions/{subscriptionId}/resources
         /// Operation Id: Resources_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the query and header parameters of this method. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GenericResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GenericResource> GetGenericResources(SubscriptionGetGenericResourcesOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<GenericResource> GetGenericResources(SubscriptionResourceGetGenericResourcesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SubscriptionGetGenericResourcesOptions();
+            options ??= new SubscriptionResourceGetGenericResourcesOptions();
 
             Page<GenericResource> FirstPageFunc(int? pageSizeHint)
             {

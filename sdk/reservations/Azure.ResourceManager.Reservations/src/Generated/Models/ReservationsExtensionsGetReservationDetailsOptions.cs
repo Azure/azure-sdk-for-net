@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> A class representing the query and header parameters in GetReservationDetails method. </summary>
+    /// <summary> The ReservationsExtensionsGetReservationDetailsOptions. </summary>
     public partial class ReservationsExtensionsGetReservationDetailsOptions
     {
         /// <summary> Initializes a new instance of ReservationsExtensionsGetReservationDetailsOptions. </summary>
