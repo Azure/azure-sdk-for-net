@@ -7,6 +7,8 @@ Project("{F453A6C3-D0A8-4B7A-A5DA-9049C14EC10B}") = "Azure.ResourceManager.Signa
 EndProject
 Project("{F453A6C3-D0A8-4B7A-A5DA-9049C14EC10B}") = "Azure.ResourceManager.SignalR.Tests", "tests\Azure.ResourceManager.SignalR.Tests.csproj", "{9DE822D7-F99F-4553-93CC-17AB058D6559}"
 EndProject
+Project("{F453A6C3-D0A8-4B7A-A5DA-9049C14EC10B}") = "Azure.ResourceManager.SignalR.Samples", "samples\Azure.ResourceManager.SignalR.Samples.csproj", "{BC59DD4C-4329-46B0-AC3B-6AD4782F7073}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
