@@ -31,7 +31,7 @@ resource iotHub 'Microsoft.Devices/IotHubs@2021-07-02' = {
 
 output IOT_HUB_ID string = iotHub.id
 
-var cosmosDbAccountName = 'sdkCosmosDbAccount${id}'
+var cosmosDbAccountName = 'sdkcosmosdbaccount${id}'
 var cosmosDbDatabaseName = 'mydb'
 var cosmosDbContainerName = 'mycontainer'
 
