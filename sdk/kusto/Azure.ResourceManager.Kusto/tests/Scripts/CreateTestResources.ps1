@@ -9,9 +9,6 @@ Write-Host "Creating new resources for test" -ForegroundColor Green
 az login
 az account set --name $SubscriptionId
 
-Write-Host "Going to clean up remainings from previous tests run" -ForegroundColor Green
-& .\CleanupTestResources.ps1
-
 Write-Host "Getting App information" -ForegroundColor Green
 $AppId = "cb0005b7-8722-4741-b183-4fa8bc3bf70f"
 $AppSecret = az ad app credential reset --id $AppId --years 2 --query "password" --output tsv
