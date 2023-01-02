@@ -30,6 +30,9 @@ namespace Azure.ResourceManager.Kusto.Tests
 
         public ResourceIdentifier EventHubId => new(GetRecordedVariable("EVENT_HUB_ID"));
         public ResourceIdentifier IotHubId => new(GetRecordedVariable("IOT_HUB_ID"));
+        public ResourceIdentifier CosmosDbAccountId => new(GetRecordedVariable("COSMOSDB_ACCOUNT_ID"));
+        public string CosmosDbDatabaseName => GetRecordedVariable("COSMOSDB_DATABASE_NAME");
+        public string CosmosDbContainerName => GetRecordedVariable("COSMOSDB_CONTAINER_NAME");
 
         public ResourceIdentifier StorageAccountId => new(GetRecordedVariable("STORAGE_ACCOUNT_ID"));
 
