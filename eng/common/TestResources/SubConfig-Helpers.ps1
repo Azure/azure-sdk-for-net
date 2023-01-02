@@ -19,7 +19,15 @@ function GetUserName() {
 function GetBaseName([string]$user, [string]$serviceDirectoryName) {
     # Handle service directories in nested directories, e.g. `data/aztables`
     $serviceDirectorySafeName = $serviceDirectoryName -replace '[\./\\]', ''
-    return "$user$serviceDirectorySafeName".ToLowerInvariant()
+    $BaseName =  "$user$serviceDirectorySafeName".ToLowerInvariant()
+    $BaseName = "loadtestingSDK"
+    # Key-Vault accounts have a limit of 24 characters
+    if ($BaseName.Length -gt 24) {
+        Log "Truncating BaseName to 24 characters."
+        $BaseName = $BaseName.Substring(0, 24)
+    }
+
+    return $BaseName
 }
 
 function ShouldMarkValueAsSecret([string]$serviceName, [string]$key, [string]$value, [array]$allowedValues = @())

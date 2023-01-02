@@ -33,7 +33,7 @@ New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-Servi
 ```
 
 ## DESCRIPTION
-Deploys live test resouces specified in test-resources.json or test-resources.bicep
+Deploys live test resources specified in test-resources.json or test-resources.bicep
 files to a new resource group.
 
 This script searches the directory specified in $ServiceDirectory recursively
@@ -560,7 +560,7 @@ Accept wildcard characters: False
 ### -SuppressVsoCommands
 By default, the -CI parameter will print out secrets to logs with Azure Pipelines log
 commands that cause them to be redacted.
-For CI environments that don't support this (like 
+For CI environments that don't support this (like
 stress test clusters), this flag can be set to $false to avoid printing out these secrets to the logs.
 
 ```yaml
