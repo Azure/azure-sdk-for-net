@@ -23,8 +23,7 @@ namespace Azure.ResourceManager.Kusto.Tests
 
         public string PrivateEndpointName => GetRecordedVariable("PRIVATE_ENDPOINT_NAME");
 
-        public ResourceIdentifier UserAssignedIdentityId =>
-            new(GetRecordedVariable("USER_ASSIGNED_IDENTITY_ID"));
+        public ResourceIdentifier UserAssignedIdentityId => new(GetRecordedVariable("USER_ASSIGNED_IDENTITY_ID"));
 
         public string UserAssignedIdentityPrincipalId => GetRecordedVariable("USER_ASSIGNED_IDENTITY_PRINCIPAL_ID");
 
