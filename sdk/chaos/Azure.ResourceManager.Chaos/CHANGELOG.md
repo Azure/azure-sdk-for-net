@@ -1,15 +1,16 @@
 # Release History
 
-## 1.0.0-beta.2 (2022-10-01)
+## 1.0.0-beta.2 (2022-12-23)
 
 ### Features Added
 
--   Support for scope filtering of targets (currently only supports VMSS availability zones)
--   Added `kind` property to `CapabilityType`
+- Added support for scope filtering of targets (currently only supports VMSS availability zones)
+- Added `kind` property to `CapabilityType`
 
 ### Bugs Fixed
 
--   Fixes serialization/deserialization of `TimeSpan` properties to support expected ISO8601 format
+- Fixed serialization/deserialization of `TimeSpan` properties to support expected ISO8601 format
+- Fixed parameter mapping in `Capability` resource
 
 ## 1.0.0-beta.1 (2022-09-15)
 

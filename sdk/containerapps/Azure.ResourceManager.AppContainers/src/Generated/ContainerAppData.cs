@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
@@ -89,6 +90,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Outbound IP Addresses for container app. </summary>
         public IReadOnlyList<IPAddress> OutboundIPAddressList { get; }
         /// <summary> The endpoint of the eventstream of the container app. </summary>
-        public string EventStreamEndpoint { get; }
+        public Uri EventStreamEndpoint { get; }
     }
 }

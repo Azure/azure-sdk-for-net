@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -36,7 +36,7 @@ Polishing since last public beta release:
 
 ### Breaking Changes
 
-- Change the namesapce from `Azure.ResourceManager.Applications.Containers` to `Azure.ResourceManager.AppContainers`.
+- Change the namespace from `Azure.ResourceManager.Applications.Containers` to `Azure.ResourceManager.AppContainers`.
 
 ### General New Features
 

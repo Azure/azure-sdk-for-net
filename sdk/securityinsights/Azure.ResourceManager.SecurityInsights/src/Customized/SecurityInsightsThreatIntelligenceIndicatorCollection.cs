@@ -60,14 +60,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> Threat intelligence indicator name field. </param>
-        /// <param name="data"> Properties of threat intelligence indicators to create and update. </param>
+        /// <param name="content"> Properties of threat intelligence indicators to create and update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityInsightsThreatIntelligenceIndicatorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, SecurityInsightsThreatIntelligenceIndicatorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsClientDiagnostics.CreateScope("SecurityInsightsThreatIntelligenceIndicatorCollection.CreateOrUpdate");
             scope.Start();
@@ -93,14 +93,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> Threat intelligence indicator name field. </param>
-        /// <param name="data"> Properties of threat intelligence indicators to create and update. </param>
+        /// <param name="content"> Properties of threat intelligence indicators to create and update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityInsightsThreatIntelligenceIndicatorResource> CreateOrUpdate(WaitUntil waitUntil, string name, SecurityInsightsThreatIntelligenceIndicatorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsClientDiagnostics.CreateScope("SecurityInsightsThreatIntelligenceIndicatorCollection.CreateOrUpdate");
             scope.Start();
@@ -185,12 +185,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
-        /// <param name="orderby"> Sorts the results. Optional. </param>
+        /// <param name="orderBy"> Sorts the results. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ThreatIntelligenceInformation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ThreatIntelligenceInformation> GetAllAsync(string workspaceName, string filter = null, int? top = null, string skipToken = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityInsightsThreatIntelligenceIndicatorResource> GetAllAsync(string filter = null, int? top = null, string skipToken = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SecurityInsightsThreatIntelligenceIndicatorResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -198,8 +196,8 @@ namespace Azure.ResourceManager.SecurityInsights
                 scope.Start();
                 try
                 {
-                    var response = await _threatIntelligenceIndicatorRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, filter, top, skipToken, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    var response = await _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skipToken, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new SecurityInsightsThreatIntelligenceIndicatorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

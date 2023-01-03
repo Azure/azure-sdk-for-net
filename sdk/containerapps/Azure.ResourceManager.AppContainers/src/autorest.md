@@ -125,7 +125,7 @@ rename-mapping:
   EnvironmentProvisioningState: ContainerAppEnvironmentProvisioningState
   EnvironmentVar: ContainerAppEnvironmentVariable
   ExtendedLocation: ContainerAppExtendedLocation
-  ExtendedLocationType: ContainerAppExtendedLocationType
+  ExtendedLocationTypes: ContainerAppExtendedLocationType
   ForwardProxy: ContainerAppForwardProxy
   ForwardProxyConvention: ContainerAppForwardProxyConvention
   GithubActionConfiguration: ContainerAppGitHubActionConfiguration
@@ -196,6 +196,7 @@ rename-mapping:
   TrafficWeight.latestRevision: IsLatestRevision
   VnetConfiguration.infrastructureSubnetId: -|arm-id
   VnetConfiguration.internal: IsInternal
+  ContainerApp.properties.eventStreamEndpoint: -|uri
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}: ContainerAppConnectedEnvironmentCertificate

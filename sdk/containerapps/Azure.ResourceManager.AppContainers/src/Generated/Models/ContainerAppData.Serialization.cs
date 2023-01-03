@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
@@ -265,7 +266,12 @@ namespace Azure.ResourceManager.AppContainers
                         }
                         if (property0.NameEquals("eventStreamEndpoint"))
                         {
-                            eventStreamEndpoint = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                eventStreamEndpoint = null;
+                                continue;
+                            }
+                            eventStreamEndpoint = new Uri(property0.Value.GetString());
                             continue;
                         }
                     }
