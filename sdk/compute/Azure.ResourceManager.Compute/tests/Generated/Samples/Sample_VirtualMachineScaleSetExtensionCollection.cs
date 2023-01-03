@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_VirtualMachineScaleSetExtensionsCreateOrUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtensions_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtensions_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSetExtensions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_VirtualMachineScaleSetExtensionsCreateOrUpdateMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtensions_CreateOrUpdate_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtensions_CreateOrUpdate_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSetExtensions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_VirtualMachineScaleSetExtensionsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtensions_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtensions_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSetExtensions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_VirtualMachineScaleSetExtensionsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtensions_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtensions_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSetExtensions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_VirtualMachineScaleSetExtensionsGetMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtensions_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtensions_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSetExtensions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_VirtualMachineScaleSetExtensionsGetMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtensions_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtensions_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSetExtensions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_VirtualMachineScaleSetExtensionsListMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtensions_List_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtensions_List_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSetExtensions_List" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_VirtualMachineScaleSetExtensionsListMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtensions_List_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtensions_List_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSetExtensions_List" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
