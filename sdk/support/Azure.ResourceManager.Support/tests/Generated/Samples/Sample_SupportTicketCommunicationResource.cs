@@ -11,8 +11,9 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Support;
 
-namespace Azure.ResourceManager.Support
+namespace Azure.ResourceManager.Support.Samples
 {
     public partial class Sample_SupportTicketCommunicationResource
     {

@@ -10,10 +10,11 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Maintenance;
 using Azure.ResourceManager.Maintenance.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Maintenance
+namespace Azure.ResourceManager.Maintenance.Samples
 {
     public partial class Sample_ResourceGroupResourceExtensions
     {

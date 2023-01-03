@@ -9,8 +9,9 @@ using System;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Advisor;
 
-namespace Azure.ResourceManager.Advisor
+namespace Azure.ResourceManager.Advisor.Samples
 {
     public partial class Sample_MetadataEntityCollection
     {

@@ -12,8 +12,9 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Samples
 {
     public partial class Sample_TemplateSpecVersionCollection
     {

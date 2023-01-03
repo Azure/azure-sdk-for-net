@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HybridConnectivity;
 using Azure.ResourceManager.HybridConnectivity.Models;
 
-namespace Azure.ResourceManager.HybridConnectivity
+namespace Azure.ResourceManager.HybridConnectivity.Samples
 {
     public partial class Sample_EndpointResource
     {

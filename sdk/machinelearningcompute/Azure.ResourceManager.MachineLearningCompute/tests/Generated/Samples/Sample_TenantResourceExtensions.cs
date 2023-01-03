@@ -11,7 +11,7 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearningCompute.Models;
 
-namespace Azure.ResourceManager.MachineLearningCompute
+namespace Azure.ResourceManager.MachineLearningCompute.Samples
 {
     public partial class Sample_TenantResourceExtensions
     {

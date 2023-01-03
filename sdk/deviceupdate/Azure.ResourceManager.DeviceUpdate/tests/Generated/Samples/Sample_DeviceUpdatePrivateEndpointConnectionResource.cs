@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DeviceUpdate;
 using Azure.ResourceManager.DeviceUpdate.Models;
 
-namespace Azure.ResourceManager.DeviceUpdate
+namespace Azure.ResourceManager.DeviceUpdate.Samples
 {
     public partial class Sample_DeviceUpdatePrivateEndpointConnectionResource
     {

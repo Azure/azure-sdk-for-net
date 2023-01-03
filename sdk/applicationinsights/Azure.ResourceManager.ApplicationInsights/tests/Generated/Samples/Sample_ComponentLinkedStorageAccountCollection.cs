@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ApplicationInsights;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ApplicationInsights
+namespace Azure.ResourceManager.ApplicationInsights.Samples
 {
     public partial class Sample_ComponentLinkedStorageAccountCollection
     {

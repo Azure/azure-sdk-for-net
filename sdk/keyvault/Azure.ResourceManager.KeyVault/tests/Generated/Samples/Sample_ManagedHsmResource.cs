@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Samples
 {
     public partial class Sample_ManagedHsmResource
     {

@@ -9,8 +9,9 @@ using System;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AgFoodPlatform;
 
-namespace Azure.ResourceManager.AgFoodPlatform
+namespace Azure.ResourceManager.AgFoodPlatform.Samples
 {
     public partial class Sample_FarmBeatsExtensionCollection
     {

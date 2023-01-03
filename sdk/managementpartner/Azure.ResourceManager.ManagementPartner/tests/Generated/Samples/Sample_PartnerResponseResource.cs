@@ -11,8 +11,9 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagementPartner;
 
-namespace Azure.ResourceManager.ManagementPartner
+namespace Azure.ResourceManager.ManagementPartner.Samples
 {
     public partial class Sample_PartnerResponseResource
     {

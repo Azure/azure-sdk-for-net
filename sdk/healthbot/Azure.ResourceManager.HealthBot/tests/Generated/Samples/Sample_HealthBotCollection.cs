@@ -11,11 +11,12 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HealthBot;
 using Azure.ResourceManager.HealthBot.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.HealthBot
+namespace Azure.ResourceManager.HealthBot.Samples
 {
     public partial class Sample_HealthBotCollection
     {

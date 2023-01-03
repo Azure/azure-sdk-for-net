@@ -13,7 +13,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.RedisEnterprise.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.RedisEnterprise
+namespace Azure.ResourceManager.RedisEnterprise.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {

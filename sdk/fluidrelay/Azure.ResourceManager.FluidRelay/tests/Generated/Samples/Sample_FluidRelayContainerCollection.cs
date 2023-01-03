@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.FluidRelay;
 
-namespace Azure.ResourceManager.FluidRelay
+namespace Azure.ResourceManager.FluidRelay.Samples
 {
     public partial class Sample_FluidRelayContainerCollection
     {

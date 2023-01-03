@@ -11,8 +11,9 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Hci;
 
-namespace Azure.ResourceManager.Hci
+namespace Azure.ResourceManager.Hci.Samples
 {
     public partial class Sample_ArcSettingCollection
     {

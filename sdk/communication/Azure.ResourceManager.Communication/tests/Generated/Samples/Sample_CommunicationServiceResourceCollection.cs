@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Communication;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Communication
+namespace Azure.ResourceManager.Communication.Samples
 {
     public partial class Sample_CommunicationServiceResourceCollection
     {

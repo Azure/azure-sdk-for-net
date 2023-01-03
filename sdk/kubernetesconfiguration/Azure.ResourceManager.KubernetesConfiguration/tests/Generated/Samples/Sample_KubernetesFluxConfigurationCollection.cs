@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.KubernetesConfiguration;
 using Azure.ResourceManager.KubernetesConfiguration.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.KubernetesConfiguration
+namespace Azure.ResourceManager.KubernetesConfiguration.Samples
 {
     public partial class Sample_KubernetesFluxConfigurationCollection
     {

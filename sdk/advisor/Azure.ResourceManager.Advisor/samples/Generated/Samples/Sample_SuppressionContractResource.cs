@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Advisor;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Advisor
+namespace Azure.ResourceManager.Advisor.Samples
 {
     public partial class Sample_SuppressionContractResource
     {

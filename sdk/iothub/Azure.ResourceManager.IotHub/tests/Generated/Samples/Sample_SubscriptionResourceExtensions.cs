@@ -13,7 +13,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.IotHub.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.IotHub
+namespace Azure.ResourceManager.IotHub.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {

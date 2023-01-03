@@ -11,8 +11,9 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HealthcareApis;
 
-namespace Azure.ResourceManager.HealthcareApis
+namespace Azure.ResourceManager.HealthcareApis.Samples
 {
     public partial class Sample_DicomServiceCollection
     {

@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.WorkloadMonitor;
 
-namespace Azure.ResourceManager.WorkloadMonitor
+namespace Azure.ResourceManager.WorkloadMonitor.Samples
 {
     public partial class Sample_HealthMonitorStateChangeCollection
     {

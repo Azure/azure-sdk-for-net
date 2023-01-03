@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HybridCompute;
 
-namespace Azure.ResourceManager.HybridCompute
+namespace Azure.ResourceManager.HybridCompute.Samples
 {
     public partial class Sample_HybridComputePrivateLinkResource
     {

@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.LabServices;
 using Azure.ResourceManager.LabServices.Models;
 
-namespace Azure.ResourceManager.LabServices
+namespace Azure.ResourceManager.LabServices.Samples
 {
     public partial class Sample_LabServicesScheduleResource
     {

@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataShare;
 
-namespace Azure.ResourceManager.DataShare
+namespace Azure.ResourceManager.DataShare.Samples
 {
     public partial class Sample_DataShareConsumerInvitationCollection
     {

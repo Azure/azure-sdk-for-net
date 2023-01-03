@@ -13,7 +13,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.AppConfiguration.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.AppConfiguration
+namespace Azure.ResourceManager.AppConfiguration.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {

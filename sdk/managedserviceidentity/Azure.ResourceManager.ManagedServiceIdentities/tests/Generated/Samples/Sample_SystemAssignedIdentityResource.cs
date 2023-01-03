@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedServiceIdentities;
 
-namespace Azure.ResourceManager.ManagedServiceIdentities
+namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 {
     public partial class Sample_SystemAssignedIdentityResource
     {

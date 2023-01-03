@@ -13,7 +13,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Advisor.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Advisor
+namespace Azure.ResourceManager.Advisor.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {

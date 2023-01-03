@@ -9,8 +9,9 @@ using System;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Subscription;
 
-namespace Azure.ResourceManager.Subscription
+namespace Azure.ResourceManager.Subscription.Samples
 {
     public partial class Sample_BillingAccountPolicyCollection
     {

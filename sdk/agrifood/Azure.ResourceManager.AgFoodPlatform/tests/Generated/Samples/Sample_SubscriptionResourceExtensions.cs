@@ -13,7 +13,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.AgFoodPlatform.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.AgFoodPlatform
+namespace Azure.ResourceManager.AgFoodPlatform.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {

@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Maps;
 using Azure.ResourceManager.Maps.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Maps
+namespace Azure.ResourceManager.Maps.Samples
 {
     public partial class Sample_MapsAccountCollection
     {

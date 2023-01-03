@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataBoxEdge;
 using Azure.ResourceManager.DataBoxEdge.Models;
 
-namespace Azure.ResourceManager.DataBoxEdge
+namespace Azure.ResourceManager.DataBoxEdge.Samples
 {
     public partial class Sample_DataBoxEdgeStorageAccountCredentialResource
     {

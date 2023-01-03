@@ -11,9 +11,10 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Support;
 using Azure.ResourceManager.Support.Models;
 
-namespace Azure.ResourceManager.Support
+namespace Azure.ResourceManager.Support.Samples
 {
     public partial class Sample_SupportTicketResource
     {

@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedServices;
 using Azure.ResourceManager.ManagedServices.Models;
 
-namespace Azure.ResourceManager.ManagedServices
+namespace Azure.ResourceManager.ManagedServices.Samples
 {
     public partial class Sample_ManagedServicesRegistrationAssignmentCollection
     {

@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.NotificationHubs;
 using Azure.ResourceManager.NotificationHubs.Models;
 
-namespace Azure.ResourceManager.NotificationHubs
+namespace Azure.ResourceManager.NotificationHubs.Samples
 {
     public partial class Sample_NotificationHubNamespaceAuthorizationRuleCollection
     {

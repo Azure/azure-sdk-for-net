@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Kubernetes;
 using Azure.ResourceManager.Kubernetes.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Kubernetes
+namespace Azure.ResourceManager.Kubernetes.Samples
 {
     public partial class Sample_ConnectedClusterResource
     {

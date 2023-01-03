@@ -11,8 +11,9 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.KeyVault;
 
-namespace Azure.ResourceManager.KeyVault
+namespace Azure.ResourceManager.KeyVault.Samples
 {
     public partial class Sample_DeletedManagedHsmResource
     {

@@ -11,8 +11,9 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Relay;
 
-namespace Azure.ResourceManager.Relay
+namespace Azure.ResourceManager.Relay.Samples
 {
     public partial class Sample_RelayHybridConnectionResource
     {

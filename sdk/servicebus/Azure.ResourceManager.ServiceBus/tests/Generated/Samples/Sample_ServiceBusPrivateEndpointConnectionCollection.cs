@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ServiceBus;
 using Azure.ResourceManager.ServiceBus.Models;
 
-namespace Azure.ResourceManager.ServiceBus
+namespace Azure.ResourceManager.ServiceBus.Samples
 {
     public partial class Sample_ServiceBusPrivateEndpointConnectionCollection
     {

@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.PowerBIDedicated;
 using Azure.ResourceManager.PowerBIDedicated.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.PowerBIDedicated
+namespace Azure.ResourceManager.PowerBIDedicated.Samples
 {
     public partial class Sample_AutoScaleVCoreCollection
     {

@@ -13,7 +13,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StoragePool.Models;
 
-namespace Azure.ResourceManager.StoragePool
+namespace Azure.ResourceManager.StoragePool.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {

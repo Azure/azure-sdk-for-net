@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ConnectedVMwarevSphere;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ConnectedVMwarevSphere
+namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
 {
     public partial class Sample_VirtualNetworkResource
     {

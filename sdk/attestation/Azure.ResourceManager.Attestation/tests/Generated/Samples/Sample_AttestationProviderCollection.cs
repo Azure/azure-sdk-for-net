@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Attestation;
 using Azure.ResourceManager.Attestation.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Attestation
+namespace Azure.ResourceManager.Attestation.Samples
 {
     public partial class Sample_AttestationProviderCollection
     {

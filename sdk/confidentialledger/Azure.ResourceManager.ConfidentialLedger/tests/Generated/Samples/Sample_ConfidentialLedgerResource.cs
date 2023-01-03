@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ConfidentialLedger;
 using Azure.ResourceManager.ConfidentialLedger.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ConfidentialLedger
+namespace Azure.ResourceManager.ConfidentialLedger.Samples
 {
     public partial class Sample_ConfidentialLedgerResource
     {

@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ProviderHub;
 using Azure.ResourceManager.ProviderHub.Models;
 
-namespace Azure.ResourceManager.ProviderHub
+namespace Azure.ResourceManager.ProviderHub.Samples
 {
     public partial class Sample_ResourceTypeRegistrationCollection
     {

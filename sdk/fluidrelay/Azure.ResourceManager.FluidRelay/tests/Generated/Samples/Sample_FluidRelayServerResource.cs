@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.FluidRelay;
 using Azure.ResourceManager.FluidRelay.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.FluidRelay
+namespace Azure.ResourceManager.FluidRelay.Samples
 {
     public partial class Sample_FluidRelayServerResource
     {

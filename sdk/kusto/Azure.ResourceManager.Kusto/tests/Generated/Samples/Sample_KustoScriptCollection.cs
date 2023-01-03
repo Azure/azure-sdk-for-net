@@ -11,8 +11,9 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Kusto;
 
-namespace Azure.ResourceManager.Kusto
+namespace Azure.ResourceManager.Kusto.Samples
 {
     public partial class Sample_KustoScriptCollection
     {

@@ -13,7 +13,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.ContainerInstance.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ContainerInstance
+namespace Azure.ResourceManager.ContainerInstance.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {

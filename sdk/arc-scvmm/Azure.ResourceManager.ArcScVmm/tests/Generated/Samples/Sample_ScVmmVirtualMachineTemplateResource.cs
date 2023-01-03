@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ArcScVmm;
 using Azure.ResourceManager.ArcScVmm.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ArcScVmm
+namespace Azure.ResourceManager.ArcScVmm.Samples
 {
     public partial class Sample_ScVmmVirtualMachineTemplateResource
     {

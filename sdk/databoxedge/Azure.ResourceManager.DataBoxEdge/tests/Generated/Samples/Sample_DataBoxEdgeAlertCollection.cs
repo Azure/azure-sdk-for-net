@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataBoxEdge;
 
-namespace Azure.ResourceManager.DataBoxEdge
+namespace Azure.ResourceManager.DataBoxEdge.Samples
 {
     public partial class Sample_DataBoxEdgeAlertCollection
     {

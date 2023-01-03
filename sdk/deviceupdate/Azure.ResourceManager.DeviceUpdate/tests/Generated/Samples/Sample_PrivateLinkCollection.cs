@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DeviceUpdate;
 
-namespace Azure.ResourceManager.DeviceUpdate
+namespace Azure.ResourceManager.DeviceUpdate.Samples
 {
     public partial class Sample_PrivateLinkCollection
     {

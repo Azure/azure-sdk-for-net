@@ -12,8 +12,9 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Billing;
 
-namespace Azure.ResourceManager.Billing
+namespace Azure.ResourceManager.Billing.Samples
 {
     public partial class Sample_BillingSubscriptionAliasCollection
     {

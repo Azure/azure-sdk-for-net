@@ -12,7 +12,7 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DataShare.Models;
 
-namespace Azure.ResourceManager.DataShare
+namespace Azure.ResourceManager.DataShare.Samples
 {
     public partial class Sample_TenantResourceExtensions
     {

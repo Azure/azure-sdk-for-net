@@ -13,7 +13,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.LabServices.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.LabServices
+namespace Azure.ResourceManager.LabServices.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {

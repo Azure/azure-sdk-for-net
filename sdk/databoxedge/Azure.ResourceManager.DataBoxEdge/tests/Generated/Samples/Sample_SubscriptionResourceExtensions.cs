@@ -13,7 +13,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.DataBoxEdge
+namespace Azure.ResourceManager.DataBoxEdge.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {

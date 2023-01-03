@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.CustomerInsights;
 using Azure.ResourceManager.CustomerInsights.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.CustomerInsights
+namespace Azure.ResourceManager.CustomerInsights.Samples
 {
     public partial class Sample_HubResource
     {

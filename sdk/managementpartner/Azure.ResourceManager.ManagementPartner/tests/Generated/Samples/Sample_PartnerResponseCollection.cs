@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagementPartner;
 
-namespace Azure.ResourceManager.ManagementPartner
+namespace Azure.ResourceManager.ManagementPartner.Samples
 {
     public partial class Sample_PartnerResponseCollection
     {

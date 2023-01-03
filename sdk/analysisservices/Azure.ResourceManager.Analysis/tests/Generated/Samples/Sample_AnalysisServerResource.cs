@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Analysis;
 using Azure.ResourceManager.Analysis.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Analysis
+namespace Azure.ResourceManager.Analysis.Samples
 {
     public partial class Sample_AnalysisServerResource
     {

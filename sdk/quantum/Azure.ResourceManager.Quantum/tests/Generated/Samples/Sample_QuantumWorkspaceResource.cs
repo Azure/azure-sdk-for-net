@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Quantum;
 using Azure.ResourceManager.Quantum.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Quantum
+namespace Azure.ResourceManager.Quantum.Samples
 {
     public partial class Sample_QuantumWorkspaceResource
     {

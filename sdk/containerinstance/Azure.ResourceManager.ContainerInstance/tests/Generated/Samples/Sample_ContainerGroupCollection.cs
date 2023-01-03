@@ -12,11 +12,12 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ContainerInstance;
 using Azure.ResourceManager.ContainerInstance.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ContainerInstance
+namespace Azure.ResourceManager.ContainerInstance.Samples
 {
     public partial class Sample_ContainerGroupCollection
     {

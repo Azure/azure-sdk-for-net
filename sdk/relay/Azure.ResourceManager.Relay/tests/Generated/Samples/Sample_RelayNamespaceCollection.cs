@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Relay;
 using Azure.ResourceManager.Relay.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Relay
+namespace Azure.ResourceManager.Relay.Samples
 {
     public partial class Sample_RelayNamespaceCollection
     {

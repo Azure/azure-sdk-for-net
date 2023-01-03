@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedNetwork;
 using Azure.ResourceManager.ManagedNetwork.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.ManagedNetwork
+namespace Azure.ResourceManager.ManagedNetwork.Samples
 {
     public partial class Sample_ManagedNetworkPeeringPolicyCollection
     {

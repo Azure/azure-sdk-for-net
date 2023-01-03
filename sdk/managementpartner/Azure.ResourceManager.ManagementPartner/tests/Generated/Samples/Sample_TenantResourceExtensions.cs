@@ -11,7 +11,7 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementPartner.Models;
 
-namespace Azure.ResourceManager.ManagementPartner
+namespace Azure.ResourceManager.ManagementPartner.Samples
 {
     public partial class Sample_TenantResourceExtensions
     {

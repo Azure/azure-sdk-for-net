@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppComplianceAutomation;
 
-namespace Azure.ResourceManager.AppComplianceAutomation
+namespace Azure.ResourceManager.AppComplianceAutomation.Samples
 {
     public partial class Sample_SnapshotResourceCollection
     {

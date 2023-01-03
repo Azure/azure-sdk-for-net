@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Purview;
 using Azure.ResourceManager.Purview.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Purview
+namespace Azure.ResourceManager.Purview.Samples
 {
     public partial class Sample_PurviewAccountResource
     {

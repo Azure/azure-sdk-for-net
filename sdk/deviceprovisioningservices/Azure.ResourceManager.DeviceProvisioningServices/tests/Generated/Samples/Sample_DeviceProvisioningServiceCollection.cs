@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DeviceProvisioningServices;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.DeviceProvisioningServices
+namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
 {
     public partial class Sample_DeviceProvisioningServiceCollection
     {

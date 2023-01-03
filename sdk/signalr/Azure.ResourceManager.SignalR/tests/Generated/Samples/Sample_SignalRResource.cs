@@ -13,9 +13,10 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SignalR;
 using Azure.ResourceManager.SignalR.Models;
 
-namespace Azure.ResourceManager.SignalR
+namespace Azure.ResourceManager.SignalR.Samples
 {
     public partial class Sample_SignalRResource
     {

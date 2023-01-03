@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.DataShare.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.DataShare
+namespace Azure.ResourceManager.DataShare.Samples
 {
     public partial class Sample_DataShareAccountResource
     {

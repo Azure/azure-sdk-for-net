@@ -10,9 +10,10 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppComplianceAutomation;
 using Azure.ResourceManager.AppComplianceAutomation.Models;
 
-namespace Azure.ResourceManager.AppComplianceAutomation
+namespace Azure.ResourceManager.AppComplianceAutomation.Samples
 {
     public partial class Sample_ReportResourceCollection
     {

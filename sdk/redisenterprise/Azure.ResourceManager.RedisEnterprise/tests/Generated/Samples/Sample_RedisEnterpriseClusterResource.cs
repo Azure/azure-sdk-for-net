@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.RedisEnterprise;
 using Azure.ResourceManager.RedisEnterprise.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.RedisEnterprise
+namespace Azure.ResourceManager.RedisEnterprise.Samples
 {
     public partial class Sample_RedisEnterpriseClusterResource
     {

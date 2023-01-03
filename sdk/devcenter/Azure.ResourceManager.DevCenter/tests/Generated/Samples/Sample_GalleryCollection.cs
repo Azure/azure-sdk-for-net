@@ -11,8 +11,9 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DevCenter;
 
-namespace Azure.ResourceManager.DevCenter
+namespace Azure.ResourceManager.DevCenter.Samples
 {
     public partial class Sample_GalleryCollection
     {

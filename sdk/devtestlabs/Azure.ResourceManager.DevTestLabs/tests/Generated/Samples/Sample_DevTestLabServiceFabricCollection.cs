@@ -11,8 +11,9 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DevTestLabs;
 
-namespace Azure.ResourceManager.DevTestLabs
+namespace Azure.ResourceManager.DevTestLabs.Samples
 {
     public partial class Sample_DevTestLabServiceFabricCollection
     {

@@ -11,11 +11,12 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DigitalTwins;
 using Azure.ResourceManager.DigitalTwins.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.DigitalTwins
+namespace Azure.ResourceManager.DigitalTwins.Samples
 {
     public partial class Sample_DigitalTwinsDescriptionResource
     {

@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.IotHub;
 
-namespace Azure.ResourceManager.IotHub
+namespace Azure.ResourceManager.IotHub.Samples
 {
     public partial class Sample_IotHubPrivateEndpointGroupInformationResource
     {

@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppComplianceAutomation;
 using Azure.ResourceManager.AppComplianceAutomation.Models;
 
-namespace Azure.ResourceManager.AppComplianceAutomation
+namespace Azure.ResourceManager.AppComplianceAutomation.Samples
 {
     public partial class Sample_ReportResource
     {

@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ElasticSan;
 using Azure.ResourceManager.ElasticSan.Models;
 
-namespace Azure.ResourceManager.ElasticSan
+namespace Azure.ResourceManager.ElasticSan.Samples
 {
     public partial class Sample_ElasticSanVolumeCollection
     {

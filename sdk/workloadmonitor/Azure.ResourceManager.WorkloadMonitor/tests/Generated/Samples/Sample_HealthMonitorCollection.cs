@@ -11,8 +11,9 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.WorkloadMonitor;
 
-namespace Azure.ResourceManager.WorkloadMonitor
+namespace Azure.ResourceManager.WorkloadMonitor.Samples
 {
     public partial class Sample_HealthMonitorCollection
     {

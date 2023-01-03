@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedServiceIdentities;
 using Azure.ResourceManager.ManagedServiceIdentities.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ManagedServiceIdentities
+namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 {
     public partial class Sample_UserAssignedIdentityResource
     {

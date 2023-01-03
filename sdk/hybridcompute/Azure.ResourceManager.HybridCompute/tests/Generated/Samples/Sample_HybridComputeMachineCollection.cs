@@ -11,11 +11,12 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HybridCompute;
 using Azure.ResourceManager.HybridCompute.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.HybridCompute
+namespace Azure.ResourceManager.HybridCompute.Samples
 {
     public partial class Sample_HybridComputeMachineCollection
     {

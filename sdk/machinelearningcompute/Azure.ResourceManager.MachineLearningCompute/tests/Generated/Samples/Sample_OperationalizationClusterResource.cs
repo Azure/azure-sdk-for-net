@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MachineLearningCompute;
 using Azure.ResourceManager.MachineLearningCompute.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.MachineLearningCompute
+namespace Azure.ResourceManager.MachineLearningCompute.Samples
 {
     public partial class Sample_OperationalizationClusterResource
     {

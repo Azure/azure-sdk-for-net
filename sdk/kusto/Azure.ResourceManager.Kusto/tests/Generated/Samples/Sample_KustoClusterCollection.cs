@@ -11,11 +11,12 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Kusto
+namespace Azure.ResourceManager.Kusto.Samples
 {
     public partial class Sample_KustoClusterCollection
     {

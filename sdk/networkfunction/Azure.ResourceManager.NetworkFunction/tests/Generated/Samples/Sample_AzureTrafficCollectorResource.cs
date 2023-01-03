@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.NetworkFunction;
 using Azure.ResourceManager.NetworkFunction.Models;
 
-namespace Azure.ResourceManager.NetworkFunction
+namespace Azure.ResourceManager.NetworkFunction.Samples
 {
     public partial class Sample_AzureTrafficCollectorResource
     {

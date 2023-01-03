@@ -13,7 +13,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.DevSpaces.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.DevSpaces
+namespace Azure.ResourceManager.DevSpaces.Samples
 {
     public partial class Sample_ResourceGroupResourceExtensions
     {

@@ -11,8 +11,9 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.EventHubs;
 
-namespace Azure.ResourceManager.EventHubs
+namespace Azure.ResourceManager.EventHubs.Samples
 {
     public partial class Sample_EventHubsConsumerGroupCollection
     {

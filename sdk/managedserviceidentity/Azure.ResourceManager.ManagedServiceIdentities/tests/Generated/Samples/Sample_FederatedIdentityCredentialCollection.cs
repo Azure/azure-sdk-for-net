@@ -11,8 +11,9 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedServiceIdentities;
 
-namespace Azure.ResourceManager.ManagedServiceIdentities
+namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 {
     public partial class Sample_FederatedIdentityCredentialCollection
     {

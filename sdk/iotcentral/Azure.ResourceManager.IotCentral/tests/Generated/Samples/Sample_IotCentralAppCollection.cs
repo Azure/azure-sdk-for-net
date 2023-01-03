@@ -11,11 +11,12 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.IotCentral;
 using Azure.ResourceManager.IotCentral.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.IotCentral
+namespace Azure.ResourceManager.IotCentral.Samples
 {
     public partial class Sample_IotCentralAppCollection
     {

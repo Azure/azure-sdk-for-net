@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.SignalR;
 using Azure.ResourceManager.SignalR.Models;
 
-namespace Azure.ResourceManager.SignalR
+namespace Azure.ResourceManager.SignalR.Samples
 {
     public partial class Sample_SignalRPrivateEndpointConnectionResource
     {
