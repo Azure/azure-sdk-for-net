@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
@@ -11,7 +12,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples : TextAnalyticsSampleBase
     {
         [Test]
-        public void AnalyzeHealthcareEntitiesConvenience()
+        public async Task LROPolling()
         {
             Uri endpoint = new(TestEnvironment.Endpoint);
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
@@ -45,23 +46,36 @@ namespace Azure.AI.TextAnalytics.Samples
                 documentB
             };
 
+            #region Snippet:SampleLROPolling_PollOperation
             // Perform the text analysis operation.
-            AnalyzeHealthcareEntitiesOperation operation = client.StartAnalyzeHealthcareEntities(batchedDocuments);
-            operation.WaitForCompletion();
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchedDocuments);
+            TimeSpan pollingInterval = new(1000);
+
+            while (true)
+            {
+                // View the operation status.
+                Console.WriteLine($"Created On   : {operation.CreatedOn}");
+                Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
+                Console.WriteLine($"Id           : {operation.Id}");
+                Console.WriteLine($"Status       : {operation.Status}");
+                Console.WriteLine($"Last Modified: {operation.LastModified}");
+                Console.WriteLine();
+
+                operation.UpdateStatus();
+                if (operation.HasCompleted)
+                {
+                    break;
+                }
+
+                Thread.Sleep(pollingInterval);
+            }
+            #endregion
 
             Console.WriteLine($"The operation has completed.");
             Console.WriteLine();
 
-            // View the operation status.
-            Console.WriteLine($"Created On   : {operation.CreatedOn}");
-            Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
-            Console.WriteLine($"Id           : {operation.Id}");
-            Console.WriteLine($"Status       : {operation.Status}");
-            Console.WriteLine($"Last Modified: {operation.LastModified}");
-            Console.WriteLine();
-
             // View the operation results.
-            foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in operation.GetValues())
+            await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in operation.Value)
             {
                 Console.WriteLine($"Analyze Healthcare Entities, model version: \"{documentsInPage.ModelVersion}\"");
                 Console.WriteLine();

@@ -1,22 +1,24 @@
-# Performing dynamic classification of documents
-This sample demonstrates how to perform dynamic classification of one or more documents.
+# Classify documents with dynamic classification
+
+This sample demonstrates how to perform dynamic classification. Also known as zero-shot classification, this is a feature of the Azure Cognitive Service for Language used to classify text documents without the need to train a model.
 
 ## Create a `TextAnalyticsClient`
+
 To create a new `TextAnalyticsClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create simply with an API key.
 
 ```C# Snippet:CreateTextAnalyticsClient
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey));
+Uri endpoint = new("<endpoint>");
+AzureKeyCredential apiKey = new("<apiKey>");
+TextAnalyticsClient client = new(endpoint, credential);
 ```
 
 The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
-## Perform dynamic classification of a single document
-To perform dynamic classification of a document, call `DynamicClassify` on the `TextAnalyticsClient` by passing the document as a string parameter, in addition to the categories that it can be classified with as an `IEnumerable<string>` parameter. This returns a `ClassificationCategoryCollection`.
+## Classify a single document
 
-```C# Snippet:Sample11DynamicClassify
-// Get the document.
+To classify a text document using dynamic classification, call `DynamicClassify` on the `TextAnalyticsClient` by passing the document as a string parameter in addition to passing the categories that it can be classified with as an `IEnumerable<string>` parameter. This returns a `ClassificationCategoryCollection`.
+
+```C# Snippet:Sample11_DynamicClassifyAsync
 string document =
     "“The Microsoft Adaptive Accessories are intended to remove the barriers that traditional mice and"
     + " keyboards may present to people with limited mobility,” says Gabi Michel, director of Accessible"
@@ -35,31 +37,30 @@ List<string> categories = new()
 
 try
 {
-    Response<ClassificationCategoryCollection> response = client.DynamicClassify(document, categories);
+    Response<ClassificationCategoryCollection> response = await client.DynamicClassifyAsync(document, categories);
     ClassificationCategoryCollection classifications = response.Value;
 
-    Console.WriteLine($"The document was classified as follows:");
-    Console.WriteLine();
-
+    Console.WriteLine($"The document was classified as:");
     foreach (ClassificationCategory classification in classifications)
     {
         Console.WriteLine($"  Category: {classification.Category}");
-        Console.WriteLine($"  ConfidenceScore: {classification.ConfidenceScore}.");
+        Console.WriteLine($"  ConfidenceScore: {classification.ConfidenceScore}");
         Console.WriteLine();
     }
 }
 catch (RequestFailedException exception)
 {
-    Console.WriteLine($"Error Code: {exception.ErrorCode}");
-    Console.WriteLine($"Message: {exception.Message}");
+    Console.WriteLine($"  Error!");
+    Console.WriteLine($"  ErrorCode: {exception.ErrorCode}");
+    Console.WriteLine($"  Message: {exception.Message}");
 }
 ```
 
-## Perform dynamic classification of multiple document
-To perform dynamic classification of multiple documents, call `DynamicClassifyBatch` on the `TextAnalyticsClient` by passing the documents as an `IEnumerable<string>` parameter, in addition to the categories that they can be classified with as another `IEnumerable<string>` parameter. This returns a `DynamicClassifyDocumentResultCollection`.
+## Classify multiple documents
 
-```C# Snippet:Sample11DynamicClassifyBatchConvenience
-// Get the documents.
+To classify multiple text documents at a time using dynamic classification, call `DynamicClassifyBatch` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter in addition to passing the categories that they can be classified with as another `IEnumerable<string>` parameter. This returns a `DynamicClassifyDocumentResultCollection`.
+
+```C# Snippet:Sample11_DynamicClassifyBatchConvenienceAsync
 string documentA =
     "“The Microsoft Adaptive Accessories are intended to remove the barriers that traditional mice and"
     + " keyboards may present to people with limited mobility,” says Gabi Michel, director of Accessible"
@@ -73,6 +74,15 @@ string documentB =
 
 string documentC = string.Empty;
 
+// Prepare the input of the text analysis operation. You can add multiple documents to this list and
+// perform the same operation on all of them simultaneously.
+List<string> batchedDocuments = new()
+{
+    documentA,
+    documentB,
+    documentC
+};
+
 // Specify the categories that the documents can be classified with.
 List<string> categories = new()
 {
@@ -83,29 +93,21 @@ List<string> categories = new()
     "Technology"
 };
 
-List<string> documents = new()
-{
-    documentA,
-    documentB,
-    documentC
-};
-
-Response<DynamicClassifyDocumentResultCollection> response = client.DynamicClassifyBatch(documents, categories);
-DynamicClassifyDocumentResultCollection batchResults = response.Value;
+Response<DynamicClassifyDocumentResultCollection> response = await client.DynamicClassifyBatchAsync(batchedDocuments, categories);
+DynamicClassifyDocumentResultCollection results = response.Value;
 
 int i = 0;
-Console.WriteLine($"Results of \"Dynamic Classification\" Model, version: \"{batchResults.ModelVersion}\"");
+Console.WriteLine($"Dynamic Classify, model version: \"{results.ModelVersion}\"");
 Console.WriteLine();
 
-foreach (ClassifyDocumentResult documentResult in batchResults)
+foreach (ClassifyDocumentResult documentResult in results)
 {
-    Console.WriteLine($"On document with Text: \"{documents[i++]}\"");
-    Console.WriteLine();
+    Console.WriteLine($"Result for document with Text = \"{batchedDocuments[i++]}\"");
 
     if (documentResult.HasError)
     {
-        Console.WriteLine("  Error!");
-        Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}.");
+        Console.WriteLine($"  Error!");
+        Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
         Console.WriteLine($"  Message: {documentResult.Error.Message}");
         Console.WriteLine();
         continue;
@@ -114,7 +116,7 @@ foreach (ClassifyDocumentResult documentResult in batchResults)
     foreach (ClassificationCategory classification in documentResult.ClassificationCategories)
     {
         Console.WriteLine($"  Category: {classification.Category}");
-        Console.WriteLine($"  ConfidenceScore: {classification.ConfidenceScore}.");
+        Console.WriteLine($"  ConfidenceScore: {classification.ConfidenceScore}");
         Console.WriteLine();
     }
 }

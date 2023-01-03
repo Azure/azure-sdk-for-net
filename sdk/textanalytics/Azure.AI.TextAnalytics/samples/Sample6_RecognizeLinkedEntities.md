@@ -1,28 +1,29 @@
 # Recognizing Linked Entities in Documents
+
 This sample demonstrates how to recognize linked entities in one or more documents. To get started you will need a Cognitive Services or Language service endpoint and credentials.  See [README][README] for links and instructions.
 
-## Creating a `TextAnalyticsClient`
+## Create a `TextAnalyticsClient`
 
-To create a new `TextAnalyticsClient` to recognize linked entities in a document, you need a Cognitive Services or Language service endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development. In the sample below, however, you'll use a Language service API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client.
-
-You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
+To create a new `TextAnalyticsClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create simply with an API key.
 
 ```C# Snippet:CreateTextAnalyticsClient
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey));
+Uri endpoint = new("<endpoint>");
+AzureKeyCredential apiKey = new("<apiKey>");
+TextAnalyticsClient client = new(endpoint, credential);
 ```
+
+The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
 ## Recognizing linked entities in a single document
 
 To recognize linked entities in a document, use the `RecognizeLinkedEntities` method.  The returned value is the collection of `LinkedEntities` containing entities recognized in the document as well as links to those entities in a reference data source, such as Wikipedia.
 
-```C# Snippet:RecognizeLinkedEntities
-string document = @"Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends,
-                    Steve Ballmer, eventually became CEO after Bill Gates as well. Steve Ballmer eventually stepped
-                    down as CEO of Microsoft, and was succeeded by Satya Nadella.
-                    Microsoft originally moved its headquarters to Bellevue, Washington in Januaray 1979, but is now
-                    headquartered in Redmond";
+```C# Snippet:Sample6_RecognizeLinkedEntities
+string document =
+    "Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends, Steve"
+    + " Ballmer, eventually became CEO after Bill Gates as well. Steve Ballmer eventually stepped down as"
+    + " CEO of Microsoft, and was succeeded by Satya Nadella. Microsoft originally moved its headquarters"
+    + " to Bellevue, Washington in Januaray 1979, but is now headquartered in Redmond.";
 
 try
 {
@@ -44,7 +45,7 @@ try
             Console.WriteLine($"    Length: {match.Length}");
             Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
         }
-        Console.WriteLine("");
+        Console.WriteLine();
     }
 }
 catch (RequestFailedException exception)
@@ -58,87 +59,93 @@ catch (RequestFailedException exception)
 
 To recognize linked entities in multiple documents, call `RecognizeLinkedEntitiesBatch` on an `IEnumerable` of strings.  The results are returned as a `RecognizeLinkedEntitiesResultCollection`.
 
-```C# Snippet:TextAnalyticsSample6RecognizeLinkedEntitiesConvenience
-string documentA = @"Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends,
-                    Steve Ballmer, eventually became CEO after Bill Gates as well.Steve Ballmer eventually stepped
-                    down as CEO of Microsoft, and was succeeded by Satya Nadella.
-                    Microsoft originally moved its headquarters to Bellevue, Washington in Januaray 1979, but is now
-                    headquartered in Redmond";
+```C# Snippet:Sample6_RecognizeLinkedEntitiesBatchConvenience
+string documentA =
+    "Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends, Steve"
+    + " Ballmer, eventually became CEO after Bill Gates as well.Steve Ballmer eventually stepped down as"
+    + " CEO of Microsoft, and was succeeded by Satya Nadella. Microsoft originally moved its headquarters"
+    + " to Bellevue, Washington in Januaray 1979, but is now headquartered in Redmond";
 
-string documentB = @"Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975, to develop and 
-                    sell BASIC interpreters for the Altair 8800. During his career at Microsoft, Gates held
-                    the positions of chairman chief executive officer, president and chief software architect
-                    while also being the largest individual shareholder until May 2014.";
+string documentB =
+    "Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975, to develop and sell BASIC"
+    + " interpreters for the Altair 8800. During his career at Microsoft, Gates held the positions of"
+    + " chairman chief executive officer, president and chief software architect while also being the"
+    + " largest individual shareholder until May 2014.";
 
 string documentC = string.Empty;
 
-var documents = new List<string>
+// Prepare the input of the text analysis operation. You can add multiple documents to this list and
+// perform the same operation on all of them simultaneously.
+List<string> batchedDocuments = new()
 {
     documentA,
     documentB,
     documentC
 };
 
-Response<RecognizeLinkedEntitiesResultCollection> response = client.RecognizeLinkedEntitiesBatch(documents);
+Response<RecognizeLinkedEntitiesResultCollection> response = client.RecognizeLinkedEntitiesBatch(batchedDocuments);
 RecognizeLinkedEntitiesResultCollection entitiesInDocuments = response.Value;
 
 int i = 0;
-Console.WriteLine($"Results of \"Entity Linking\", version: \"{entitiesInDocuments.ModelVersion}\"");
-Console.WriteLine("");
+Console.WriteLine($"Recognize Linked Entities, model version: \"{entitiesInDocuments.ModelVersion}\"");
+Console.WriteLine();
 
-foreach (RecognizeLinkedEntitiesResult entitiesInDocument in entitiesInDocuments)
+foreach (RecognizeLinkedEntitiesResult documentResult in entitiesInDocuments)
 {
-    Console.WriteLine($"On document with Text: \"{documents[i++]}\"");
-    Console.WriteLine("");
+    Console.WriteLine($"Result for document with Text = \"{batchedDocuments[i++]}\"");
 
-    if (entitiesInDocument.HasError)
+    if (documentResult.HasError)
     {
-        Console.WriteLine("  Error!");
-        Console.WriteLine($"  Document error code: {entitiesInDocument.Error.ErrorCode}.");
-        Console.WriteLine($"  Message: {entitiesInDocument.Error.Message}");
+        Console.WriteLine($"  Error!");
+        Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+        Console.WriteLine($"  Message: {documentResult.Error.Message}");
+        Console.WriteLine();
+        continue;
     }
-    else
+
+    Console.WriteLine($"Recognized {documentResult.Entities.Count} entities:");
+    foreach (LinkedEntity linkedEntity in documentResult.Entities)
     {
-        Console.WriteLine($"Recognized {entitiesInDocument.Entities.Count} entities:");
-        foreach (LinkedEntity linkedEntity in entitiesInDocument.Entities)
+        Console.WriteLine($"  Name: {linkedEntity.Name}");
+        Console.WriteLine($"  Language: {linkedEntity.Language}");
+        Console.WriteLine($"  Data Source: {linkedEntity.DataSource}");
+        Console.WriteLine($"  URL: {linkedEntity.Url}");
+        Console.WriteLine($"  Entity Id in Data Source: {linkedEntity.DataSourceEntityId}");
+        foreach (LinkedEntityMatch match in linkedEntity.Matches)
         {
-            Console.WriteLine($"  Name: {linkedEntity.Name}");
-            Console.WriteLine($"  Language: {linkedEntity.Language}");
-            Console.WriteLine($"  Data Source: {linkedEntity.DataSource}");
-            Console.WriteLine($"  URL: {linkedEntity.Url}");
-            Console.WriteLine($"  Entity Id in Data Source: {linkedEntity.DataSourceEntityId}");
-            foreach (LinkedEntityMatch match in linkedEntity.Matches)
-            {
-                Console.WriteLine($"    Match Text: {match.Text}");
-                Console.WriteLine($"    Offset: {match.Offset}");
-                Console.WriteLine($"    Length: {match.Length}");
-                Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
-            }
-            Console.WriteLine("");
+            Console.WriteLine($"    Match Text: {match.Text}");
+            Console.WriteLine($"    Offset: {match.Offset}");
+            Console.WriteLine($"    Length: {match.Length}");
+            Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
         }
+        Console.WriteLine();
     }
-    Console.WriteLine("");
+    Console.WriteLine();
 }
 ```
 
 To recognize linked entities in a collection of documents in different languages, call `RecognizeLinkedEntitiesBatch` on an `IEnumerable` of `TextDocumentInput` objects, setting the `Language` on each document.
 
-```C# Snippet:TextAnalyticsSample6RecognizeLinkedEntitiesBatch
-string documentA = @"Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends,
-                    Steve Ballmer, eventually became CEO after Bill Gates as well.Steve Ballmer eventually stepped
-                    down as CEO of Microsoft, and was succeeded by Satya Nadella.
-                    Microsoft originally moved its headquarters to Bellevue, Washington in Januaray 1979, but is now
-                    headquartered in Redmond";
+```C# Snippet:Sample6_RecognizeLinkedEntitiesBatch
+string documentA =
+    "Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends, Steve"
+    + " Ballmer, eventually became CEO after Bill Gates as well.Steve Ballmer eventually stepped down as"
+    + " CEO of Microsoft, and was succeeded by Satya Nadella. Microsoft originally moved its headquarters"
+    + " to Bellevue, Washington in Januaray 1979, but is now headquartered in Redmond.";
 
-string documentB = @"El CEO de Microsoft es Satya Nadella, quien asumió esta posición en Febrero de 2014. Él
-                    empezó como Ingeniero de Software en el año 1992.";
+string documentB =
+    "El CEO de Microsoft es Satya Nadella, quien asumió esta posición en Febrero de 2014. Él empezó como"
+    + " Ingeniero de Software en el año 1992.";
 
-string documentC = @"Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975, to develop and 
-                    sell BASIC interpreters for the Altair 8800. During his career at Microsoft, Gates held
-                    the positions of chairman chief executive officer, president and chief software architect
-                    while also being the largest individual shareholder until May 2014.";
+string documentC =
+    "Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975, to develop and sell BASIC"
+    + " interpreters for the Altair 8800. During his career at Microsoft, Gates held the positions of"
+    + " chairman chief executive officer, president and chief software architect while also being the"
+    + " largest individual shareholder until May 2014.";
 
-var documents = new List<TextDocumentInput>
+// Prepare the input of the text analysis operation. You can add multiple documents to this list and
+// perform the same operation on all of them simultaneously.
+List<TextDocumentInput> batchedDocuments = new()
 {
     new TextDocumentInput("1", documentA)
     {
@@ -155,51 +162,51 @@ var documents = new List<TextDocumentInput>
     new TextDocumentInput("4", string.Empty)
 };
 
-var options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
-Response<RecognizeLinkedEntitiesResultCollection> response = client.RecognizeLinkedEntitiesBatch(documents, options);
+TextAnalyticsRequestOptions options = new() { IncludeStatistics = true };
+Response<RecognizeLinkedEntitiesResultCollection> response = client.RecognizeLinkedEntitiesBatch(batchedDocuments, options);
 RecognizeLinkedEntitiesResultCollection entitiesPerDocuments = response.Value;
 
 int i = 0;
-Console.WriteLine($"Results of \"Entity Linking\", version: \"{entitiesPerDocuments.ModelVersion}\"");
-Console.WriteLine("");
+Console.WriteLine($"Recognize Linked Entities, model version: \"{entitiesPerDocuments.ModelVersion}\"");
+Console.WriteLine();
 
-foreach (RecognizeLinkedEntitiesResult entitiesInDocument in entitiesPerDocuments)
+foreach (RecognizeLinkedEntitiesResult documentResult in entitiesPerDocuments)
 {
-    TextDocumentInput document = documents[i++];
+    TextDocumentInput document = batchedDocuments[i++];
 
-    Console.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\"):");
+    Console.WriteLine($"Result for document with Id = \"{document.Id}\" and Language = \"{document.Language}\":");
 
-    if (entitiesInDocument.HasError)
+    if (documentResult.HasError)
     {
-        Console.WriteLine("  Error!");
-        Console.WriteLine($"  Document error code: {entitiesInDocument.Error.ErrorCode}.");
-        Console.WriteLine($"  Message: {entitiesInDocument.Error.Message}");
+        Console.WriteLine($"  Error!");
+        Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+        Console.WriteLine($"  Message: {documentResult.Error.Message}");
+        Console.WriteLine();
+        continue;
     }
-    else
+
+    Console.WriteLine($"Recognized {documentResult.Entities.Count} entities:");
+    foreach (LinkedEntity linkedEntity in documentResult.Entities)
     {
-        Console.WriteLine($"Recognized {entitiesInDocument.Entities.Count} entities:");
-        foreach (LinkedEntity linkedEntity in entitiesInDocument.Entities)
+        Console.WriteLine($"  Name: {linkedEntity.Name}");
+        Console.WriteLine($"  Language: {linkedEntity.Language}");
+        Console.WriteLine($"  Data Source: {linkedEntity.DataSource}");
+        Console.WriteLine($"  URL: {linkedEntity.Url}");
+        Console.WriteLine($"  Entity Id in Data Source: {linkedEntity.DataSourceEntityId}");
+        foreach (LinkedEntityMatch match in linkedEntity.Matches)
         {
-            Console.WriteLine($"  Name: {linkedEntity.Name}");
-            Console.WriteLine($"  Language: {linkedEntity.Language}");
-            Console.WriteLine($"  Data Source: {linkedEntity.DataSource}");
-            Console.WriteLine($"  URL: {linkedEntity.Url}");
-            Console.WriteLine($"  Entity Id in Data Source: {linkedEntity.DataSourceEntityId}");
-            foreach (LinkedEntityMatch match in linkedEntity.Matches)
-            {
-                Console.WriteLine($"    Match Text: {match.Text}");
-                Console.WriteLine($"    Offset: {match.Offset}");
-                Console.WriteLine($"    Length: {match.Length}");
-                Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
-            }
-            Console.WriteLine("");
+            Console.WriteLine($"    Match Text: {match.Text}");
+            Console.WriteLine($"    Offset: {match.Offset}");
+            Console.WriteLine($"    Length: {match.Length}");
+            Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
         }
-
-        Console.WriteLine($"  Document statistics:");
-        Console.WriteLine($"    Character count: {entitiesInDocument.Statistics.CharacterCount}");
-        Console.WriteLine($"    Transaction count: {entitiesInDocument.Statistics.TransactionCount}");
+        Console.WriteLine();
     }
-    Console.WriteLine("");
+
+    Console.WriteLine($"  Document statistics:");
+    Console.WriteLine($"    Character count: {documentResult.Statistics.CharacterCount}");
+    Console.WriteLine($"    Transaction count: {documentResult.Statistics.TransactionCount}");
+    Console.WriteLine();
 }
 
 Console.WriteLine($"Batch operation statistics:");
@@ -207,7 +214,7 @@ Console.WriteLine($"  Document count: {entitiesPerDocuments.Statistics.DocumentC
 Console.WriteLine($"  Valid document count: {entitiesPerDocuments.Statistics.ValidDocumentCount}");
 Console.WriteLine($"  Invalid document count: {entitiesPerDocuments.Statistics.InvalidDocumentCount}");
 Console.WriteLine($"  Transaction count: {entitiesPerDocuments.Statistics.TransactionCount}");
-Console.WriteLine("");
+Console.WriteLine();
 ```
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

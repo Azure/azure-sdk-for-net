@@ -18,13 +18,13 @@ namespace Azure.AI.TextAnalytics.Samples
         {
             #region Snippet:CreateTextAnalyticsClient
 #if SNIPPET
-            string endpoint = "<endpoint>";
-            string apiKey = "<apiKey>";
+            Uri endpoint = new("<endpoint>");
+            AzureKeyCredential apiKey = new("<apiKey>");
 #else
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
 #endif
-            TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            TextAnalyticsClient client = new(endpoint, credential);
             #endregion
         }
 
@@ -33,22 +33,21 @@ namespace Azure.AI.TextAnalytics.Samples
         {
             #region Snippet:CreateTextAnalyticsClientTokenCredential
 #if SNIPPET
-            string endpoint = "<endpoint>";
+            Uri endpoint = new("<endpoint>");
 #else
-            string endpoint = TestEnvironment.Endpoint;
+            Uri endpoint = new(TestEnvironment.Endpoint);
 #endif
-            TextAnalyticsClient client = new(new Uri(endpoint), new DefaultAzureCredential());
+            TextAnalyticsClient client = new(endpoint, new DefaultAzureCredential());
             #endregion
         }
 
         [Test]
         public void BadRequestSnippet()
         {
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential);
 
-            AzureKeyCredential credentials = new(apiKey);
-            TextAnalyticsClient client = new(new Uri(endpoint), credentials);
             string document = "Este documento está en español.";
 
             #region Snippet:BadRequest
