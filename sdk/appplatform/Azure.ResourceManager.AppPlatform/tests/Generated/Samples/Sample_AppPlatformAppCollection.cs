@@ -175,11 +175,11 @@ namespace Azure.ResourceManager.AppPlatform.Samples
                     IsPublic = true,
                     AddonConfigs =
 {
-["ApplicationConfigurationService"] = new System.Collections.Generic.IDictionary<string, BinaryData>()
+["ApplicationConfigurationService"] = new Dictionary<string, BinaryData>()
 {
 ["resourceId"] = BinaryData.FromString("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/configurationServices/myacs"),
 },
-["ServiceRegistry"] = new System.Collections.Generic.IDictionary<string, BinaryData>()
+["ServiceRegistry"] = new Dictionary<string, BinaryData>()
 {
 ["resourceId"] = BinaryData.FromString("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/serviceRegistries/myServiceRegistry"),
 },
@@ -271,11 +271,11 @@ LoadTrustStore = true,
                     IsPublic = true,
                     AddonConfigs =
 {
-["ApplicationConfigurationService"] = new System.Collections.Generic.IDictionary<string, BinaryData>()
+["ApplicationConfigurationService"] = new Dictionary<string, BinaryData>()
 {
 ["resourceId"] = BinaryData.FromString("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/configurationServices/myacs"),
 },
-["ServiceRegistry"] = new System.Collections.Generic.IDictionary<string, BinaryData>()
+["ServiceRegistry"] = new Dictionary<string, BinaryData>()
 {
 ["resourceId"] = BinaryData.FromString("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/serviceRegistries/myServiceRegistry"),
 },

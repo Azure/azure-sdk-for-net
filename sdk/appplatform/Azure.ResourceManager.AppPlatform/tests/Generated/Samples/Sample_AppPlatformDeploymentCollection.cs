@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppPlatform.Samples
 },
                         AddonConfigs =
 {
-["ApplicationConfigurationService"] = new System.Collections.Generic.IDictionary<string, BinaryData>()
+["ApplicationConfigurationService"] = new Dictionary<string, BinaryData>()
 {
 ["patterns"] = BinaryData.FromObjectAsJson(new object[] { "mypattern" }),
 },
