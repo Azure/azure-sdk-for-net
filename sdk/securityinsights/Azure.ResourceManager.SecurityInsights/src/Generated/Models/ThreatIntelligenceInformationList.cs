@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="value">
         /// Array of threat intelligence information objects.
         /// Please note <see cref="SecurityInsightsThreatIntelligenceIndicatorBaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsThreatIntelligenceIndicatorData"/>.
+        /// The available derived classes include <see cref="SecurityInsightsThreatIntelligenceIndicatorCreateOrUpdateContent"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ThreatIntelligenceInformationList(IEnumerable<SecurityInsightsThreatIntelligenceIndicatorBaseData> value)
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="value">
         /// Array of threat intelligence information objects.
         /// Please note <see cref="SecurityInsightsThreatIntelligenceIndicatorBaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsThreatIntelligenceIndicatorData"/>.
+        /// The available derived classes include <see cref="SecurityInsightsThreatIntelligenceIndicatorCreateOrUpdateContent"/>.
         /// </param>
         internal ThreatIntelligenceInformationList(string nextLink, IReadOnlyList<SecurityInsightsThreatIntelligenceIndicatorBaseData> value)
         {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary>
         /// Array of threat intelligence information objects.
         /// Please note <see cref="SecurityInsightsThreatIntelligenceIndicatorBaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityInsightsThreatIntelligenceIndicatorData"/>.
+        /// The available derived classes include <see cref="SecurityInsightsThreatIntelligenceIndicatorCreateOrUpdateContent"/>.
         /// </summary>
         public IReadOnlyList<SecurityInsightsThreatIntelligenceIndicatorBaseData> Value { get; }
     }

@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.LoadTesting.Tests.Helpers
     public class LoadTestResourceHelper
     {
         public const string LOADTESTS_RESOURCE_LOCATION = "westus2";
-        public const string LOADTESTS_RESOURCE_TYPE = "/loadtests";
-        public const string LOAD_TEST_DESCRIPTION = "test";
+        public const string LOADTESTS_RESOURCE_TYPE = "Microsoft.LoadTestService/loadtests";
     }
 }

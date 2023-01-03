@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppContainers.Models;
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="location"> The location. </param>
         public ContainerAppData(AzureLocation location) : base(location)
         {
-            OutboundIPAddresses = new ChangeTrackingList<Uri>();
+            OutboundIPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppData. </summary>
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="template"> Container App versioned application definition. </param>
         /// <param name="outboundIPAddresses"> Outbound IP Addresses for container app. </param>
         /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the container app. </param>
-        internal ContainerAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, ContainerAppProvisioningState? provisioningState, ResourceIdentifier managedEnvironmentId, ResourceIdentifier environmentId, string workloadProfileType, string latestRevisionName, string latestReadyRevisionName, string latestRevisionFqdn, string customDomainVerificationId, ContainerAppConfiguration configuration, ContainerAppTemplate template, IReadOnlyList<Uri> outboundIPAddresses, Uri eventStreamEndpoint) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerAppExtendedLocation extendedLocation, ManagedServiceIdentity identity, ContainerAppProvisioningState? provisioningState, ResourceIdentifier managedEnvironmentId, ResourceIdentifier environmentId, string workloadProfileType, string latestRevisionName, string latestReadyRevisionName, string latestRevisionFqdn, string customDomainVerificationId, ContainerAppConfiguration configuration, ContainerAppTemplate template, IReadOnlyList<string> outboundIPAddresses, string eventStreamEndpoint) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Identity = identity;
@@ -87,8 +86,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Container App versioned application definition. </summary>
         public ContainerAppTemplate Template { get; set; }
         /// <summary> Outbound IP Addresses for container app. </summary>
-        public IReadOnlyList<Uri> OutboundIPAddresses { get; }
+        public IReadOnlyList<string> OutboundIPAddresses { get; }
         /// <summary> The endpoint of the eventstream of the container app. </summary>
-        public Uri EventStreamEndpoint { get; }
+        public string EventStreamEndpoint { get; }
     }
 }

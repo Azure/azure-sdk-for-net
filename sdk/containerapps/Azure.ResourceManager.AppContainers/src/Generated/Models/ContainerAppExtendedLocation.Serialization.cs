@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         internal static ContainerAppExtendedLocation DeserializeContainerAppExtendedLocation(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<ContainerAppExtendedLocationType> type = default;
+            Optional<ExtendedLocationType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new ContainerAppExtendedLocationType(property.Value.GetString());
+                    type = new ExtendedLocationType(property.Value.GetString());
                     continue;
                 }
             }

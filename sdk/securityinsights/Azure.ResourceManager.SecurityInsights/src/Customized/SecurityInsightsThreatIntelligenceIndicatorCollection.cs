@@ -21,22 +21,13 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A class representing a collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource" /> and their operations.
-<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
-    /// Each <see cref="SecurityInsightsThreatIntelligenceIndicatorResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="SecurityInsightsThreatIntelligenceIndicatorCollection" /> instance call the GetSecurityInsightsThreatIntelligenceIndicators method from an instance of <see cref="ResourceGroupResource" />.
-========
     /// Each <see cref="SecurityInsightsThreatIntelligenceIndicatorResource" /> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" />.
     /// To get a <see cref="SecurityInsightsThreatIntelligenceIndicatorCollection" /> instance call the GetSecurityInsightsThreatIntelligenceIndicators method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" />.
->>>>>>>> upstream/main:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Customized/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
     /// </summary>
     public partial class SecurityInsightsThreatIntelligenceIndicatorCollection : ArmCollection, IEnumerable<SecurityInsightsThreatIntelligenceIndicatorResource>, IAsyncEnumerable<SecurityInsightsThreatIntelligenceIndicatorResource>
     {
         private readonly ClientDiagnostics _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsClientDiagnostics;
         private readonly ThreatIntelligenceIndicatorsRestOperations _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient;
-<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
-        private readonly string _workspaceName;
-========
->>>>>>>> upstream/main:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Customized/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
 
         /// <summary> Initializes a new instance of the <see cref="SecurityInsightsThreatIntelligenceIndicatorCollection"/> class for mocking. </summary>
         protected SecurityInsightsThreatIntelligenceIndicatorCollection()
@@ -46,17 +37,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> Initializes a new instance of the <see cref="SecurityInsightsThreatIntelligenceIndicatorCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
-        /// <param name="workspaceName"> The name of the workspace. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal SecurityInsightsThreatIntelligenceIndicatorCollection(ArmClient client, ResourceIdentifier id, string workspaceName) : base(client, id)
-        {
-            _workspaceName = workspaceName;
-========
         internal SecurityInsightsThreatIntelligenceIndicatorCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
->>>>>>>> upstream/main:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Customized/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
             _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsThreatIntelligenceIndicatorResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SecurityInsightsThreatIntelligenceIndicatorResource.ResourceType, out string securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsApiVersion);
             _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient = new ThreatIntelligenceIndicatorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsApiVersion);
@@ -78,29 +60,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> Threat intelligence indicator name field. </param>
-        /// <param name="content"> Properties of threat intelligence indicators to create and update. </param>
+        /// <param name="data"> Properties of threat intelligence indicators to create and update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<SecurityInsightsThreatIntelligenceIndicatorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, SecurityInsightsThreatIntelligenceIndicatorCreateOrUpdateContent content, CancellationToken cancellationToken = default)
-========
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityInsightsThreatIntelligenceIndicatorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, SecurityInsightsThreatIntelligenceIndicatorData data, CancellationToken cancellationToken = default)
->>>>>>>> upstream/main:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Customized/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsClientDiagnostics.CreateScope("SecurityInsightsThreatIntelligenceIndicatorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
-                var response = await _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, name, content, cancellationToken).ConfigureAwait(false);
-========
                 var response = await _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
->>>>>>>> upstream/main:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Customized/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
                 var operation = new SecurityInsightsArmOperation<SecurityInsightsThreatIntelligenceIndicatorResource>(Response.FromValue(new SecurityInsightsThreatIntelligenceIndicatorResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -120,29 +93,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> Threat intelligence indicator name field. </param>
-        /// <param name="content"> Properties of threat intelligence indicators to create and update. </param>
+        /// <param name="data"> Properties of threat intelligence indicators to create and update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<SecurityInsightsThreatIntelligenceIndicatorResource> CreateOrUpdate(WaitUntil waitUntil, string name, SecurityInsightsThreatIntelligenceIndicatorCreateOrUpdateContent content, CancellationToken cancellationToken = default)
-========
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityInsightsThreatIntelligenceIndicatorResource> CreateOrUpdate(WaitUntil waitUntil, string name, SecurityInsightsThreatIntelligenceIndicatorData data, CancellationToken cancellationToken = default)
->>>>>>>> upstream/main:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Customized/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsClientDiagnostics.CreateScope("SecurityInsightsThreatIntelligenceIndicatorCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
-                var response = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, name, content, cancellationToken);
-========
                 var response = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
->>>>>>>> upstream/main:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Customized/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
                 var operation = new SecurityInsightsArmOperation<SecurityInsightsThreatIntelligenceIndicatorResource>(Response.FromValue(new SecurityInsightsThreatIntelligenceIndicatorResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -172,11 +136,7 @@ namespace Azure.ResourceManager.SecurityInsights
             scope.Start();
             try
             {
-<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
-                var response = await _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, name, cancellationToken).ConfigureAwait(false);
-========
                 var response = await _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
->>>>>>>> upstream/main:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Customized/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SecurityInsightsThreatIntelligenceIndicatorResource(Client, response.Value), response.GetRawResponse());
@@ -205,11 +165,7 @@ namespace Azure.ResourceManager.SecurityInsights
             scope.Start();
             try
             {
-<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
-                var response = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, name, cancellationToken);
-========
                 var response = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
->>>>>>>> upstream/main:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Customized/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SecurityInsightsThreatIntelligenceIndicatorResource(Client, response.Value), response.GetRawResponse());
@@ -229,10 +185,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
-        /// <param name="orderBy"> Sorts the results. Optional. </param>
+        /// <param name="orderby"> Sorts the results. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityInsightsThreatIntelligenceIndicatorResource> GetAllAsync(string filter = null, int? top = null, string skipToken = null, string orderBy = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ThreatIntelligenceInformation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ThreatIntelligenceInformation> GetAllAsync(string workspaceName, string filter = null, int? top = null, string skipToken = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SecurityInsightsThreatIntelligenceIndicatorResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -240,12 +198,8 @@ namespace Azure.ResourceManager.SecurityInsights
                 scope.Start();
                 try
                 {
-<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
-                    var response = await _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, filter, top, skipToken, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
-========
-                    var response = await _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skipToken, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
->>>>>>>> upstream/main:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Customized/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityInsightsThreatIntelligenceIndicatorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _threatIntelligenceIndicatorRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, filter, top, skipToken, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -259,11 +213,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 scope.Start();
                 try
                 {
-<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
-                    var response = await _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, filter, top, skipToken, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
-========
                     var response = await _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skipToken, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
->>>>>>>> upstream/main:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Customized/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
                     return Page.FromValues(response.Value.Value.Select(value => new SecurityInsightsThreatIntelligenceIndicatorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -294,11 +244,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 scope.Start();
                 try
                 {
-<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
-                    var response = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, filter, top, skipToken, orderBy, cancellationToken: cancellationToken);
-========
                     var response = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skipToken, orderBy, cancellationToken: cancellationToken);
->>>>>>>> upstream/main:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Customized/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
                     return Page.FromValues(response.Value.Value.Select(value => new SecurityInsightsThreatIntelligenceIndicatorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -313,11 +259,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 scope.Start();
                 try
                 {
-<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
-                    var response = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, filter, top, skipToken, orderBy, cancellationToken: cancellationToken);
-========
                     var response = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skipToken, orderBy, cancellationToken: cancellationToken);
->>>>>>>> upstream/main:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Customized/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
                     return Page.FromValues(response.Value.Value.Select(value => new SecurityInsightsThreatIntelligenceIndicatorResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -346,11 +288,7 @@ namespace Azure.ResourceManager.SecurityInsights
             scope.Start();
             try
             {
-<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
-                var response = await _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
-========
                 var response = await _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
->>>>>>>> upstream/main:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Customized/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -377,11 +315,7 @@ namespace Azure.ResourceManager.SecurityInsights
             scope.Start();
             try
             {
-<<<<<<<< HEAD:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Generated/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
-                var response = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _workspaceName, name, cancellationToken: cancellationToken);
-========
                 var response = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
->>>>>>>> upstream/main:sdk/securityinsights/Azure.ResourceManager.SecurityInsights/src/Customized/SecurityInsightsThreatIntelligenceIndicatorCollection.cs
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
