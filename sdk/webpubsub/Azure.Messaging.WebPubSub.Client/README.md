@@ -2,7 +2,7 @@
 
 [Azure Web PubSub Service](https://aka.ms/awps/doc) is an Azure-managed service that helps developers easily build web applications with real-time features and publish-subscribe pattern. Any scenario that requires real-time publish-subscribe messaging between server and clients or among clients can use Azure Web PubSub service. Traditional real-time features that often require polling from server or submitting HTTP requests can also use Azure Web PubSub service.
 
-You can use this library in your client side to manage the WebSocket client connections, as shown in below diagram:
+You can use this library on your client side to manage the WebSocket client connections, as shown in the below diagram:
 
 ![overflow](https://user-images.githubusercontent.com/668244/140014067-25a00959-04dc-47e8-ac25-6957bd0a71ce.png)
 
@@ -36,7 +36,7 @@ dotnet add package Azure.Messaging.WebPubSub.Client
 
 ### Authenticate the client
 
-Client uses a Client Access URL to connect and authenticate with the service. The Uri follow the patten as `wss://<service_name>.webpubsub.azure.com/client/hubs/<hub_name>?access_token=<token>`. The client has some different ways to get Client Access URL. As a quick start, you can copy and paste from Azure Portal, and for production, you usually need a negotiation server to generate the Uri.
+A Client uses a Client Access URL to connect and authenticate with the service. The Uri follow the patten as `wss://<service_name>.webpubsub.azure.com/client/hubs/<hub_name>?access_token=<token>`. There're multiple ways to get a Client Access URL. As a quick start, you can copy and paste from Azure Portal, and for production, you usually need a negotiation server to generate the Uri.
 
 #### Use Client Access URL from Azure Portal
 
@@ -44,7 +44,7 @@ As a quick start, you can go to the Portal and copy the **Client Access URL** fr
 
 ![get_client_url](https://learn.microsoft.com/azure/azure-web-pubsub/media/howto-websocket-connect/generate-client-url.png)
 
-As shown in the diagram, the client will be granted the permission of sending message to the specific group and joining the specific group. Learn more about client permission, see [permissions](https://learn.microsoft.com/azure/azure-web-pubsub/reference-json-reliable-webpubsub-subprotocol#permissions)
+As shown in the diagram, the client will be granted permission of sending messages to the specific group and joining the specific group. Learn more about client permission, see [permissions](https://learn.microsoft.com/azure/azure-web-pubsub/reference-json-reliable-webpubsub-subprotocol#permissions)
 
 ```C# Snippet:WebPubSubClient_Construct
 var client = new WebPubSubClient(new Uri("<client-access-uri>"));
@@ -52,7 +52,7 @@ var client = new WebPubSubClient(new Uri("<client-access-uri>"));
 
 #### Use negotiation server to generate Client Access URL
 
-In production, client usually fetch Client Access URL from a negotiation server. The server holds the connection string and generates Client Access URL through `WebPubSubServiceClient`. As an sample, the code snippet below just demostrate the how to generate the Client Access URL inside single process.
+In production, a client usually fetches the Client Access URL from a negotiation server. The server holds the connection string and generates the Client Access URL through `WebPubSubServiceClient`. As a sample, the code snippet below just demonstrates how to generate the Client Access URL inside a single process.
 
 ```C# Snippet:WebPubSubClient_Construct2
 var client = new WebPubSubClient(new WebPubSubClientCredential(token =>
@@ -70,6 +70,8 @@ public async ValueTask<Uri> FetchClientAccessTokenFromServerAsync(CancellationTo
 }
 ```
 
+`WebPubSubServiceClient` can be used to generate the Client Access Uri as well as manage client connections. Find more details in [Azure.Messaging.WebPubSub](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/webpubsub/Azure.Messaging.WebPubSub)
+
 ## Key concepts
 
 ### Connection
@@ -78,15 +80,15 @@ A connection, also known as a client connection, represents an individual WebSoc
 
 ### Recovery
 
-If using reliable protocols, a new WebSocket tries to establish using the connection ID of the lost connection. If the new WebSocket connection is successfully connected, the connection is recovered. And all group contexts will be recovered, and unreceived messages will be resent. If the service returns WebSocket error code `1008` or the recovery attemption lasts more than 30 seconds, the recovery fails.
+If a client using reliable protocols disconnects, a new WebSocket tries to establish using the connection ID of the lost connection. If the new WebSocket connection is successfully connected, the connection is recovered. Throughout the time a client is disconnected, the service retains the client's context as well as all messages that the client was subscribed to, and when the client recovers, the service will send these messages to the client. If the service returns WebSocket error code `1008` or the recovery attempt lasts more than 30 seconds, the recovery fails.
 
 ### Reconnect
 
-Reconnection happens when client connection drops and fails to recover. Reconnection just like a new connection which has a new connection ID. After reconnection, the group context or unreceived messages are lost. Client connection needs to rejoin groups. By default, client library rejoin group after reconnection.
+Reconnection happens when the client connection drops and fails to recover. Reconnection starts a new connection and the new connection has a new connection ID. Unlike recovery, the service treats the reconnected client as a new client connection. The client connection needs to rejoin groups. By default, the client library rejoins groups after reconnection.
 
 ### Hub
 
-A hub is a logical concept representing a collection of client connections. Usually, you use one hub for one purpose: for example, a chat hub, or a notification hub. When a client connection is created, it connects to a hub and, and during its lifetime, it is bound to that hub. Different applications can share one Azure Web PubSub service by using different hub names.
+A hub is a logical concept representing a collection of client connections. Usually, you use one hub for one purpose: for example, a chat hub, or a notification hub. When a client connection is created, it connects to a hub, and during its lifetime, it is bound to that hub. Different applications can share one Azure Web PubSub service by using different hub names.
 
 ### Group
 
@@ -98,13 +100,13 @@ Connections to Web PubSub can belong to one user. A user might have multiple con
 
 ## Client Lifetime
 
-Each of the Web PubSub client is safe to cache and use as a singleton for the lifetime of the application. The registered event callbacks share the same lifetime with the client. Which means you can add or remove callbacks at anytime and the registration status won't change after reconnection or even stopping the client.
+Each of the Web PubSub clients is safe to cache and use as a singleton for the lifetime of the application. The registered event callbacks share the same lifetime with the client. This means you can add or remove callbacks at any time and the registration status won't change after reconnection or even stopping the client.
 
 ## Examples
 
 ### Specify subprotocol
 
-You can change the subprotocol to be used in client. By default, the client uses `json.reliable.webpubsub.azure.v1`. In library, you can choose to use `json.reliable.webpubsub.azure.v1` or `json.webpubsub.azure.v1`.
+You can specify the subprotocol to be used by the client. By default, the client uses `json.reliable.webpubsub.azure.v1`. You can choose to use `json.reliable.webpubsub.azure.v1` or `json.webpubsub.azure.v1` as shown below.
 
 ```C# Snippet:WebPubSubClient_JsonProtocol
 var client = new WebPubSubClient(new Uri("<client-access-uri>"), new WebPubSubClientOptions
@@ -120,9 +122,9 @@ var client = new WebPubSubClient(new Uri("<client-access-uri>"), new WebPubSubCl
 });
 ```
 
-### Consume messages from server and from groups
+### Consume messages from the server and groups
 
-Client can add callbacks to consume messages from server and from groups. Please note, client can only receive group messages that it has joined.
+A client can add callbacks to consume messages from the server and groups. Please note, clients can only receive group messages that it has joined.
 
 ```C# Snippet:WebPubSubClient_Subscribe_ServerMessage
 client.ServerMessageReceived += eventArgs =>
@@ -140,7 +142,7 @@ client.GroupMessageReceived += eventArgs =>
 };
 ```
 
-### Add callbacks for connected, disconnected and stopped events
+### Add callbacks for connected, disconnected, and stopped events
 
 When a client connection is connected to the service, the `Connected` event is triggered once it received the connected message from the service.
 
@@ -162,7 +164,7 @@ client.Disconnected += eventArgs =>
 };
 ```
 
-When a client is stopped, which means the client connection is disconnected and the client stops try to reconnect, the `Stopped` event will be triggered. This usually happens after the `client.StopAsync()` is called, or disabled `AutoReconnect`. If you want to restart the client, you can call `client.StartAsync()` in the `Stopped` event.
+When a client is stopped, which means the client connection is disconnected and the client stops trying to reconnect, the `Stopped` event will be triggered. This usually happens after the `client.StopAsync()` is called, or disabled `AutoReconnect`. If you want to restart the client, you can call `client.StartAsync()` in the `Stopped` event.
 
 ```C# Snippet:WebPubSubClient_Subscribe_Stopped
 client.Stopped += eventArgs =>
@@ -172,9 +174,9 @@ client.Stopped += eventArgs =>
 };
 ```
 
-### Auto rejoin group and handle rejoin failure
+### Auto rejoin groups and handle rejoin failure
 
-When a client connection has dropped and fails to recover, all group context will be clean up in the service side. That means when the client reconnects, it needs to rejoin groups. By default, the client enabled `AutoRejoinGroups` options. However, this feature has limitation. The client can only rejoin groups that it's originally joined by then client rather than joined by server side. And rejoin group operations may fail due to various reason, e.g. the client don't have the permission to join group. In such case, uses need to add a callback to handle the failure.
+When a client connection has dropped and fails to recover, all group contexts will be cleaned up on the service side. That means when the client reconnects, it needs to rejoin groups. By default, the client enabled `AutoRejoinGroups` options. However, this feature has limitations. The client can only rejoin groups that it's originally joined by the client rather than joined by the server side. And rejoin group operations may fail due to various reasons, e.g. the client doesn't have permission to join groups. In such cases, users need to add a callback to handle the failure.
 
 ```C# Snippet:WebPubSubClient_Subscribe_RestoreFailed
 client.RejoinGroupFailed += eventArgs =>
@@ -186,7 +188,7 @@ client.RejoinGroupFailed += eventArgs =>
 
 ### Operation and retry
 
-By default, the operation like `client.JoinGroupAsync()`, `client.LeaveGroupAsync()`, `client.SendToGroupAsync()`, `client.SendEventAsync()` has three reties. You can use `WebPubSubClientOptions.MessageRetryOptions` to change. If all retries have failed, an error will be thrown. You can keep retry by pass in the same `ackId` as previous retries, thus the service can help to deduplicate the operation with the same `ackId`
+By default, the operation such as `client.JoinGroupAsync()`, `client.LeaveGroupAsync()`, `client.SendToGroupAsync()`, `client.SendEventAsync()` has three reties. You can use `WebPubSubClientOptions.MessageRetryOptions` to change. If all retries have failed, an error will be thrown. You can keep retrying by passing in the same `ackId` as previous retries, thus the service can help to deduplicate the operation with the same `ackId`
 
 ```C# Snippet:WebPubSubClient_JoinGroupAndRetry
 // Send message to group "testGroup"
