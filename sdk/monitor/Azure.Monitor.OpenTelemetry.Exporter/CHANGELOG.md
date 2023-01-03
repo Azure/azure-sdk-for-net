@@ -4,8 +4,7 @@
 
 ### Features Added
 
-* AAD Support.
-([#32986](https://github.com/Azure/azure-sdk-for-net/pull/32986))
+* AAD Support ([#32986](https://github.com/Azure/azure-sdk-for-net/pull/32986))
 
 ### Breaking Changes
 
