@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class ThrottlingPolicy : IUtf8JsonSerializable
+    public partial class EventHubsThrottlingPolicy : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type");
-            writer.WriteStringValue(PolicyType.ToString());
+            writer.WriteStringValue(ApplicationGroupPolicyType.ToString());
             writer.WriteEndObject();
         }
 
-        internal static ThrottlingPolicy DeserializeThrottlingPolicy(JsonElement element)
+        internal static EventHubsThrottlingPolicy DeserializeEventHubsThrottlingPolicy(JsonElement element)
         {
             long rateLimitThreshold = default;
             MetricId metricId = default;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new ThrottlingPolicy(name, type, rateLimitThreshold, metricId);
+            return new EventHubsThrottlingPolicy(name, type, rateLimitThreshold, metricId);
         }
     }
 }

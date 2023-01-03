@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
     public class ApplicationGroupTest : EventHubTestBase
     {
         private ResourceGroupResource _resourceGroup;
-        private ApplicationGroupCollection _applicationGroupCollection;
+        private EventHubsApplicationGroupCollection _applicationGroupCollection;
         public ApplicationGroupTest(bool isAsync) : base(isAsync)
         {
         }
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             eventHubNamespace = await namespaceCollection.GetAsync(namespaceName);
             Assert.IsTrue(await namespaceCollection.ExistsAsync(namespaceName));
            // VerifyNamespaceProperties(eventHubNamespace, true);
-            _applicationGroupCollection = eventHubNamespace.GetApplicationGroups();
+            _applicationGroupCollection = eventHubNamespace.GetEventHubsApplicationGroups();
         }
 
         [Test]
@@ -55,25 +55,25 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             string SASKey = Recording.GenerateAssetName("SasKey_");
             string ClientAppGroupIdentifier = "SASKeyName=" + SASKey;
             string applicationGroupName = Recording.GenerateAssetName("applicationgroup");
-            ApplicationGroupData applicationgroupData = new ApplicationGroupData()
+            EventHubsApplicationGroupData applicationgroupData = new EventHubsApplicationGroupData()
             {
                 IsEnabled = true,
                 ClientAppGroupIdentifier = ClientAppGroupIdentifier,
                 Policies =
                 {
-                    new ThrottlingPolicy("Throttlingpolicy1", 3452, "IncomingMessages")
+                    new EventHubsThrottlingPolicy("Throttlingpolicy1", 3452, "IncomingMessages")
                 }
             };
-            applicationgroupData.Policies.Add(new ThrottlingPolicy("Throttlingpolicy3", 3451, "IncomingBytes"));
-            ApplicationGroupResource applicationgroup = (await _applicationGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, applicationGroupName,applicationgroupData)).Value;
+            applicationgroupData.Policies.Add(new EventHubsThrottlingPolicy("Throttlingpolicy3", 3451, "IncomingBytes"));
+            EventHubsApplicationGroupResource applicationgroup = (await _applicationGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, applicationGroupName,applicationgroupData)).Value;
             Assert.IsNotNull(applicationgroup);
             Assert.AreEqual(applicationgroup.Id.Name, applicationGroupName);
             Assert.AreEqual(applicationgroup.Data.IsEnabled,applicationgroupData.IsEnabled);
             Assert.AreEqual(applicationgroup.Data.ClientAppGroupIdentifier, applicationgroupData.ClientAppGroupIdentifier);
             Assert.IsTrue(await _applicationGroupCollection.ExistsAsync(applicationGroupName));
-            List<ThrottlingPolicy> policy = new List<ThrottlingPolicy>();
+            List<EventHubsThrottlingPolicy> policy = new List<EventHubsThrottlingPolicy>();
 
-            policy = applicationgroupData.Policies.Select(x => x as ThrottlingPolicy).ToList();
+            policy = applicationgroupData.Policies.Select(x => x as EventHubsThrottlingPolicy).ToList();
             // List<ThrottlingPolicy> lp = applicationgroupData.Policies.ConvertAll(new Converter<ApplicationGroupPolicy,ThrottlingPolicy>(ApplicationGroupPolicyToThrottling));
             Assert.AreEqual("Throttlingpolicy1", policy[0].Name);
             Assert.AreEqual(3452, policy[0].RateLimitThreshold);
@@ -104,22 +104,22 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             //create two Application Groups
             string applicationGroupName1 = Recording.GenerateAssetName("applicationgroup1");
             string applicationGroupName2 = Recording.GenerateAssetName("applicationgroup2");
-            ApplicationGroupData applicationgroupData1 = new ApplicationGroupData()
+            EventHubsApplicationGroupData applicationgroupData1 = new EventHubsApplicationGroupData()
             {
                 IsEnabled = true,
                 ClientAppGroupIdentifier = ClientAppGroupIdentifier1,
                 Policies =
                 {
-                    new ThrottlingPolicy("Throttlingpolicy1", 3452, "IncomingMessages")
+                    new EventHubsThrottlingPolicy("Throttlingpolicy1", 3452, "IncomingMessages")
                 }
             };
-            ApplicationGroupData applicationgroupData2 = new ApplicationGroupData()
+            EventHubsApplicationGroupData applicationgroupData2 = new EventHubsApplicationGroupData()
             {
                 IsEnabled = true,
                 ClientAppGroupIdentifier = ClientAppGroupIdentifier2,
                 Policies =
                 {
-                    new ThrottlingPolicy("Throttlingpolicy4", 3455, "IncomingMessages")
+                    new EventHubsThrottlingPolicy("Throttlingpolicy4", 3455, "IncomingMessages")
                 }
             };
             _ = (await _applicationGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, applicationGroupName1, applicationgroupData1)).Value;
@@ -127,9 +127,9 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
             //validate
             int count = 0;
-            ApplicationGroupResource applicationGroup1 = null;
-            ApplicationGroupResource applicationGroup2 = null;
-            await foreach (ApplicationGroupResource applicationgroup in _applicationGroupCollection.GetAllAsync())
+            EventHubsApplicationGroupResource applicationGroup1 = null;
+            EventHubsApplicationGroupResource applicationGroup2 = null;
+            await foreach (EventHubsApplicationGroupResource applicationgroup in _applicationGroupCollection.GetAllAsync())
             {
                 count++;
                 if (applicationgroup.Id.Name == applicationGroupName1)

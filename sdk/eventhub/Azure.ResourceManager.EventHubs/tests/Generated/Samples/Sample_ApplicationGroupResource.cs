@@ -34,25 +34,25 @@ namespace Azure.ResourceManager.EventHubs
             string resourceGroupName = "contosotest";
             string namespaceName = "contoso-ua-test-eh-system-1";
             string applicationGroupName = "appGroup1";
-            ResourceIdentifier applicationGroupResourceId = ApplicationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, applicationGroupName);
-            ApplicationGroupResource applicationGroup = client.GetApplicationGroupResource(applicationGroupResourceId);
+            ResourceIdentifier applicationGroupResourceId = EventHubsApplicationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, applicationGroupName);
+            EventHubsApplicationGroupResource applicationGroup = client.GetEventHubsApplicationGroupResource(applicationGroupResourceId);
 
             // invoke the operation
-            ApplicationGroupData data = new ApplicationGroupData()
+            EventHubsApplicationGroupData data = new EventHubsApplicationGroupData()
             {
                 IsEnabled = true,
                 ClientAppGroupIdentifier = "SASKeyName=KeyName",
                 Policies =
 {
-new ThrottlingPolicy("ThrottlingPolicy1",7912,MetricId.IncomingMessages),new ThrottlingPolicy("ThrottlingPolicy2",3951729,MetricId.IncomingBytes),new ThrottlingPolicy("ThrottlingPolicy3",245175,MetricId.OutgoingBytes)
+new EventHubsThrottlingPolicy("ThrottlingPolicy1",7912,MetricId.IncomingMessages),new EventHubsThrottlingPolicy("ThrottlingPolicy2",3951729,MetricId.IncomingBytes),new EventHubsThrottlingPolicy("ThrottlingPolicy3",245175,MetricId.OutgoingBytes)
 },
             };
-            ArmOperation<ApplicationGroupResource> lro = await applicationGroup.UpdateAsync(WaitUntil.Completed, data);
-            ApplicationGroupResource result = lro.Value;
+            ArmOperation<EventHubsApplicationGroupResource> lro = await applicationGroup.UpdateAsync(WaitUntil.Completed, data);
+            EventHubsApplicationGroupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApplicationGroupData resourceData = result.Data;
+            EventHubsApplicationGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -74,8 +74,8 @@ new ThrottlingPolicy("ThrottlingPolicy1",7912,MetricId.IncomingMessages),new Thr
             string resourceGroupName = "contosotest";
             string namespaceName = "contoso-ua-test-eh-system-1";
             string applicationGroupName = "appGroup1";
-            ResourceIdentifier applicationGroupResourceId = ApplicationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, applicationGroupName);
-            ApplicationGroupResource applicationGroup = client.GetApplicationGroupResource(applicationGroupResourceId);
+            ResourceIdentifier applicationGroupResourceId = EventHubsApplicationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, applicationGroupName);
+            EventHubsApplicationGroupResource applicationGroup = client.GetEventHubsApplicationGroupResource(applicationGroupResourceId);
 
             // invoke the operation
             await applicationGroup.DeleteAsync(WaitUntil.Completed);
@@ -100,15 +100,15 @@ new ThrottlingPolicy("ThrottlingPolicy1",7912,MetricId.IncomingMessages),new Thr
             string resourceGroupName = "contosotest";
             string namespaceName = "contoso-ua-test-eh-system-1";
             string applicationGroupName = "appGroup1";
-            ResourceIdentifier applicationGroupResourceId = ApplicationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, applicationGroupName);
-            ApplicationGroupResource applicationGroup = client.GetApplicationGroupResource(applicationGroupResourceId);
+            ResourceIdentifier applicationGroupResourceId = EventHubsApplicationGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, applicationGroupName);
+            EventHubsApplicationGroupResource applicationGroup = client.GetEventHubsApplicationGroupResource(applicationGroupResourceId);
 
             // invoke the operation
-            ApplicationGroupResource result = await applicationGroup.GetAsync();
+            EventHubsApplicationGroupResource result = await applicationGroup.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApplicationGroupData resourceData = result.Data;
+            EventHubsApplicationGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
