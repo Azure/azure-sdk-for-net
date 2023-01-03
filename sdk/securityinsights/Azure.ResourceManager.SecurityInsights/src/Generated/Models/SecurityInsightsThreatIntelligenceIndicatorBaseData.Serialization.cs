@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 switch (discriminator.GetString())
                 {
-                    case "indicator": return SecurityInsightsThreatIntelligenceIndicatorCreateOrUpdateContent.DeserializeSecurityInsightsThreatIntelligenceIndicatorCreateOrUpdateContent(element);
+                    case "indicator": return SecurityInsightsThreatIntelligenceIndicatorData.DeserializeSecurityInsightsThreatIntelligenceIndicatorData(element);
                 }
             }
             ThreatIntelligenceResourceInnerKind kind = default;
