@@ -168,6 +168,29 @@ namespace Azure.Developer.LoadTesting.Tests
             LoadTestAdministrationClient loadTestAdministrationClient = CreateAdministrationClient();
             await _testHelper.SetupTestingLoadTestResourceAsync(loadTestAdministrationClient, _testId);
 
+            resourceId = TestEnvironment.ResourceId;
+
+            await loadTestAdministrationClient.CreateOrUpdateAppComponentsAsync(
+                    _testId,
+                    RequestContent.Create(
+                        new Dictionary<string, Dictionary<string, Dictionary<string, string>>>
+                        {
+                            { "components",  new Dictionary<string, Dictionary<string, string>>
+                                {
+                                    { resourceId, new Dictionary<string, string>
+                                        {
+                                            { "resourceId", resourceId },
+                                            { "resourceName", "App-Service-Sample-Demo" },
+                                            { "resourceType", "Microsoft.Web/sites" },
+                                            { "kind", "web" }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    )
+                );
+
             Response response = await loadTestAdministrationClient.GetAppComponentsAsync(_testId);
             Assert.IsNotNull(response);
         }
@@ -211,6 +234,33 @@ namespace Azure.Developer.LoadTesting.Tests
         {
             LoadTestAdministrationClient loadTestAdministrationClient = CreateAdministrationClient();
             await _testHelper.SetupTestingLoadTestResourceAsync(loadTestAdministrationClient, _testId);
+            resourceId = TestEnvironment.ResourceId;
+
+            await loadTestAdministrationClient.CreateOrUpdateServerMetricsConfigAsync(
+                    _testId,
+                    RequestContent.Create(
+                        new Dictionary<string, Dictionary<string, Dictionary<string, string>>>
+                        {
+                            {
+                                "metrics", new Dictionary<string, Dictionary<string, string>>
+                                {
+                                    {
+                                        resourceId, new Dictionary<string, string>
+                                        {
+                                            {"resourceId", resourceId },
+                                            {"metricNamespace", "microsoft.insights/components"},
+                                            {"displayDescription", "sample description"},
+                                            {"name",  "requests/duration"},
+                                            {"aggregation", "Average"},
+                                            {"unit", ""},
+                                            {"resourceType", "microsoft.insights/components"}
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    )
+                );
 
             Response response = await loadTestAdministrationClient.GetServerMetricsConfigAsync(_testId);
             Assert.NotNull(response);
