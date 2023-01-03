@@ -24,6 +24,7 @@ namespace Azure.Communication.CallAutomation
         internal ServerCallingRestClient ServerCallingRestClient { get; }
         internal ContentRestClient ContentRestClient { get; }
         internal ServerCallsRestClient ServerCallsRestClient { get; }
+        internal CallAutomationEventHandler CallAutomationEventHandler { get; }
 
         #region public constructors
         /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/>.</summary>
@@ -84,6 +85,7 @@ namespace Azure.Communication.CallAutomation
             CallConnectionsRestClient = new CallConnectionsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             ContentRestClient = new ContentRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             ServerCallsRestClient = new ServerCallsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            CallAutomationEventHandler = new CallAutomationEventHandler();
         }
 
         private CallAutomationClient(Uri endpoint, CallAutomationClientOptions options, ConnectionString connectionString)
@@ -555,6 +557,22 @@ namespace Azure.Communication.CallAutomation
             try
             {
                 return new CallRecording(_resourceEndpoint, ServerCallsRestClient, ContentRestClient, _clientDiagnostics, _pipeline);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Get CallAtumation's EventHandler for handling Call Automation's event more easily. </summary>
+        public virtual CallAutomationEventHandler GetCallAutomationEventHandler()
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetCallAutomationEventHandler)}");
+            scope.Start();
+            try
+            {
+                return CallAutomationEventHandler;
             }
             catch (Exception ex)
             {
