@@ -42,7 +42,7 @@ The client is responsible for making a connection to the service and efficiently
 
 ## Subscribe to messages
 
-Messages can come from groups or from servers. The client can register an event handler to be notified of messages and system events. The event handler share the same lifetime with the client, so you can subscribe them before you start the client. If the client has a permission to join group, it can join group to subscribe messages from that group. But note joining group operation must be called after the client has been started.
+Messages can come from groups or from servers. The client can register a callback to be notified when messages have received. The callbacks share the same lifetime with the client, so you can subscribe them before you start the client. If the client has a permission to join group, it can join group to subscribe messages from that group. But note joining group operation must be called after the client has been started.
 
 ```C# Snippet:WebPubSubClient_Subscribe_ServerMessage
 client.ServerMessageReceived += eventArgs =>
@@ -58,6 +58,14 @@ client.GroupMessageReceived += eventArgs =>
     Console.WriteLine($"Receive group message from {eventArgs.Message.Group}: {eventArgs.Message.Data}");
     return Task.CompletedTask;
 };
+```
+
+## Start client
+
+After you call `client.StartAsync()`, the client start to make connection to the service and be ready for sending messages.
+
+```csharp
+await client.StartAsync();
 ```
 
 ## Publish messages to group or server
