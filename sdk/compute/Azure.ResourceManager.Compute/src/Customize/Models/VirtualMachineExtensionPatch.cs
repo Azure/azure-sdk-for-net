@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public BinaryData ProtectedSettingsFromKeyVault
         {
-            get => BinaryData.FromObjectAsJson(ProtectedSettingsFromKeyVault);
+            get => BinaryData.FromObjectAsJson(KeyVaultProtectedSettings);
             set => KeyVaultProtectedSettings = value.ToObjectFromJson<KeyVaultSecretReference>();
         }
     }
