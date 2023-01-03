@@ -222,5 +222,9 @@ directive:
     transform: >
       if ($['type'] === 'boolean')
         $['x-ms-client-name'] = 'IsEnabled'
-
+  - from: ContainerApps.json
+    where: $.definitions.ContainerApp
+    transform: >
+      $.properties.properties.properties.outboundIpAddresses['x-ms-client-name'] = 'outboundIpAddressList';
+      $.properties.properties.properties.outboundIpAddresses.items['x-ms-format'] = 'ip-address';
 ```
