@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppContainers.Models;
@@ -93,8 +95,8 @@ namespace Azure.ResourceManager.AppContainers
             Optional<string> customDomainVerificationId = default;
             Optional<ContainerAppConfiguration> configuration = default;
             Optional<ContainerAppTemplate> template = default;
-            Optional<IReadOnlyList<string>> outboundIPAddresses = default;
-            Optional<string> eventStreamEndpoint = default;
+            Optional<IReadOnlyList<IPAddress>> outboundIPAddresses = default;
+            Optional<Uri> eventStreamEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"))
@@ -254,17 +256,22 @@ namespace Azure.ResourceManager.AppContainers
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<IPAddress> array = new List<IPAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                array.Add(IPAddress.Parse(item.GetString()));
                             }
                             outboundIPAddresses = array;
                             continue;
                         }
                         if (property0.NameEquals("eventStreamEndpoint"))
                         {
-                            eventStreamEndpoint = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                eventStreamEndpoint = null;
+                                continue;
+                            }
+                            eventStreamEndpoint = new Uri(property0.Value.GetString());
                             continue;
                         }
                     }
