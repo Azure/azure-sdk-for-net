@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="location"> the region. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NameAvailability>> CheckNameAvailabilitySignalRAsync(AzureLocation location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SignalRNameAvailabilityResult>> CheckSignalRNameAvailabilityAsync(AzureLocation location, SignalRNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = SignalRClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilitySignalR");
+            using var scope = SignalRClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSignalRNameAvailability");
             scope.Start();
             try
             {
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="location"> the region. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NameAvailability> CheckNameAvailabilitySignalR(AzureLocation location, NameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<SignalRNameAvailabilityResult> CheckSignalRNameAvailability(AzureLocation location, SignalRNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = SignalRClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckNameAvailabilitySignalR");
+            using var scope = SignalRClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckSignalRNameAvailability");
             scope.Start();
             try
             {

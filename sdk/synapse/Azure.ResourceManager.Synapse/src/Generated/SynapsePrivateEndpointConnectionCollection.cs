@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A class representing a collection of <see cref="SynapsePrivateEndpointConnectionResource" /> and their operations.
-    /// Each <see cref="SynapsePrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="WorkspaceResource" />.
-    /// To get a <see cref="SynapsePrivateEndpointConnectionCollection" /> instance call the GetSynapsePrivateEndpointConnections method from an instance of <see cref="WorkspaceResource" />.
+    /// Each <see cref="SynapsePrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="SynapseWorkspaceResource" />.
+    /// To get a <see cref="SynapsePrivateEndpointConnectionCollection" /> instance call the GetSynapsePrivateEndpointConnections method from an instance of <see cref="SynapseWorkspaceResource" />.
     /// </summary>
     public partial class SynapsePrivateEndpointConnectionCollection : ArmCollection, IEnumerable<SynapsePrivateEndpointConnectionResource>, IAsyncEnumerable<SynapsePrivateEndpointConnectionResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Synapse
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != WorkspaceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WorkspaceResource.ResourceType), nameof(id));
+            if (id.ResourceType != SynapseWorkspaceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SynapseWorkspaceResource.ResourceType), nameof(id));
         }
 
         /// <summary>
