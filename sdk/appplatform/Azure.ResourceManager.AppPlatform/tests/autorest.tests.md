@@ -2,7 +2,7 @@
 
 Run `dotnet build /t:GenerateTest` to generate code.
 
-# Azure.ResourceManager.EventHubs.Tests
+# Azure.ResourceManager.AppPlatform.Tests
 
 > see https://aka.ms/autorest
 ``` yaml

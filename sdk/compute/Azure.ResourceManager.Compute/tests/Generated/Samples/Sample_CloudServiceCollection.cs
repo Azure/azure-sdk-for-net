@@ -73,9 +73,7 @@ Capacity = 1,
                 {
                     LoadBalancerConfigurations =
 {
-new CloudServiceLoadBalancerConfiguration("contosolb",new LoadBalancerFrontendIPConfiguration[]
-{
-})
+new CloudServiceLoadBalancerConfiguration("contosolb",null)
 },
                 },
             };
@@ -134,9 +132,7 @@ Capacity = 1,
                 {
                     LoadBalancerConfigurations =
 {
-new CloudServiceLoadBalancerConfiguration("myLoadBalancer",new LoadBalancerFrontendIPConfiguration[]
-{
-})
+new CloudServiceLoadBalancerConfiguration("myLoadBalancer",null)
 },
                 },
             };
@@ -209,9 +205,7 @@ CertificateUri = new Uri("https://{keyvault-name}.vault.azure.net:443/secrets/Co
                 {
                     LoadBalancerConfigurations =
 {
-new CloudServiceLoadBalancerConfiguration("contosolb",new LoadBalancerFrontendIPConfiguration[]
-{
-})
+new CloudServiceLoadBalancerConfiguration("contosolb",null)
 },
                 },
             };
@@ -270,9 +264,7 @@ Capacity = 1,
                 {
                     LoadBalancerConfigurations =
 {
-new CloudServiceLoadBalancerConfiguration("contosolb",new LoadBalancerFrontendIPConfiguration[]
-{
-})
+new CloudServiceLoadBalancerConfiguration("contosolb",null)
 },
                 },
                 Extensions =

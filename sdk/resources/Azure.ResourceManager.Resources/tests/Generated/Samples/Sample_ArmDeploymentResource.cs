@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Resources.Samples
             // invoke the operation
             ArmDeploymentWhatIfContent content = new ArmDeploymentWhatIfContent(new ArmDeploymentWhatIfProperties(ArmDeploymentMode.Incremental)
             {
-                TemplateLink = new ArmDeploymentTemplateLink(),
+                TemplateLink = null,
                 Parameters = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
                 }),
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Resources.Samples
             // invoke the operation
             ArmDeploymentWhatIfContent content = new ArmDeploymentWhatIfContent(new ArmDeploymentWhatIfProperties(ArmDeploymentMode.Incremental)
             {
-                TemplateLink = new ArmDeploymentTemplateLink(),
+                TemplateLink = null,
                 Parameters = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
                 }),
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Resources.Samples
             // invoke the operation
             ArmDeploymentWhatIfContent content = new ArmDeploymentWhatIfContent(new ArmDeploymentWhatIfProperties(ArmDeploymentMode.Incremental)
             {
-                TemplateLink = new ArmDeploymentTemplateLink(),
+                TemplateLink = null,
                 Parameters = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
                 }),
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Resources.Samples
             // invoke the operation
             ArmDeploymentWhatIfContent content = new ArmDeploymentWhatIfContent(new ArmDeploymentWhatIfProperties(ArmDeploymentMode.Incremental)
             {
-                TemplateLink = new ArmDeploymentTemplateLink(),
+                TemplateLink = null,
                 Parameters = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
                 }),

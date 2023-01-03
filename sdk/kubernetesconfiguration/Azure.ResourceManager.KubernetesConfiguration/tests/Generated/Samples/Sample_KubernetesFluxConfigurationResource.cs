@@ -82,13 +82,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Samples
                 },
                 Kustomizations =
 {
-["srs-kustomization1"] = new KustomizationUpdateContent(),
+["srs-kustomization1"] = null,
 ["srs-kustomization2"] = new KustomizationUpdateContent()
 {
 Path = "./test/alt-path",
-DependsOn =
-{
-},
+DependsOn = null,
 SyncIntervalInSeconds = 300,
 },
 ["srs-kustomization3"] = new KustomizationUpdateContent()
