@@ -146,27 +146,27 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(6, jd.RootElement.GetProperty("Foo").GetIndexElement(0).GetInt32());
         }
 
-        //[Test]
-        //public void CanSwapArrayElements()
-        //{
-        //    string json = @"[ { ""Foo"" : 4 } ]";
+        [Test]
+        public void CanSwapArrayElements()
+        {
+            string json = @"[ { ""Foo"" : 4 } ]";
 
-        //    var jd = JsonData.Parse(json);
+            var jd = JsonData.Parse(json);
 
-        //    var a = jd.RootElement.GetIndexElement(0);
-        //    jd.RootElement.GetIndexElement(0).Set(5);
+            var a = jd.RootElement.GetIndexElement(0);
+            jd.RootElement.GetIndexElement(0).Set(5);
 
-        //    // This is wicked because 'a' keeps a reference to the root
-        //    // with the changelist.  Would we detach that?  How would we know to?
-        //    a.GetProperty("Foo").Set(6);
+            // This is wicked because 'a' keeps a reference to the root
+            // with the changelist.  Would we detach that?  How would we know to?
+            a.GetProperty("Foo").Set(6);
 
-        //    Assert.AreEqual(5, jd.RootElement.GetIndexElement(0).GetInt32());
-        //    Assert.AreEqual(6, a.GetProperty("Foo").GetIndexElement(0).GetInt32());
+            Assert.AreEqual(5, jd.RootElement.GetIndexElement(0).GetInt32());
+            Assert.AreEqual(6, a.GetProperty("Foo").GetIndexElement(0).GetInt32());
 
-        //    jd.RootElement.GetIndexElement(0).Set(a);
+            jd.RootElement.GetIndexElement(0).Set(a);
 
-        //    Assert.AreEqual(6, jd.RootElement.GetProperty("Foo").GetIndexElement(0).GetInt32());
-        //    Assert.AreEqual(6, a.GetProperty("Foo").GetIndexElement(0).GetInt32());
-        //}
+            Assert.AreEqual(6, jd.RootElement.GetProperty("Foo").GetIndexElement(0).GetInt32());
+            Assert.AreEqual(6, a.GetProperty("Foo").GetIndexElement(0).GetInt32());
+        }
     }
 }
