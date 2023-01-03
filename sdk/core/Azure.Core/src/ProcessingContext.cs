@@ -16,7 +16,7 @@ namespace Azure.Core
         public DateTimeOffset StartTime
         {
             get => _message.ProcessingStartTime;
-            set => _message.ProcessingStartTime = value;
+            internal set => _message.ProcessingStartTime = value;
         }
 
         /// <summary>
