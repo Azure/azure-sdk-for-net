@@ -53,7 +53,7 @@ namespace SignalRServiceExtension.Tests
         [Fact]
         public async Task ServiceEndpointsNotSet()
         {
-            var rootHubContextMock = new Mock<ServiceHubContext>().As<IInternalServiceHubContext>();
+            var rootHubContextMock = new Mock<ServiceHubContext>();
             var childHubContextMock = new Mock<ServiceHubContext>();
             rootHubContextMock.Setup(c => c.WithEndpoints(It.IsAny<ServiceEndpoint[]>())).Returns(childHubContextMock.Object);
             rootHubContextMock.Setup(c => c.Clients.All.SendCoreAsync(It.IsAny<string>(), It.IsAny<object[]>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
@@ -73,7 +73,7 @@ namespace SignalRServiceExtension.Tests
         [Fact]
         public async Task ServiceEndpointsSet()
         {
-            var rootHubContextMock = new Mock<ServiceHubContext>().As<IInternalServiceHubContext>();
+            var rootHubContextMock = new Mock<ServiceHubContext>();
             var childHubContextMock = new Mock<ServiceHubContext>();
             rootHubContextMock.Setup(c => c.WithEndpoints(It.IsAny<ServiceEndpoint[]>())).Returns(childHubContextMock.Object);
             childHubContextMock.Setup(c => c.Clients.All.SendCoreAsync(It.IsAny<string>(), It.IsAny<object[]>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);

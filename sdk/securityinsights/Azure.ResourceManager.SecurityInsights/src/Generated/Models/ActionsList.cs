@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of ActionsList. </summary>
         /// <param name="value"> Array of actions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ActionsList(IEnumerable<ActionResponseData> value)
+        internal ActionsList(IEnumerable<SecurityInsightsAlertRuleActionData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of ActionsList. </summary>
         /// <param name="nextLink"> URL to fetch the next set of actions. </param>
         /// <param name="value"> Array of actions. </param>
-        internal ActionsList(string nextLink, IReadOnlyList<ActionResponseData> value)
+        internal ActionsList(string nextLink, IReadOnlyList<SecurityInsightsAlertRuleActionData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> URL to fetch the next set of actions. </summary>
         public string NextLink { get; }
         /// <summary> Array of actions. </summary>
-        public IReadOnlyList<ActionResponseData> Value { get; }
+        public IReadOnlyList<SecurityInsightsAlertRuleActionData> Value { get; }
     }
 }

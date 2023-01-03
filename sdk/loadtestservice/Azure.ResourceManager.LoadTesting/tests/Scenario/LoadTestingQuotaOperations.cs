@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.LoadTesting.Tests.ScenarioTests
         public async Task GetQuotaLimitAndUsage()
         {
             //// Quota get limit and usage tests
-            var quotaResponse = await _quotaResourceCollection.GetAsync("maxConcurrentTestRuns");
+            Response<LoadTestingQuotaResource> quotaResponse = await _quotaResourceCollection.GetAsync("maxConcurrentTestRuns");
             Assert.IsNotNull(quotaResponse);
             Assert.IsNotNull(quotaResponse.Value);
             Assert.IsNotNull(quotaResponse.Value.Data);
@@ -50,6 +51,45 @@ namespace Azure.ResourceManager.LoadTesting.Tests.ScenarioTests
             Assert.IsNotNull(quotaResponse.Value.Data.Limit);
             Assert.IsNotNull(quotaResponse.Value.Data.Usage);
             Assert.AreEqual("maxConcurrentTestRuns", quotaResponse.Value.Data.Name);
+
+            quotaResponse = await Subscription.GetLoadTestingQuotaAsync(AzureLocation.WestUS2, "maxConcurrentTestRuns");
+            Assert.IsNotNull(quotaResponse);
+            Assert.IsNotNull(quotaResponse.Value);
+            Assert.IsNotNull(quotaResponse.Value.Data);
+            Assert.IsNotNull(quotaResponse.Value.Data.Name);
+            Assert.IsNotNull(quotaResponse.Value.Data.Limit);
+            Assert.IsNotNull(quotaResponse.Value.Data.Usage);
+            Assert.AreEqual("maxConcurrentTestRuns", quotaResponse.Value.Data.Name);
+        }
+
+        [RecordedTest]
+        public async Task ListAllQuotaBuckets()
+        {
+            //// Quota get limit and usage tests
+            List<LoadTestingQuotaResource> quotaBuckets = await _quotaResourceCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotNull(quotaBuckets);
+
+            foreach (LoadTestingQuotaResource quotaBucket in quotaBuckets)
+            {
+                Assert.IsTrue(quotaBucket.HasData);
+                Assert.IsNotNull(quotaBucket.Data);
+                Assert.IsNotNull(quotaBucket.Data.Name);
+                Assert.IsNotNull(quotaBucket.Data.Id);
+                Assert.IsNotNull(quotaBucket.Data.ResourceType);
+                Assert.IsNotNull(quotaBucket.Data.Limit);
+                Assert.IsNotNull(quotaBucket.Data.Usage);
+
+                Response<LoadTestingQuotaResource> quotaBucketLimits = await quotaBucket.GetAsync();
+                Assert.IsNotNull(quotaBucketLimits);
+                Assert.IsTrue(quotaBucketLimits.HasValue);
+                Assert.NotNull(quotaBucketLimits.Value);
+                Assert.IsTrue(quotaBucketLimits.Value.HasData);
+                Assert.NotNull(quotaBucketLimits.Value.Data);
+                Assert.NotNull(quotaBucketLimits.Value.Data.Name);
+                Assert.NotNull(quotaBucketLimits.Value.Data.Id);
+                Assert.NotNull(quotaBucketLimits.Value.Data.Limit);
+                Assert.NotNull(quotaBucketLimits.Value.Data.Usage);
+            }
         }
 
         [RecordedTest]
@@ -62,9 +102,11 @@ namespace Azure.ResourceManager.LoadTesting.Tests.ScenarioTests
             Assert.IsNotNull(quotaResponse.Value);
             LoadTestingQuotaResource quotaResource = quotaResponse.Value;
             Assert.IsNotNull(quotaResource.Data);
+            Assert.IsNotNull(quotaResource.Data.Id);
             Assert.IsNotNull(quotaResource.Data.Name);
             Assert.IsNotNull(quotaResource.Data.Limit);
             Assert.IsNotNull(quotaResource.Data.Usage);
+            Assert.IsNotNull(quotaResource.Data.ResourceType);
             Assert.AreEqual("maxConcurrentTestRuns", quotaResource.Data.Name);
 
             LoadTestingQuotaBucketDimensions dimensions = new LoadTestingQuotaBucketDimensions(
