@@ -2,4 +2,5 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.SecurityInsights.csproj" />
   </ItemGroup>
+
 </Project>
