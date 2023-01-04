@@ -8,10 +8,6 @@
 - Ability to create cluster with LanguageExtension
 - Get available skus by location
 
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
 
 - Upgraded API version to 2022-11-11.
