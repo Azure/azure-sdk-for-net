@@ -1,6 +1,6 @@
 # Release History
 
-## 1.9.0-beta.1 (Unreleased)
+## 1.9.0 (2023-01-04)
 
 ### Bugs Fixed
 * Fixed the bug that the arguments are required in a SignalR message for isolated-process
