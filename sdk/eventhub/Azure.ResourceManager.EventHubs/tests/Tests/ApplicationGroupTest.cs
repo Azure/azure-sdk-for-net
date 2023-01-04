@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             // List<ThrottlingPolicy> lp = applicationgroupData.Policies.ConvertAll(new Converter<ApplicationGroupPolicy,ThrottlingPolicy>(ApplicationGroupPolicyToThrottling));
             Assert.AreEqual("Throttlingpolicy1", policy[0].Name);
             Assert.AreEqual(3452, policy[0].RateLimitThreshold);
-            Assert.AreEqual(MetricId.IncomingMessages, policy[0].MetricId);
+            Assert.AreEqual(EventHubsMetricId.IncomingMessages, policy[0].MetricId);
 
             Assert.AreEqual("Throttlingpolicy3", policy[1].Name);
             Assert.AreEqual(3451, policy[1].RateLimitThreshold);
-            Assert.AreEqual(MetricId.IncomingBytes, policy[1].MetricId);
+            Assert.AreEqual(EventHubsMetricId.IncomingBytes, policy[1].MetricId);
             applicationgroup = await _applicationGroupCollection.GetAsync(applicationGroupName);
 
             //delete applicationGroup

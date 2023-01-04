@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventHubs
                 ClientAppGroupIdentifier = "SASKeyName=KeyName",
                 Policies =
 {
-new EventHubsThrottlingPolicy("ThrottlingPolicy1",7912,MetricId.IncomingMessages),new EventHubsThrottlingPolicy("ThrottlingPolicy2",3951729,MetricId.IncomingBytes),new EventHubsThrottlingPolicy("ThrottlingPolicy3",245175,MetricId.OutgoingBytes)
+new EventHubsThrottlingPolicy("ThrottlingPolicy1",7912,EventHubsMetricId.IncomingMessages),new EventHubsThrottlingPolicy("ThrottlingPolicy2",3951729,EventHubsMetricId.IncomingBytes),new EventHubsThrottlingPolicy("ThrottlingPolicy3",245175,EventHubsMetricId.OutgoingBytes)
 },
             };
             ArmOperation<EventHubsApplicationGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, applicationGroupName, data);

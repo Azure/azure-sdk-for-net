@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.EventHubs
             EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (NetworkSecurityPerimeterConfiguration item in eventHubsNamespace.GetNetworkSecurityPerimeterConfigurationsAsync())
+            await foreach (EventHubsNetworkSecurityPerimeterConfiguration item in eventHubsNamespace.GetNetworkSecurityPerimeterConfigurationsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
