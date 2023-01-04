@@ -1,17 +1,14 @@
 # Release History
 
-## 0.1.0-preview.24 (Unreleased)
+## 0.1.0-preview.24 (2023-01-10)
 
 ### Features Added
+
+- Added extension method `ToDynamic()` to `BinaryData`.
 
 ### Breaking Changes
 
 - Moved `JsonData` into `Azure.Core.Dynamic` namespace, and removed all public APIs with the exception of operators.
-- Added extension method `ToDynamic()` to `BinaryData`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 0.1.0-preview.23 (2022-11-08)
 
