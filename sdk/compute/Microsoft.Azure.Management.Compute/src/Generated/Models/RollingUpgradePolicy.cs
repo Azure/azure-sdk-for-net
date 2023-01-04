@@ -61,12 +61,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="rollbackFailedInstancesOnPolicyBreach">Rollback failed
         /// instances to previous model if the Rolling Upgrade policy is
         /// violated.</param>
-        public RollingUpgradePolicy(int? maxBatchInstancePercent = default(int?), int? maxUnhealthyInstancePercent = default(int?), int? maxUnhealthyUpgradedInstancePercent = default(int?), string pauseTimeBetweenBatches = default(string), bool? enableCrossZoneUpgrade = default(bool?), bool? prioritizeUnhealthyInstances = default(bool?), bool? rollbackFailedInstancesOnPolicyBreach = default(bool?))
         /// <param name="maxSurge">Create new virtual machines to upgrade the
         /// scale set, rather than updating the existing virtual machines.
         /// Existing virtual machines will be deleted once the new virtual
         /// machines are created for each batch.</param>
-        public RollingUpgradePolicy(int? maxBatchInstancePercent = default(int?), int? maxUnhealthyInstancePercent = default(int?), int? maxUnhealthyUpgradedInstancePercent = default(int?), string pauseTimeBetweenBatches = default(string), bool? enableCrossZoneUpgrade = default(bool?), bool? prioritizeUnhealthyInstances = default(bool?), bool? maxSurge = default(bool?))
+        public RollingUpgradePolicy(int? maxBatchInstancePercent = default(int?), int? maxUnhealthyInstancePercent = default(int?), int? maxUnhealthyUpgradedInstancePercent = default(int?), string pauseTimeBetweenBatches = default(string), bool? enableCrossZoneUpgrade = default(bool?), bool? prioritizeUnhealthyInstances = default(bool?), bool? rollbackFailedInstancesOnPolicyBreach = default(bool?), bool? maxSurge = default(bool?))
         {
             MaxBatchInstancePercent = maxBatchInstancePercent;
             MaxUnhealthyInstancePercent = maxUnhealthyInstancePercent;
@@ -147,6 +146,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         [JsonProperty(PropertyName = "rollbackFailedInstancesOnPolicyBreach")]
         public bool? RollbackFailedInstancesOnPolicyBreach { get; set; }
 
+        /// <summary>
         /// Gets or sets create new virtual machines to upgrade the scale set,
         /// rather than updating the existing virtual machines. Existing
         /// virtual machines will be deleted once the new virtual machines are
