@@ -710,7 +710,7 @@ namespace Azure.Core
     public partial class SequentialDelayStrategy : Azure.Core.DelayStrategy
     {
         public SequentialDelayStrategy(System.Collections.Generic.IEnumerable<System.TimeSpan>? sequence = null) { }
-        public override System.TimeSpan GetNextDelay(Azure.Response? response, int attempt, System.TimeSpan? suggestedDelay) { throw null; }
+        public override System.TimeSpan GetNextDelay(Azure.Response? response, int attempt, System.TimeSpan? delayHint) { throw null; }
     }
     public partial class StatusCodeClassifier : Azure.Core.ResponseClassifier
     {
