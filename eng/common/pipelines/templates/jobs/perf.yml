@@ -4,10 +4,10 @@ parameters:
   default: 'Perf'
 - name: LinuxPool
   type: string
-  default: 'azsdk-pool-mms-ubuntu-2004-perf'
+  default: azsdk-pool-mms-ubuntu-2204-perf
 - name: LinuxVmImage
   type: string
-  default: 'MMSUbuntu20.04'
+  default: MMSUbuntu22.04
 - name: WindowsPool
   type: string
   default: 'azsdk-pool-mms-win-2019-perf'

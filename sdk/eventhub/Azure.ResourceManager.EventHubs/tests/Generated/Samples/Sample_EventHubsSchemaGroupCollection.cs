@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventHubs
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_SchemaRegistryListAll()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/SchemaRegistry/SchemaRegistryListByNamespace.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/SchemaRegistry/SchemaRegistryListByNamespace.json
             // this example is just showing the usage of "SchemaRegistry_ListByNamespace" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EventHubs
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_SchemaRegistryCreate()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/SchemaRegistry/SchemaRegistryCreate.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/SchemaRegistry/SchemaRegistryCreate.json
             // this example is just showing the usage of "SchemaRegistry_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.EventHubs
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_SchemaRegistryGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/SchemaRegistry/SchemaRegistryGet.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/SchemaRegistry/SchemaRegistryGet.json
             // this example is just showing the usage of "SchemaRegistry_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.EventHubs
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_SchemaRegistryGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/SchemaRegistry/SchemaRegistryGet.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/SchemaRegistry/SchemaRegistryGet.json
             // this example is just showing the usage of "SchemaRegistry_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
