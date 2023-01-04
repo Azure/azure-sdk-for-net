@@ -28,9 +28,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="terminateNotificationProfile">Specifies Terminate
         /// Scheduled Event related configurations.</param>
-        public ScheduledEventsProfile(TerminateNotificationProfile terminateNotificationProfile = default(TerminateNotificationProfile))
+        /// <param name="osImageNotificationProfile">Specifies OS Image
+        /// Scheduled Event related configurations.</param>
+        public ScheduledEventsProfile(TerminateNotificationProfile terminateNotificationProfile = default(TerminateNotificationProfile), OSImageNotificationProfile osImageNotificationProfile = default(OSImageNotificationProfile))
         {
             TerminateNotificationProfile = terminateNotificationProfile;
+            OsImageNotificationProfile = osImageNotificationProfile;
             CustomInit();
         }
 
@@ -45,6 +48,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "terminateNotificationProfile")]
         public TerminateNotificationProfile TerminateNotificationProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies OS Image Scheduled Event related
+        /// configurations.
+        /// </summary>
+        [JsonProperty(PropertyName = "osImageNotificationProfile")]
+        public OSImageNotificationProfile OsImageNotificationProfile { get; set; }
 
     }
 }
