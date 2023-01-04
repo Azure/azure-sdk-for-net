@@ -20,6 +20,8 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
+                string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
                 EnsureClientsInitialized(context);
 
@@ -61,6 +63,7 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                 }
                 finally
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                     if (m_ResourcesClient != null)
                     {
                         m_ResourcesClient.ResourceGroups.Delete(rgName);
