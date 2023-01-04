@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Made `RedirectPolicy` public to provide `SetAllowAutoRedirect()` method to library authors.
+
 ### Breaking Changes
 
 ### Bugs Fixed
@@ -20,7 +22,7 @@
 
 ### Bugs Fixed
 
-- Fixed issue where fixed delay was applied when the `RetryMode` was set to `Exponential` when retrying a request that resulted in an exception. 
+- Fixed issue where fixed delay was applied when the `RetryMode` was set to `Exponential` when retrying a request that resulted in an exception.
 
 ### Other Changes
 

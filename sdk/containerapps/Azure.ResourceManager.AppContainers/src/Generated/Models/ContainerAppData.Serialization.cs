@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppContainers.Models;
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers
             Optional<string> customDomainVerificationId = default;
             Optional<ContainerAppConfiguration> configuration = default;
             Optional<ContainerAppTemplate> template = default;
-            Optional<IReadOnlyList<Uri>> outboundIPAddresses = default;
+            Optional<IReadOnlyList<IPAddress>> outboundIPAddresses = default;
             Optional<Uri> eventStreamEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -255,10 +256,10 @@ namespace Azure.ResourceManager.AppContainers
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Uri> array = new List<Uri>();
+                            List<IPAddress> array = new List<IPAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new Uri(item.GetString()));
+                                array.Add(IPAddress.Parse(item.GetString()));
                             }
                             outboundIPAddresses = array;
                             continue;
