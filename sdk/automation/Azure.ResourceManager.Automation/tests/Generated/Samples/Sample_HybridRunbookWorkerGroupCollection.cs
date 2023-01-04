@@ -26,8 +26,10 @@ namespace Azure.ResourceManager.Automation.Samples
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2022-02-22/examples/getHybridRunbookWorkerGroup.json
             // this example is just showing the usage of "HybridRunbookWorkerGroup_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AutomationAccountResource created on azure
             // for more information of creating AutomationAccountResource, please refer to the document of AutomationAccountResource
@@ -59,8 +61,10 @@ namespace Azure.ResourceManager.Automation.Samples
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2022-02-22/examples/getHybridRunbookWorkerGroup.json
             // this example is just showing the usage of "HybridRunbookWorkerGroup_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AutomationAccountResource created on azure
             // for more information of creating AutomationAccountResource, please refer to the document of AutomationAccountResource
@@ -88,8 +92,10 @@ namespace Azure.ResourceManager.Automation.Samples
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2022-02-22/examples/putHybridRunbookWorkerGroup.json
             // this example is just showing the usage of "HybridRunbookWorkerGroup_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AutomationAccountResource created on azure
             // for more information of creating AutomationAccountResource, please refer to the document of AutomationAccountResource
@@ -126,8 +132,10 @@ namespace Azure.ResourceManager.Automation.Samples
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2022-02-22/examples/listHybridRunbookWorkerGroup.json
             // this example is just showing the usage of "HybridRunbookWorkerGroup_ListByAutomationAccount" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AutomationAccountResource created on azure
             // for more information of creating AutomationAccountResource, please refer to the document of AutomationAccountResource

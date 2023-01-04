@@ -26,8 +26,10 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
             // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2022-06-01/examples/dicomservices/DicomServices_Get.json
             // this example is just showing the usage of "DicomServices_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DicomServiceResource created on azure
             // for more information of creating DicomServiceResource, please refer to the document of DicomServiceResource
@@ -56,8 +58,10 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
             // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2022-06-01/examples/dicomservices/DicomServices_Patch.json
             // this example is just showing the usage of "DicomServices_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DicomServiceResource created on azure
             // for more information of creating DicomServiceResource, please refer to the document of DicomServiceResource
@@ -94,8 +98,10 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
             // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2022-06-01/examples/dicomservices/DicomServices_Delete.json
             // this example is just showing the usage of "DicomServices_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DicomServiceResource created on azure
             // for more information of creating DicomServiceResource, please refer to the document of DicomServiceResource

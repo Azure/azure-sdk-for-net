@@ -26,8 +26,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/RoleListAddOns.json
             // this example is just showing the usage of "Addons_ListByRole" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DataBoxEdgeRoleResource created on azure
             // for more information of creating DataBoxEdgeRoleResource, please refer to the document of DataBoxEdgeRoleResource
@@ -62,8 +64,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/GetAddons.json
             // this example is just showing the usage of "Addons_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DataBoxEdgeRoleResource created on azure
             // for more information of creating DataBoxEdgeRoleResource, please refer to the document of DataBoxEdgeRoleResource
@@ -96,8 +100,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/GetAddons.json
             // this example is just showing the usage of "Addons_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DataBoxEdgeRoleResource created on azure
             // for more information of creating DataBoxEdgeRoleResource, please refer to the document of DataBoxEdgeRoleResource
@@ -126,8 +132,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             // Generated from example definition: specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2022-03-01/examples/PutAddons.json
             // this example is just showing the usage of "Addons_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DataBoxEdgeRoleResource created on azure
             // for more information of creating DataBoxEdgeRoleResource, please refer to the document of DataBoxEdgeRoleResource

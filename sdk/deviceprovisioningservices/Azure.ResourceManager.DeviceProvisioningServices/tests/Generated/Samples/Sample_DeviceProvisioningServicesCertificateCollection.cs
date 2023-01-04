@@ -26,8 +26,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             // Generated from example definition: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/stable/2022-02-05/examples/DPSGetCertificate.json
             // this example is just showing the usage of "DpsCertificate_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DeviceProvisioningServiceResource created on azure
             // for more information of creating DeviceProvisioningServiceResource, please refer to the document of DeviceProvisioningServiceResource
@@ -59,8 +61,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             // Generated from example definition: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/stable/2022-02-05/examples/DPSGetCertificate.json
             // this example is just showing the usage of "DpsCertificate_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DeviceProvisioningServiceResource created on azure
             // for more information of creating DeviceProvisioningServiceResource, please refer to the document of DeviceProvisioningServiceResource
@@ -88,8 +92,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             // Generated from example definition: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/stable/2022-02-05/examples/DPSCertificateCreateOrUpdate.json
             // this example is just showing the usage of "DpsCertificate_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DeviceProvisioningServiceResource created on azure
             // for more information of creating DeviceProvisioningServiceResource, please refer to the document of DeviceProvisioningServiceResource
@@ -129,8 +135,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             // Generated from example definition: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/stable/2022-02-05/examples/DPSGetCertificates.json
             // this example is just showing the usage of "DpsCertificate_List" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DeviceProvisioningServiceResource created on azure
             // for more information of creating DeviceProvisioningServiceResource, please refer to the document of DeviceProvisioningServiceResource

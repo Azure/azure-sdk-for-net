@@ -25,8 +25,10 @@ namespace Azure.ResourceManager.Billing.Samples
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2021-10-01/examples/PaymentMethodAtBillingProfile_Get.json
             // this example is just showing the usage of "PaymentMethods_GetByBillingProfile" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this BillingPaymentMethodLinkResource created on azure
             // for more information of creating BillingPaymentMethodLinkResource, please refer to the document of BillingPaymentMethodLinkResource
@@ -54,8 +56,10 @@ namespace Azure.ResourceManager.Billing.Samples
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2021-10-01/examples/PaymentMethodAtBillingProfile_Delete.json
             // this example is just showing the usage of "PaymentMethods_DeleteAtBillingProfile" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this BillingPaymentMethodLinkResource created on azure
             // for more information of creating BillingPaymentMethodLinkResource, please refer to the document of BillingPaymentMethodLinkResource

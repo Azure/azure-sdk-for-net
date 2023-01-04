@@ -26,8 +26,10 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/AuthorizationPoliciesCreateOrUpdate.json
             // this example is just showing the usage of "AuthorizationPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AuthorizationPolicyResourceFormatResource created on azure
             // for more information of creating AuthorizationPolicyResourceFormatResource, please refer to the document of AuthorizationPolicyResourceFormatResource
@@ -64,8 +66,10 @@ PermissionType.Read,PermissionType.Write,PermissionType.Manage
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/AuthorizationPoliciesGet.json
             // this example is just showing the usage of "AuthorizationPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AuthorizationPolicyResourceFormatResource created on azure
             // for more information of creating AuthorizationPolicyResourceFormatResource, please refer to the document of AuthorizationPolicyResourceFormatResource
@@ -94,8 +98,10 @@ PermissionType.Read,PermissionType.Write,PermissionType.Manage
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/AuthorizationPoliciesRegeneratePrimaryKey.json
             // this example is just showing the usage of "AuthorizationPolicies_RegeneratePrimaryKey" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AuthorizationPolicyResourceFormatResource created on azure
             // for more information of creating AuthorizationPolicyResourceFormatResource, please refer to the document of AuthorizationPolicyResourceFormatResource
@@ -120,8 +126,10 @@ PermissionType.Read,PermissionType.Write,PermissionType.Manage
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/AuthorizationPoliciesRegenerateSecondaryKey.json
             // this example is just showing the usage of "AuthorizationPolicies_RegenerateSecondaryKey" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AuthorizationPolicyResourceFormatResource created on azure
             // for more information of creating AuthorizationPolicyResourceFormatResource, please refer to the document of AuthorizationPolicyResourceFormatResource

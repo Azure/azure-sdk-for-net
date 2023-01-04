@@ -26,8 +26,10 @@ namespace Azure.ResourceManager.StorageSync.Samples
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_Create.json
             // this example is just showing the usage of "CloudEndpoints_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this StorageSyncGroupResource created on azure
             // for more information of creating StorageSyncGroupResource, please refer to the document of StorageSyncGroupResource
@@ -68,8 +70,10 @@ namespace Azure.ResourceManager.StorageSync.Samples
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_Get.json
             // this example is just showing the usage of "CloudEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this StorageSyncGroupResource created on azure
             // for more information of creating StorageSyncGroupResource, please refer to the document of StorageSyncGroupResource
@@ -102,8 +106,10 @@ namespace Azure.ResourceManager.StorageSync.Samples
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_Get.json
             // this example is just showing the usage of "CloudEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this StorageSyncGroupResource created on azure
             // for more information of creating StorageSyncGroupResource, please refer to the document of StorageSyncGroupResource
@@ -132,8 +138,10 @@ namespace Azure.ResourceManager.StorageSync.Samples
             // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_ListBySyncGroup.json
             // this example is just showing the usage of "CloudEndpoints_ListBySyncGroup" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this StorageSyncGroupResource created on azure
             // for more information of creating StorageSyncGroupResource, please refer to the document of StorageSyncGroupResource

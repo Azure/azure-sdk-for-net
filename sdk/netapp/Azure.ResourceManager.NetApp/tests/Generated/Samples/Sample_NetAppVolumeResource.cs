@@ -26,8 +26,10 @@ namespace Azure.ResourceManager.NetApp.Samples
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-05-01/examples/Volumes_Get.json
             // this example is just showing the usage of "Volumes_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
@@ -57,8 +59,10 @@ namespace Azure.ResourceManager.NetApp.Samples
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-05-01/examples/Volumes_Update.json
             // this example is just showing the usage of "Volumes_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
@@ -90,8 +94,10 @@ namespace Azure.ResourceManager.NetApp.Samples
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-05-01/examples/Volumes_Delete.json
             // this example is just showing the usage of "Volumes_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
@@ -117,8 +123,10 @@ namespace Azure.ResourceManager.NetApp.Samples
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-05-01/examples/Volumes_Revert.json
             // this example is just showing the usage of "Volumes_Revert" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
@@ -148,8 +156,10 @@ namespace Azure.ResourceManager.NetApp.Samples
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-05-01/examples/Volumes_ResetCifsPassword.json
             // this example is just showing the usage of "Volumes_ResetCifsPassword" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
@@ -175,8 +185,10 @@ namespace Azure.ResourceManager.NetApp.Samples
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-05-01/examples/Volumes_BreakReplication.json
             // this example is just showing the usage of "Volumes_BreakReplication" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
@@ -206,8 +218,10 @@ namespace Azure.ResourceManager.NetApp.Samples
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-05-01/examples/Volumes_ReestablishReplication.json
             // this example is just showing the usage of "Volumes_ReestablishReplication" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
@@ -237,8 +251,10 @@ namespace Azure.ResourceManager.NetApp.Samples
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-05-01/examples/Volumes_ReplicationStatus.json
             // this example is just showing the usage of "Volumes_ReplicationStatus" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
@@ -264,8 +280,10 @@ namespace Azure.ResourceManager.NetApp.Samples
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-05-01/examples/Volumes_ListReplications.json
             // this example is just showing the usage of "Volumes_ListReplications" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
@@ -294,8 +312,10 @@ namespace Azure.ResourceManager.NetApp.Samples
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-05-01/examples/Volumes_ResyncReplication.json
             // this example is just showing the usage of "Volumes_ResyncReplication" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
@@ -321,8 +341,10 @@ namespace Azure.ResourceManager.NetApp.Samples
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-05-01/examples/Volumes_DeleteReplication.json
             // this example is just showing the usage of "Volumes_DeleteReplication" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
@@ -348,8 +370,10 @@ namespace Azure.ResourceManager.NetApp.Samples
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-05-01/examples/Volumes_AuthorizeReplication.json
             // this example is just showing the usage of "Volumes_AuthorizeReplication" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
@@ -379,8 +403,10 @@ namespace Azure.ResourceManager.NetApp.Samples
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-05-01/examples/Volumes_ReInitializeReplication.json
             // this example is just showing the usage of "Volumes_ReInitializeReplication" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
@@ -406,8 +432,10 @@ namespace Azure.ResourceManager.NetApp.Samples
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-05-01/examples/Volumes_PoolChange.json
             // this example is just showing the usage of "Volumes_PoolChange" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
@@ -434,8 +462,10 @@ namespace Azure.ResourceManager.NetApp.Samples
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-05-01/examples/Volumes_Relocate.json
             // this example is just showing the usage of "Volumes_Relocate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
@@ -462,8 +492,10 @@ namespace Azure.ResourceManager.NetApp.Samples
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-05-01/examples/Volumes_FinalizeRelocation.json
             // this example is just showing the usage of "Volumes_FinalizeRelocation" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
@@ -489,8 +521,10 @@ namespace Azure.ResourceManager.NetApp.Samples
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-05-01/examples/Volumes_RevertRelocation.json
             // this example is just showing the usage of "Volumes_RevertRelocation" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
@@ -516,8 +550,10 @@ namespace Azure.ResourceManager.NetApp.Samples
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-05-01/examples/Volumes_BackupStatus.json
             // this example is just showing the usage of "Backups_GetStatus" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
@@ -543,8 +579,10 @@ namespace Azure.ResourceManager.NetApp.Samples
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-05-01/examples/Volumes_RestoreStatus.json
             // this example is just showing the usage of "Backups_GetVolumeRestoreStatus" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this NetAppVolumeResource created on azure
             // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource

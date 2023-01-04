@@ -26,8 +26,10 @@ namespace Azure.ResourceManager.Automation.Samples
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/getRunbookDraftContent.json
             // this example is just showing the usage of "RunbookDraft_GetContent" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AutomationRunbookResource created on azure
             // for more information of creating AutomationRunbookResource, please refer to the document of AutomationRunbookResource
@@ -52,8 +54,10 @@ namespace Azure.ResourceManager.Automation.Samples
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/getRunbookDraft.json
             // this example is just showing the usage of "RunbookDraft_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AutomationRunbookResource created on azure
             // for more information of creating AutomationRunbookResource, please refer to the document of AutomationRunbookResource
@@ -78,8 +82,10 @@ namespace Azure.ResourceManager.Automation.Samples
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/undoDraftEditToLastKnownPublishedState.json
             // this example is just showing the usage of "RunbookDraft_UndoEdit" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AutomationRunbookResource created on azure
             // for more information of creating AutomationRunbookResource, please refer to the document of AutomationRunbookResource
@@ -104,8 +110,10 @@ namespace Azure.ResourceManager.Automation.Samples
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/publishRunbook.json
             // this example is just showing the usage of "Runbook_Publish" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AutomationRunbookResource created on azure
             // for more information of creating AutomationRunbookResource, please refer to the document of AutomationRunbookResource
@@ -130,8 +138,10 @@ namespace Azure.ResourceManager.Automation.Samples
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/getRunbookContent.json
             // this example is just showing the usage of "Runbook_GetContent" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AutomationRunbookResource created on azure
             // for more information of creating AutomationRunbookResource, please refer to the document of AutomationRunbookResource
@@ -156,8 +166,10 @@ namespace Azure.ResourceManager.Automation.Samples
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/getRunbook.json
             // this example is just showing the usage of "Runbook_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AutomationRunbookResource created on azure
             // for more information of creating AutomationRunbookResource, please refer to the document of AutomationRunbookResource
@@ -186,8 +198,10 @@ namespace Azure.ResourceManager.Automation.Samples
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/updateRunbook.json
             // this example is just showing the usage of "Runbook_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AutomationRunbookResource created on azure
             // for more information of creating AutomationRunbookResource, please refer to the document of AutomationRunbookResource
@@ -223,8 +237,10 @@ namespace Azure.ResourceManager.Automation.Samples
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/deleteRunbook.json
             // this example is just showing the usage of "Runbook_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AutomationRunbookResource created on azure
             // for more information of creating AutomationRunbookResource, please refer to the document of AutomationRunbookResource
@@ -249,8 +265,10 @@ namespace Azure.ResourceManager.Automation.Samples
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/getTestJobStream.json
             // this example is just showing the usage of "TestJobStreams_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AutomationRunbookResource created on azure
             // for more information of creating AutomationRunbookResource, please refer to the document of AutomationRunbookResource
@@ -276,8 +294,10 @@ namespace Azure.ResourceManager.Automation.Samples
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/listTestJobStreamsByJob.json
             // this example is just showing the usage of "TestJobStreams_ListByTestJob" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AutomationRunbookResource created on azure
             // for more information of creating AutomationRunbookResource, please refer to the document of AutomationRunbookResource
@@ -305,8 +325,10 @@ namespace Azure.ResourceManager.Automation.Samples
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/createTestJob.json
             // this example is just showing the usage of "TestJob_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AutomationRunbookResource created on azure
             // for more information of creating AutomationRunbookResource, please refer to the document of AutomationRunbookResource
@@ -340,8 +362,10 @@ namespace Azure.ResourceManager.Automation.Samples
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/getTestJob.json
             // this example is just showing the usage of "TestJob_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AutomationRunbookResource created on azure
             // for more information of creating AutomationRunbookResource, please refer to the document of AutomationRunbookResource
@@ -366,8 +390,10 @@ namespace Azure.ResourceManager.Automation.Samples
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/resumeTestJob.json
             // this example is just showing the usage of "TestJob_Resume" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AutomationRunbookResource created on azure
             // for more information of creating AutomationRunbookResource, please refer to the document of AutomationRunbookResource
@@ -392,8 +418,10 @@ namespace Azure.ResourceManager.Automation.Samples
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/stopTestJob.json
             // this example is just showing the usage of "TestJob_Stop" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AutomationRunbookResource created on azure
             // for more information of creating AutomationRunbookResource, please refer to the document of AutomationRunbookResource
@@ -418,8 +446,10 @@ namespace Azure.ResourceManager.Automation.Samples
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/suspendTestJob.json
             // this example is just showing the usage of "TestJob_Suspend" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AutomationRunbookResource created on azure
             // for more information of creating AutomationRunbookResource, please refer to the document of AutomationRunbookResource

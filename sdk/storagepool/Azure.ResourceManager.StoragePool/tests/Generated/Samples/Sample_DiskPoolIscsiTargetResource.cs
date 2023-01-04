@@ -26,8 +26,10 @@ namespace Azure.ResourceManager.StoragePool.Samples
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/IscsiTargets_Patch.json
             // this example is just showing the usage of "IscsiTargets_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DiskPoolIscsiTargetResource created on azure
             // for more information of creating DiskPoolIscsiTargetResource, please refer to the document of DiskPoolIscsiTargetResource
@@ -71,8 +73,10 @@ new ManagedDiskIscsiLun("lun0",new ResourceIdentifier("/subscriptions/11111111-1
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/IscsiTargets_Delete.json
             // this example is just showing the usage of "IscsiTargets_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DiskPoolIscsiTargetResource created on azure
             // for more information of creating DiskPoolIscsiTargetResource, please refer to the document of DiskPoolIscsiTargetResource
@@ -97,8 +101,10 @@ new ManagedDiskIscsiLun("lun0",new ResourceIdentifier("/subscriptions/11111111-1
             // Generated from example definition: specification/storagepool/resource-manager/Microsoft.StoragePool/stable/2021-08-01/examples/IscsiTargets_Get.json
             // this example is just showing the usage of "IscsiTargets_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DiskPoolIscsiTargetResource created on azure
             // for more information of creating DiskPoolIscsiTargetResource, please refer to the document of DiskPoolIscsiTargetResource

@@ -26,8 +26,10 @@ namespace Azure.ResourceManager.IotHub.Samples
             // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2021-07-02/examples/iothub_listehgroups.json
             // this example is just showing the usage of "IotHubResource_ListEventHubConsumerGroups" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this IotHubDescriptionResource created on azure
             // for more information of creating IotHubDescriptionResource, please refer to the document of IotHubDescriptionResource
@@ -62,8 +64,10 @@ namespace Azure.ResourceManager.IotHub.Samples
             // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2021-07-02/examples/iothub_getconsumergroup.json
             // this example is just showing the usage of "IotHubResource_GetEventHubConsumerGroup" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this IotHubDescriptionResource created on azure
             // for more information of creating IotHubDescriptionResource, please refer to the document of IotHubDescriptionResource
@@ -96,8 +100,10 @@ namespace Azure.ResourceManager.IotHub.Samples
             // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2021-07-02/examples/iothub_getconsumergroup.json
             // this example is just showing the usage of "IotHubResource_GetEventHubConsumerGroup" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this IotHubDescriptionResource created on azure
             // for more information of creating IotHubDescriptionResource, please refer to the document of IotHubDescriptionResource
@@ -126,8 +132,10 @@ namespace Azure.ResourceManager.IotHub.Samples
             // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2021-07-02/examples/iothub_createconsumergroup.json
             // this example is just showing the usage of "IotHubResource_CreateEventHubConsumerGroup" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this IotHubDescriptionResource created on azure
             // for more information of creating IotHubDescriptionResource, please refer to the document of IotHubDescriptionResource

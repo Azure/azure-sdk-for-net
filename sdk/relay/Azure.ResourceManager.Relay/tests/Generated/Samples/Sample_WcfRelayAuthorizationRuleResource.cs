@@ -26,8 +26,10 @@ namespace Azure.ResourceManager.Relay.Samples
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/Relay/RelayAuthorizationRuleCreate.json
             // this example is just showing the usage of "WCFRelays_CreateOrUpdateAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this WcfRelayAuthorizationRuleResource created on azure
             // for more information of creating WcfRelayAuthorizationRuleResource, please refer to the document of WcfRelayAuthorizationRuleResource
@@ -65,8 +67,10 @@ RelayAccessRight.Listen,RelayAccessRight.Send
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/Relay/RelayAuthorizationRuleDelete.json
             // this example is just showing the usage of "WCFRelays_DeleteAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this WcfRelayAuthorizationRuleResource created on azure
             // for more information of creating WcfRelayAuthorizationRuleResource, please refer to the document of WcfRelayAuthorizationRuleResource
@@ -92,8 +96,10 @@ RelayAccessRight.Listen,RelayAccessRight.Send
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/Relay/RelayAuthorizationRuleGet.json
             // this example is just showing the usage of "WCFRelays_GetAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this WcfRelayAuthorizationRuleResource created on azure
             // for more information of creating WcfRelayAuthorizationRuleResource, please refer to the document of WcfRelayAuthorizationRuleResource
@@ -123,8 +129,10 @@ RelayAccessRight.Listen,RelayAccessRight.Send
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/Relay/RelayAuthorizationRuleListKey.json
             // this example is just showing the usage of "WCFRelays_ListKeys" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this WcfRelayAuthorizationRuleResource created on azure
             // for more information of creating WcfRelayAuthorizationRuleResource, please refer to the document of WcfRelayAuthorizationRuleResource
@@ -150,8 +158,10 @@ RelayAccessRight.Listen,RelayAccessRight.Send
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/Relay/RelayAuthorizationRuleRegenerateKey.json
             // this example is just showing the usage of "WCFRelays_RegenerateKeys" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this WcfRelayAuthorizationRuleResource created on azure
             // for more information of creating WcfRelayAuthorizationRuleResource, please refer to the document of WcfRelayAuthorizationRuleResource

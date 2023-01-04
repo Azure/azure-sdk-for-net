@@ -24,8 +24,10 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2022-10-31/examples/PrivateLinkResourcesByGroupId_example.json
             // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DigitalTwinsPrivateLinkResource created on azure
             // for more information of creating DigitalTwinsPrivateLinkResource, please refer to the document of DigitalTwinsPrivateLinkResource

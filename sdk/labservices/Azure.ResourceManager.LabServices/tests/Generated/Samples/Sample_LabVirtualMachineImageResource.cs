@@ -25,8 +25,10 @@ namespace Azure.ResourceManager.LabServices.Samples
             // Generated from example definition: specification/labservices/resource-manager/Microsoft.LabServices/stable/2022-08-01/examples/Images/getImage.json
             // this example is just showing the usage of "Images_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this LabVirtualMachineImageResource created on azure
             // for more information of creating LabVirtualMachineImageResource, please refer to the document of LabVirtualMachineImageResource
@@ -55,8 +57,10 @@ namespace Azure.ResourceManager.LabServices.Samples
             // Generated from example definition: specification/labservices/resource-manager/Microsoft.LabServices/stable/2022-08-01/examples/Images/patchImage.json
             // this example is just showing the usage of "Images_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this LabVirtualMachineImageResource created on azure
             // for more information of creating LabVirtualMachineImageResource, please refer to the document of LabVirtualMachineImageResource

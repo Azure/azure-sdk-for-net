@@ -27,8 +27,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             // Generated from example definition: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/stable/2022-02-05/examples/DPSGet.json
             // this example is just showing the usage of "IotDpsResource_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DeviceProvisioningServiceResource created on azure
             // for more information of creating DeviceProvisioningServiceResource, please refer to the document of DeviceProvisioningServiceResource
@@ -56,8 +58,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             // Generated from example definition: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/stable/2022-02-05/examples/DPSPatch.json
             // this example is just showing the usage of "IotDpsResource_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DeviceProvisioningServiceResource created on azure
             // for more information of creating DeviceProvisioningServiceResource, please refer to the document of DeviceProvisioningServiceResource
@@ -93,8 +97,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             // Generated from example definition: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/stable/2022-02-05/examples/DPSDelete.json
             // this example is just showing the usage of "IotDpsResource_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DeviceProvisioningServiceResource created on azure
             // for more information of creating DeviceProvisioningServiceResource, please refer to the document of DeviceProvisioningServiceResource
@@ -118,8 +124,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             // Generated from example definition: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/stable/2022-02-05/examples/DPSListBySubscription.json
             // this example is just showing the usage of "IotDpsResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
@@ -148,8 +156,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             // Generated from example definition: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/stable/2022-02-05/examples/DPSGetValidSku.json
             // this example is just showing the usage of "IotDpsResource_listValidSkus" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DeviceProvisioningServiceResource created on azure
             // for more information of creating DeviceProvisioningServiceResource, please refer to the document of DeviceProvisioningServiceResource
@@ -176,8 +186,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             // Generated from example definition: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/stable/2022-02-05/examples/DPSCheckNameAvailability.json
             // this example is just showing the usage of "IotDpsResource_CheckProvisioningServiceNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
@@ -200,8 +212,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             // Generated from example definition: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/stable/2022-02-05/examples/DPSListKeys.json
             // this example is just showing the usage of "IotDpsResource_ListKeys" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DeviceProvisioningServiceResource created on azure
             // for more information of creating DeviceProvisioningServiceResource, please refer to the document of DeviceProvisioningServiceResource
@@ -228,8 +242,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             // Generated from example definition: specification/deviceprovisioningservices/resource-manager/Microsoft.Devices/stable/2022-02-05/examples/DPSGetKey.json
             // this example is just showing the usage of "IotDpsResource_ListKeysForKeyName" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DeviceProvisioningServiceResource created on azure
             // for more information of creating DeviceProvisioningServiceResource, please refer to the document of DeviceProvisioningServiceResource

@@ -26,8 +26,10 @@ namespace Azure.ResourceManager.DataShare.Samples
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_CancelSynchronization.json
             // this example is just showing the usage of "ShareSubscriptions_CancelSynchronization" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareSubscriptionResource created on azure
             // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
@@ -54,8 +56,10 @@ namespace Azure.ResourceManager.DataShare.Samples
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_ListSourceShareSynchronizationSettings.json
             // this example is just showing the usage of "ShareSubscriptions_ListSourceShareSynchronizationSettings" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareSubscriptionResource created on azure
             // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
@@ -83,8 +87,10 @@ namespace Azure.ResourceManager.DataShare.Samples
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_ListSynchronizationDetails.json
             // this example is just showing the usage of "ShareSubscriptions_ListSynchronizationDetails" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareSubscriptionResource created on azure
             // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
@@ -113,8 +119,10 @@ namespace Azure.ResourceManager.DataShare.Samples
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_ListSynchronizations.json
             // this example is just showing the usage of "ShareSubscriptions_ListSynchronizations" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareSubscriptionResource created on azure
             // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
@@ -142,8 +150,10 @@ namespace Azure.ResourceManager.DataShare.Samples
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_Synchronize.json
             // this example is just showing the usage of "ShareSubscriptions_Synchronize" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareSubscriptionResource created on azure
             // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
@@ -173,8 +183,10 @@ namespace Azure.ResourceManager.DataShare.Samples
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_Get.json
             // this example is just showing the usage of "ShareSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareSubscriptionResource created on azure
             // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
@@ -203,8 +215,10 @@ namespace Azure.ResourceManager.DataShare.Samples
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_Create.json
             // this example is just showing the usage of "ShareSubscriptions_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareSubscriptionResource created on azure
             // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
@@ -238,8 +252,10 @@ namespace Azure.ResourceManager.DataShare.Samples
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_Delete.json
             // this example is just showing the usage of "ShareSubscriptions_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareSubscriptionResource created on azure
             // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
@@ -265,8 +281,10 @@ namespace Azure.ResourceManager.DataShare.Samples
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ConsumerSourceDataSets_ListByShareSubscription.json
             // this example is just showing the usage of "ConsumerSourceDataSets_ListByShareSubscription" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareSubscriptionResource created on azure
             // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource

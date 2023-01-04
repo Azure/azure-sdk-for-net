@@ -24,8 +24,10 @@ namespace Azure.ResourceManager.Support.Samples
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/ListProblemClassifications.json
             // this example is just showing the usage of "ProblemClassifications_List" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SupportAzureServiceResource created on azure
             // for more information of creating SupportAzureServiceResource, please refer to the document of SupportAzureServiceResource
@@ -57,8 +59,10 @@ namespace Azure.ResourceManager.Support.Samples
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/GetProblemClassification.json
             // this example is just showing the usage of "ProblemClassifications_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SupportAzureServiceResource created on azure
             // for more information of creating SupportAzureServiceResource, please refer to the document of SupportAzureServiceResource
@@ -88,8 +92,10 @@ namespace Azure.ResourceManager.Support.Samples
             // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/GetProblemClassification.json
             // this example is just showing the usage of "ProblemClassifications_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SupportAzureServiceResource created on azure
             // for more information of creating SupportAzureServiceResource, please refer to the document of SupportAzureServiceResource

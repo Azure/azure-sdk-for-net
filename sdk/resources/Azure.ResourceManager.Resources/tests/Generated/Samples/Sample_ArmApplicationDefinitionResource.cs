@@ -26,8 +26,10 @@ namespace Azure.ResourceManager.Resources.Samples
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Solutions/stable/2019-07-01/examples/getApplicationDefinition.json
             // this example is just showing the usage of "ApplicationDefinitions_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ArmApplicationDefinitionResource created on azure
             // for more information of creating ArmApplicationDefinitionResource, please refer to the document of ArmApplicationDefinitionResource
@@ -55,8 +57,10 @@ namespace Azure.ResourceManager.Resources.Samples
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Solutions/stable/2019-07-01/examples/createOrUpdateApplicationDefinition.json
             // this example is just showing the usage of "ApplicationDefinitions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ArmApplicationDefinitionResource created on azure
             // for more information of creating ArmApplicationDefinitionResource, please refer to the document of ArmApplicationDefinitionResource

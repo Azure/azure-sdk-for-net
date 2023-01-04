@@ -26,8 +26,10 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_Get.json
             // this example is just showing the usage of "Deployments_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppPlatformDeploymentResource created on azure
             // for more information of creating AppPlatformDeploymentResource, please refer to the document of AppPlatformDeploymentResource
@@ -57,8 +59,10 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_Get_CustomContainer.json
             // this example is just showing the usage of "Deployments_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppPlatformDeploymentResource created on azure
             // for more information of creating AppPlatformDeploymentResource, please refer to the document of AppPlatformDeploymentResource
@@ -88,8 +92,10 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_Delete.json
             // this example is just showing the usage of "Deployments_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppPlatformDeploymentResource created on azure
             // for more information of creating AppPlatformDeploymentResource, please refer to the document of AppPlatformDeploymentResource
@@ -115,8 +121,10 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_Update.json
             // this example is just showing the usage of "Deployments_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppPlatformDeploymentResource created on azure
             // for more information of creating AppPlatformDeploymentResource, please refer to the document of AppPlatformDeploymentResource
@@ -159,8 +167,10 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_Update_CustomContainer.json
             // this example is just showing the usage of "Deployments_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppPlatformDeploymentResource created on azure
             // for more information of creating AppPlatformDeploymentResource, please refer to the document of AppPlatformDeploymentResource
@@ -218,8 +228,10 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_Start.json
             // this example is just showing the usage of "Deployments_Start" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppPlatformDeploymentResource created on azure
             // for more information of creating AppPlatformDeploymentResource, please refer to the document of AppPlatformDeploymentResource
@@ -245,8 +257,10 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_Stop.json
             // this example is just showing the usage of "Deployments_Stop" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppPlatformDeploymentResource created on azure
             // for more information of creating AppPlatformDeploymentResource, please refer to the document of AppPlatformDeploymentResource
@@ -272,8 +286,10 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_Restart.json
             // this example is just showing the usage of "Deployments_Restart" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppPlatformDeploymentResource created on azure
             // for more information of creating AppPlatformDeploymentResource, please refer to the document of AppPlatformDeploymentResource
@@ -299,8 +315,10 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_EnableRemoteDebugging.json
             // this example is just showing the usage of "Deployments_EnableRemoteDebugging" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppPlatformDeploymentResource created on azure
             // for more information of creating AppPlatformDeploymentResource, please refer to the document of AppPlatformDeploymentResource
@@ -328,8 +346,10 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_DisableRemoteDebugging.json
             // this example is just showing the usage of "Deployments_DisableRemoteDebugging" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppPlatformDeploymentResource created on azure
             // for more information of creating AppPlatformDeploymentResource, please refer to the document of AppPlatformDeploymentResource
@@ -356,8 +376,10 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_GetRemoteDebuggingConfig.json
             // this example is just showing the usage of "Deployments_GetRemoteDebuggingConfig" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppPlatformDeploymentResource created on azure
             // for more information of creating AppPlatformDeploymentResource, please refer to the document of AppPlatformDeploymentResource
@@ -383,8 +405,10 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_GetLogFileUrl.json
             // this example is just showing the usage of "Deployments_GetLogFileUrl" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppPlatformDeploymentResource created on azure
             // for more information of creating AppPlatformDeploymentResource, please refer to the document of AppPlatformDeploymentResource
@@ -410,8 +434,10 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_GenerateHeapDump.json
             // this example is just showing the usage of "Deployments_GenerateHeapDump" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppPlatformDeploymentResource created on azure
             // for more information of creating AppPlatformDeploymentResource, please refer to the document of AppPlatformDeploymentResource
@@ -442,8 +468,10 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_GenerateThreadDump.json
             // this example is just showing the usage of "Deployments_GenerateThreadDump" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppPlatformDeploymentResource created on azure
             // for more information of creating AppPlatformDeploymentResource, please refer to the document of AppPlatformDeploymentResource
@@ -474,8 +502,10 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_StartJFR.json
             // this example is just showing the usage of "Deployments_StartJFR" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppPlatformDeploymentResource created on azure
             // for more information of creating AppPlatformDeploymentResource, please refer to the document of AppPlatformDeploymentResource

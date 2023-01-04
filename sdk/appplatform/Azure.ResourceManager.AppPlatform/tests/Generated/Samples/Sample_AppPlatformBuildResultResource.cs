@@ -25,8 +25,10 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/BuildService_GetBuildResult.json
             // this example is just showing the usage of "BuildService_GetBuildResult" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppPlatformBuildResultResource created on azure
             // for more information of creating AppPlatformBuildResultResource, please refer to the document of AppPlatformBuildResultResource
@@ -57,8 +59,10 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/BuildService_GetBuildResultLog.json
             // this example is just showing the usage of "BuildService_GetBuildResultLog" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppPlatformBuildResultResource created on azure
             // for more information of creating AppPlatformBuildResultResource, please refer to the document of AppPlatformBuildResultResource

@@ -27,8 +27,10 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/BuildServiceBuilder_Get.json
             // this example is just showing the usage of "BuildServiceBuilder_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppPlatformBuilderResource created on azure
             // for more information of creating AppPlatformBuilderResource, please refer to the document of AppPlatformBuilderResource
@@ -58,8 +60,10 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/BuildServiceBuilder_CreateOrUpdate.json
             // this example is just showing the usage of "BuildServiceBuilder_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppPlatformBuilderResource created on azure
             // for more information of creating AppPlatformBuilderResource, please refer to the document of AppPlatformBuilderResource
@@ -115,8 +119,10 @@ Id = new ResourceIdentifier("tanzu-buildpacks/java-azure"),
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/BuildServiceBuilder_Delete.json
             // this example is just showing the usage of "BuildServiceBuilder_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppPlatformBuilderResource created on azure
             // for more information of creating AppPlatformBuilderResource, please refer to the document of AppPlatformBuilderResource
@@ -142,8 +148,10 @@ Id = new ResourceIdentifier("tanzu-buildpacks/java-azure"),
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/BuildServiceBuilder_ListDeployments.json
             // this example is just showing the usage of "BuildServiceBuilder_ListDeployments" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this AppPlatformBuilderResource created on azure
             // for more information of creating AppPlatformBuilderResource, please refer to the document of AppPlatformBuilderResource

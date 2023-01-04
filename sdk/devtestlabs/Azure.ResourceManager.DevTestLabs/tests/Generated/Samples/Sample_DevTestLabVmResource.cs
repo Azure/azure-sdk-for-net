@@ -26,8 +26,10 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Get.json
             // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DevTestLabVmResource created on azure
             // for more information of creating DevTestLabVmResource, please refer to the document of DevTestLabVmResource
@@ -56,8 +58,10 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Delete.json
             // this example is just showing the usage of "VirtualMachines_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DevTestLabVmResource created on azure
             // for more information of creating DevTestLabVmResource, please refer to the document of DevTestLabVmResource
@@ -82,8 +86,10 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Update.json
             // this example is just showing the usage of "VirtualMachines_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DevTestLabVmResource created on azure
             // for more information of creating DevTestLabVmResource, please refer to the document of DevTestLabVmResource
@@ -113,8 +119,10 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_AddDataDisk.json
             // this example is just showing the usage of "VirtualMachines_AddDataDisk" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DevTestLabVmResource created on azure
             // for more information of creating DevTestLabVmResource, please refer to the document of DevTestLabVmResource
@@ -148,8 +156,10 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_ApplyArtifacts.json
             // this example is just showing the usage of "VirtualMachines_ApplyArtifacts" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DevTestLabVmResource created on azure
             // for more information of creating DevTestLabVmResource, please refer to the document of DevTestLabVmResource
@@ -184,8 +194,10 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Claim.json
             // this example is just showing the usage of "VirtualMachines_Claim" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DevTestLabVmResource created on azure
             // for more information of creating DevTestLabVmResource, please refer to the document of DevTestLabVmResource
@@ -210,8 +222,10 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_DetachDataDisk.json
             // this example is just showing the usage of "VirtualMachines_DetachDataDisk" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DevTestLabVmResource created on azure
             // for more information of creating DevTestLabVmResource, please refer to the document of DevTestLabVmResource
@@ -240,8 +254,10 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_GetRdpFileContents.json
             // this example is just showing the usage of "VirtualMachines_GetRdpFileContents" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DevTestLabVmResource created on azure
             // for more information of creating DevTestLabVmResource, please refer to the document of DevTestLabVmResource
@@ -266,8 +282,10 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_ListApplicableSchedules.json
             // this example is just showing the usage of "VirtualMachines_ListApplicableSchedules" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DevTestLabVmResource created on azure
             // for more information of creating DevTestLabVmResource, please refer to the document of DevTestLabVmResource
@@ -292,8 +310,10 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Redeploy.json
             // this example is just showing the usage of "VirtualMachines_Redeploy" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DevTestLabVmResource created on azure
             // for more information of creating DevTestLabVmResource, please refer to the document of DevTestLabVmResource
@@ -318,8 +338,10 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Resize.json
             // this example is just showing the usage of "VirtualMachines_Resize" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DevTestLabVmResource created on azure
             // for more information of creating DevTestLabVmResource, please refer to the document of DevTestLabVmResource
@@ -348,8 +370,10 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Restart.json
             // this example is just showing the usage of "VirtualMachines_Restart" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DevTestLabVmResource created on azure
             // for more information of creating DevTestLabVmResource, please refer to the document of DevTestLabVmResource
@@ -374,8 +398,10 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Start.json
             // this example is just showing the usage of "VirtualMachines_Start" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DevTestLabVmResource created on azure
             // for more information of creating DevTestLabVmResource, please refer to the document of DevTestLabVmResource
@@ -400,8 +426,10 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_Stop.json
             // this example is just showing the usage of "VirtualMachines_Stop" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DevTestLabVmResource created on azure
             // for more information of creating DevTestLabVmResource, please refer to the document of DevTestLabVmResource
@@ -426,8 +454,10 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_TransferDisks.json
             // this example is just showing the usage of "VirtualMachines_TransferDisks" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DevTestLabVmResource created on azure
             // for more information of creating DevTestLabVmResource, please refer to the document of DevTestLabVmResource
@@ -452,8 +482,10 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/VirtualMachines_UnClaim.json
             // this example is just showing the usage of "VirtualMachines_UnClaim" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DevTestLabVmResource created on azure
             // for more information of creating DevTestLabVmResource, please refer to the document of DevTestLabVmResource

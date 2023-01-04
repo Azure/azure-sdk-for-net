@@ -27,8 +27,10 @@ namespace Azure.ResourceManager.ProviderHub.Samples
             // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/DefaultRollouts_Get.json
             // this example is just showing the usage of "DefaultRollouts_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ProviderRegistrationResource created on azure
             // for more information of creating ProviderRegistrationResource, please refer to the document of ProviderRegistrationResource
@@ -59,8 +61,10 @@ namespace Azure.ResourceManager.ProviderHub.Samples
             // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/DefaultRollouts_Get.json
             // this example is just showing the usage of "DefaultRollouts_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ProviderRegistrationResource created on azure
             // for more information of creating ProviderRegistrationResource, please refer to the document of ProviderRegistrationResource
@@ -87,8 +91,10 @@ namespace Azure.ResourceManager.ProviderHub.Samples
             // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/DefaultRollouts_CreateOrUpdate.json
             // this example is just showing the usage of "DefaultRollouts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ProviderRegistrationResource created on azure
             // for more information of creating ProviderRegistrationResource, please refer to the document of ProviderRegistrationResource
@@ -141,8 +147,10 @@ namespace Azure.ResourceManager.ProviderHub.Samples
             // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/DefaultRollouts_ListByProviderRegistration.json
             // this example is just showing the usage of "DefaultRollouts_ListByProviderRegistration" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ProviderRegistrationResource created on azure
             // for more information of creating ProviderRegistrationResource, please refer to the document of ProviderRegistrationResource

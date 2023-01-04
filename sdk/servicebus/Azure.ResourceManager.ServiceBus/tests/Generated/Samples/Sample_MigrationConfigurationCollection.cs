@@ -26,8 +26,10 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2021-11-01/examples/Migrationconfigurations/SBMigrationconfigurationList.json
             // this example is just showing the usage of "MigrationConfigs_List" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceBusNamespaceResource created on azure
             // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
@@ -61,8 +63,10 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2021-11-01/examples/Migrationconfigurations/SBMigrationconfigurationCreateAndStartMigration.json
             // this example is just showing the usage of "MigrationConfigs_CreateAndStartMigration" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceBusNamespaceResource created on azure
             // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
@@ -100,8 +104,10 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2021-11-01/examples/Migrationconfigurations/SBMigrationconfigurationGet.json
             // this example is just showing the usage of "MigrationConfigs_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceBusNamespaceResource created on azure
             // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource
@@ -133,8 +139,10 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2021-11-01/examples/Migrationconfigurations/SBMigrationconfigurationGet.json
             // this example is just showing the usage of "MigrationConfigs_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ServiceBusNamespaceResource created on azure
             // for more information of creating ServiceBusNamespaceResource, please refer to the document of ServiceBusNamespaceResource

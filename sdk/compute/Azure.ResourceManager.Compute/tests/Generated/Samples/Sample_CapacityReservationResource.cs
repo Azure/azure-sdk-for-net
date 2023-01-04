@@ -26,8 +26,10 @@ namespace Azure.ResourceManager.Compute.Samples
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/capacityReservationExamples/CapacityReservation_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "CapacityReservations_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CapacityReservationResource created on azure
             // for more information of creating CapacityReservationResource, please refer to the document of CapacityReservationResource
@@ -70,8 +72,10 @@ namespace Azure.ResourceManager.Compute.Samples
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/capacityReservationExamples/CapacityReservation_Update_MinimumSet_Gen.json
             // this example is just showing the usage of "CapacityReservations_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CapacityReservationResource created on azure
             // for more information of creating CapacityReservationResource, please refer to the document of CapacityReservationResource
@@ -102,8 +106,10 @@ namespace Azure.ResourceManager.Compute.Samples
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/capacityReservationExamples/CapacityReservation_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "CapacityReservations_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CapacityReservationResource created on azure
             // for more information of creating CapacityReservationResource, please refer to the document of CapacityReservationResource
@@ -128,8 +134,10 @@ namespace Azure.ResourceManager.Compute.Samples
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/capacityReservationExamples/CapacityReservation_Delete_MinimumSet_Gen.json
             // this example is just showing the usage of "CapacityReservations_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CapacityReservationResource created on azure
             // for more information of creating CapacityReservationResource, please refer to the document of CapacityReservationResource
@@ -154,8 +162,10 @@ namespace Azure.ResourceManager.Compute.Samples
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/capacityReservationExamples/CapacityReservation_Get.json
             // this example is just showing the usage of "CapacityReservations_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CapacityReservationResource created on azure
             // for more information of creating CapacityReservationResource, please refer to the document of CapacityReservationResource

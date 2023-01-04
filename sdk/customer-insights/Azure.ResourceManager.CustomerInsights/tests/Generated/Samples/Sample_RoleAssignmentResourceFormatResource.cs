@@ -26,8 +26,10 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RoleAssignmentsCreateOrUpdate.json
             // this example is just showing the usage of "RoleAssignments_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this RoleAssignmentResourceFormatResource created on azure
             // for more information of creating RoleAssignmentResourceFormatResource, please refer to the document of RoleAssignmentResourceFormatResource
@@ -65,8 +67,10 @@ new AssignmentPrincipal("4c54c38ffa9b416ba5a6d6c8a20cbe7e","User"),new Assignmen
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RoleAssignmentsGet.json
             // this example is just showing the usage of "RoleAssignments_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this RoleAssignmentResourceFormatResource created on azure
             // for more information of creating RoleAssignmentResourceFormatResource, please refer to the document of RoleAssignmentResourceFormatResource
@@ -95,8 +99,10 @@ new AssignmentPrincipal("4c54c38ffa9b416ba5a6d6c8a20cbe7e","User"),new Assignmen
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/RoleAssignmentsDelete.json
             // this example is just showing the usage of "RoleAssignments_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this RoleAssignmentResourceFormatResource created on azure
             // for more information of creating RoleAssignmentResourceFormatResource, please refer to the document of RoleAssignmentResourceFormatResource

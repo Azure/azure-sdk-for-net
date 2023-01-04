@@ -26,8 +26,10 @@ namespace Azure.ResourceManager.DataShare.Samples
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/Shares_Get.json
             // this example is just showing the usage of "Shares_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DataShareAccountResource created on azure
             // for more information of creating DataShareAccountResource, please refer to the document of DataShareAccountResource
@@ -59,8 +61,10 @@ namespace Azure.ResourceManager.DataShare.Samples
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/Shares_Get.json
             // this example is just showing the usage of "Shares_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DataShareAccountResource created on azure
             // for more information of creating DataShareAccountResource, please refer to the document of DataShareAccountResource
@@ -88,8 +92,10 @@ namespace Azure.ResourceManager.DataShare.Samples
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/Shares_Create.json
             // this example is just showing the usage of "Shares_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DataShareAccountResource created on azure
             // for more information of creating DataShareAccountResource, please refer to the document of DataShareAccountResource
@@ -128,8 +134,10 @@ namespace Azure.ResourceManager.DataShare.Samples
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/Shares_ListByAccount.json
             // this example is just showing the usage of "Shares_ListByAccount" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this DataShareAccountResource created on azure
             // for more information of creating DataShareAccountResource, please refer to the document of DataShareAccountResource
