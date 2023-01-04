@@ -21,9 +21,9 @@ namespace Azure.Communication.CallAutomation
         private ConcurrentDictionary<(Type, string), EventHandler<CallAutomationEventArgs>> _ongoingEvents;
         private event EventHandler<CallAutomationEventArgs> _eventReceived;
 
-        internal CallAutomationEventHandler(TimeSpan defaultTimeout = default)
+        internal CallAutomationEventHandler(EventHandlerOptions options)
         {
-            _exceptionTimeout = defaultTimeout;
+            _exceptionTimeout = options.TimeoutException;
             _eventBacklog = new EventBacklog();
             _ongoingEvents = new ConcurrentDictionary<(Type, string), EventHandler<CallAutomationEventArgs>>();
         }
@@ -66,13 +66,120 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Wait for incoming event. Returns event once event arrives in ProcessEvent method.
+        /// Set Ongoing EventHandler for specific event.
         /// </summary>
-        /// <param name="eventTypesToWaitFor">List of events type to wait for.</param>
+        /// <typeparam name="TEvent">Call Automation Event Type.</typeparam>
+        /// <param name="callConnectionId">CallConnectionId of the call.</param>
+        /// <param name="eventHandler">EventHandler to be fired when the specified event arrives.</param>
+        public void SetOngoingEventHandler<TEvent>(string callConnectionId, Action<TEvent> eventHandler) where TEvent : CallAutomationEventBase
+        {
+            var ongoingAwaiter = new EventAwaiterOngoing<TEvent>(callConnectionId, eventHandler);
+            EventHandler<CallAutomationEventArgs> handler = (o, arg) => ongoingAwaiter.OnEventRecieved(o, arg);
+
+            // on new addition, add it to the dictionary
+            // on update, update the last eventhandler with new eventhandler
+            _ongoingEvents.AddOrUpdate((typeof(TEvent), callConnectionId), handler, (key, oldValue) => handler);
+            _eventReceived += handler;
+        }
+
+        /// <summary>
+        /// Unset Ongoing EventHandler for specific event.
+        /// </summary>
+        /// <typeparam name="TEvent">Call Automation Event Type.</typeparam>
+        /// <param name="callConnectionId">CallConnectionId of the call.</param>
+        public void UnsetOngoingEventHandler<TEvent>(string callConnectionId) where TEvent : CallAutomationEventBase
+        {
+            if (_ongoingEvents.TryRemove((typeof(TEvent), callConnectionId), out var handler))
+            {
+                _eventReceived -= handler;
+            }
+        }
+
+        /// <summary>
+        /// Wait for any matching incoming event for the call. Returns the event once it arrives in ProcessEvent method.
+        /// </summary>
         /// <param name="callConnectionId">CallConnectionId of the call.</param>
         /// <param name="operationContext">(Optional) Optional operationContext of the method call.</param>
         /// <returns>Returns CallAutomationEvent once matching event arrives.</returns>
-        public async Task<CallAutomationEventBase> WaitForEvent(IEnumerable<Type> eventTypesToWaitFor, string callConnectionId, string operationContext = null)
+        public async Task<CallAutomationEventBase> WaitForEvent(string callConnectionId, string operationContext = null)
+            => await _WaitForEvent(new List<Type> { }, callConnectionId, operationContext).ConfigureAwait(false);
+
+        /// <summary>
+        /// Wait for specific type of incoming event for the call. Returns the event once it arrives in ProcessEvent method.
+        /// </summary>
+        /// <typeparam name="T1">Matching CallAutomation's Event Type.</typeparam>
+        /// <param name="callConnectionId">CallConnectionId of the call.</param>
+        /// <param name="operationContext">(Optional) Optional operationContext of the method call.</param>
+        /// <returns>Returns CallAutomationEvent once matching event arrives.</returns>
+        public async Task<CallAutomationEventBase> WaitForEvent<T1>(string callConnectionId, string operationContext = null)
+            where T1 : CallAutomationEventBase
+            => await _WaitForEvent(new List<Type> { typeof(T1) }, callConnectionId, operationContext).ConfigureAwait(false);
+
+        /// <summary>
+        /// Wait for specific types of incoming event for the call. Returns the event once it arrives in ProcessEvent method.
+        /// </summary>
+        /// <typeparam name="T1">Matching CallAutomation's Event Type.</typeparam>
+        /// <typeparam name="T2">Matching CallAutomation's Event Type.</typeparam>
+        /// <param name="callConnectionId">CallConnectionId of the call.</param>
+        /// <param name="operationContext">(Optional) Optional operationContext of the method call.</param>
+        /// <returns>Returns CallAutomationEvent once matching event arrives.</returns>
+        public async Task<CallAutomationEventBase> WaitForEvent<T1, T2>(string callConnectionId, string operationContext = null)
+            where T1 : CallAutomationEventBase
+            where T2 : CallAutomationEventBase
+            => await _WaitForEvent(new List<Type> { typeof(T1), typeof(T2) }, callConnectionId, operationContext).ConfigureAwait(false);
+
+        /// <summary>
+        /// Wait for specific types of incoming event for the call. Returns the event once it arrives in ProcessEvent method.
+        /// </summary>
+        /// <typeparam name="T1">Matching CallAutomation's Event Type.</typeparam>
+        /// <typeparam name="T2">Matching CallAutomation's Event Type.</typeparam>
+        /// <typeparam name="T3">Matching CallAutomation's Event Type.</typeparam>
+        /// <param name="callConnectionId">CallConnectionId of the call.</param>
+        /// <param name="operationContext">(Optional) Optional operationContext of the method call.</param>
+        /// <returns>Returns CallAutomationEvent once matching event arrives.</returns>
+        public async Task<CallAutomationEventBase> WaitForEvent<T1, T2, T3>(string callConnectionId, string operationContext = null)
+            where T1 : CallAutomationEventBase
+            where T2 : CallAutomationEventBase
+            where T3 : CallAutomationEventBase
+           => await _WaitForEvent(new List<Type> { typeof(T1), typeof(T2), typeof(T2) }, callConnectionId, operationContext).ConfigureAwait(false);
+
+        /// <summary>
+        /// Wait for specific types of incoming event for the call. Returns the event once it arrives in ProcessEvent method.
+        /// </summary>
+        /// <typeparam name="T1">Matching CallAutomation's Event Type.</typeparam>
+        /// <typeparam name="T2">Matching CallAutomation's Event Type.</typeparam>
+        /// <typeparam name="T3">Matching CallAutomation's Event Type.</typeparam>
+        /// <typeparam name="T4">Matching CallAutomation's Event Type.</typeparam>
+        /// <param name="callConnectionId">CallConnectionId of the call.</param>
+        /// <param name="operationContext">(Optional) Optional operationContext of the method call.</param>
+        /// <returns>Returns CallAutomationEvent once matching event arrives.</returns>
+        public async Task<CallAutomationEventBase> WaitForEvent<T1, T2, T3, T4>(string callConnectionId, string operationContext = null)
+            where T1 : CallAutomationEventBase
+            where T2 : CallAutomationEventBase
+            where T3 : CallAutomationEventBase
+            where T4 : CallAutomationEventBase
+            => await _WaitForEvent(new List<Type> { typeof(T1), typeof(T2), typeof(T3), typeof(T4) }, callConnectionId, operationContext).ConfigureAwait(false);
+
+        /// <summary>
+        /// Wait for specific types of incoming event for the call. Returns the event once it arrives in ProcessEvent method.
+        /// </summary>
+        /// <typeparam name="T1">Matching CallAutomation's Event Type.</typeparam>
+        /// <typeparam name="T2">Matching CallAutomation's Event Type.</typeparam>
+        /// <typeparam name="T3">Matching CallAutomation's Event Type.</typeparam>
+        /// <typeparam name="T4">Matching CallAutomation's Event Type.</typeparam>
+        /// <typeparam name="T5">Matching CallAutomation's Event Type.</typeparam>
+        /// <param name="callConnectionId">CallConnectionId of the call.</param>
+        /// <param name="operationContext">(Optional) Optional operationContext of the method call.</param>
+        /// <returns>Returns CallAutomationEvent once matching event arrives.</returns>
+        public async Task<CallAutomationEventBase> WaitForEvent<T1, T2, T3, T4, T5>(string callConnectionId, string operationContext = null)
+            where T1 : CallAutomationEventBase
+            where T2 : CallAutomationEventBase
+            where T3 : CallAutomationEventBase
+            where T4 : CallAutomationEventBase
+            where T5 : CallAutomationEventBase
+            => await _WaitForEvent(new List<Type> { typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5) }, callConnectionId, operationContext).ConfigureAwait(false);
+
+        private async Task<CallAutomationEventBase> _WaitForEvent(IEnumerable<Type> eventTypesToWaitFor, string callConnectionId, string operationContext = null)
         {
             // initialize awaiter and get event handler of it
             var awaiter = new EventAwaiter(eventTypesToWaitFor, callConnectionId, operationContext, _exceptionTimeout);
@@ -106,48 +213,6 @@ namespace Azure.Communication.CallAutomation
                 _eventReceived -= handler;
                 awaiter.Dispose();
                 throw;
-            }
-        }
-
-        /// <summary>
-        /// Set Ongoing EventHandler for specific event.
-        /// </summary>
-        /// <typeparam name="TEvent">Call Automation Event Type.</typeparam>
-        /// <param name="callConnectionId">CallConnectionId of the call.</param>
-        /// <param name="eventHandler">EventHandler to be fired when the specified event arrives.</param>
-        /// <returns></returns>
-        public bool SetOngoingEventHandler<TEvent>(string callConnectionId, Action<TEvent> eventHandler) where TEvent : CallAutomationEventBase
-        {
-            var ongoingAwaiter = new EventAwaiterOngoing<TEvent>(callConnectionId, eventHandler);
-            EventHandler<CallAutomationEventArgs> handler = (o, arg) => ongoingAwaiter.OnEventRecieved(o, arg);
-
-            if (_ongoingEvents.TryAdd((typeof(TEvent), callConnectionId), handler))
-            {
-                _eventReceived += handler;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Unset Ongoing EventHandler for specific event.
-        /// </summary>
-        /// <typeparam name="TEvent">Call Automation Event Type.</typeparam>
-        /// <param name="callConnectionId">CallConnectionId of the call.</param>
-        /// <returns></returns>
-        public bool UnsetOngoingEventHandler<TEvent>(string callConnectionId) where TEvent : CallAutomationEventBase
-        {
-            if (_ongoingEvents.TryRemove((typeof(TEvent), callConnectionId), out var handler))
-            {
-                _eventReceived += handler;
-                return true;
-            }
-            else
-            {
-                return false;
             }
         }
     }

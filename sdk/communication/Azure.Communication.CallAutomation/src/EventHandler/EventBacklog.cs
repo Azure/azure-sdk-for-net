@@ -41,9 +41,9 @@ namespace Azure.Communication.CallAutomation
         {
             // Match any event that matches in the events backlog
             var matchingKvp = _eventBacklog.ToArray().Where(kvp
-                => eventTypes.Contains(kvp.Value.Item1.GetType())
-                && callConnectionId == kvp.Value.Item1.CallConnectionId
-                && operationContext == kvp.Value.Item1.OperationContext)
+                => callConnectionId == kvp.Value.Item1.CallConnectionId
+                && operationContext == kvp.Value.Item1.OperationContext
+                && (!(eventTypes?.Any() ?? false) || eventTypes.Contains(kvp.Value.Item1.GetType())))
                 .FirstOrDefault();
 
             // try remove the item - if successful, return it as keyValuePair

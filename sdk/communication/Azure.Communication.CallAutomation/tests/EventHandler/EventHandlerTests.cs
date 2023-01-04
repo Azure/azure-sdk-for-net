@@ -15,16 +15,36 @@ namespace Azure.Communication.CallAutomation.Tests.EventHandler
         [Test]
         public async Task ProcessEventAndWaitForIt()
         {
+            // Most common case where where you wait for event, then event gets sent with matching CallconnectionId
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient();
             CallAutomationEventHandler handler = callAutomationClient.GetCallAutomationEventHandler();
 
             // Wait for Event
-            Task<CallAutomationEventBase> baseEventTask = handler.WaitForEvent(new List<Type>() { typeof(CallConnected) }, CallConnectionId);
+            Task<CallAutomationEventBase> baseEventTask = handler.WaitForEvent<CallConnected>(CallConnectionId);
 
             // create and send event to event processor
             SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
 
             CallAutomationEventBase returnedBaseEvent = await baseEventTask;
+
+            // assert
+            Assert.NotNull(returnedBaseEvent);
+            Assert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());
+            Assert.AreEqual(CallConnectionId, ((CallConnected)returnedBaseEvent).CallConnectionId);
+        }
+
+        [Test]
+        public async Task ProcessEventFirstThenWaitForIt()
+        {
+            // Events arrives first, then waits for it.
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient();
+            CallAutomationEventHandler handler = callAutomationClient.GetCallAutomationEventHandler();
+
+            // create and send event to event processor first
+            SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
+
+            // Wait for Event after
+            CallAutomationEventBase returnedBaseEvent = await handler.WaitForEvent<CallConnected>(CallConnectionId);
 
             // assert
             Assert.NotNull(returnedBaseEvent);

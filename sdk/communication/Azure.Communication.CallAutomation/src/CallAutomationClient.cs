@@ -85,7 +85,7 @@ namespace Azure.Communication.CallAutomation
             CallConnectionsRestClient = new CallConnectionsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             ContentRestClient = new ContentRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             ServerCallsRestClient = new ServerCallsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            CallAutomationEventHandler = new CallAutomationEventHandler();
+            CallAutomationEventHandler = new CallAutomationEventHandler(options.EventHandlerOptions);
         }
 
         private CallAutomationClient(Uri endpoint, CallAutomationClientOptions options, ConnectionString connectionString)
