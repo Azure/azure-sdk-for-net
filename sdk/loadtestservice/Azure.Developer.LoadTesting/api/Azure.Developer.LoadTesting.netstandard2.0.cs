@@ -60,7 +60,7 @@ namespace Azure.Developer.LoadTesting
         public LoadTestRunClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Developer.LoadTesting.LoadTestingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Developer.LoadTesting.TestRunOperation BeginTestRun(string testRunId, Azure.Core.RequestContent content, Azure.WaitUntil waitUntil = Azure.WaitUntil.Started, string oldTestRunId = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Developer.LoadTesting.TestRunOperation> BeginTestRunAync(string testRunId, Azure.Core.RequestContent content, Azure.WaitUntil waitUntil = Azure.WaitUntil.Started, string oldTestRunId = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Developer.LoadTesting.TestRunOperation> BeginTestRunAsync(string testRunId, Azure.Core.RequestContent content, Azure.WaitUntil waitUntil = Azure.WaitUntil.Started, string oldTestRunId = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdateAppComponents(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAppComponentsAsync(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdateServerMetricsConfig(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }

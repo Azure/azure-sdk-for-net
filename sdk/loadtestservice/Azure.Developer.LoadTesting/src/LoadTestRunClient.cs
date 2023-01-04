@@ -39,7 +39,7 @@ namespace Azure.Developer.LoadTesting
         /// <summary>
         /// BeginCreateOrUpdateTestRunAsync
         /// </summary>
-        public virtual async Task<TestRunOperation> BeginTestRunAync(string testRunId, RequestContent content, WaitUntil waitUntil = WaitUntil.Started, string oldTestRunId = null, RequestContext context = null)
+        public virtual async Task<TestRunOperation> BeginTestRunAsync(string testRunId, RequestContent content, WaitUntil waitUntil = WaitUntil.Started, string oldTestRunId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
