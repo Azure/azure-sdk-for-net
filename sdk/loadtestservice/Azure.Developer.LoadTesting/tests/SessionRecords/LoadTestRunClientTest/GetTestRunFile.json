@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f9ba419963589440a2e893802d43a776-92bc15e93522d143-00",
-        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230103.1 (.NET Core 3.1.32; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "55f1cd1875043df7373f67b0040f229b",
+        "traceparent": "00-6a1f8056cab8f01396b5b354bd3fe817-68b1d02ee14a49d3-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230104.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "d58219f275316885aa4c390899556998",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -18,17 +18,17 @@
         "Connection": "keep-alive",
         "Content-Length": "534",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 03 Jan 2023 14:55:00 GMT",
-        "mise-correlation-id": "7507f258-3713-4e6c-8fd2-9417aa959342",
+        "Date": "Wed, 04 Jan 2023 11:05:59 GMT",
+        "mise-correlation-id": "be246c28-207a-418c-9354-ed4ab9459086",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b1a84997-5620-4a74-95ab-0d76b34ece21"
+        "x-ms-correlation-request-id": "eafcceee-32ac-4097-b392-ccaf035dd5ed"
       },
       "ResponseBody": {
-        "url": "https://stcnteuapdata0901.blob.core.windows.net/1748061b-ac7a-40e0-800d-f80d51c40055/c5f3540d-6029-411a-9d06-76142fa5a0d4?skoid=fe06edb5-033b-4f33-bef0-9489f8feffb8\u0026sktid=33e01921-4d64-4f8c-a055-5bdaffd5e33d\u0026skt=2023-01-03T14%3A55%3A00Z\u0026ske=2023-01-03T15%3A05%3A00Z\u0026sks=b\u0026skv=2021-08-06\u0026sv=2021-08-06\u0026se=2023-01-03T15%3A05%3A00Z\u0026sr=b\u0026sp=r\u0026sig=cmwjxQxBBHWmlO7n%2F1BasmqXW6ARlVNlYOVCf6IAS5Y%3D",
+        "url": "https://stcnteuapdata0901.blob.core.windows.net/e2e1ae12-1199-46e9-bfbe-4cabea366ada/7930b739-17d7-44fb-87f0-7b418a50b133?skoid=fe06edb5-033b-4f33-bef0-9489f8feffb8\u0026sktid=33e01921-4d64-4f8c-a055-5bdaffd5e33d\u0026skt=2023-01-04T11%3A05%3A59Z\u0026ske=2023-01-04T11%3A15%3A59Z\u0026sks=b\u0026skv=2021-08-06\u0026sv=2021-08-06\u0026se=2023-01-04T11%3A15%3A59Z\u0026sr=b\u0026sp=r\u0026sig=vR2CcNXSTA7I0KLdZxvn945JhOOwJ1xESFj%2Fp2V1ojI%3D",
         "fileName": "sample.jmx",
         "fileType": "JMX_FILE",
-        "expireDateTime": "2023-01-03T15:05:00.3206139",
+        "expireDateTime": "2023-01-04T11:15:59.2769667",
         "validationStatus": "VALIDATION_SUCCESS"
       }
     }
@@ -36,6 +36,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "LOADTESTSERVICE_ENDPOINT": "f3395a15-535c-46ea-aaf4-db52915c248b.eastus2euap.cnt-canary.loadtesting.azure.com",
-    "RandomSeed": "950538410"
+    "RandomSeed": "1739523540"
   }
 }
