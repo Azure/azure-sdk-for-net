@@ -486,6 +486,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var shareName = GetNewShareName();
             ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            await share.CreateIfNotExistsAsync();
 
             ShareUriBuilder uriBuilder = new ShareUriBuilder(share.Uri)
             {
