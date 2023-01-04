@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SignalR
         // SignalR_CheckNameAvailability
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckNameAvailabilitySignalR_SignalRCheckNameAvailability()
+        public async Task CheckSignalRNameAvailability_SignalRCheckNameAvailability()
         {
             // Generated from example definition: specification/signalr/resource-manager/Microsoft.SignalRService/stable/2022-02-01/examples/SignalR_CheckNameAvailability.json
             // this example is just showing the usage of "SignalR_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.SignalR
 
             // invoke the operation
             AzureLocation location = new AzureLocation("eastus");
-            NameAvailabilityContent content = new NameAvailabilityContent("Microsoft.SignalRService/SignalR", "mySignalRService");
-            NameAvailability result = await subscriptionResource.CheckNameAvailabilitySignalRAsync(location, content);
+            SignalRNameAvailabilityContent content = new SignalRNameAvailabilityContent(new ResourceType("Microsoft.SignalRService/SignalR"), "mySignalRService");
+            SignalRNameAvailabilityResult result = await subscriptionResource.CheckSignalRNameAvailabilityAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -150,54 +150,72 @@ namespace Azure.ResourceManager.SignalR
             // invoke the operation
             SignalRData data = new SignalRData(new AzureLocation("eastus"))
             {
-                Sku = new ResourceSku("Standard_S1")
+                Sku = new SignalRResourceSku("Standard_S1")
                 {
                     Tier = SignalRSkuTier.Standard,
                     Capacity = 1,
                 },
-                Kind = ServiceKind.SignalR,
+                Kind = SignalRServiceKind.SignalR,
                 Identity = new ManagedServiceIdentity("SystemAssigned"),
-                ClientCertEnabled = false,
+                IsClientCertEnabled = false,
                 Features =
 {
-new SignalRFeature(FeatureFlag.ServiceMode,"Serverless")
+new SignalRFeature(SignalRFeatureFlag.ServiceMode,"Serverless")
 {
 Properties =
 {
 },
-},new SignalRFeature(FeatureFlag.EnableConnectivityLogs,"True")
+},new SignalRFeature(SignalRFeatureFlag.EnableConnectivityLogs,"True")
 {
 Properties =
 {
 },
-},new SignalRFeature(FeatureFlag.EnableMessagingLogs,"False")
+},new SignalRFeature(SignalRFeatureFlag.EnableMessagingLogs,"False")
 {
 Properties =
 {
 },
-},new SignalRFeature(FeatureFlag.EnableLiveTrace,"False")
+},new SignalRFeature(SignalRFeatureFlag.EnableLiveTrace,"False")
 {
 Properties =
 {
 },
 }
 },
-                LiveTraceConfiguration = new LiveTraceConfiguration()
+                LiveTraceConfiguration = new SignalRLiveTraceConfiguration()
                 {
                     Enabled = "false",
                     Categories =
 {
-new LiveTraceCategory()
+new SignalRLiveTraceCategory()
 {
 Name = "ConnectivityLogs",
 Enabled = "true",
 }
 },
                 },
-                NetworkACLs = new SignalRNetworkACLs()
+                CorsAllowedOrigins =
+{
+"https://foo.com","https://bar.com"
+},
+                UpstreamTemplates =
+{
+new SignalRUpstreamTemplate("https://example.com/chat/api/connect")
+{
+HubPattern = "*",
+EventPattern = "connect,disconnect",
+CategoryPattern = "*",
+Auth = new SignalRUpstreamAuthSettings()
+{
+AuthType = SignalRUpstreamAuthType.ManagedIdentity,
+ManagedIdentityResource = "api://example",
+},
+}
+},
+                NetworkACLs = new SignalRNetworkAcls()
                 {
-                    DefaultAction = ACLAction.Deny,
-                    PublicNetwork = new NetworkACL()
+                    DefaultAction = SignalRNetworkAclAction.Deny,
+                    PublicNetwork = new SignalRNetworkAcl()
                     {
                         Allow =
 {
@@ -206,7 +224,7 @@ SignalRRequestType.ClientConnection
                     },
                     PrivateEndpoints =
 {
-new PrivateEndpointACL("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e")
+new SignalRPrivateEndpointAcl("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e")
 {
 Allow =
 {
@@ -278,9 +296,9 @@ SignalRRequestType.ServerConnection
             SignalRResource signalR = client.GetSignalRResource(signalRResourceId);
 
             // invoke the operation
-            RegenerateKeyContent content = new RegenerateKeyContent()
+            SignalRRegenerateKeyContent content = new SignalRRegenerateKeyContent()
             {
-                KeyType = KeyType.Primary,
+                KeyType = SignalRKeyType.Primary,
             };
             ArmOperation<SignalRKeys> lro = await signalR.RegenerateKeyAsync(WaitUntil.Completed, content);
             SignalRKeys result = lro.Value;

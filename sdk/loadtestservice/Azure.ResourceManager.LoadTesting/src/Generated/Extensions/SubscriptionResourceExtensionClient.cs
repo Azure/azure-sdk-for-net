@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.LoadTesting
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _loadTestingLoadTestsClientDiagnostics;
-        private LoadTestsRestOperations _loadTestingLoadTestsRestClient;
+        private ClientDiagnostics _loadTestingResourceLoadTestsClientDiagnostics;
+        private LoadTestsRestOperations _loadTestingResourceLoadTestsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.LoadTesting
         {
         }
 
-        private ClientDiagnostics LoadTestingLoadTestsClientDiagnostics => _loadTestingLoadTestsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LoadTesting", LoadTestingResource.ResourceType.Namespace, Diagnostics);
-        private LoadTestsRestOperations LoadTestingLoadTestsRestClient => _loadTestingLoadTestsRestClient ??= new LoadTestsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LoadTestingResource.ResourceType));
+        private ClientDiagnostics LoadTestingResourceLoadTestsClientDiagnostics => _loadTestingResourceLoadTestsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LoadTesting", LoadTestingResource.ResourceType.Namespace, Diagnostics);
+        private LoadTestsRestOperations LoadTestingResourceLoadTestsRestClient => _loadTestingResourceLoadTestsRestClient ??= new LoadTestsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LoadTestingResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -58,15 +58,15 @@ namespace Azure.ResourceManager.LoadTesting
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LoadTestingResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LoadTestingResource> GetLoadTestingsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LoadTestingResource> GetLoadTestingResourcesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<LoadTestingResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LoadTestingLoadTestsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLoadTestings");
+                using var scope = LoadTestingResourceLoadTestsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLoadTestingResources");
                 scope.Start();
                 try
                 {
-                    var response = await LoadTestingLoadTestsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await LoadTestingResourceLoadTestsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new LoadTestingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.LoadTesting
             }
             async Task<Page<LoadTestingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LoadTestingLoadTestsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLoadTestings");
+                using var scope = LoadTestingResourceLoadTestsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLoadTestingResources");
                 scope.Start();
                 try
                 {
-                    var response = await LoadTestingLoadTestsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await LoadTestingResourceLoadTestsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new LoadTestingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -100,15 +100,15 @@ namespace Azure.ResourceManager.LoadTesting
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LoadTestingResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LoadTestingResource> GetLoadTestings(CancellationToken cancellationToken = default)
+        public virtual Pageable<LoadTestingResource> GetLoadTestingResources(CancellationToken cancellationToken = default)
         {
             Page<LoadTestingResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LoadTestingLoadTestsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLoadTestings");
+                using var scope = LoadTestingResourceLoadTestsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLoadTestingResources");
                 scope.Start();
                 try
                 {
-                    var response = LoadTestingLoadTestsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = LoadTestingResourceLoadTestsRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new LoadTestingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.LoadTesting
             }
             Page<LoadTestingResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = LoadTestingLoadTestsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLoadTestings");
+                using var scope = LoadTestingResourceLoadTestsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLoadTestingResources");
                 scope.Start();
                 try
                 {
-                    var response = LoadTestingLoadTestsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = LoadTestingResourceLoadTestsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new LoadTestingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

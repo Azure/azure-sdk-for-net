@@ -115,6 +115,13 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 ProtocolType = StorageTargetType.Iscsi,
                 Encryption = ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey,
+                VirtualNetworkRules =
+{
+new ElasticSanVirtualNetworkRule(new ResourceIdentifier("aaaaaaaaaaaaaaaa"))
+{
+Action = ElasticSanVirtualNetworkRuleAction.Allow,
+}
+},
                 Tags =
 {
 ["key5933"] = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa",

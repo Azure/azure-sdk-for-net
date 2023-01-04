@@ -16,14 +16,18 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of SupportedCapabilities. </summary>
+        /// <param name="diskControllerTypes"> The disk controllers that an OS disk supports. If set it can be SCSI or SCSI, NVME or NVME, SCSI. </param>
         /// <param name="acceleratedNetwork"> True if the image from which the OS disk is created supports accelerated networking. </param>
         /// <param name="architecture"> CPU architecture supported by an OS disk. </param>
-        internal SupportedCapabilities(bool? acceleratedNetwork, ArchitectureType? architecture)
+        internal SupportedCapabilities(string diskControllerTypes, bool? acceleratedNetwork, ArchitectureType? architecture)
         {
+            DiskControllerTypes = diskControllerTypes;
             AcceleratedNetwork = acceleratedNetwork;
             Architecture = architecture;
         }
 
+        /// <summary> The disk controllers that an OS disk supports. If set it can be SCSI or SCSI, NVME or NVME, SCSI. </summary>
+        public string DiskControllerTypes { get; set; }
         /// <summary> True if the image from which the OS disk is created supports accelerated networking. </summary>
         public bool? AcceleratedNetwork { get; set; }
         /// <summary> CPU architecture supported by an OS disk. </summary>

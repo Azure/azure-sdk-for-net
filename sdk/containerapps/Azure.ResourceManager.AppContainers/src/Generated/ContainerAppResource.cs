@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.AppContainers
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of AuthConfigResources in the ContainerApp. </summary>
-        /// <returns> An object representing collection of AuthConfigResources and their operations over a AuthConfigResource. </returns>
-        public virtual AuthConfigCollection GetAuthConfigs()
+        /// <summary> Gets a collection of ContainerAppAuthConfigResources in the ContainerApp. </summary>
+        /// <returns> An object representing collection of ContainerAppAuthConfigResources and their operations over a ContainerAppAuthConfigResource. </returns>
+        public virtual ContainerAppAuthConfigCollection GetContainerAppAuthConfigs()
         {
-            return GetCachedClient(Client => new AuthConfigCollection(Client, Id));
+            return GetCachedClient(Client => new ContainerAppAuthConfigCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AuthConfigResource>> GetAuthConfigAsync(string authConfigName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppAuthConfigResource>> GetContainerAppAuthConfigAsync(string authConfigName, CancellationToken cancellationToken = default)
         {
-            return await GetAuthConfigs().GetAsync(authConfigName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerAppAuthConfigs().GetAsync(authConfigName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="authConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="authConfigName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AuthConfigResource> GetAuthConfig(string authConfigName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppAuthConfigResource> GetContainerAppAuthConfig(string authConfigName, CancellationToken cancellationToken = default)
         {
-            return GetAuthConfigs().Get(authConfigName, cancellationToken);
+            return GetContainerAppAuthConfigs().Get(authConfigName, cancellationToken);
         }
 
         /// <summary> Gets an object representing a ContainerAppDetectorPropertyResource along with the instance operations that can be performed on it in the ContainerApp. </summary>
@@ -244,11 +244,11 @@ namespace Azure.ResourceManager.AppContainers
             return GetContainerAppDetectors().Get(detectorName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SourceControlResources in the ContainerApp. </summary>
-        /// <returns> An object representing collection of SourceControlResources and their operations over a SourceControlResource. </returns>
-        public virtual SourceControlCollection GetSourceControls()
+        /// <summary> Gets a collection of ContainerAppSourceControlResources in the ContainerApp. </summary>
+        /// <returns> An object representing collection of ContainerAppSourceControlResources and their operations over a ContainerAppSourceControlResource. </returns>
+        public virtual ContainerAppSourceControlCollection GetContainerAppSourceControls()
         {
-            return GetCachedClient(Client => new SourceControlCollection(Client, Id));
+            return GetCachedClient(Client => new ContainerAppSourceControlCollection(Client, Id));
         }
 
         /// <summary>
@@ -261,9 +261,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SourceControlResource>> GetSourceControlAsync(string sourceControlName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppSourceControlResource>> GetContainerAppSourceControlAsync(string sourceControlName, CancellationToken cancellationToken = default)
         {
-            return await GetSourceControls().GetAsync(sourceControlName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerAppSourceControls().GetAsync(sourceControlName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -276,9 +276,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SourceControlResource> GetSourceControl(string sourceControlName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppSourceControlResource> GetContainerAppSourceControl(string sourceControlName, CancellationToken cancellationToken = default)
         {
-            return GetSourceControls().Get(sourceControlName, cancellationToken);
+            return GetContainerAppSourceControls().Get(sourceControlName, cancellationToken);
         }
 
         /// <summary>
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="data"> Properties of a Container App that need to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, ContainerAppData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ContainerAppResource>> UpdateAsync(WaitUntil waitUntil, ContainerAppData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -399,9 +399,9 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = await _containerAppRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation(_containerAppClientDiagnostics, Pipeline, _containerAppRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppContainersArmOperation<ContainerAppResource>(new ContainerAppOperationSource(Client), _containerAppClientDiagnostics, Pipeline, _containerAppRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="data"> Properties of a Container App that need to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation Update(WaitUntil waitUntil, ContainerAppData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ContainerAppResource> Update(WaitUntil waitUntil, ContainerAppData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -429,9 +429,9 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _containerAppRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                var operation = new AppContainersArmOperation(_containerAppClientDiagnostics, Pipeline, _containerAppRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppContainersArmOperation<ContainerAppResource>(new ContainerAppOperationSource(Client), _containerAppClientDiagnostics, Pipeline, _containerAppRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="customHostname"> Custom hostname. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CustomHostnameAnalysisResult>> GetCustomHostNameAnalysisAsync(string customHostname = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppCustomHostnameAnalysisResult>> GetCustomHostNameAnalysisAsync(string customHostname = null, CancellationToken cancellationToken = default)
         {
             using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppResource.GetCustomHostNameAnalysis");
             scope.Start();
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="customHostname"> Custom hostname. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CustomHostnameAnalysisResult> GetCustomHostNameAnalysis(string customHostname = null, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppCustomHostnameAnalysisResult> GetCustomHostNameAnalysis(string customHostname = null, CancellationToken cancellationToken = default)
         {
             using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppResource.GetCustomHostNameAnalysis");
             scope.Start();
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.AppContainers
                     }
                     patch.Tags[key] = value;
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.AppContainers
                     }
                     patch.Tags[key] = value;
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Get(cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.AppContainers
                     var patch = new ContainerAppData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.AppContainers
                     var patch = new ContainerAppData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Get(cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -793,7 +793,7 @@ namespace Azure.ResourceManager.AppContainers
                     }
                     patch.Tags.Remove(key);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -837,7 +837,7 @@ namespace Azure.ResourceManager.AppContainers
                     }
                     patch.Tags.Remove(key);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Get(cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)

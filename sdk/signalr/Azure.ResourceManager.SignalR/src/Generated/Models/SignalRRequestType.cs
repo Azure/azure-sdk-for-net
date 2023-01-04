@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         private const string ClientConnectionValue = "ClientConnection";
         private const string ServerConnectionValue = "ServerConnection";
-        private const string RestapiValue = "RESTAPI";
+        private const string RestApiValue = "RESTAPI";
         private const string TraceValue = "Trace";
 
         /// <summary> ClientConnection. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> ServerConnection. </summary>
         public static SignalRRequestType ServerConnection { get; } = new SignalRRequestType(ServerConnectionValue);
         /// <summary> RESTAPI. </summary>
-        public static SignalRRequestType Restapi { get; } = new SignalRRequestType(RestapiValue);
+        public static SignalRRequestType RestApi { get; } = new SignalRRequestType(RestApiValue);
         /// <summary> Trace. </summary>
         public static SignalRRequestType Trace { get; } = new SignalRRequestType(TraceValue);
         /// <summary> Determines if two <see cref="SignalRRequestType"/> values are the same. </summary>

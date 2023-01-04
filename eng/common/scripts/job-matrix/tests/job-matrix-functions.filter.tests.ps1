@@ -6,7 +6,7 @@ BeforeAll {
     $matrixConfig = @"
 {
     "matrix": {
-        "operatingSystem": [ "windows-2019", "ubuntu-18.04", "macos-11" ],
+        "operatingSystem": [ "windows-2022", "ubuntu-18.04", "macos-11" ],
         "framework": [ "net461", "netcoreapp2.1" ],
         "additionalArguments": [ "", "mode=test" ]
     }
@@ -17,8 +17,8 @@ BeforeAll {
 
 Describe "Matrix Filter" -Tag "filter" {
     It "Should filter by matrix display name" -TestCases @(
-        @{ regex = "windows.*"; expectedFirst = "windows2019_net461"; length = 4 }
-        @{ regex = "windows2019_netcoreapp21_modetest"; expectedFirst = "windows2019_netcoreapp21_modetest"; length = 1 }
+        @{ regex = "windows.*"; expectedFirst = "windows2022_net461"; length = 4 }
+        @{ regex = "windows2022_netcoreapp21_modetest"; expectedFirst = "windows2022_netcoreapp21_modetest"; length = 1 }
         @{ regex = ".*ubuntu.*"; expectedFirst = "ubuntu1804_net461"; length = 4 }
     ) {
         [array]$matrix = GenerateMatrix $config "all" $regex
@@ -33,11 +33,11 @@ Describe "Matrix Filter" -Tag "filter" {
     }
 
     It "Should filter by matrix key/value" -TestCases @(
-        @{ filterString = "operatingSystem=windows.*"; expectedFirst = "windows2019_net461"; length = 4 }
-        @{ filterString = "operatingSystem=windows-2019"; expectedFirst = "windows2019_net461"; length = 4 }
-        @{ filterString = "framework=.*"; expectedFirst = "windows2019_net461"; length = 12 }
-        @{ filterString = "additionalArguments=mode=test"; expectedFirst = "windows2019_net461_modetest"; length = 6 }
-        @{ filterString = "additionalArguments=^$"; expectedFirst = "windows2019_net461"; length = 6 }
+        @{ filterString = "operatingSystem=windows.*"; expectedFirst = "windows2022_net461"; length = 4 }
+        @{ filterString = "operatingSystem=windows-2022"; expectedFirst = "windows2022_net461"; length = 4 }
+        @{ filterString = "framework=.*"; expectedFirst = "windows2022_net461"; length = 12 }
+        @{ filterString = "additionalArguments=mode=test"; expectedFirst = "windows2022_net461_modetest"; length = 6 }
+        @{ filterString = "additionalArguments=^$"; expectedFirst = "windows2022_net461"; length = 6 }
     ) {
         [array]$matrix = GenerateMatrix $config "all" -filters @($filterString)
         $matrix.Length | Should -Be $length
@@ -45,8 +45,8 @@ Describe "Matrix Filter" -Tag "filter" {
     }
 
     It "Should filter by optional matrix key/value" -TestCases @(
-        @{ filterString = "operatingSystem=^$|windows.*"; expectedFirst = "windows2019_net461"; length = 4 }
-        @{ filterString = "doesnotexist=^$|.*"; expectedFirst = "windows2019_net461"; length = 12 }
+        @{ filterString = "operatingSystem=^$|windows.*"; expectedFirst = "windows2022_net461"; length = 4 }
+        @{ filterString = "doesnotexist=^$|.*"; expectedFirst = "windows2022_net461"; length = 12 }
     ) {
         [array]$matrix = GenerateMatrix $config "all" -filters @($filterString)
         $matrix.Length | Should -Be $length
@@ -56,7 +56,7 @@ Describe "Matrix Filter" -Tag "filter" {
     It "Should handle multiple matrix key/value filters " {
         [array]$matrix = GenerateMatrix $config "all" -filters "operatingSystem=windows.*","framework=.*","additionalArguments=mode=test"
         $matrix.Length | Should -Be 2
-        $matrix[0].Name | Should -Be "windows2019_net461_modetest"
+        $matrix[0].Name | Should -Be "windows2022_net461_modetest"
     }
 
     It "Should handle no matrix key/value filter matches" {

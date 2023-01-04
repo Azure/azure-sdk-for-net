@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Peering.Models
     {
         internal static RpUnbilledPrefixListResult DeserializeRpUnbilledPrefixListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<RpUnbilledPrefix>> value = default;
+            Optional<IReadOnlyList<RoutingPreferenceUnbilledPrefix>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Peering.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RpUnbilledPrefix> array = new List<RpUnbilledPrefix>();
+                    List<RoutingPreferenceUnbilledPrefix> array = new List<RoutingPreferenceUnbilledPrefix>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RpUnbilledPrefix.DeserializeRpUnbilledPrefix(item));
+                        array.Add(RoutingPreferenceUnbilledPrefix.DeserializeRoutingPreferenceUnbilledPrefix(item));
                     }
                     value = array;
                     continue;
