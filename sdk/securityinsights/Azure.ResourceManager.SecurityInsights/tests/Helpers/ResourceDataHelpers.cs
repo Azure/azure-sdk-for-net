@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         #endregion
 
         #region WatchlistData
-        public static void AssertWatchlistData(WatchlistData data1, WatchlistData data2)
+        public static void AssertWatchlistData(SecurityInsightsWatchlistData data1, SecurityInsightsWatchlistData data2)
         {
             AssertResource(data1, data2);
             Assert.AreEqual(data1.IsDeleted, data2.IsDeleted);
@@ -214,9 +214,9 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
             Assert.AreEqual(data1.TenantId, data2.TenantId);
             Assert.AreEqual(data1.Provider, data2.Provider);
         }
-        public static WatchlistData GetWatchlistData()
+        public static SecurityInsightsWatchlistData GetWatchlistData()
         {
-            var data = new WatchlistData()
+            var data = new SecurityInsightsWatchlistData()
             {
                 DisplayName = "SDK Test",
                 Provider = "SDK Test",
