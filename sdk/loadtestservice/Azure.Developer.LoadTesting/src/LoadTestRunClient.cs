@@ -16,7 +16,7 @@ namespace Azure.Developer.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.BeginCreateOrUpdateTestRun");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.BeginTestRun");
             scope.Start();
 
             try
@@ -43,7 +43,7 @@ namespace Azure.Developer.LoadTesting
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.BeginCreateOrUpdateTestRun");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.BeginTestRun");
             scope.Start();
 
             try
