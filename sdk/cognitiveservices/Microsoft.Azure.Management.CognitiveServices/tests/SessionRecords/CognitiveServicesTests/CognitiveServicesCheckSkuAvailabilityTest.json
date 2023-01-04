@@ -1,22 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/providers/Microsoft.CognitiveServices/locations/centraluseuap/checkSkuAvailability?api-version=2022-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29nbml0aXZlU2VydmljZXMvbG9jYXRpb25zL2NlbnRyYWx1c2V1YXAvY2hlY2tTa3VBdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAyMi0xMC0wMQ==",
+      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/providers/Microsoft.CognitiveServices/locations/centraluseuap/checkSkuAvailability?api-version=2022-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29nbml0aXZlU2VydmljZXMvbG9jYXRpb25zL2NlbnRyYWx1c2V1YXAvY2hlY2tTa3VBdmFpbGFiaWxpdHk/YXBpLXZlcnNpb249MjAyMi0xMi0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"skus\": [\r\n    \"S0\"\r\n  ],\r\n  \"kind\": \"Face\",\r\n  \"type\": \"Microsoft.CognitiveServices/accounts\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "00b2278a-a3af-49f3-b8f9-a698a9cc3258"
+          "7fa87364-8c1c-4d47-8c98-137a40a03beb"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.22.41602",
+          "FxVersion/4.700.22.51102",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22621",
-          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.4.0.0"
+          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.5.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -36,7 +36,7 @@
           "nosniff"
         ],
         "x-envoy-upstream-service-time": [
-          "39"
+          "54"
         ],
         "Server": [
           "istio-envoy"
@@ -45,19 +45,19 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "fd856403-d540-4c3d-9ace-31d0557f96ab"
+          "14dbe890-273d-44bc-8dc6-cb240ebec216"
         ],
         "x-ms-correlation-request-id": [
-          "fd856403-d540-4c3d-9ace-31d0557f96ab"
+          "14dbe890-273d-44bc-8dc6-cb240ebec216"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20220929T031225Z:fd856403-d540-4c3d-9ace-31d0557f96ab"
+          "WESTUS2:20230104T212631Z:14dbe890-273d-44bc-8dc6-cb240ebec216"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Date": [
-          "Thu, 29 Sep 2022 03:12:25 GMT"
+          "Wed, 04 Jan 2023 21:26:31 GMT"
         ],
         "Content-Length": [
           "204"

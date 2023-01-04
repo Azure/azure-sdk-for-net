@@ -29,13 +29,20 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// <summary>
         /// Initializes a new instance of the CommitmentPlanProperties class.
         /// </summary>
+        /// <param name="provisioningState">Gets the status of the resource at
+        /// the time the operation was called. Possible values include:
+        /// 'Accepted', 'Creating', 'Deleting', 'Moving', 'Failed',
+        /// 'Succeeded', 'Canceled'</param>
+        /// <param name="commitmentPlanGuid">Commitment plan guid.</param>
         /// <param name="hostingModel">Account hosting model. Possible values
         /// include: 'Web', 'ConnectedContainer',
         /// 'DisconnectedContainer'</param>
         /// <param name="planType">Commitment plan type.</param>
         /// <param name="autoRenew">AutoRenew commitment plan.</param>
-        public CommitmentPlanProperties(string hostingModel = default(string), string planType = default(string), CommitmentPeriod current = default(CommitmentPeriod), bool? autoRenew = default(bool?), CommitmentPeriod next = default(CommitmentPeriod), CommitmentPeriod last = default(CommitmentPeriod))
+        public CommitmentPlanProperties(string provisioningState = default(string), string commitmentPlanGuid = default(string), string hostingModel = default(string), string planType = default(string), CommitmentPeriod current = default(CommitmentPeriod), bool? autoRenew = default(bool?), CommitmentPeriod next = default(CommitmentPeriod), CommitmentPeriod last = default(CommitmentPeriod))
         {
+            ProvisioningState = provisioningState;
+            CommitmentPlanGuid = commitmentPlanGuid;
             HostingModel = hostingModel;
             PlanType = planType;
             Current = current;
@@ -49,6 +56,20 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets the status of the resource at the time the operation was
+        /// called. Possible values include: 'Accepted', 'Creating',
+        /// 'Deleting', 'Moving', 'Failed', 'Succeeded', 'Canceled'
+        /// </summary>
+        [JsonProperty(PropertyName = "provisioningState")]
+        public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets commitment plan guid.
+        /// </summary>
+        [JsonProperty(PropertyName = "commitmentPlanGuid")]
+        public string CommitmentPlanGuid { get; set; }
 
         /// <summary>
         /// Gets or sets account hosting model. Possible values include: 'Web',

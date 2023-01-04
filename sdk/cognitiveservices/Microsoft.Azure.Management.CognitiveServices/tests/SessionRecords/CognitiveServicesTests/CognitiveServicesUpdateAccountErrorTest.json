@@ -1,19 +1,19 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourcegroups/res7563?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlZ3JvdXBzL3Jlczc1NjM/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourcegroups/res9876?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlZ3JvdXBzL3Jlczk4NzY/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"CENTRALUS\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "010865c3-57ee-47ad-8c58-64fd64999c71"
+          "ae94ff47-99d4-4942-84c5-f2e508ee75e4"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.22.41602",
+          "FxVersion/4.700.22.51102",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22621",
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
@@ -36,13 +36,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "d6c450b1-2ddf-401f-b331-d3bf12540d25"
+          "64d55672-c644-419c-bc01-6d60b0b15a13"
         ],
         "x-ms-correlation-request-id": [
-          "d6c450b1-2ddf-401f-b331-d3bf12540d25"
+          "64d55672-c644-419c-bc01-6d60b0b15a13"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20220929T025615Z:d6c450b1-2ddf-401f-b331-d3bf12540d25"
+          "WESTUS2:20230104T213607Z:64d55672-c644-419c-bc01-6d60b0b15a13"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 29 Sep 2022 02:56:15 GMT"
+          "Wed, 04 Jan 2023 21:36:07 GMT"
         ],
         "Content-Length": [
           "170"
@@ -63,26 +63,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res7563\",\r\n  \"name\": \"res7563\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res9876\",\r\n  \"name\": \"res9876\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res7563/providers/Microsoft.CognitiveServices/accounts/csa1557?api-version=2022-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL3Jlczc1NjMvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9jc2ExNTU3P2FwaS12ZXJzaW9uPTIwMjItMTAtMDE=",
+      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res9876/providers/Microsoft.CognitiveServices/accounts/csa640?api-version=2022-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL3Jlczk4NzYvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9jc2E2NDA/YXBpLXZlcnNpb249MjAyMi0xMi0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"kind\": \"Face\",\r\n  \"sku\": {\r\n    \"name\": \"S0\"\r\n  },\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"location\": \"CENTRALUS\",\r\n  \"properties\": {}\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "023a4293-8dfa-4655-951e-5d3659840411"
+          "8859a7db-81f8-40aa-ae54-a533df8cf512"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.22.41602",
+          "FxVersion/4.700.22.51102",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22621",
-          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.4.0.0"
+          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.5.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -99,19 +99,19 @@
           "no-cache"
         ],
         "ETag": [
-          "\"3f009976-0000-0300-0000-633509510000\""
+          "\"e300a27f-0000-0300-0000-63b5f1490000\""
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "x-ms-request-id": [
-          "3975731c-5080-4ebb-b333-5e81d27ae0aa"
+          "e25883b1-10a0-46ac-b688-525a8b1fb191"
         ],
         "azure-asyncoperation": [
-          "https://management.azure.com/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/providers/Microsoft.CognitiveServices/locations/CENTRALUS/operationResults/3d207287-d8f9-4256-b475-178ffd09ed4c?api-version=2017-04-18"
+          "https://management.azure.com/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/providers/Microsoft.CognitiveServices/locations/CENTRALUS/operationResults/b92d8011-5494-4c68-a87a-a9be2b575862?api-version=2017-04-18"
         ],
         "x-envoy-upstream-service-time": [
-          "238"
+          "382"
         ],
         "Server": [
           "istio-envoy"
@@ -120,19 +120,19 @@
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "f6ebf7d6-6e86-4185-9143-1571fb68fc27"
+          "7bd577d4-7ed2-4afc-88a0-a43fe1b76d3c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20220929T025618Z:f6ebf7d6-6e86-4185-9143-1571fb68fc27"
+          "WESTUS2:20230104T213609Z:7bd577d4-7ed2-4afc-88a0-a43fe1b76d3c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Date": [
-          "Thu, 29 Sep 2022 02:56:17 GMT"
+          "Wed, 04 Jan 2023 21:36:09 GMT"
         ],
         "Content-Length": [
-          "1554"
+          "1452"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -141,20 +141,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res7563/providers/Microsoft.CognitiveServices/accounts/csa1557\",\r\n  \"name\": \"csa1557\",\r\n  \"type\": \"Microsoft.CognitiveServices/accounts\",\r\n  \"etag\": \"\\\"3f009976-0000-0300-0000-633509510000\\\"\",\r\n  \"location\": \"CENTRALUS\",\r\n  \"sku\": {\r\n    \"name\": \"S0\"\r\n  },\r\n  \"kind\": \"Face\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"endpoint\": \"https://centralus.api.cognitive.microsoft.com/\",\r\n    \"internalId\": \"76cbd39fc8b44baeb7cda38952fc8e18\",\r\n    \"dateCreated\": \"2022-09-29T02:56:17.3617145Z\",\r\n    \"callRateLimit\": {\r\n      \"rules\": [\r\n        {\r\n          \"key\": \"face\",\r\n          \"renewalPeriod\": 1,\r\n          \"count\": 10,\r\n          \"dynamicThrottlingEnabled\": false,\r\n          \"matchPatterns\": [\r\n            {\r\n              \"path\": \"face/*\",\r\n              \"method\": \"*\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"key\": \"container.billing\",\r\n          \"renewalPeriod\": 10,\r\n          \"count\": 500,\r\n          \"dynamicThrottlingEnabled\": false,\r\n          \"matchPatterns\": [\r\n            {\r\n              \"path\": \"billing/*\",\r\n              \"method\": \"*\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"key\": \"default\",\r\n          \"renewalPeriod\": 1,\r\n          \"count\": 10,\r\n          \"dynamicThrottlingEnabled\": false,\r\n          \"matchPatterns\": [\r\n            {\r\n              \"path\": \"*\",\r\n              \"method\": \"*\"\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    },\r\n    \"isMigrated\": false,\r\n    \"privateEndpointConnections\": [],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"capabilities\": [\r\n      {\r\n        \"name\": \"VirtualNetworks\"\r\n      },\r\n      {\r\n        \"name\": \"Container\",\r\n        \"value\": \"Face.*,Face.Face\"\r\n      },\r\n      {\r\n        \"name\": \"Scenario\",\r\n        \"value\": \"Face.LegacyPreview,Face.Legacy\"\r\n      }\r\n    ],\r\n    \"endpoints\": {\r\n      \"Face\": \"https://centralus.api.cognitive.microsoft.com/\"\r\n    },\r\n    \"provisioningState\": \"Creating\"\r\n  },\r\n  \"systemData\": {\r\n    \"createdBy\": \"50841d5f-166a-406c-8472-6800c9698b43\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2022-09-29T02:56:17.1660553Z\",\r\n    \"lastModifiedBy\": \"50841d5f-166a-406c-8472-6800c9698b43\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2022-09-29T02:56:17.1660553Z\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res9876/providers/Microsoft.CognitiveServices/accounts/csa640\",\r\n  \"name\": \"csa640\",\r\n  \"type\": \"Microsoft.CognitiveServices/accounts\",\r\n  \"etag\": \"\\\"e300a27f-0000-0300-0000-63b5f1490000\\\"\",\r\n  \"location\": \"CENTRALUS\",\r\n  \"sku\": {\r\n    \"name\": \"S0\"\r\n  },\r\n  \"kind\": \"Face\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"endpoint\": \"https://centralus.api.cognitive.microsoft.com/\",\r\n    \"internalId\": \"69cc3e1154454d6c9fa63064ea3f1b32\",\r\n    \"dateCreated\": \"2023-01-04T21:36:08.975133Z\",\r\n    \"callRateLimit\": {\r\n      \"rules\": [\r\n        {\r\n          \"key\": \"face\",\r\n          \"renewalPeriod\": 1,\r\n          \"count\": 10,\r\n          \"matchPatterns\": [\r\n            {\r\n              \"path\": \"face/*\",\r\n              \"method\": \"*\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"key\": \"container.billing\",\r\n          \"renewalPeriod\": 10,\r\n          \"count\": 500,\r\n          \"matchPatterns\": [\r\n            {\r\n              \"path\": \"billing/*\",\r\n              \"method\": \"*\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"key\": \"default\",\r\n          \"renewalPeriod\": 1,\r\n          \"count\": 10,\r\n          \"matchPatterns\": [\r\n            {\r\n              \"path\": \"*\",\r\n              \"method\": \"*\"\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    },\r\n    \"isMigrated\": false,\r\n    \"privateEndpointConnections\": [],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"capabilities\": [\r\n      {\r\n        \"name\": \"VirtualNetworks\"\r\n      },\r\n      {\r\n        \"name\": \"Container\",\r\n        \"value\": \"Face.*,Face.Face\"\r\n      },\r\n      {\r\n        \"name\": \"Scenario\",\r\n        \"value\": \"Face.LegacyPreview,Face.Legacy\"\r\n      }\r\n    ],\r\n    \"endpoints\": {\r\n      \"Face\": \"https://centralus.api.cognitive.microsoft.com/\"\r\n    },\r\n    \"provisioningState\": \"Creating\"\r\n  },\r\n  \"systemData\": {\r\n    \"createdBy\": \"50841d5f-166a-406c-8472-6800c9698b43\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2023-01-04T21:36:08.7923467Z\",\r\n    \"lastModifiedBy\": \"50841d5f-166a-406c-8472-6800c9698b43\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2023-01-04T21:36:08.7923467Z\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/providers/Microsoft.CognitiveServices/locations/CENTRALUS/operationResults/3d207287-d8f9-4256-b475-178ffd09ed4c?api-version=2017-04-18",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29nbml0aXZlU2VydmljZXMvbG9jYXRpb25zL0NFTlRSQUxVUy9vcGVyYXRpb25SZXN1bHRzLzNkMjA3Mjg3LWQ4ZjktNDI1Ni1iNDc1LTE3OGZmZDA5ZWQ0Yz9hcGktdmVyc2lvbj0yMDE3LTA0LTE4",
+      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/providers/Microsoft.CognitiveServices/locations/CENTRALUS/operationResults/b92d8011-5494-4c68-a87a-a9be2b575862?api-version=2017-04-18",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29nbml0aXZlU2VydmljZXMvbG9jYXRpb25zL0NFTlRSQUxVUy9vcGVyYXRpb25SZXN1bHRzL2I5MmQ4MDExLTU0OTQtNGM2OC1hODdhLWE5YmUyYjU3NTg2Mj9hcGktdmVyc2lvbj0yMDE3LTA0LTE4",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.700.22.41602",
+          "FxVersion/4.700.22.51102",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22621",
-          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.4.0.0"
+          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.5.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -168,10 +168,10 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "0ac75351-0924-428f-9b9e-b480d01988a2"
+          "7cdbd0de-05d5-4712-b671-79a0ddbb12de"
         ],
         "x-envoy-upstream-service-time": [
-          "6"
+          "14"
         ],
         "Server": [
           "istio-envoy"
@@ -180,16 +180,16 @@
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "1d516d25-abc8-43c3-a019-536a21d19f12"
+          "c8c9d918-4cb1-4791-8db9-f751723a5cd5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20220929T025648Z:1d516d25-abc8-43c3-a019-536a21d19f12"
+          "WESTUS2:20230104T213640Z:c8c9d918-4cb1-4791-8db9-f751723a5cd5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Date": [
-          "Thu, 29 Sep 2022 02:56:48 GMT"
+          "Wed, 04 Jan 2023 21:36:39 GMT"
         ],
         "Content-Length": [
           "307"
@@ -201,20 +201,20 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/providers/Microsoft.CognitiveServices/locations/CENTRALUS/operationResults/3d207287-d8f9-4256-b475-178ffd09ed4c\",\r\n  \"name\": \"3d207287-d8f9-4256-b475-178ffd09ed4c\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2022-09-29T02:56:17Z\",\r\n  \"endTime\": \"2022-09-29T02:56:17Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/providers/Microsoft.CognitiveServices/locations/CENTRALUS/operationResults/b92d8011-5494-4c68-a87a-a9be2b575862\",\r\n  \"name\": \"b92d8011-5494-4c68-a87a-a9be2b575862\",\r\n  \"status\": \"Succeeded\",\r\n  \"startTime\": \"2023-01-04T21:36:09Z\",\r\n  \"endTime\": \"2023-01-04T21:36:10Z\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res7563/providers/Microsoft.CognitiveServices/accounts/csa1557?api-version=2022-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL3Jlczc1NjMvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9jc2ExNTU3P2FwaS12ZXJzaW9uPTIwMjItMTAtMDE=",
+      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res9876/providers/Microsoft.CognitiveServices/accounts/csa640?api-version=2022-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL3Jlczk4NzYvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9jc2E2NDA/YXBpLXZlcnNpb249MjAyMi0xMi0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.700.22.41602",
+          "FxVersion/4.700.22.51102",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22621",
-          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.4.0.0"
+          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.5.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -225,16 +225,16 @@
           "no-cache"
         ],
         "ETag": [
-          "\"3f009a76-0000-0300-0000-633509510000\""
+          "\"e300a77f-0000-0300-0000-63b5f14a0000\""
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "x-ms-request-id": [
-          "72732d0e-416e-4c41-8ce0-61b2c9a6f371"
+          "79e4cf52-9638-43b5-b219-a62e77dc34c2"
         ],
         "x-envoy-upstream-service-time": [
-          "15"
+          "10"
         ],
         "Server": [
           "istio-envoy"
@@ -243,19 +243,19 @@
           "11998"
         ],
         "x-ms-correlation-request-id": [
-          "4d65cac0-7da0-4aeb-b8e2-cec87cdbdd80"
+          "70c08340-6e94-4e25-aa3e-918072a454a3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20220929T025648Z:4d65cac0-7da0-4aeb-b8e2-cec87cdbdd80"
+          "WESTUS2:20230104T213640Z:70c08340-6e94-4e25-aa3e-918072a454a3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Date": [
-          "Thu, 29 Sep 2022 02:56:48 GMT"
+          "Wed, 04 Jan 2023 21:36:40 GMT"
         ],
         "Content-Length": [
-          "1555"
+          "1453"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -264,26 +264,26 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res7563/providers/Microsoft.CognitiveServices/accounts/csa1557\",\r\n  \"name\": \"csa1557\",\r\n  \"type\": \"Microsoft.CognitiveServices/accounts\",\r\n  \"etag\": \"\\\"3f009a76-0000-0300-0000-633509510000\\\"\",\r\n  \"location\": \"CENTRALUS\",\r\n  \"sku\": {\r\n    \"name\": \"S0\"\r\n  },\r\n  \"kind\": \"Face\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"endpoint\": \"https://centralus.api.cognitive.microsoft.com/\",\r\n    \"internalId\": \"76cbd39fc8b44baeb7cda38952fc8e18\",\r\n    \"dateCreated\": \"2022-09-29T02:56:17.3617145Z\",\r\n    \"callRateLimit\": {\r\n      \"rules\": [\r\n        {\r\n          \"key\": \"face\",\r\n          \"renewalPeriod\": 1,\r\n          \"count\": 10,\r\n          \"dynamicThrottlingEnabled\": false,\r\n          \"matchPatterns\": [\r\n            {\r\n              \"path\": \"face/*\",\r\n              \"method\": \"*\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"key\": \"container.billing\",\r\n          \"renewalPeriod\": 10,\r\n          \"count\": 500,\r\n          \"dynamicThrottlingEnabled\": false,\r\n          \"matchPatterns\": [\r\n            {\r\n              \"path\": \"billing/*\",\r\n              \"method\": \"*\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"key\": \"default\",\r\n          \"renewalPeriod\": 1,\r\n          \"count\": 10,\r\n          \"dynamicThrottlingEnabled\": false,\r\n          \"matchPatterns\": [\r\n            {\r\n              \"path\": \"*\",\r\n              \"method\": \"*\"\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    },\r\n    \"isMigrated\": false,\r\n    \"privateEndpointConnections\": [],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"capabilities\": [\r\n      {\r\n        \"name\": \"VirtualNetworks\"\r\n      },\r\n      {\r\n        \"name\": \"Container\",\r\n        \"value\": \"Face.*,Face.Face\"\r\n      },\r\n      {\r\n        \"name\": \"Scenario\",\r\n        \"value\": \"Face.LegacyPreview,Face.Legacy\"\r\n      }\r\n    ],\r\n    \"endpoints\": {\r\n      \"Face\": \"https://centralus.api.cognitive.microsoft.com/\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"systemData\": {\r\n    \"createdBy\": \"50841d5f-166a-406c-8472-6800c9698b43\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2022-09-29T02:56:17.1660553Z\",\r\n    \"lastModifiedBy\": \"50841d5f-166a-406c-8472-6800c9698b43\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2022-09-29T02:56:17.1660553Z\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res9876/providers/Microsoft.CognitiveServices/accounts/csa640\",\r\n  \"name\": \"csa640\",\r\n  \"type\": \"Microsoft.CognitiveServices/accounts\",\r\n  \"etag\": \"\\\"e300a77f-0000-0300-0000-63b5f14a0000\\\"\",\r\n  \"location\": \"CENTRALUS\",\r\n  \"sku\": {\r\n    \"name\": \"S0\"\r\n  },\r\n  \"kind\": \"Face\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"endpoint\": \"https://centralus.api.cognitive.microsoft.com/\",\r\n    \"internalId\": \"69cc3e1154454d6c9fa63064ea3f1b32\",\r\n    \"dateCreated\": \"2023-01-04T21:36:08.975133Z\",\r\n    \"callRateLimit\": {\r\n      \"rules\": [\r\n        {\r\n          \"key\": \"face\",\r\n          \"renewalPeriod\": 1,\r\n          \"count\": 10,\r\n          \"matchPatterns\": [\r\n            {\r\n              \"path\": \"face/*\",\r\n              \"method\": \"*\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"key\": \"container.billing\",\r\n          \"renewalPeriod\": 10,\r\n          \"count\": 500,\r\n          \"matchPatterns\": [\r\n            {\r\n              \"path\": \"billing/*\",\r\n              \"method\": \"*\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"key\": \"default\",\r\n          \"renewalPeriod\": 1,\r\n          \"count\": 10,\r\n          \"matchPatterns\": [\r\n            {\r\n              \"path\": \"*\",\r\n              \"method\": \"*\"\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    },\r\n    \"isMigrated\": false,\r\n    \"privateEndpointConnections\": [],\r\n    \"publicNetworkAccess\": \"Enabled\",\r\n    \"capabilities\": [\r\n      {\r\n        \"name\": \"VirtualNetworks\"\r\n      },\r\n      {\r\n        \"name\": \"Container\",\r\n        \"value\": \"Face.*,Face.Face\"\r\n      },\r\n      {\r\n        \"name\": \"Scenario\",\r\n        \"value\": \"Face.LegacyPreview,Face.Legacy\"\r\n      }\r\n    ],\r\n    \"endpoints\": {\r\n      \"Face\": \"https://centralus.api.cognitive.microsoft.com/\"\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"systemData\": {\r\n    \"createdBy\": \"50841d5f-166a-406c-8472-6800c9698b43\",\r\n    \"createdByType\": \"Application\",\r\n    \"createdAt\": \"2023-01-04T21:36:08.7923467Z\",\r\n    \"lastModifiedBy\": \"50841d5f-166a-406c-8472-6800c9698b43\",\r\n    \"lastModifiedByType\": \"Application\",\r\n    \"lastModifiedAt\": \"2023-01-04T21:36:08.7923467Z\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/NotExistedRG/providers/Microsoft.CognitiveServices/accounts/nonExistedAccountName?api-version=2022-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL05vdEV4aXN0ZWRSRy9wcm92aWRlcnMvTWljcm9zb2Z0LkNvZ25pdGl2ZVNlcnZpY2VzL2FjY291bnRzL25vbkV4aXN0ZWRBY2NvdW50TmFtZT9hcGktdmVyc2lvbj0yMDIyLTEwLTAx",
+      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res9876/providers/Microsoft.CognitiveServices/accounts/nonExistedAccountName?api-version=2022-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL3Jlczk4NzYvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9ub25FeGlzdGVkQWNjb3VudE5hbWU/YXBpLXZlcnNpb249MjAyMi0xMi0wMQ==",
       "RequestMethod": "PATCH",
       "RequestBody": "{}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8ae87f34-feb4-479a-8e06-21953bb51d2e"
+          "29a0a385-9626-4115-9e1e-a270e0f8b639"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.22.41602",
+          "FxVersion/4.700.22.51102",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22621",
-          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.4.0.0"
+          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.5.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -303,13 +303,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "68082bdf-ecf4-488d-8f62-dca284873370"
+          "b4270ed2-4327-4e46-95b8-957859187194"
         ],
         "x-ms-correlation-request-id": [
-          "68082bdf-ecf4-488d-8f62-dca284873370"
+          "b4270ed2-4327-4e46-95b8-957859187194"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20220929T025648Z:68082bdf-ecf4-488d-8f62-dca284873370"
+          "WESTUS2:20230104T213640Z:b4270ed2-4327-4e46-95b8-957859187194"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -318,7 +318,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 29 Sep 2022 02:56:48 GMT"
+          "Wed, 04 Jan 2023 21:36:40 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -327,95 +327,29 @@
           "-1"
         ],
         "Content-Length": [
-          "104"
+          "308"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'NotExistedRG' could not be found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"PatchResourceNotFound\",\r\n    \"target\": \"nonExistedAccountName\",\r\n    \"message\": \"The resource '/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res9876/providers/Microsoft.CognitiveServices/accounts/nonExistedAccountName' was not found when evaluating policies for a PATCH operation.\"\r\n  }\r\n}",
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res7563/providers/Microsoft.CognitiveServices/accounts/nonExistedAccountName?api-version=2022-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL3Jlczc1NjMvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9ub25FeGlzdGVkQWNjb3VudE5hbWU/YXBpLXZlcnNpb249MjAyMi0xMC0wMQ==",
-      "RequestMethod": "PATCH",
-      "RequestBody": "{}",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "d08d31db-1e9e-409f-8e22-85f53e7e2275"
-        ],
-        "Accept-Language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.700.22.41602",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22621",
-          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.4.0.0"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "2"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-failure-cause": [
-          "gateway"
-        ],
-        "x-ms-request-id": [
-          "1feb521d-d5bd-4fa0-a7cc-13514842541e"
-        ],
-        "x-ms-correlation-request-id": [
-          "1feb521d-d5bd-4fa0-a7cc-13514842541e"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20220929T025648Z:1feb521d-d5bd-4fa0-a7cc-13514842541e"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Thu, 29 Sep 2022 02:56:48 GMT"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Content-Length": [
-          "237"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.CognitiveServices/accounts/nonExistedAccountName' under resource group 'res7563' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix\"\r\n  }\r\n}",
-      "StatusCode": 404
-    },
-    {
-      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res7563/providers/Microsoft.CognitiveServices/accounts/csa1557?api-version=2022-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL3Jlczc1NjMvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9jc2ExNTU3P2FwaS12ZXJzaW9uPTIwMjItMTAtMDE=",
+      "RequestUri": "/subscriptions/f9b96b36-1f5e-4021-8959-51527e26e6d3/resourceGroups/res9876/providers/Microsoft.CognitiveServices/accounts/csa640?api-version=2022-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjliOTZiMzYtMWY1ZS00MDIxLTg5NTktNTE1MjdlMjZlNmQzL3Jlc291cmNlR3JvdXBzL3Jlczk4NzYvcHJvdmlkZXJzL01pY3Jvc29mdC5Db2duaXRpdmVTZXJ2aWNlcy9hY2NvdW50cy9jc2E2NDA/YXBpLXZlcnNpb249MjAyMi0xMi0wMQ==",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"P1\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "cf91b0c7-e0a7-4d80-ba05-5f7820254f8b"
+          "081df73a-174d-49a7-ac9a-fd84a03fdd08"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.22.41602",
+          "FxVersion/4.700.22.51102",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22621",
-          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.4.0.0"
+          "Microsoft.Azure.Management.CognitiveServices.CognitiveServicesManagementClient/8.5.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -435,28 +369,28 @@
           "nosniff"
         ],
         "x-ms-request-id": [
-          "26a18e60-a1c0-492f-bd82-b9f111b6a9be"
+          "3b144d3e-95b5-4095-9a22-6ebb66d3bcf0"
         ],
         "x-envoy-upstream-service-time": [
-          "35"
+          "37"
         ],
         "Server": [
           "istio-envoy"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
+          "1196"
         ],
         "x-ms-correlation-request-id": [
-          "d2a6a991-b674-4c75-9d28-a27a971bbb8c"
+          "b97c7b24-f26c-4a40-b581-79a0978ab4d8"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20220929T025648Z:d2a6a991-b674-4c75-9d28-a27a971bbb8c"
+          "WESTUS2:20230104T213641Z:b97c7b24-f26c-4a40-b581-79a0978ab4d8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Date": [
-          "Thu, 29 Sep 2022 02:56:48 GMT"
+          "Wed, 04 Jan 2023 21:36:40 GMT"
         ],
         "Content-Length": [
           "98"
@@ -474,10 +408,10 @@
   ],
   "Names": {
     "CreateResourceGroup": [
-      "res7563"
+      "res9876"
     ],
     "CreateCognitiveServicesAccount": [
-      "csa1557"
+      "csa640"
     ]
   },
   "Variables": {

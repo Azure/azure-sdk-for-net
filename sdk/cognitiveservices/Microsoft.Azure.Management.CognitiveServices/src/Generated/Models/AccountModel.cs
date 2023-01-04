@@ -37,13 +37,19 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// <param name="baseModel">Base Model Identifier.</param>
         /// <param name="maxCapacity">The max capacity.</param>
         /// <param name="capabilities">The capabilities.</param>
-        public AccountModel(string format = default(string), string name = default(string), string version = default(string), CallRateLimit callRateLimit = default(CallRateLimit), DeploymentModel baseModel = default(DeploymentModel), int? maxCapacity = default(int?), IDictionary<string, string> capabilities = default(IDictionary<string, string>), ModelDeprecationInfo deprecation = default(ModelDeprecationInfo), SystemData systemData = default(SystemData))
+        /// <param name="finetuneCapabilities">The capabilities for finetune
+        /// models.</param>
+        /// <param name="lifecycleStatus">Model lifecycle status. Possible
+        /// values include: 'GenerallyAvailable', 'Preview'</param>
+        public AccountModel(string format = default(string), string name = default(string), string version = default(string), CallRateLimit callRateLimit = default(CallRateLimit), DeploymentModel baseModel = default(DeploymentModel), int? maxCapacity = default(int?), IDictionary<string, string> capabilities = default(IDictionary<string, string>), IDictionary<string, string> finetuneCapabilities = default(IDictionary<string, string>), ModelDeprecationInfo deprecation = default(ModelDeprecationInfo), string lifecycleStatus = default(string), SystemData systemData = default(SystemData))
             : base(format, name, version, callRateLimit)
         {
             BaseModel = baseModel;
             MaxCapacity = maxCapacity;
             Capabilities = capabilities;
+            FinetuneCapabilities = finetuneCapabilities;
             Deprecation = deprecation;
+            LifecycleStatus = lifecycleStatus;
             SystemData = systemData;
             CustomInit();
         }
@@ -72,9 +78,22 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         public IDictionary<string, string> Capabilities { get; set; }
 
         /// <summary>
+        /// Gets or sets the capabilities for finetune models.
+        /// </summary>
+        [JsonProperty(PropertyName = "finetuneCapabilities")]
+        public IDictionary<string, string> FinetuneCapabilities { get; set; }
+
+        /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "deprecation")]
         public ModelDeprecationInfo Deprecation { get; set; }
+
+        /// <summary>
+        /// Gets or sets model lifecycle status. Possible values include:
+        /// 'GenerallyAvailable', 'Preview'
+        /// </summary>
+        [JsonProperty(PropertyName = "lifecycleStatus")]
+        public string LifecycleStatus { get; set; }
 
         /// <summary>
         /// </summary>

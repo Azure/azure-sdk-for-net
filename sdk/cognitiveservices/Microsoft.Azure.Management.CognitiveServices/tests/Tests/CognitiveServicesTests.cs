@@ -573,12 +573,8 @@ namespace CognitiveServices.Tests
 
                 // try to update non-existent account
                 TestHelper.ValidateExpectedException(
-                    () => cognitiveServicesMgmtClient.Accounts.Update("NotExistedRG", "nonExistedAccountName", new Account()),
-                    "ResourceGroupNotFound");
-
-                TestHelper.ValidateExpectedException(
                     () => cognitiveServicesMgmtClient.Accounts.Update(rgname, "nonExistedAccountName", new Account()),
-                    "ResourceNotFound");
+                    "PatchResourceNotFound");
 
                 // Update with a SKU which doesn't exist
                 TestHelper.ValidateExpectedException(

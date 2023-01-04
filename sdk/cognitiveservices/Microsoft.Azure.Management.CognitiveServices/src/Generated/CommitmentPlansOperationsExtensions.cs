@@ -215,6 +215,448 @@ namespace Microsoft.Azure.Management.CognitiveServices
             }
 
             /// <summary>
+            /// Create Cognitive Services commitment plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='commitmentPlan'>
+            /// The parameters to provide for the created commitment plan.
+            /// </param>
+            public static CommitmentPlan CreateOrUpdatePlan(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName, CommitmentPlan commitmentPlan)
+            {
+                return operations.CreateOrUpdatePlanAsync(resourceGroupName, commitmentPlanName, commitmentPlan).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create Cognitive Services commitment plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='commitmentPlan'>
+            /// The parameters to provide for the created commitment plan.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CommitmentPlan> CreateOrUpdatePlanAsync(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName, CommitmentPlan commitmentPlan, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdatePlanWithHttpMessagesAsync(resourceGroupName, commitmentPlanName, commitmentPlan, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Create Cognitive Services commitment plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='commitmentPlan'>
+            /// The parameters to provide for the created commitment plan.
+            /// </param>
+            public static CommitmentPlan UpdatePlan(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName, PatchResourceTagsAndSku commitmentPlan)
+            {
+                return operations.UpdatePlanAsync(resourceGroupName, commitmentPlanName, commitmentPlan).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create Cognitive Services commitment plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='commitmentPlan'>
+            /// The parameters to provide for the created commitment plan.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CommitmentPlan> UpdatePlanAsync(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName, PatchResourceTagsAndSku commitmentPlan, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdatePlanWithHttpMessagesAsync(resourceGroupName, commitmentPlanName, commitmentPlan, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a Cognitive Services commitment plan from the resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            public static CommitmentPlansDeletePlanHeaders DeletePlan(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName)
+            {
+                return operations.DeletePlanAsync(resourceGroupName, commitmentPlanName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a Cognitive Services commitment plan from the resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CommitmentPlansDeletePlanHeaders> DeletePlanAsync(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeletePlanWithHttpMessagesAsync(resourceGroupName, commitmentPlanName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Returns a Cognitive Services commitment plan specified by the parameters.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            public static CommitmentPlan GetPlan(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName)
+            {
+                return operations.GetPlanAsync(resourceGroupName, commitmentPlanName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns a Cognitive Services commitment plan specified by the parameters.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CommitmentPlan> GetPlanAsync(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPlanWithHttpMessagesAsync(resourceGroupName, commitmentPlanName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns all the resources of a particular type belonging to a resource
+            /// group
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            public static IPage<CommitmentPlan> ListPlansByResourceGroup(this ICommitmentPlansOperations operations, string resourceGroupName)
+            {
+                return operations.ListPlansByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns all the resources of a particular type belonging to a resource
+            /// group
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CommitmentPlan>> ListPlansByResourceGroupAsync(this ICommitmentPlansOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListPlansByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns all the resources of a particular type belonging to a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IPage<CommitmentPlan> ListPlansBySubscription(this ICommitmentPlansOperations operations)
+            {
+                return operations.ListPlansBySubscriptionAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns all the resources of a particular type belonging to a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CommitmentPlan>> ListPlansBySubscriptionAsync(this ICommitmentPlansOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListPlansBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the associations of the Cognitive Services commitment plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            public static IPage<CommitmentPlanAccountAssociation> ListAssociations(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName)
+            {
+                return operations.ListAssociationsAsync(resourceGroupName, commitmentPlanName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the associations of the Cognitive Services commitment plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CommitmentPlanAccountAssociation>> ListAssociationsAsync(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAssociationsWithHttpMessagesAsync(resourceGroupName, commitmentPlanName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the association of the Cognitive Services commitment plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='commitmentPlanAssociationName'>
+            /// The name of the commitment plan association with the Cognitive Services
+            /// Account
+            /// </param>
+            public static CommitmentPlanAccountAssociation GetAssociation(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName)
+            {
+                return operations.GetAssociationAsync(resourceGroupName, commitmentPlanName, commitmentPlanAssociationName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the association of the Cognitive Services commitment plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='commitmentPlanAssociationName'>
+            /// The name of the commitment plan association with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CommitmentPlanAccountAssociation> GetAssociationAsync(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAssociationWithHttpMessagesAsync(resourceGroupName, commitmentPlanName, commitmentPlanAssociationName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Create or update the association of the Cognitive Services commitment plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='commitmentPlanAssociationName'>
+            /// The name of the commitment plan association with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='association'>
+            /// The commitmentPlan properties.
+            /// </param>
+            public static CommitmentPlanAccountAssociation CreateOrUpdateAssociation(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName, CommitmentPlanAccountAssociation association)
+            {
+                return operations.CreateOrUpdateAssociationAsync(resourceGroupName, commitmentPlanName, commitmentPlanAssociationName, association).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create or update the association of the Cognitive Services commitment plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='commitmentPlanAssociationName'>
+            /// The name of the commitment plan association with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='association'>
+            /// The commitmentPlan properties.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CommitmentPlanAccountAssociation> CreateOrUpdateAssociationAsync(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName, CommitmentPlanAccountAssociation association, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateAssociationWithHttpMessagesAsync(resourceGroupName, commitmentPlanName, commitmentPlanAssociationName, association, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes the association of the Cognitive Services commitment plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='commitmentPlanAssociationName'>
+            /// The name of the commitment plan association with the Cognitive Services
+            /// Account
+            /// </param>
+            public static CommitmentPlansDeleteAssociationHeaders DeleteAssociation(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName)
+            {
+                return operations.DeleteAssociationAsync(resourceGroupName, commitmentPlanName, commitmentPlanAssociationName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes the association of the Cognitive Services commitment plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='commitmentPlanAssociationName'>
+            /// The name of the commitment plan association with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CommitmentPlansDeleteAssociationHeaders> DeleteAssociationAsync(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeleteAssociationWithHttpMessagesAsync(resourceGroupName, commitmentPlanName, commitmentPlanAssociationName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
             /// Deletes the specified commitmentPlan associated with the Cognitive Services
             /// account.
             /// </summary>
@@ -262,6 +704,250 @@ namespace Microsoft.Azure.Management.CognitiveServices
             }
 
             /// <summary>
+            /// Create Cognitive Services commitment plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='commitmentPlan'>
+            /// The parameters to provide for the created commitment plan.
+            /// </param>
+            public static CommitmentPlan BeginCreateOrUpdatePlan(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName, CommitmentPlan commitmentPlan)
+            {
+                return operations.BeginCreateOrUpdatePlanAsync(resourceGroupName, commitmentPlanName, commitmentPlan).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create Cognitive Services commitment plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='commitmentPlan'>
+            /// The parameters to provide for the created commitment plan.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CommitmentPlan> BeginCreateOrUpdatePlanAsync(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName, CommitmentPlan commitmentPlan, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdatePlanWithHttpMessagesAsync(resourceGroupName, commitmentPlanName, commitmentPlan, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Create Cognitive Services commitment plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='commitmentPlan'>
+            /// The parameters to provide for the created commitment plan.
+            /// </param>
+            public static CommitmentPlan BeginUpdatePlan(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName, PatchResourceTagsAndSku commitmentPlan)
+            {
+                return operations.BeginUpdatePlanAsync(resourceGroupName, commitmentPlanName, commitmentPlan).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create Cognitive Services commitment plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='commitmentPlan'>
+            /// The parameters to provide for the created commitment plan.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CommitmentPlan> BeginUpdatePlanAsync(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName, PatchResourceTagsAndSku commitmentPlan, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdatePlanWithHttpMessagesAsync(resourceGroupName, commitmentPlanName, commitmentPlan, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a Cognitive Services commitment plan from the resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            public static CommitmentPlansDeletePlanHeaders BeginDeletePlan(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName)
+            {
+                return operations.BeginDeletePlanAsync(resourceGroupName, commitmentPlanName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a Cognitive Services commitment plan from the resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CommitmentPlansDeletePlanHeaders> BeginDeletePlanAsync(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginDeletePlanWithHttpMessagesAsync(resourceGroupName, commitmentPlanName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Create or update the association of the Cognitive Services commitment plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='commitmentPlanAssociationName'>
+            /// The name of the commitment plan association with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='association'>
+            /// The commitmentPlan properties.
+            /// </param>
+            public static CommitmentPlanAccountAssociation BeginCreateOrUpdateAssociation(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName, CommitmentPlanAccountAssociation association)
+            {
+                return operations.BeginCreateOrUpdateAssociationAsync(resourceGroupName, commitmentPlanName, commitmentPlanAssociationName, association).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create or update the association of the Cognitive Services commitment plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='commitmentPlanAssociationName'>
+            /// The name of the commitment plan association with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='association'>
+            /// The commitmentPlan properties.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CommitmentPlanAccountAssociation> BeginCreateOrUpdateAssociationAsync(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName, CommitmentPlanAccountAssociation association, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateAssociationWithHttpMessagesAsync(resourceGroupName, commitmentPlanName, commitmentPlanAssociationName, association, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes the association of the Cognitive Services commitment plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='commitmentPlanAssociationName'>
+            /// The name of the commitment plan association with the Cognitive Services
+            /// Account
+            /// </param>
+            public static CommitmentPlansDeleteAssociationHeaders BeginDeleteAssociation(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName)
+            {
+                return operations.BeginDeleteAssociationAsync(resourceGroupName, commitmentPlanName, commitmentPlanAssociationName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes the association of the Cognitive Services commitment plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='commitmentPlanName'>
+            /// The name of the commitmentPlan associated with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='commitmentPlanAssociationName'>
+            /// The name of the commitment plan association with the Cognitive Services
+            /// Account
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CommitmentPlansDeleteAssociationHeaders> BeginDeleteAssociationAsync(this ICommitmentPlansOperations operations, string resourceGroupName, string commitmentPlanName, string commitmentPlanAssociationName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginDeleteAssociationWithHttpMessagesAsync(resourceGroupName, commitmentPlanName, commitmentPlanAssociationName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
             /// Gets the commitmentPlans associated with the Cognitive Services account.
             /// </summary>
             /// <param name='operations'>
@@ -290,6 +976,110 @@ namespace Microsoft.Azure.Management.CognitiveServices
             public static async Task<IPage<CommitmentPlan>> ListNextAsync(this ICommitmentPlansOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns all the resources of a particular type belonging to a resource
+            /// group
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<CommitmentPlan> ListPlansByResourceGroupNext(this ICommitmentPlansOperations operations, string nextPageLink)
+            {
+                return operations.ListPlansByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns all the resources of a particular type belonging to a resource
+            /// group
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CommitmentPlan>> ListPlansByResourceGroupNextAsync(this ICommitmentPlansOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListPlansByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns all the resources of a particular type belonging to a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<CommitmentPlan> ListPlansBySubscriptionNext(this ICommitmentPlansOperations operations, string nextPageLink)
+            {
+                return operations.ListPlansBySubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns all the resources of a particular type belonging to a subscription.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CommitmentPlan>> ListPlansBySubscriptionNextAsync(this ICommitmentPlansOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListPlansBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the associations of the Cognitive Services commitment plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<CommitmentPlanAccountAssociation> ListAssociationsNext(this ICommitmentPlansOperations operations, string nextPageLink)
+            {
+                return operations.ListAssociationsNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the associations of the Cognitive Services commitment plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<CommitmentPlanAccountAssociation>> ListAssociationsNextAsync(this ICommitmentPlansOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAssociationsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
