@@ -846,6 +846,27 @@ namespace Azure.AI.TextAnalytics
         }
         #endregion
 
+        #region Dynamic Classify
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TextAnalytics.DynamicClassifyDocumentResultCollection"/> for mocking purposes.
+        /// </summary>
+        /// <param name="results">Sets the collection of <see cref="TextAnalytics.ClassifyDocumentResult"/>.</param>
+        /// <param name="statistics">Sets the <see cref="DynamicClassifyDocumentResultCollection.Statistics"/> property.</param>
+        /// <param name="modelVersion">Sets the <see cref="DynamicClassifyDocumentResultCollection.ModelVersion"/> property.</param>
+        /// <returns>
+        /// A new instance of <see cref="TextAnalytics.DynamicClassifyDocumentResultCollection"/> for mocking purposes.
+        /// </returns>
+        public static DynamicClassifyDocumentResultCollection DynamicClassifyDocumentResultCollection(
+            IEnumerable<ClassifyDocumentResult> results,
+            TextDocumentBatchStatistics statistics,
+            string modelVersion)
+        {
+            return new DynamicClassifyDocumentResultCollection(results.ToList(), statistics, modelVersion);
+        }
+
+        #endregion
+
         #region Linked Entities
         /// <summary>
         /// Initializes a new instance of <see cref="TextAnalytics.LinkedEntity"/> for mocking purposes.
@@ -1931,11 +1952,11 @@ namespace Azure.AI.TextAnalytics
         public static ExtractSummaryResult ExtractSummaryResult(
             string id,
             TextDocumentStatistics statistics,
-            IList<SummarySentence> sentences,
+            IEnumerable<SummarySentence> sentences,
             DetectedLanguage? detectedLanguage = default,
-            IList<TextAnalyticsWarning> warnings = default)
+            IEnumerable<TextAnalyticsWarning> warnings = default)
         {
-            return new ExtractSummaryResult(id, statistics, sentences, detectedLanguage, warnings);
+            return new ExtractSummaryResult(id, statistics, sentences.ToList(), detectedLanguage, warnings.ToList());
         }
 
         /// <summary>
@@ -1962,11 +1983,11 @@ namespace Azure.AI.TextAnalytics
         /// A new instance of <see cref="TextAnalytics.ExtractSummaryResultCollection"/> for mocking purposes.
         /// </returns>
         public static ExtractSummaryResultCollection ExtractSummaryResultCollection(
-            IList<ExtractSummaryResult> results,
+            IEnumerable<ExtractSummaryResult> results,
             TextDocumentBatchStatistics statistics,
             string modelVersion)
         {
-            return new ExtractSummaryResultCollection(results, statistics, modelVersion);
+            return new ExtractSummaryResultCollection(results.ToList(), statistics, modelVersion);
         }
 
         /// <summary>
@@ -2002,11 +2023,11 @@ namespace Azure.AI.TextAnalytics
         public static AbstractSummaryResult AbstractSummaryResult(
             string id,
             TextDocumentStatistics statistics,
-            IList<AbstractiveSummary> summaries,
+            IEnumerable<AbstractiveSummary> summaries,
             DetectedLanguage? detectedLanguage = default,
-            IList<TextAnalyticsWarning> warnings = default)
+            IEnumerable<TextAnalyticsWarning> warnings = default)
         {
-            return new AbstractSummaryResult(id, statistics, summaries, detectedLanguage, warnings);
+            return new AbstractSummaryResult(id, statistics, summaries.ToList(), detectedLanguage, warnings.ToList());
         }
 
         /// <summary>
@@ -2033,11 +2054,11 @@ namespace Azure.AI.TextAnalytics
         /// A new instance of <see cref="TextAnalytics.AbstractSummaryResultCollection"/> for mocking purposes.
         /// </returns>
         public static AbstractSummaryResultCollection AbstractSummaryResultCollection(
-            IList<AbstractSummaryResult> results,
+            IEnumerable<AbstractSummaryResult> results,
             TextDocumentBatchStatistics statistics,
             string modelVersion)
         {
-            return new AbstractSummaryResultCollection(results, statistics, modelVersion);
+            return new AbstractSummaryResultCollection(results.ToList(), statistics, modelVersion);
         }
 
         /// <summary>
@@ -2061,7 +2082,7 @@ namespace Azure.AI.TextAnalytics
         /// <returns>
         /// A new instance of <see cref="TextAnalytics.AbstractiveSummary"/> for mocking purposes.
         /// </returns>
-        public static AbstractiveSummary AbstractiveSummary(string text, IList<SummaryContext> contexts)
+        public static AbstractiveSummary AbstractiveSummary(string text, IEnumerable<SummaryContext> contexts)
         {
             List<SummaryContextInternal> internalContexts = new();
             foreach (SummaryContext context in contexts)

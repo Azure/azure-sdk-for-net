@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineScaleSetsByLocation_ListsAllTheVMScaleSetsUnderTheSpecifiedSubscriptionForTheSpecifiedLocation()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ListBySubscription_ByLocation.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ListBySubscription_ByLocation.json
             // this example is just showing the usage of "VirtualMachineScaleSets_ListByLocation" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_VirtualMachineScaleSetsUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Update" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute
                         WindowsConfiguration = new WindowsConfiguration()
                         {
                             ProvisionVmAgent = true,
-                            EnableAutomaticUpdates = true,
+                            IsAutomaticUpdatesEnabled = true,
                             TimeZone = "aaaaaaaaaaaaaaaa",
                             AdditionalUnattendContent =
 {
@@ -144,10 +144,26 @@ Content = "aaaaaaaaaaaaaaaaaaaa",
                                 AssessmentMode = WindowsPatchAssessmentMode.ImageDefault,
                                 AutomaticByPlatformRebootSetting = WindowsVmGuestPatchAutomaticByPlatformRebootSetting.Never,
                             },
+                            WinRMListeners =
+{
+new WinRMListener()
+{
+Protocol = WinRMListenerProtocolType.Http,
+CertificateUri = new Uri("aaaaaaaaaaaaaaaaaaaaaa"),
+}
+},
                         },
                         LinuxConfiguration = new LinuxConfiguration()
                         {
-                            DisablePasswordAuthentication = true,
+                            IsPasswordAuthenticationDisabled = true,
+                            SshPublicKeys =
+{
+new SshPublicKeyConfiguration()
+{
+Path = "/home/{your-username}/.ssh/authorized_keys",
+KeyData = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCeClRAk2ipUs/l5voIsDC5q9RI+YSRd1Bvd/O+axgY4WiBzG+4FwJWZm/mLLe5DoOdHQwmU2FrKXZSW4w2sYE70KeWnrFViCOX5MTVvJgPE8ClugNl8RWth/tU849DvM9sT7vFgfVSHcAS2yDRyDlueii+8nF2ym8XWAPltFVCyLHRsyBp5YPqK8JFYIa1eybKsY3hEAxRCA+/7bq8et+Gj3coOsuRmrehav7rE6N12Pb80I6ofa6SM5XNYq4Xk0iYNx7R3kdz0Jj9XgZYWjAHjJmT0gTRoOnt6upOuxK7xI/ykWrllgpXrCPu3Ymz+c+ujaqcxDopnAl2lmf69/J1",
+}
+},
                             ProvisionVmAgent = true,
                             PatchSettings = new LinuxPatchSettings()
                             {
@@ -228,6 +244,9 @@ Primary = true,
 EnableAcceleratedNetworking = true,
 EnableFpga = true,
 NetworkSecurityGroupId = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
+DnsServers =
+{
+},
 IPConfigurations =
 {
 new VirtualMachineScaleSetUpdateIPConfiguration()
@@ -369,7 +388,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_VirtualMachineScaleSetsUpdateMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Update_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Update_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Update" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -400,7 +419,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_ForceDeleteAVMScaleSet()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Delete_Force.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Delete_Force.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -421,12 +440,42 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             Console.WriteLine($"Succeeded");
         }
 
+        // Get VM scale set VM with Disk Controller Type
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Get_GetVMScaleSetVMWithDiskControllerType()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_WithDiskControllerType.json
+            // this example is just showing the usage of "VirtualMachineScaleSets_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this VirtualMachineScaleSetResource created on azure
+            // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string virtualMachineScaleSetName = "myVirtualMachineScaleSet";
+            ResourceIdentifier virtualMachineScaleSetResourceId = VirtualMachineScaleSetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName);
+            VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
+
+            // invoke the operation
+            VirtualMachineScaleSetGetExpand? expand = VirtualMachineScaleSetGetExpand.UserData;
+            VirtualMachineScaleSetResource result = await virtualMachineScaleSet.GetAsync(expand: expand);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VirtualMachineScaleSetData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
         // Get a virtual machine scale set
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAVirtualMachineScaleSet()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -455,7 +504,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAVirtualMachineScaleSetPlacedOnADedicatedHostGroupThroughAutomaticPlacement()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_AutoPlacedOnDedicatedHostGroup.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_AutoPlacedOnDedicatedHostGroup.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -484,7 +533,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAVirtualMachineScaleSetWithUserData()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_WithUserData.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_WithUserData.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -499,7 +548,8 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             VirtualMachineScaleSetResource virtualMachineScaleSet = client.GetVirtualMachineScaleSetResource(virtualMachineScaleSetResourceId);
 
             // invoke the operation
-            VirtualMachineScaleSetResource result = await virtualMachineScaleSet.GetAsync();
+            VirtualMachineScaleSetGetExpand? expand = VirtualMachineScaleSetGetExpand.UserData;
+            VirtualMachineScaleSetResource result = await virtualMachineScaleSet.GetAsync(expand: expand);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -513,7 +563,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Deallocate_VirtualMachineScaleSetsDeallocateMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Deallocate_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Deallocate_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Deallocate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -545,7 +595,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Deallocate_VirtualMachineScaleSetsDeallocateMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Deallocate_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Deallocate_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Deallocate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -570,7 +620,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task DeleteInstances_VirtualMachineScaleSetsDeleteInstancesMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_DeleteInstances_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_DeleteInstances_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_DeleteInstances" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -600,7 +650,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task DeleteInstances_VirtualMachineScaleSetsDeleteInstancesMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_DeleteInstances_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_DeleteInstances_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_DeleteInstances" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -629,7 +679,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetInstanceView_VirtualMachineScaleSetsGetInstanceViewMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_GetInstanceView_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_GetInstanceView_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_GetInstanceView" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -654,7 +704,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetInstanceView_VirtualMachineScaleSetsGetInstanceViewMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_GetInstanceView_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_GetInstanceView_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_GetInstanceView" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -679,7 +729,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineScaleSets_VirtualMachineScaleSetsListAllMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ListAll_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ListAll_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -709,7 +759,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineScaleSets_VirtualMachineScaleSetsListAllMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ListAll_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ListAll_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -739,7 +789,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetSkus_VirtualMachineScaleSetsListSkusMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ListSkus_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ListSkus_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_ListSkus" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -767,7 +817,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetSkus_VirtualMachineScaleSetsListSkusMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ListSkus_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ListSkus_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_ListSkus" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -795,7 +845,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetOSUpgradeHistory_VirtualMachineScaleSetsGetOSUpgradeHistoryMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_GetOSUpgradeHistory_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_GetOSUpgradeHistory_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_GetOSUpgradeHistory" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -823,7 +873,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetOSUpgradeHistory_VirtualMachineScaleSetsGetOSUpgradeHistoryMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_GetOSUpgradeHistory_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_GetOSUpgradeHistory_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_GetOSUpgradeHistory" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -851,7 +901,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task PowerOff_VirtualMachineScaleSetsPowerOffMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_PowerOff_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_PowerOff_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_PowerOff" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -884,7 +934,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task PowerOff_VirtualMachineScaleSetsPowerOffMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_PowerOff_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_PowerOff_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_PowerOff" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -909,7 +959,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Restart_VirtualMachineScaleSetsRestartMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Restart_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Restart_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Restart" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -941,7 +991,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Restart_VirtualMachineScaleSetsRestartMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Restart_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Restart_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Restart" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -966,7 +1016,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task PowerOn_VirtualMachineScaleSetsStartMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Start_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Start_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Start" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -998,7 +1048,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task PowerOn_VirtualMachineScaleSetsStartMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Start_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Start_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Start" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -1023,7 +1073,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Redeploy_VirtualMachineScaleSetsRedeployMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Redeploy_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Redeploy_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Redeploy" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -1055,7 +1105,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Redeploy_VirtualMachineScaleSetsRedeployMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Redeploy_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Redeploy_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Redeploy" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -1080,7 +1130,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task PerformMaintenance_VirtualMachineScaleSetsPerformMaintenanceMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_PerformMaintenance_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_PerformMaintenance_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_PerformMaintenance" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -1112,7 +1162,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task PerformMaintenance_VirtualMachineScaleSetsPerformMaintenanceMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_PerformMaintenance_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_PerformMaintenance_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_PerformMaintenance" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -1137,7 +1187,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task UpdateInstances_VirtualMachineScaleSetsUpdateInstancesMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_UpdateInstances_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_UpdateInstances_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_UpdateInstances" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -1166,7 +1216,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task UpdateInstances_VirtualMachineScaleSetsUpdateInstancesMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_UpdateInstances_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_UpdateInstances_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_UpdateInstances" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -1195,7 +1245,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Reimage_VirtualMachineScaleSetsReimageMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Reimage_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Reimage_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Reimage" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -1228,7 +1278,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Reimage_VirtualMachineScaleSetsReimageMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Reimage_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_Reimage_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_Reimage" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -1253,7 +1303,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ReimageAll_VirtualMachineScaleSetsReimageAllMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ReimageAll_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ReimageAll_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_ReimageAll" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -1285,7 +1335,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ReimageAll_VirtualMachineScaleSetsReimageAllMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ReimageAll_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ReimageAll_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_ReimageAll" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -1310,7 +1360,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ForceRecoveryServiceFabricPlatformUpdateDomainWalk_VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ForceRecoveryServiceFabricPlatformUpdateDomainWalk_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ForceRecoveryServiceFabricPlatformUpdateDomainWalk_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_ForceRecoveryServiceFabricPlatformUpdateDomainWalk" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -1336,7 +1386,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ForceRecoveryServiceFabricPlatformUpdateDomainWalk_VirtualMachineScaleSetsForceRecoveryServiceFabricPlatformUpdateDomainWalkMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ForceRecoveryServiceFabricPlatformUpdateDomainWalk_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ForceRecoveryServiceFabricPlatformUpdateDomainWalk_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_ForceRecoveryServiceFabricPlatformUpdateDomainWalk" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -1362,7 +1412,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ConvertToSinglePlacementGroup_VirtualMachineScaleSetsConvertToSinglePlacementGroupMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ConvertToSinglePlacementGroup_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ConvertToSinglePlacementGroup_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_ConvertToSinglePlacementGroup" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -1391,7 +1441,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ConvertToSinglePlacementGroup_VirtualMachineScaleSetsConvertToSinglePlacementGroupMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ConvertToSinglePlacementGroup_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_ConvertToSinglePlacementGroup_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_ConvertToSinglePlacementGroup" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -1417,7 +1467,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task SetOrchestrationServiceState_VirtualMachineScaleSetsSetOrchestrationServiceStateMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_SetOrchestrationServiceState_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_SetOrchestrationServiceState_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_SetOrchestrationServiceState" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -1443,7 +1493,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task SetOrchestrationServiceState_VirtualMachineScaleSetsSetOrchestrationServiceStateMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_SetOrchestrationServiceState_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSets_SetOrchestrationServiceState_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSets_SetOrchestrationServiceState" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -1469,7 +1519,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CancelVirtualMachineScaleSetRollingUpgrade_VirtualMachineScaleSetRollingUpgradesCancelMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetRollingUpgrades_Cancel_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetRollingUpgrades_Cancel_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSetRollingUpgrades_Cancel" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -1494,7 +1544,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CancelVirtualMachineScaleSetRollingUpgrade_VirtualMachineScaleSetRollingUpgradesCancelMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetRollingUpgrades_Cancel_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetRollingUpgrades_Cancel_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSetRollingUpgrades_Cancel" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -1519,7 +1569,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task StartOSUpgrade_VirtualMachineScaleSetRollingUpgradesStartOSUpgradeMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -1544,7 +1594,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task StartOSUpgrade_VirtualMachineScaleSetRollingUpgradesStartOSUpgradeMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSetRollingUpgrades_StartOSUpgrade" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -1569,7 +1619,7 @@ VirtualMachineScaleSetScaleInRule.OldestVm
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task StartExtensionUpgradeVirtualMachineScaleSetRollingUpgrade_StartAnExtensionRollingUpgrade()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtension_RollingUpgrade.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtension_RollingUpgrade.json
             // this example is just showing the usage of "VirtualMachineScaleSetRollingUpgrades_StartExtensionUpgrade" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client

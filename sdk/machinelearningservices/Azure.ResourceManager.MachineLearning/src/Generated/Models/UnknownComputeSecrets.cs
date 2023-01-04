@@ -7,11 +7,17 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownComputeSecrets. </summary>
-    internal partial class UnknownComputeSecrets : ComputeSecrets
+    /// <summary>
+    /// The UnknownComputeSecrets.
+    /// Serialized Name: UnknownComputeSecrets
+    /// </summary>
+    internal partial class UnknownComputeSecrets : MachineLearningComputeSecrets
     {
         /// <summary> Initializes a new instance of UnknownComputeSecrets. </summary>
-        /// <param name="computeType"> The type of compute. </param>
+        /// <param name="computeType">
+        /// The type of compute
+        /// Serialized Name: ComputeSecrets.computeType
+        /// </param>
         internal UnknownComputeSecrets(ComputeType computeType) : base(computeType)
         {
             ComputeType = computeType;

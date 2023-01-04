@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("storageProfile");
                 writer.WriteObjectValue(StorageProfile);
             }
+            if (Optional.IsDefined(SafetyProfile))
+            {
+                writer.WritePropertyName("safetyProfile");
+                writer.WriteObjectValue(SafetyProfile);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

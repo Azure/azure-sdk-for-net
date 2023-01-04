@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, UnderlyingResourceAction underlyingResourceAction)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, MachineLearningUnderlyingResourceAction underlyingResourceAction)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="computeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="computeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, UnderlyingResourceAction underlyingResourceAction, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, MachineLearningUnderlyingResourceAction underlyingResourceAction, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="computeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="computeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, UnderlyingResourceAction underlyingResourceAction, CancellationToken cancellationToken = default)
+        public Response Delete(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, MachineLearningUnderlyingResourceAction underlyingResourceAction, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="computeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="computeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ComputeSecrets>> ListKeysAsync(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, CancellationToken cancellationToken = default)
+        public async Task<Response<MachineLearningComputeSecrets>> ListKeysAsync(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -586,9 +586,9 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case 200:
                     {
-                        ComputeSecrets value = default;
+                        MachineLearningComputeSecrets value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ComputeSecrets.DeserializeComputeSecrets(document.RootElement);
+                        value = MachineLearningComputeSecrets.DeserializeMachineLearningComputeSecrets(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="computeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="computeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ComputeSecrets> ListKeys(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, CancellationToken cancellationToken = default)
+        public Response<MachineLearningComputeSecrets> ListKeys(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -617,9 +617,9 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case 200:
                     {
-                        ComputeSecrets value = default;
+                        MachineLearningComputeSecrets value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ComputeSecrets.DeserializeComputeSecrets(document.RootElement);
+                        value = MachineLearningComputeSecrets.DeserializeMachineLearningComputeSecrets(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

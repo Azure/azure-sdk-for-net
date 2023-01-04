@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static CertificateResourceList DeserializeCertificateResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<CertificateResourceData>> value = default;
+            Optional<IReadOnlyList<AppPlatformCertificateData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CertificateResourceData> array = new List<CertificateResourceData>();
+                    List<AppPlatformCertificateData> array = new List<AppPlatformCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CertificateResourceData.DeserializeCertificateResourceData(item));
+                        array.Add(AppPlatformCertificateData.DeserializeAppPlatformCertificateData(item));
                     }
                     value = array;
                     continue;

@@ -11,27 +11,42 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> A paginated list of DataContainer entities. </summary>
+    /// <summary>
+    /// A paginated list of DataContainer entities.
+    /// Serialized Name: DataContainerResourceArmPaginatedResult
+    /// </summary>
     internal partial class DataContainerResourceArmPaginatedResult
     {
         /// <summary> Initializes a new instance of DataContainerResourceArmPaginatedResult. </summary>
         internal DataContainerResourceArmPaginatedResult()
         {
-            Value = new ChangeTrackingList<DataContainerData>();
+            Value = new ChangeTrackingList<MachineLearningDataContainerData>();
         }
 
         /// <summary> Initializes a new instance of DataContainerResourceArmPaginatedResult. </summary>
-        /// <param name="nextLink"> The link to the next page of DataContainer objects. If null, there are no additional pages. </param>
-        /// <param name="value"> An array of objects of type DataContainer. </param>
-        internal DataContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<DataContainerData> value)
+        /// <param name="nextLink">
+        /// The link to the next page of DataContainer objects. If null, there are no additional pages.
+        /// Serialized Name: DataContainerResourceArmPaginatedResult.nextLink
+        /// </param>
+        /// <param name="value">
+        /// An array of objects of type DataContainer.
+        /// Serialized Name: DataContainerResourceArmPaginatedResult.value
+        /// </param>
+        internal DataContainerResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningDataContainerData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
-        /// <summary> The link to the next page of DataContainer objects. If null, there are no additional pages. </summary>
+        /// <summary>
+        /// The link to the next page of DataContainer objects. If null, there are no additional pages.
+        /// Serialized Name: DataContainerResourceArmPaginatedResult.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> An array of objects of type DataContainer. </summary>
-        public IReadOnlyList<DataContainerData> Value { get; }
+        /// <summary>
+        /// An array of objects of type DataContainer.
+        /// Serialized Name: DataContainerResourceArmPaginatedResult.value
+        /// </summary>
+        public IReadOnlyList<MachineLearningDataContainerData> Value { get; }
     }
 }

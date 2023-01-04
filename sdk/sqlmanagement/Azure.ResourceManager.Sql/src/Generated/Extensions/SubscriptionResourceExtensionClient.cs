@@ -29,8 +29,6 @@ namespace Azure.ResourceManager.Sql
         private CapabilitiesRestOperations _capabilitiesRestClient;
         private ClientDiagnostics _syncGroupClientDiagnostics;
         private SyncGroupsRestOperations _syncGroupRestClient;
-        private ClientDiagnostics _virtualClusterClientDiagnostics;
-        private VirtualClustersRestOperations _virtualClusterRestClient;
         private ClientDiagnostics _sqlServerServersClientDiagnostics;
         private ServersRestOperations _sqlServerServersRestClient;
         private ClientDiagnostics _longTermRetentionBackupsClientDiagnostics;
@@ -39,6 +37,8 @@ namespace Azure.ResourceManager.Sql
         private LongTermRetentionManagedInstanceBackupsRestOperations _longTermRetentionManagedInstanceBackupsRestClient;
         private ClientDiagnostics _managedInstanceClientDiagnostics;
         private ManagedInstancesRestOperations _managedInstanceRestClient;
+        private ClientDiagnostics _virtualClusterClientDiagnostics;
+        private VirtualClustersRestOperations _virtualClusterRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -60,8 +60,6 @@ namespace Azure.ResourceManager.Sql
         private CapabilitiesRestOperations CapabilitiesRestClient => _capabilitiesRestClient ??= new CapabilitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics SyncGroupClientDiagnostics => _syncGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", SyncGroupResource.ResourceType.Namespace, Diagnostics);
         private SyncGroupsRestOperations SyncGroupRestClient => _syncGroupRestClient ??= new SyncGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SyncGroupResource.ResourceType));
-        private ClientDiagnostics VirtualClusterClientDiagnostics => _virtualClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", VirtualClusterResource.ResourceType.Namespace, Diagnostics);
-        private VirtualClustersRestOperations VirtualClusterRestClient => _virtualClusterRestClient ??= new VirtualClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualClusterResource.ResourceType));
         private ClientDiagnostics SqlServerServersClientDiagnostics => _sqlServerServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerResource.ResourceType.Namespace, Diagnostics);
         private ServersRestOperations SqlServerServersRestClient => _sqlServerServersRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SqlServerResource.ResourceType));
         private ClientDiagnostics LongTermRetentionBackupsClientDiagnostics => _longTermRetentionBackupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -70,6 +68,8 @@ namespace Azure.ResourceManager.Sql
         private LongTermRetentionManagedInstanceBackupsRestOperations LongTermRetentionManagedInstanceBackupsRestClient => _longTermRetentionManagedInstanceBackupsRestClient ??= new LongTermRetentionManagedInstanceBackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics ManagedInstanceClientDiagnostics => _managedInstanceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceResource.ResourceType.Namespace, Diagnostics);
         private ManagedInstancesRestOperations ManagedInstanceRestClient => _managedInstanceRestClient ??= new ManagedInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedInstanceResource.ResourceType));
+        private ClientDiagnostics VirtualClusterClientDiagnostics => _virtualClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", VirtualClusterResource.ResourceType.Namespace, Diagnostics);
+        private VirtualClustersRestOperations VirtualClusterRestClient => _virtualClusterRestClient ??= new VirtualClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualClusterResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -413,90 +413,6 @@ namespace Azure.ResourceManager.Sql
                 {
                     var response = SyncGroupRestClient.ListSyncDatabaseIdsNextPage(nextLink, Id.SubscriptionId, locationName, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Gets a list of all virtualClusters in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters
-        /// Operation Id: VirtualClusters_List
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualClusterResource> GetVirtualClustersAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<VirtualClusterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VirtualClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualClusters");
-                scope.Start();
-                try
-                {
-                    var response = await VirtualClusterRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<VirtualClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VirtualClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualClusters");
-                scope.Start();
-                try
-                {
-                    var response = await VirtualClusterRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Gets a list of all virtualClusters in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters
-        /// Operation Id: VirtualClusters_List
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualClusterResource> GetVirtualClusters(CancellationToken cancellationToken = default)
-        {
-            Page<VirtualClusterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = VirtualClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualClusters");
-                scope.Start();
-                try
-                {
-                    var response = VirtualClusterRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<VirtualClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = VirtualClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualClusters");
-                scope.Start();
-                try
-                {
-                    var response = VirtualClusterRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new VirtualClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -1079,6 +995,90 @@ namespace Azure.ResourceManager.Sql
                 {
                     var response = ManagedInstanceRestClient.ListNextPage(nextLink, Id.SubscriptionId, expand, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ManagedInstanceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets a list of all virtualClusters in the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters
+        /// Operation Id: VirtualClusters_List
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="VirtualClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualClusterResource> GetVirtualClustersAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<VirtualClusterResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = VirtualClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualClusters");
+                scope.Start();
+                try
+                {
+                    var response = await VirtualClusterRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<VirtualClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = VirtualClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualClusters");
+                scope.Start();
+                try
+                {
+                    var response = await VirtualClusterRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets a list of all virtualClusters in the subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters
+        /// Operation Id: VirtualClusters_List
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualClusterResource> GetVirtualClusters(CancellationToken cancellationToken = default)
+        {
+            Page<VirtualClusterResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = VirtualClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualClusters");
+                scope.Start();
+                try
+                {
+                    var response = VirtualClusterRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<VirtualClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = VirtualClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualClusters");
+                scope.Start();
+                try
+                {
+                    var response = VirtualClusterRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new VirtualClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

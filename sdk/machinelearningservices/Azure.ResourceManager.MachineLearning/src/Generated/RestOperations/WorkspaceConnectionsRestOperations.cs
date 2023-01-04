@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string connectionName, WorkspaceConnectionPropertiesV2BasicResourceData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string connectionName, MachineLearningWorkspaceConnectionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkspaceConnectionPropertiesV2BasicResourceData>> CreateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string connectionName, WorkspaceConnectionPropertiesV2BasicResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<MachineLearningWorkspaceConnectionData>> CreateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string connectionName, MachineLearningWorkspaceConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case 200:
                     {
-                        WorkspaceConnectionPropertiesV2BasicResourceData value = default;
+                        MachineLearningWorkspaceConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkspaceConnectionPropertiesV2BasicResourceData.DeserializeWorkspaceConnectionPropertiesV2BasicResourceData(document.RootElement);
+                        value = MachineLearningWorkspaceConnectionData.DeserializeMachineLearningWorkspaceConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkspaceConnectionPropertiesV2BasicResourceData> Create(string subscriptionId, string resourceGroupName, string workspaceName, string connectionName, WorkspaceConnectionPropertiesV2BasicResourceData data, CancellationToken cancellationToken = default)
+        public Response<MachineLearningWorkspaceConnectionData> Create(string subscriptionId, string resourceGroupName, string workspaceName, string connectionName, MachineLearningWorkspaceConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case 200:
                     {
-                        WorkspaceConnectionPropertiesV2BasicResourceData value = default;
+                        MachineLearningWorkspaceConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkspaceConnectionPropertiesV2BasicResourceData.DeserializeWorkspaceConnectionPropertiesV2BasicResourceData(document.RootElement);
+                        value = MachineLearningWorkspaceConnectionData.DeserializeMachineLearningWorkspaceConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkspaceConnectionPropertiesV2BasicResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string connectionName, CancellationToken cancellationToken = default)
+        public async Task<Response<MachineLearningWorkspaceConnectionData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -169,13 +169,13 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case 200:
                     {
-                        WorkspaceConnectionPropertiesV2BasicResourceData value = default;
+                        MachineLearningWorkspaceConnectionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = WorkspaceConnectionPropertiesV2BasicResourceData.DeserializeWorkspaceConnectionPropertiesV2BasicResourceData(document.RootElement);
+                        value = MachineLearningWorkspaceConnectionData.DeserializeMachineLearningWorkspaceConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WorkspaceConnectionPropertiesV2BasicResourceData)null, message.Response);
+                    return Response.FromValue((MachineLearningWorkspaceConnectionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkspaceConnectionPropertiesV2BasicResourceData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string connectionName, CancellationToken cancellationToken = default)
+        public Response<MachineLearningWorkspaceConnectionData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string connectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -201,13 +201,13 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case 200:
                     {
-                        WorkspaceConnectionPropertiesV2BasicResourceData value = default;
+                        MachineLearningWorkspaceConnectionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = WorkspaceConnectionPropertiesV2BasicResourceData.DeserializeWorkspaceConnectionPropertiesV2BasicResourceData(document.RootElement);
+                        value = MachineLearningWorkspaceConnectionData.DeserializeMachineLearningWorkspaceConnectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((WorkspaceConnectionPropertiesV2BasicResourceData)null, message.Response);
+                    return Response.FromValue((MachineLearningWorkspaceConnectionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

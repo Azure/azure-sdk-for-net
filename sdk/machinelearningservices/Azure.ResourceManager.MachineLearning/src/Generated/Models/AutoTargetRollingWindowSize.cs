@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Target lags rolling window determined automatically. </summary>
+    /// <summary>
+    /// Target lags rolling window determined automatically.
+    /// Serialized Name: AutoTargetRollingWindowSize
+    /// </summary>
     public partial class AutoTargetRollingWindowSize : TargetRollingWindowSize
     {
         /// <summary> Initializes a new instance of AutoTargetRollingWindowSize. </summary>
@@ -17,7 +20,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of AutoTargetRollingWindowSize. </summary>
-        /// <param name="mode"> [Required] TargetRollingWindowSiz detection mode. </param>
+        /// <param name="mode">
+        /// [Required] TargetRollingWindowSiz detection mode.
+        /// Serialized Name: TargetRollingWindowSize.mode
+        /// </param>
         internal AutoTargetRollingWindowSize(TargetRollingWindowSizeMode mode) : base(mode)
         {
             Mode = mode;

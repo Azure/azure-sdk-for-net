@@ -10,7 +10,7 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 ```C# Snippet:CreateTextAnalyticsClient
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
-var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
 ## Recognizing linked entities in a single document
@@ -65,7 +65,7 @@ string documentA = @"Microsoft was founded by Bill Gates with some friends he me
                     Microsoft originally moved its headquarters to Bellevue, Washington in Januaray 1979, but is now
                     headquartered in Redmond";
 
-string documentB = @"Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975, to develop and
+string documentB = @"Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975, to develop and 
                     sell BASIC interpreters for the Altair 8800. During his career at Microsoft, Gates held
                     the positions of chairman chief executive officer, president and chief software architect
                     while also being the largest individual shareholder until May 2014.";
@@ -133,7 +133,7 @@ string documentA = @"Microsoft was founded by Bill Gates with some friends he me
 string documentB = @"El CEO de Microsoft es Satya Nadella, quien asumió esta posición en Febrero de 2014. Él
                     empezó como Ingeniero de Software en el año 1992.";
 
-string documentC = @"Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975, to develop and
+string documentC = @"Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975, to develop and 
                     sell BASIC interpreters for the Altair 8800. During his career at Microsoft, Gates held
                     the positions of chairman chief executive officer, president and chief software architect
                     while also being the largest individual shareholder until May 2014.";

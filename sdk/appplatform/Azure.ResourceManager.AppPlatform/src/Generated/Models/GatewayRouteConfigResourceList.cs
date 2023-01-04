@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of GatewayRouteConfigResourceList. </summary>
         internal GatewayRouteConfigResourceList()
         {
-            Value = new ChangeTrackingList<GatewayRouteConfigResourceData>();
+            Value = new ChangeTrackingList<AppPlatformGatewayRouteConfigData>();
         }
 
         /// <summary> Initializes a new instance of GatewayRouteConfigResourceList. </summary>
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
         /// </param>
-        internal GatewayRouteConfigResourceList(IReadOnlyList<GatewayRouteConfigResourceData> value, string nextLink)
+        internal GatewayRouteConfigResourceList(IReadOnlyList<AppPlatformGatewayRouteConfigData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of Spring Cloud Gateway route config resources. </summary>
-        public IReadOnlyList<GatewayRouteConfigResourceData> Value { get; }
+        public IReadOnlyList<AppPlatformGatewayRouteConfigData> Value { get; }
         /// <summary>
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
