@@ -1,19 +1,25 @@
 namespace Azure.Developer.LoadTesting
 {
-    public partial class AzureLoadTestingClientOptions : Azure.Core.ClientOptions
+    public partial class FileUploadOperation : Azure.Operation<System.BinaryData>
     {
-        public AzureLoadTestingClientOptions(Azure.Developer.LoadTesting.AzureLoadTestingClientOptions.ServiceVersion version = Azure.Developer.LoadTesting.AzureLoadTestingClientOptions.ServiceVersion.V2022_11_01) { }
-        public enum ServiceVersion
-        {
-            V2022_11_01 = 1,
-        }
+        protected FileUploadOperation() { }
+        public FileUploadOperation(string testId, string fileName, Azure.Developer.LoadTesting.LoadTestAdministrationClient client, Azure.Response initialResponse) { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override System.BinaryData Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LoadTestAdministrationClient
     {
         protected LoadTestAdministrationClient() { }
+        public LoadTestAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public LoadTestAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Developer.LoadTesting.LoadTestingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Developer.LoadTesting.TestFileValidationStatus BeginGetTestScriptValidationStatus(string testId, int refreshTime = 10000, int timeOut = 600000) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Developer.LoadTesting.TestFileValidationStatus> BeginGetTestScriptValidationStatusAsync(string testId, int refreshTime = 10000, int timeOut = 600000) { throw null; }
+        public virtual Azure.Developer.LoadTesting.FileUploadOperation BeginUploadTestFile(string testId, string fileName, Azure.Core.RequestContent content, Azure.WaitUntil waitUntil = Azure.WaitUntil.Started, string fileType = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Developer.LoadTesting.FileUploadOperation> BeginUploadTestFileAsync(string testId, string fileName, Azure.Core.RequestContent content, Azure.WaitUntil waitUntil = Azure.WaitUntil.Started, string fileType = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdateAppComponents(string testId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAppComponentsAsync(string testId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdateServerMetricsConfig(string testId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -26,8 +32,8 @@ namespace Azure.Developer.LoadTesting
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTestFileAsync(string testId, string fileName, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetAppComponents(string testId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAppComponentsAsync(string testId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetServerMetricsConfigs(string testId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetServerMetricsConfigsAsync(string testId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetServerMetricsConfig(string testId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetServerMetricsConfigAsync(string testId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetTest(string testId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTestAsync(string testId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetTestFile(string testId, string fileName, Azure.RequestContext context = null) { throw null; }
@@ -37,27 +43,24 @@ namespace Azure.Developer.LoadTesting
         public virtual Azure.Pageable<System.BinaryData> GetTests(string orderby = null, string search = null, System.DateTimeOffset? lastModifiedStartTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedEndTime = default(System.DateTimeOffset?), string continuationToken = null, int? maxpagesize = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetTestsAsync(string orderby = null, string search = null, System.DateTimeOffset? lastModifiedStartTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedEndTime = default(System.DateTimeOffset?), string continuationToken = null, int? maxpagesize = default(int?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response UploadTestFile(string testId, string fileName, Azure.Core.RequestContent content, string fileType = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response UploadTestFile(string testId, string fileId, System.IO.FileStream file, string fileType, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response UploadTestFile(string testId, string fileId, string fileName, Azure.Core.RequestContent content, string fileType, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UploadTestFileAsync(string testId, string fileName, Azure.Core.RequestContent content, string fileType = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UploadTestFileAsync(string testId, string fileId, System.IO.FileStream file, string fileType, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> UploadTestFileAsync(string testId, string fileId, string fileName, Azure.Core.RequestContent content, string fileType, Azure.RequestContext context = null) { throw null; }
     }
-    public partial class LoadTestingClient
+    public partial class LoadTestingClientOptions : Azure.Core.ClientOptions
     {
-        protected LoadTestingClient() { }
-        public LoadTestingClient(string endpoint, Azure.Core.TokenCredential credential) { }
-        public LoadTestingClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Developer.LoadTesting.AzureLoadTestingClientOptions options) { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public Azure.Developer.LoadTesting.LoadTestAdministrationClient getLoadTestAdministration() { throw null; }
-        public Azure.Developer.LoadTesting.LoadTestRunClient getLoadTestRun() { throw null; }
+        public LoadTestingClientOptions(Azure.Developer.LoadTesting.LoadTestingClientOptions.ServiceVersion version = Azure.Developer.LoadTesting.LoadTestingClientOptions.ServiceVersion.V2022_11_01) { }
+        public enum ServiceVersion
+        {
+            V2022_11_01 = 1,
+        }
     }
     public partial class LoadTestRunClient
     {
         protected LoadTestRunClient() { }
+        public LoadTestRunClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public LoadTestRunClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Developer.LoadTesting.LoadTestingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Developer.LoadTesting.TestRunStatus BeginTestRunStatus(string testRunId, int refreshTime = 10000, int timeOut = 60000) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Developer.LoadTesting.TestRunStatus> BeginTestRunStatusAsync(string testRunId, int refreshTime = 10000, int timeOut = 60000) { throw null; }
+        public virtual Azure.Developer.LoadTesting.TestRunOperation BeginTestRun(string testRunId, Azure.Core.RequestContent content, Azure.WaitUntil waitUntil = Azure.WaitUntil.Started, string oldTestRunId = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Developer.LoadTesting.TestRunOperation> BeginTestRunAync(string testRunId, Azure.Core.RequestContent content, Azure.WaitUntil waitUntil = Azure.WaitUntil.Started, string oldTestRunId = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdateAppComponents(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAppComponentsAsync(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateOrUpdateServerMetricsConfig(string testRunId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -70,14 +73,14 @@ namespace Azure.Developer.LoadTesting
         public virtual System.Threading.Tasks.Task<Azure.Response> GetAppComponentsAsync(string testRunId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetMetricDefinitions(string testRunId, string metricNamespace, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetMetricDefinitionsAsync(string testRunId, string metricNamespace, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetMetricDimensionValues(string testRunId, string name, string metricname, string metricNamespace, string timespan, string interval = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetMetricDimensionValuesAsync(string testRunId, string name, string metricname, string metricNamespace, string timespan, string interval = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetMetricDimensionValues(string testRunId, string name, string metricname, string metricNamespace, string timespan, string interval = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetMetricDimensionValuesAsync(string testRunId, string name, string metricname, string metricNamespace, string timespan, string interval = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetMetricNamespaces(string testRunId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetMetricNamespacesAsync(string testRunId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetMetrics(string testRunId, string metricname, string metricNamespace, string timespan, Azure.Core.RequestContent content, string aggregation = null, string interval = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetMetricsAsync(string testRunId, string metricname, string metricNamespace, string timespan, Azure.Core.RequestContent content, string aggregation = null, string interval = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetServerMetricsConfigs(string testRunId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetServerMetricsConfigsAsync(string testRunId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetMetrics(string testRunId, string metricname, string metricNamespace, string timespan, Azure.Core.RequestContent content, string aggregation = null, string interval = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetMetricsAsync(string testRunId, string metricname, string metricNamespace, string timespan, Azure.Core.RequestContent content, string aggregation = null, string interval = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetServerMetricsConfig(string testRunId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetServerMetricsConfigAsync(string testRunId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetTestRun(string testRunId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTestRunAsync(string testRunId, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response GetTestRunFile(string testRunId, string fileName, Azure.RequestContext context = null) { throw null; }
@@ -87,31 +90,16 @@ namespace Azure.Developer.LoadTesting
         public virtual Azure.Response StopTestRun(string testRunId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopTestRunAsync(string testRunId, Azure.RequestContext context = null) { throw null; }
     }
-    public enum TestFileValidationStatus
+    public partial class TestRunOperation : Azure.Operation<System.BinaryData>
     {
-        ValidationInitiated = 0,
-        ValidationSuccess = 1,
-        ValidationFailed = 2,
-        ValidationCheckTimeout = 3,
-    }
-    public enum TestRunStatus
-    {
-        Accepted = 0,
-        NotStarted = 1,
-        Provisioning = 2,
-        Provisioned = 3,
-        Configuring = 4,
-        Configured = 5,
-        Executing = 6,
-        Executed = 7,
-        Deprovisioning = 8,
-        Deprovisioned = 9,
-        Done = 10,
-        Cancelling = 11,
-        Cancelled = 12,
-        Failed = 13,
-        ValidationSuccess = 14,
-        ValidationFailed = 15,
-        CheckTimeout = 16,
+        protected TestRunOperation() { }
+        public TestRunOperation(string testRunId, Azure.Developer.LoadTesting.LoadTestRunClient client, Azure.Response initialResponse = null) { }
+        public override bool HasCompleted { get { throw null; } }
+        public override bool HasValue { get { throw null; } }
+        public override string Id { get { throw null; } }
+        public override System.BinaryData Value { get { throw null; } }
+        public override Azure.Response GetRawResponse() { throw null; }
+        public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
