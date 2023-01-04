@@ -45,6 +45,10 @@ extends:
       safeName: AzureStorageQueues
     - name: Azure.Storage.Blobs.ChangeFeed
       safeName: AzureStorageBlobsChangeFeed
+    - name: Azure.Storage.DataMovement
+      safeName: AzureStorageDataMovement
+    - name: Azure.Storage.DataMovement.Blobs
+      safeName: AzureStorageDataMovementBlobs
     - name: Microsoft.Azure.WebJobs.Extensions.Storage
       safeName: MicrosoftAzureWebJobsExtensionsStorage
     - name: Microsoft.Azure.WebJobs.Extensions.Storage.Blobs

@@ -15,6 +15,7 @@ using Azure.AI.Language.Conversations.Authoring;
 
 namespace Azure.AI.Language.Conversations.Tests.Samples
 {
+    [IgnoreServiceError(429, "429", Reason = "Exceeded rate limit of S pricing tier given number of tests run")]
     public partial class ConversationAnalysisClientSamples
     {
         private readonly List<string> _projects = new();

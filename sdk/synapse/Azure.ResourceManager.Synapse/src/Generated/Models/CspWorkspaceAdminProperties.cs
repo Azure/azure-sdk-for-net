@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Initial workspace AAD admin properties for a CSP subscription. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary> Initializes a new instance of CspWorkspaceAdminProperties. </summary>
         /// <param name="initialWorkspaceAdminObjectId"> AAD object ID of initial workspace admin. </param>
-        internal CspWorkspaceAdminProperties(string initialWorkspaceAdminObjectId)
+        internal CspWorkspaceAdminProperties(Guid? initialWorkspaceAdminObjectId)
         {
             InitialWorkspaceAdminObjectId = initialWorkspaceAdminObjectId;
         }
 
         /// <summary> AAD object ID of initial workspace admin. </summary>
-        public string InitialWorkspaceAdminObjectId { get; set; }
+        public Guid? InitialWorkspaceAdminObjectId { get; set; }
     }
 }

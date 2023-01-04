@@ -7,9 +7,9 @@ cmd.exe /c autorest.cmd https://github.com/johnzhang-microsoft/azure-rest-api-sp
 Autorest CSharp Version: 2.3.82
 2022-11-16 23:19:19 UTC
 Azure-rest-api-specs repository information
-GitHub fork: johnzhang-microsoft
-Branch:      dev/johnzhang/addReimageNotification
-Commit:      edb6fcd4fe01667973aac35696c455c652e1482e
+GitHub fork: Azure
+Branch:      main
+Commit:      afc91d411dc6f5b8f6c6e6d5abbc46da096729e0
 AutoRest information
 Requested version: 2.0.4421
 Bootstrapper version:    autorest@2.0.4413

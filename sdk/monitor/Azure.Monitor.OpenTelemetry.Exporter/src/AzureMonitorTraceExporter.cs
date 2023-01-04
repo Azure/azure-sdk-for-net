@@ -1,10 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using System;
 using System.Diagnostics;
 using System.Threading;
-
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
@@ -19,7 +21,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         private readonly ResourceParser _resourceParser;
         private readonly AzureMonitorPersistentStorage _persistentStorage;
 
-        public AzureMonitorTraceExporter(AzureMonitorExporterOptions options) : this(new AzureMonitorTransmitter(options))
+        public AzureMonitorTraceExporter(AzureMonitorExporterOptions options, TokenCredential credential = null) : this(new AzureMonitorTransmitter(options, credential))
         {
         }
 

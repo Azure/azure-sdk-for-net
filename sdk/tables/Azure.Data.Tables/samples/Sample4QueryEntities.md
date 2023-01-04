@@ -97,7 +97,33 @@ foreach (Page<TableEntity> page in queryResultsMaxPerPage.AsPages())
 }
 ```
 
----
-To see the full example source files, see:
-- [Synchronous Query Entities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample4_QueryEntities.cs)
-- [Asynchronous Query Entities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample4_QueryEntitiesAsync.cs)
+In more advanced scenarios, it may be necessary to store the continuation token returned from the service so your code controls exactly when the next pages is fetched.
+Below is a simple example that illustrates how the token can be fetched and applied to paginated results.
+
+```C# Snippet:TablesSample4QueryPagination
+string continuationToken = null;
+bool hadResults = true;
+while (hadResults)
+{
+    Page<TableEntity> page = tableClient
+        .Query<TableEntity>()
+        .AsPages(continuationToken, pageSizeHint: 10)
+        .FirstOrDefault(); // Note: Since the pageSizeHint only limits the number of results in a single page, we explicitly only enumerate the first page.
+
+    if (page == null)
+        break;
+
+    // Get the continuation token from the page.
+    // Note: This value can be stored so that the next page query can be executed later.
+    continuationToken = page.ContinuationToken;
+
+    IReadOnlyList<TableEntity> pageResults = page.Values;
+    hadResults = pageResults.Any();
+
+    // Print out the results for this page.
+    foreach (TableEntity result in pageResults)
+    {
+        Console.WriteLine($"{result.PartitionKey}-{result.RowKey}");
+    }
+}
+```

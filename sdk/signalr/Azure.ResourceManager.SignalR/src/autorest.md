@@ -15,12 +15,58 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+rename-mapping:
+  SignalRResource: SignalR
+  CustomCertificateList: SignalRCustomCertificateListResult
+  CustomDomainList: SignalRCustomDomainListResult
+  NameAvailability: SignalRNameAvailabilityResult
+  NameAvailabilityParameters: SignalRNameAvailabilityContent
+  NameAvailabilityParameters.type: -|resource-type
+  ACLAction: SignalRNetworkAclAction
+  SignalRNetworkACLs: SignalRNetworkAcls
+  NetworkACL: SignalRNetworkAcl
+  PrivateEndpointACL: SignalRPrivateEndpointAcl
+  PrivateEndpointConnectionList: SignalRPrivateEndpointConnectionListResult
+  PrivateLinkResourceList: SignalRPrivateLinkResourceListResult
+  ResourceLogConfiguration: SignalRResourceLogCategoryListResult
+  SharedPrivateLinkResourceList: SignalRSharedPrivateLinkResourceListResult
+  SkuList: SignalRSkuListResult
+  SignalRTlsSettings.clientCertEnabled: IsClientCertEnabled
+  NameAvailability.nameAvailable: IsNameAvailable
+  SignalRRequestType.RESTAPI: RestApi
+  Sku.resourceType: -|resource-type
+  SignalRUsage.id: -|arm-id
+  SharedPrivateLinkResource.properties.privateLinkResourceId: -|arm-id
+
+prepend-rp-prefix:
+  - CustomDomain
+  - CustomCertificate
+  - SharedPrivateLinkResource
+  - FeatureFlags
+  - KeyType
+  - LiveTraceCategory
+  - LiveTraceConfiguration
+  - ProvisioningState
+  - RegenerateKeyParameters
+  - ResourceLogCategory
+  - ResourceSku
+  - ScaleType
+  - ServiceKind
+  - SharedPrivateLinkResourceStatus
+  - SkuCapacity
+  - UpstreamAuthSettings
+  - UpstreamAuthType
+  - UpstreamTemplate
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+
+override-operation-name:
+  SignalR_CheckNameAvailability: CheckSignalRNameAvailability
 
 rename-rules:
   CPU: Cpu
@@ -45,9 +91,4 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
-directive:
-  - from: signalr.json
-    where: $.definitions
-    transform: >
-      $.SignalRResource['x-ms-client-name'] = 'SignalR';
 ```

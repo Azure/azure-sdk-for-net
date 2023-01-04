@@ -12,11 +12,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The CustomTargetLags. </summary>
+    /// <summary>
+    /// The CustomTargetLags.
+    /// Serialized Name: CustomTargetLags
+    /// </summary>
     public partial class CustomTargetLags : TargetLags
     {
         /// <summary> Initializes a new instance of CustomTargetLags. </summary>
-        /// <param name="values"> [Required] Set target lags values. </param>
+        /// <param name="values">
+        /// [Required] Set target lags values.
+        /// Serialized Name: CustomTargetLags.values
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         public CustomTargetLags(IEnumerable<int> values)
         {
@@ -27,15 +33,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of CustomTargetLags. </summary>
-        /// <param name="mode"> [Required] Set target lags mode - Auto/Custom. </param>
-        /// <param name="values"> [Required] Set target lags values. </param>
+        /// <param name="mode">
+        /// [Required] Set target lags mode - Auto/Custom
+        /// Serialized Name: TargetLags.mode
+        /// </param>
+        /// <param name="values">
+        /// [Required] Set target lags values.
+        /// Serialized Name: CustomTargetLags.values
+        /// </param>
         internal CustomTargetLags(TargetLagsMode mode, IList<int> values) : base(mode)
         {
             Values = values;
             Mode = mode;
         }
 
-        /// <summary> [Required] Set target lags values. </summary>
+        /// <summary>
+        /// [Required] Set target lags values.
+        /// Serialized Name: CustomTargetLags.values
+        /// </summary>
         public IList<int> Values { get; }
     }
 }

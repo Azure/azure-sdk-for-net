@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    // Data plane generated client. The Attachments service client.
+    // Data plane generated client.
     /// <summary> The Attachments service client. </summary>
     public partial class AttachmentsClient
     {

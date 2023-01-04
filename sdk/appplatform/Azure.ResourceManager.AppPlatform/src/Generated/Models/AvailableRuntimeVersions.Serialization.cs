@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static AvailableRuntimeVersions DeserializeAvailableRuntimeVersions(JsonElement element)
         {
-            Optional<IReadOnlyList<SupportedRuntimeVersion>> value = default;
+            Optional<IReadOnlyList<AppPlatformSupportedRuntimeVersion>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SupportedRuntimeVersion> array = new List<SupportedRuntimeVersion>();
+                    List<AppPlatformSupportedRuntimeVersion> array = new List<AppPlatformSupportedRuntimeVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportedRuntimeVersion.DeserializeSupportedRuntimeVersion(item));
+                        array.Add(AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion(item));
                     }
                     value = array;
                     continue;

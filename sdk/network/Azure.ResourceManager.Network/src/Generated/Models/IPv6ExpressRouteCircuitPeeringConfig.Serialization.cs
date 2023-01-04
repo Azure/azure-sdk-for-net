@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    routeFilter = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    routeFilter = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("state"))

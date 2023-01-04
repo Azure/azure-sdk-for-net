@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/providers/Microsoft.Network/trafficManagerGeographicHierarchies/default?api-version=2018-08-01",
+      "RequestUri": "https://management.azure.com/providers/Microsoft.Network/trafficManagerGeographicHierarchies/default?api-version=2022-04-01-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-5605d1bdb4a650479b0eafecb6d67255-9fa3c761827ed747-00",
-        "User-Agent": "azsdk-net-ResourceManager.TrafficManager/1.0.0-alpha.20220802.1 (.NET Framework 4.8.9032.0; Microsoft Windows 10.0.22622 )",
-        "x-ms-client-request-id": "304d0b6b9e741cc58248e9e1eedb4dd5",
+        "traceparent": "00-f7e078d32aa6945feeb5612f0c9d4286-7981e1703d7c53be-00",
+        "User-Agent": "azsdk-net-ResourceManager.TrafficManager/1.1.0-alpha.20221115.1 (.NET 6.0.11; Microsoft Windows 10.0.19045)",
+        "x-ms-client-request-id": "8448e9908f5c08c14c6fda8868c08f23",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,15 +17,15 @@
         "Cache-Control": "private",
         "Content-Length": "16124",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 03 Aug 2022 05:17:18 GMT",
+        "Date": "Tue, 15 Nov 2022 13:32:30 GMT",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-AspNet-Version": "4.0.30319",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "036af240-d42f-4fb4-8d86-146cbd9d3239",
-        "x-ms-ratelimit-remaining-tenant-reads": "11998",
-        "x-ms-request-id": "304d0b6b-9e74-1cc5-8248-e9e1eedb4dd5",
-        "x-ms-routing-request-id": "WESTUS2:20220803T051718Z:036af240-d42f-4fb4-8d86-146cbd9d3239",
+        "x-ms-correlation-request-id": "bb4732e9-c98d-4a1b-86d8-5c76a700c761",
+        "x-ms-ratelimit-remaining-tenant-resource-requests": "98",
+        "x-ms-request-id": "8448e990-8f5c-08c1-4c6f-da8868c08f23",
+        "x-ms-routing-request-id": "JIOINDIACENTRAL:20221115T133230Z:bb4732e9-c98d-4a1b-86d8-5c76a700c761",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -1721,9 +1721,9 @@
     }
   ],
   "Variables": {
-    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
-    "RandomSeed": "374999733",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "1944766541",
     "RESOURCE_MANAGER_URL": null,
-    "SUBSCRIPTION_ID": "fb9e7fe1-af44-47ef-852d-2d086a069327"
+    "SUBSCRIPTION_ID": "6bb9d374-1f0d-437e-8bbe-4bc892850065"
   }
 }

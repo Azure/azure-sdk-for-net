@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateVirtualMachineScaleSetVMExtension()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVMExtensions_Update.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVMExtensions_Update.json
             // this example is just showing the usage of "VirtualMachineScaleSetVMExtensions_Update" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -45,9 +46,9 @@ namespace Azure.ResourceManager.Compute
                 ExtensionType = "extType",
                 TypeHandlerVersion = "1.2",
                 AutoUpgradeMinorVersion = true,
-                Settings = BinaryData.FromObjectAsJson(new
+                Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 {
-                    UserName = "xyz@microsoft.com"
+                    ["UserName"] = "xyz@microsoft.com"
                 }),
             };
             ArmOperation<VirtualMachineScaleSetVmExtensionResource> lro = await virtualMachineScaleSetVmExtension.UpdateAsync(WaitUntil.Completed, patch);
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteVirtualMachineScaleSetVMExtension()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVMExtensions_Delete.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVMExtensions_Delete.json
             // this example is just showing the usage of "VirtualMachineScaleSetVMExtensions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetVirtualMachineScaleSetVMExtension()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVMExtensions_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVMExtensions_Get.json
             // this example is just showing the usage of "VirtualMachineScaleSetVMExtensions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
