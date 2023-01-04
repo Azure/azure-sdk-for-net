@@ -16,7 +16,7 @@ namespace Azure.Monitor.Ingestion.Tests
     public class MonitorIngestionLiveTest : RecordedTestBase<MonitorIngestionTestEnvironment>
     {
         private const int Mb = 1024 * 1024;
-        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync)
+        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -217,6 +217,36 @@ namespace Azure.Monitor.Ingestion.Tests
             RequestContent content = RequestContent.Create(data);
             GZipUtf8JsonRequestContent gzContent = new(content);
             Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, gzContent, "gzip").ConfigureAwait(false); //takes StreamName not tablename
+            // Check the response
+            Assert.AreEqual(204, response.Status);
+            Assert.IsFalse(response.IsError);
+        }
+
+        [Test]
+        public async Task TwiceGzip()
+        {
+            LogsIngestionClient client = CreateClient();
+
+            BinaryData data = BinaryData.FromObjectAsJson(
+                // Use an anonymous type to create the payload
+                new[] {
+                    new
+                    {
+                        Time = Recording.Now.DateTime,
+                        Computer = "Computer1",
+                        AdditionalContext = 2,
+                    },
+                    new
+                    {
+                        Time = Recording.Now.DateTime,
+                        Computer = "Computer2",
+                        AdditionalContext = 3
+                    },
+                });
+            RequestContent content = RequestContent.Create(data);
+            GZipUtf8JsonRequestContent gzContent = new(content);
+            GZipUtf8JsonRequestContent gzContent2 = new(gzContent);
+            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, gzContent2, "gzip").ConfigureAwait(false); //takes StreamName not tablename
             // Check the response
             Assert.AreEqual(204, response.Status);
             Assert.IsFalse(response.IsError);

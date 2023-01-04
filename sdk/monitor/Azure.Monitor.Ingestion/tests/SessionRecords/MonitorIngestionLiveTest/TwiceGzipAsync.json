@@ -1,0 +1,40 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://9d2b163e-87de-536c-ac5f-c3209657d8a8-z2vl.westus-1.ingest.monitor.azure.com/dataCollectionRules/dcr-bcdb7829b33440ac891fc35cf35d5c34/streams/Custom-MyTableRawData?api-version=2021-11-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Encoding": "gzip",
+        "Content-Length": "172",
+        "Content-Type": "application/json",
+        "traceparent": "00-1a9be853cd78204ca469ec2c0dfe53ed-c1f8e2017b01154e-00",
+        "User-Agent": "azsdk-net-Monitor.Ingestion/1.0.0-alpha.20221130.1 (.NET Framework 4.8.9105.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "d4ed2aeef308ea2cd7f5fb7aa10f8620",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": [
+        "\u001F\uFFFD\b\u0000\u0000\u0000\u0000\u0000\u0004\u0000\uFFFD\uFFFDV\n",
+        "\uFFFD\uFFFDMU\uFFFDR2202\uFFFD54\uFFFD56\b14\uFFFD2\uFFFD\uFFFD2\uFFFD\uFFFD3541064S\uFFFDQr\uFFFD\uFFFD-(-I-\u0002*\uFFFD1\r",
+        "\uFFFD\u008E))\uFFFD%\uFFFD\uFFFDy\uFFFD9\uFFFD\uFFFDy%\uFFFD\u0015%JVF\uFFFD:\uFFFDi\uFFFD\uFFFDL\uFFFD\uFFFDX\u0000M~\uFFFD\uFFFD\uFFFD\u0000\u0000\u0000"
+      ],
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Date": "Wed, 30 Nov 2022 20:18:49 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "x-ms-client-request-id": "d4ed2aee-f308-ea2c-d7f5-fb7aa10f8620",
+        "x-ms-request-id": "f00c5ee4-ac6f-4601-8c90-db5942681e4c"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "DateTimeOffsetNow": "2022-11-30T12:18:49.5140316-08:00",
+    "INGESTION_DATA_COLLECTION_ENDPOINT": "https://9d2b163e-87de-536c-ac5f-c3209657d8a8-z2vl.westus-1.ingest.monitor.azure.com",
+    "INGESTION_DATA_COLLECTION_RULE_IMMUTABLE_ID": "dcr-bcdb7829b33440ac891fc35cf35d5c34",
+    "INGESTION_STREAM_NAME": "Custom-MyTableRawData",
+    "RandomSeed": "592686834"
+  }
+}
