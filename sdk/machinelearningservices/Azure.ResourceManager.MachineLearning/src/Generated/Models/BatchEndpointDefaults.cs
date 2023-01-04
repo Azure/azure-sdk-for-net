@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Batch endpoint default values. </summary>
+    /// <summary>
+    /// Batch endpoint default values
+    /// Serialized Name: BatchEndpointDefaults
+    /// </summary>
     internal partial class BatchEndpointDefaults
     {
         /// <summary> Initializes a new instance of BatchEndpointDefaults. </summary>
@@ -19,6 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="deploymentName">
         /// Name of the deployment that will be default for the endpoint.
         /// This deployment will end up getting 100% traffic when the endpoint scoring URL is invoked.
+        /// Serialized Name: BatchEndpointDefaults.deploymentName
         /// </param>
         internal BatchEndpointDefaults(string deploymentName)
         {
@@ -28,6 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Name of the deployment that will be default for the endpoint.
         /// This deployment will end up getting 100% traffic when the endpoint scoring URL is invoked.
+        /// Serialized Name: BatchEndpointDefaults.deploymentName
         /// </summary>
         public string DeploymentName { get; set; }
     }

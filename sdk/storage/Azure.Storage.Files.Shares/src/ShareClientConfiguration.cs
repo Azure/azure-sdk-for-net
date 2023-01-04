@@ -40,7 +40,7 @@ namespace Azure.Storage.Files.Shares
             ClientDiagnostics clientDiagnostics,
             ShareClientOptions clientOptions,
             ShareFileRequestIntent? fileRequestIntent)
-            : base(pipeline, sharedKeyCredential, sasCredential, clientDiagnostics)
+            : base(pipeline, sharedKeyCredential, sasCredential, default, clientDiagnostics)
         {
             ClientOptions = clientOptions;
             TransferValidation = clientOptions.TransferValidation;

@@ -1881,6 +1881,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 _backgroundTasksCancellationSource?.Cancel();
                 _backgroundTasksCancellationSource?.Dispose();
+                _backgroundTasksCancellationSource = null;
 
                 if (cancelActiveSendOperations)
                 {

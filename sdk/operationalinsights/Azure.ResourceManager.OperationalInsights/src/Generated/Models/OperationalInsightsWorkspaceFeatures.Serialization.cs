@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("clusterResourceId");
                 }
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
-                if (DisableLocalAuth != null)
+                if (IsLocalAuthDisabled != null)
                 {
                     writer.WritePropertyName("disableLocalAuth");
-                    writer.WriteBooleanValue(DisableLocalAuth.Value);
+                    writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
                 }
                 else
                 {

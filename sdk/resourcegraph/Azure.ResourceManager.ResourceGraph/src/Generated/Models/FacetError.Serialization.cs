@@ -15,17 +15,17 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     {
         internal static FacetError DeserializeFacetError(JsonElement element)
         {
-            IReadOnlyList<ErrorDetails> errors = default;
+            IReadOnlyList<FacetErrorDetails> errors = default;
             string expression = default;
             string resultType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errors"))
                 {
-                    List<ErrorDetails> array = new List<ErrorDetails>();
+                    List<FacetErrorDetails> array = new List<FacetErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorDetails.DeserializeErrorDetails(item));
+                        array.Add(FacetErrorDetails.DeserializeFacetErrorDetails(item));
                     }
                     errors = array;
                     continue;

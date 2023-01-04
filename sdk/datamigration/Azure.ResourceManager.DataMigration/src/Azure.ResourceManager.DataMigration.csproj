@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Version>1.0.0-beta.2</Version>
     <PackageId>Azure.ResourceManager.DataMigration</PackageId>
-    <Description>Azure Resource Manager client SDK for Azure resource provider DataMigration</Description>
+    <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.DataMigration.</Description>
     <PackageTags>azure;management;arm;resource manager;datamigration</PackageTags>
   </PropertyGroup>
 </Project>

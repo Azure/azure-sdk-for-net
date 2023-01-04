@@ -72,14 +72,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("suppressFailures");
                 writer.WriteBooleanValue(SuppressFailures.Value);
             }
-            if (Optional.IsDefined(ProtectedSettingsFromKeyVault))
+            if (Optional.IsDefined(KeyVaultProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ProtectedSettingsFromKeyVault);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettingsFromKeyVault.ToString()).RootElement);
-#endif
+                writer.WriteObjectValue(KeyVaultProtectedSettings);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -100,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<BinaryData> settings = default;
             Optional<BinaryData> protectedSettings = default;
             Optional<bool> suppressFailures = default;
-            Optional<BinaryData> protectedSettingsFromKeyVault = default;
+            Optional<KeyVaultSecretReference> protectedSettingsFromKeyVault = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -125,7 +121,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -214,7 +210,7 @@ namespace Azure.ResourceManager.Compute.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            protectedSettingsFromKeyVault = BinaryData.FromString(property0.Value.GetRawText());
+                            protectedSettingsFromKeyVault = KeyVaultSecretReference.DeserializeKeyVaultSecretReference(property0.Value);
                             continue;
                         }
                     }

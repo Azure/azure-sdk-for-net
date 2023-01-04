@@ -348,7 +348,7 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        protected async Task CreateTestEntities<T>(List<T> entitiesToCreate) where T : class, ITableEntity, new()
+        protected async Task CreateTestEntities<T>(List<T> entitiesToCreate) where T : class, ITableEntity
         {
             foreach (var entity in entitiesToCreate)
             {
@@ -364,7 +364,7 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        protected async Task UpsertTestEntities<T>(List<T> entitiesToCreate, TableUpdateMode updateMode) where T : class, ITableEntity, new()
+        protected async Task UpsertTestEntities<T>(List<T> entitiesToCreate, TableUpdateMode updateMode) where T : class, ITableEntity
         {
             foreach (var entity in entitiesToCreate)
             {

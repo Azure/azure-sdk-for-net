@@ -90,6 +90,7 @@
     "skus",
     "structs",
     "uints",
+    "unbilled",
     "unencrypted",
     "unformattable",
     "unhold",
@@ -104,6 +105,12 @@
       "filename": "**/eng/pipelines/templates/jobs/ci.yml",
       "words": [
         "warnaserror"
+      ]
+    },
+    {
+      "filename": "**/sdk/analysisservices/**/*.cs",
+      "words": [
+        "Dmts"
       ]
     },
     {
@@ -166,6 +173,12 @@
       "filename": "**/sdk/batch/**/*.cs",
       "words": [
         "cifs"
+      ]
+    },
+    {
+      "filename": "**/sdk/billingbenefits/**/*.cs",
+      "words": [
+        "Hana"
       ]
     },
     {
@@ -249,7 +262,8 @@
         "sysctls",
         "tcpkeepalive",
         "wasi",
-        "wmem"
+        "wmem",
+        "Oidc"
       ]
     },
     {
@@ -816,6 +830,12 @@
       ]
     },
     {
+      "filename": "**/sdk/storagemover/**/*.cs",
+      "words": [
+        "Unregistering"
+      ]
+    },
+    {
       "filename": "**/sdk/storagepool/**/*.cs",
       "words": [
         "iscsi"
@@ -956,7 +976,7 @@
         "Ackable",
         "awps"
         ]
-    }  
+    }
   ],
   "allowCompoundWords": true
 }

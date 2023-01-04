@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LoadTestingResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<LoadTestingResource> GetLoadTestingsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<LoadTestingResource> GetLoadTestingResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetLoadTestingsAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetLoadTestingResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LoadTestingResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<LoadTestingResource> GetLoadTestings(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<LoadTestingResource> GetLoadTestingResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetLoadTestings(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetLoadTestingResources(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -108,9 +108,9 @@ namespace Azure.ResourceManager.LoadTesting
         /// <summary> Gets a collection of LoadTestingResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of LoadTestingResources and their operations over a LoadTestingResource. </returns>
-        public static LoadTestingCollection GetLoadTestings(this ResourceGroupResource resourceGroupResource)
+        public static LoadTestingResourceCollection GetLoadTestingResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetLoadTestings();
+            return GetExtensionClient(resourceGroupResource).GetLoadTestingResources();
         }
 
         /// <summary>
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<LoadTestingResource>> GetLoadTestingAsync(this ResourceGroupResource resourceGroupResource, string loadTestName, CancellationToken cancellationToken = default)
+        public static async Task<Response<LoadTestingResource>> GetLoadTestingResourceAsync(this ResourceGroupResource resourceGroupResource, string loadTestName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetLoadTestings().GetAsync(loadTestName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetLoadTestingResources().GetAsync(loadTestName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -140,9 +140,9 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="loadTestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadTestName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<LoadTestingResource> GetLoadTesting(this ResourceGroupResource resourceGroupResource, string loadTestName, CancellationToken cancellationToken = default)
+        public static Response<LoadTestingResource> GetLoadTestingResource(this ResourceGroupResource resourceGroupResource, string loadTestName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetLoadTestings().Get(loadTestName, cancellationToken);
+            return resourceGroupResource.GetLoadTestingResources().Get(loadTestName, cancellationToken);
         }
 
         #region LoadTestingQuotaResource
