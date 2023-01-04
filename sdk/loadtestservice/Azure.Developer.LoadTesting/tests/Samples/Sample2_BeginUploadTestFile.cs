@@ -40,14 +40,14 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
 
                 // get the intial reponse for uploading file
                 Response initialResponse = operation.GetRawResponse();
-                Console.WriteLine(initialResponse);
+                Console.WriteLine(initialResponse.Content.ToString());
 
                 // run lro to check the validation of file uploaded
                 operation.WaitForCompletion();
 
                 // printing final response
                 Response validatedFileResponse = operation.GetRawResponse();
-                Console.WriteLine(validatedFileResponse);
+                Console.WriteLine(validatedFileResponse.Content.ToString());
             }
             catch (Exception ex) {
                 Console.WriteLine(ex.Message);

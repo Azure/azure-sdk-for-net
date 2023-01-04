@@ -6,6 +6,7 @@ using Azure.Core.TestFramework;
 using Azure.Core;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Azure.Developer.LoadTesting.Tests.Samples
 {
@@ -13,7 +14,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
     {
         [Test]
         [AsyncOnly]
-        public async void CreateOrUpdateAppComponentAsync()
+        public async Task CreateOrUpdateAppComponentAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
             Uri enpointUrl = new Uri("https://" + endpoint);
