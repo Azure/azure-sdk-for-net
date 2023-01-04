@@ -3,6 +3,7 @@
 
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
@@ -32,11 +33,12 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             #region Snippet:SearchPhoneNumbersAsync
 
-            var capabilities = new PhoneNumberCapabilities(calling:PhoneNumberCapabilityType.None, sms:PhoneNumberCapabilityType.Outbound);
+            var capabilities = new PhoneNumberCapabilities(calling: PhoneNumberCapabilityType.None, sms: PhoneNumberCapabilityType.Outbound);
 
             var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities);
             //@@ await searchOperation.WaitForCompletionAsync();
-            /*@@*/ await WaitForCompletionAsync(searchOperation);
+            /*@@*/
+            await WaitForCompletionAsync(searchOperation);
 
             #endregion Snippet:SearchPhoneNumbersAsync
 
@@ -44,8 +46,9 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             var purchaseOperation = await client.StartPurchasePhoneNumbersAsync(searchOperation.Value.SearchId);
             //@@ await purchaseOperation.WaitForCompletionResponseAsync();
-            /*@@*/ await WaitForCompletionResponseAsync(purchaseOperation!);
-
+            /*@@*/
+            await WaitForCompletionResponseAsync(purchaseOperation!);
+            Assert.AreEqual(purchaseOperation.GetRawResponse().Status, 200);
             #endregion Snippet:StartPurchaseSearchAsync
 
             #region Snippet:GetPurchasedPhoneNumbersAsync
@@ -63,36 +66,34 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             var updateCapabilitiesOperation = await client.StartUpdateCapabilitiesAsync(purchasedPhoneNumber, calling: PhoneNumberCapabilityType.Outbound, sms: PhoneNumberCapabilityType.InboundOutbound);
 
             //@@ await updateCapabilitiesOperation.WaitForCompletionAsync();
-            /*@@*/ await WaitForCompletionAsync(updateCapabilitiesOperation);
+            /*@@*/
+            await WaitForCompletionAsync(updateCapabilitiesOperation);
 
             #endregion Snippet:UpdateCapabilitiesNumbersAsync
 
             Assert.AreEqual(PhoneNumberCapabilityType.Outbound, updateCapabilitiesOperation.Value.Capabilities.Calling);
             Assert.AreEqual(PhoneNumberCapabilityType.InboundOutbound, updateCapabilitiesOperation.Value.Capabilities.Sms);
 
-            purchasedPhoneNumbers = client.GetPurchasedPhoneNumbersAsync();
-            var beforeReleaseNumberCount = (await purchasedPhoneNumbers.ToEnumerableAsync()).Count;
-
             #region Snippet:ReleasePhoneNumbersAsync
 
             //@@var purchasedPhoneNumber = "<purchased_phone_number>";
             var releaseOperation = await client.StartReleasePhoneNumberAsync(purchasedPhoneNumber);
             //@@ await releaseOperation.WaitForCompletionResponseAsync();
-            /*@@*/ await WaitForCompletionResponseAsync(releaseOperation);
+            /*@@*/
+            await WaitForCompletionResponseAsync(releaseOperation);
 
             #endregion Snippet:ReleasePhoneNumbersAsync
-
-            var afterReleasePhoneNumbers = client.GetPurchasedPhoneNumbersAsync();
-            var foundPhoneNumber = false;
-            foreach (PurchasedPhoneNumber number in (await afterReleasePhoneNumbers.ToEnumerableAsync()))
+            var purchasedPhoneNumbersAfterReleaseStatus = "";
+            try
             {
-                if (number.PhoneNumber == purchasedPhoneNumber)
-                {
-                    foundPhoneNumber = true;
-                    break;
-                }
+                var purchasedPhoneNumbersAfterReleaseOperation = await client.GetPurchasedPhoneNumberAsync(purchasedPhoneNumber);
+                purchasedPhoneNumbersAfterReleaseStatus = purchasedPhoneNumbersAfterReleaseOperation.GetRawResponse().ReasonPhrase;
             }
-            Assert.IsFalse(foundPhoneNumber);
+            catch (RequestFailedException e)
+            {
+                purchasedPhoneNumbersAfterReleaseStatus = e.ErrorCode;
+            }
+            Assert.AreEqual("NotFound", purchasedPhoneNumbersAfterReleaseStatus);
         }
 
         private ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation) where T : notnull
@@ -129,14 +130,15 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             #region Snippet:SearchPhoneNumbers
 
-            var capabilities = new PhoneNumberCapabilities(calling:PhoneNumberCapabilityType.None, sms:PhoneNumberCapabilityType.Outbound);
+            var capabilities = new PhoneNumberCapabilities(calling: PhoneNumberCapabilityType.None, sms: PhoneNumberCapabilityType.Outbound);
 
             var searchOperation = client.StartSearchAvailablePhoneNumbers(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities);
 
             while (!searchOperation.HasCompleted)
             {
                 //@@ Thread.Sleep(2000);
-                /*@@*/ SleepIfNotInPlaybackMode();
+                /*@@*/
+                SleepIfNotInPlaybackMode();
                 searchOperation.UpdateStatus();
             }
 
@@ -144,13 +146,15 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             #region Snippet:StartPurchaseSearch
             var purchaseOperation = client.StartPurchasePhoneNumbers(searchOperation.Value.SearchId);
-
             while (!purchaseOperation.HasCompleted)
             {
                 //@@ Thread.Sleep(2000);
-                /*@@*/ SleepIfNotInPlaybackMode();
+                /*@@*/
+                SleepIfNotInPlaybackMode();
                 purchaseOperation.UpdateStatus();
             }
+            Assert.AreEqual(purchaseOperation.GetRawResponse().Status, 200);
+
             #endregion Snippet:StartPurchaseSearch
 
             #region Snippet:GetPurchasedPhoneNumbers
@@ -165,12 +169,13 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             var purchasedPhoneNumber = searchOperation.Value.PhoneNumbers.Single();
 
             #region Snippet:UpdateCapabilitiesNumbers
-            var updateCapabilitiesOperation = client.StartUpdateCapabilities(purchasedPhoneNumber, calling:PhoneNumberCapabilityType.Outbound, sms:PhoneNumberCapabilityType.InboundOutbound);
+            var updateCapabilitiesOperation = client.StartUpdateCapabilities(purchasedPhoneNumber, calling: PhoneNumberCapabilityType.Outbound, sms: PhoneNumberCapabilityType.InboundOutbound);
 
             while (!updateCapabilitiesOperation.HasCompleted)
             {
                 //@@ Thread.Sleep(2000);
-                /*@@*/ SleepIfNotInPlaybackMode();
+                /*@@*/
+                SleepIfNotInPlaybackMode();
                 updateCapabilitiesOperation.UpdateStatus();
             }
 
@@ -179,30 +184,31 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             Assert.AreEqual(PhoneNumberCapabilityType.Outbound, updateCapabilitiesOperation.Value.Capabilities.Calling);
             Assert.AreEqual(PhoneNumberCapabilityType.InboundOutbound, updateCapabilitiesOperation.Value.Capabilities.Sms);
 
-            purchasedPhoneNumbers = client.GetPurchasedPhoneNumbers();
-            var beforeReleaseNumberCount = purchasedPhoneNumbers.Count();
-
             #region Snippet:ReleasePhoneNumbers
             //@@var purchasedPhoneNumber = "<purchased_phone_number>";
-            var releaseOperation = client.StartReleasePhoneNumber(purchasedPhoneNumber).WaitForCompletionResponseAsync();
+            var releaseOperation = client.StartReleasePhoneNumber(purchasedPhoneNumber);
+
+            while (!releaseOperation.HasCompleted)
+            {
+                //@@ Thread.Sleep(2000);
+                /*@@*/
+                SleepIfNotInPlaybackMode();
+                releaseOperation.UpdateStatus();
+            }
 
             #endregion Snippet:ReleasePhoneNumbers
 
-            if (releaseOperation.IsCompletedSuccessfully)
+            var purchasedPhoneNumbersAfterReleaseStatus = "";
+            try
             {
-                var foundReleasedNumber = false;
-                purchasedPhoneNumbers = client.GetPurchasedPhoneNumbers();
-
-                foreach (var phoneNumber in purchasedPhoneNumbers)
-                {
-                    if (phoneNumber.PhoneNumber == purchasedPhoneNumber)
-                    {
-                        foundReleasedNumber = true;
-                        break;
-                    }
-                }
-                Assert.IsFalse(foundReleasedNumber);
+                var purchasedPhoneNumbersAfterReleaseOperation = client.GetPurchasedPhoneNumber(purchasedPhoneNumber);
+                purchasedPhoneNumbersAfterReleaseStatus = purchasedPhoneNumbersAfterReleaseOperation.GetRawResponse().ReasonPhrase;
             }
+            catch (RequestFailedException e)
+            {
+                purchasedPhoneNumbersAfterReleaseStatus = e.ErrorCode;
+            }
+            Assert.AreEqual("NotFound", purchasedPhoneNumbersAfterReleaseStatus);
         }
     }
 }
