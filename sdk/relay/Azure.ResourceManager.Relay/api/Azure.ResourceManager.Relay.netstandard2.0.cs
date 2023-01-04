@@ -155,6 +155,7 @@ namespace Azure.ResourceManager.Relay
         public string MetricId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public string ServiceBusEndpoint { get { throw null; } }
         public Azure.ResourceManager.Relay.Models.RelaySku Sku { get { throw null; } set { } }
@@ -202,6 +203,7 @@ namespace Azure.ResourceManager.Relay
         public RelayNetworkRuleSetData() { }
         public Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetDefaultAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Relay.Models.RelayNetworkRuleSetIPRule> IPRules { get { throw null; } }
+        public Azure.ResourceManager.Relay.Models.RelayPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
     }
     public partial class RelayNetworkRuleSetResource : Azure.ResourceManager.ArmResource
     {

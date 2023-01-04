@@ -48,6 +48,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
+        [Ignore("Known service regression with scheduled fix 01/12/2023.")]
         public async Task CanGetManifestProperties()
         {
             // Arrange

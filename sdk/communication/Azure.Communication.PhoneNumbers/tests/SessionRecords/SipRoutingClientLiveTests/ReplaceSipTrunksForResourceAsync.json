@@ -8,11 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "13",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-664b8985742486c084855d70e83e1c7a-50e2f1dc4e48f0bf-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221213.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "59ca48c433996eb876564dc446cfcf21",
+        "traceparent": "00-fad12a593c0d98203130ede5ac92531b-567a075d89bd93e4-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221220.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "626edfcc172f99a58afd76ed05a64f64",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 13 Dec 2022 20:17:07 GMT",
+        "x-ms-date": "Tue, 20 Dec 2022 00:49:35 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -22,13 +22,13 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 13 Dec 2022 20:17:09 GMT",
-        "MS-CV": "Vf3O\u002BIzFT0iedRdIVs4a2w.0",
+        "Date": "Tue, 20 Dec 2022 00:49:35 GMT",
+        "MS-CV": "tjGAA7y7UkSoMlzvuGdv5g.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0xN2YYwAAAACoFLZtpQuTSpVC5ZdIqnvxUFJHMDFFREdFMDkxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0oAahYwAAAAAR0kf4oeetR7MMib41SFplUFJHMDFFREdFMDkyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "251ms"
+        "X-Processing-Time": "152ms"
       },
       "ResponseBody": {
         "trunks": {},
@@ -41,11 +41,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-307fd51b261947d9247b2a800afec144-17a1c0afb0215f4a-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221213.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "89f2734def770b84174683c04890c113",
+        "traceparent": "00-a4fd94da92754a8ce7bad7170faaed88-ada6c7e9de766ab6-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221220.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "af40ee55c9df26b5956bb03d0ebcf33d",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 13 Dec 2022 20:17:08 GMT",
+        "x-ms-date": "Tue, 20 Dec 2022 00:49:36 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -53,13 +53,13 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 13 Dec 2022 20:17:09 GMT",
-        "MS-CV": "6xeQ6OUvkEyGKDAZnHICCg.0",
+        "Date": "Tue, 20 Dec 2022 00:49:36 GMT",
+        "MS-CV": "ZrQxwenr4km\u002B\u002BW/rkH28HA.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0xd2YYwAAAAC5iMdKdlo8TZ5XcJJzcb/yUFJHMDFFREdFMDkxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0oAahYwAAAAB6NGz/qH9VTqc0awys2FIfUFJHMDFFREdFMDkyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "107ms"
+        "X-Processing-Time": "89ms"
       },
       "ResponseBody": {
         "trunks": {},
@@ -74,19 +74,19 @@
         "Authorization": "Sanitized",
         "Content-Length": "160",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-307fd51b261947d9247b2a800afec144-0cae731986325632-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221213.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "f387d7529ad7550dbd7ca9d0f6ecd71f",
+        "traceparent": "00-a4fd94da92754a8ce7bad7170faaed88-087c5a83f2493230-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221220.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4b6a0d2e33a200f9875fe7acd4698a56",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 13 Dec 2022 20:17:08 GMT",
+        "x-ms-date": "Tue, 20 Dec 2022 00:49:36 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "trunks": {
-          "sbs1.1feb7689-4426-1eb0-efd7-b9d3d2a179bd.com": {
+          "sbs1.71f82c17-4baa-9056-fca9-15099f8b3bd7.com": {
             "sipSignalingPort": 1122
           },
-          "sbs2.1feb7689-4426-1eb0-efd7-b9d3d2a179bd.com": {
+          "sbs2.71f82c17-4baa-9056-fca9-15099f8b3bd7.com": {
             "sipSignalingPort": 1123
           }
         }
@@ -95,20 +95,20 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 13 Dec 2022 20:17:09 GMT",
-        "MS-CV": "vbhYW0EmFkeRpKDSTtzwaw.0",
+        "Date": "Tue, 20 Dec 2022 00:49:36 GMT",
+        "MS-CV": "XbLiQedntEKDYx97lFfw8w.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0xd2YYwAAAAD0gWyhBC/1RrniDB39ZSRtUFJHMDFFREdFMDkxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0oAahYwAAAAAY4XptI8s1TZUkktCArIHAUFJHMDFFREdFMDkyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "454ms"
+        "X-Processing-Time": "750ms"
       },
       "ResponseBody": {
         "trunks": {
-          "sbs1.1feb7689-4426-1eb0-efd7-b9d3d2a179bd.com": {
+          "sbs1.71f82c17-4baa-9056-fca9-15099f8b3bd7.com": {
             "sipSignalingPort": 1122
           },
-          "sbs2.1feb7689-4426-1eb0-efd7-b9d3d2a179bd.com": {
+          "sbs2.71f82c17-4baa-9056-fca9-15099f8b3bd7.com": {
             "sipSignalingPort": 1123
           }
         },
@@ -123,11 +123,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "201",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-c3d7d2024360698719f9803a25a78b5a-e941ae60dab4ea55-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221213.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "5e859807efaed445c4bf4252b0f826e6",
+        "traceparent": "00-a0fba5296f3d6cfecbba79fa50d5f32c-c14cb2cdb2f29755-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221220.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b0b3b0598c4a03f82a48cdc467678ace",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 13 Dec 2022 20:17:08 GMT",
+        "x-ms-date": "Tue, 20 Dec 2022 00:49:37 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -137,7 +137,7 @@
             "name": "First rule",
             "numberPattern": "\\\u002B123[0-9]\u002B",
             "trunks": [
-              "sbs1.1feb7689-4426-1eb0-efd7-b9d3d2a179bd.com"
+              "sbs1.71f82c17-4baa-9056-fca9-15099f8b3bd7.com"
             ]
           }
         ]
@@ -146,20 +146,20 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 13 Dec 2022 20:17:10 GMT",
-        "MS-CV": "opZPuXEUN0a/ead\u002BJttD0w.0",
+        "Date": "Tue, 20 Dec 2022 00:49:37 GMT",
+        "MS-CV": "A/44KjSryEmZ1wUGrhaAoA.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0xd2YYwAAAABEoPvQGZO0TKHk9fjG1QuyUFJHMDFFREdFMDkxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0oQahYwAAAAAndZGVRB7ZS7ucHY8Bm7VNUFJHMDFFREdFMDkyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "193ms"
+        "X-Processing-Time": "173ms"
       },
       "ResponseBody": {
         "trunks": {
-          "sbs1.1feb7689-4426-1eb0-efd7-b9d3d2a179bd.com": {
+          "sbs1.71f82c17-4baa-9056-fca9-15099f8b3bd7.com": {
             "sipSignalingPort": 1122
           },
-          "sbs2.1feb7689-4426-1eb0-efd7-b9d3d2a179bd.com": {
+          "sbs2.71f82c17-4baa-9056-fca9-15099f8b3bd7.com": {
             "sipSignalingPort": 1123
           }
         },
@@ -169,7 +169,7 @@
             "name": "First rule",
             "numberPattern": "\\\u002B123[0-9]\u002B",
             "trunks": [
-              "sbs1.1feb7689-4426-1eb0-efd7-b9d3d2a179bd.com"
+              "sbs1.71f82c17-4baa-9056-fca9-15099f8b3bd7.com"
             ]
           }
         ]
@@ -183,11 +183,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "13",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-d3f66a0779789d8ae97eb64e3ebcf83a-a64a1dc2364f585e-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221213.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "6f723994dc48b34a669dccfa46b3142b",
+        "traceparent": "00-0eb62aeabe3fb8da145b94da19afb1bf-48f201366f55d0f7-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221220.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f7be390a033b22c2f53f2880e208512b",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 13 Dec 2022 20:17:09 GMT",
+        "x-ms-date": "Tue, 20 Dec 2022 00:49:37 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -197,20 +197,20 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 13 Dec 2022 20:17:10 GMT",
-        "MS-CV": "wLR\u002Bwi/m9kaIMoqErZbfZQ.0",
+        "Date": "Tue, 20 Dec 2022 00:49:37 GMT",
+        "MS-CV": "D0sPkvLNyEyiZwwCRuavcw.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0xt2YYwAAAACTMXvHB/8zTYuf5z77cS2TUFJHMDFFREdFMDkxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0oQahYwAAAADMl9JL7tnQSahMLCzvfCzOUFJHMDFFREdFMDkyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "156ms"
+        "X-Processing-Time": "162ms"
       },
       "ResponseBody": {
         "trunks": {
-          "sbs1.1feb7689-4426-1eb0-efd7-b9d3d2a179bd.com": {
+          "sbs1.71f82c17-4baa-9056-fca9-15099f8b3bd7.com": {
             "sipSignalingPort": 1122
           },
-          "sbs2.1feb7689-4426-1eb0-efd7-b9d3d2a179bd.com": {
+          "sbs2.71f82c17-4baa-9056-fca9-15099f8b3bd7.com": {
             "sipSignalingPort": 1123
           }
         },
@@ -223,11 +223,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-1a7a62eaf1daabdb8c8817235c3cd835-238769833e7f993c-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221213.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "b0b8636f630b626491b22e1758baa4c5",
+        "traceparent": "00-7307d9fa09876d1c7780d6f4e3cc6511-86c4d13a0e96d6e8-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221220.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5de45ae04208a2f2156721596635981f",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 13 Dec 2022 20:17:09 GMT",
+        "x-ms-date": "Tue, 20 Dec 2022 00:49:37 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -235,20 +235,20 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 13 Dec 2022 20:17:11 GMT",
-        "MS-CV": "vIC/A\u002B9KQUe/AqWYm08srQ.0",
+        "Date": "Tue, 20 Dec 2022 00:49:37 GMT",
+        "MS-CV": "w5Rzmt3JNEqpHwVzRXgTRw.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0xt2YYwAAAABzpShGb/KpT7JrnQSLBHqmUFJHMDFFREdFMDkxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0ogahYwAAAAA4jB9Ud2OxTI5wbW4rSpAMUFJHMDFFREdFMDkyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "321ms"
+        "X-Processing-Time": "93ms"
       },
       "ResponseBody": {
         "trunks": {
-          "sbs1.1feb7689-4426-1eb0-efd7-b9d3d2a179bd.com": {
+          "sbs1.71f82c17-4baa-9056-fca9-15099f8b3bd7.com": {
             "sipSignalingPort": 1122
           },
-          "sbs2.1feb7689-4426-1eb0-efd7-b9d3d2a179bd.com": {
+          "sbs2.71f82c17-4baa-9056-fca9-15099f8b3bd7.com": {
             "sipSignalingPort": 1123
           }
         },
@@ -263,37 +263,37 @@
         "Authorization": "Sanitized",
         "Content-Length": "194",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-1a7a62eaf1daabdb8c8817235c3cd835-21717111d1e5dabc-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221213.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "bd3bc35667792bd74dd2f811234b8e10",
+        "traceparent": "00-7307d9fa09876d1c7780d6f4e3cc6511-54e7afd8d6409389-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221220.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9ba218d492aa551aee91bb0b63772021",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 13 Dec 2022 20:17:10 GMT",
+        "x-ms-date": "Tue, 20 Dec 2022 00:49:38 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "trunks": {
-          "newsbs.1feb7689-4426-1eb0-efd7-b9d3d2a179bd.com": {
+          "newsbs.71f82c17-4baa-9056-fca9-15099f8b3bd7.com": {
             "sipSignalingPort": 3333
           },
-          "sbs1.1feb7689-4426-1eb0-efd7-b9d3d2a179bd.com": null,
-          "sbs2.1feb7689-4426-1eb0-efd7-b9d3d2a179bd.com": null
+          "sbs1.71f82c17-4baa-9056-fca9-15099f8b3bd7.com": null,
+          "sbs2.71f82c17-4baa-9056-fca9-15099f8b3bd7.com": null
         }
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 13 Dec 2022 20:17:11 GMT",
-        "MS-CV": "\u002BA9YsAKAskuXkTI/5qr1hQ.0",
+        "Date": "Tue, 20 Dec 2022 00:49:38 GMT",
+        "MS-CV": "rr2inkaWT06PaCOwzMutEg.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0x92YYwAAAAAVktkYnEQBTKtGOBDx94FUUFJHMDFFREdFMDkxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0ogahYwAAAAAn9tW\u002B1XUkRLZl\u002BzWJtC9xUFJHMDFFREdFMDkyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "696ms"
+        "X-Processing-Time": "597ms"
       },
       "ResponseBody": {
         "trunks": {
-          "newsbs.1feb7689-4426-1eb0-efd7-b9d3d2a179bd.com": {
+          "newsbs.71f82c17-4baa-9056-fca9-15099f8b3bd7.com": {
             "sipSignalingPort": 3333
           }
         },
@@ -306,11 +306,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-d3187af4e2385ea4f0b26d6a3c51353b-b13109b610a63007-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221213.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "4de316ab763f31dad40fde95ad325aab",
+        "traceparent": "00-ccfc7abf2abaf739ac102e8c83ad3726-106f5e82585f64bf-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221220.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0de3a2f72d83c8c5461ce2d3e268bcc0",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 13 Dec 2022 20:17:10 GMT",
+        "x-ms-date": "Tue, 20 Dec 2022 00:49:38 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -318,17 +318,56 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 13 Dec 2022 20:17:12 GMT",
-        "MS-CV": "Z7Q/Wed9B0qHFY1FlCDPNA.0",
+        "Date": "Tue, 20 Dec 2022 00:49:38 GMT",
+        "MS-CV": "nmW6\u002BLXNuE\u002BQfdY1LTLhpw.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0x92YYwAAAABqokrR8FJHR7WcNsen/oXfUFJHMDFFREdFMDkxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0owahYwAAAAAk9yt8nfOGQI8omwppfQPHUFJHMDFFREdFMDkyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "118ms"
+        "X-Processing-Time": "94ms"
       },
       "ResponseBody": {
         "trunks": {
-          "newsbs.1feb7689-4426-1eb0-efd7-b9d3d2a179bd.com": {
+          "newsbs.71f82c17-4baa-9056-fca9-15099f8b3bd7.com": {
+            "sipSignalingPort": 3333
+          }
+        },
+        "routes": []
+      }
+    },
+    {
+      "RequestUri": "https://jb-sdk-e2e-test.communication.azure.com/sip?api-version=2021-05-01-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "13",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "traceparent": "00-ae8eed933771e0da3f73398b7b65127b-4d54bea3fcc57fe8-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221220.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c9ac08a7b5664d803f8f6f7787e73e9d",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Tue, 20 Dec 2022 00:49:38 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "routes": []
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 20 Dec 2022 00:49:38 GMT",
+        "MS-CV": "Y6/r10SJNEWXnptourlUGg.0",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0owahYwAAAADcD8WodjvFS5ubgvb0gaHeUFJHMDFFREdFMDkyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "156ms"
+      },
+      "ResponseBody": {
+        "trunks": {
+          "newsbs.71f82c17-4baa-9056-fca9-15099f8b3bd7.com": {
             "sipSignalingPort": 3333
           }
         },
@@ -341,11 +380,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-cafc44f5969cf3a070630d2ab68ddd7e-428c67a9b672330a-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221213.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "83a406f9577707b18c8d62396a533f46",
+        "traceparent": "00-2b152654a52acb250357af43c59d66e9-2d00e8e9aa111af5-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221220.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "c46200468b51a79c52d9548db0467286",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 13 Dec 2022 20:17:11 GMT",
+        "x-ms-date": "Tue, 20 Dec 2022 00:49:39 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -353,87 +392,17 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 13 Dec 2022 20:17:12 GMT",
-        "MS-CV": "s6i1Esn6zEanoLILRONayQ.0",
+        "Date": "Tue, 20 Dec 2022 00:49:39 GMT",
+        "MS-CV": "XHhostaDk0macn2EAYaW7g.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0yN2YYwAAAABPajeTpEemTbZN\u002BOkB91\u002BXUFJHMDFFREdFMDkxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0owahYwAAAAAVf7gcgPV7Qqz6MxWxbSaNUFJHMDFFREdFMDkyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "101ms"
+        "X-Processing-Time": "85ms"
       },
       "ResponseBody": {
         "trunks": {
-          "newsbs.1feb7689-4426-1eb0-efd7-b9d3d2a179bd.com": {
-            "sipSignalingPort": 3333
-          }
-        },
-        "routes": []
-      }
-    },
-    {
-      "RequestUri": "https://jb-sdk-e2e-test.communication.azure.com/sip?api-version=2021-05-01-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "traceparent": "00-ee914af936026121a252a4b5aae96cc5-245a7adf580bd26e-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221213.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "416c1e2357d7e085e80ae86a89427d1b",
-        "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 13 Dec 2022 20:17:11 GMT",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 13 Dec 2022 20:17:12 GMT",
-        "MS-CV": "lWiGiTMCpEuyRyNdhMQJvA.0",
-        "Strict-Transport-Security": "max-age=2592000",
-        "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0yN2YYwAAAAAs\u002BcNMXY\u002BrSIghbaYfBkmDUFJHMDFFREdFMDkxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "108ms"
-      },
-      "ResponseBody": {
-        "trunks": {
-          "newsbs.1feb7689-4426-1eb0-efd7-b9d3d2a179bd.com": {
-            "sipSignalingPort": 3333
-          }
-        },
-        "routes": []
-      }
-    },
-    {
-      "RequestUri": "https://jb-sdk-e2e-test.communication.azure.com/sip?api-version=2021-05-01-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "traceparent": "00-b873749422de74c63f0241d4748a986b-1d8909e7c0ae5109-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221213.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "1c184c770ba6539965dbc0b214a1c680",
-        "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 13 Dec 2022 20:17:11 GMT",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 13 Dec 2022 20:17:12 GMT",
-        "MS-CV": "EnpOaWDOUEuxX6y6KLjM5Q.0",
-        "Strict-Transport-Security": "max-age=2592000",
-        "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0yN2YYwAAAAD33pz/7ekoRY7AJ0v6cyGhUFJHMDFFREdFMDkxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
-        "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "90ms"
-      },
-      "ResponseBody": {
-        "trunks": {
-          "newsbs.1feb7689-4426-1eb0-efd7-b9d3d2a179bd.com": {
+          "newsbs.71f82c17-4baa-9056-fca9-15099f8b3bd7.com": {
             "sipSignalingPort": 3333
           }
         },
@@ -448,29 +417,29 @@
         "Authorization": "Sanitized",
         "Content-Length": "67",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-b873749422de74c63f0241d4748a986b-3380e433bd3ab1d0-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221213.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "8f7197cf18c6a1d380c49a6d6e477d4a",
+        "traceparent": "00-2b152654a52acb250357af43c59d66e9-6434041c7e8c8b5b-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.1.0-alpha.20221220.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "5b63fbd557cb41bb2196cdf3bd4e405e",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 13 Dec 2022 20:17:11 GMT",
+        "x-ms-date": "Tue, 20 Dec 2022 00:49:39 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "trunks": {
-          "newsbs.1feb7689-4426-1eb0-efd7-b9d3d2a179bd.com": null
+          "newsbs.71f82c17-4baa-9056-fca9-15099f8b3bd7.com": null
         }
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "api-supported-versions": "2021-05-01-preview, 2022-09-01-preview",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 13 Dec 2022 20:17:13 GMT",
-        "MS-CV": "3pNI3yylU0aes/JyvbHobg.0",
+        "Date": "Tue, 20 Dec 2022 00:49:39 GMT",
+        "MS-CV": "auO6DvYFJUu7FDuoJnjHRg.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "0yN2YYwAAAACQkNYJ5MiAS6O6tOxCf7hAUFJHMDFFREdFMDkxOAA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0owahYwAAAAByPBRqpRqFTIuRFTezc9yvUFJHMDFFREdFMDkyMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "262ms"
+        "X-Processing-Time": "270ms"
       },
       "ResponseBody": {
         "trunks": {},
@@ -480,6 +449,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://jb-sdk-e2e-test.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1865169759"
+    "RandomSeed": "985489074"
   }
 }

@@ -107,6 +107,10 @@ namespace Azure.ResourceManager.Analysis
                 Capacity = 1,
             })
             {
+                AsAdministratorIdentities =
+{
+"azsdktest@microsoft.com","azsdktest2@microsoft.com"
+},
                 AnalysisServerSku = new AnalysisResourceSku("S1")
                 {
                     Tier = AnalysisSkuTier.Standard,

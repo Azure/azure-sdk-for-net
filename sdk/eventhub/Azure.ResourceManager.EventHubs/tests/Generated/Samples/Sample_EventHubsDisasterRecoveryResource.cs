@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EventHubs
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_EHAliasCreate()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/disasterRecoveryConfigs/EHAliasCreate.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/disasterRecoveryConfigs/EHAliasCreate.json
             // this example is just showing the usage of "DisasterRecoveryConfigs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EventHubs
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_EHAliasDelete()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/disasterRecoveryConfigs/EHAliasDelete.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/disasterRecoveryConfigs/EHAliasDelete.json
             // this example is just showing the usage of "DisasterRecoveryConfigs_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventHubs
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_EHAliasGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/disasterRecoveryConfigs/EHAliasGet.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/disasterRecoveryConfigs/EHAliasGet.json
             // this example is just showing the usage of "DisasterRecoveryConfigs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.EventHubs
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task BreakPairing_EHAliasBreakPairing()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/disasterRecoveryConfigs/EHAliasBreakPairing.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/disasterRecoveryConfigs/EHAliasBreakPairing.json
             // this example is just showing the usage of "DisasterRecoveryConfigs_BreakPairing" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.EventHubs
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task FailOver_EHAliasFailOver()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/disasterRecoveryConfigs/EHAliasFailOver.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/disasterRecoveryConfigs/EHAliasFailOver.json
             // this example is just showing the usage of "DisasterRecoveryConfigs_FailOver" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client

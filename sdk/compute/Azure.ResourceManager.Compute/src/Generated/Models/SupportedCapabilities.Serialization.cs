@@ -15,6 +15,11 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(DiskControllerTypes))
+            {
+                writer.WritePropertyName("diskControllerTypes");
+                writer.WriteStringValue(DiskControllerTypes);
+            }
             if (Optional.IsDefined(AcceleratedNetwork))
             {
                 writer.WritePropertyName("acceleratedNetwork");
@@ -30,10 +35,16 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SupportedCapabilities DeserializeSupportedCapabilities(JsonElement element)
         {
+            Optional<string> diskControllerTypes = default;
             Optional<bool> acceleratedNetwork = default;
             Optional<ArchitectureType> architecture = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("diskControllerTypes"))
+                {
+                    diskControllerTypes = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("acceleratedNetwork"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -55,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
                     continue;
                 }
             }
-            return new SupportedCapabilities(Optional.ToNullable(acceleratedNetwork), Optional.ToNullable(architecture));
+            return new SupportedCapabilities(diskControllerTypes.Value, Optional.ToNullable(acceleratedNetwork), Optional.ToNullable(architecture));
         }
     }
 }

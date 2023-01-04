@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.LoadTesting
         protected LoadTestingQuotaResource() { }
         public virtual Azure.ResourceManager.LoadTesting.LoadTestingQuotaData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaAvailabilityResponse> CheckAvailability(Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaBucketContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaAvailabilityResponse>> CheckAvailabilityAsync(Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaBucketContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaAvailabilityResult> CheckLoadTestingQuotaAvailability(Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaBucketContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaAvailabilityResult>> CheckLoadTestingQuotaAvailabilityAsync(Azure.ResourceManager.LoadTesting.Models.LoadTestingQuotaBucketContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, string quotaBucketName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingQuotaResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingQuotaResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -51,6 +51,8 @@ namespace Azure.ResourceManager.LoadTesting
         protected LoadTestingResource() { }
         public virtual Azure.ResourceManager.LoadTesting.LoadTestingResourceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string loadTestName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -58,6 +60,10 @@ namespace Azure.ResourceManager.LoadTesting
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.LoadTesting.Models.OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.LoadTesting.Models.OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.LoadTesting.LoadTestingResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.LoadTesting.Models.LoadTestingResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.LoadTesting.LoadTestingResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.LoadTesting.Models.LoadTestingResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -150,9 +156,9 @@ namespace Azure.ResourceManager.LoadTesting.Models
         public static bool operator !=(Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState left, Azure.ResourceManager.LoadTesting.Models.LoadTestingProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class LoadTestingQuotaAvailabilityResponse : Azure.ResourceManager.Models.ResourceData
+    public partial class LoadTestingQuotaAvailabilityResult : Azure.ResourceManager.Models.ResourceData
     {
-        public LoadTestingQuotaAvailabilityResponse() { }
+        public LoadTestingQuotaAvailabilityResult() { }
         public string AvailabilityStatus { get { throw null; } set { } }
         public bool? IsAvailable { get { throw null; } set { } }
     }
@@ -176,7 +182,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.LoadTesting.Models.CustomerManagedKeyEncryptionProperties Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public System.BinaryData Tags { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
     }
     public partial class OutboundEnvironmentEndpoint
     {

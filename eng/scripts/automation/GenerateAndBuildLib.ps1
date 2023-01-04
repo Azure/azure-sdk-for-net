@@ -1,5 +1,6 @@
 #Requires -Version 7.0
 $CI_YAML_FILE = "ci.yml"
+$CADL_LOCATION_FILE = "cadl-location.yaml"
 
 . (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
 
@@ -359,12 +360,59 @@ function New-MgmtPackageFolder() {
     return $projectFolder
 }
 
+function CreateOrUpdateCadlConfigFile() {
+    param (
+        [string]$cadlConfigurationFile,
+        [string]$directory,
+        [string]$commit = "",
+        [string]$repo = "",
+        [string]$specRoot = ""
+    )
+    if (!(Test-Path -Path $cadlConfigurationFile)) {
+        New-Item -Path $cadlConfigurationFile
+    }
+
+    $configuration = Get-Content -Path $cadlConfigurationFile -Raw | ConvertFrom-Yaml
+    if ( !$configuration) {
+        $configuration = [System.Collections.Generic.Dictionary[string,string]](New-Object 'System.Collections.Generic.Dictionary[string,string]')
+    }
+    $configuration["directory"] = $directory
+    if ($commit) {
+        $configuration["commit"] = $commit
+    } else {
+        $configuration.Remove("commit")
+    }
+    if ($repo) {
+        $configuration["repo"] = $repo
+    } else {
+        $configuration.Remove("repo")
+    }
+
+    if ($specRoot) {
+        $configuration["spec-root-dir"] = $specRoot
+    } else {
+        $configuration.Remove("spec-root-dir")
+    }
+
+    $fileContent = ""
+    foreach ( $key in $configuration.keys) {
+        if ($configuration[$key]) {
+            $fileContent += ( $key + ": " + $configuration[$key] + [Environment]::NewLine)
+        }
+    }
+
+    $fileContent | Out-File $cadlConfigurationFile
+}
+
 function New-CADLPackageFolder() {
     param(
         [string]$service,
         [string]$namespace,
         [string]$sdkPath = "",
-        [string]$cadlInput ="",
+        [string]$relatedCadlProjectFolder,
+        [string]$commit = "",
+        [string]$repo = "",
+        [string]$specRoot = "",
         [string]$outputJsonFile = "$PWD/output.json"
     )
     $serviceFolder = (Join-Path $sdkPath "sdk" $service)
@@ -381,17 +429,14 @@ function New-CADLPackageFolder() {
         if (Test-Path -Path $projectFolder/src/autorest.md) {
             Remove-Item -Path $projectFolder/src/autorest.md
         }
-        $projFile = (Join-Path $projectFolder "src" "$namespace.csproj")
-        $fileContent = Get-Content -Path $projFile
-        $match = ($fileContent | Select-String -Pattern "<AutoRestInput>").LineNumber
-        if ($match.count -gt 0) {
-            $fileContent[$match[0] - 1] = "<AutoRestInput>$cadlInput</AutoRestInput>";
-        } else {
-            $startNum = ($fileContent | Select-String -Pattern '</PropertyGroup>').LineNumber[0]
-            $fileContent[$startNum - 2] += ([Environment]::NewLine + "<AutoRestInput>$cadlInput</AutoRestInput>")
-        }
-        $fileContent | Out-File $projFile
-
+        
+        CreateOrUpdateCadlConfigFile `
+            -cadlConfigurationFile $projectFolder/src/$CADL_LOCATION_FILE `
+            -directory $relatedCadlProjectFolder `
+            -commit $commit `
+            -repo $repo `
+            -specRoot $specRoot
+        
         Update-CIYmlFile -ciFilePath $ciymlFilePath -artifact $namespace
     } else {
         Write-Host "Path doesn't exist. create template."
@@ -425,8 +470,6 @@ function New-CADLPackageFolder() {
         $projFile = (Join-Path $projectFolder "src" "$namespace.csproj")
         $fileContent = Get-Content -Path $projFile
         $fileContent = $fileContent -replace '<Version>[^<]+</Version>', '<Version>1.0.0-beta.1</Version>'
-        $startNum = ($fileContent | Select-String -Pattern '</PropertyGroup>').LineNumber[0]
-        $fileContent[$startNum - 2] += ([Environment]::NewLine + "<AutoRestInput>$cadlInput</AutoRestInput>")
         $fileContent | Out-File $projFile
         # (Get-Content $projFile) -replace "<Version>*.*.*-*.*</Version>", "<Version>1.0.0-beta.1</Version>" | -replace "<AutoRestInput>*</AutoRestInput>", "<AutoRestInput>$cadlInput</AutoRestInput>" |Set-Content $projFile
         Pop-Location
@@ -435,6 +478,14 @@ function New-CADLPackageFolder() {
         if (Test-Path -Path $projectFolder/src/autorest.md) {
             Remove-Item -Path $projectFolder/src/autorest.md
         }
+
+        CreateOrUpdateCadlConfigFile `
+            -cadlConfigurationFile $projectFolder/src/$CADL_LOCATION_FILE `
+            -directory $relatedCadlProjectFolder `
+            -commit $commit `
+            -repo $repo `
+            -specRoot $specRoot
+
         dotnet sln remove src/$namespace.csproj
         dotnet sln add src/$namespace.csproj
         dotnet sln remove tests/$namespace.Tests.csproj
