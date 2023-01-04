@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EventHubs
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<TlsVersion> minimumTlsVersion = default;
+            Optional<EventHubsTlsVersion> minimumTlsVersion = default;
             Optional<string> provisioningState = default;
             Optional<string> status = default;
             Optional<DateTimeOffset> createdAt = default;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EventHubs
             Optional<ResourceIdentifier> clusterArmId = default;
             Optional<string> metricId = default;
             Optional<bool> isAutoInflateEnabled = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<EventHubsPublicNetworkAccess> publicNetworkAccess = default;
             Optional<int> maximumThroughputUnits = default;
             Optional<bool> kafkaEnabled = default;
             Optional<bool> zoneRedundant = default;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            minimumTlsVersion = new TlsVersion(property0.Value.GetString());
+                            minimumTlsVersion = new EventHubsTlsVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.EventHubs
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new EventHubsPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("maximumThroughputUnits"))

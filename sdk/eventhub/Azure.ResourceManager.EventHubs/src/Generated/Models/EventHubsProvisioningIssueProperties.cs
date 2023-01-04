@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Properties of Provisioning Issue. </summary>
-    public partial class ProvisioningIssueProperties
+    public partial class EventHubsProvisioningIssueProperties
     {
-        /// <summary> Initializes a new instance of ProvisioningIssueProperties. </summary>
-        internal ProvisioningIssueProperties()
+        /// <summary> Initializes a new instance of EventHubsProvisioningIssueProperties. </summary>
+        internal EventHubsProvisioningIssueProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ProvisioningIssueProperties. </summary>
+        /// <summary> Initializes a new instance of EventHubsProvisioningIssueProperties. </summary>
         /// <param name="issueType"> Type of Issue. </param>
         /// <param name="description"> Description of the issue. </param>
-        internal ProvisioningIssueProperties(string issueType, string description)
+        internal EventHubsProvisioningIssueProperties(string issueType, string description)
         {
             IssueType = issueType;
             Description = description;

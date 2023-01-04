@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class ProvisioningIssueProperties
+    public partial class EventHubsProvisioningIssueProperties
     {
-        internal static ProvisioningIssueProperties DeserializeProvisioningIssueProperties(JsonElement element)
+        internal static EventHubsProvisioningIssueProperties DeserializeEventHubsProvisioningIssueProperties(JsonElement element)
         {
             Optional<string> issueType = default;
             Optional<string> description = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new ProvisioningIssueProperties(issueType.Value, description.Value);
+            return new EventHubsProvisioningIssueProperties(issueType.Value, description.Value);
         }
     }
 }

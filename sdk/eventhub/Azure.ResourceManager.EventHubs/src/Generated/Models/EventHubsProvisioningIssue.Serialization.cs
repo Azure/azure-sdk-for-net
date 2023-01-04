@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class ProvisioningIssue : IUtf8JsonSerializable
+    public partial class EventHubsProvisioningIssue : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WriteEndObject();
         }
 
-        internal static ProvisioningIssue DeserializeProvisioningIssue(JsonElement element)
+        internal static EventHubsProvisioningIssue DeserializeEventHubsProvisioningIssue(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<ProvisioningIssueProperties> properties = default;
+            Optional<EventHubsProvisioningIssueProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = ProvisioningIssueProperties.DeserializeProvisioningIssueProperties(property.Value);
+                    properties = EventHubsProvisioningIssueProperties.DeserializeEventHubsProvisioningIssueProperties(property.Value);
                     continue;
                 }
             }
-            return new ProvisioningIssue(name.Value, properties.Value);
+            return new EventHubsProvisioningIssue(name.Value, properties.Value);
         }
     }
 }

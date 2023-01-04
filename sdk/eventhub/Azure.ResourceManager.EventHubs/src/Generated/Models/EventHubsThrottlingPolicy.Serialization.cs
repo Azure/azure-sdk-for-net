@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         internal static EventHubsThrottlingPolicy DeserializeEventHubsThrottlingPolicy(JsonElement element)
         {
             long rateLimitThreshold = default;
-            MetricId metricId = default;
+            EventHubsMetricId metricId = default;
             string name = default;
             ApplicationGroupPolicyType type = default;
             foreach (var property in element.EnumerateObject())
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (property.NameEquals("metricId"))
                 {
-                    metricId = new MetricId(property.Value.GetString());
+                    metricId = new EventHubsMetricId(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))

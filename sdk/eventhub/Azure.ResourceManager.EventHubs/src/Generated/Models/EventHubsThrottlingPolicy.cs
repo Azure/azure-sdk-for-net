@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="rateLimitThreshold"> The Threshold limit above which the application group will be throttled.Rate limit is always per second. </param>
         /// <param name="metricId"> Metric Id on which the throttle limit should be set, MetricId can be discovered by hovering over Metric in the Metrics section of Event Hub Namespace inside Azure Portal. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public EventHubsThrottlingPolicy(string name, long rateLimitThreshold, MetricId metricId) : base(name)
+        public EventHubsThrottlingPolicy(string name, long rateLimitThreshold, EventHubsMetricId metricId) : base(name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="applicationGroupPolicyType"> Application Group Policy types. </param>
         /// <param name="rateLimitThreshold"> The Threshold limit above which the application group will be throttled.Rate limit is always per second. </param>
         /// <param name="metricId"> Metric Id on which the throttle limit should be set, MetricId can be discovered by hovering over Metric in the Metrics section of Event Hub Namespace inside Azure Portal. </param>
-        internal EventHubsThrottlingPolicy(string name, ApplicationGroupPolicyType applicationGroupPolicyType, long rateLimitThreshold, MetricId metricId) : base(name, applicationGroupPolicyType)
+        internal EventHubsThrottlingPolicy(string name, ApplicationGroupPolicyType applicationGroupPolicyType, long rateLimitThreshold, EventHubsMetricId metricId) : base(name, applicationGroupPolicyType)
         {
             RateLimitThreshold = rateLimitThreshold;
             MetricId = metricId;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> The Threshold limit above which the application group will be throttled.Rate limit is always per second. </summary>
         public long RateLimitThreshold { get; set; }
         /// <summary> Metric Id on which the throttle limit should be set, MetricId can be discovered by hovering over Metric in the Metrics section of Event Hub Namespace inside Azure Portal. </summary>
-        public MetricId MetricId { get; set; }
+        public EventHubsMetricId MetricId { get; set; }
     }
 }

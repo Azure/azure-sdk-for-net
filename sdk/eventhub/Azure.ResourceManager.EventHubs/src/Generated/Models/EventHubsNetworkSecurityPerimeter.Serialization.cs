@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class NetworkSecurityPerimeter
+    public partial class EventHubsNetworkSecurityPerimeter
     {
-        internal static NetworkSecurityPerimeter DeserializeNetworkSecurityPerimeter(JsonElement element)
+        internal static EventHubsNetworkSecurityPerimeter DeserializeEventHubsNetworkSecurityPerimeter(JsonElement element)
         {
             Optional<string> id = default;
             Optional<string> perimeterGuid = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new NetworkSecurityPerimeter(id.Value, perimeterGuid.Value, Optional.ToNullable(location));
+            return new EventHubsNetworkSecurityPerimeter(id.Value, perimeterGuid.Value, Optional.ToNullable(location));
         }
     }
 }

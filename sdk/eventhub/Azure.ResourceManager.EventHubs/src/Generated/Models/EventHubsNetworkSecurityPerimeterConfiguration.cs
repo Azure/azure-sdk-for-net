@@ -12,16 +12,16 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Network Security Perimeter related configurations of a given namespace. </summary>
-    public partial class NetworkSecurityPerimeterConfiguration : TrackedResourceData
+    public partial class EventHubsNetworkSecurityPerimeterConfiguration : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkSecurityPerimeterConfiguration. </summary>
+        /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeterConfiguration. </summary>
         /// <param name="location"> The location. </param>
-        public NetworkSecurityPerimeterConfiguration(AzureLocation location) : base(location)
+        public EventHubsNetworkSecurityPerimeterConfiguration(AzureLocation location) : base(location)
         {
-            ProvisioningIssues = new ChangeTrackingList<ProvisioningIssue>();
+            ProvisioningIssues = new ChangeTrackingList<EventHubsProvisioningIssue>();
         }
 
-        /// <summary> Initializes a new instance of NetworkSecurityPerimeterConfiguration. </summary>
+        /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeterConfiguration. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="networkSecurityPerimeter"> NetworkSecurityPerimeter related information. </param>
         /// <param name="resourceAssociation"> Information about resource association. </param>
         /// <param name="profile"> Information about current network profile. </param>
-        internal NetworkSecurityPerimeterConfiguration(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IList<ProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation, NetworkSecurityPerimeterConfigurationPropertiesProfile profile) : base(id, name, resourceType, systemData, tags, location)
+        internal EventHubsNetworkSecurityPerimeterConfiguration(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IList<EventHubsProvisioningIssue> provisioningIssues, EventHubsNetworkSecurityPerimeter networkSecurityPerimeter, EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation, EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile profile) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             ProvisioningIssues = provisioningIssues;
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Provisioning state of NetworkSecurityPerimeter configuration propagation. </summary>
-        public NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; set; }
+        public EventHubsNetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; set; }
         /// <summary> List of Provisioning Issues if any. </summary>
-        public IList<ProvisioningIssue> ProvisioningIssues { get; }
+        public IList<EventHubsProvisioningIssue> ProvisioningIssues { get; }
         /// <summary> NetworkSecurityPerimeter related information. </summary>
-        public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
+        public EventHubsNetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
         /// <summary> Information about resource association. </summary>
-        public NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation ResourceAssociation { get; }
+        public EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation ResourceAssociation { get; }
         /// <summary> Information about current network profile. </summary>
-        public NetworkSecurityPerimeterConfigurationPropertiesProfile Profile { get; }
+        public EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile Profile { get; }
     }
 }

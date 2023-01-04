@@ -10,12 +10,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation
+    public partial class EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation
     {
-        internal static NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation DeserializeNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(JsonElement element)
+        internal static EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation DeserializeEventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<ResourceAssociationAccessMode> accessMode = default;
+            Optional<EventHubsResourceAssociationAccessMode> accessMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    accessMode = new ResourceAssociationAccessMode(property.Value.GetString());
+                    accessMode = new EventHubsResourceAssociationAccessMode(property.Value.GetString());
                     continue;
                 }
             }
-            return new NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(name.Value, Optional.ToNullable(accessMode));
+            return new EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(name.Value, Optional.ToNullable(accessMode));
         }
     }
 }

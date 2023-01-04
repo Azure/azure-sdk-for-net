@@ -10,18 +10,18 @@ using Azure.Core;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> NetworkSecurityPerimeter related information. </summary>
-    public partial class NetworkSecurityPerimeter
+    public partial class EventHubsNetworkSecurityPerimeter
     {
-        /// <summary> Initializes a new instance of NetworkSecurityPerimeter. </summary>
-        internal NetworkSecurityPerimeter()
+        /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeter. </summary>
+        internal EventHubsNetworkSecurityPerimeter()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkSecurityPerimeter. </summary>
+        /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeter. </summary>
         /// <param name="id"> Fully qualified identifier of the resource. </param>
         /// <param name="perimeterGuid"> Guid of the resource. </param>
         /// <param name="location"> Location of the resource. </param>
-        internal NetworkSecurityPerimeter(string id, string perimeterGuid, AzureLocation? location)
+        internal EventHubsNetworkSecurityPerimeter(string id, string perimeterGuid, AzureLocation? location)
         {
             Id = id;
             PerimeterGuid = perimeterGuid;

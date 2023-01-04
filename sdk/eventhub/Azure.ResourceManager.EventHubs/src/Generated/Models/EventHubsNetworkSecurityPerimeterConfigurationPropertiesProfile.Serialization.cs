@@ -11,13 +11,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class NetworkSecurityPerimeterConfigurationPropertiesProfile
+    public partial class EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile
     {
-        internal static NetworkSecurityPerimeterConfigurationPropertiesProfile DeserializeNetworkSecurityPerimeterConfigurationPropertiesProfile(JsonElement element)
+        internal static EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile DeserializeEventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> accessRulesVersion = default;
-            Optional<IReadOnlyList<NspAccessRule>> accessRules = default;
+            Optional<IReadOnlyList<EventHubsNspAccessRule>> accessRules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -37,16 +37,16 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NspAccessRule> array = new List<NspAccessRule>();
+                    List<EventHubsNspAccessRule> array = new List<EventHubsNspAccessRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NspAccessRule.DeserializeNspAccessRule(item));
+                        array.Add(EventHubsNspAccessRule.DeserializeEventHubsNspAccessRule(item));
                     }
                     accessRules = array;
                     continue;
                 }
             }
-            return new NetworkSecurityPerimeterConfigurationPropertiesProfile(name.Value, accessRulesVersion.Value, Optional.ToList(accessRules));
+            return new EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(name.Value, accessRulesVersion.Value, Optional.ToList(accessRules));
         }
     }
 }

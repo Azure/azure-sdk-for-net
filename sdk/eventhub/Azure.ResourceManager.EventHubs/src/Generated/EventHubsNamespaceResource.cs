@@ -544,10 +544,10 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: NetworkSecurityPerimeterConfiguration_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkSecurityPerimeterConfiguration" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="EventHubsNetworkSecurityPerimeterConfiguration" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventHubsNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NetworkSecurityPerimeterConfiguration>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<EventHubsNetworkSecurityPerimeterConfiguration>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _networkSecurityPerimeterConfigurationClientDiagnostics.CreateScope("EventHubsNamespaceResource.GetNetworkSecurityPerimeterConfigurations");
                 scope.Start();
@@ -571,10 +571,10 @@ namespace Azure.ResourceManager.EventHubs
         /// Operation Id: NetworkSecurityPerimeterConfiguration_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkSecurityPerimeterConfiguration" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurations(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventHubsNetworkSecurityPerimeterConfiguration" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventHubsNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurations(CancellationToken cancellationToken = default)
         {
-            Page<NetworkSecurityPerimeterConfiguration> FirstPageFunc(int? pageSizeHint)
+            Page<EventHubsNetworkSecurityPerimeterConfiguration> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _networkSecurityPerimeterConfigurationClientDiagnostics.CreateScope("EventHubsNamespaceResource.GetNetworkSecurityPerimeterConfigurations");
                 scope.Start();

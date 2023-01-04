@@ -56,6 +56,22 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+prepend-rp-prefix:
+  - TlsVersion
+  - PublicNetworkAccess
+  - ProvisioningIssueProperties
+  - ProvisioningIssue
+  - MetricId
+  - NetworkSecurityPerimeter
+  - NetworkSecurityPerimeterConfiguration
+  - NetworkSecurityPerimeterConfigurationPropertiesProfile
+  - NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation
+  - NetworkSecurityPerimeterConfigurationProvisioningState
+  - NspAccessRule
+  - NspAccessRuleDirection
+  - NspAccessRuleProperties
+  - ResourceAssociationAccessMode
+
 rename-mapping:
   SchemaType: EventHubsSchemaType
   SchemaCompatibility: EventHubsSchemaCompatibility

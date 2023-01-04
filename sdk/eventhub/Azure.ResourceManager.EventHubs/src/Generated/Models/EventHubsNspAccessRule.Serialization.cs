@@ -11,11 +11,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class NspAccessRule
+    public partial class EventHubsNspAccessRule
     {
-        internal static NspAccessRule DeserializeNspAccessRule(JsonElement element)
+        internal static EventHubsNspAccessRule DeserializeEventHubsNspAccessRule(JsonElement element)
         {
-            Optional<NspAccessRuleProperties> properties = default;
+            Optional<EventHubsNspAccessRuleProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = NspAccessRuleProperties.DeserializeNspAccessRuleProperties(property.Value);
+                    properties = EventHubsNspAccessRuleProperties.DeserializeEventHubsNspAccessRuleProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new NspAccessRule(id, name, type, systemData.Value, properties.Value);
+            return new EventHubsNspAccessRule(id, name, type, systemData.Value, properties.Value);
         }
     }
 }

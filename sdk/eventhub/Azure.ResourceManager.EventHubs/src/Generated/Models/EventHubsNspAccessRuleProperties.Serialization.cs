@@ -12,14 +12,14 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class NspAccessRuleProperties
+    public partial class EventHubsNspAccessRuleProperties
     {
-        internal static NspAccessRuleProperties DeserializeNspAccessRuleProperties(JsonElement element)
+        internal static EventHubsNspAccessRuleProperties DeserializeEventHubsNspAccessRuleProperties(JsonElement element)
         {
-            Optional<NspAccessRuleDirection> direction = default;
+            Optional<EventHubsNspAccessRuleDirection> direction = default;
             Optional<IReadOnlyList<string>> addressPrefixes = default;
             Optional<IReadOnlyList<SubResource>> subscriptions = default;
-            Optional<IReadOnlyList<NetworkSecurityPerimeter>> networkSecurityPerimeters = default;
+            Optional<IReadOnlyList<EventHubsNetworkSecurityPerimeter>> networkSecurityPerimeters = default;
             Optional<IReadOnlyList<string>> fullyQualifiedDomainNames = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    direction = new NspAccessRuleDirection(property.Value.GetString());
+                    direction = new EventHubsNspAccessRuleDirection(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("addressPrefixes"))
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NetworkSecurityPerimeter> array = new List<NetworkSecurityPerimeter>();
+                    List<EventHubsNetworkSecurityPerimeter> array = new List<EventHubsNetworkSecurityPerimeter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityPerimeter.DeserializeNetworkSecurityPerimeter(item));
+                        array.Add(EventHubsNetworkSecurityPerimeter.DeserializeEventHubsNetworkSecurityPerimeter(item));
                     }
                     networkSecurityPerimeters = array;
                     continue;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     continue;
                 }
             }
-            return new NspAccessRuleProperties(Optional.ToNullable(direction), Optional.ToList(addressPrefixes), Optional.ToList(subscriptions), Optional.ToList(networkSecurityPerimeters), Optional.ToList(fullyQualifiedDomainNames));
+            return new EventHubsNspAccessRuleProperties(Optional.ToNullable(direction), Optional.ToList(addressPrefixes), Optional.ToList(subscriptions), Optional.ToList(networkSecurityPerimeters), Optional.ToList(fullyQualifiedDomainNames));
         }
     }
 }

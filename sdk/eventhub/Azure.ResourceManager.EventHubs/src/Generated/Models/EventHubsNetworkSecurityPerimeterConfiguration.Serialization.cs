@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class NetworkSecurityPerimeterConfiguration : IUtf8JsonSerializable
+    public partial class EventHubsNetworkSecurityPerimeterConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WriteEndObject();
         }
 
-        internal static NetworkSecurityPerimeterConfiguration DeserializeNetworkSecurityPerimeterConfiguration(JsonElement element)
+        internal static EventHubsNetworkSecurityPerimeterConfiguration DeserializeEventHubsNetworkSecurityPerimeterConfiguration(JsonElement element)
         {
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.EventHubs.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<NetworkSecurityPerimeterConfigurationProvisioningState> provisioningState = default;
-            Optional<IList<ProvisioningIssue>> provisioningIssues = default;
-            Optional<NetworkSecurityPerimeter> networkSecurityPerimeter = default;
-            Optional<NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation> resourceAssociation = default;
-            Optional<NetworkSecurityPerimeterConfigurationPropertiesProfile> profile = default;
+            Optional<EventHubsNetworkSecurityPerimeterConfigurationProvisioningState> provisioningState = default;
+            Optional<IList<EventHubsProvisioningIssue>> provisioningIssues = default;
+            Optional<EventHubsNetworkSecurityPerimeter> networkSecurityPerimeter = default;
+            Optional<EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation> resourceAssociation = default;
+            Optional<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile> profile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new NetworkSecurityPerimeterConfigurationProvisioningState(property0.Value.GetString());
+                            provisioningState = new EventHubsNetworkSecurityPerimeterConfigurationProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningIssues"))
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ProvisioningIssue> array = new List<ProvisioningIssue>();
+                            List<EventHubsProvisioningIssue> array = new List<EventHubsProvisioningIssue>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ProvisioningIssue.DeserializeProvisioningIssue(item));
+                                array.Add(EventHubsProvisioningIssue.DeserializeEventHubsProvisioningIssue(item));
                             }
                             provisioningIssues = array;
                             continue;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            networkSecurityPerimeter = NetworkSecurityPerimeter.DeserializeNetworkSecurityPerimeter(property0.Value);
+                            networkSecurityPerimeter = EventHubsNetworkSecurityPerimeter.DeserializeEventHubsNetworkSecurityPerimeter(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceAssociation"))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resourceAssociation = NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation.DeserializeNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(property0.Value);
+                            resourceAssociation = EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation.DeserializeEventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("profile"))
@@ -172,14 +172,14 @@ namespace Azure.ResourceManager.EventHubs.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            profile = NetworkSecurityPerimeterConfigurationPropertiesProfile.DeserializeNetworkSecurityPerimeterConfigurationPropertiesProfile(property0.Value);
+                            profile = EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile.DeserializeEventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new NetworkSecurityPerimeterConfiguration(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToList(provisioningIssues), networkSecurityPerimeter.Value, resourceAssociation.Value, profile.Value);
+            return new EventHubsNetworkSecurityPerimeterConfiguration(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToList(provisioningIssues), networkSecurityPerimeter.Value, resourceAssociation.Value, profile.Value);
         }
     }
 }

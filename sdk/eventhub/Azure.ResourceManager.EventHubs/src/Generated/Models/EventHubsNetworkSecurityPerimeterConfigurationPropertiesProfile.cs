@@ -11,19 +11,19 @@ using Azure.Core;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Information about current network profile. </summary>
-    public partial class NetworkSecurityPerimeterConfigurationPropertiesProfile
+    public partial class EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile
     {
-        /// <summary> Initializes a new instance of NetworkSecurityPerimeterConfigurationPropertiesProfile. </summary>
-        internal NetworkSecurityPerimeterConfigurationPropertiesProfile()
+        /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile. </summary>
+        internal EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile()
         {
-            AccessRules = new ChangeTrackingList<NspAccessRule>();
+            AccessRules = new ChangeTrackingList<EventHubsNspAccessRule>();
         }
 
-        /// <summary> Initializes a new instance of NetworkSecurityPerimeterConfigurationPropertiesProfile. </summary>
+        /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile. </summary>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="accessRulesVersion"> Current access rules version. </param>
         /// <param name="accessRules"> List of Access Rules. </param>
-        internal NetworkSecurityPerimeterConfigurationPropertiesProfile(string name, string accessRulesVersion, IReadOnlyList<NspAccessRule> accessRules)
+        internal EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(string name, string accessRulesVersion, IReadOnlyList<EventHubsNspAccessRule> accessRules)
         {
             Name = name;
             AccessRulesVersion = accessRulesVersion;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Current access rules version. </summary>
         public string AccessRulesVersion { get; }
         /// <summary> List of Access Rules. </summary>
-        public IReadOnlyList<NspAccessRule> AccessRules { get; }
+        public IReadOnlyList<EventHubsNspAccessRule> AccessRules { get; }
     }
 }

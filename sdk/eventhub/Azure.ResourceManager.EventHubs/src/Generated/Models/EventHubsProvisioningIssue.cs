@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Describes Provisioning issue for given NetworkSecurityPerimeterConfiguration. </summary>
-    public partial class ProvisioningIssue
+    public partial class EventHubsProvisioningIssue
     {
-        /// <summary> Initializes a new instance of ProvisioningIssue. </summary>
-        public ProvisioningIssue()
+        /// <summary> Initializes a new instance of EventHubsProvisioningIssue. </summary>
+        public EventHubsProvisioningIssue()
         {
         }
 
-        /// <summary> Initializes a new instance of ProvisioningIssue. </summary>
+        /// <summary> Initializes a new instance of EventHubsProvisioningIssue. </summary>
         /// <param name="name"> Name of the issue. </param>
         /// <param name="properties"> Properties of Provisioning Issue. </param>
-        internal ProvisioningIssue(string name, ProvisioningIssueProperties properties)
+        internal EventHubsProvisioningIssue(string name, EventHubsProvisioningIssueProperties properties)
         {
             Name = name;
             Properties = properties;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Name of the issue. </summary>
         public string Name { get; set; }
         /// <summary> Properties of Provisioning Issue. </summary>
-        public ProvisioningIssueProperties Properties { get; }
+        public EventHubsProvisioningIssueProperties Properties { get; }
     }
 }

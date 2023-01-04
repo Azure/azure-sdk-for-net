@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static NetworkSecurityPerimeterConfigurationList DeserializeNetworkSecurityPerimeterConfigurationList(JsonElement element)
         {
-            Optional<IReadOnlyList<NetworkSecurityPerimeterConfiguration>> value = default;
+            Optional<IReadOnlyList<EventHubsNetworkSecurityPerimeterConfiguration>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NetworkSecurityPerimeterConfiguration> array = new List<NetworkSecurityPerimeterConfiguration>();
+                    List<EventHubsNetworkSecurityPerimeterConfiguration> array = new List<EventHubsNetworkSecurityPerimeterConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityPerimeterConfiguration.DeserializeNetworkSecurityPerimeterConfiguration(item));
+                        array.Add(EventHubsNetworkSecurityPerimeterConfiguration.DeserializeEventHubsNetworkSecurityPerimeterConfiguration(item));
                     }
                     value = array;
                     continue;
