@@ -17,9 +17,9 @@ namespace Azure.Core
     {
         private readonly DelayStrategy _delayStrategy;
 
-        public OperationPoller(DelayStrategy? delayStrategy = null)
+        public OperationPoller(DelayStrategy? fallbackStrategy = null)
         {
-            _delayStrategy = delayStrategy ?? new FixedDelayStrategy(TimeSpan.FromSeconds(1));
+            _delayStrategy = new RetryAfterDelayStrategy(fallbackStrategy);
         }
 
         public ValueTask<Response> WaitForCompletionResponseAsync(Operation operation, TimeSpan? delayHint, CancellationToken cancellationToken)
