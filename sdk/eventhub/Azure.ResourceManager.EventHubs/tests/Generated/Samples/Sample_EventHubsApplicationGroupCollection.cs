@@ -15,7 +15,7 @@ using Azure.ResourceManager.EventHubs.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    public partial class Sample_ApplicationGroupCollection
+    public partial class Sample_EventHubsApplicationGroupCollection
     {
         // ListApplicationGroups
         [NUnit.Framework.Test]
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EventHubs
             ResourceIdentifier eventHubsNamespaceResourceId = EventHubsNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
             EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
 
-            // get the collection of this ApplicationGroupResource
+            // get the collection of this EventHubsApplicationGroupResource
             EventHubsApplicationGroupCollection collection = eventHubsNamespace.GetEventHubsApplicationGroups();
 
             // invoke the operation and iterate over the result
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EventHubs
             ResourceIdentifier eventHubsNamespaceResourceId = EventHubsNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
             EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
 
-            // get the collection of this ApplicationGroupResource
+            // get the collection of this EventHubsApplicationGroupResource
             EventHubsApplicationGroupCollection collection = eventHubsNamespace.GetEventHubsApplicationGroups();
 
             // invoke the operation
@@ -114,7 +114,7 @@ new EventHubsThrottlingPolicy("ThrottlingPolicy1",7912,MetricId.IncomingMessages
             ResourceIdentifier eventHubsNamespaceResourceId = EventHubsNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
             EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
 
-            // get the collection of this ApplicationGroupResource
+            // get the collection of this EventHubsApplicationGroupResource
             EventHubsApplicationGroupCollection collection = eventHubsNamespace.GetEventHubsApplicationGroups();
 
             // invoke the operation
@@ -147,7 +147,7 @@ new EventHubsThrottlingPolicy("ThrottlingPolicy1",7912,MetricId.IncomingMessages
             ResourceIdentifier eventHubsNamespaceResourceId = EventHubsNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
             EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
 
-            // get the collection of this ApplicationGroupResource
+            // get the collection of this EventHubsApplicationGroupResource
             EventHubsApplicationGroupCollection collection = eventHubsNamespace.GetEventHubsApplicationGroups();
 
             // invoke the operation
