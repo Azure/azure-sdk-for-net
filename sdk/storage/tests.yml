@@ -24,11 +24,11 @@ extends:
           Selection: sparse
           GenerateVMJobs: true
     EnvVars:
-      DYLD_LIBRARY_PATH: /opt/homebrew/opt/openssl@3/lib
+      DYLD_LIBRARY_PATH: /usr/local/opt/openssl@1.1/lib
       ${{ if not(contains(variables['Build.DefinitionName'], 'tests-weekly')) }}:
         AZURE_ONLY_TEST_LATEST_SERVICE_VERSION: true
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
-    - bash: brew install openssl@3
+    - bash: brew install openssl@1.1
       displayName: (MacOS) Install OpenSSL
       condition: contains(variables['OSVmImage'], 'mac')
