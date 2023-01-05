@@ -24,7 +24,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             // creating LoadTesting TestRun Client
             LoadTestRunClient loadTestRunClient = new LoadTestRunClient(enpointUrl, credential);
 
-            #region Snippet:Azure_Developer_LoadTesting_GetMetrics
+            #region Snippet:Azure_Developer_LoadTesting_GetMetricsAsync
 
             string testId = "my-loadtest";
             string resourceId = TestEnvironment.ResourceId;
