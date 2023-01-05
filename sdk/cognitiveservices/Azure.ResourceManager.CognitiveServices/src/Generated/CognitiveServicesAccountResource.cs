@@ -167,11 +167,11 @@ namespace Azure.ResourceManager.CognitiveServices
             return GetCognitiveServicesAccountDeployments().Get(deploymentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CommitmentPlanResources in the CognitiveServicesAccount. </summary>
-        /// <returns> An object representing collection of CommitmentPlanResources and their operations over a CommitmentPlanResource. </returns>
-        public virtual CommitmentPlanCollection GetCommitmentPlans()
+        /// <summary> Gets a collection of AccountCommitmentPlanResources in the CognitiveServicesAccount. </summary>
+        /// <returns> An object representing collection of AccountCommitmentPlanResources and their operations over a AccountCommitmentPlanResource. </returns>
+        public virtual AccountCommitmentPlanCollection GetAccountCommitmentPlans()
         {
-            return GetCachedClient(Client => new CommitmentPlanCollection(Client, Id));
+            return GetCachedClient(Client => new AccountCommitmentPlanCollection(Client, Id));
         }
 
         /// <summary>
@@ -184,9 +184,9 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CommitmentPlanResource>> GetCommitmentPlanAsync(string commitmentPlanName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AccountCommitmentPlanResource>> GetAccountCommitmentPlanAsync(string commitmentPlanName, CancellationToken cancellationToken = default)
         {
-            return await GetCommitmentPlans().GetAsync(commitmentPlanName, cancellationToken).ConfigureAwait(false);
+            return await GetAccountCommitmentPlans().GetAsync(commitmentPlanName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -199,9 +199,9 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CommitmentPlanResource> GetCommitmentPlan(string commitmentPlanName, CancellationToken cancellationToken = default)
+        public virtual Response<AccountCommitmentPlanResource> GetAccountCommitmentPlan(string commitmentPlanName, CancellationToken cancellationToken = default)
         {
-            return GetCommitmentPlans().Get(commitmentPlanName, cancellationToken);
+            return GetAccountCommitmentPlans().Get(commitmentPlanName, cancellationToken);
         }
 
         /// <summary>

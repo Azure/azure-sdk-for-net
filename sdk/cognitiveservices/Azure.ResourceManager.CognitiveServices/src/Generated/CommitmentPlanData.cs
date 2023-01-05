@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CognitiveServices.Models;
@@ -13,10 +14,11 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary> A class representing the CommitmentPlan data model. </summary>
-    public partial class CommitmentPlanData : ResourceData
+    public partial class CommitmentPlanData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CommitmentPlanData. </summary>
-        public CommitmentPlanData()
+        /// <param name="location"> The location. </param>
+        public CommitmentPlanData(AzureLocation location) : base(location)
         {
         }
 
@@ -25,16 +27,26 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="etag"> Resource Etag. </param>
+        /// <param name="kind"> The Kind of the resource. </param>
+        /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="properties"> Properties of Cognitive Services account commitment plan. </param>
-        internal CommitmentPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, CommitmentPlanProperties properties) : base(id, name, resourceType, systemData)
+        internal CommitmentPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, string kind, CognitiveServicesSku sku, CommitmentPlanProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
+            Kind = kind;
+            Sku = sku;
             Properties = properties;
         }
 
         /// <summary> Resource Etag. </summary>
         public ETag? ETag { get; }
+        /// <summary> The Kind of the resource. </summary>
+        public string Kind { get; set; }
+        /// <summary> The resource model definition representing SKU. </summary>
+        public CognitiveServicesSku Sku { get; set; }
         /// <summary> Properties of Cognitive Services account commitment plan. </summary>
         public CommitmentPlanProperties Properties { get; set; }
     }

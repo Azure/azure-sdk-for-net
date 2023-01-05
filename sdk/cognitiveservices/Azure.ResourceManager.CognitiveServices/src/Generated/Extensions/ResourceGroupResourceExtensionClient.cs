@@ -37,5 +37,12 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             return GetCachedClient(Client => new CognitiveServicesAccountCollection(Client, Id));
         }
+
+        /// <summary> Gets a collection of CommitmentPlanResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of CommitmentPlanResources and their operations over a CommitmentPlanResource. </returns>
+        public virtual CommitmentPlanCollection GetCommitmentPlans()
+        {
+            return GetCachedClient(Client => new CommitmentPlanCollection(Client, Id));
+        }
     }
 }
