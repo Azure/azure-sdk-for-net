@@ -6,14 +6,9 @@
 
 - Update to the latest api-version.
 
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
 
 - Update the Readme with samples.
-- Update test cases.
 
 ## 1.0.0-beta.1 (2022-11-24)
 
