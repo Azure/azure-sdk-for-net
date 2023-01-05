@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetFluxConfiguration()
         {
-            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-07-01/examples/GetFluxConfiguration.json
+            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-11-01/examples/GetFluxConfiguration.json
             // this example is just showing the usage of "FluxConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetFluxConfiguration()
         {
-            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-07-01/examples/GetFluxConfiguration.json
+            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-11-01/examples/GetFluxConfiguration.json
             // this example is just showing the usage of "FluxConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateFluxConfiguration()
         {
-            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-07-01/examples/CreateFluxConfiguration.json
+            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-11-01/examples/CreateFluxConfiguration.json
             // this example is just showing the usage of "FluxConfigurations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -167,7 +167,7 @@ Prune = false,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateFluxConfigurationWithBucketSourceKind()
         {
-            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-07-01/examples/CreateFluxConfigurationWithBucket.json
+            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-11-01/examples/CreateFluxConfigurationWithBucket.json
             // this example is just showing the usage of "FluxConfigurations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -242,7 +242,7 @@ Prune = false,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListFluxConfiguration()
         {
-            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-07-01/examples/ListFluxConfigurations.json
+            // Generated from example definition: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/stable/2022-11-01/examples/ListFluxConfigurations.json
             // this example is just showing the usage of "FluxConfigurations_List" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client

@@ -32,14 +32,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("tenantId");
                 writer.WriteStringValue(TenantId.Value);
             }
-            writer.WritePropertyName("dataTypes");
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Alerts))
+            if (Optional.IsDefined(DataTypes))
             {
-                writer.WritePropertyName("alerts");
-                writer.WriteObjectValue(Alerts);
+                writer.WritePropertyName("dataTypes");
+                writer.WriteObjectValue(DataTypes);
             }
-            writer.WriteEndObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -53,7 +50,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<Guid> tenantId = default;
-            Optional<DataConnectorDataTypeCommon> alerts = default;
+            Optional<SecurityInsightsAlertsDataTypeOfDataConnector> dataTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -122,26 +119,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                if (property1.NameEquals("alerts"))
-                                {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        property1.ThrowNonNullablePropertyIsNull();
-                                        continue;
-                                    }
-                                    alerts = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property1.Value);
-                                    continue;
-                                }
-                            }
+                            dataTypes = SecurityInsightsAlertsDataTypeOfDataConnector.DeserializeSecurityInsightsAlertsDataTypeOfDataConnector(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new MdatpDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToNullable(tenantId), alerts.Value);
+            return new MdatpDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToNullable(tenantId), dataTypes.Value);
         }
     }
 }

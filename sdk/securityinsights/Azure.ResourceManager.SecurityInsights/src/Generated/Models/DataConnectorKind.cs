@@ -26,22 +26,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string AzureSecurityCenterValue = "AzureSecurityCenter";
         private const string MicrosoftCloudAppSecurityValue = "MicrosoftCloudAppSecurity";
         private const string ThreatIntelligenceValue = "ThreatIntelligence";
-        private const string ThreatIntelligenceTaxiiValue = "ThreatIntelligenceTaxii";
         private const string Office365Value = "Office365";
-        private const string OfficeATPValue = "OfficeATP";
-        private const string OfficeIRMValue = "OfficeIRM";
-        private const string Office365ProjectValue = "Office365Project";
-        private const string OfficePowerBIValue = "OfficePowerBI";
         private const string AmazonWebServicesCloudTrailValue = "AmazonWebServicesCloudTrail";
-        private const string AmazonWebServicesS3Value = "AmazonWebServicesS3";
         private const string AzureAdvancedThreatProtectionValue = "AzureAdvancedThreatProtection";
         private const string MicrosoftDefenderAdvancedThreatProtectionValue = "MicrosoftDefenderAdvancedThreatProtection";
-        private const string Dynamics365Value = "Dynamics365";
-        private const string MicrosoftThreatProtectionValue = "MicrosoftThreatProtection";
-        private const string MicrosoftThreatIntelligenceValue = "MicrosoftThreatIntelligence";
-        private const string GenericUIValue = "GenericUI";
-        private const string APIPollingValue = "APIPolling";
-        private const string IOTValue = "IOT";
 
         /// <summary> AzureActiveDirectory. </summary>
         public static DataConnectorKind AzureActiveDirectory { get; } = new DataConnectorKind(AzureActiveDirectoryValue);
@@ -51,38 +39,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static DataConnectorKind MicrosoftCloudAppSecurity { get; } = new DataConnectorKind(MicrosoftCloudAppSecurityValue);
         /// <summary> ThreatIntelligence. </summary>
         public static DataConnectorKind ThreatIntelligence { get; } = new DataConnectorKind(ThreatIntelligenceValue);
-        /// <summary> ThreatIntelligenceTaxii. </summary>
-        public static DataConnectorKind ThreatIntelligenceTaxii { get; } = new DataConnectorKind(ThreatIntelligenceTaxiiValue);
         /// <summary> Office365. </summary>
         public static DataConnectorKind Office365 { get; } = new DataConnectorKind(Office365Value);
-        /// <summary> OfficeATP. </summary>
-        public static DataConnectorKind OfficeATP { get; } = new DataConnectorKind(OfficeATPValue);
-        /// <summary> OfficeIRM. </summary>
-        public static DataConnectorKind OfficeIRM { get; } = new DataConnectorKind(OfficeIRMValue);
-        /// <summary> Office365Project. </summary>
-        public static DataConnectorKind Office365Project { get; } = new DataConnectorKind(Office365ProjectValue);
-        /// <summary> OfficePowerBI. </summary>
-        public static DataConnectorKind OfficePowerBI { get; } = new DataConnectorKind(OfficePowerBIValue);
         /// <summary> AmazonWebServicesCloudTrail. </summary>
         public static DataConnectorKind AmazonWebServicesCloudTrail { get; } = new DataConnectorKind(AmazonWebServicesCloudTrailValue);
-        /// <summary> AmazonWebServicesS3. </summary>
-        public static DataConnectorKind AmazonWebServicesS3 { get; } = new DataConnectorKind(AmazonWebServicesS3Value);
         /// <summary> AzureAdvancedThreatProtection. </summary>
         public static DataConnectorKind AzureAdvancedThreatProtection { get; } = new DataConnectorKind(AzureAdvancedThreatProtectionValue);
         /// <summary> MicrosoftDefenderAdvancedThreatProtection. </summary>
         public static DataConnectorKind MicrosoftDefenderAdvancedThreatProtection { get; } = new DataConnectorKind(MicrosoftDefenderAdvancedThreatProtectionValue);
-        /// <summary> Dynamics365. </summary>
-        public static DataConnectorKind Dynamics365 { get; } = new DataConnectorKind(Dynamics365Value);
-        /// <summary> MicrosoftThreatProtection. </summary>
-        public static DataConnectorKind MicrosoftThreatProtection { get; } = new DataConnectorKind(MicrosoftThreatProtectionValue);
-        /// <summary> MicrosoftThreatIntelligence. </summary>
-        public static DataConnectorKind MicrosoftThreatIntelligence { get; } = new DataConnectorKind(MicrosoftThreatIntelligenceValue);
-        /// <summary> GenericUI. </summary>
-        public static DataConnectorKind GenericUI { get; } = new DataConnectorKind(GenericUIValue);
-        /// <summary> APIPolling. </summary>
-        public static DataConnectorKind APIPolling { get; } = new DataConnectorKind(APIPollingValue);
-        /// <summary> IOT. </summary>
-        public static DataConnectorKind IOT { get; } = new DataConnectorKind(IOTValue);
         /// <summary> Determines if two <see cref="DataConnectorKind"/> values are the same. </summary>
         public static bool operator ==(DataConnectorKind left, DataConnectorKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataConnectorKind"/> values are not the same. </summary>
