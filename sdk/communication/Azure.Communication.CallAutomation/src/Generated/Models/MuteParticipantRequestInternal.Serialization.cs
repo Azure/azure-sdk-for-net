@@ -8,22 +8,22 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication.CallAutomation.Models
 {
-    public partial class MuteAllParticipantsRequest : IUtf8JsonSerializable
+    internal partial class MuteParticipantRequestInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(TargetParticipant))
+            {
+                writer.WritePropertyName("targetParticipant");
+                writer.WriteObjectValue(TargetParticipant);
+            }
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext");
                 writer.WriteStringValue(OperationContext);
-            }
-            if (Optional.IsDefined(RequestInitiator))
-            {
-                writer.WritePropertyName("requestInitiator");
-                writer.WriteObjectValue(RequestInitiator);
             }
             writer.WriteEndObject();
         }

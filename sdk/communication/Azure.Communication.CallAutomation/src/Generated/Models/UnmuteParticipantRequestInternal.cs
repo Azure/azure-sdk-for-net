@@ -9,15 +9,15 @@ using System;
 using Azure.Communication;
 using Azure.Core;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication.CallAutomation.Models
 {
     /// <summary> The request payload for adding participants to the call. </summary>
-    public partial class UnmuteParticipantRequest
+    internal partial class UnmuteParticipantRequestInternal
     {
-        /// <summary> Initializes a new instance of UnmuteParticipantRequest. </summary>
+        /// <summary> Initializes a new instance of UnmuteParticipantRequestInternal. </summary>
         /// <param name="targetParticipant"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
-        public UnmuteParticipantRequest(CommunicationIdentifierModel targetParticipant)
+        public UnmuteParticipantRequestInternal(CommunicationIdentifierModel targetParticipant)
         {
             Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
 

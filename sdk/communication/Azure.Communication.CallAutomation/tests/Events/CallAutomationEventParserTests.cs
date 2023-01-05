@@ -372,9 +372,9 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             var callConnectionId = "callConnectionId";
             var serverCallId = "serverCallId";
             var correlationId = "correlationId";
-            var participant1 = new CommunicationUserIdentifier("8:acs:12345");
-            var participant2 = new PhoneNumberIdentifier("+123456789");
-            var participants = new CommunicationIdentifier[] { participant1, participant2 };
+            var participant1 = new CallParticipant(new CommunicationUserIdentifier("8:acs:12345"), false);
+            var participant2 = new CallParticipant(new PhoneNumberIdentifier("+123456789"), false);
+            var participants = new CallParticipant[] { participant1, participant2 };
             var @event = CallAutomationModelFactory.ParticipantsUpdated(callConnectionId, serverCallId, correlationId, participants);
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
@@ -391,8 +391,10 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.IsNull(participantsUpdated.OperationContext);
                 Assert.IsNull(participantsUpdated.ResultInformation);
                 Assert.AreEqual(2, participantsUpdated.Participants.Count);
-                Assert.AreEqual("8:acs:12345", participantsUpdated.Participants[0].RawId);
-                Assert.IsTrue(participantsUpdated.Participants[1].RawId.EndsWith("123456789"));
+                Assert.AreEqual("8:acs:12345", participantsUpdated.Participants[0].Identifier.RawId);
+                Assert.IsFalse(participantsUpdated.Participants[0].IsMuted);
+                Assert.IsTrue(participantsUpdated.Participants[1].Identifier.RawId.EndsWith("123456789"));
+                Assert.IsFalse(participantsUpdated.Participants[1].IsMuted);
             }
             else
             {

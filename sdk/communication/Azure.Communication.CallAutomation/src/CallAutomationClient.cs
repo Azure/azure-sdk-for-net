@@ -60,7 +60,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         public CallAutomationClient(Uri pmaEndpoint, string connectionString, CallAutomationClientOptions options = default)
         : this(
-        pmaEndpoint,
+        pmaEndpoint.AbsoluteUri,
         options ?? new CallAutomationClientOptions(),
         ConnectionString.Parse(connectionString))
         { }
@@ -68,17 +68,17 @@ namespace Azure.Communication.CallAutomation
 
         #region private constructors
         private CallAutomationClient(ConnectionString connectionString, CallAutomationClientOptions options)
-            : this(new Uri(connectionString.GetRequired("endpoint")), options.BuildHttpPipeline(connectionString), options)
+            : this(connectionString.GetRequired("endpoint"), options.BuildHttpPipeline(connectionString), options)
         { }
 
         private CallAutomationClient(string endpoint, TokenCredential tokenCredential, CallAutomationClientOptions options)
-            : this(new Uri(endpoint), options.BuildHttpPipeline(tokenCredential), options)
+            : this(endpoint, options.BuildHttpPipeline(tokenCredential), options)
         { }
 
-        private CallAutomationClient(Uri endpoint, HttpPipeline httpPipeline, CallAutomationClientOptions options)
+        private CallAutomationClient(string endpoint, HttpPipeline httpPipeline, CallAutomationClientOptions options)
         {
             _pipeline = httpPipeline;
-            _resourceEndpoint = endpoint.AbsoluteUri;
+            _resourceEndpoint = endpoint;
             _clientDiagnostics = new ClientDiagnostics(options);
             ServerCallingRestClient = new ServerCallingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             CallConnectionsRestClient = new CallConnectionsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
@@ -86,7 +86,7 @@ namespace Azure.Communication.CallAutomation
             ServerCallsRestClient = new ServerCallsRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
         }
 
-        private CallAutomationClient(Uri endpoint, CallAutomationClientOptions options, ConnectionString connectionString)
+        private CallAutomationClient(string endpoint, CallAutomationClientOptions options, ConnectionString connectionString)
         : this(
         endpoint: endpoint,
         httpPipeline: options.CustomBuildHttpPipeline(connectionString),

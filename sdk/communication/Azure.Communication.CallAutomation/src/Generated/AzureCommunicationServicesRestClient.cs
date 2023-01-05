@@ -10,6 +10,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Communication.CallAutomation.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -38,7 +39,7 @@ namespace Azure.Communication.CallAutomation
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateCallingCallConnectionsMuteAllRequest(string callConnectionId, MuteAllParticipantsRequest muteAllParticipantsRequest, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
+        internal HttpMessage CreateCallingCallConnectionsMuteAllRequest(string callConnectionId, MuteAllParticipantsRequestInternal muteAllParticipantsRequest, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -74,7 +75,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="muteAllParticipantsRequest"/> is null. </exception>
         /// <remarks> Remove participant from the call using identifier. </remarks>
-        public async Task<Response<MuteParticipantsResponse>> CallingCallConnectionsMuteAllAsync(string callConnectionId, MuteAllParticipantsRequest muteAllParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MuteParticipantsResponse>> CallingCallConnectionsMuteAllAsync(string callConnectionId, MuteAllParticipantsRequestInternal muteAllParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -109,7 +110,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="muteAllParticipantsRequest"/> is null. </exception>
         /// <remarks> Remove participant from the call using identifier. </remarks>
-        public Response<MuteParticipantsResponse> CallingCallConnectionsMuteAll(string callConnectionId, MuteAllParticipantsRequest muteAllParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public Response<MuteParticipantsResponse> CallingCallConnectionsMuteAll(string callConnectionId, MuteAllParticipantsRequestInternal muteAllParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -234,7 +235,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateCallingCallConnectionsMuteRequest(string callConnectionId, MuteParticipantRequest muteParticipantsRequest, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
+        internal HttpMessage CreateCallingCallConnectionsMuteRequest(string callConnectionId, MuteParticipantRequestInternal muteParticipantsRequest, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -270,7 +271,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="muteParticipantsRequest"/> is null. </exception>
         /// <remarks> Remove participant from the call using identifier. </remarks>
-        public async Task<Response<MuteParticipantsResponse>> CallingCallConnectionsMuteAsync(string callConnectionId, MuteParticipantRequest muteParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public async Task<Response<MuteParticipantsResponse>> CallingCallConnectionsMuteAsync(string callConnectionId, MuteParticipantRequestInternal muteParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -305,7 +306,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="muteParticipantsRequest"/> is null. </exception>
         /// <remarks> Remove participant from the call using identifier. </remarks>
-        public Response<MuteParticipantsResponse> CallingCallConnectionsMute(string callConnectionId, MuteParticipantRequest muteParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public Response<MuteParticipantsResponse> CallingCallConnectionsMute(string callConnectionId, MuteParticipantRequestInternal muteParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -332,7 +333,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateCallingCallConnectionsUnmuteRequest(string callConnectionId, UnmuteParticipantRequest unmuteParticipantsRequest, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
+        internal HttpMessage CreateCallingCallConnectionsUnmuteRequest(string callConnectionId, UnmuteParticipantRequestInternal unmuteParticipantsRequest, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -368,7 +369,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unmuteParticipantsRequest"/> is null. </exception>
         /// <remarks> Remove participant from the call using identifier. </remarks>
-        public async Task<Response<UnmuteParticipantsResponse>> CallingCallConnectionsUnmuteAsync(string callConnectionId, UnmuteParticipantRequest unmuteParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public async Task<Response<UnmuteParticipantsResponse>> CallingCallConnectionsUnmuteAsync(string callConnectionId, UnmuteParticipantRequestInternal unmuteParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -403,7 +404,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unmuteParticipantsRequest"/> is null. </exception>
         /// <remarks> Remove participant from the call using identifier. </remarks>
-        public Response<UnmuteParticipantsResponse> CallingCallConnectionsUnmute(string callConnectionId, UnmuteParticipantRequest unmuteParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public Response<UnmuteParticipantsResponse> CallingCallConnectionsUnmute(string callConnectionId, UnmuteParticipantRequestInternal unmuteParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
