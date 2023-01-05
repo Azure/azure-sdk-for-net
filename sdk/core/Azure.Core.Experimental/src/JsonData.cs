@@ -103,7 +103,9 @@ namespace Azure.Core.Dynamic
         {
             // this is so we can add JSON Patch in the future
             if (format != default)
+            {
                 throw new ArgumentOutOfRangeException(nameof(format));
+            }
 
             Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             if (_changes == null || _changes.Count == 0)

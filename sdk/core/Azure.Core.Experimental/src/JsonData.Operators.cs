@@ -97,12 +97,11 @@ namespace Azure.Core.Dynamic
         }
 
         /// <summary>
-        /// Returns false if a <see cref="JsonData"/> has the same value as a given bool,
-        /// and true otherwise.
+        /// Determines whether a given <see cref="JsonData"/> has a different value from a given bool.
         /// </summary>
         /// <param name="left">The <see cref="JsonData"/> to compare.</param>
         /// <param name="right">The <see cref="bool"/> to compare.</param>
-        /// <returns>False if the given JsonData represents the given bool, and false otherwise</returns>
+        /// <returns><c>true</c> if the value of <paramref name="left"/> is different from the value of <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         public static bool operator !=(JsonData? left, bool right) => !(left == right);
 
         /// <summary>
@@ -124,12 +123,11 @@ namespace Azure.Core.Dynamic
         }
 
         /// <summary>
-        /// Returns false if a <see cref="JsonData"/> has the same value as a given bool,
-        /// and true otherwise.
+        /// Determines whether a given <see cref="JsonData"/> has a different value from a given bool.
         /// </summary>
         /// <param name="left">The <see cref="bool"/> to compare.</param>
         /// <param name="right">The <see cref="JsonData"/> to compare.</param>
-        /// <returns>False if the given JsonData represents the given bool, and false otherwise</returns>
+        /// <returns><c>true</c> if the value of <paramref name="left"/> is different from the value of <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         public static bool operator !=(bool left, JsonData? right) => !(left == right);
 
         /// <summary>
@@ -150,12 +148,11 @@ namespace Azure.Core.Dynamic
         }
 
         /// <summary>
-        /// Returns false if a <see cref="JsonData"/> has the same value as a given int,
-        /// and true otherwise.
+        /// Determines whether a given <see cref="JsonData"/> has a different value from a given int.
         /// </summary>
         /// <param name="left">The <see cref="JsonData"/> to compare.</param>
         /// <param name="right">The <see cref="int"/> to compare.</param>
-        /// <returns>False if the given JsonData represents the given int, and false otherwise</returns>
+        /// <returns><c>true</c> if the value of <paramref name="left"/> is different from the value of <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         public static bool operator !=(JsonData? left, int right) => !(left == right);
 
         /// <summary>
@@ -202,12 +199,11 @@ namespace Azure.Core.Dynamic
         }
 
         /// <summary>
-        /// Returns false if a <see cref="JsonData"/> has the same value as a given long,
-        /// and true otherwise.
+        /// Determines whether a given <see cref="JsonData"/> has a different value from a given long.
         /// </summary>
         /// <param name="left">The <see cref="JsonData"/> to compare.</param>
         /// <param name="right">The <see cref="long"/> to compare.</param>
-        /// <returns>False if the given JsonData represents the given long, and false otherwise</returns>
+        /// <returns><c>true</c> if the value of <paramref name="left"/> is different from the value of <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         public static bool operator !=(JsonData? left, long right) => !(left == right);
 
         /// <summary>
@@ -228,12 +224,11 @@ namespace Azure.Core.Dynamic
         }
 
         /// <summary>
-        /// Returns false if a <see cref="JsonData"/> has the same value as a given long,
-        /// and true otherwise.
+        /// Determines whether a given <see cref="JsonData"/> has a different value from a given long.
         /// </summary>
         /// <param name="left">The <see cref="long"/> to compare.</param>
         /// <param name="right">The <see cref="JsonData"/> to compare.</param>
-        /// <returns>False if the given JsonData represents the given long, and false otherwise</returns>
+        /// <returns><c>true</c> if the value of <paramref name="left"/> is different from the value of <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         public static bool operator !=(long left, JsonData? right) => !(left == right);
 
         /// <summary>
@@ -259,12 +254,11 @@ namespace Azure.Core.Dynamic
         }
 
         /// <summary>
-        /// Returns false if a <see cref="JsonData"/> has the same value as a given string,
-        /// and true otherwise.
+        /// Determines whether a given <see cref="JsonData"/> has a different value from a given string.
         /// </summary>
         /// <param name="left">The <see cref="JsonData"/> to compare.</param>
         /// <param name="right">The <see cref="string"/> to compare.</param>
-        /// <returns>False if the given JsonData represents the given string, and false otherwise</returns>
+        /// <returns><c>true</c> if the value of <paramref name="left"/> is different from the value of <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         public static bool operator !=(JsonData? left, string? right) => !(left == right);
 
         /// <summary>
@@ -290,12 +284,11 @@ namespace Azure.Core.Dynamic
         }
 
         /// <summary>
-        /// Returns false if a <see cref="JsonData"/> has the same value as a given string,
-        /// and true otherwise.
+        /// Determines whether a given <see cref="JsonData"/> has a different value from a given string.
         /// </summary>
         /// <param name="left">The <see cref="string"/> to compare.</param>
         /// <param name="right">The <see cref="JsonData"/> to compare.</param>
-        /// <returns>False if the given JsonData represents the given string, and false otherwise</returns>
+        /// <returns><c>true</c> if the value of <paramref name="left"/> is different from the value of <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         public static bool operator !=(string? left, JsonData? right) => !(left == right);
 
         /// <summary>
@@ -316,12 +309,11 @@ namespace Azure.Core.Dynamic
         }
 
         /// <summary>
-        /// Returns false if a <see cref="JsonData"/> has the same value as a given float,
-        /// and true otherwise.
+        /// Determines whether a given <see cref="JsonData"/> has a different value from a given float.
         /// </summary>
         /// <param name="left">The <see cref="JsonData"/> to compare.</param>
         /// <param name="right">The <see cref="float"/> to compare.</param>
-        /// <returns>False if the given JsonData represents the given string, and false otherwise</returns>
+        /// <returns><c>true</c> if the value of <paramref name="left"/> is different from the value of <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         public static bool operator !=(JsonData? left, float right) => !(left == right);
 
         /// <summary>
@@ -342,12 +334,11 @@ namespace Azure.Core.Dynamic
         }
 
         /// <summary>
-        /// Returns false if a <see cref="JsonData"/> has the same value as a given float,
-        /// and true otherwise.
+        /// Determines whether a given <see cref="JsonData"/> has a different value from a given float.
         /// </summary>
         /// <param name="left">The <see cref="float"/> to compare.</param>
         /// <param name="right">The <see cref="JsonData"/> to compare.</param>
-        /// <returns>False if the given JsonData represents the given float, and false otherwise</returns>
+        /// <returns><c>true</c> if the value of <paramref name="left"/> is different from the value of <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         public static bool operator !=(float left, JsonData? right) => !(left == right);
 
         /// <summary>
@@ -368,12 +359,11 @@ namespace Azure.Core.Dynamic
         }
 
         /// <summary>
-        /// Returns false if a <see cref="JsonData"/> has the same value as a given double,
-        /// and true otherwise.
+        /// Determines whether a given <see cref="JsonData"/> has a different value from a given double.
         /// </summary>
         /// <param name="left">The <see cref="JsonData"/> to compare.</param>
         /// <param name="right">The <see cref="double"/> to compare.</param>
-        /// <returns>False if the given JsonData represents the given string, and false otherwise</returns>
+        /// <returns><c>true</c> if the value of <paramref name="left"/> is different from the value of <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         public static bool operator !=(JsonData? left, double right) => !(left == right);
 
         /// <summary>
@@ -394,12 +384,11 @@ namespace Azure.Core.Dynamic
         }
 
         /// <summary>
-        /// Returns false if a <see cref="JsonData"/> has the same value as a given double,
-        /// and true otherwise.
+        /// Determines whether a given <see cref="JsonData"/> has a different value from a given double.
         /// </summary>
         /// <param name="left">The <see cref="double"/> to compare.</param>
         /// <param name="right">The <see cref="JsonData"/> to compare.</param>
-        /// <returns>False if the given JsonData represents the given double, and false otherwise</returns>
+        /// <returns><c>true</c> if the value of <paramref name="left"/> is different from the value of <paramref name="right"/>; otherwise, <c>false</c>.</returns>
         public static bool operator !=(double left, JsonData? right) => !(left == right);
     }
 }
