@@ -30,6 +30,22 @@ namespace Azure.Communication.CallAutomation
             return new RemoveParticipantsResult(operationContext);
         }
 
+        /// <summary> Initializes a new instance of MuteParticipantsResponse. </summary>
+        /// <param name="operationContext"> The operation context provided by client. </param>
+        /// <returns> A new <see cref="CallAutomation.MuteParticipantsResponse"/> instance for mocking. </returns>
+        public static MuteParticipantsResponse MuteParticipantsResponse(string operationContext = null)
+        {
+            return new MuteParticipantsResponse(operationContext);
+        }
+
+        /// <summary> Initializes a new instance of UnmuteParticipantsResponse. </summary>
+        /// <param name="operationContext"> The operation context provided by client. </param>
+        /// <returns> A new <see cref="CallAutomation.UnmuteParticipantsResponse"/> instance for mocking. </returns>
+        public static UnmuteParticipantsResponse UnmuteParticipantsResponse(string operationContext = null)
+        {
+            return new UnmuteParticipantsResponse(operationContext);
+        }
+
         /// <summary> Initializes a new instance of RecordingStateResult. </summary>
         /// <param name="recordingId"></param>
         /// <param name="recordingState"></param>
@@ -174,7 +190,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of ChoiceResult. </summary>
         /// <param name="label"> Label is the primary identifier for the choice detected. </param>
         /// <param name="recognizedPhrase">
-        /// Phrases are set to the value if choice is selected via phrase detection.
+        /// Phrases are set to the value if choice is seletected via phrase detection.
         /// If Dtmf input is recognized, then Label will be the identifier for the choice detected and phrases will be set to null
         /// </param>
         /// <returns> A new <see cref="CallAutomation.ChoiceResult"/> instance for mocking. </returns>
