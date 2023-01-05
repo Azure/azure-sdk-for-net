@@ -891,7 +891,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new SeasonalFieldsClient(endpoint, credential);
 
-var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<farmerId>", "<seasonalFieldId>");
+var operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Started, "<jobId>", "<farmerId>", "<seasonalFieldId>");
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -949,7 +949,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new SeasonalFieldsClient(endpoint, credential);
 
-var operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<farmerId>", "<seasonalFieldId>");
+var operation = client.CreateCascadeDeleteJob(WaitUntil.Started, "<jobId>", "<farmerId>", "<seasonalFieldId>");
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
