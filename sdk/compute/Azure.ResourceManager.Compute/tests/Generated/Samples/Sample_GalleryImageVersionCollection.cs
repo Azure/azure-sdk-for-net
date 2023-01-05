@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateASimpleGalleryImageVersionUsingVMAsSource()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Create_WithVmAsSource.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryImageVersion_Create_WithVmAsSource.json
             // this example is just showing the usage of "GalleryImageVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -71,6 +71,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
+IsExcludedFromLatest = false,
 },new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
@@ -92,15 +93,119 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
+IsExcludedFromLatest = false,
 }
 },
                 },
                 StorageProfile = new GalleryImageVersionStorageProfile()
                 {
-                    Source = new GalleryArtifactVersionSource()
+                    GallerySource = new GalleryArtifactVersionFullSource()
                     {
                         Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/{vmName}"),
                     },
+                },
+                SafetyProfile = new GalleryImageVersionSafetyProfile()
+                {
+                    AllowDeletionOfReplicatedLocations = false,
+                },
+            };
+            ArmOperation<GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
+            GalleryImageVersionResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            GalleryImageVersionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Create or update a simple Gallery Image Version using community gallery image as source.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_CreateOrUpdateASimpleGalleryImageVersionUsingCommunityGalleryImageAsSource()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryImageVersion_Create_WithCommunityImageVersionAsSource.json
+            // this example is just showing the usage of "GalleryImageVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // authenticate your client
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+
+            // this example assumes you already have this GalleryImageResource created on azure
+            // for more information of creating GalleryImageResource, please refer to the document of GalleryImageResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string galleryName = "myGalleryName";
+            string galleryImageName = "myGalleryImageName";
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+
+            // get the collection of this GalleryImageVersionResource
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+
+            // invoke the operation
+            string galleryImageVersionName = "1.0.0";
+            GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
+            {
+                PublishingProfile = new GalleryImageVersionPublishingProfile()
+                {
+                    TargetRegions =
+{
+new TargetRegion("West US")
+{
+RegionalReplicaCount = 1,
+Encryption = new EncryptionImages()
+{
+OSDiskImage = new OSDiskImageEncryption()
+{
+DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
+},
+DataDiskImages =
+{
+new DataDiskImageEncryption(0)
+{
+DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherWestUSDiskEncryptionSet"),
+},new DataDiskImageEncryption(1)
+{
+DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
+}
+},
+},
+IsExcludedFromLatest = false,
+},new TargetRegion("East US")
+{
+RegionalReplicaCount = 2,
+StorageAccountType = ImageStorageAccountType.StandardZrs,
+Encryption = new EncryptionImages()
+{
+OSDiskImage = new OSDiskImageEncryption()
+{
+DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
+},
+DataDiskImages =
+{
+new DataDiskImageEncryption(0)
+{
+DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherEastUSDiskEncryptionSet"),
+},new DataDiskImageEncryption(1)
+{
+DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
+}
+},
+},
+IsExcludedFromLatest = false,
+}
+},
+                },
+                StorageProfile = new GalleryImageVersionStorageProfile()
+                {
+                    GallerySource = new GalleryArtifactVersionFullSource()
+                    {
+                        CommunityGalleryImageId = "/communityGalleries/{communityGalleryName}/images/{communityGalleryImageName}",
+                    },
+                },
+                SafetyProfile = new GalleryImageVersionSafetyProfile()
+                {
+                    AllowDeletionOfReplicatedLocations = false,
                 },
             };
             ArmOperation<GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
@@ -118,7 +223,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateASimpleGalleryImageVersionUsingManagedImageAsSource()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Create.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryImageVersion_Create.json
             // this example is just showing the usage of "GalleryImageVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -166,6 +271,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
+IsExcludedFromLatest = false,
 },new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
@@ -187,15 +293,20 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
+IsExcludedFromLatest = false,
 }
 },
                 },
                 StorageProfile = new GalleryImageVersionStorageProfile()
                 {
-                    Source = new GalleryArtifactVersionSource()
+                    GallerySource = new GalleryArtifactVersionFullSource()
                     {
                         Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}"),
                     },
+                },
+                SafetyProfile = new GalleryImageVersionSafetyProfile()
+                {
+                    AllowDeletionOfReplicatedLocations = false,
                 },
             };
             ArmOperation<GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
@@ -213,7 +324,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateASimpleGalleryImageVersionUsingMixOfDisksAndSnapshotsAsASource()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Create_WithSnapshotsAsSource.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryImageVersion_Create_WithSnapshotsAsSource.json
             // this example is just showing the usage of "GalleryImageVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -258,6 +369,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
+IsExcludedFromLatest = false,
 },new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
@@ -276,6 +388,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
+IsExcludedFromLatest = false,
 }
 },
                 },
@@ -284,7 +397,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
                     OSDiskImage = new GalleryOSDiskImage()
                     {
                         HostCaching = HostCaching.ReadOnly,
-                        Source = new GalleryArtifactVersionSource()
+                        GallerySource = new GalleryDiskImageSource()
                         {
                             Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/snapshots/{osSnapshotName}"),
                         },
@@ -294,12 +407,16 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 new GalleryDataDiskImage(1)
 {
 HostCaching = HostCaching.None,
-Source = new GalleryArtifactVersionSource()
+GallerySource = new GalleryDiskImageSource()
 {
 Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/disks/{dataDiskName}"),
 },
 }
 },
+                },
+                SafetyProfile = new GalleryImageVersionSafetyProfile()
+                {
+                    AllowDeletionOfReplicatedLocations = false,
                 },
             };
             ArmOperation<GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
@@ -317,7 +434,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateASimpleGalleryImageVersionUsingShallowReplicationMode()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Create_WithShallowReplicationMode.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryImageVersion_Create_WithShallowReplicationMode.json
             // this example is just showing the usage of "GalleryImageVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -348,16 +465,21 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
 new TargetRegion("West US")
 {
 RegionalReplicaCount = 1,
+IsExcludedFromLatest = false,
 }
 },
                     ReplicationMode = GalleryReplicationMode.Shallow,
                 },
                 StorageProfile = new GalleryImageVersionStorageProfile()
                 {
-                    Source = new GalleryArtifactVersionSource()
+                    GallerySource = new GalleryArtifactVersionFullSource()
                     {
                         Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}"),
                     },
+                },
+                SafetyProfile = new GalleryImageVersionSafetyProfile()
+                {
+                    AllowDeletionOfReplicatedLocations = false,
                 },
             };
             ArmOperation<GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
@@ -375,7 +497,7 @@ RegionalReplicaCount = 1,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateASimpleGalleryImageVersionUsingSharedImageAsSource()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Create_WithImageVersionAsSource.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryImageVersion_Create_WithImageVersionAsSource.json
             // this example is just showing the usage of "GalleryImageVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -423,6 +545,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
+IsExcludedFromLatest = false,
 },new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
@@ -444,15 +567,20 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
+IsExcludedFromLatest = false,
 }
 },
                 },
                 StorageProfile = new GalleryImageVersionStorageProfile()
                 {
-                    Source = new GalleryArtifactVersionSource()
+                    GallerySource = new GalleryArtifactVersionFullSource()
                     {
                         Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{versionName}"),
                     },
+                },
+                SafetyProfile = new GalleryImageVersionSafetyProfile()
+                {
+                    AllowDeletionOfReplicatedLocations = false,
                 },
             };
             ArmOperation<GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
@@ -470,7 +598,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateASimpleGalleryImageVersionUsingSnapshotsAsASource()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Create_WithSnapshotsAsSource.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryImageVersion_Create_WithSnapshotsAsSource.json
             // this example is just showing the usage of "GalleryImageVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -515,6 +643,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
+IsExcludedFromLatest = false,
 },new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
@@ -533,6 +662,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
+IsExcludedFromLatest = false,
 }
 },
                 },
@@ -541,7 +671,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
                     OSDiskImage = new GalleryOSDiskImage()
                     {
                         HostCaching = HostCaching.ReadOnly,
-                        Source = new GalleryArtifactVersionSource()
+                        GallerySource = new GalleryDiskImageSource()
                         {
                             Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/snapshots/{osSnapshotName}"),
                         },
@@ -551,12 +681,16 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 new GalleryDataDiskImage(1)
 {
 HostCaching = HostCaching.None,
-Source = new GalleryArtifactVersionSource()
+GallerySource = new GalleryDiskImageSource()
 {
 Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/disks/{dataDiskName}"),
 },
 }
 },
+                },
+                SafetyProfile = new GalleryImageVersionSafetyProfile()
+                {
+                    AllowDeletionOfReplicatedLocations = false,
                 },
             };
             ArmOperation<GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
@@ -574,7 +708,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateASimpleGalleryImageVersionUsingVhdAsASource()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Create_WithVHD.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryImageVersion_Create_WithVHD.json
             // this example is just showing the usage of "GalleryImageVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -619,10 +753,12 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
+IsExcludedFromLatest = false,
 },new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
 StorageAccountType = ImageStorageAccountType.StandardZrs,
+IsExcludedFromLatest = false,
 }
 },
                 },
@@ -631,10 +767,10 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
                     OSDiskImage = new GalleryOSDiskImage()
                     {
                         HostCaching = HostCaching.ReadOnly,
-                        Source = new GalleryArtifactVersionSource()
+                        GallerySource = new GalleryDiskImageSource()
                         {
-                            Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/{storageAccount}"),
                             Uri = new Uri("https://gallerysourcencus.blob.core.windows.net/myvhds/Windows-Server-2012-R2-20171216-en.us-128GB.vhd"),
+                            Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/{storageAccount}"),
                         },
                     },
                     DataDiskImages =
@@ -642,13 +778,17 @@ StorageAccountType = ImageStorageAccountType.StandardZrs,
 new GalleryDataDiskImage(1)
 {
 HostCaching = HostCaching.None,
-Source = new GalleryArtifactVersionSource()
+GallerySource = new GalleryDiskImageSource()
 {
-Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/{storageAccount}"),
 Uri = new Uri("https://gallerysourcencus.blob.core.windows.net/myvhds/Windows-Server-2012-R2-20171216-en.us-128GB.vhd"),
+Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/{storageAccount}"),
 },
 }
 },
+                },
+                SafetyProfile = new GalleryImageVersionSafetyProfile()
+                {
+                    AllowDeletionOfReplicatedLocations = false,
                 },
             };
             ArmOperation<GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
@@ -666,7 +806,7 @@ Uri = new Uri("https://gallerysourcencus.blob.core.windows.net/myvhds/Windows-Se
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateASimpleGalleryImageVersionWithTargetExtendedLocationsSpecified()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Create_WithTargetExtendedLocations.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryImageVersion_Create_WithTargetExtendedLocations.json
             // this example is just showing the usage of "GalleryImageVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -714,6 +854,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
+IsExcludedFromLatest = false,
 },new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
@@ -735,15 +876,20 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
 },
+IsExcludedFromLatest = false,
 }
 },
                 },
                 StorageProfile = new GalleryImageVersionStorageProfile()
                 {
-                    Source = new GalleryArtifactVersionSource()
+                    GallerySource = new GalleryArtifactVersionFullSource()
                     {
                         Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}"),
                     },
+                },
+                SafetyProfile = new GalleryImageVersionSafetyProfile()
+                {
+                    AllowDeletionOfReplicatedLocations = false,
                 },
             };
             ArmOperation<GalleryImageVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryImageVersionName, data);
@@ -761,7 +907,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAGalleryImageVersionWithReplicationStatus()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Get_WithReplicationStatus.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryImageVersion_Get_WithReplicationStatus.json
             // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -798,7 +944,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAGalleryImageVersionWithReplicationStatus()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Get_WithReplicationStatus.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryImageVersion_Get_WithReplicationStatus.json
             // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -831,7 +977,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAGalleryImageVersionWithSnapshotsAsASource()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Get_WithSnapshotsAsSource.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryImageVersion_Get_WithSnapshotsAsSource.json
             // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -867,7 +1013,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAGalleryImageVersionWithSnapshotsAsASource()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Get_WithSnapshotsAsSource.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryImageVersion_Get_WithSnapshotsAsSource.json
             // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -899,7 +1045,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAGalleryImageVersionWithVhdAsASource()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Get_WithVhdAsSource.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryImageVersion_Get_WithVhdAsSource.json
             // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -935,7 +1081,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAGalleryImageVersionWithVhdAsASource()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Get_WithVhdAsSource.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryImageVersion_Get_WithVhdAsSource.json
             // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -967,7 +1113,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAGalleryImageVersion()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryImageVersion_Get.json
             // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1003,7 +1149,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAGalleryImageVersion()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryImageVersion_Get.json
             // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1035,7 +1181,7 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListGalleryImageVersionsInAGalleryImageDefinition()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryImageVersion_ListByGalleryImage.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryImageVersion_ListByGalleryImage.json
             // this example is just showing the usage of "GalleryImageVersions_ListByGalleryImage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
