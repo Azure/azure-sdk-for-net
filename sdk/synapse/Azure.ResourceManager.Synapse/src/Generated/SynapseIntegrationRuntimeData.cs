@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,17 +16,10 @@ namespace Azure.ResourceManager.Synapse
     public partial class SynapseIntegrationRuntimeData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeData. </summary>
-        /// <param name="properties">
-        /// Integration runtime properties.
-        /// Please note <see cref="SynapseIntegrationRuntimeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseManagedIntegrationRuntime"/> and <see cref="SynapseSelfHostedIntegrationRuntime"/>.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public SynapseIntegrationRuntimeData(SynapseIntegrationRuntimeProperties properties)
+        /// <param name="typePropertiesType"> Type of integration runtime. </param>
+        public SynapseIntegrationRuntimeData(IntegrationRuntimeType typePropertiesType)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
-
-            Properties = properties;
+            TypePropertiesType = typePropertiesType;
         }
 
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeData. </summary>
@@ -35,24 +27,20 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Integration runtime properties.
-        /// Please note <see cref="SynapseIntegrationRuntimeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseManagedIntegrationRuntime"/> and <see cref="SynapseSelfHostedIntegrationRuntime"/>.
-        /// </param>
+        /// <param name="typePropertiesType"> Type of integration runtime. </param>
+        /// <param name="description"> Integration runtime description. </param>
         /// <param name="etag"> Resource Etag. </param>
-        internal SynapseIntegrationRuntimeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SynapseIntegrationRuntimeProperties properties, ETag? etag) : base(id, name, resourceType, systemData)
+        internal SynapseIntegrationRuntimeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IntegrationRuntimeType typePropertiesType, string description, ETag? etag) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
+            TypePropertiesType = typePropertiesType;
+            Description = description;
             ETag = etag;
         }
 
-        /// <summary>
-        /// Integration runtime properties.
-        /// Please note <see cref="SynapseIntegrationRuntimeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseManagedIntegrationRuntime"/> and <see cref="SynapseSelfHostedIntegrationRuntime"/>.
-        /// </summary>
-        public SynapseIntegrationRuntimeProperties Properties { get; set; }
+        /// <summary> Type of integration runtime. </summary>
+        internal IntegrationRuntimeType TypePropertiesType { get; set; }
+        /// <summary> Integration runtime description. </summary>
+        public string Description { get; set; }
         /// <summary> Resource Etag. </summary>
         public ETag? ETag { get; }
     }

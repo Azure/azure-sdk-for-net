@@ -19,25 +19,29 @@ namespace Azure.ResourceManager.Synapse
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
-            writer.WriteObjectValue(Properties);
+            writer.WriteStartObject();
+            writer.WritePropertyName("type");
+            writer.WriteStringValue(TypePropertiesType.ToString());
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description");
+                writer.WriteStringValue(Description);
+            }
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static SynapseIntegrationRuntimeData DeserializeSynapseIntegrationRuntimeData(JsonElement element)
         {
-            SynapseIntegrationRuntimeProperties properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            IntegrationRuntimeType type0 = default;
+            Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
-                {
-                    properties = SynapseIntegrationRuntimeProperties.DeserializeSynapseIntegrationRuntimeProperties(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("etag"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -73,8 +77,30 @@ namespace Azure.ResourceManager.Synapse
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("type"))
+                        {
+                            type0 = new IntegrationRuntimeType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("description"))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
             }
-            return new SynapseIntegrationRuntimeData(id, name, type, systemData.Value, properties, Optional.ToNullable(etag));
+            return new SynapseIntegrationRuntimeData(id, name, type, systemData.Value, type0, description.Value, Optional.ToNullable(etag));
         }
     }
 }

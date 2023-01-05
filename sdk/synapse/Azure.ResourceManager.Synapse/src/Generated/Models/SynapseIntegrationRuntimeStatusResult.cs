@@ -5,48 +5,38 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> Integration runtime status response. </summary>
     public partial class SynapseIntegrationRuntimeStatusResult
     {
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeStatusResult. </summary>
-        /// <param name="properties">
-        /// Integration runtime properties.
-        /// Please note <see cref="SynapseIntegrationRuntimeStatus"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseManagedIntegrationRuntimeStatus"/> and <see cref="SynapseSelfHostedIntegrationRuntimeStatus"/>.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        internal SynapseIntegrationRuntimeStatusResult(SynapseIntegrationRuntimeStatus properties)
+        /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
+        internal SynapseIntegrationRuntimeStatusResult(IntegrationRuntimeType integrationRuntimeType)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
-
-            Properties = properties;
+            IntegrationRuntimeType = integrationRuntimeType;
         }
 
         /// <summary> Initializes a new instance of SynapseIntegrationRuntimeStatusResult. </summary>
         /// <param name="name"> The integration runtime name. </param>
-        /// <param name="properties">
-        /// Integration runtime properties.
-        /// Please note <see cref="SynapseIntegrationRuntimeStatus"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseManagedIntegrationRuntimeStatus"/> and <see cref="SynapseSelfHostedIntegrationRuntimeStatus"/>.
-        /// </param>
-        internal SynapseIntegrationRuntimeStatusResult(string name, SynapseIntegrationRuntimeStatus properties)
+        /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
+        /// <param name="dataFactoryName"> The workspace name which the integration runtime belong to. </param>
+        /// <param name="state"> The state of integration runtime. </param>
+        internal SynapseIntegrationRuntimeStatusResult(string name, IntegrationRuntimeType integrationRuntimeType, string dataFactoryName, SynapseIntegrationRuntimeState? state)
         {
             Name = name;
-            Properties = properties;
+            IntegrationRuntimeType = integrationRuntimeType;
+            DataFactoryName = dataFactoryName;
+            State = state;
         }
 
         /// <summary> The integration runtime name. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Integration runtime properties.
-        /// Please note <see cref="SynapseIntegrationRuntimeStatus"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SynapseManagedIntegrationRuntimeStatus"/> and <see cref="SynapseSelfHostedIntegrationRuntimeStatus"/>.
-        /// </summary>
-        public SynapseIntegrationRuntimeStatus Properties { get; }
+        /// <summary> Type of integration runtime. </summary>
+        internal IntegrationRuntimeType IntegrationRuntimeType { get; set; }
+        /// <summary> The workspace name which the integration runtime belong to. </summary>
+        public string DataFactoryName { get; }
+        /// <summary> The state of integration runtime. </summary>
+        public SynapseIntegrationRuntimeState? State { get; }
     }
 }

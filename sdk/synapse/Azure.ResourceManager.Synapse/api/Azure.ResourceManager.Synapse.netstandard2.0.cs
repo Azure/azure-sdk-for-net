@@ -121,8 +121,8 @@ namespace Azure.ResourceManager.Synapse
         public virtual Azure.Response<Azure.ResourceManager.Synapse.SynapseBigDataPoolInfoResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseBigDataPoolInfoResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string bigDataPoolName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseBigDataPoolInfoResource> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseBigDataPoolInfoResource>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Synapse.SynapseBigDataPoolInfoResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseBigDataPoolInfoResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Synapse.SynapseBigDataPoolInfoResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -652,9 +652,9 @@ namespace Azure.ResourceManager.Synapse
     }
     public partial class SynapseIntegrationRuntimeData : Azure.ResourceManager.Models.ResourceData
     {
-        public SynapseIntegrationRuntimeData(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeProperties properties) { }
+        public SynapseIntegrationRuntimeData(Azure.ResourceManager.Synapse.Models.IntegrationRuntimeType typePropertiesType) { }
+        public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
-        public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeProperties Properties { get { throw null; } set { } }
     }
     public partial class SynapseIntegrationRuntimeResource : Azure.ResourceManager.ArmResource
     {
@@ -689,6 +689,12 @@ namespace Azure.ResourceManager.Synapse
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatusResult>> GetIntegrationRuntimeStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependenciesEndpoints(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Synapse.Models.IntegrationRuntimeEnableinteractivequery> IntegrationRuntimeEnableInteractivequeryGet(string integrationRuntimeOperationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.Models.IntegrationRuntimeEnableinteractivequery>> IntegrationRuntimeEnableInteractivequeryGetAsync(string integrationRuntimeOperationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Synapse.Models.IntegrationRuntimeOperationStatus> IntegrationRuntimeStartGet(string integrationRuntimeOperationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.Models.IntegrationRuntimeOperationStatus>> IntegrationRuntimeStartGetAsync(string integrationRuntimeOperationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Synapse.Models.IntegrationRuntimeStopOperationStatus> IntegrationRuntimeStopGet(string integrationRuntimeOperationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.Models.IntegrationRuntimeStopOperationStatus>> IntegrationRuntimeStopGetAsync(string integrationRuntimeOperationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadataStatusResult> RefreshIntegrationRuntimeObjectMetadata(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadataStatusResult>> RefreshIntegrationRuntimeObjectMetadataAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAuthKeys> RegenerateIntegrationRuntimeAuthKey(Azure.ResourceManager.Synapse.Models.IntegrationRuntimeRegenerateKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -735,8 +741,8 @@ namespace Azure.ResourceManager.Synapse
         public virtual Azure.ResourceManager.Synapse.SynapseIPFirewallRuleInfoData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string ruleName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseIPFirewallRuleInfoResource> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseIPFirewallRuleInfoResource>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Synapse.SynapseIPFirewallRuleInfoResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseIPFirewallRuleInfoResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseIPFirewallRuleInfoResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.SynapseIPFirewallRuleInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -831,6 +837,8 @@ namespace Azure.ResourceManager.Synapse
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseKustoPoolResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Synapse.Models.SynapseFollowerDatabaseDefinition> GetFollowerDatabases(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Synapse.Models.SynapseFollowerDatabaseDefinition> GetFollowerDatabasesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Synapse.Models.KustoPoolPrivateLinkResources> GetKustoPoolPrivateLinkResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Synapse.Models.KustoPoolPrivateLinkResources> GetKustoPoolPrivateLinkResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Synapse.Models.SynapseLanguageExtension> GetLanguageExtensions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Synapse.Models.SynapseLanguageExtension> GetLanguageExtensionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Synapse.Models.SynapseDataSourceResourceSku> GetSkusByResource(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1567,8 +1575,8 @@ namespace Azure.ResourceManager.Synapse
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseRestorePointResource> CreateSqlPoolRestorePoint(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.Models.SqlPoolCreateRestorePointContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseRestorePointResource>> CreateSqlPoolRestorePointAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.Models.SqlPoolCreateRestorePointContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseSqlPoolResource> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseSqlPoolResource>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Synapse.SynapseSqlPoolResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseSqlPoolResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Synapse.SynapseSensitivityLabelResource> GetCurrentSqlPoolSensitivityLabels(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1613,18 +1621,18 @@ namespace Azure.ResourceManager.Synapse
         public virtual Azure.Response<Azure.ResourceManager.Synapse.SynapseWorkloadGroupResource> GetSynapseWorkloadGroup(string workloadGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseWorkloadGroupResource>> GetSynapseWorkloadGroupAsync(string workloadGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Synapse.SynapseWorkloadGroupCollection GetSynapseWorkloadGroups() { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> Pause(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> PauseAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseSqlPoolResource> Pause(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseSqlPoolResource>> PauseAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Synapse.SynapseSqlPoolResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseSqlPoolResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Rename(Azure.ResourceManager.Synapse.Models.SynapseResourceMoveDefinition synapseResourceMoveDefinition, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RenameAsync(Azure.ResourceManager.Synapse.Models.SynapseResourceMoveDefinition synapseResourceMoveDefinition, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> Resume(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> ResumeAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseSqlPoolResource> Resume(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseSqlPoolResource>> ResumeAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Synapse.SynapseSqlPoolResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseSqlPoolResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Synapse.SynapseSqlPoolResource> Update(Azure.ResourceManager.Synapse.Models.SynapseSqlPoolPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseSqlPoolResource>> UpdateAsync(Azure.ResourceManager.Synapse.Models.SynapseSqlPoolPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseSqlPoolResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.Models.SynapseSqlPoolPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapseSqlPoolResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.Models.SynapseSqlPoolPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateSqlPoolRecommendedSensitivityLabel(Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdateOperationListResult synapseRecommendedSensitivityLabelUpdateOperationListResult, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateSqlPoolRecommendedSensitivityLabelAsync(Azure.ResourceManager.Synapse.Models.SynapseRecommendedSensitivityLabelUpdateOperationListResult synapseRecommendedSensitivityLabelUpdateOperationListResult, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateSqlPoolSensitivityLabel(Azure.ResourceManager.Synapse.Models.SynapseSensitivityLabelUpdateListResult synapseSensitivityLabelUpdateListResult, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2242,10 +2250,52 @@ namespace Azure.ResourceManager.Synapse.Models
         public string Filename { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
     }
+    public partial class IntegrationRuntimeEnableinteractivequery
+    {
+        internal IntegrationRuntimeEnableinteractivequery() { }
+        public string Error { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.BinaryData Properties { get { throw null; } }
+        public Azure.ResourceManager.Synapse.Models.WorkspaceStatus? Status { get { throw null; } }
+    }
+    public partial class IntegrationRuntimeOperationStatus
+    {
+        internal IntegrationRuntimeOperationStatus() { }
+        public string Error { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.BinaryData Properties { get { throw null; } }
+        public Azure.ResourceManager.Synapse.Models.WorkspaceStatus? Status { get { throw null; } }
+    }
     public partial class IntegrationRuntimeRegenerateKeyContent
     {
         public IntegrationRuntimeRegenerateKeyContent() { }
         public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAuthKeyName? KeyName { get { throw null; } set { } }
+    }
+    public partial class IntegrationRuntimeStopOperationStatus
+    {
+        internal IntegrationRuntimeStopOperationStatus() { }
+        public string Error { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.BinaryData Properties { get { throw null; } }
+        public Azure.ResourceManager.Synapse.Models.WorkspaceStatus? Status { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IntegrationRuntimeType : System.IEquatable<Azure.ResourceManager.Synapse.Models.IntegrationRuntimeType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IntegrationRuntimeType(string value) { throw null; }
+        public static Azure.ResourceManager.Synapse.Models.IntegrationRuntimeType Managed { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.IntegrationRuntimeType SelfHosted { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Synapse.Models.IntegrationRuntimeType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Synapse.Models.IntegrationRuntimeType left, Azure.ResourceManager.Synapse.Models.IntegrationRuntimeType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Synapse.Models.IntegrationRuntimeType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Synapse.Models.IntegrationRuntimeType left, Azure.ResourceManager.Synapse.Models.IntegrationRuntimeType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class KekIdentityProperties
     {
@@ -2331,6 +2381,14 @@ namespace Azure.ResourceManager.Synapse.Models
         public KustoPoolPrincipalAssignmentNameAvailabilityContent(string name) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapsePrincipalAssignmentType ResourceType { get { throw null; } }
+    }
+    public partial class KustoPoolPrivateLinkResources : Azure.ResourceManager.Models.ResourceData
+    {
+        public KustoPoolPrivateLinkResources() { }
+        public string GroupId { get { throw null; } }
+        public Azure.ResourceManager.Synapse.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
     }
     public partial class KustoPoolSkuDescription
     {
@@ -2694,23 +2752,6 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseClusterPrincipalRole left, Azure.ResourceManager.Synapse.Models.SynapseClusterPrincipalRole right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseCmdkeySetup : Azure.ResourceManager.Synapse.Models.SynapseCustomSetupBase
-    {
-        public SynapseCmdkeySetup(System.BinaryData targetName, System.BinaryData userName, Azure.ResourceManager.Synapse.Models.SynapseSecretBase password) { }
-        public Azure.ResourceManager.Synapse.Models.SynapseSecretBase Password { get { throw null; } set { } }
-        public System.BinaryData TargetName { get { throw null; } set { } }
-        public System.BinaryData UserName { get { throw null; } set { } }
-    }
-    public partial class SynapseComponentSetup : Azure.ResourceManager.Synapse.Models.SynapseCustomSetupBase
-    {
-        public SynapseComponentSetup(string componentName) { }
-        public string ComponentName { get { throw null; } set { } }
-        public Azure.ResourceManager.Synapse.Models.SynapseSecretBase LicenseKey { get { throw null; } set { } }
-    }
-    public abstract partial class SynapseCustomSetupBase
-    {
-        protected SynapseCustomSetupBase() { }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseDatabasePrincipalAssignmentType : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseDatabasePrincipalAssignmentType>
     {
@@ -2782,25 +2823,6 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal SynapseDataConnectionValidationResult() { }
         public string ErrorMessage { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SynapseDataFlowComputeType : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseDataFlowComputeType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SynapseDataFlowComputeType(string value) { throw null; }
-        public static Azure.ResourceManager.Synapse.Models.SynapseDataFlowComputeType ComputeOptimized { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.SynapseDataFlowComputeType General { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.SynapseDataFlowComputeType MemoryOptimized { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseDataFlowComputeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseDataFlowComputeType left, Azure.ResourceManager.Synapse.Models.SynapseDataFlowComputeType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseDataFlowComputeType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseDataFlowComputeType left, Azure.ResourceManager.Synapse.Models.SynapseDataFlowComputeType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class SynapseDataLakeStorageAccountDetails
     {
@@ -2980,18 +3002,6 @@ namespace Azure.ResourceManager.Synapse.Models
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseEncryptionProtectorName (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseEncryptionProtectorName left, Azure.ResourceManager.Synapse.Models.SynapseEncryptionProtectorName right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class SynapseEntityReference
-    {
-        public SynapseEntityReference() { }
-        public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEntityReferenceType? IntegrationRuntimeEntityReferenceType { get { throw null; } set { } }
-        public string ReferenceName { get { throw null; } set { } }
-    }
-    public partial class SynapseEnvironmentVariableSetup : Azure.ResourceManager.Synapse.Models.SynapseCustomSetupBase
-    {
-        public SynapseEnvironmentVariableSetup(string variableName, string variableValue) { }
-        public string VariableName { get { throw null; } set { } }
-        public string VariableValue { get { throw null; } set { } }
     }
     public partial class SynapseEventGridDataConnection : Azure.ResourceManager.Synapse.SynapseDataConnectionData
     {
@@ -3173,17 +3183,6 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAutoUpdate left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAutoUpdate right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseIntegrationRuntimeComputeProperties
-    {
-        public SynapseIntegrationRuntimeComputeProperties() { }
-        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeDataFlowProperties DataFlowProperties { get { throw null; } set { } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
-        public int? MaxParallelExecutionsPerNode { get { throw null; } set { } }
-        public string NodeSize { get { throw null; } set { } }
-        public int? NumberOfNodes { get { throw null; } set { } }
-        public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeVnetProperties VnetProperties { get { throw null; } set { } }
-    }
     public partial class SynapseIntegrationRuntimeConnectionInfo
     {
         internal SynapseIntegrationRuntimeConnectionInfo() { }
@@ -3194,101 +3193,6 @@ namespace Azure.ResourceManager.Synapse.Models
         public string PublicKey { get { throw null; } }
         public string ServiceToken { get { throw null; } }
         public string Version { get { throw null; } }
-    }
-    public partial class SynapseIntegrationRuntimeCustomSetupScriptProperties
-    {
-        public SynapseIntegrationRuntimeCustomSetupScriptProperties() { }
-        public System.Uri BlobContainerUri { get { throw null; } set { } }
-        public Azure.ResourceManager.Synapse.Models.SynapseSecureString SasToken { get { throw null; } set { } }
-    }
-    public partial class SynapseIntegrationRuntimeDataFlowProperties
-    {
-        public SynapseIntegrationRuntimeDataFlowProperties() { }
-        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public bool? Cleanup { get { throw null; } set { } }
-        public Azure.ResourceManager.Synapse.Models.SynapseDataFlowComputeType? ComputeType { get { throw null; } set { } }
-        public int? CoreCount { get { throw null; } set { } }
-        public int? TimeToLive { get { throw null; } set { } }
-    }
-    public partial class SynapseIntegrationRuntimeDataProxyProperties
-    {
-        public SynapseIntegrationRuntimeDataProxyProperties() { }
-        public Azure.ResourceManager.Synapse.Models.SynapseEntityReference ConnectVia { get { throw null; } set { } }
-        public string Path { get { throw null; } set { } }
-        public Azure.ResourceManager.Synapse.Models.SynapseEntityReference StagingLinkedService { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SynapseIntegrationRuntimeEdition : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEdition>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SynapseIntegrationRuntimeEdition(string value) { throw null; }
-        public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEdition Enterprise { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEdition Standard { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEdition other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEdition left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEdition right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEdition (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEdition left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEdition right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SynapseIntegrationRuntimeEntityReferenceType : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEntityReferenceType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SynapseIntegrationRuntimeEntityReferenceType(string value) { throw null; }
-        public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEntityReferenceType IntegrationRuntimeReference { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEntityReferenceType LinkedServiceReference { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEntityReferenceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEntityReferenceType left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEntityReferenceType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEntityReferenceType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEntityReferenceType left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEntityReferenceType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SynapseIntegrationRuntimeInternalChannelEncryptionMode : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeInternalChannelEncryptionMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SynapseIntegrationRuntimeInternalChannelEncryptionMode(string value) { throw null; }
-        public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeInternalChannelEncryptionMode NotEncrypted { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeInternalChannelEncryptionMode NotSet { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeInternalChannelEncryptionMode SslEncrypted { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeInternalChannelEncryptionMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeInternalChannelEncryptionMode left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeInternalChannelEncryptionMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeInternalChannelEncryptionMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeInternalChannelEncryptionMode left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeInternalChannelEncryptionMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SynapseIntegrationRuntimeLicenseType : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeLicenseType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SynapseIntegrationRuntimeLicenseType(string value) { throw null; }
-        public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeLicenseType BasePrice { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeLicenseType LicenseIncluded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeLicenseType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeLicenseType left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeLicenseType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeLicenseType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeLicenseType left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeLicenseType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class SynapseIntegrationRuntimeMonitoringResult
     {
@@ -3337,52 +3241,6 @@ namespace Azure.ResourceManager.Synapse.Models
         public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAutoUpdate? AutoUpdate { get { throw null; } set { } }
         public string UpdateDelayOffset { get { throw null; } set { } }
     }
-    public partial class SynapseIntegrationRuntimeProperties
-    {
-        public SynapseIntegrationRuntimeProperties() { }
-        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public string Description { get { throw null; } set { } }
-    }
-    public partial class SynapseIntegrationRuntimeSsisCatalogInfo
-    {
-        public SynapseIntegrationRuntimeSsisCatalogInfo() { }
-        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public Azure.ResourceManager.Synapse.Models.SynapseSecureString CatalogAdminPassword { get { throw null; } set { } }
-        public string CatalogAdminUserName { get { throw null; } set { } }
-        public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogPricingTier? CatalogPricingTier { get { throw null; } set { } }
-        public System.Uri CatalogServerEndpoint { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SynapseIntegrationRuntimeSsisCatalogPricingTier : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogPricingTier>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SynapseIntegrationRuntimeSsisCatalogPricingTier(string value) { throw null; }
-        public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogPricingTier Basic { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogPricingTier Premium { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogPricingTier PremiumRS { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogPricingTier Standard { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogPricingTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogPricingTier left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogPricingTier right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogPricingTier (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogPricingTier left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogPricingTier right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class SynapseIntegrationRuntimeSsisProperties
-    {
-        public SynapseIntegrationRuntimeSsisProperties() { }
-        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisCatalogInfo CatalogInfo { get { throw null; } set { } }
-        public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeCustomSetupScriptProperties CustomSetupScriptProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeDataProxyProperties DataProxyProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeEdition? Edition { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Synapse.Models.SynapseCustomSetupBase> ExpressCustomSetupProperties { get { throw null; } }
-        public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeLicenseType? LicenseType { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseIntegrationRuntimeState : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeState>
     {
@@ -3409,18 +3267,12 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeState left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SynapseIntegrationRuntimeStatus
-    {
-        internal SynapseIntegrationRuntimeStatus() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public string DataFactoryName { get { throw null; } }
-        public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeState? State { get { throw null; } }
-    }
     public partial class SynapseIntegrationRuntimeStatusResult
     {
         internal SynapseIntegrationRuntimeStatusResult() { }
+        public string DataFactoryName { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatus Properties { get { throw null; } }
+        public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeState? State { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SynapseIntegrationRuntimeUpdateResult : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeUpdateResult>
@@ -3440,15 +3292,6 @@ namespace Azure.ResourceManager.Synapse.Models
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeUpdateResult (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeUpdateResult left, Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeUpdateResult right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class SynapseIntegrationRuntimeVnetProperties
-    {
-        public SynapseIntegrationRuntimeVnetProperties() { }
-        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public System.Collections.Generic.IList<string> PublicIPs { get { throw null; } }
-        public string Subnet { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
-        public System.Guid? VnetId { get { throw null; } set { } }
     }
     public partial class SynapseIotHubDataConnection : Azure.ResourceManager.Synapse.SynapseDataConnectionData
     {
@@ -3545,101 +3388,12 @@ namespace Azure.ResourceManager.Synapse.Models
         public SynapseLanguageExtensionsList() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Synapse.Models.SynapseLanguageExtension> Value { get { throw null; } }
     }
-    public partial class SynapseLinkedIntegrationRuntime
-    {
-        internal SynapseLinkedIntegrationRuntime() { }
-        public System.DateTimeOffset? CreateOn { get { throw null; } }
-        public string DataFactoryLocation { get { throw null; } }
-        public string DataFactoryName { get { throw null; } }
-        public string Name { get { throw null; } }
-        public string SubscriptionId { get { throw null; } }
-    }
-    public partial class SynapseLinkedIntegrationRuntimeKeyAuthorization : Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeType
-    {
-        public SynapseLinkedIntegrationRuntimeKeyAuthorization(Azure.ResourceManager.Synapse.Models.SynapseSecureString key) { }
-        public Azure.ResourceManager.Synapse.Models.SynapseSecureString Key { get { throw null; } set { } }
-    }
-    public partial class SynapseLinkedIntegrationRuntimeRbacAuthorization : Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeType
-    {
-        public SynapseLinkedIntegrationRuntimeRbacAuthorization(Azure.Core.ResourceIdentifier resourceId) { }
-        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
-    }
-    public abstract partial class SynapseLinkedIntegrationRuntimeType
-    {
-        protected SynapseLinkedIntegrationRuntimeType() { }
-    }
     public partial class SynapseMaintenanceWindowTimeRange
     {
         public SynapseMaintenanceWindowTimeRange() { }
         public Azure.ResourceManager.Synapse.Models.SynapseDayOfWeek? DayOfWeek { get { throw null; } set { } }
         public System.TimeSpan? Duration { get { throw null; } set { } }
         public System.TimeSpan? StartOn { get { throw null; } set { } }
-    }
-    public partial class SynapseManagedIntegrationRuntime : Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeProperties
-    {
-        public SynapseManagedIntegrationRuntime() { }
-        public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeComputeProperties ComputeProperties { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
-        public string ReferenceName { get { throw null; } set { } }
-        public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeSsisProperties SsisProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeState? State { get { throw null; } }
-        public string TypeManagedVirtualNetworkType { get { throw null; } set { } }
-    }
-    public partial class SynapseManagedIntegrationRuntimeError
-    {
-        internal SynapseManagedIntegrationRuntimeError() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public string Code { get { throw null; } }
-        public string Message { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Parameters { get { throw null; } }
-        public System.DateTimeOffset? Time { get { throw null; } }
-    }
-    public partial class SynapseManagedIntegrationRuntimeNode
-    {
-        internal SynapseManagedIntegrationRuntimeNode() { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeError> Errors { get { throw null; } }
-        public string NodeId { get { throw null; } }
-        public Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNodeStatus? Status { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SynapseManagedIntegrationRuntimeNodeStatus : System.IEquatable<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNodeStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SynapseManagedIntegrationRuntimeNodeStatus(string value) { throw null; }
-        public static Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNodeStatus Available { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNodeStatus Recycling { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNodeStatus Starting { get { throw null; } }
-        public static Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNodeStatus Unavailable { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNodeStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNodeStatus left, Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNodeStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNodeStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNodeStatus left, Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNodeStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class SynapseManagedIntegrationRuntimeOperationResult
-    {
-        internal SynapseManagedIntegrationRuntimeOperationResult() { }
-        public string ActivityId { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
-        public string ErrorCode { get { throw null; } }
-        public string ManagedIntegrationRuntimeOperationResultType { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Parameters { get { throw null; } }
-        public string Result { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-    }
-    public partial class SynapseManagedIntegrationRuntimeStatus : Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatus
-    {
-        internal SynapseManagedIntegrationRuntimeStatus() { }
-        public System.DateTimeOffset? CreateOn { get { throw null; } }
-        public Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeOperationResult LastOperation { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeNode> Nodes { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Synapse.Models.SynapseManagedIntegrationRuntimeError> OtherErrors { get { throw null; } }
     }
     public partial class SynapseManagedVirtualNetworkSettings
     {
@@ -3834,25 +3588,11 @@ namespace Azure.ResourceManager.Synapse.Models
         Continuous = 0,
         Discrete = 1,
     }
-    public abstract partial class SynapseSecretBase
-    {
-        protected SynapseSecretBase() { }
-    }
-    public partial class SynapseSecureString : Azure.ResourceManager.Synapse.Models.SynapseSecretBase
-    {
-        public SynapseSecureString(string value) { }
-        public string Value { get { throw null; } set { } }
-    }
     public enum SynapseSecurityAlertPolicyState
     {
         New = 0,
         Enabled = 1,
         Disabled = 2,
-    }
-    public partial class SynapseSelfHostedIntegrationRuntime : Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeProperties
-    {
-        public SynapseSelfHostedIntegrationRuntime() { }
-        public Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntimeType LinkedInfo { get { throw null; } set { } }
     }
     public partial class SynapseSelfHostedIntegrationRuntimeNode
     {
@@ -3899,29 +3639,6 @@ namespace Azure.ResourceManager.Synapse.Models
         public static implicit operator Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNodeStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNodeStatus left, Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNodeStatus right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class SynapseSelfHostedIntegrationRuntimeStatus : Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeStatus
-    {
-        internal SynapseSelfHostedIntegrationRuntimeStatus() { }
-        public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeAutoUpdate? AutoUpdate { get { throw null; } }
-        public System.DateTimeOffset? AutoUpdateEta { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Capabilities { get { throw null; } }
-        public System.DateTimeOffset? CreateOn { get { throw null; } }
-        public Azure.ResourceManager.Synapse.Models.SynapseIntegrationRuntimeInternalChannelEncryptionMode? InternalChannelEncryption { get { throw null; } }
-        public string LatestVersion { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Synapse.Models.SynapseLinkedIntegrationRuntime> Links { get { throw null; } }
-        public string LocalTimeZoneOffset { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> NewerVersions { get { throw null; } }
-        public string NodeCommunicationChannelEncryptionMode { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Synapse.Models.SynapseSelfHostedIntegrationRuntimeNode> Nodes { get { throw null; } }
-        public string PushedVersion { get { throw null; } }
-        public System.DateTimeOffset? ScheduledUpdateOn { get { throw null; } }
-        public string ServiceRegion { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> ServiceUrls { get { throw null; } }
-        public string TaskQueueId { get { throw null; } }
-        public string UpdateDelayOffset { get { throw null; } }
-        public string Version { get { throw null; } }
-        public string VersionStatus { get { throw null; } }
     }
     public enum SynapseSensitivityLabelRank
     {
@@ -4286,6 +4003,25 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(Azure.ResourceManager.Synapse.Models.WorkspacePublicNetworkAccess left, Azure.ResourceManager.Synapse.Models.WorkspacePublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.Synapse.Models.WorkspacePublicNetworkAccess (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Synapse.Models.WorkspacePublicNetworkAccess left, Azure.ResourceManager.Synapse.Models.WorkspacePublicNetworkAccess right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WorkspaceStatus : System.IEquatable<Azure.ResourceManager.Synapse.Models.WorkspaceStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WorkspaceStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Synapse.Models.WorkspaceStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.WorkspaceStatus InProgress { get { throw null; } }
+        public static Azure.ResourceManager.Synapse.Models.WorkspaceStatus Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Synapse.Models.WorkspaceStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Synapse.Models.WorkspaceStatus left, Azure.ResourceManager.Synapse.Models.WorkspaceStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Synapse.Models.WorkspaceStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Synapse.Models.WorkspaceStatus left, Azure.ResourceManager.Synapse.Models.WorkspaceStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

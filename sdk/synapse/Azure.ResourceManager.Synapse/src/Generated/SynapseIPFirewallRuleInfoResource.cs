@@ -141,14 +141,14 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<BinaryData>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SynapseIPFirewallRuleInfoResource>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics.CreateScope("SynapseIPFirewallRuleInfoResource.Delete");
             scope.Start();
             try
             {
                 var response = await _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SynapseIPFirewallRuleInfoResource>(new SynapseIPFirewallRuleInfoOperationSource(Client), _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -167,14 +167,14 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<BinaryData> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SynapseIPFirewallRuleInfoResource> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics.CreateScope("SynapseIPFirewallRuleInfoResource.Delete");
             scope.Start();
             try
             {
                 var response = _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<SynapseIPFirewallRuleInfoResource>(new SynapseIPFirewallRuleInfoOperationSource(Client), _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics, Pipeline, _synapseIPFirewallRuleInfoIPFirewallRulesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

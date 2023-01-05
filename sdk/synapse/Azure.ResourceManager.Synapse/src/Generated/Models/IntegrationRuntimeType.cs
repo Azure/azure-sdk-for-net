@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Synapse.Models
 {
     /// <summary> The type of integration runtime. </summary>
-    internal readonly partial struct IntegrationRuntimeType : IEquatable<IntegrationRuntimeType>
+    public readonly partial struct IntegrationRuntimeType : IEquatable<IntegrationRuntimeType>
     {
         private readonly string _value;
 

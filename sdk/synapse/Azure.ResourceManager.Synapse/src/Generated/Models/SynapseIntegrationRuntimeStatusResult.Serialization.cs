@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.Synapse.Models
         internal static SynapseIntegrationRuntimeStatusResult DeserializeSynapseIntegrationRuntimeStatusResult(JsonElement element)
         {
             Optional<string> name = default;
-            SynapseIntegrationRuntimeStatus properties = default;
+            IntegrationRuntimeType type = default;
+            Optional<string> dataFactoryName = default;
+            Optional<SynapseIntegrationRuntimeState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -25,11 +27,38 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 if (property.NameEquals("properties"))
                 {
-                    properties = SynapseIntegrationRuntimeStatus.DeserializeSynapseIntegrationRuntimeStatus(property.Value);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("type"))
+                        {
+                            type = new IntegrationRuntimeType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("dataFactoryName"))
+                        {
+                            dataFactoryName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("state"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            state = new SynapseIntegrationRuntimeState(property0.Value.GetString());
+                            continue;
+                        }
+                    }
                     continue;
                 }
             }
-            return new SynapseIntegrationRuntimeStatusResult(name.Value, properties);
+            return new SynapseIntegrationRuntimeStatusResult(name.Value, type, dataFactoryName.Value, Optional.ToNullable(state));
         }
     }
 }

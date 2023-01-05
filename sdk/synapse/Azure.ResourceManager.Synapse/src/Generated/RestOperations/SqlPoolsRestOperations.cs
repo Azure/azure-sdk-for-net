@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SynapseSqlPoolData>> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseSqlPoolPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseSqlPoolPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -173,14 +173,8 @@ namespace Azure.ResourceManager.Synapse
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        SynapseSqlPoolData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SynapseSqlPoolData.DeserializeSynapseSqlPoolData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
                 case 202:
-                    return Response.FromValue((SynapseSqlPoolData)null, message.Response);
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -195,7 +189,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SynapseSqlPoolData> Update(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseSqlPoolPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseSqlPoolPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -208,14 +202,8 @@ namespace Azure.ResourceManager.Synapse
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        SynapseSqlPoolData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SynapseSqlPoolData.DeserializeSynapseSqlPoolData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
                 case 202:
-                    return Response.FromValue((SynapseSqlPoolData)null, message.Response);
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
