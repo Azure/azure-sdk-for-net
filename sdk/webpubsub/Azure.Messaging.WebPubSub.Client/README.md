@@ -70,7 +70,14 @@ public async ValueTask<Uri> FetchClientAccessTokenFromServerAsync(CancellationTo
 }
 ```
 
-`WebPubSubServiceClient` can be used to generate the Client Access Uri as well as manage client connections. Find more details in [Azure.Messaging.WebPubSub](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/webpubsub/Azure.Messaging.WebPubSub)
+Features to differentiate `WebPubSubClient` and `WebPubSubServiceClient`.
+
+|Class Name|WebPubSubClient|WebPubSubServiceClient|
+|------|---------|---------|
+|Nuget Package Name|Azure.Messaging.WebPubSub.Client |Azure.Messaging.WebPubSub|
+|Features|Usually used on client side. Publish messages and subscribe to messages.|Usually used on server side. Generate Client Access Uri and manage clients|
+
+Find more details in [Azure.Messaging.WebPubSub](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/webpubsub/Azure.Messaging.WebPubSub)
 
 ## Key concepts
 
