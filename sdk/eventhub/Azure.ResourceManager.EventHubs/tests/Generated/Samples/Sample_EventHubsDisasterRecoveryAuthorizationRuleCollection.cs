@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventHubs
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListAuthorizationRules()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/disasterRecoveryConfigs/EHAliasAuthorizationRuleListAll.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/disasterRecoveryConfigs/EHAliasAuthorizationRuleListAll.json
             // this example is just showing the usage of "DisasterRecoveryConfigs_ListAuthorizationRules" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EventHubs
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_NameSpaceAuthorizationRuleGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/disasterRecoveryConfigs/EHAliasAuthorizationRuleGet.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/disasterRecoveryConfigs/EHAliasAuthorizationRuleGet.json
             // this example is just showing the usage of "DisasterRecoveryConfigs_GetAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.EventHubs
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_NameSpaceAuthorizationRuleGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/disasterRecoveryConfigs/EHAliasAuthorizationRuleGet.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/disasterRecoveryConfigs/EHAliasAuthorizationRuleGet.json
             // this example is just showing the usage of "DisasterRecoveryConfigs_GetAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client

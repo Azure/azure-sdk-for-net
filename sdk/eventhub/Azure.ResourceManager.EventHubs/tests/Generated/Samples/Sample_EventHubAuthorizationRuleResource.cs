@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventHubs
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_EventHubAuthorizationRuleCreate()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/EventHubs/EHEventHubAuthorizationRuleCreate.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/EventHubs/EHEventHubAuthorizationRuleCreate.json
             // this example is just showing the usage of "EventHubs_CreateOrUpdateAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -61,7 +61,7 @@ EventHubsAccessRight.Listen,EventHubsAccessRight.Send
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_EventHubAuthorizationRuleGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/EventHubs/EHEventHubAuthorizationRuleGet.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/EventHubs/EHEventHubAuthorizationRuleGet.json
             // this example is just showing the usage of "EventHubs_GetAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -92,7 +92,7 @@ EventHubsAccessRight.Listen,EventHubsAccessRight.Send
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_EventHubAuthorizationRuleDelete()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/EventHubs/EHEventHubAuthorizationRuleDelete.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/EventHubs/EHEventHubAuthorizationRuleDelete.json
             // this example is just showing the usage of "EventHubs_DeleteAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -119,7 +119,7 @@ EventHubsAccessRight.Listen,EventHubsAccessRight.Send
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetKeys_EventHubAuthorizationRuleListKey()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/EventHubs/EHEventHubAuthorizationRuleListKey.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/EventHubs/EHEventHubAuthorizationRuleListKey.json
             // this example is just showing the usage of "EventHubs_ListKeys" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -146,7 +146,7 @@ EventHubsAccessRight.Listen,EventHubsAccessRight.Send
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RegenerateKeys_EventHubAuthorizationRuleRegenerateKey()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/EventHubs/EHEventHubAuthorizationRuleRegenerateKey.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/EventHubs/EHEventHubAuthorizationRuleRegenerateKey.json
             // this example is just showing the usage of "EventHubs_RegenerateKeys" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
