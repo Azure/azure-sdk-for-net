@@ -307,12 +307,9 @@ namespace Azure.Core.Dynamic
         /// <returns>Returns a stringified version of the JSON for this value.</returns>
         internal string ToJsonString()
         {
-            using var memoryStream = new MemoryStream();
-            using (var writer = new Utf8JsonWriter(memoryStream))
-            {
-                WriteTo(writer);
-            }
-            return Encoding.UTF8.GetString(memoryStream.ToArray());
+            using var stream = new MemoryStream();
+            WriteTo(stream);
+            return Encoding.UTF8.GetString(stream.ToArray());
         }
 
         /// <summary>
@@ -427,7 +424,13 @@ namespace Azure.Core.Dynamic
 
         private bool GetBoolean() => _element.GetBoolean();
 
-        internal override void WriteTo(Utf8JsonWriter writer) => _element.WriteTo(writer);
+        internal override void WriteTo(Stream stream)
+        {
+            using Utf8JsonWriter writer = new(stream);
+            _element.WriteTo(writer);
+        }
+
+        private void WriteTo(Utf8JsonWriter writer) => _element.WriteTo(writer);
 
         private void EnsureObject()
         {
