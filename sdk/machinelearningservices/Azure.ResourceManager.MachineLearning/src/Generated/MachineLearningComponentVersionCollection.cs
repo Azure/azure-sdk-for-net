@@ -183,20 +183,21 @@ namespace Azure.ResourceManager.MachineLearning
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/components/{name}/versions
         /// Operation Id: ComponentVersions_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="orderBy"> Ordering of list. </param>
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningComponentVersionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningComponentVersionResource> GetAllAsync(MachineLearningComponentVersionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MachineLearningComponentVersionResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
-            options ??= new MachineLearningComponentVersionCollectionGetAllOptions();
-
             async Task<Page<MachineLearningComponentVersionResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _machineLearningComponentVersionComponentVersionsClientDiagnostics.CreateScope("MachineLearningComponentVersionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _machineLearningComponentVersionComponentVersionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.OrderBy, options.Top, options.Skip, options.ListViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _machineLearningComponentVersionComponentVersionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningComponentVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.MachineLearning
                 scope.Start();
                 try
                 {
-                    var response = await _machineLearningComponentVersionComponentVersionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.OrderBy, options.Top, options.Skip, options.ListViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _machineLearningComponentVersionComponentVersionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningComponentVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -228,20 +229,21 @@ namespace Azure.ResourceManager.MachineLearning
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/components/{name}/versions
         /// Operation Id: ComponentVersions_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="orderBy"> Ordering of list. </param>
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningComponentVersionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningComponentVersionResource> GetAll(MachineLearningComponentVersionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<MachineLearningComponentVersionResource> GetAll(string orderBy = null, int? top = null, string skip = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
-            options ??= new MachineLearningComponentVersionCollectionGetAllOptions();
-
             Page<MachineLearningComponentVersionResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _machineLearningComponentVersionComponentVersionsClientDiagnostics.CreateScope("MachineLearningComponentVersionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _machineLearningComponentVersionComponentVersionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.OrderBy, options.Top, options.Skip, options.ListViewType, cancellationToken: cancellationToken);
+                    var response = _machineLearningComponentVersionComponentVersionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningComponentVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -256,7 +258,7 @@ namespace Azure.ResourceManager.MachineLearning
                 scope.Start();
                 try
                 {
-                    var response = _machineLearningComponentVersionComponentVersionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.OrderBy, options.Top, options.Skip, options.ListViewType, cancellationToken: cancellationToken);
+                    var response = _machineLearningComponentVersionComponentVersionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningComponentVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -324,17 +326,17 @@ namespace Azure.ResourceManager.MachineLearning
 
         IEnumerator<MachineLearningComponentVersionResource> IEnumerable<MachineLearningComponentVersionResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IAsyncEnumerator<MachineLearningComponentVersionResource> IAsyncEnumerable<MachineLearningComponentVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

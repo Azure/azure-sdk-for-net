@@ -512,20 +512,20 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/sites
         /// Operation Id: AppServicePlans_ListWebApps
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="skipToken"> Skip to a web app in the list of webapps associated with app service plan. If specified, the resulting list will contain web apps starting from (including) the skipToken. Otherwise, the resulting list contains web apps from the start of the list. </param>
+        /// <param name="filter"> Supported filter: $filter=state eq running. Returns only web apps that are currently running. </param>
+        /// <param name="top"> List page size. If specified, results are paged. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="WebSiteData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebSiteData> GetWebAppsAsync(AppServicePlanResourceGetWebAppsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WebSiteData> GetWebAppsAsync(string skipToken = null, string filter = null, string top = null, CancellationToken cancellationToken = default)
         {
-            options ??= new AppServicePlanResourceGetWebAppsOptions();
-
             async Task<Page<WebSiteData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetWebApps");
                 scope.Start();
                 try
                 {
-                    var response = await _appServicePlanRestClient.ListWebAppsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.SkipToken, options.Filter, options.Top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServicePlanRestClient.ListWebAppsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await _appServicePlanRestClient.ListWebAppsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.SkipToken, options.Filter, options.Top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _appServicePlanRestClient.ListWebAppsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -557,20 +557,20 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/sites
         /// Operation Id: AppServicePlans_ListWebApps
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="skipToken"> Skip to a web app in the list of webapps associated with app service plan. If specified, the resulting list will contain web apps starting from (including) the skipToken. Otherwise, the resulting list contains web apps from the start of the list. </param>
+        /// <param name="filter"> Supported filter: $filter=state eq running. Returns only web apps that are currently running. </param>
+        /// <param name="top"> List page size. If specified, results are paged. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebSiteData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebSiteData> GetWebApps(AppServicePlanResourceGetWebAppsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<WebSiteData> GetWebApps(string skipToken = null, string filter = null, string top = null, CancellationToken cancellationToken = default)
         {
-            options ??= new AppServicePlanResourceGetWebAppsOptions();
-
             Page<WebSiteData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServicePlanClientDiagnostics.CreateScope("AppServicePlanResource.GetWebApps");
                 scope.Start();
                 try
                 {
-                    var response = _appServicePlanRestClient.ListWebApps(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.SkipToken, options.Filter, options.Top, cancellationToken: cancellationToken);
+                    var response = _appServicePlanRestClient.ListWebApps(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = _appServicePlanRestClient.ListWebAppsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.SkipToken, options.Filter, options.Top, cancellationToken: cancellationToken);
+                    var response = _appServicePlanRestClient.ListWebAppsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

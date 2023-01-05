@@ -1573,9 +1573,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseSqlPoolResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Synapse.SynapseSensitivityLabelResource> GetCurrentSqlPoolSensitivityLabels(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Synapse.SynapseSensitivityLabelResource> GetCurrentSqlPoolSensitivityLabelsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Synapse.SynapseSensitivityLabelResource> GetRecommendedSqlPoolSensitivityLabels(Azure.ResourceManager.Synapse.Models.SynapseSqlPoolResourceGetRecommendedSqlPoolSensitivityLabelsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Synapse.SynapseSensitivityLabelResource> GetRecommendedSqlPoolSensitivityLabels(bool? includeDisabledRecommendations = default(bool?), string skipToken = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Synapse.SynapseSensitivityLabelResource> GetRecommendedSqlPoolSensitivityLabelsAsync(Azure.ResourceManager.Synapse.Models.SynapseSqlPoolResourceGetRecommendedSqlPoolSensitivityLabelsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Synapse.SynapseSensitivityLabelResource> GetRecommendedSqlPoolSensitivityLabelsAsync(bool? includeDisabledRecommendations = default(bool?), string skipToken = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Synapse.Models.SqlPoolUsage> GetSqlPoolUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Synapse.Models.SqlPoolUsage> GetSqlPoolUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4046,13 +4044,6 @@ namespace Azure.ResourceManager.Synapse.Models
         public string Status { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SqlPoolStorageAccountType? StorageAccountType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class SynapseSqlPoolResourceGetRecommendedSqlPoolSensitivityLabelsOptions
-    {
-        public SynapseSqlPoolResourceGetRecommendedSqlPoolSensitivityLabelsOptions() { }
-        public string Filter { get { throw null; } set { } }
-        public bool? IncludeDisabledRecommendations { get { throw null; } set { } }
-        public string SkipToken { get { throw null; } set { } }
     }
     public partial class SynapseSsisEnvironment : Azure.ResourceManager.Synapse.Models.SynapseSsisObjectMetadata
     {

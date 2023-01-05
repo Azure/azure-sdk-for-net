@@ -28,28 +28,30 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         /// <summary> ETag of the certificate. </summary>
         public string IfMatch { get; }
-        /// <summary> Common Name for the certificate. </summary>
-        public string CertificateCommonName { get; set; }
-        /// <summary> Raw data of certificate. </summary>
-        public byte[] CertificateRawBytes { get; set; }
-        /// <summary> Indicates if the certificate has been verified by owner of the private key. </summary>
-        public bool? CertificateIsVerified { get; set; }
-        /// <summary> Describe the purpose of the certificate. </summary>
-        public DeviceProvisioningServicesCertificatePurpose? CertificatePurpose { get; set; }
-        /// <summary> Certificate creation time. </summary>
-        public DateTimeOffset? CertificateCreatedOn { get; set; }
-        /// <summary> Certificate last updated time. </summary>
-        public DateTimeOffset? CertificateLastUpdatedOn { get; set; }
-        /// <summary> Indicates if the certificate contains private key. </summary>
-        public bool? CertificateHasPrivateKey { get; set; }
-        /// <summary> Random number generated to indicate Proof of Possession. </summary>
-        public string CertificateNonce { get; set; }
         /// <summary> The name of the certificate. </summary>
-        internal CertificateVerificationCodeContent Content { get; }
-        /// <summary> base-64 representation of X509 certificate .cer file or just .pem file content. </summary>
-        public string ContentCertificate
-        {
-            get => Content?.Certificate;
-        }
+        public CertificateVerificationCodeContent Content { get; }
+        /// <summary> Common Name for the certificate. </summary>
+        public string CertificateCommonName { get; set; } = null;
+
+        /// <summary> Raw data of certificate. </summary>
+        public byte[] CertificateRawBytes { get; set; } = null;
+
+        /// <summary> Indicates if the certificate has been verified by owner of the private key. </summary>
+        public bool? CertificateIsVerified { get; set; } = null;
+
+        /// <summary> Describe the purpose of the certificate. </summary>
+        public DeviceProvisioningServicesCertificatePurpose? CertificatePurpose { get; set; } = null;
+
+        /// <summary> Certificate creation time. </summary>
+        public DateTimeOffset? CertificateCreatedOn { get; set; } = null;
+
+        /// <summary> Certificate last updated time. </summary>
+        public DateTimeOffset? CertificateLastUpdatedOn { get; set; } = null;
+
+        /// <summary> Indicates if the certificate contains private key. </summary>
+        public bool? CertificateHasPrivateKey { get; set; } = null;
+
+        /// <summary> Random number generated to indicate Proof of Possession. </summary>
+        public string CertificateNonce { get; set; } = null;
     }
 }

@@ -1519,10 +1519,13 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/geoRegions
         /// Operation Id: ListGeoRegions
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="sku"> Name of SKU used to filter the regions. </param>
+        /// <param name="linuxWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux workers. </param>
+        /// <param name="xenonWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Xenon workers. </param>
+        /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AppServiceGeoRegion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppServiceGeoRegion> GetGeoRegionsAsync(AppServiceExtensionsGetGeoRegionsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AppServiceGeoRegion> GetGeoRegionsAsync(AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<AppServiceGeoRegion>> FirstPageFunc(int? pageSizeHint)
             {
@@ -1530,7 +1533,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await DefaultRestClient.ListGeoRegionsAsync(Id.SubscriptionId, options.Sku, options.LinuxWorkersEnabled, options.XenonWorkersEnabled, options.LinuxDynamicWorkersEnabled, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await DefaultRestClient.ListGeoRegionsAsync(Id.SubscriptionId, sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1545,7 +1548,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = await DefaultRestClient.ListGeoRegionsNextPageAsync(nextLink, Id.SubscriptionId, options.Sku, options.LinuxWorkersEnabled, options.XenonWorkersEnabled, options.LinuxDynamicWorkersEnabled, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await DefaultRestClient.ListGeoRegionsNextPageAsync(nextLink, Id.SubscriptionId, sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1562,10 +1565,13 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/geoRegions
         /// Operation Id: ListGeoRegions
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="sku"> Name of SKU used to filter the regions. </param>
+        /// <param name="linuxWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux workers. </param>
+        /// <param name="xenonWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Xenon workers. </param>
+        /// <param name="linuxDynamicWorkersEnabled"> Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only regions that support Linux Consumption Workers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AppServiceGeoRegion" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppServiceGeoRegion> GetGeoRegions(AppServiceExtensionsGetGeoRegionsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<AppServiceGeoRegion> GetGeoRegions(AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
             Page<AppServiceGeoRegion> FirstPageFunc(int? pageSizeHint)
             {
@@ -1573,7 +1579,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = DefaultRestClient.ListGeoRegions(Id.SubscriptionId, options.Sku, options.LinuxWorkersEnabled, options.XenonWorkersEnabled, options.LinuxDynamicWorkersEnabled, cancellationToken: cancellationToken);
+                    var response = DefaultRestClient.ListGeoRegions(Id.SubscriptionId, sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1588,7 +1594,7 @@ namespace Azure.ResourceManager.AppService
                 scope.Start();
                 try
                 {
-                    var response = DefaultRestClient.ListGeoRegionsNextPage(nextLink, Id.SubscriptionId, options.Sku, options.LinuxWorkersEnabled, options.XenonWorkersEnabled, options.LinuxDynamicWorkersEnabled, cancellationToken: cancellationToken);
+                    var response = DefaultRestClient.ListGeoRegionsNextPage(nextLink, Id.SubscriptionId, sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

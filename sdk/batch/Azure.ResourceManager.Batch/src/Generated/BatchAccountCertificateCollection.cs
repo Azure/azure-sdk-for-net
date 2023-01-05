@@ -187,20 +187,20 @@ namespace Azure.ResourceManager.Batch
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates
         /// Operation Id: Certificate_ListByBatchAccount
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="maxresults"> The maximum number of items to return in the response. </param>
+        /// <param name="select"> Comma separated list of properties that should be returned. e.g. &quot;properties/provisioningState&quot;. Only top level properties under properties/ are valid for selection. </param>
+        /// <param name="filter"> OData filter expression. Valid properties for filtering are &quot;properties/provisioningState&quot;, &quot;properties/provisioningStateTransitionTime&quot;, &quot;name&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BatchAccountCertificateResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BatchAccountCertificateResource> GetAllAsync(BatchAccountCertificateCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchAccountCertificateResource> GetAllAsync(int? maxresults = null, string select = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            options ??= new BatchAccountCertificateCollectionGetAllOptions();
-
             async Task<Page<BatchAccountCertificateResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _batchAccountCertificateCertificateClientDiagnostics.CreateScope("BatchAccountCertificateCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _batchAccountCertificateCertificateRestClient.ListByBatchAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Maxresults, options.Select, options.Filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _batchAccountCertificateCertificateRestClient.ListByBatchAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new BatchAccountCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Batch
                 scope.Start();
                 try
                 {
-                    var response = await _batchAccountCertificateCertificateRestClient.ListByBatchAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Maxresults, options.Select, options.Filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _batchAccountCertificateCertificateRestClient.ListByBatchAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new BatchAccountCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -232,20 +232,20 @@ namespace Azure.ResourceManager.Batch
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/certificates
         /// Operation Id: Certificate_ListByBatchAccount
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="maxresults"> The maximum number of items to return in the response. </param>
+        /// <param name="select"> Comma separated list of properties that should be returned. e.g. &quot;properties/provisioningState&quot;. Only top level properties under properties/ are valid for selection. </param>
+        /// <param name="filter"> OData filter expression. Valid properties for filtering are &quot;properties/provisioningState&quot;, &quot;properties/provisioningStateTransitionTime&quot;, &quot;name&quot;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BatchAccountCertificateResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BatchAccountCertificateResource> GetAll(BatchAccountCertificateCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchAccountCertificateResource> GetAll(int? maxresults = null, string select = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            options ??= new BatchAccountCertificateCollectionGetAllOptions();
-
             Page<BatchAccountCertificateResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _batchAccountCertificateCertificateClientDiagnostics.CreateScope("BatchAccountCertificateCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _batchAccountCertificateCertificateRestClient.ListByBatchAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Maxresults, options.Select, options.Filter, cancellationToken: cancellationToken);
+                    var response = _batchAccountCertificateCertificateRestClient.ListByBatchAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new BatchAccountCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Batch
                 scope.Start();
                 try
                 {
-                    var response = _batchAccountCertificateCertificateRestClient.ListByBatchAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Maxresults, options.Select, options.Filter, cancellationToken: cancellationToken);
+                    var response = _batchAccountCertificateCertificateRestClient.ListByBatchAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new BatchAccountCertificateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -328,17 +328,17 @@ namespace Azure.ResourceManager.Batch
 
         IEnumerator<BatchAccountCertificateResource> IEnumerable<BatchAccountCertificateResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IAsyncEnumerator<BatchAccountCertificateResource> IAsyncEnumerable<BatchAccountCertificateResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

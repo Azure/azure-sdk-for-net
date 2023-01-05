@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public string CertificateNonce { get { throw null; } set { } }
         public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesCertificatePurpose? CertificatePurpose { get { throw null; } set { } }
         public byte[] CertificateRawBytes { get { throw null; } set { } }
-        public string ContentCertificate { get { throw null; } }
+        public Azure.ResourceManager.DeviceProvisioningServices.Models.CertificateVerificationCodeContent Content { get { throw null; } }
         public string IfMatch { get { throw null; } }
     }
     public enum DeviceProvisioningServicesIPFilterActionType

@@ -133,18 +133,23 @@ namespace Azure.ResourceManager.ManagementGroups
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_Get
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="groupId"> Management Group ID. </param>
+        /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
+        /// <param name="recurse"> The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload. Note that  $expand=children must be passed up if $recurse is set to true. </param>
+        /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual async Task<Response<ManagementGroupResource>> GetAsync(ManagementGroupCollectionGetOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        public virtual async Task<Response<ManagementGroupResource>> GetAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _managementGroupRestClient.GetAsync(options.GroupId, options.Expand, options.Recurse, options.Filter, options.CacheControl, cancellationToken).ConfigureAwait(false);
+                var response = await _managementGroupRestClient.GetAsync(groupId, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagementGroupResource(Client, response.Value), response.GetRawResponse());
@@ -162,18 +167,23 @@ namespace Azure.ResourceManager.ManagementGroups
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_Get
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="groupId"> Management Group ID. </param>
+        /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
+        /// <param name="recurse"> The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload. Note that  $expand=children must be passed up if $recurse is set to true. </param>
+        /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<ManagementGroupResource> Get(ManagementGroupCollectionGetOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        public virtual Response<ManagementGroupResource> Get(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = _managementGroupRestClient.Get(options.GroupId, options.Expand, options.Recurse, options.Filter, options.CacheControl, cancellationToken);
+                var response = _managementGroupRestClient.Get(groupId, expand, recurse, filter, cacheControl, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ManagementGroupResource(Client, response.Value), response.GetRawResponse());
@@ -340,18 +350,23 @@ namespace Azure.ResourceManager.ManagementGroups
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_Get
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="groupId"> Management Group ID. </param>
+        /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
+        /// <param name="recurse"> The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload. Note that  $expand=children must be passed up if $recurse is set to true. </param>
+        /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(ManagementGroupCollectionExistsOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _managementGroupRestClient.GetAsync(options.GroupId, options.Expand, options.Recurse, options.Filter, options.CacheControl, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managementGroupRestClient.GetAsync(groupId, expand, recurse, filter, cacheControl, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -366,18 +381,23 @@ namespace Azure.ResourceManager.ManagementGroups
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_Get
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="groupId"> Management Group ID. </param>
+        /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
+        /// <param name="recurse"> The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload. Note that  $expand=children must be passed up if $recurse is set to true. </param>
+        /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<bool> Exists(ManagementGroupCollectionExistsOptions options, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        public virtual Response<bool> Exists(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
             using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = _managementGroupRestClient.Get(options.GroupId, options.Expand, options.Recurse, options.Filter, options.CacheControl, cancellationToken: cancellationToken);
+                var response = _managementGroupRestClient.Get(groupId, expand, recurse, filter, cacheControl, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

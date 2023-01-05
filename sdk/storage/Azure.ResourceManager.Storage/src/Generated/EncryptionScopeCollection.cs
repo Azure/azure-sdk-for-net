@@ -183,20 +183,20 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopes
         /// Operation Id: EncryptionScopes_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="maxpagesize"> Optional, specifies the maximum number of encryption scopes that will be included in the list response. </param>
+        /// <param name="filter"> Optional. When specified, only encryption scope names starting with the filter will be listed. </param>
+        /// <param name="include"> Optional, when specified, will list encryption scopes with the specific state. Defaults to All. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EncryptionScopeResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EncryptionScopeResource> GetAllAsync(EncryptionScopeCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EncryptionScopeResource> GetAllAsync(int? maxpagesize = null, string filter = null, EncryptionScopesIncludeType? include = null, CancellationToken cancellationToken = default)
         {
-            options ??= new EncryptionScopeCollectionGetAllOptions();
-
             async Task<Page<EncryptionScopeResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _encryptionScopeRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, options.Filter, options.Include, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _encryptionScopeRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, filter, include, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new EncryptionScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Storage
                 scope.Start();
                 try
                 {
-                    var response = await _encryptionScopeRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, options.Filter, options.Include, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _encryptionScopeRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, filter, include, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new EncryptionScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -228,20 +228,20 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/encryptionScopes
         /// Operation Id: EncryptionScopes_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="maxpagesize"> Optional, specifies the maximum number of encryption scopes that will be included in the list response. </param>
+        /// <param name="filter"> Optional. When specified, only encryption scope names starting with the filter will be listed. </param>
+        /// <param name="include"> Optional, when specified, will list encryption scopes with the specific state. Defaults to All. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EncryptionScopeResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EncryptionScopeResource> GetAll(EncryptionScopeCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<EncryptionScopeResource> GetAll(int? maxpagesize = null, string filter = null, EncryptionScopesIncludeType? include = null, CancellationToken cancellationToken = default)
         {
-            options ??= new EncryptionScopeCollectionGetAllOptions();
-
             Page<EncryptionScopeResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _encryptionScopeClientDiagnostics.CreateScope("EncryptionScopeCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _encryptionScopeRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, options.Filter, options.Include, cancellationToken: cancellationToken);
+                    var response = _encryptionScopeRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, filter, include, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new EncryptionScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Storage
                 scope.Start();
                 try
                 {
-                    var response = _encryptionScopeRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, options.Filter, options.Include, cancellationToken: cancellationToken);
+                    var response = _encryptionScopeRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, filter, include, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new EncryptionScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -324,17 +324,17 @@ namespace Azure.ResourceManager.Storage
 
         IEnumerator<EncryptionScopeResource> IEnumerable<EncryptionScopeResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IAsyncEnumerator<EncryptionScopeResource> IAsyncEnumerable<EncryptionScopeResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

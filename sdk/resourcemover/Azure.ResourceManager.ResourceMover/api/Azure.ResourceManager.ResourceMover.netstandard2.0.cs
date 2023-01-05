@@ -78,9 +78,7 @@ namespace Azure.ResourceManager.ResourceMover
         public virtual Azure.ResourceManager.ResourceMover.MoverResourceCollection GetMoverResources() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ResourceMover.Models.RequiredForResourcesList> GetRequiredForResources(Azure.Core.ResourceIdentifier sourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceMover.Models.RequiredForResourcesList>> GetRequiredForResourcesAsync(Azure.Core.ResourceIdentifier sourceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.ResourceMover.Models.MoverUnresolvedDependency> GetUnresolvedDependencies(Azure.ResourceManager.ResourceMover.Models.MoverResourceSetResourceGetUnresolvedDependenciesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ResourceMover.Models.MoverUnresolvedDependency> GetUnresolvedDependencies(Azure.ResourceManager.ResourceMover.Models.MoverDependencyLevel? dependencyLevel = default(Azure.ResourceManager.ResourceMover.Models.MoverDependencyLevel?), string orderby = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ResourceMover.Models.MoverUnresolvedDependency> GetUnresolvedDependenciesAsync(Azure.ResourceManager.ResourceMover.Models.MoverResourceSetResourceGetUnresolvedDependenciesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ResourceMover.Models.MoverUnresolvedDependency> GetUnresolvedDependenciesAsync(Azure.ResourceManager.ResourceMover.Models.MoverDependencyLevel? dependencyLevel = default(Azure.ResourceManager.ResourceMover.Models.MoverDependencyLevel?), string orderby = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ResourceMover.Models.MoverOperationStatus> InitiateMove(Azure.WaitUntil waitUntil, Azure.ResourceManager.ResourceMover.Models.MoverResourceMoveContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ResourceMover.Models.MoverOperationStatus>> InitiateMoveAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ResourceMover.Models.MoverResourceMoveContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -440,13 +438,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
         public Azure.ResourceManager.ResourceMover.Models.MoverProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.AzureLocation SourceRegion { get { throw null; } set { } }
         public Azure.Core.AzureLocation TargetRegion { get { throw null; } set { } }
-    }
-    public partial class MoverResourceSetResourceGetUnresolvedDependenciesOptions
-    {
-        public MoverResourceSetResourceGetUnresolvedDependenciesOptions() { }
-        public Azure.ResourceManager.ResourceMover.Models.MoverDependencyLevel? DependencyLevel { get { throw null; } set { } }
-        public string Filter { get { throw null; } set { } }
-        public string Orderby { get { throw null; } set { } }
     }
     public abstract partial class MoverResourceSettings
     {

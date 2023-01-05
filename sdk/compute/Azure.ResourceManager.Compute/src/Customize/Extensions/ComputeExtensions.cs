@@ -5,6 +5,7 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
@@ -115,5 +116,41 @@ namespace Azure.ResourceManager.Compute
                 Top = top,
                 Orderby = orderby
             }, cancellationToken);
+
+        /// <summary>
+        /// Gets a virtual machine image in an edge zone.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions/{version}
+        /// Operation Id: VirtualMachineImagesEdgeZone_Get
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="edgeZone"> The name of the edge zone. </param>
+        /// <param name="publisherName"> A valid image publisher. </param>
+        /// <param name="offer"> A valid image publisher offer. </param>
+        /// <param name="skus"> A valid image SKU. </param>
+        /// <param name="version"> A valid image SKU version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
+        public static async Task<Response<VirtualMachineImage>> GetVirtualMachineImagesEdgeZoneAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default) =>
+            await GetVirtualMachineImagesEdgeZoneAsync(subscriptionResource, new ComputeExtensionsGetVirtualMachineImagesEdgeZoneOptions(location, edgeZone, publisherName, offer, skus, version), cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Gets a virtual machine image in an edge zone.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions/{version}
+        /// Operation Id: VirtualMachineImagesEdgeZone_Get
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of a supported Azure region. </param>
+        /// <param name="edgeZone"> The name of the edge zone. </param>
+        /// <param name="publisherName"> A valid image publisher. </param>
+        /// <param name="offer"> A valid image publisher offer. </param>
+        /// <param name="skus"> A valid image SKU. </param>
+        /// <param name="version"> A valid image SKU version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
+        public static Response<VirtualMachineImage> GetVirtualMachineImagesEdgeZone(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default) =>
+            GetVirtualMachineImagesEdgeZone(subscriptionResource, new ComputeExtensionsGetVirtualMachineImagesEdgeZoneOptions(location, edgeZone, publisherName, offer, skus, version), cancellationToken);
     }
 }

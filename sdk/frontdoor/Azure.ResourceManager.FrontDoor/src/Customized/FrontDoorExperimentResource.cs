@@ -20,38 +20,6 @@ namespace Azure.ResourceManager.FrontDoor
     public partial class FrontDoorExperimentResource : ArmResource
     {
         /// <summary>
-        /// Gets a Latency Scorecard for a given Experiment
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/LatencyScorecard
-        /// Operation Id: Reports_GetLatencyScorecards
-        /// </summary>
-        /// <param name="aggregationInterval"> The aggregation interval of the Latency Scorecard. </param>
-        /// <param name="endOn"> The end DateTime of the Latency Scorecard in UTC. </param>
-        /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LatencyScorecard>> GetLatencyScorecardsReportAsync(LatencyScorecardAggregationInterval aggregationInterval, DateTimeOffset? endOn = null, string country = null, CancellationToken cancellationToken = default) =>
-            await GetLatencyScorecardsReportAsync(new FrontDoorExperimentResourceGetLatencyScorecardsReportOptions(aggregationInterval)
-            {
-                EndOn = endOn,
-                Country = country
-            }, cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
-        /// Gets a Latency Scorecard for a given Experiment
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/LatencyScorecard
-        /// Operation Id: Reports_GetLatencyScorecards
-        /// </summary>
-        /// <param name="aggregationInterval"> The aggregation interval of the Latency Scorecard. </param>
-        /// <param name="endOn"> The end DateTime of the Latency Scorecard in UTC. </param>
-        /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LatencyScorecard> GetLatencyScorecardsReport(LatencyScorecardAggregationInterval aggregationInterval, DateTimeOffset? endOn = null, string country = null, CancellationToken cancellationToken = default) =>
-            GetLatencyScorecardsReport(new FrontDoorExperimentResourceGetLatencyScorecardsReportOptions(aggregationInterval)
-            {
-                EndOn = endOn,
-                Country = country
-            }, cancellationToken);
-
-        /// <summary>
         /// Gets a Timeseries for a given Experiment
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/Timeseries
         /// Operation Id: Reports_GetTimeseries

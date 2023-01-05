@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.DataShare.Models;
 
 namespace Azure.ResourceManager.DataShare
 {
@@ -183,20 +182,20 @@ namespace Azure.ResourceManager.DataShare
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/dataSets
         /// Operation Id: DataSets_ListByShare
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="skipToken"> continuation token. </param>
+        /// <param name="filter"> Filters the results using OData syntax. </param>
+        /// <param name="orderby"> Sorts the results using OData syntax. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ShareDataSetResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ShareDataSetResource> GetAllAsync(ShareDataSetCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ShareDataSetResource> GetAllAsync(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            options ??= new ShareDataSetCollectionGetAllOptions();
-
             async Task<Page<ShareDataSetResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _shareDataSetDataSetsClientDiagnostics.CreateScope("ShareDataSetCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _shareDataSetDataSetsRestClient.ListByShareAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _shareDataSetDataSetsRestClient.ListByShareAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ShareDataSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -211,7 +210,7 @@ namespace Azure.ResourceManager.DataShare
                 scope.Start();
                 try
                 {
-                    var response = await _shareDataSetDataSetsRestClient.ListByShareNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _shareDataSetDataSetsRestClient.ListByShareNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ShareDataSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -228,20 +227,20 @@ namespace Azure.ResourceManager.DataShare
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/dataSets
         /// Operation Id: DataSets_ListByShare
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="skipToken"> continuation token. </param>
+        /// <param name="filter"> Filters the results using OData syntax. </param>
+        /// <param name="orderby"> Sorts the results using OData syntax. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ShareDataSetResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ShareDataSetResource> GetAll(ShareDataSetCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ShareDataSetResource> GetAll(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            options ??= new ShareDataSetCollectionGetAllOptions();
-
             Page<ShareDataSetResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _shareDataSetDataSetsClientDiagnostics.CreateScope("ShareDataSetCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _shareDataSetDataSetsRestClient.ListByShare(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken);
+                    var response = _shareDataSetDataSetsRestClient.ListByShare(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ShareDataSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -256,7 +255,7 @@ namespace Azure.ResourceManager.DataShare
                 scope.Start();
                 try
                 {
-                    var response = _shareDataSetDataSetsRestClient.ListByShareNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.SkipToken, options.Filter, options.Orderby, cancellationToken: cancellationToken);
+                    var response = _shareDataSetDataSetsRestClient.ListByShareNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ShareDataSetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -324,17 +323,17 @@ namespace Azure.ResourceManager.DataShare
 
         IEnumerator<ShareDataSetResource> IEnumerable<ShareDataSetResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IAsyncEnumerator<ShareDataSetResource> IAsyncEnumerable<ShareDataSetResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

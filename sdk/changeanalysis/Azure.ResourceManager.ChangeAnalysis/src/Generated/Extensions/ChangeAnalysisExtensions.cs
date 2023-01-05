@@ -32,15 +32,19 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// Operation Id: ResourceChanges_List
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="resourceId"> The identifier of the resource. </param>
+        /// <param name="startTime"> Specifies the start time of the changes request. </param>
+        /// <param name="endTime"> Specifies the end time of the changes request. </param>
+        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         /// <returns> An async collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DetectedChangeData> GetResourceChangesAsync(this TenantResource tenantResource, ChangeAnalysisExtensionsGetResourceChangesOptions options, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DetectedChangeData> GetResourceChangesAsync(this TenantResource tenantResource, string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
-            return GetExtensionClient(tenantResource).GetResourceChangesAsync(options, cancellationToken);
+            return GetExtensionClient(tenantResource).GetResourceChangesAsync(resourceId, startTime, endTime, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -49,15 +53,19 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// Operation Id: ResourceChanges_List
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="resourceId"> The identifier of the resource. </param>
+        /// <param name="startTime"> Specifies the start time of the changes request. </param>
+        /// <param name="endTime"> Specifies the end time of the changes request. </param>
+        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         /// <returns> A collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DetectedChangeData> GetResourceChanges(this TenantResource tenantResource, ChangeAnalysisExtensionsGetResourceChangesOptions options, CancellationToken cancellationToken = default)
+        public static Pageable<DetectedChangeData> GetResourceChanges(this TenantResource tenantResource, string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
-            return GetExtensionClient(tenantResource).GetResourceChanges(options, cancellationToken);
+            return GetExtensionClient(tenantResource).GetResourceChanges(resourceId, startTime, endTime, skipToken, cancellationToken);
         }
 
         private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
@@ -75,15 +83,14 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// Operation Id: Changes_ListChangesBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="startTime"> Specifies the start time of the changes request. </param>
+        /// <param name="endTime"> Specifies the end time of the changes request. </param>
+        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DetectedChangeData> GetChangesBySubscriptionAsync(this SubscriptionResource subscriptionResource, ChangeAnalysisExtensionsGetChangesBySubscriptionOptions options, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DetectedChangeData> GetChangesBySubscriptionAsync(this SubscriptionResource subscriptionResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return GetExtensionClient(subscriptionResource).GetChangesBySubscriptionAsync(options, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetChangesBySubscriptionAsync(startTime, endTime, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -92,15 +99,14 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// Operation Id: Changes_ListChangesBySubscription
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="startTime"> Specifies the start time of the changes request. </param>
+        /// <param name="endTime"> Specifies the end time of the changes request. </param>
+        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DetectedChangeData> GetChangesBySubscription(this SubscriptionResource subscriptionResource, ChangeAnalysisExtensionsGetChangesBySubscriptionOptions options, CancellationToken cancellationToken = default)
+        public static Pageable<DetectedChangeData> GetChangesBySubscription(this SubscriptionResource subscriptionResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return GetExtensionClient(subscriptionResource).GetChangesBySubscription(options, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetChangesBySubscription(startTime, endTime, skipToken, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -118,15 +124,14 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// Operation Id: Changes_ListChangesByResourceGroup
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="startTime"> Specifies the start time of the changes request. </param>
+        /// <param name="endTime"> Specifies the end time of the changes request. </param>
+        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DetectedChangeData> GetChangesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, ChangeAnalysisExtensionsGetChangesByResourceGroupOptions options, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DetectedChangeData> GetChangesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return GetExtensionClient(resourceGroupResource).GetChangesByResourceGroupAsync(options, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetChangesByResourceGroupAsync(startTime, endTime, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -135,15 +140,14 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// Operation Id: Changes_ListChangesByResourceGroup
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="startTime"> Specifies the start time of the changes request. </param>
+        /// <param name="endTime"> Specifies the end time of the changes request. </param>
+        /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DetectedChangeData> GetChangesByResourceGroup(this ResourceGroupResource resourceGroupResource, ChangeAnalysisExtensionsGetChangesByResourceGroupOptions options, CancellationToken cancellationToken = default)
+        public static Pageable<DetectedChangeData> GetChangesByResourceGroup(this ResourceGroupResource resourceGroupResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return GetExtensionClient(resourceGroupResource).GetChangesByResourceGroup(options, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetChangesByResourceGroup(startTime, endTime, skipToken, cancellationToken);
         }
     }
 }

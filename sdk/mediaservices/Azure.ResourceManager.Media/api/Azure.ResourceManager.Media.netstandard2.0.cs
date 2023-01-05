@@ -8,9 +8,7 @@ namespace Azure.ResourceManager.Media
         public virtual Azure.Response<bool> Exists(string contentKeyPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string contentKeyPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.ContentKeyPolicyResource> Get(string contentKeyPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Media.ContentKeyPolicyResource> GetAll(Azure.ResourceManager.Media.Models.ContentKeyPolicyCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Media.ContentKeyPolicyResource> GetAll(string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Media.ContentKeyPolicyResource> GetAllAsync(Azure.ResourceManager.Media.Models.ContentKeyPolicyCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Media.ContentKeyPolicyResource> GetAllAsync(string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.ContentKeyPolicyResource>> GetAsync(string contentKeyPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Media.ContentKeyPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Media.ContentKeyPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -50,9 +48,7 @@ namespace Azure.ResourceManager.Media
         public virtual Azure.Response<bool> Exists(string assetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string assetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaAssetResource> Get(string assetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Media.MediaAssetResource> GetAll(Azure.ResourceManager.Media.Models.MediaAssetCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Media.MediaAssetResource> GetAll(string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Media.MediaAssetResource> GetAllAsync(Azure.ResourceManager.Media.Models.MediaAssetCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Media.MediaAssetResource> GetAllAsync(string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaAssetResource>> GetAsync(string assetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Media.MediaAssetResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Media.MediaAssetResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -643,9 +639,7 @@ namespace Azure.ResourceManager.Media
         public virtual Azure.Response<bool> Exists(string streamingLocatorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string streamingLocatorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.StreamingLocatorResource> Get(string streamingLocatorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Media.StreamingLocatorResource> GetAll(Azure.ResourceManager.Media.Models.StreamingLocatorCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Media.StreamingLocatorResource> GetAll(string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Media.StreamingLocatorResource> GetAllAsync(Azure.ResourceManager.Media.Models.StreamingLocatorCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Media.StreamingLocatorResource> GetAllAsync(string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.StreamingLocatorResource>> GetAsync(string streamingLocatorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Media.StreamingLocatorResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Media.StreamingLocatorResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -692,9 +686,7 @@ namespace Azure.ResourceManager.Media
         public virtual Azure.Response<bool> Exists(string streamingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string streamingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.StreamingPolicyResource> Get(string streamingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Media.StreamingPolicyResource> GetAll(Azure.ResourceManager.Media.Models.StreamingPolicyCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Media.StreamingPolicyResource> GetAll(string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Media.StreamingPolicyResource> GetAllAsync(Azure.ResourceManager.Media.Models.StreamingPolicyCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Media.StreamingPolicyResource> GetAllAsync(string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.StreamingPolicyResource>> GetAsync(string streamingPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Media.StreamingPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Media.StreamingPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -911,13 +903,6 @@ namespace Azure.ResourceManager.Media.Models
     public partial class ContentKeyPolicyClearKeyConfiguration : Azure.ResourceManager.Media.Models.ContentKeyPolicyConfiguration
     {
         public ContentKeyPolicyClearKeyConfiguration() { }
-    }
-    public partial class ContentKeyPolicyCollectionGetAllOptions
-    {
-        public ContentKeyPolicyCollectionGetAllOptions() { }
-        public string Filter { get { throw null; } set { } }
-        public string Orderby { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
     }
     public abstract partial class ContentKeyPolicyConfiguration
     {
@@ -1791,13 +1776,6 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.IPAccessControlDefaultAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Net.IPAddress> IPAllowList { get { throw null; } }
     }
-    public partial class MediaAssetCollectionGetAllOptions
-    {
-        public MediaAssetCollectionGetAllOptions() { }
-        public string Filter { get { throw null; } set { } }
-        public string Orderby { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MediaAssetContainerPermission : System.IEquatable<Azure.ResourceManager.Media.Models.MediaAssetContainerPermission>
     {
@@ -2499,13 +2477,6 @@ namespace Azure.ResourceManager.Media.Models
         public StreamingEntityScaleUnit() { }
         public int? ScaleUnit { get { throw null; } set { } }
     }
-    public partial class StreamingLocatorCollectionGetAllOptions
-    {
-        public StreamingLocatorCollectionGetAllOptions() { }
-        public string Filter { get { throw null; } set { } }
-        public string Orderby { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
-    }
     public partial class StreamingLocatorContentKey
     {
         public StreamingLocatorContentKey(System.Guid id) { }
@@ -2567,13 +2538,6 @@ namespace Azure.ResourceManager.Media.Models
         internal StreamingPathsResult() { }
         public System.Collections.Generic.IReadOnlyList<string> DownloadPaths { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Media.Models.StreamingPath> StreamingPaths { get { throw null; } }
-    }
-    public partial class StreamingPolicyCollectionGetAllOptions
-    {
-        public StreamingPolicyCollectionGetAllOptions() { }
-        public string Filter { get { throw null; } set { } }
-        public string Orderby { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
     }
     public partial class StreamingPolicyContentKey
     {

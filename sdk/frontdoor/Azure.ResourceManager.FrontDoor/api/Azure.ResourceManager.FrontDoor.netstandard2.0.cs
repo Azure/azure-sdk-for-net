@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.FrontDoor
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.Models.LatencyScorecard> GetLatencyScorecardsReport(Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentResourceGetLatencyScorecardsReportOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FrontDoor.Models.LatencyScorecard> GetLatencyScorecardsReport(Azure.ResourceManager.FrontDoor.Models.LatencyScorecardAggregationInterval aggregationInterval, System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string country = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.Models.LatencyScorecard>> GetLatencyScorecardsReportAsync(Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentResourceGetLatencyScorecardsReportOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.Models.LatencyScorecard>> GetLatencyScorecardsReportAsync(Azure.ResourceManager.FrontDoor.Models.LatencyScorecardAggregationInterval aggregationInterval, System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string country = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfo> GetTimeSeriesReport(Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentResourceGetTimeSeriesReportOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfo> GetTimeSeriesReport(System.DateTimeOffset startOn, System.DateTimeOffset endOn, Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesAggregationInterval aggregationInterval, Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesType timeSeriesType, string endpoint = null, string country = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -558,13 +556,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState? EnabledState { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class FrontDoorExperimentResourceGetLatencyScorecardsReportOptions
-    {
-        public FrontDoorExperimentResourceGetLatencyScorecardsReportOptions(Azure.ResourceManager.FrontDoor.Models.LatencyScorecardAggregationInterval aggregationInterval) { }
-        public Azure.ResourceManager.FrontDoor.Models.LatencyScorecardAggregationInterval AggregationInterval { get { throw null; } }
-        public string Country { get { throw null; } set { } }
-        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
     }
     public partial class FrontDoorExperimentResourceGetTimeSeriesReportOptions
     {

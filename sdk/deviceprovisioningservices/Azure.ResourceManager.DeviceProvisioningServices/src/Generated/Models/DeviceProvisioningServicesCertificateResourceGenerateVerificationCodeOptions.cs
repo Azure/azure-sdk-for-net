@@ -26,20 +26,27 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <summary> ETag of the certificate. This is required to update an existing certificate, and ignored while creating a brand new certificate. </summary>
         public string IfMatch { get; }
         /// <summary> Common Name for the certificate. </summary>
-        public string CertificateCommonName { get; set; }
+        public string CertificateCommonName { get; set; } = null;
+
         /// <summary> Raw data of certificate. </summary>
-        public byte[] CertificateRawBytes { get; set; }
+        public byte[] CertificateRawBytes { get; set; } = null;
+
         /// <summary> Indicates if the certificate has been verified by owner of the private key. </summary>
-        public bool? CertificateIsVerified { get; set; }
+        public bool? CertificateIsVerified { get; set; } = null;
+
         /// <summary> Description mentioning the purpose of the certificate. </summary>
-        public DeviceProvisioningServicesCertificatePurpose? CertificatePurpose { get; set; }
+        public DeviceProvisioningServicesCertificatePurpose? CertificatePurpose { get; set; } = null;
+
         /// <summary> Certificate creation time. </summary>
-        public DateTimeOffset? CertificateCreatedOn { get; set; }
+        public DateTimeOffset? CertificateCreatedOn { get; set; } = null;
+
         /// <summary> Certificate last updated time. </summary>
-        public DateTimeOffset? CertificateLastUpdatedOn { get; set; }
+        public DateTimeOffset? CertificateLastUpdatedOn { get; set; } = null;
+
         /// <summary> Indicates if the certificate contains private key. </summary>
-        public bool? CertificateHasPrivateKey { get; set; }
+        public bool? CertificateHasPrivateKey { get; set; } = null;
+
         /// <summary> Random number generated to indicate Proof of Possession. </summary>
-        public string CertificateNonce { get; set; }
+        public string CertificateNonce { get; set; } = null;
     }
 }

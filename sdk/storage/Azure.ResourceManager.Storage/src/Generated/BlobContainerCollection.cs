@@ -183,20 +183,20 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers
         /// Operation Id: BlobContainers_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="maxpagesize"> Optional. Specified maximum number of containers that can be included in the list. </param>
+        /// <param name="filter"> Optional. When specified, only container names starting with the filter will be listed. </param>
+        /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BlobContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BlobContainerResource> GetAllAsync(BlobContainerCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BlobContainerResource> GetAllAsync(string maxpagesize = null, string filter = null, BlobContainerState? include = null, CancellationToken cancellationToken = default)
         {
-            options ??= new BlobContainerCollectionGetAllOptions();
-
             async Task<Page<BlobContainerResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _blobContainerRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, options.Maxpagesize, options.Filter, options.Include, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _blobContainerRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, include, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new BlobContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Storage
                 scope.Start();
                 try
                 {
-                    var response = await _blobContainerRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, options.Maxpagesize, options.Filter, options.Include, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _blobContainerRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, include, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new BlobContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -228,20 +228,20 @@ namespace Azure.ResourceManager.Storage
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers
         /// Operation Id: BlobContainers_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="maxpagesize"> Optional. Specified maximum number of containers that can be included in the list. </param>
+        /// <param name="filter"> Optional. When specified, only container names starting with the filter will be listed. </param>
+        /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BlobContainerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BlobContainerResource> GetAll(BlobContainerCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<BlobContainerResource> GetAll(string maxpagesize = null, string filter = null, BlobContainerState? include = null, CancellationToken cancellationToken = default)
         {
-            options ??= new BlobContainerCollectionGetAllOptions();
-
             Page<BlobContainerResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _blobContainerClientDiagnostics.CreateScope("BlobContainerCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _blobContainerRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, options.Maxpagesize, options.Filter, options.Include, cancellationToken: cancellationToken);
+                    var response = _blobContainerRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, include, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new BlobContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Storage
                 scope.Start();
                 try
                 {
-                    var response = _blobContainerRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, options.Maxpagesize, options.Filter, options.Include, cancellationToken: cancellationToken);
+                    var response = _blobContainerRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter, include, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new BlobContainerResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -324,17 +324,17 @@ namespace Azure.ResourceManager.Storage
 
         IEnumerator<BlobContainerResource> IEnumerable<BlobContainerResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IAsyncEnumerator<BlobContainerResource> IAsyncEnumerable<BlobContainerResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

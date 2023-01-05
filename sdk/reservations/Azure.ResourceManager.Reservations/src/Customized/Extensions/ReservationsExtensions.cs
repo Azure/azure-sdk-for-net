@@ -62,51 +62,5 @@ namespace Azure.ResourceManager.Reservations
                 SelectedState = selectedState,
                 Take = take
             }, cancellationToken);
-
-        /// <summary>
-        /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs
-        /// Operation Id: GetCatalog
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="reservedResourceType"> The type of the resource for which the skus should be provided. </param>
-        /// <param name="location"> Filters the skus based on the location specified in this parameter. This can be an azure region or global. </param>
-        /// <param name="publisherId"> Publisher id used to get the third party products. </param>
-        /// <param name="offerId"> Offer id used to get the third party products. </param>
-        /// <param name="planId"> Plan id used to get the third party products. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReservationCatalog> GetCatalogAsync(this SubscriptionResource subscriptionResource, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default) =>
-            GetCatalogAsync(subscriptionResource, new ReservationsExtensionsGetCatalogOptions
-            {
-                ReservedResourceType = reservedResourceType,
-                Location = location,
-                PublisherId = publisherId,
-                OfferId = offerId,
-                PlanId = planId
-            }, cancellationToken);
-
-        /// <summary>
-        /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs
-        /// Operation Id: GetCatalog
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="reservedResourceType"> The type of the resource for which the skus should be provided. </param>
-        /// <param name="location"> Filters the skus based on the location specified in this parameter. This can be an azure region or global. </param>
-        /// <param name="publisherId"> Publisher id used to get the third party products. </param>
-        /// <param name="offerId"> Offer id used to get the third party products. </param>
-        /// <param name="planId"> Plan id used to get the third party products. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReservationCatalog> GetCatalog(this SubscriptionResource subscriptionResource, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default) =>
-            GetCatalog(subscriptionResource, new ReservationsExtensionsGetCatalogOptions
-            {
-                ReservedResourceType = reservedResourceType,
-                Location = location,
-                PublisherId = publisherId,
-                OfferId = offerId,
-                PlanId = planId
-            }, cancellationToken);
     }
 }

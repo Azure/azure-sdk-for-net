@@ -45,10 +45,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> A valid image SKU. </summary>
         public string Skus { get; }
         /// <summary> The expand expression to apply on the operation. </summary>
-        public string Expand { get; set; }
+        public string Expand { get; set; } = null;
+
         /// <summary> An integer value specifying the number of images to return that matches supplied values. </summary>
-        public int? Top { get; set; }
+        public int? Top { get; set; } = null;
+
         /// <summary> Specifies the order of the results returned. Formatted as an OData query. </summary>
-        public string Orderby { get; set; }
+        public string Orderby { get; set; } = null;
     }
 }

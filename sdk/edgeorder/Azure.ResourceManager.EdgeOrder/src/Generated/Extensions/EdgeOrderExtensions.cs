@@ -194,14 +194,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Operation Id: ListOrderItemsAtSubscriptionLevel
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter"> $filter is supported to filter based on order id. Filter supports only equals operation. </param>
+        /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
+        /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EdgeOrderItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EdgeOrderItemResource> GetEdgeOrderItemsAsync(this SubscriptionResource subscriptionResource, EdgeOrderExtensionsGetEdgeOrderItemsOptions options, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EdgeOrderItemResource> GetEdgeOrderItemsAsync(this SubscriptionResource subscriptionResource, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            options ??= new EdgeOrderExtensionsGetEdgeOrderItemsOptions();
-
-            return GetExtensionClient(subscriptionResource).GetEdgeOrderItemsAsync(options, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetEdgeOrderItemsAsync(filter, expand, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -210,14 +210,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Operation Id: ListOrderItemsAtSubscriptionLevel
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter"> $filter is supported to filter based on order id. Filter supports only equals operation. </param>
+        /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
+        /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeOrderItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EdgeOrderItemResource> GetEdgeOrderItems(this SubscriptionResource subscriptionResource, EdgeOrderExtensionsGetEdgeOrderItemsOptions options, CancellationToken cancellationToken = default)
+        public static Pageable<EdgeOrderItemResource> GetEdgeOrderItems(this SubscriptionResource subscriptionResource, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            options ??= new EdgeOrderExtensionsGetEdgeOrderItemsOptions();
-
-            return GetExtensionClient(subscriptionResource).GetEdgeOrderItems(options, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetEdgeOrderItems(filter, expand, skipToken, cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)

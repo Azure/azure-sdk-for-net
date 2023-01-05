@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Advisor.Tests
         {
             // get recommendations, we should get a non-empty list
             var collection = Client.GetResourceRecommendationBases(DefaultSubscription.Id);
-            var recs = await collection.GetAllAsync(null).ToEnumerableAsync();
+            var recs = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.GreaterOrEqual(recs.Count, 1);
 
             ResourceRecommendationBaseResource recommendation = null;

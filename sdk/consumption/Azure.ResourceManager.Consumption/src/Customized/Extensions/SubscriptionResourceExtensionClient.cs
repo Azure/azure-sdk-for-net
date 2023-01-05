@@ -16,8 +16,8 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Consumption
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    [CodeGenSuppress("GetPriceSheetAsync", typeof(SubscriptionBillingPeriodConsumptionResourceGetPriceSheetOptions), typeof(CancellationToken))]
-    [CodeGenSuppress("GetPriceSheet", typeof(SubscriptionBillingPeriodConsumptionResourceGetPriceSheetOptions), typeof(CancellationToken))]
+    [CodeGenSuppress("GetPriceSheetAsync", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetPriceSheet", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(CancellationToken))]
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
     }

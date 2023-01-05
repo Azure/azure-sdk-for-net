@@ -8,9 +8,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Azure.Response<bool> Exists(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryResource> Get(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryResource> GetAll(Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQueryCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryResource> GetAll(long? top = default(long?), bool? includeBody = default(bool?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryResource> GetAllAsync(Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQueryCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryResource> GetAllAsync(long? top = default(long?), bool? includeBody = default(bool?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryResource>> GetAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -72,9 +70,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryResource>> GetLogAnalyticsQueryAsync(string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryResource> SearchQueries(Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQueryPackResourceSearchQueriesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryResource> SearchQueries(Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQuerySearchProperties querySearchProperties, long? top = default(long?), bool? includeBody = default(bool?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryResource> SearchQueriesAsync(Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQueryPackResourceSearchQueriesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryResource> SearchQueriesAsync(Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQuerySearchProperties querySearchProperties, long? top = default(long?), bool? includeBody = default(bool?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -577,25 +573,10 @@ namespace Azure.ResourceManager.OperationalInsights
 }
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class LogAnalyticsQueryCollectionGetAllOptions
-    {
-        public LogAnalyticsQueryCollectionGetAllOptions() { }
-        public bool? IncludeBody { get { throw null; } set { } }
-        public string SkipToken { get { throw null; } set { } }
-        public long? Top { get { throw null; } set { } }
-    }
     public partial class LogAnalyticsQueryPackPatch
     {
         public LogAnalyticsQueryPackPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class LogAnalyticsQueryPackResourceSearchQueriesOptions
-    {
-        public LogAnalyticsQueryPackResourceSearchQueriesOptions(Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQuerySearchProperties querySearchProperties) { }
-        public bool? IncludeBody { get { throw null; } set { } }
-        public Azure.ResourceManager.OperationalInsights.Models.LogAnalyticsQuerySearchProperties QuerySearchProperties { get { throw null; } }
-        public string SkipToken { get { throw null; } set { } }
-        public long? Top { get { throw null; } set { } }
     }
     public partial class LogAnalyticsQueryRelatedMetadata
     {

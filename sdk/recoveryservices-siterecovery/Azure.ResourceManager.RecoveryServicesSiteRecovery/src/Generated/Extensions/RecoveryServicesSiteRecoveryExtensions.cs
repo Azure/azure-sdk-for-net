@@ -603,15 +603,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Operation Id: ReplicationMigrationItems_List
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="skipToken"> The pagination token. </param>
+        /// <param name="takeToken"> The page size. </param>
+        /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <returns> An async collection of <see cref="MigrationItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MigrationItemResource> GetMigrationItemsAsync(this ResourceGroupResource resourceGroupResource, RecoveryServicesSiteRecoveryExtensionsGetMigrationItemsOptions options, CancellationToken cancellationToken = default)
+        public static AsyncPageable<MigrationItemResource> GetMigrationItemsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetMigrationItemsAsync(options, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetMigrationItemsAsync(resourceName, skipToken, takeToken, filter, cancellationToken);
         }
 
         /// <summary>
@@ -620,15 +624,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Operation Id: ReplicationMigrationItems_List
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="skipToken"> The pagination token. </param>
+        /// <param name="takeToken"> The page size. </param>
+        /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <returns> A collection of <see cref="MigrationItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MigrationItemResource> GetMigrationItems(this ResourceGroupResource resourceGroupResource, RecoveryServicesSiteRecoveryExtensionsGetMigrationItemsOptions options, CancellationToken cancellationToken = default)
+        public static Pageable<MigrationItemResource> GetMigrationItems(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetMigrationItems(options, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetMigrationItems(resourceName, skipToken, takeToken, filter, cancellationToken);
         }
 
         /// <summary>

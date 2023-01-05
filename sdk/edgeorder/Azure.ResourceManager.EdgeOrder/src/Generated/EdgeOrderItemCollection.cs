@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.EdgeOrder.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeOrder
@@ -186,20 +185,20 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems
         /// Operation Id: ListOrderItemsAtResourceGroupLevel
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter"> $filter is supported to filter based on order id. Filter supports only equals operation. </param>
+        /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
+        /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EdgeOrderItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EdgeOrderItemResource> GetAllAsync(EdgeOrderItemCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EdgeOrderItemResource> GetAllAsync(string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            options ??= new EdgeOrderItemCollectionGetAllOptions();
-
             async Task<Page<EdgeOrderItemResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _edgeOrderItemRestClient.ListOrderItemsAtResourceGroupLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, options.Filter, options.Expand, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _edgeOrderItemRestClient.ListOrderItemsAtResourceGroupLevelAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, expand, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -214,7 +213,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 scope.Start();
                 try
                 {
-                    var response = await _edgeOrderItemRestClient.ListOrderItemsAtResourceGroupLevelNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, options.Filter, options.Expand, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _edgeOrderItemRestClient.ListOrderItemsAtResourceGroupLevelNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -231,20 +230,20 @@ namespace Azure.ResourceManager.EdgeOrder
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/orderItems
         /// Operation Id: ListOrderItemsAtResourceGroupLevel
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter"> $filter is supported to filter based on order id. Filter supports only equals operation. </param>
+        /// <param name="expand"> $expand is supported on device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Device Details for order item provides details on the devices of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
+        /// <param name="skipToken"> $skipToken is supported on Get list of order items, which provides the next page in the list of order items. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeOrderItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EdgeOrderItemResource> GetAll(EdgeOrderItemCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<EdgeOrderItemResource> GetAll(string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            options ??= new EdgeOrderItemCollectionGetAllOptions();
-
             Page<EdgeOrderItemResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _edgeOrderItemClientDiagnostics.CreateScope("EdgeOrderItemCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _edgeOrderItemRestClient.ListOrderItemsAtResourceGroupLevel(Id.SubscriptionId, Id.ResourceGroupName, options.Filter, options.Expand, options.SkipToken, cancellationToken: cancellationToken);
+                    var response = _edgeOrderItemRestClient.ListOrderItemsAtResourceGroupLevel(Id.SubscriptionId, Id.ResourceGroupName, filter, expand, skipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -259,7 +258,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 scope.Start();
                 try
                 {
-                    var response = _edgeOrderItemRestClient.ListOrderItemsAtResourceGroupLevelNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, options.Filter, options.Expand, options.SkipToken, cancellationToken: cancellationToken);
+                    var response = _edgeOrderItemRestClient.ListOrderItemsAtResourceGroupLevelNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand, skipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new EdgeOrderItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -329,17 +328,17 @@ namespace Azure.ResourceManager.EdgeOrder
 
         IEnumerator<EdgeOrderItemResource> IEnumerable<EdgeOrderItemResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IAsyncEnumerator<EdgeOrderItemResource> IAsyncEnumerable<EdgeOrderItemResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

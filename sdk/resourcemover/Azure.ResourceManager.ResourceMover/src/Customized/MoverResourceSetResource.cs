@@ -232,41 +232,5 @@ namespace Azure.ResourceManager.ResourceMover
                 throw;
             }
         }
-
-        /// <summary>
-        /// Gets a list of unresolved dependencies.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/unresolvedDependencies
-        /// Operation Id: UnresolvedDependencies_Get
-        /// </summary>
-        /// <param name="dependencyLevel"> Defines the dependency level. </param>
-        /// <param name="orderby"> OData order by query option. For example, you can use $orderby=Count desc. </param>
-        /// <param name="filter"> The filter to apply on the operation. For example, $apply=filter(count eq 2). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MoverUnresolvedDependency" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MoverUnresolvedDependency> GetUnresolvedDependenciesAsync(MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default) =>
-            GetUnresolvedDependenciesAsync(new MoverResourceSetResourceGetUnresolvedDependenciesOptions
-            {
-                DependencyLevel = dependencyLevel,
-                Orderby = orderby,
-                Filter = filter
-            }, cancellationToken);
-
-        /// <summary>
-        /// Gets a list of unresolved dependencies.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/unresolvedDependencies
-        /// Operation Id: UnresolvedDependencies_Get
-        /// </summary>
-        /// <param name="dependencyLevel"> Defines the dependency level. </param>
-        /// <param name="orderby"> OData order by query option. For example, you can use $orderby=Count desc. </param>
-        /// <param name="filter"> The filter to apply on the operation. For example, $apply=filter(count eq 2). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MoverUnresolvedDependency" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MoverUnresolvedDependency> GetUnresolvedDependencies(MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default) =>
-            GetUnresolvedDependencies(new MoverResourceSetResourceGetUnresolvedDependenciesOptions
-            {
-                DependencyLevel = dependencyLevel,
-                Orderby = orderby,
-                Filter = filter
-            }, cancellationToken);
     }
 }

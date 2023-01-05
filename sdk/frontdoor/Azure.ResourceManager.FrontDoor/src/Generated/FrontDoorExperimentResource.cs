@@ -257,18 +257,17 @@ namespace Azure.ResourceManager.FrontDoor
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/LatencyScorecard
         /// Operation Id: Reports_GetLatencyScorecards
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="aggregationInterval"> The aggregation interval of the Latency Scorecard. </param>
+        /// <param name="endOn"> The end DateTime of the Latency Scorecard in UTC. </param>
+        /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual async Task<Response<LatencyScorecard>> GetLatencyScorecardsReportAsync(FrontDoorExperimentResourceGetLatencyScorecardsReportOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LatencyScorecard>> GetLatencyScorecardsReportAsync(LatencyScorecardAggregationInterval aggregationInterval, DateTimeOffset? endOn = null, string country = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
             using var scope = _reportsClientDiagnostics.CreateScope("FrontDoorExperimentResource.GetLatencyScorecardsReport");
             scope.Start();
             try
             {
-                var response = await _reportsRestClient.GetLatencyScorecardsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.AggregationInterval, options.EndOn, options.Country, cancellationToken).ConfigureAwait(false);
+                var response = await _reportsRestClient.GetLatencyScorecardsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, aggregationInterval, endOn, country, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -283,18 +282,17 @@ namespace Azure.ResourceManager.FrontDoor
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/NetworkExperimentProfiles/{profileName}/Experiments/{experimentName}/LatencyScorecard
         /// Operation Id: Reports_GetLatencyScorecards
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="aggregationInterval"> The aggregation interval of the Latency Scorecard. </param>
+        /// <param name="endOn"> The end DateTime of the Latency Scorecard in UTC. </param>
+        /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        public virtual Response<LatencyScorecard> GetLatencyScorecardsReport(FrontDoorExperimentResourceGetLatencyScorecardsReportOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<LatencyScorecard> GetLatencyScorecardsReport(LatencyScorecardAggregationInterval aggregationInterval, DateTimeOffset? endOn = null, string country = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
             using var scope = _reportsClientDiagnostics.CreateScope("FrontDoorExperimentResource.GetLatencyScorecardsReport");
             scope.Start();
             try
             {
-                var response = _reportsRestClient.GetLatencyScorecards(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.AggregationInterval, options.EndOn, options.Country, cancellationToken);
+                var response = _reportsRestClient.GetLatencyScorecards(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, aggregationInterval, endOn, country, cancellationToken);
                 return response;
             }
             catch (Exception e)

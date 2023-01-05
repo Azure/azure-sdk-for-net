@@ -30,13 +30,18 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_Get
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="groupId"> Management Group ID. </param>
+        /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
+        /// <param name="recurse"> The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload. Note that  $expand=children must be passed up if $recurse is set to true. </param>
+        /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ManagementGroupResource>> GetManagementGroupAsync(ManagementGroupCollectionGetOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementGroupResource>> GetManagementGroupAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            return await GetManagementGroups().GetAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetManagementGroups().GetAsync(groupId, expand, recurse, filter, cacheControl, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -45,13 +50,18 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /providers/Microsoft.Management/managementGroups/{groupId}
         /// Operation Id: ManagementGroups_Get
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="groupId"> Management Group ID. </param>
+        /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
+        /// <param name="recurse"> The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload. Note that  $expand=children must be passed up if $recurse is set to true. </param>
+        /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. &apos;$filter=children.childType ne Subscription&apos;). </param>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with &apos;no-cache&apos; value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ManagementGroupResource> GetManagementGroup(ManagementGroupCollectionGetOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroupResource> GetManagementGroup(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            return GetManagementGroups().Get(options, cancellationToken);
+            return GetManagementGroups().Get(groupId, expand, recurse, filter, cacheControl, cancellationToken);
         }
     }
 }

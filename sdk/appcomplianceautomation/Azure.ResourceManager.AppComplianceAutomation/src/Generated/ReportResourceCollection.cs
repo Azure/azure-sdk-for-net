@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppComplianceAutomation.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
@@ -189,20 +188,22 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Request Path: /providers/Microsoft.AppComplianceAutomation/reports
         /// Operation Id: Reports_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="skipToken"> Skip over when retrieving results. </param>
+        /// <param name="top"> Number of elements to return when retrieving results. </param>
+        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
+        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReportResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReportResource> GetAllAsync(ReportResourceCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReportResource> GetAllAsync(string skipToken = null, int? top = null, string select = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
         {
-            options ??= new ReportResourceCollectionGetAllOptions();
-
             async Task<Page<ReportResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _reportResourceReportsClientDiagnostics.CreateScope("ReportResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _reportResourceReportsRestClient.ListAsync(options.SkipToken, options.Top, options.Select, options.OfferGuid, options.ReportCreatorTenantId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _reportResourceReportsRestClient.ListAsync(skipToken, top, select, offerGuid, reportCreatorTenantId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ReportResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -217,7 +218,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 scope.Start();
                 try
                 {
-                    var response = await _reportResourceReportsRestClient.ListNextPageAsync(nextLink, options.SkipToken, options.Top, options.Select, options.OfferGuid, options.ReportCreatorTenantId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _reportResourceReportsRestClient.ListNextPageAsync(nextLink, skipToken, top, select, offerGuid, reportCreatorTenantId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ReportResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -234,20 +235,22 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Request Path: /providers/Microsoft.AppComplianceAutomation/reports
         /// Operation Id: Reports_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="skipToken"> Skip over when retrieving results. </param>
+        /// <param name="top"> Number of elements to return when retrieving results. </param>
+        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
+        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReportResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReportResource> GetAll(ReportResourceCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ReportResource> GetAll(string skipToken = null, int? top = null, string select = null, string offerGuid = null, string reportCreatorTenantId = null, CancellationToken cancellationToken = default)
         {
-            options ??= new ReportResourceCollectionGetAllOptions();
-
             Page<ReportResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _reportResourceReportsClientDiagnostics.CreateScope("ReportResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _reportResourceReportsRestClient.List(options.SkipToken, options.Top, options.Select, options.OfferGuid, options.ReportCreatorTenantId, cancellationToken: cancellationToken);
+                    var response = _reportResourceReportsRestClient.List(skipToken, top, select, offerGuid, reportCreatorTenantId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ReportResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -262,7 +265,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 scope.Start();
                 try
                 {
-                    var response = _reportResourceReportsRestClient.ListNextPage(nextLink, options.SkipToken, options.Top, options.Select, options.OfferGuid, options.ReportCreatorTenantId, cancellationToken: cancellationToken);
+                    var response = _reportResourceReportsRestClient.ListNextPage(nextLink, skipToken, top, select, offerGuid, reportCreatorTenantId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ReportResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -330,17 +333,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         IEnumerator<ReportResource> IEnumerable<ReportResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IAsyncEnumerator<ReportResource> IAsyncEnumerable<ReportResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

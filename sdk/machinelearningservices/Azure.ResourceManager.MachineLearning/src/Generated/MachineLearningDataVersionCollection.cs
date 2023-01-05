@@ -183,20 +183,25 @@ namespace Azure.ResourceManager.MachineLearning
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions
         /// Operation Id: DataVersions_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="orderBy"> Please choose OrderBy value from [&apos;createdtime&apos;, &apos;modifiedtime&apos;]. </param>
+        /// <param name="top">
+        /// Top count of results, top count cannot be greater than the page size.
+        ///                               If topCount &gt; page size, results with be default page size count will be returned
+        /// </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
+        /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningDataVersionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningDataVersionResource> GetAllAsync(MachineLearningDataVersionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MachineLearningDataVersionResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, string tags = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
-            options ??= new MachineLearningDataVersionCollectionGetAllOptions();
-
             async Task<Page<MachineLearningDataVersionResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _machineLearningDataVersionDataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _machineLearningDataVersionDataVersionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.OrderBy, options.Top, options.Skip, options.Tags, options.ListViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _machineLearningDataVersionDataVersionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, tags, listViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningDataVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -211,7 +216,7 @@ namespace Azure.ResourceManager.MachineLearning
                 scope.Start();
                 try
                 {
-                    var response = await _machineLearningDataVersionDataVersionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.OrderBy, options.Top, options.Skip, options.Tags, options.ListViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _machineLearningDataVersionDataVersionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, tags, listViewType, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningDataVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -228,20 +233,25 @@ namespace Azure.ResourceManager.MachineLearning
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions
         /// Operation Id: DataVersions_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="orderBy"> Please choose OrderBy value from [&apos;createdtime&apos;, &apos;modifiedtime&apos;]. </param>
+        /// <param name="top">
+        /// Top count of results, top count cannot be greater than the page size.
+        ///                               If topCount &gt; page size, results with be default page size count will be returned
+        /// </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
+        /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningDataVersionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningDataVersionResource> GetAll(MachineLearningDataVersionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<MachineLearningDataVersionResource> GetAll(string orderBy = null, int? top = null, string skip = null, string tags = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
         {
-            options ??= new MachineLearningDataVersionCollectionGetAllOptions();
-
             Page<MachineLearningDataVersionResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _machineLearningDataVersionDataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _machineLearningDataVersionDataVersionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.OrderBy, options.Top, options.Skip, options.Tags, options.ListViewType, cancellationToken: cancellationToken);
+                    var response = _machineLearningDataVersionDataVersionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, tags, listViewType, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningDataVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -256,7 +266,7 @@ namespace Azure.ResourceManager.MachineLearning
                 scope.Start();
                 try
                 {
-                    var response = _machineLearningDataVersionDataVersionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.OrderBy, options.Top, options.Skip, options.Tags, options.ListViewType, cancellationToken: cancellationToken);
+                    var response = _machineLearningDataVersionDataVersionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, tags, listViewType, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new MachineLearningDataVersionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -324,17 +334,17 @@ namespace Azure.ResourceManager.MachineLearning
 
         IEnumerator<MachineLearningDataVersionResource> IEnumerable<MachineLearningDataVersionResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IAsyncEnumerator<MachineLearningDataVersionResource> IAsyncEnumerable<MachineLearningDataVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

@@ -6,9 +6,7 @@ namespace Azure.ResourceManager.Reservations
         public virtual Azure.Response<bool> Exists(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Reservations.QuotaRequestDetailResource> Get(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Reservations.QuotaRequestDetailResource> GetAll(Azure.ResourceManager.Reservations.Models.QuotaRequestDetailCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Reservations.QuotaRequestDetailResource> GetAll(string filter = null, int? top = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Reservations.QuotaRequestDetailResource> GetAllAsync(Azure.ResourceManager.Reservations.Models.QuotaRequestDetailCollectionGetAllOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Reservations.QuotaRequestDetailResource> GetAllAsync(string filter = null, int? top = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Reservations.QuotaRequestDetailResource>> GetAsync(System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Reservations.QuotaRequestDetailResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Reservations.QuotaRequestDetailResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -174,9 +172,7 @@ namespace Azure.ResourceManager.Reservations
         public static Azure.ResourceManager.Reservations.ReservationQuotaCollection GetAllReservationQuota(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string providerId, Azure.Core.AzureLocation location) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Reservations.Models.AppliedReservationData> GetAppliedReservations(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Reservations.Models.AppliedReservationData>> GetAppliedReservationsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Reservations.Models.ReservationCatalog> GetCatalog(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Reservations.Models.ReservationsExtensionsGetCatalogOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Reservations.Models.ReservationCatalog> GetCatalog(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string reservedResourceType = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string publisherId = null, string offerId = null, string planId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Reservations.Models.ReservationCatalog> GetCatalogAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Reservations.Models.ReservationsExtensionsGetCatalogOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Reservations.Models.ReservationCatalog> GetCatalogAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string reservedResourceType = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string publisherId = null, string offerId = null, string planId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Reservations.QuotaRequestDetailResource> GetQuotaRequestDetail(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string providerId, Azure.Core.AzureLocation location, System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Reservations.QuotaRequestDetailResource>> GetQuotaRequestDetailAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string providerId, Azure.Core.AzureLocation location, System.Guid id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -480,13 +476,6 @@ namespace Azure.ResourceManager.Reservations.Models
         public Azure.ResourceManager.Reservations.Models.ReservationResourceName ResourceName { get { throw null; } set { } }
         public Azure.ResourceManager.Reservations.Models.ResourceTypeName? ResourceTypeName { get { throw null; } set { } }
         public string Unit { get { throw null; } set { } }
-    }
-    public partial class QuotaRequestDetailCollectionGetAllOptions
-    {
-        public QuotaRequestDetailCollectionGetAllOptions() { }
-        public string Filter { get { throw null; } set { } }
-        public string Skiptoken { get { throw null; } set { } }
-        public int? Top { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct QuotaRequestState : System.IEquatable<Azure.ResourceManager.Reservations.Models.QuotaRequestState>
@@ -856,15 +845,6 @@ namespace Azure.ResourceManager.Reservations.Models
         public ReservationResourceName() { }
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } set { } }
-    }
-    public partial class ReservationsExtensionsGetCatalogOptions
-    {
-        public ReservationsExtensionsGetCatalogOptions() { }
-        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
-        public string OfferId { get { throw null; } set { } }
-        public string PlanId { get { throw null; } set { } }
-        public string PublisherId { get { throw null; } set { } }
-        public string ReservedResourceType { get { throw null; } set { } }
     }
     public partial class ReservationsExtensionsGetReservationDetailsOptions
     {

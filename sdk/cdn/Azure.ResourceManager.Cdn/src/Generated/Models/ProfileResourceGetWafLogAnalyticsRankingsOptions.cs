@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class ProfileResourceGetWafLogAnalyticsRankingsOptions
     {
         /// <summary> Initializes a new instance of ProfileResourceGetWafLogAnalyticsRankingsOptions. </summary>
-        /// <param name="metrics"></param>
-        /// <param name="dateTimeBegin"></param>
-        /// <param name="dateTimeEnd"></param>
-        /// <param name="maxRanking"></param>
-        /// <param name="rankings"></param>
+        /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
+        /// <param name="dateTimeBegin"> The DateTime to use. </param>
+        /// <param name="dateTimeEnd"> The DateTime to use. </param>
+        /// <param name="maxRanking"> The Integer to use. </param>
+        /// <param name="rankings"> The ArrayOfWafRankingType to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
         public ProfileResourceGetWafLogAnalyticsRankingsOptions(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings)
         {
@@ -36,19 +36,20 @@ namespace Azure.ResourceManager.Cdn.Models
             RuleTypes = new ChangeTrackingList<WafRuleType>();
         }
 
-        /// <summary> Gets the metrics. </summary>
+        /// <summary> The ArrayOfWafMetric to use. </summary>
         public IList<WafMetric> Metrics { get; }
-        /// <summary> Gets the date time begin. </summary>
+        /// <summary> The DateTime to use. </summary>
         public DateTimeOffset DateTimeBegin { get; }
-        /// <summary> Gets the date time end. </summary>
+        /// <summary> The DateTime to use. </summary>
         public DateTimeOffset DateTimeEnd { get; }
-        /// <summary> Gets the max ranking. </summary>
+        /// <summary> The Integer to use. </summary>
         public int MaxRanking { get; }
-        /// <summary> Gets the rankings. </summary>
+        /// <summary> The ArrayOfWafRankingType to use. </summary>
         public IList<WafRankingType> Rankings { get; }
-        /// <summary> Gets the actions. </summary>
-        public IList<WafAction> Actions { get; }
-        /// <summary> Gets the rule types. </summary>
-        public IList<WafRuleType> RuleTypes { get; }
+        /// <summary> The ArrayOfWafAction to use. </summary>
+        public IList<WafAction> Actions { get; } = null;
+
+        /// <summary> The ArrayOfWafRuleType to use. </summary>
+        public IList<WafRuleType> RuleTypes { get; } = null;
     }
 }

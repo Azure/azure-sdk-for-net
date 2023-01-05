@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.DevTestLabs.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
@@ -119,20 +118,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/armtemplates
         /// Operation Id: ArmTemplates_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=displayName)&apos;. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevTestLabArmTemplateResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabArmTemplateResource> GetAllAsync(DevTestLabArmTemplateCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevTestLabArmTemplateResource> GetAllAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            options ??= new DevTestLabArmTemplateCollectionGetAllOptions();
-
             async Task<Page<DevTestLabArmTemplateResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _devTestLabArmTemplateArmTemplatesClientDiagnostics.CreateScope("DevTestLabArmTemplateCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _devTestLabArmTemplateArmTemplatesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Expand, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _devTestLabArmTemplateArmTemplatesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabArmTemplateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Start();
                 try
                 {
-                    var response = await _devTestLabArmTemplateArmTemplatesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Expand, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _devTestLabArmTemplateArmTemplatesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabArmTemplateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -164,20 +164,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/armtemplates
         /// Operation Id: ArmTemplates_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=displayName)&apos;. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabArmTemplateResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabArmTemplateResource> GetAll(DevTestLabArmTemplateCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevTestLabArmTemplateResource> GetAll(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            options ??= new DevTestLabArmTemplateCollectionGetAllOptions();
-
             Page<DevTestLabArmTemplateResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _devTestLabArmTemplateArmTemplatesClientDiagnostics.CreateScope("DevTestLabArmTemplateCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _devTestLabArmTemplateArmTemplatesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Expand, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken);
+                    var response = _devTestLabArmTemplateArmTemplatesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabArmTemplateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -192,7 +193,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Start();
                 try
                 {
-                    var response = _devTestLabArmTemplateArmTemplatesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Expand, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken);
+                    var response = _devTestLabArmTemplateArmTemplatesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabArmTemplateResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -262,17 +263,17 @@ namespace Azure.ResourceManager.DevTestLabs
 
         IEnumerator<DevTestLabArmTemplateResource> IEnumerable<DevTestLabArmTemplateResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IAsyncEnumerator<DevTestLabArmTemplateResource> IAsyncEnumerable<DevTestLabArmTemplateResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

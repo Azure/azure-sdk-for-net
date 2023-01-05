@@ -328,20 +328,22 @@ namespace Azure.ResourceManager.Peering
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/receivedRoutes
         /// Operation Id: ReceivedRoutes_ListByPeering
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="prefix"> The optional prefix that can be used to filter the routes. </param>
+        /// <param name="asPath"> The optional AS path that can be used to filter the routes. </param>
+        /// <param name="originAsValidationState"> The optional origin AS validation state that can be used to filter the routes. </param>
+        /// <param name="rpkiValidationState"> The optional RPKI validation state that can be used to filter the routes. </param>
+        /// <param name="skipToken"> The optional page continuation token that is used in the event of paginated result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PeeringReceivedRoute" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PeeringReceivedRoute> GetReceivedRoutesAsync(PeeringResourceGetReceivedRoutesOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PeeringReceivedRoute> GetReceivedRoutesAsync(string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            options ??= new PeeringResourceGetReceivedRoutesOptions();
-
             async Task<Page<PeeringReceivedRoute>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _receivedRoutesClientDiagnostics.CreateScope("PeeringResource.GetReceivedRoutes");
                 scope.Start();
                 try
                 {
-                    var response = await _receivedRoutesRestClient.ListByPeeringAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Prefix, options.AsPath, options.OriginAsValidationState, options.RpkiValidationState, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _receivedRoutesRestClient.ListByPeeringAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -356,7 +358,7 @@ namespace Azure.ResourceManager.Peering
                 scope.Start();
                 try
                 {
-                    var response = await _receivedRoutesRestClient.ListByPeeringNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Prefix, options.AsPath, options.OriginAsValidationState, options.RpkiValidationState, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _receivedRoutesRestClient.ListByPeeringNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -373,20 +375,22 @@ namespace Azure.ResourceManager.Peering
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/receivedRoutes
         /// Operation Id: ReceivedRoutes_ListByPeering
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="prefix"> The optional prefix that can be used to filter the routes. </param>
+        /// <param name="asPath"> The optional AS path that can be used to filter the routes. </param>
+        /// <param name="originAsValidationState"> The optional origin AS validation state that can be used to filter the routes. </param>
+        /// <param name="rpkiValidationState"> The optional RPKI validation state that can be used to filter the routes. </param>
+        /// <param name="skipToken"> The optional page continuation token that is used in the event of paginated result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PeeringReceivedRoute" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PeeringReceivedRoute> GetReceivedRoutes(PeeringResourceGetReceivedRoutesOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<PeeringReceivedRoute> GetReceivedRoutes(string prefix = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            options ??= new PeeringResourceGetReceivedRoutesOptions();
-
             Page<PeeringReceivedRoute> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _receivedRoutesClientDiagnostics.CreateScope("PeeringResource.GetReceivedRoutes");
                 scope.Start();
                 try
                 {
-                    var response = _receivedRoutesRestClient.ListByPeering(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Prefix, options.AsPath, options.OriginAsValidationState, options.RpkiValidationState, options.SkipToken, cancellationToken: cancellationToken);
+                    var response = _receivedRoutesRestClient.ListByPeering(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -401,7 +405,7 @@ namespace Azure.ResourceManager.Peering
                 scope.Start();
                 try
                 {
-                    var response = _receivedRoutesRestClient.ListByPeeringNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Prefix, options.AsPath, options.OriginAsValidationState, options.RpkiValidationState, options.SkipToken, cancellationToken: cancellationToken);
+                    var response = _receivedRoutesRestClient.ListByPeeringNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

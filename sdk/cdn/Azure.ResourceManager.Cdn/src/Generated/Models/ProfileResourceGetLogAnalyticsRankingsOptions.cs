@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class ProfileResourceGetLogAnalyticsRankingsOptions
     {
         /// <summary> Initializes a new instance of ProfileResourceGetLogAnalyticsRankingsOptions. </summary>
-        /// <param name="rankings"></param>
-        /// <param name="metrics"></param>
-        /// <param name="maxRanking"></param>
-        /// <param name="dateTimeBegin"></param>
-        /// <param name="dateTimeEnd"></param>
+        /// <param name="rankings"> The ArrayOfLogRanking to use. </param>
+        /// <param name="metrics"> The ArrayOfLogRankingMetric to use. </param>
+        /// <param name="maxRanking"> The Integer to use. </param>
+        /// <param name="dateTimeBegin"> The DateTime to use. </param>
+        /// <param name="dateTimeEnd"> The DateTime to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
         public ProfileResourceGetLogAnalyticsRankingsOptions(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd)
         {
@@ -35,17 +35,17 @@ namespace Azure.ResourceManager.Cdn.Models
             CustomDomains = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Gets the rankings. </summary>
+        /// <summary> The ArrayOfLogRanking to use. </summary>
         public IList<LogRanking> Rankings { get; }
-        /// <summary> Gets the metrics. </summary>
+        /// <summary> The ArrayOfLogRankingMetric to use. </summary>
         public IList<LogRankingMetric> Metrics { get; }
-        /// <summary> Gets the max ranking. </summary>
+        /// <summary> The Integer to use. </summary>
         public int MaxRanking { get; }
-        /// <summary> Gets the date time begin. </summary>
+        /// <summary> The DateTime to use. </summary>
         public DateTimeOffset DateTimeBegin { get; }
-        /// <summary> Gets the date time end. </summary>
+        /// <summary> The DateTime to use. </summary>
         public DateTimeOffset DateTimeEnd { get; }
-        /// <summary> Gets the custom domains. </summary>
-        public IList<string> CustomDomains { get; }
+        /// <summary> The ArrayOfString to use. </summary>
+        public IList<string> CustomDomains { get; } = null;
     }
 }

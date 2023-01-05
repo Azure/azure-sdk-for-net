@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.DevTestLabs.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevTestLabs
@@ -186,20 +185,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs
         /// Operation Id: Labs_ListByResourceGroup
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=defaultStorageAccount)&apos;. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevTestLabResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevTestLabResource> GetAllAsync(DevTestLabCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevTestLabResource> GetAllAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            options ??= new DevTestLabCollectionGetAllOptions();
-
             async Task<Page<DevTestLabResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _devTestLabLabsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, options.Expand, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _devTestLabLabsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Start();
                 try
                 {
-                    var response = await _devTestLabLabsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, options.Expand, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _devTestLabLabsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -231,20 +231,21 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs
         /// Operation Id: Labs_ListByResourceGroup
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=defaultStorageAccount)&apos;. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevTestLabResource> GetAll(DevTestLabCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<DevTestLabResource> GetAll(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            options ??= new DevTestLabCollectionGetAllOptions();
-
             Page<DevTestLabResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _devTestLabLabsClientDiagnostics.CreateScope("DevTestLabCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _devTestLabLabsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, options.Expand, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken);
+                    var response = _devTestLabLabsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -259,7 +260,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 scope.Start();
                 try
                 {
-                    var response = _devTestLabLabsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, options.Expand, options.Filter, options.Top, options.Orderby, cancellationToken: cancellationToken);
+                    var response = _devTestLabLabsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DevTestLabResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -329,17 +330,17 @@ namespace Azure.ResourceManager.DevTestLabs
 
         IEnumerator<DevTestLabResource> IEnumerable<DevTestLabResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IAsyncEnumerator<DevTestLabResource> IAsyncEnumerable<DevTestLabResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

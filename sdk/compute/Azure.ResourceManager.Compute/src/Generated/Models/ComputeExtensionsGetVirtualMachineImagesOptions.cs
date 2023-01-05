@@ -40,10 +40,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> A valid image SKU. </summary>
         public string Skus { get; }
         /// <summary> The expand expression to apply on the operation. </summary>
-        public string Expand { get; set; }
-        /// <summary> Gets or sets the top. </summary>
-        public int? Top { get; set; }
-        /// <summary> Gets or sets the orderby. </summary>
-        public string Orderby { get; set; }
+        public string Expand { get; set; } = null;
+
+        /// <summary> The Integer to use. </summary>
+        public int? Top { get; set; } = null;
+
+        /// <summary> The String to use. </summary>
+        public string Orderby { get; set; } = null;
     }
 }

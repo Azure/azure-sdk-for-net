@@ -283,20 +283,22 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/listAssociatedResources
         /// Operation Id: UserAssignedIdentities_ListAssociatedResources
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter"> OData filter expression to apply to the query. </param>
+        /// <param name="orderby"> OData orderBy expression to apply to the query. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="skiptoken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="IdentityAssociatedResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IdentityAssociatedResourceData> GetAssociatedResourcesAsync(UserAssignedIdentityResourceGetAssociatedResourcesOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IdentityAssociatedResourceData> GetAssociatedResourcesAsync(string filter = null, string orderby = null, int? top = null, int? skip = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            options ??= new UserAssignedIdentityResourceGetAssociatedResourcesOptions();
-
             async Task<Page<IdentityAssociatedResourceData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityResource.GetAssociatedResources");
                 scope.Start();
                 try
                 {
-                    var response = await _userAssignedIdentityRestClient.ListAssociatedResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Orderby, options.Top, options.Skip, options.Skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _userAssignedIdentityRestClient.ListAssociatedResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -311,7 +313,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 scope.Start();
                 try
                 {
-                    var response = await _userAssignedIdentityRestClient.ListAssociatedResourcesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Orderby, options.Top, options.Skip, options.Skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _userAssignedIdentityRestClient.ListAssociatedResourcesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -328,20 +330,22 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/listAssociatedResources
         /// Operation Id: UserAssignedIdentities_ListAssociatedResources
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter"> OData filter expression to apply to the query. </param>
+        /// <param name="orderby"> OData orderBy expression to apply to the query. </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
+        /// <param name="skiptoken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IdentityAssociatedResourceData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IdentityAssociatedResourceData> GetAssociatedResources(UserAssignedIdentityResourceGetAssociatedResourcesOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<IdentityAssociatedResourceData> GetAssociatedResources(string filter = null, string orderby = null, int? top = null, int? skip = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            options ??= new UserAssignedIdentityResourceGetAssociatedResourcesOptions();
-
             Page<IdentityAssociatedResourceData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _userAssignedIdentityClientDiagnostics.CreateScope("UserAssignedIdentityResource.GetAssociatedResources");
                 scope.Start();
                 try
                 {
-                    var response = _userAssignedIdentityRestClient.ListAssociatedResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Orderby, options.Top, options.Skip, options.Skiptoken, cancellationToken: cancellationToken);
+                    var response = _userAssignedIdentityRestClient.ListAssociatedResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -356,7 +360,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 scope.Start();
                 try
                 {
-                    var response = _userAssignedIdentityRestClient.ListAssociatedResourcesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Orderby, options.Top, options.Skip, options.Skiptoken, cancellationToken: cancellationToken);
+                    var response = _userAssignedIdentityRestClient.ListAssociatedResourcesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

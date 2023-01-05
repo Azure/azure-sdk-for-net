@@ -609,20 +609,20 @@ namespace Azure.ResourceManager.ResourceMover
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/unresolvedDependencies
         /// Operation Id: UnresolvedDependencies_Get
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="dependencyLevel"> Defines the dependency level. </param>
+        /// <param name="orderby"> OData order by query option. For example, you can use $orderby=Count desc. </param>
+        /// <param name="filter"> The filter to apply on the operation. For example, $apply=filter(count eq 2). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MoverUnresolvedDependency" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MoverUnresolvedDependency> GetUnresolvedDependenciesAsync(MoverResourceSetResourceGetUnresolvedDependenciesOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MoverUnresolvedDependency> GetUnresolvedDependenciesAsync(MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            options ??= new MoverResourceSetResourceGetUnresolvedDependenciesOptions();
-
             async Task<Page<MoverUnresolvedDependency>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _unresolvedDependenciesClientDiagnostics.CreateScope("MoverResourceSetResource.GetUnresolvedDependencies");
                 scope.Start();
                 try
                 {
-                    var response = await _unresolvedDependenciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.DependencyLevel, options.Orderby, options.Filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _unresolvedDependenciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.ResourceMover
                 scope.Start();
                 try
                 {
-                    var response = await _unresolvedDependenciesRestClient.GetNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.DependencyLevel, options.Orderby, options.Filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _unresolvedDependenciesRestClient.GetNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -654,20 +654,20 @@ namespace Azure.ResourceManager.ResourceMover
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/unresolvedDependencies
         /// Operation Id: UnresolvedDependencies_Get
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="dependencyLevel"> Defines the dependency level. </param>
+        /// <param name="orderby"> OData order by query option. For example, you can use $orderby=Count desc. </param>
+        /// <param name="filter"> The filter to apply on the operation. For example, $apply=filter(count eq 2). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MoverUnresolvedDependency" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MoverUnresolvedDependency> GetUnresolvedDependencies(MoverResourceSetResourceGetUnresolvedDependenciesOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<MoverUnresolvedDependency> GetUnresolvedDependencies(MoverDependencyLevel? dependencyLevel = null, string orderby = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            options ??= new MoverResourceSetResourceGetUnresolvedDependenciesOptions();
-
             Page<MoverUnresolvedDependency> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _unresolvedDependenciesClientDiagnostics.CreateScope("MoverResourceSetResource.GetUnresolvedDependencies");
                 scope.Start();
                 try
                 {
-                    var response = _unresolvedDependenciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.DependencyLevel, options.Orderby, options.Filter, cancellationToken: cancellationToken);
+                    var response = _unresolvedDependenciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.ResourceMover
                 scope.Start();
                 try
                 {
-                    var response = _unresolvedDependenciesRestClient.GetNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.DependencyLevel, options.Orderby, options.Filter, cancellationToken: cancellationToken);
+                    var response = _unresolvedDependenciesRestClient.GetNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

@@ -16,26 +16,36 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         }
 
         /// <summary> Filter by target resource( which is full ARM ID) Default value is select all. </summary>
-        public string TargetResource { get; set; }
+        public string TargetResource { get; set; } = null;
+
         /// <summary> Filter by target resource group name. Default value is select all. </summary>
-        public string TargetResourceGroup { get; set; }
+        public string TargetResourceGroup { get; set; } = null;
+
         /// <summary> Filter by target resource type. Default value is select all. </summary>
-        public string TargetResourceType { get; set; }
+        public string TargetResourceType { get; set; } = null;
+
         /// <summary> Filter by monitor service which generates the alert instance. Default value is select all. </summary>
-        public MonitorServiceSourceForAlert? MonitorService { get; set; }
+        public MonitorServiceSourceForAlert? MonitorService { get; set; } = null;
+
         /// <summary> Filter by monitor condition which is either &apos;Fired&apos; or &apos;Resolved&apos;. Default value is to select all. </summary>
-        public MonitorCondition? MonitorCondition { get; set; }
+        public MonitorCondition? MonitorCondition { get; set; } = null;
+
         /// <summary> Filter by severity.  Default value is select all. </summary>
-        public ServiceAlertSeverity? Severity { get; set; }
+        public ServiceAlertSeverity? Severity { get; set; } = null;
+
         /// <summary> Filter by state of the smart group. Default value is to select all. </summary>
-        public ServiceAlertState? SmartGroupState { get; set; }
+        public ServiceAlertState? SmartGroupState { get; set; } = null;
+
         /// <summary> Filter by time range by below listed values. Default value is 1 day. </summary>
-        public TimeRangeFilter? TimeRange { get; set; }
+        public TimeRangeFilter? TimeRange { get; set; } = null;
+
         /// <summary> Determines number of alerts returned per page in response. Permissible value is between 1 to 250. When the &quot;includeContent&quot;  filter is selected, maximum value allowed is 25. Default value is 25. </summary>
-        public long? PageCount { get; set; }
+        public long? PageCount { get; set; } = null;
+
         /// <summary> Sort the query results by input field. Default value is sort by &apos;lastModifiedDateTime&apos;. </summary>
-        public SmartGroupsSortByField? SortBy { get; set; }
+        public SmartGroupsSortByField? SortBy { get; set; } = null;
+
         /// <summary> Sort the query results order in either ascending or descending.  Default value is &apos;desc&apos; for time fields and &apos;asc&apos; for others. </summary>
-        public AlertsManagementQuerySortOrder? SortOrder { get; set; }
+        public AlertsManagementQuerySortOrder? SortOrder { get; set; } = null;
     }
 }

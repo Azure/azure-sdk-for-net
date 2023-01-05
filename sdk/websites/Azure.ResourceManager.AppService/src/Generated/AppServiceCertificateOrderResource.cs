@@ -137,13 +137,17 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}
         /// Operation Id: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="detectorName"> The detector name which needs to be run. </param>
+        /// <param name="startTime"> The start time for detector response. </param>
+        /// <param name="endTime"> The end time for the detector response. </param>
+        /// <param name="timeGrain"> The time grain for the detector response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CertificateOrderDetectorResource>> GetCertificateOrderDetectorAsync(CertificateOrderDetectorCollectionGetOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CertificateOrderDetectorResource>> GetCertificateOrderDetectorAsync(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            return await GetCertificateOrderDetectors().GetAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetCertificateOrderDetectors().GetAsync(detectorName, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -151,13 +155,17 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}/detectors/{detectorName}
         /// Operation Id: CertificateOrdersDiagnostics_GetAppServiceCertificateOrderDetectorResponse
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="detectorName"> The detector name which needs to be run. </param>
+        /// <param name="startTime"> The start time for detector response. </param>
+        /// <param name="endTime"> The end time for the detector response. </param>
+        /// <param name="timeGrain"> The time grain for the detector response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CertificateOrderDetectorResource> GetCertificateOrderDetector(CertificateOrderDetectorCollectionGetOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<CertificateOrderDetectorResource> GetCertificateOrderDetector(string detectorName, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            return GetCertificateOrderDetectors().Get(options, cancellationToken);
+            return GetCertificateOrderDetectors().Get(detectorName, startTime, endTime, timeGrain, cancellationToken);
         }
 
         /// <summary>

@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
@@ -117,20 +116,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectableItems
         /// Operation Id: ReplicationProtectableItems_ListByReplicationProtectionContainers
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="take"> take OData query parameter. </param>
+        /// <param name="skipToken"> skipToken OData query parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProtectableItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ProtectableItemResource> GetAllAsync(ProtectableItemCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ProtectableItemResource> GetAllAsync(string filter = null, string take = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            options ??= new ProtectableItemCollectionGetAllOptions();
-
             async Task<Page<ProtectableItemResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _protectableItemReplicationProtectableItemsClientDiagnostics.CreateScope("ProtectableItemCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _protectableItemReplicationProtectableItemsRestClient.ListByReplicationProtectionContainersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.Filter, options.Take, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _protectableItemReplicationProtectableItemsRestClient.ListByReplicationProtectionContainersAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, take, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ProtectableItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 scope.Start();
                 try
                 {
-                    var response = await _protectableItemReplicationProtectableItemsRestClient.ListByReplicationProtectionContainersNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.Filter, options.Take, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _protectableItemReplicationProtectableItemsRestClient.ListByReplicationProtectionContainersNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, take, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ProtectableItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -162,20 +161,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectableItems
         /// Operation Id: ReplicationProtectableItems_ListByReplicationProtectionContainers
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="take"> take OData query parameter. </param>
+        /// <param name="skipToken"> skipToken OData query parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProtectableItemResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ProtectableItemResource> GetAll(ProtectableItemCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ProtectableItemResource> GetAll(string filter = null, string take = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            options ??= new ProtectableItemCollectionGetAllOptions();
-
             Page<ProtectableItemResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _protectableItemReplicationProtectableItemsClientDiagnostics.CreateScope("ProtectableItemCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _protectableItemReplicationProtectableItemsRestClient.ListByReplicationProtectionContainers(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.Filter, options.Take, options.SkipToken, cancellationToken: cancellationToken);
+                    var response = _protectableItemReplicationProtectableItemsRestClient.ListByReplicationProtectionContainers(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, take, skipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ProtectableItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -190,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 scope.Start();
                 try
                 {
-                    var response = _protectableItemReplicationProtectableItemsRestClient.ListByReplicationProtectionContainersNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.Filter, options.Take, options.SkipToken, cancellationToken: cancellationToken);
+                    var response = _protectableItemReplicationProtectableItemsRestClient.ListByReplicationProtectionContainersNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, take, skipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ProtectableItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -258,17 +257,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         IEnumerator<ProtectableItemResource> IEnumerable<ProtectableItemResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IAsyncEnumerator<ProtectableItemResource> IAsyncEnumerable<ProtectableItemResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

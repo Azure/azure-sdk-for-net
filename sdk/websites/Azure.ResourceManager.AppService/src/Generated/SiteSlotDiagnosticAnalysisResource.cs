@@ -140,17 +140,17 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}/execute
         /// Operation Id: Diagnostics_ExecuteSiteAnalysisSlot
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="startTime"> Start Time. </param>
+        /// <param name="endTime"> End Time. </param>
+        /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DiagnosticAnalysis>> ExecuteSiteAnalysisSlotAsync(SiteSlotDiagnosticAnalysisResourceExecuteSiteAnalysisSlotOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiagnosticAnalysis>> ExecuteSiteAnalysisSlotAsync(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            options ??= new SiteSlotDiagnosticAnalysisResourceExecuteSiteAnalysisSlotOptions();
-
             using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisResource.ExecuteSiteAnalysisSlot");
             scope.Start();
             try
             {
-                var response = await _siteSlotDiagnosticAnalysisDiagnosticsRestClient.ExecuteSiteAnalysisSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.StartTime, options.EndTime, options.TimeGrain, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotDiagnosticAnalysisDiagnosticsRestClient.ExecuteSiteAnalysisSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -165,17 +165,17 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/analyses/{analysisName}/execute
         /// Operation Id: Diagnostics_ExecuteSiteAnalysisSlot
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="startTime"> Start Time. </param>
+        /// <param name="endTime"> End Time. </param>
+        /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DiagnosticAnalysis> ExecuteSiteAnalysisSlot(SiteSlotDiagnosticAnalysisResourceExecuteSiteAnalysisSlotOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<DiagnosticAnalysis> ExecuteSiteAnalysisSlot(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            options ??= new SiteSlotDiagnosticAnalysisResourceExecuteSiteAnalysisSlotOptions();
-
             using var scope = _siteSlotDiagnosticAnalysisDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticAnalysisResource.ExecuteSiteAnalysisSlot");
             scope.Start();
             try
             {
-                var response = _siteSlotDiagnosticAnalysisDiagnosticsRestClient.ExecuteSiteAnalysisSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.StartTime, options.EndTime, options.TimeGrain, cancellationToken);
+                var response = _siteSlotDiagnosticAnalysisDiagnosticsRestClient.ExecuteSiteAnalysisSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, startTime, endTime, timeGrain, cancellationToken);
                 return response;
             }
             catch (Exception e)

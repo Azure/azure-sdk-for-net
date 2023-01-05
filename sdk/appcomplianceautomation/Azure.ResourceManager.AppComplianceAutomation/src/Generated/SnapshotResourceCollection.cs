@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppComplianceAutomation.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
 {
@@ -122,20 +121,22 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Request Path: /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots
         /// Operation Id: Snapshots_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="skipToken"> Skip over when retrieving results. </param>
+        /// <param name="top"> Number of elements to return when retrieving results. </param>
+        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
+        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
+        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SnapshotResource> GetAllAsync(SnapshotResourceCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SnapshotResource> GetAllAsync(string skipToken = null, int? top = null, string select = null, string reportCreatorTenantId = null, string offerGuid = null, CancellationToken cancellationToken = default)
         {
-            options ??= new SnapshotResourceCollectionGetAllOptions();
-
             async Task<Page<SnapshotResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _snapshotResourceSnapshotsClientDiagnostics.CreateScope("SnapshotResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _snapshotResourceSnapshotsRestClient.ListAsync(Id.Name, options.SkipToken, options.Top, options.Select, options.ReportCreatorTenantId, options.OfferGuid, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _snapshotResourceSnapshotsRestClient.ListAsync(Id.Name, skipToken, top, select, reportCreatorTenantId, offerGuid, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 scope.Start();
                 try
                 {
-                    var response = await _snapshotResourceSnapshotsRestClient.ListNextPageAsync(nextLink, Id.Name, options.SkipToken, options.Top, options.Select, options.ReportCreatorTenantId, options.OfferGuid, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _snapshotResourceSnapshotsRestClient.ListNextPageAsync(nextLink, Id.Name, skipToken, top, select, reportCreatorTenantId, offerGuid, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new SnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -167,20 +168,22 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// Request Path: /providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots
         /// Operation Id: Snapshots_List
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="skipToken"> Skip over when retrieving results. </param>
+        /// <param name="top"> Number of elements to return when retrieving results. </param>
+        /// <param name="select"> OData Select statement. Limits the properties on each entry to just those requested, e.g. ?$select=reportName,id. </param>
+        /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
+        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SnapshotResource> GetAll(SnapshotResourceCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<SnapshotResource> GetAll(string skipToken = null, int? top = null, string select = null, string reportCreatorTenantId = null, string offerGuid = null, CancellationToken cancellationToken = default)
         {
-            options ??= new SnapshotResourceCollectionGetAllOptions();
-
             Page<SnapshotResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _snapshotResourceSnapshotsClientDiagnostics.CreateScope("SnapshotResourceCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _snapshotResourceSnapshotsRestClient.List(Id.Name, options.SkipToken, options.Top, options.Select, options.ReportCreatorTenantId, options.OfferGuid, cancellationToken: cancellationToken);
+                    var response = _snapshotResourceSnapshotsRestClient.List(Id.Name, skipToken, top, select, reportCreatorTenantId, offerGuid, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -195,7 +198,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 scope.Start();
                 try
                 {
-                    var response = _snapshotResourceSnapshotsRestClient.ListNextPage(nextLink, Id.Name, options.SkipToken, options.Top, options.Select, options.ReportCreatorTenantId, options.OfferGuid, cancellationToken: cancellationToken);
+                    var response = _snapshotResourceSnapshotsRestClient.ListNextPage(nextLink, Id.Name, skipToken, top, select, reportCreatorTenantId, offerGuid, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new SnapshotResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -263,17 +266,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         IEnumerator<SnapshotResource> IEnumerable<SnapshotResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IAsyncEnumerator<SnapshotResource> IAsyncEnumerable<SnapshotResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

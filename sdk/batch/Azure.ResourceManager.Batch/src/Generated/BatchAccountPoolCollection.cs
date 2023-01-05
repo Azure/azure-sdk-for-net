@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Batch.Models;
 
 namespace Azure.ResourceManager.Batch
 {
@@ -187,20 +186,34 @@ namespace Azure.ResourceManager.Batch
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools
         /// Operation Id: Pool_ListByBatchAccount
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="maxresults"> The maximum number of items to return in the response. </param>
+        /// <param name="select"> Comma separated list of properties that should be returned. e.g. &quot;properties/provisioningState&quot;. Only top level properties under properties/ are valid for selection. </param>
+        /// <param name="filter">
+        /// OData filter expression. Valid properties for filtering are:
+        /// 
+        ///  name
+        ///  properties/allocationState
+        ///  properties/allocationStateTransitionTime
+        ///  properties/creationTime
+        ///  properties/provisioningState
+        ///  properties/provisioningStateTransitionTime
+        ///  properties/lastModified
+        ///  properties/vmSize
+        ///  properties/interNodeCommunication
+        ///  properties/scaleSettings/autoScale
+        ///  properties/scaleSettings/fixedScale
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BatchAccountPoolResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BatchAccountPoolResource> GetAllAsync(BatchAccountPoolCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchAccountPoolResource> GetAllAsync(int? maxresults = null, string select = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            options ??= new BatchAccountPoolCollectionGetAllOptions();
-
             async Task<Page<BatchAccountPoolResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _batchAccountPoolPoolClientDiagnostics.CreateScope("BatchAccountPoolCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _batchAccountPoolPoolRestClient.ListByBatchAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Maxresults, options.Select, options.Filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _batchAccountPoolPoolRestClient.ListByBatchAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new BatchAccountPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -215,7 +228,7 @@ namespace Azure.ResourceManager.Batch
                 scope.Start();
                 try
                 {
-                    var response = await _batchAccountPoolPoolRestClient.ListByBatchAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Maxresults, options.Select, options.Filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _batchAccountPoolPoolRestClient.ListByBatchAccountNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new BatchAccountPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -232,20 +245,34 @@ namespace Azure.ResourceManager.Batch
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools
         /// Operation Id: Pool_ListByBatchAccount
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="maxresults"> The maximum number of items to return in the response. </param>
+        /// <param name="select"> Comma separated list of properties that should be returned. e.g. &quot;properties/provisioningState&quot;. Only top level properties under properties/ are valid for selection. </param>
+        /// <param name="filter">
+        /// OData filter expression. Valid properties for filtering are:
+        /// 
+        ///  name
+        ///  properties/allocationState
+        ///  properties/allocationStateTransitionTime
+        ///  properties/creationTime
+        ///  properties/provisioningState
+        ///  properties/provisioningStateTransitionTime
+        ///  properties/lastModified
+        ///  properties/vmSize
+        ///  properties/interNodeCommunication
+        ///  properties/scaleSettings/autoScale
+        ///  properties/scaleSettings/fixedScale
+        /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BatchAccountPoolResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BatchAccountPoolResource> GetAll(BatchAccountPoolCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchAccountPoolResource> GetAll(int? maxresults = null, string select = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            options ??= new BatchAccountPoolCollectionGetAllOptions();
-
             Page<BatchAccountPoolResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _batchAccountPoolPoolClientDiagnostics.CreateScope("BatchAccountPoolCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _batchAccountPoolPoolRestClient.ListByBatchAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Maxresults, options.Select, options.Filter, cancellationToken: cancellationToken);
+                    var response = _batchAccountPoolPoolRestClient.ListByBatchAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new BatchAccountPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -260,7 +287,7 @@ namespace Azure.ResourceManager.Batch
                 scope.Start();
                 try
                 {
-                    var response = _batchAccountPoolPoolRestClient.ListByBatchAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Maxresults, options.Select, options.Filter, cancellationToken: cancellationToken);
+                    var response = _batchAccountPoolPoolRestClient.ListByBatchAccountNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, maxresults, select, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new BatchAccountPoolResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -328,17 +355,17 @@ namespace Azure.ResourceManager.Batch
 
         IEnumerator<BatchAccountPoolResource> IEnumerable<BatchAccountPoolResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IAsyncEnumerator<BatchAccountPoolResource> IAsyncEnumerable<BatchAccountPoolResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

@@ -16,7 +16,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -183,20 +182,28 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalRevisions
         /// Operation Id: PortalRevision_ListByService
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter">
+        /// | Field       | Supported operators    | Supported functions               |
+        /// |-------------|------------------------|-----------------------------------|
+        /// 
+        /// |name | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
+        /// |description | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
+        /// |isCurrent | eq, ne |    |
+        /// 
+        /// </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiManagementPortalRevisionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementPortalRevisionResource> GetAllAsync(ApiManagementPortalRevisionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiManagementPortalRevisionResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementPortalRevisionCollectionGetAllOptions();
-
             async Task<Page<ApiManagementPortalRevisionResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _apiManagementPortalRevisionPortalRevisionClientDiagnostics.CreateScope("ApiManagementPortalRevisionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _apiManagementPortalRevisionPortalRevisionRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _apiManagementPortalRevisionPortalRevisionRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementPortalRevisionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -211,7 +218,7 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Start();
                 try
                 {
-                    var response = await _apiManagementPortalRevisionPortalRevisionRestClient.ListByServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _apiManagementPortalRevisionPortalRevisionRestClient.ListByServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementPortalRevisionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -228,20 +235,28 @@ namespace Azure.ResourceManager.ApiManagement
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalRevisions
         /// Operation Id: PortalRevision_ListByService
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter">
+        /// | Field       | Supported operators    | Supported functions               |
+        /// |-------------|------------------------|-----------------------------------|
+        /// 
+        /// |name | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
+        /// |description | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
+        /// |isCurrent | eq, ne |    |
+        /// 
+        /// </param>
+        /// <param name="top"> Number of records to return. </param>
+        /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementPortalRevisionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementPortalRevisionResource> GetAll(ApiManagementPortalRevisionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<ApiManagementPortalRevisionResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            options ??= new ApiManagementPortalRevisionCollectionGetAllOptions();
-
             Page<ApiManagementPortalRevisionResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _apiManagementPortalRevisionPortalRevisionClientDiagnostics.CreateScope("ApiManagementPortalRevisionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _apiManagementPortalRevisionPortalRevisionRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken);
+                    var response = _apiManagementPortalRevisionPortalRevisionRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementPortalRevisionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -256,7 +271,7 @@ namespace Azure.ResourceManager.ApiManagement
                 scope.Start();
                 try
                 {
-                    var response = _apiManagementPortalRevisionPortalRevisionRestClient.ListByServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Filter, options.Top, options.Skip, cancellationToken: cancellationToken);
+                    var response = _apiManagementPortalRevisionPortalRevisionRestClient.ListByServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new ApiManagementPortalRevisionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -324,17 +339,17 @@ namespace Azure.ResourceManager.ApiManagement
 
         IEnumerator<ApiManagementPortalRevisionResource> IEnumerable<ApiManagementPortalRevisionResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return GetAll().GetEnumerator();
         }
 
         IAsyncEnumerator<ApiManagementPortalRevisionResource> IAsyncEnumerable<ApiManagementPortalRevisionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

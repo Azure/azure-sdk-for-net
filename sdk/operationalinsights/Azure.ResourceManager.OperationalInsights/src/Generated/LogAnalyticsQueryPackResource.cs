@@ -289,13 +289,16 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks/{queryPackName}/queries/search
         /// Operation Id: Queries_Search
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="querySearchProperties"> Properties by which to search queries in the given Log Analytics QueryPack. </param>
+        /// <param name="top"> Maximum items returned in page. </param>
+        /// <param name="includeBody"> Flag indicating whether or not to return the body of each applicable query. If false, only return the query information. </param>
+        /// <param name="skipToken"> Base64 encoded token used to fetch the next page of items. Default is null. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="querySearchProperties"/> is null. </exception>
         /// <returns> An async collection of <see cref="LogAnalyticsQueryResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LogAnalyticsQueryResource> SearchQueriesAsync(LogAnalyticsQueryPackResourceSearchQueriesOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LogAnalyticsQueryResource> SearchQueriesAsync(LogAnalyticsQuerySearchProperties querySearchProperties, long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(querySearchProperties, nameof(querySearchProperties));
 
             async Task<Page<LogAnalyticsQueryResource>> FirstPageFunc(int? pageSizeHint)
             {
@@ -303,7 +306,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 scope.Start();
                 try
                 {
-                    var response = await _logAnalyticsQueryQueriesRestClient.SearchAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.QuerySearchProperties, options.Top, options.IncludeBody, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _logAnalyticsQueryQueriesRestClient.SearchAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, querySearchProperties, top, includeBody, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new LogAnalyticsQueryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -318,7 +321,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 scope.Start();
                 try
                 {
-                    var response = await _logAnalyticsQueryQueriesRestClient.SearchNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.QuerySearchProperties, options.Top, options.IncludeBody, options.SkipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _logAnalyticsQueryQueriesRestClient.SearchNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, querySearchProperties, top, includeBody, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new LogAnalyticsQueryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -335,13 +338,16 @@ namespace Azure.ResourceManager.OperationalInsights
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks/{queryPackName}/queries/search
         /// Operation Id: Queries_Search
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="querySearchProperties"> Properties by which to search queries in the given Log Analytics QueryPack. </param>
+        /// <param name="top"> Maximum items returned in page. </param>
+        /// <param name="includeBody"> Flag indicating whether or not to return the body of each applicable query. If false, only return the query information. </param>
+        /// <param name="skipToken"> Base64 encoded token used to fetch the next page of items. Default is null. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="querySearchProperties"/> is null. </exception>
         /// <returns> A collection of <see cref="LogAnalyticsQueryResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LogAnalyticsQueryResource> SearchQueries(LogAnalyticsQueryPackResourceSearchQueriesOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<LogAnalyticsQueryResource> SearchQueries(LogAnalyticsQuerySearchProperties querySearchProperties, long? top = null, bool? includeBody = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(querySearchProperties, nameof(querySearchProperties));
 
             Page<LogAnalyticsQueryResource> FirstPageFunc(int? pageSizeHint)
             {
@@ -349,7 +355,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 scope.Start();
                 try
                 {
-                    var response = _logAnalyticsQueryQueriesRestClient.Search(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.QuerySearchProperties, options.Top, options.IncludeBody, options.SkipToken, cancellationToken: cancellationToken);
+                    var response = _logAnalyticsQueryQueriesRestClient.Search(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, querySearchProperties, top, includeBody, skipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new LogAnalyticsQueryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -364,7 +370,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 scope.Start();
                 try
                 {
-                    var response = _logAnalyticsQueryQueriesRestClient.SearchNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.QuerySearchProperties, options.Top, options.IncludeBody, options.SkipToken, cancellationToken: cancellationToken);
+                    var response = _logAnalyticsQueryQueriesRestClient.SearchNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, querySearchProperties, top, includeBody, skipToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new LogAnalyticsQueryResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
