@@ -55,7 +55,7 @@ namespace Azure.Developer.LoadTesting.Tests
             _loadTestAdministrationClient = CreateAdministrationClient();
             await _testHelper.SetupLoadTestResourceAndTestScriptAsync(_loadTestAdministrationClient, _testId, _fileName);
 
-            TestRunOperation testRunOperation = await loadTestRunClient.BeginCreateOrUpdateTestRunAsync(
+            TestRunOperation testRunOperation = await loadTestRunClient.BeginTestRunAsync(
                 _testRunId, RequestContent.Create(
                     new
                     {
@@ -69,7 +69,8 @@ namespace Azure.Developer.LoadTesting.Tests
             Assert.IsTrue(testRunOperation.HasCompleted);
 
             await loadTestRunClient.DeleteTestRunAsync(_testRunId);
-            testRunOperation = await loadTestRunClient.BeginCreateOrUpdateTestRunAsync(
+            await _testHelper.SetupLoadTestResourceAndTestScriptAsync(_loadTestAdministrationClient, _testId, _fileName);
+            testRunOperation = await loadTestRunClient.BeginTestRunAsync(
                     _testRunId, RequestContent.Create(
                         new
                         {

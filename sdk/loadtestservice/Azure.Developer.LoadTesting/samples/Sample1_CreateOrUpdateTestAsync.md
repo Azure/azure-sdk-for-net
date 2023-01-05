@@ -1,24 +1,21 @@
-# Create or Update Load Test Async
+# Create or Update Load Test
 
 To use these samples, you'll first need to set up resources. See [getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/README.md#getting-started) for details.
 
-You can create a LoadTestclient and call the `CreateOrUpdateTestAsync` method from SubClient `LoadTestAdministrationClient`
+You can create a LoadTestclient and call the `CreateOrUpdateTest` method from client `LoadTestAdministrationClient`
 
 ## Create LoadTestAdministrationClient
-```C# Snippet:Azure_Developer_LoadTesting_CreatingClient
+```C# Snippet:Azure_Developer_LoadTesting_CreateAdminClient
 string endpoint = TestEnvironment.Endpoint;
+Uri enpointUrl = new Uri("https://"+endpoint);
 TokenCredential credential = TestEnvironment.Credential;
 
-// creating LoadTesting Client
-LoadTestingClient loadTestingClient = new LoadTestingClient(endpoint, credential);
-
-// getting appropriate Subclient
-LoadTestAdministrationClient loadTestAdministrationClient = loadTestingClient.getLoadTestAdministration();
+// creating LoadTesting Administration Client
+LoadTestAdministrationClient loadTestAdministrationClient = new LoadTestAdministrationClient(enpointUrl, credential);
 ```
 
-## Calling CreateOrUpdateTestAsync
+## Calling CreateOrUpdateTest
 ```C# Snippet:Azure_Developer_LoadTesting_CreateOrUpdateTestAsync
-// provide unique identifier for your test
 string testId = "my-test-id";
 
 // all data needs to be passed while creating a loadtest
@@ -76,12 +73,10 @@ var data = new
 try
 {
     Response response = await loadTestAdministrationClient.CreateOrUpdateTestAsync(testId, RequestContent.Create(data));
-
-    // if the test is created successfully, printing response
-    Console.WriteLine(response.Content);
+    Console.WriteLine(response.Content.ToString());
 }
-catch (Exception e)
+catch (Exception ex)
 {
-    Console.WriteLine(string.Format("Error : ", e.Message));
+    Console.WriteLine(ex.Message);
 }
 ```
