@@ -52,7 +52,7 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        public void CanAssignMultipleTimes()
+        public void CanSetPropertyMultipleTimes()
         {
             string json = @"
                 {
@@ -73,7 +73,7 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        public void CanAssignObject()
+        public void CanSetObject()
         {
             string json = @"
                 {
@@ -131,7 +131,7 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        public void CanAssignArrayElementMultipleTimes()
+        public void CanSetArrayElementMultipleTimes()
         {
             string json = @"
                 {

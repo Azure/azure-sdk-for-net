@@ -459,7 +459,7 @@ namespace Azure.Core.Tests.Public
             using var stream = new MemoryStream();
             using (var writer = new Utf8JsonWriter(stream))
             {
-                DynamicData.WriteTo(writer, json);
+                DynamicData.WriteTo(stream, json);
             }
 
             // Assert

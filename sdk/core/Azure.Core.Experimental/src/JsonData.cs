@@ -35,7 +35,7 @@ namespace Azure.Core.Dynamic
         {
             if (_changes == null)
             {
-                value = default(T);
+                value = default;
                 return false;
             }
 
@@ -58,7 +58,7 @@ namespace Azure.Core.Dynamic
         {
             if (_changes == null)
             {
-                value = default(T);
+                value = default;
                 return false;
             }
 
@@ -90,8 +90,6 @@ namespace Azure.Core.Dynamic
 
         internal void Set<T>(string path, T value)
         {
-            // TODO: why was this here?
-            //if (path.Contains(".")) throw new ArgumentOutOfRangeException(nameof(path));
             if (_changes == null)
             {
                 _changes = new List<IJsonDataChange>();

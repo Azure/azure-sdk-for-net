@@ -32,27 +32,27 @@ namespace Azure.Core.Dynamic
             // I think we can deal with this by more clever merge logic, but it will be tricky
             var path = _path.Length == 0 ? name : _path + "." + name;
 
-            // If the object referred to has been changed, we need to refer to
-            // the new object. (See CanAssignObject test case.)
-            //
-            // This case is different, because it changes the structure of the JSON --
-            // the JsonDocument and JsonElements we're holding at the root no longer
-            // reflect the structure of the end-state of the JsonData.  We may want to
-            // set a dirty-bit at the root level to indicate that to the serialization
-            // methods.
-            if ((_element.ValueKind == JsonValueKind.Object) &&
-                _root.TryGetChange(path, out object? value))
-            {
-                // Need to make new node to use for this element
-                // TODO: using this constructor for convenience - rewrite for clarity
-                var jd = new JsonData(value);
-                return new JsonDataElement(_root, jd.RootElement._element, path);
+            //// If the object referred to has been changed, we need to refer to
+            //// the new object. (See CanAssignObject test case.)
+            ////
+            //// This case is different, because it changes the structure of the JSON --
+            //// the JsonDocument and JsonElements we're holding at the root no longer
+            //// reflect the structure of the end-state of the JsonData.  We may want to
+            //// set a dirty-bit at the root level to indicate that to the serialization
+            //// methods.
+            //if ((_element.ValueKind == JsonValueKind.Object) &&
+            //    _root.TryGetChange(path, out object? value))
+            //{
+            //    // Need to make new node to use for this element
+            //    // TODO: using this constructor for convenience - rewrite for clarity
+            //    var jd = new JsonData(value);
+            //    return new JsonDataElement(_root, jd.RootElement._element, path);
 
-                // TODO: if we keep this approach, we'd want to cache the serialized JsonElement
-                // so we don't re-serialize it each time.  Would we store it back on the change record?
-                // Or would it be better to start building a shadow JSON tree if we have
-                // to store these things anyway?
-            }
+            //    // TODO: if we keep this approach, we'd want to cache the serialized JsonElement
+            //    // so we don't re-serialize it each time.  Would we store it back on the change record?
+            //    // Or would it be better to start building a shadow JSON tree if we have
+            //    // to store these things anyway?
+            //}
 
             return new JsonDataElement(_root, _element.GetProperty(name), path);
         }
@@ -73,21 +73,27 @@ namespace Azure.Core.Dynamic
         internal double GetDouble()
         {
             if (_root.TryGetChange(_path, out double value))
+            {
                 return value;
+            }
             return _element.GetDouble();
         }
 
         internal int GetInt32()
         {
             if (_root.TryGetChange(_path, out int value))
+            {
                 return value;
+            }
             return _element.GetInt32();
         }
 
         internal string? GetString()
         {
             if (_root.TryGetChange(_path, out string? value))
+            {
                 return value;
+            }
             return _element.GetString();
         }
 
