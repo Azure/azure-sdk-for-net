@@ -324,14 +324,14 @@ namespace Azure.ResourceManager.Tests
 
             client.TryGetApiVersion("Microsoft.resources/subscriptions", out var subscriptionApiVersion);
             client.TryGetApiVersion("mIcrOsoft.resources/ResourceGroups", out var resourceGroupApiVersion);
-            Assert.AreEqual(subscriptionApiVersion, "2021-01-01");
+            Assert.AreEqual(subscriptionApiVersion, "2016-06-01");
             Assert.AreEqual(resourceGroupApiVersion, "2021-01-01");
 
             var subscription = await client.GetDefaultSubscriptionAsync();
             var resourceProviders = subscription.GetResourceProviders();
             subscriptionApiVersion = await resourceProviders.GetApiVersionAsync(SubscriptionResource.ResourceType);
             resourceGroupApiVersion = await resourceProviders.GetApiVersionAsync("microsoft.Resources/resourcegroups");
-            Assert.AreEqual(subscriptionApiVersion, "2021-01-01");
+            Assert.AreEqual(subscriptionApiVersion, "2016-06-01");
             Assert.AreEqual(resourceGroupApiVersion, "2021-01-01");
         }
 

@@ -45,9 +45,7 @@ namespace Azure.ResourceManager
         public void SetApiVersionsFromProfile(AzureStackProfile profile)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            var profileFileFullName = $"Azure.ResourceManager.Assets.Profile.{profile.GetFileName()}";
-
-            using (Stream stream = assembly.GetManifestResourceStream(profileFileFullName))
+            using (Stream stream = assembly.GetManifestResourceStream(profile.GetManifestName()))
             {
                 var allProfile = BinaryData.FromStream(stream).ToObjectFromJson<Dictionary<string, Dictionary<string, object>>>();
                 var armProfile = allProfile["resource-manager"];
@@ -71,11 +69,7 @@ namespace Azure.ResourceManager
                                 }
                             }
                             var resourceType = $"{namespaceName}/{resourceTypeName}";
-                            // If the API version is already set by SetApiVersion, don't override it.
-                            if (!ResourceApiVersionOverrides.ContainsKey(resourceType))
-                            {
-                                ResourceApiVersionOverrides[resourceType] = apiVersion;
-                            }
+                            ResourceApiVersionOverrides[resourceType] = apiVersion;
                         }
                     }
                 }

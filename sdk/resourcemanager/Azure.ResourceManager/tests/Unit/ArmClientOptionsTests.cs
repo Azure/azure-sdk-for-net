@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Threading.Tasks;
+using System.Linq;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
@@ -51,9 +50,20 @@ namespace Azure.ResourceManager.Tests
             options.SetApiVersionsFromProfile(AzureStackProfile.Profile20200901Hybrid);
             options.SetApiVersion("microsoft.resources/ResourceGroups", "2021-01-01");
             options.ResourceApiVersionOverrides.TryGetValue("Microsoft.Resources/subscriptions", out var subscriptionApiVersion);
-            Assert.AreEqual("2021-01-01", subscriptionApiVersion);
+            Assert.AreEqual("2016-06-01", subscriptionApiVersion);
             options.ResourceApiVersionOverrides.TryGetValue("Microsoft.Resources/resourceGroups", out var resourceGroupApiVersion);
             Assert.AreEqual("2021-01-01", resourceGroupApiVersion);
+        }
+
+        [Test]
+        public void EnsureAllProfilesCanGetManifestName()
+        {
+            var values = Enum.GetValues(typeof(AzureStackProfile)).Cast<AzureStackProfile>();
+            foreach (var value in values)
+            {
+                var name = value.GetManifestName();
+                Assert.NotNull(name);
+            }
         }
 
         [TestCase]
