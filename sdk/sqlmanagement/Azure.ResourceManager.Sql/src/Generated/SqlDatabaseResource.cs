@@ -1987,6 +1987,90 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets all synapselink workspaces for a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/linkWorkspaces
+        /// Operation Id: SynapseLinkWorkspaces_ListByDatabase
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SynapseLinkWorkspace" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SynapseLinkWorkspace> GetSynapseLinkWorkspacesAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<SynapseLinkWorkspace>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _synapseLinkWorkspacesClientDiagnostics.CreateScope("SqlDatabaseResource.GetSynapseLinkWorkspaces");
+                scope.Start();
+                try
+                {
+                    var response = await _synapseLinkWorkspacesRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<SynapseLinkWorkspace>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _synapseLinkWorkspacesClientDiagnostics.CreateScope("SqlDatabaseResource.GetSynapseLinkWorkspaces");
+                scope.Start();
+                try
+                {
+                    var response = await _synapseLinkWorkspacesRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets all synapselink workspaces for a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/linkWorkspaces
+        /// Operation Id: SynapseLinkWorkspaces_ListByDatabase
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SynapseLinkWorkspace" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SynapseLinkWorkspace> GetSynapseLinkWorkspaces(CancellationToken cancellationToken = default)
+        {
+            Page<SynapseLinkWorkspace> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _synapseLinkWorkspacesClientDiagnostics.CreateScope("SqlDatabaseResource.GetSynapseLinkWorkspaces");
+                scope.Start();
+                try
+                {
+                    var response = _synapseLinkWorkspacesRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<SynapseLinkWorkspace> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _synapseLinkWorkspacesClientDiagnostics.CreateScope("SqlDatabaseResource.GetSynapseLinkWorkspaces");
+                scope.Start();
+                try
+                {
+                    var response = _synapseLinkWorkspacesRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
         /// Exports a database.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/export
         /// Operation Id: Databases_Export
@@ -2366,90 +2450,6 @@ namespace Azure.ResourceManager.Sql
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Gets all synapselink workspaces for a database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/linkWorkspaces
-        /// Operation Id: SynapseLinkWorkspaces_ListByDatabase
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseLinkWorkspace" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SynapseLinkWorkspace> GetSynapseLinkWorkspacesAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<SynapseLinkWorkspace>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseLinkWorkspacesClientDiagnostics.CreateScope("SqlDatabaseResource.GetSynapseLinkWorkspaces");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseLinkWorkspacesRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SynapseLinkWorkspace>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseLinkWorkspacesClientDiagnostics.CreateScope("SqlDatabaseResource.GetSynapseLinkWorkspaces");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseLinkWorkspacesRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Gets all synapselink workspaces for a database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/linkWorkspaces
-        /// Operation Id: SynapseLinkWorkspaces_ListByDatabase
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseLinkWorkspace" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SynapseLinkWorkspace> GetSynapseLinkWorkspaces(CancellationToken cancellationToken = default)
-        {
-            Page<SynapseLinkWorkspace> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseLinkWorkspacesClientDiagnostics.CreateScope("SqlDatabaseResource.GetSynapseLinkWorkspaces");
-                scope.Start();
-                try
-                {
-                    var response = _synapseLinkWorkspacesRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SynapseLinkWorkspace> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseLinkWorkspacesClientDiagnostics.CreateScope("SqlDatabaseResource.GetSynapseLinkWorkspaces");
-                scope.Start();
-                try
-                {
-                    var response = _synapseLinkWorkspacesRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>

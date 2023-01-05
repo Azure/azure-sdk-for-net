@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Maps;
 using Azure.ResourceManager.Maps.Models;
 
-namespace Azure.ResourceManager.Maps
+namespace Azure.ResourceManager.Maps.Samples
 {
     public partial class Sample_MapsCreatorResource
     {
@@ -25,8 +26,10 @@ namespace Azure.ResourceManager.Maps
             // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2021-02-01/examples/UpdateMapsCreator.json
             // this example is just showing the usage of "Creators_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this MapsCreatorResource created on azure
             // for more information of creating MapsCreatorResource, please refer to the document of MapsCreatorResource
@@ -63,8 +66,10 @@ namespace Azure.ResourceManager.Maps
             // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2021-02-01/examples/DeleteMapsCreator.json
             // this example is just showing the usage of "Creators_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this MapsCreatorResource created on azure
             // for more information of creating MapsCreatorResource, please refer to the document of MapsCreatorResource
@@ -89,8 +94,10 @@ namespace Azure.ResourceManager.Maps
             // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2021-02-01/examples/GetMapsCreator.json
             // this example is just showing the usage of "Creators_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this MapsCreatorResource created on azure
             // for more information of creating MapsCreatorResource, please refer to the document of MapsCreatorResource

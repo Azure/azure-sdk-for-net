@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SignalR.Models
     {
         internal static SignalRUsage DeserializeSignalRUsage(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<long> currentValue = default;
             Optional<long> limit = default;
             Optional<SignalRUsageName> name = default;
@@ -23,7 +23,12 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("currentValue"))

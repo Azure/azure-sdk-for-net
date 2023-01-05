@@ -25,12 +25,17 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static PurviewConfiguration DeserializePurviewConfiguration(JsonElement element)
         {
-            Optional<string> purviewResourceId = default;
+            Optional<ResourceIdentifier> purviewResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("purviewResourceId"))
                 {
-                    purviewResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    purviewResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }
