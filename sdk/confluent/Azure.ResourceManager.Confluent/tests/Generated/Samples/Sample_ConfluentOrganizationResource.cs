@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Confluent;
 using Azure.ResourceManager.Confluent.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Confluent
+namespace Azure.ResourceManager.Confluent.Samples
 {
     public partial class Sample_ConfluentOrganizationResource
     {
@@ -26,8 +27,10 @@ namespace Azure.ResourceManager.Confluent
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2021-12-01/examples/Organization_ListBySubscription.json
             // this example is just showing the usage of "Organization_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
@@ -56,8 +59,10 @@ namespace Azure.ResourceManager.Confluent
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2021-12-01/examples/Organization_Get.json
             // this example is just showing the usage of "Organization_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ConfluentOrganizationResource created on azure
             // for more information of creating ConfluentOrganizationResource, please refer to the document of ConfluentOrganizationResource
@@ -85,8 +90,10 @@ namespace Azure.ResourceManager.Confluent
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2021-12-01/examples/Organization_Update.json
             // this example is just showing the usage of "Organization_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ConfluentOrganizationResource created on azure
             // for more information of creating ConfluentOrganizationResource, please refer to the document of ConfluentOrganizationResource
@@ -122,8 +129,10 @@ namespace Azure.ResourceManager.Confluent
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2021-12-01/examples/Organization_Delete.json
             // this example is just showing the usage of "Organization_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ConfluentOrganizationResource created on azure
             // for more information of creating ConfluentOrganizationResource, please refer to the document of ConfluentOrganizationResource

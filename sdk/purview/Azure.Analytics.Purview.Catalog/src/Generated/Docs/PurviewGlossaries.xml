@@ -13431,7 +13431,7 @@ var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossaries
 
 var data = File.OpenRead("<filePath>");
 
-var operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data));
+var operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Started, "<glossaryGuid>", RequestContent.Create(data));
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -13445,7 +13445,7 @@ var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossaries
 
 var data = File.OpenRead("<filePath>");
 
-var operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data), true);
+var operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Started, "<glossaryGuid>", RequestContent.Create(data), true);
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -13493,7 +13493,7 @@ var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossaries
 
 var data = File.OpenRead("<filePath>");
 
-var operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data));
+var operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Started, "<glossaryGuid>", RequestContent.Create(data));
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -13507,7 +13507,7 @@ var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossaries
 
 var data = File.OpenRead("<filePath>");
 
-var operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data), true);
+var operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Started, "<glossaryGuid>", RequestContent.Create(data), true);
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -13555,7 +13555,7 @@ var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossaries
 
 var data = File.OpenRead("<filePath>");
 
-var operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data));
+var operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Started, "<glossaryName>", RequestContent.Create(data));
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -13569,7 +13569,7 @@ var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossaries
 
 var data = File.OpenRead("<filePath>");
 
-var operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data), true);
+var operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Started, "<glossaryName>", RequestContent.Create(data), true);
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -13617,7 +13617,7 @@ var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossaries
 
 var data = File.OpenRead("<filePath>");
 
-var operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data));
+var operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Started, "<glossaryName>", RequestContent.Create(data));
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -13631,7 +13631,7 @@ var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossaries
 
 var data = File.OpenRead("<filePath>");
 
-var operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data), true);
+var operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Started, "<glossaryName>", RequestContent.Create(data), true);
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;

@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.EventHubs.Models;
 
-namespace Azure.ResourceManager.EventHubs
+namespace Azure.ResourceManager.EventHubs.Samples
 {
     public partial class Sample_EventHubsNetworkRuleSetResource
     {
@@ -22,11 +23,13 @@ namespace Azure.ResourceManager.EventHubs
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_NameSpaceNetworkRuleSetCreate()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/NameSpaces/VirtualNetworkRule/EHNetworkRuleSetCreate.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/NameSpaces/VirtualNetworkRule/EHNetworkRuleSetCreate.json
             // this example is just showing the usage of "Namespaces_CreateOrUpdateNetworkRuleSet" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this EventHubsNetworkRuleSetResource created on azure
             // for more information of creating EventHubsNetworkRuleSetResource, please refer to the document of EventHubsNetworkRuleSetResource
@@ -96,11 +99,13 @@ Action = EventHubsNetworkRuleIPAction.Allow,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_NameSpaceNetworkRuleSetGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2021-11-01/examples/NameSpaces/VirtualNetworkRule/EHNetworkRuleSetGet.json
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/preview/2022-01-01-preview/examples/NameSpaces/VirtualNetworkRule/EHNetworkRuleSetGet.json
             // this example is just showing the usage of "Namespaces_GetNetworkRuleSet" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this EventHubsNetworkRuleSetResource created on azure
             // for more information of creating EventHubsNetworkRuleSetResource, please refer to the document of EventHubsNetworkRuleSetResource

@@ -72,7 +72,17 @@ namespace Azure.Messaging.ServiceBus
         /// The option to auto complete messages is specified when creating the receiver
         /// using <see cref="ServiceBusReceiverOptions.PrefetchCount"/> and has a default value of 0.
         /// </value>
-        public virtual int PrefetchCount { get; }
+        public virtual int PrefetchCount
+        {
+            get
+            {
+                return InnerReceiver.PrefetchCount;
+            }
+            internal set
+            {
+                InnerReceiver.PrefetchCount = value;
+            }
+        }
 
         /// <summary>
         /// A name used to identify the receiver client.  If <c>null</c> or empty, a random unique value will be will be used.
@@ -171,7 +181,6 @@ namespace Azure.Messaging.ServiceBus
                 _connection = connection;
                 _retryPolicy = connection.RetryOptions.ToRetryPolicy();
                 ReceiveMode = options.ReceiveMode;
-                PrefetchCount = options.PrefetchCount;
 
                 EntityPath = EntityNameFormatter.FormatEntityPath(entityPath, options.SubQueue);
 
@@ -180,7 +189,7 @@ namespace Azure.Messaging.ServiceBus
                     entityPath: EntityPath,
                     retryPolicy: _retryPolicy,
                     receiveMode: ReceiveMode,
-                    prefetchCount: (uint)PrefetchCount,
+                    prefetchCount: (uint)options.PrefetchCount,
                     identifier: Identifier,
                     sessionId: sessionId,
                     isSessionReceiver: IsSessionReceiver,
