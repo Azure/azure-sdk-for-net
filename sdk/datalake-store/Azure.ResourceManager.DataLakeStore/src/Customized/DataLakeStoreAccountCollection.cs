@@ -5,6 +5,7 @@
 
 using System.Collections.Generic;
 using System.Threading;
+using Azure.Core;
 using Azure.ResourceManager.DataLakeStore.Models;
 using Azure.ResourceManager.Resources;
 
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="count"> A Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<DataLakeStoreAccountBasicData> GetAllAsync(string filter = null, int? top = null, int? skip = null, string select = null, string orderBy = null, bool? count = null, CancellationToken cancellationToken = default) =>
             GetAllAsync(new DataLakeStoreAccountCollectionGetAllOptions
             {
@@ -54,6 +56,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="count"> A Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
+        [ForwardsClientCalls]
         public virtual Pageable<DataLakeStoreAccountBasicData> GetAll(string filter = null, int? top = null, int? skip = null, string select = null, string orderBy = null, bool? count = null, CancellationToken cancellationToken = default) =>
             GetAll(new DataLakeStoreAccountCollectionGetAllOptions
             {

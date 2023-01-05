@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.Threading;
+using Azure.Core;
 using Azure.ResourceManager.DataLakeAnalytics.Models;
 using Azure.ResourceManager.Resources;
 
@@ -26,6 +27,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="count"> The Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataLakeAnalyticsAccountBasic" /> that may take multiple service requests to iterate over. </returns>
+        [ForwardsClientCalls]
         public static AsyncPageable<DataLakeAnalyticsAccountBasic> GetAccountsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default) =>
             GetAccountsAsync(subscriptionResource, new DataLakeAnalyticsExtensionsGetAccountsOptions
             {
@@ -51,6 +53,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="count"> The Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataLakeAnalyticsAccountBasic" /> that may take multiple service requests to iterate over. </returns>
+        [ForwardsClientCalls]
         public static Pageable<DataLakeAnalyticsAccountBasic> GetAccounts(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, int? skip = null, string select = null, string orderby = null, bool? count = null, CancellationToken cancellationToken = default) =>
             GetAccounts(subscriptionResource, new DataLakeAnalyticsExtensionsGetAccountsOptions
             {

@@ -5,6 +5,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.ResourceManager.AlertsManagement.Models;
 using Azure.ResourceManager.Resources;
 
@@ -32,6 +33,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
         /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)&apos;. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public static async Task<Response<ServiceAlertSummary>> GetServiceAlertSummaryAsync(this SubscriptionResource subscriptionResource, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default) =>
             await GetServiceAlertSummaryAsync(subscriptionResource, new AlertsManagementExtensionsGetServiceAlertSummaryOptions(groupby)
             {
@@ -67,6 +69,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
         /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)&apos;. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public static Response<ServiceAlertSummary> GetServiceAlertSummary(this SubscriptionResource subscriptionResource, AlertsSummaryGroupByField groupby, bool? includeSmartGroupsCount = null, string targetResource = null, string targetResourceType = null, string targetResourceGroup = null, MonitorServiceSourceForAlert? monitorService = null, MonitorCondition? monitorCondition = null, ServiceAlertSeverity? severity = null, ServiceAlertState? alertState = null, string alertRule = null, TimeRangeFilter? timeRange = null, string customTimeRange = null, CancellationToken cancellationToken = default) =>
             GetServiceAlertSummary(subscriptionResource, new AlertsManagementExtensionsGetServiceAlertSummaryOptions(groupby)
             {

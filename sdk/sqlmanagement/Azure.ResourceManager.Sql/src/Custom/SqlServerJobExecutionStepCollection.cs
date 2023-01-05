@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Azure.Core;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SqlServerJobExecutionStepResource" /> that may take multiple service requests to iterate over. </returns>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<SqlServerJobExecutionStepResource> GetAllAsync(DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default) =>
             GetAllAsync(new SqlServerJobExecutionStepCollectionGetAllOptions
             {
@@ -57,6 +59,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SqlServerJobExecutionStepResource" /> that may take multiple service requests to iterate over. </returns>
+        [ForwardsClientCalls]
         public virtual Pageable<SqlServerJobExecutionStepResource> GetAll(DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default) =>
             GetAll(new SqlServerJobExecutionStepCollectionGetAllOptions
             {

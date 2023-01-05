@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="take"> To number of reservations to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
+        [ForwardsClientCalls]
         public static AsyncPageable<ReservationDetailResource> GetReservationDetailsAsync(this TenantResource tenantResource, string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default) =>
             GetReservationDetailsAsync(tenantResource, new ReservationsExtensionsGetReservationDetailsOptions
             {
@@ -52,6 +53,7 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="take"> To number of reservations to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
+        [ForwardsClientCalls]
         public static Pageable<ReservationDetailResource> GetReservationDetails(this TenantResource tenantResource, string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default) =>
             GetReservationDetails(tenantResource, new ReservationsExtensionsGetReservationDetailsOptions
             {

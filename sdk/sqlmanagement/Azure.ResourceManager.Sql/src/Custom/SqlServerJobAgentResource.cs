@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SqlServerJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<SqlServerJobExecutionResource> GetJobExecutionsByAgentAsync(DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default) =>
             GetJobExecutionsByAgentAsync(new SqlServerJobAgentResourceGetJobExecutionsByAgentOptions
             {
@@ -58,6 +59,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SqlServerJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
+        [ForwardsClientCalls]
         public virtual Pageable<SqlServerJobExecutionResource> GetJobExecutionsByAgent(DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default) =>
             GetJobExecutionsByAgent(new SqlServerJobAgentResourceGetJobExecutionsByAgentOptions
             {

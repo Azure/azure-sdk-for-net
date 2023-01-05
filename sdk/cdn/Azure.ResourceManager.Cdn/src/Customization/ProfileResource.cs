@@ -5,6 +5,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -37,18 +39,19 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="countryOrRegions"> The ArrayOfGet10ItemsItem to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/>, <paramref name="customDomains"/> or <paramref name="protocols"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<MetricsResponse>> GetLogAnalyticsMetricsAsync(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
         {
             var input = new ProfileResourceGetLogAnalyticsMetricsOptions(metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols);
-            foreach (var item in groupBy)
+            foreach (var item in groupBy ?? Enumerable.Empty<LogMetricsGroupBy>())
             {
                 input.GroupBy.Add(item);
             }
-            foreach (var item in continents)
+            foreach (var item in continents ?? Enumerable.Empty<string>())
             {
                 input.Continents.Add(item);
             }
-            foreach (var item in countryOrRegions)
+            foreach (var item in countryOrRegions ?? Enumerable.Empty<string>())
             {
                 input.CountryOrRegions.Add(item);
             }
@@ -71,18 +74,19 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="countryOrRegions"> The ArrayOfGet10ItemsItem to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/>, <paramref name="customDomains"/> or <paramref name="protocols"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<MetricsResponse> GetLogAnalyticsMetrics(IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
         {
             var input = new ProfileResourceGetLogAnalyticsMetricsOptions(metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols);
-            foreach (var item in groupBy)
+            foreach (var item in groupBy ?? Enumerable.Empty<LogMetricsGroupBy>())
             {
                 input.GroupBy.Add(item);
             }
-            foreach (var item in continents)
+            foreach (var item in continents ?? Enumerable.Empty<string>())
             {
                 input.Continents.Add(item);
             }
-            foreach (var item in countryOrRegions)
+            foreach (var item in countryOrRegions ?? Enumerable.Empty<string>())
             {
                 input.CountryOrRegions.Add(item);
             }
@@ -102,10 +106,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomains"> The ArrayOfString to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<RankingsResponse>> GetLogAnalyticsRankingsAsync(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
         {
             var input = new ProfileResourceGetLogAnalyticsRankingsOptions(rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd);
-            foreach (var item in customDomains)
+            foreach (var item in customDomains ?? Enumerable.Empty<string>())
             {
                 input.CustomDomains.Add(item);
             }
@@ -125,10 +130,11 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="customDomains"> The ArrayOfString to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<RankingsResponse> GetLogAnalyticsRankings(IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
         {
             var input = new ProfileResourceGetLogAnalyticsRankingsOptions(rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd);
-            foreach (var item in customDomains)
+            foreach (var item in customDomains ?? Enumerable.Empty<string>())
             {
                 input.CustomDomains.Add(item);
             }
@@ -149,18 +155,19 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<WafMetricsResponse>> GetWafLogAnalyticsMetricsAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
             var input = new ProfileResourceGetWafLogAnalyticsMetricsOptions(metrics, dateTimeBegin, dateTimeEnd, granularity);
-            foreach (var item in actions)
+            foreach (var item in actions ?? Enumerable.Empty<WafAction>())
             {
                 input.Actions.Add(item);
             }
-            foreach (var item in groupBy)
+            foreach (var item in groupBy ?? Enumerable.Empty<WafRankingGroupBy>())
             {
                 input.GroupBy.Add(item);
             }
-            foreach (var item in ruleTypes)
+            foreach (var item in ruleTypes ?? Enumerable.Empty<WafRuleType>())
             {
                 input.RuleTypes.Add(item);
             }
@@ -181,18 +188,19 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<WafMetricsResponse> GetWafLogAnalyticsMetrics(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
             var input = new ProfileResourceGetWafLogAnalyticsMetricsOptions(metrics, dateTimeBegin, dateTimeEnd, granularity);
-            foreach (var item in actions)
+            foreach (var item in actions ?? Enumerable.Empty<WafAction>())
             {
                 input.Actions.Add(item);
             }
-            foreach (var item in groupBy)
+            foreach (var item in groupBy ?? Enumerable.Empty<WafRankingGroupBy>())
             {
                 input.GroupBy.Add(item);
             }
-            foreach (var item in ruleTypes)
+            foreach (var item in ruleTypes ?? Enumerable.Empty<WafRuleType>())
             {
                 input.RuleTypes.Add(item);
             }
@@ -213,14 +221,15 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<WafRankingsResponse>> GetWafLogAnalyticsRankingsAsync(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
             var input = new ProfileResourceGetWafLogAnalyticsRankingsOptions(metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings);
-            foreach (var item in actions)
+            foreach (var item in actions ?? Enumerable.Empty<WafAction>())
             {
                 input.Actions.Add(item);
             }
-            foreach (var item in ruleTypes)
+            foreach (var item in ruleTypes ?? Enumerable.Empty<WafRuleType>())
             {
                 input.RuleTypes.Add(item);
             }
@@ -241,14 +250,15 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<WafRankingsResponse> GetWafLogAnalyticsRankings(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
         {
             var input = new ProfileResourceGetWafLogAnalyticsRankingsOptions(metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings);
-            foreach (var item in actions)
+            foreach (var item in actions ?? Enumerable.Empty<WafAction>())
             {
                 input.Actions.Add(item);
             }
-            foreach (var item in ruleTypes)
+            foreach (var item in ruleTypes ?? Enumerable.Empty<WafRuleType>())
             {
                 input.RuleTypes.Add(item);
             }

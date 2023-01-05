@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="endpoint"> The specific endpoint. </param>
         /// <param name="country"> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<FrontDoorTimeSeriesInfo>> GetTimeSeriesReportAsync(DateTimeOffset startOn, DateTimeOffset endOn, FrontDoorTimeSeriesAggregationInterval aggregationInterval, FrontDoorTimeSeriesType timeSeriesType, string endpoint = null, string country = null, CancellationToken cancellationToken = default) =>
             await GetTimeSeriesReportAsync(new FrontDoorExperimentResourceGetTimeSeriesReportOptions(startOn, endOn, aggregationInterval, timeSeriesType)
             {
@@ -50,6 +51,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="endpoint"> The specific endpoint. </param>
         /// <param name="country"> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<FrontDoorTimeSeriesInfo> GetTimeSeriesReport(DateTimeOffset startOn, DateTimeOffset endOn, FrontDoorTimeSeriesAggregationInterval aggregationInterval, FrontDoorTimeSeriesType timeSeriesType, string endpoint = null, string country = null, CancellationToken cancellationToken = default) =>
             GetTimeSeriesReport(new FrontDoorExperimentResourceGetTimeSeriesReportOptions(startOn, endOn, aggregationInterval, timeSeriesType)
             {
