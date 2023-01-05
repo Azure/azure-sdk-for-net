@@ -20,7 +20,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventHandler
             CallAutomationEventHandler handler = callAutomationClient.GetCallAutomationEventHandler();
 
             // Wait for Event
-            Task<CallAutomationEventBase> baseEventTask = handler.WaitForEvent<CallConnected>(CallConnectionId);
+            Task<CallConnected> baseEventTask = handler.WaitForEvent<CallConnected>(CallConnectionId);
 
             // create and send event to event processor
             SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventHandler
             // assert
             Assert.NotNull(returnedBaseEvent);
             Assert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());
-            Assert.AreEqual(CallConnectionId, ((CallConnected)returnedBaseEvent).CallConnectionId);
+            Assert.AreEqual(CallConnectionId, returnedBaseEvent.CallConnectionId);
         }
 
         [Test]
@@ -44,12 +44,38 @@ namespace Azure.Communication.CallAutomation.Tests.EventHandler
             SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
 
             // Wait for Event after
-            CallAutomationEventBase returnedBaseEvent = await handler.WaitForEvent<CallConnected>(CallConnectionId);
+            CallConnected returnedBaseEvent = await handler.WaitForEvent<CallConnected>(CallConnectionId);
 
             // assert
             Assert.NotNull(returnedBaseEvent);
             Assert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());
-            Assert.AreEqual(CallConnectionId, ((CallConnected)returnedBaseEvent).CallConnectionId);
+            Assert.AreEqual(CallConnectionId, returnedBaseEvent.CallConnectionId);
+        }
+
+        [Test]
+        public async Task OnGoingHandlerRegistration()
+        {
+            // ongoing handler with delegate tests
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient();
+            CallAutomationEventHandler handler = callAutomationClient.GetCallAutomationEventHandler();
+            string callConnectionIdPassedFromOngoingEventHandler = "";
+
+            // Add delegate for call connected event
+            handler.SetOngoingEventHandler<CallConnected>(CallConnectionId, passedEvent => callConnectionIdPassedFromOngoingEventHandler = passedEvent.CallConnectionId);
+
+            // create and send event to event processor first
+            SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
+
+            // Wait for Event after
+            CallConnected returnedBaseEvent = await handler.WaitForEvent<CallConnected>(CallConnectionId);
+
+            // assert
+            Assert.NotNull(returnedBaseEvent);
+            Assert.AreEqual(typeof(CallConnected), returnedBaseEvent.GetType());
+            Assert.AreEqual(CallConnectionId, returnedBaseEvent.CallConnectionId);
+
+            // assert if the delegate was also called
+            Assert.AreEqual(CallConnectionId, callConnectionIdPassedFromOngoingEventHandler);
         }
     }
 }

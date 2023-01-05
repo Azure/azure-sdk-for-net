@@ -39,9 +39,9 @@ namespace Azure.Communication.CallAutomation
         private void OnEventsReceived(object sender, CallAutomationEventArgs e)
         {
             // see if events sent matches filter set on constructor.
-            if ((_callConnectionId == e.callAutomationEvent.CallConnectionId
+            if (_callConnectionId == e.callAutomationEvent.CallConnectionId
                 && _operationContext == e.callAutomationEvent.OperationContext
-                && (!(_eventTypes?.Any() ?? false) || _eventTypes.Contains(e.callAutomationEvent.GetType()))))
+                && (!(_eventTypes?.Any() ?? false) || _eventTypes.Contains(e.callAutomationEvent.GetType())))
             {
                 // dispose expiring timer, as we don't want timer activating.
                 _expiringTimer.Dispose();

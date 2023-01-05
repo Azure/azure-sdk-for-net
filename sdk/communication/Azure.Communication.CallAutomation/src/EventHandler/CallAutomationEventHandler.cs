@@ -18,14 +18,14 @@ namespace Azure.Communication.CallAutomation
     {
         private TimeSpan _exceptionTimeout;
         private EventBacklog _eventBacklog;
-        private ConcurrentDictionary<(Type, string), EventHandler<CallAutomationEventArgs>> _ongoingEvents;
+        private ConcurrentDictionary<(string, Type), EventHandler<CallAutomationEventArgs>> _ongoingEvents;
         private event EventHandler<CallAutomationEventArgs> _eventReceived;
 
         internal CallAutomationEventHandler(EventHandlerOptions options)
         {
             _exceptionTimeout = options.TimeoutException;
             _eventBacklog = new EventBacklog();
-            _ongoingEvents = new ConcurrentDictionary<(Type, string), EventHandler<CallAutomationEventArgs>>();
+            _ongoingEvents = new ConcurrentDictionary<(string, Type), EventHandler<CallAutomationEventArgs>>();
         }
 
         /// <summary>
@@ -62,6 +62,16 @@ namespace Azure.Communication.CallAutomation
                     };
                     handlers(this, args);
                 }
+
+                // if this call is disconnect, remove all related items in memory
+                if (recievedEvent is CallDisconnected)
+                {
+                    // remove from eventsbacklog
+                    _eventBacklog.RemoveEvent(internalEventId);
+
+                    // remove from ongoingevent list
+                    RemoveFromOngoingEvent(recievedEvent.CallConnectionId);
+                }
             }
         }
 
@@ -78,7 +88,7 @@ namespace Azure.Communication.CallAutomation
 
             // on new addition, add it to the dictionary
             // on update, update the last eventhandler with new eventhandler
-            _ongoingEvents.AddOrUpdate((typeof(TEvent), callConnectionId), handler, (key, oldValue) => handler);
+            _ongoingEvents.AddOrUpdate((callConnectionId, typeof(TEvent)), handler, (key, oldValue) => handler);
             _eventReceived += handler;
         }
 
@@ -89,10 +99,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callConnectionId">CallConnectionId of the call.</param>
         public void UnsetOngoingEventHandler<TEvent>(string callConnectionId) where TEvent : CallAutomationEventBase
         {
-            if (_ongoingEvents.TryRemove((typeof(TEvent), callConnectionId), out var handler))
-            {
-                _eventReceived -= handler;
-            }
+            RemoveFromOngoingEvent(callConnectionId, typeof(TEvent));
         }
 
         /// <summary>
@@ -102,7 +109,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="operationContext">(Optional) Optional operationContext of the method call.</param>
         /// <returns>Returns CallAutomationEvent once matching event arrives.</returns>
         public async Task<CallAutomationEventBase> WaitForEvent(string callConnectionId, string operationContext = null)
-            => await _WaitForEvent(new List<Type> { }, callConnectionId, operationContext).ConfigureAwait(false);
+            => await WaitForEvent(new List<Type> { }, callConnectionId, operationContext).ConfigureAwait(false);
 
         /// <summary>
         /// Wait for specific type of incoming event for the call. Returns the event once it arrives in ProcessEvent method.
@@ -111,9 +118,9 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callConnectionId">CallConnectionId of the call.</param>
         /// <param name="operationContext">(Optional) Optional operationContext of the method call.</param>
         /// <returns>Returns CallAutomationEvent once matching event arrives.</returns>
-        public async Task<CallAutomationEventBase> WaitForEvent<T1>(string callConnectionId, string operationContext = null)
+        public async Task<T1> WaitForEvent<T1>(string callConnectionId, string operationContext = null)
             where T1 : CallAutomationEventBase
-            => await _WaitForEvent(new List<Type> { typeof(T1) }, callConnectionId, operationContext).ConfigureAwait(false);
+            => (T1)await WaitForEvent(new List<Type> { typeof(T1) }, callConnectionId, operationContext).ConfigureAwait(false);
 
         /// <summary>
         /// Wait for specific types of incoming event for the call. Returns the event once it arrives in ProcessEvent method.
@@ -126,7 +133,7 @@ namespace Azure.Communication.CallAutomation
         public async Task<CallAutomationEventBase> WaitForEvent<T1, T2>(string callConnectionId, string operationContext = null)
             where T1 : CallAutomationEventBase
             where T2 : CallAutomationEventBase
-            => await _WaitForEvent(new List<Type> { typeof(T1), typeof(T2) }, callConnectionId, operationContext).ConfigureAwait(false);
+            => await WaitForEvent(new List<Type> { typeof(T1), typeof(T2) }, callConnectionId, operationContext).ConfigureAwait(false);
 
         /// <summary>
         /// Wait for specific types of incoming event for the call. Returns the event once it arrives in ProcessEvent method.
@@ -141,7 +148,7 @@ namespace Azure.Communication.CallAutomation
             where T1 : CallAutomationEventBase
             where T2 : CallAutomationEventBase
             where T3 : CallAutomationEventBase
-           => await _WaitForEvent(new List<Type> { typeof(T1), typeof(T2), typeof(T2) }, callConnectionId, operationContext).ConfigureAwait(false);
+           => await WaitForEvent(new List<Type> { typeof(T1), typeof(T2), typeof(T2) }, callConnectionId, operationContext).ConfigureAwait(false);
 
         /// <summary>
         /// Wait for specific types of incoming event for the call. Returns the event once it arrives in ProcessEvent method.
@@ -158,7 +165,7 @@ namespace Azure.Communication.CallAutomation
             where T2 : CallAutomationEventBase
             where T3 : CallAutomationEventBase
             where T4 : CallAutomationEventBase
-            => await _WaitForEvent(new List<Type> { typeof(T1), typeof(T2), typeof(T3), typeof(T4) }, callConnectionId, operationContext).ConfigureAwait(false);
+            => await WaitForEvent(new List<Type> { typeof(T1), typeof(T2), typeof(T3), typeof(T4) }, callConnectionId, operationContext).ConfigureAwait(false);
 
         /// <summary>
         /// Wait for specific types of incoming event for the call. Returns the event once it arrives in ProcessEvent method.
@@ -177,9 +184,9 @@ namespace Azure.Communication.CallAutomation
             where T3 : CallAutomationEventBase
             where T4 : CallAutomationEventBase
             where T5 : CallAutomationEventBase
-            => await _WaitForEvent(new List<Type> { typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5) }, callConnectionId, operationContext).ConfigureAwait(false);
+            => await WaitForEvent(new List<Type> { typeof(T1), typeof(T2), typeof(T3), typeof(T4), typeof(T5) }, callConnectionId, operationContext).ConfigureAwait(false);
 
-        private async Task<CallAutomationEventBase> _WaitForEvent(IEnumerable<Type> eventTypesToWaitFor, string callConnectionId, string operationContext = null)
+        private async Task<CallAutomationEventBase> WaitForEvent(IEnumerable<Type> eventTypesToWaitFor, string callConnectionId, string operationContext = null)
         {
             // initialize awaiter and get event handler of it
             var awaiter = new EventAwaiter(eventTypesToWaitFor, callConnectionId, operationContext, _exceptionTimeout);
@@ -213,6 +220,29 @@ namespace Azure.Communication.CallAutomation
                 _eventReceived -= handler;
                 awaiter.Dispose();
                 throw;
+            }
+        }
+
+        private void RemoveFromOngoingEvent(string callConnectionId, Type eventType = null)
+        {
+            if (eventType == null)
+            {
+                // remove all matching connectionId
+                var keysToRemove = _ongoingEvents.Keys.Where(key => key.Item1 == callConnectionId).ToList();
+                keysToRemove.ForEach(key =>
+                {
+                    if (_ongoingEvents.TryRemove(key, out var handler))
+                    {
+                        _eventReceived -= handler;
+                    }
+                });
+            }
+            else
+            {
+                if (_ongoingEvents.TryRemove((callConnectionId, eventType.GetType()), out var handler))
+                {
+                    _eventReceived -= handler;
+                }
             }
         }
     }

@@ -14,7 +14,11 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     internal class EventBacklog
     {
+        // TODO: Upper limit on backlog;
+
         private TimeSpan _expiringTimeout;
+
+        // TODO: do not use valuetuple?
         private ConcurrentDictionary<string, (CallAutomationEventBase, Timer)> _eventBacklog;
 
         internal EventBacklog(TimeSpan defaultExpiringTimeout = default)
@@ -40,7 +44,7 @@ namespace Azure.Communication.CallAutomation
         internal bool GetAndRemoveEvent(IEnumerable<Type> eventTypes, string callConnectionId, string operationContext, out KeyValuePair<string, CallAutomationEventBase> matchingEvent)
         {
             // Match any event that matches in the events backlog
-            var matchingKvp = _eventBacklog.ToArray().Where(kvp
+            var matchingKvp = _eventBacklog.Where(kvp
                 => callConnectionId == kvp.Value.Item1.CallConnectionId
                 && operationContext == kvp.Value.Item1.OperationContext
                 && (!(eventTypes?.Any() ?? false) || eventTypes.Contains(kvp.Value.Item1.GetType())))
@@ -61,9 +65,9 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Remove the event by Id.
         /// </summary>
-        /// <param name="key">Key of the event in events backlog.</param>
+        /// <param name="internalEventId">Key of the event in events backlog.</param>
         /// <returns></returns>
-        internal bool RemoveEvent(string key) => _eventBacklog.TryRemove(key, out _);
+        internal bool RemoveEvent(string internalEventId) => _eventBacklog.TryRemove(internalEventId, out _);
 
         /// <summary>
         /// When timer procs, it will remove itself from the dictionary.
@@ -71,8 +75,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="state">Key of the event in events backlog.</param>
         private void TimerProc(object state)
         {
-            var key = (string)state;
-            _ = _eventBacklog.TryRemove(key, out _);
+            var internalEventId = (string)state;
+            _ = _eventBacklog.TryRemove(internalEventId, out _);
         }
     }
 }
