@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers
 
         private readonly ClientDiagnostics _containerAppDetectorContainerAppsDiagnosticsClientDiagnostics;
         private readonly ContainerAppsDiagnosticsRestOperations _containerAppDetectorContainerAppsDiagnosticsRestClient;
-        private readonly DiagnosticData _data;
+        private readonly ContainerAppDiagnosticData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ContainerAppDetectorResource"/> class for mocking. </summary>
         protected ContainerAppDetectorResource()
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Initializes a new instance of the <see cref = "ContainerAppDetectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ContainerAppDetectorResource(ArmClient client, DiagnosticData data) : this(client, data.Id)
+        internal ContainerAppDetectorResource(ArmClient client, ContainerAppDiagnosticData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DiagnosticData Data
+        public virtual ContainerAppDiagnosticData Data
         {
             get
             {

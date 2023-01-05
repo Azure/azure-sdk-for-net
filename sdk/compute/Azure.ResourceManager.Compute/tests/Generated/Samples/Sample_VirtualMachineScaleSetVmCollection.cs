@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_VirtualMachineScaleSetVmCollection
     {
@@ -23,11 +24,13 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_VirtualMachineScaleSetVMsUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVMs_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVMs_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSetVMs_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
@@ -141,7 +144,7 @@ DeleteOption = DiskDeleteOptionType.Delete,
                     WindowsConfiguration = new WindowsConfiguration()
                     {
                         ProvisionVmAgent = true,
-                        EnableAutomaticUpdates = true,
+                        IsAutomaticUpdatesEnabled = true,
                         TimeZone = "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
                         AdditionalUnattendContent =
 {
@@ -159,10 +162,26 @@ Content = "aaaaaaaaaaaaaaaaaaaa",
                             EnableHotpatching = true,
                             AssessmentMode = WindowsPatchAssessmentMode.ImageDefault,
                         },
+                        WinRMListeners =
+{
+new WinRMListener()
+{
+Protocol = WinRMListenerProtocolType.Http,
+CertificateUri = new Uri("aaaaaaaaaaaaaaaaaaaaaa"),
+}
+},
                     },
                     LinuxConfiguration = new LinuxConfiguration()
                     {
-                        DisablePasswordAuthentication = true,
+                        IsPasswordAuthenticationDisabled = true,
+                        SshPublicKeys =
+{
+new SshPublicKeyConfiguration()
+{
+Path = "aaa",
+KeyData = "aaaaaa",
+}
+},
                         ProvisionVmAgent = true,
                         PatchSettings = new LinuxPatchSettings()
                         {
@@ -208,6 +227,10 @@ EnableAcceleratedNetworking = true,
 EnableFpga = true,
 EnableIPForwarding = true,
 NetworkSecurityGroupId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
+DnsServers =
+{
+"aaaaaa"
+},
 IPConfigurations =
 {
 new VirtualMachineNetworkInterfaceIPConfiguration("aa")
@@ -264,6 +287,81 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
 }
 },
                 },
+                NetworkInterfaceConfigurations =
+{
+new VirtualMachineScaleSetNetworkConfiguration("vmsstestnetconfig5415")
+{
+Primary = true,
+EnableAcceleratedNetworking = true,
+EnableFpga = true,
+NetworkSecurityGroupId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
+DnsServers =
+{
+},
+IPConfigurations =
+{
+new VirtualMachineScaleSetIPConfiguration("vmsstestnetconfig9693")
+{
+SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/vn4071/subnets/sn5503"),
+Primary = true,
+PublicIPAddressConfiguration = new VirtualMachineScaleSetPublicIPAddressConfiguration("aaaaaaaaaaaaaaaaaa")
+{
+Sku = new ComputePublicIPAddressSku()
+{
+Name = ComputePublicIPAddressSkuName.Basic,
+Tier = ComputePublicIPAddressSkuTier.Regional,
+},
+IdleTimeoutInMinutes = 18,
+DnsDomainNameLabel = "aaaaaaaaaaaaaaaaaa",
+IPTags =
+{
+new VirtualMachineScaleSetIPTag()
+{
+IPTagType = "aaaaaaa",
+Tag = "aaaaaaaaaaaaaaaaaaaaaaaaaaa",
+}
+},
+PublicIPPrefixId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
+PublicIPAddressVersion = IPVersion.IPv4,
+DeleteOption = ComputeDeleteOption.Delete,
+},
+PrivateIPAddressVersion = IPVersion.IPv4,
+ApplicationGatewayBackendAddressPools =
+{
+new WritableSubResource()
+{
+Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
+}
+},
+ApplicationSecurityGroups =
+{
+new WritableSubResource()
+{
+Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
+}
+},
+LoadBalancerBackendAddressPools =
+{
+new WritableSubResource()
+{
+Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
+}
+},
+LoadBalancerInboundNatPools =
+{
+new WritableSubResource()
+{
+Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
+}
+},
+Id = new ResourceIdentifier("aaaaaaaaa"),
+}
+},
+EnableIPForwarding = true,
+DeleteOption = ComputeDeleteOption.Delete,
+Id = new ResourceIdentifier("aaaaaaaa"),
+}
+},
                 BootDiagnostics = new BootDiagnostics()
                 {
                     Enabled = true,
@@ -296,11 +394,13 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_VirtualMachineScaleSetVMsUpdateMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVMs_Update_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVMs_Update_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSetVMs_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
@@ -331,11 +431,13 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetVMScaleSetVMWithUserData()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_Get_WithUserData.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_Get_WithUserData.json
             // this example is just showing the usage of "VirtualMachineScaleSetVMs_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
@@ -364,11 +466,13 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetVMScaleSetVMWithUserData()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_Get_WithUserData.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_Get_WithUserData.json
             // this example is just showing the usage of "VirtualMachineScaleSetVMs_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
@@ -393,11 +497,13 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetVMScaleSetVMWithVMSizeProperties()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_Get_WithVMSizeProperties.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_Get_WithVMSizeProperties.json
             // this example is just showing the usage of "VirtualMachineScaleSetVMs_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
@@ -426,11 +532,13 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetVMScaleSetVMWithVMSizeProperties()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_Get_WithVMSizeProperties.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVM_Get_WithVMSizeProperties.json
             // this example is just showing the usage of "VirtualMachineScaleSetVMs_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
@@ -455,11 +563,13 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_VirtualMachineScaleSetVMsListMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVMs_List_MaximumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVMs_List_MaximumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSetVMs_List" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource
@@ -493,11 +603,13 @@ DscpConfigurationId = new ResourceIdentifier("/subscriptions/{subscriptionId}/re
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_VirtualMachineScaleSetVMsListMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-03-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVMs_List_MinimumSet_Gen.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2022-08-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetVMs_List_MinimumSet_Gen.json
             // this example is just showing the usage of "VirtualMachineScaleSetVMs_List" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this VirtualMachineScaleSetResource created on azure
             // for more information of creating VirtualMachineScaleSetResource, please refer to the document of VirtualMachineScaleSetResource

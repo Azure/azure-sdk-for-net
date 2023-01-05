@@ -13,9 +13,10 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SignalR;
 using Azure.ResourceManager.SignalR.Models;
 
-namespace Azure.ResourceManager.SignalR
+namespace Azure.ResourceManager.SignalR.Samples
 {
     public partial class Sample_SignalRCollection
     {
@@ -27,8 +28,10 @@ namespace Azure.ResourceManager.SignalR
             // Generated from example definition: specification/signalr/resource-manager/Microsoft.SignalRService/stable/2022-02-01/examples/SignalR_ListByResourceGroup.json
             // this example is just showing the usage of "SignalR_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -61,8 +64,10 @@ namespace Azure.ResourceManager.SignalR
             // Generated from example definition: specification/signalr/resource-manager/Microsoft.SignalRService/stable/2022-02-01/examples/SignalR_Get.json
             // this example is just showing the usage of "SignalR_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -93,8 +98,10 @@ namespace Azure.ResourceManager.SignalR
             // Generated from example definition: specification/signalr/resource-manager/Microsoft.SignalRService/stable/2022-02-01/examples/SignalR_Get.json
             // this example is just showing the usage of "SignalR_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -121,8 +128,10 @@ namespace Azure.ResourceManager.SignalR
             // Generated from example definition: specification/signalr/resource-manager/Microsoft.SignalRService/stable/2022-02-01/examples/SignalR_CreateOrUpdate.json
             // this example is just showing the usage of "SignalR_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -138,54 +147,72 @@ namespace Azure.ResourceManager.SignalR
             string resourceName = "mySignalRService";
             SignalRData data = new SignalRData(new AzureLocation("eastus"))
             {
-                Sku = new ResourceSku("Standard_S1")
+                Sku = new SignalRResourceSku("Standard_S1")
                 {
                     Tier = SignalRSkuTier.Standard,
                     Capacity = 1,
                 },
-                Kind = ServiceKind.SignalR,
+                Kind = SignalRServiceKind.SignalR,
                 Identity = new ManagedServiceIdentity("SystemAssigned"),
-                ClientCertEnabled = false,
+                IsClientCertEnabled = false,
                 Features =
 {
-new SignalRFeature(FeatureFlag.ServiceMode,"Serverless")
+new SignalRFeature(SignalRFeatureFlag.ServiceMode,"Serverless")
 {
 Properties =
 {
 },
-},new SignalRFeature(FeatureFlag.EnableConnectivityLogs,"True")
+},new SignalRFeature(SignalRFeatureFlag.EnableConnectivityLogs,"True")
 {
 Properties =
 {
 },
-},new SignalRFeature(FeatureFlag.EnableMessagingLogs,"False")
+},new SignalRFeature(SignalRFeatureFlag.EnableMessagingLogs,"False")
 {
 Properties =
 {
 },
-},new SignalRFeature(FeatureFlag.EnableLiveTrace,"False")
+},new SignalRFeature(SignalRFeatureFlag.EnableLiveTrace,"False")
 {
 Properties =
 {
 },
 }
 },
-                LiveTraceConfiguration = new LiveTraceConfiguration()
+                LiveTraceConfiguration = new SignalRLiveTraceConfiguration()
                 {
                     Enabled = "false",
                     Categories =
 {
-new LiveTraceCategory()
+new SignalRLiveTraceCategory()
 {
 Name = "ConnectivityLogs",
 Enabled = "true",
 }
 },
                 },
-                NetworkACLs = new SignalRNetworkACLs()
+                CorsAllowedOrigins =
+{
+"https://foo.com","https://bar.com"
+},
+                UpstreamTemplates =
+{
+new SignalRUpstreamTemplate("https://example.com/chat/api/connect")
+{
+HubPattern = "*",
+EventPattern = "connect,disconnect",
+CategoryPattern = "*",
+Auth = new SignalRUpstreamAuthSettings()
+{
+AuthType = SignalRUpstreamAuthType.ManagedIdentity,
+ManagedIdentityResource = "api://example",
+},
+}
+},
+                NetworkACLs = new SignalRNetworkAcls()
                 {
-                    DefaultAction = ACLAction.Deny,
-                    PublicNetwork = new NetworkACL()
+                    DefaultAction = SignalRNetworkAclAction.Deny,
+                    PublicNetwork = new SignalRNetworkAcl()
                     {
                         Allow =
 {
@@ -194,7 +221,7 @@ SignalRRequestType.ClientConnection
                     },
                     PrivateEndpoints =
 {
-new PrivateEndpointACL("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e")
+new SignalRPrivateEndpointAcl("mysignalrservice.1fa229cd-bf3f-47f0-8c49-afb36723997e")
 {
 Allow =
 {

@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="identity"> Identity of the Extension resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="plan"> The plan information. </param>
         /// <param name="extensionType"> Type of the Extension, of which this resource is an instance of.  It must be one of the Extension Types registered with Microsoft.KubernetesConfiguration by the Extension publisher. </param>
         /// <param name="autoUpgradeMinorVersion"> Flag to note if this extension participates in auto upgrade of minor version, or not. </param>
         /// <param name="releaseTrain"> ReleaseTrain this extension participates in for auto-upgrade (e.g. Stable, Preview, etc.) - only if autoUpgradeMinorVersion is &apos;true&apos;. </param>
@@ -39,16 +40,18 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <param name="scope"> Scope at which the extension is installed. </param>
         /// <param name="configurationSettings"> Configuration settings, as name-value pairs for configuring this extension. </param>
         /// <param name="configurationProtectedSettings"> Configuration settings that are sensitive, as name-value pairs for configuring this extension. </param>
-        /// <param name="installedVersion"> Installed version of the extension. </param>
+        /// <param name="currentVersion"> Currently installed version of the extension. </param>
         /// <param name="provisioningState"> Status of installation of this extension. </param>
         /// <param name="statuses"> Status from this extension. </param>
         /// <param name="errorInfo"> Error information from the Agent - e.g. errors during installation. </param>
         /// <param name="customLocationSettings"> Custom Location settings properties. </param>
         /// <param name="packageUri"> Uri of the Helm package. </param>
         /// <param name="aksAssignedIdentity"> Identity of the Extension resource in an AKS cluster. Current supported identity types: SystemAssigned, UserAssigned. </param>
-        internal KubernetesClusterExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string extensionType, bool? autoUpgradeMinorVersion, string releaseTrain, string version, KubernetesClusterExtensionScope scope, IDictionary<string, string> configurationSettings, IDictionary<string, string> configurationProtectedSettings, string installedVersion, KubernetesConfigurationProvisioningState? provisioningState, IList<KubernetesClusterExtensionStatus> statuses, ResponseError errorInfo, IReadOnlyDictionary<string, string> customLocationSettings, Uri packageUri, ManagedServiceIdentity aksAssignedIdentity) : base(id, name, resourceType, systemData)
+        /// <param name="isSystemExtension"> Flag to note if this extension is a system extension. </param>
+        internal KubernetesClusterExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ArmPlan plan, string extensionType, bool? autoUpgradeMinorVersion, string releaseTrain, string version, KubernetesClusterExtensionScope scope, IDictionary<string, string> configurationSettings, IDictionary<string, string> configurationProtectedSettings, string currentVersion, KubernetesConfigurationProvisioningState? provisioningState, IList<KubernetesClusterExtensionStatus> statuses, ResponseError errorInfo, IReadOnlyDictionary<string, string> customLocationSettings, Uri packageUri, ManagedServiceIdentity aksAssignedIdentity, bool? isSystemExtension) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
+            Plan = plan;
             ExtensionType = extensionType;
             AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
             ReleaseTrain = releaseTrain;
@@ -56,17 +59,20 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             Scope = scope;
             ConfigurationSettings = configurationSettings;
             ConfigurationProtectedSettings = configurationProtectedSettings;
-            InstalledVersion = installedVersion;
+            CurrentVersion = currentVersion;
             ProvisioningState = provisioningState;
             Statuses = statuses;
             ErrorInfo = errorInfo;
             CustomLocationSettings = customLocationSettings;
             PackageUri = packageUri;
             AksAssignedIdentity = aksAssignedIdentity;
+            IsSystemExtension = isSystemExtension;
         }
 
         /// <summary> Identity of the Extension resource. Current supported identity types: SystemAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> The plan information. </summary>
+        public ArmPlan Plan { get; set; }
         /// <summary> Type of the Extension, of which this resource is an instance of.  It must be one of the Extension Types registered with Microsoft.KubernetesConfiguration by the Extension publisher. </summary>
         public string ExtensionType { get; set; }
         /// <summary> Flag to note if this extension participates in auto upgrade of minor version, or not. </summary>
@@ -81,8 +87,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         public IDictionary<string, string> ConfigurationSettings { get; set; }
         /// <summary> Configuration settings that are sensitive, as name-value pairs for configuring this extension. </summary>
         public IDictionary<string, string> ConfigurationProtectedSettings { get; set; }
-        /// <summary> Installed version of the extension. </summary>
-        public string InstalledVersion { get; }
+        /// <summary> Currently installed version of the extension. </summary>
+        public string CurrentVersion { get; }
         /// <summary> Status of installation of this extension. </summary>
         public KubernetesConfigurationProvisioningState? ProvisioningState { get; }
         /// <summary> Status from this extension. </summary>
@@ -95,5 +101,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         public Uri PackageUri { get; }
         /// <summary> Identity of the Extension resource in an AKS cluster. Current supported identity types: SystemAssigned, UserAssigned. </summary>
         public ManagedServiceIdentity AksAssignedIdentity { get; set; }
+        /// <summary> Flag to note if this extension is a system extension. </summary>
+        public bool? IsSystemExtension { get; }
     }
 }

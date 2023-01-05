@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Nginx.Models
         public bool? EnableDiagnosticsSupport { get; set; }
         /// <summary> Gets or sets the logging. </summary>
         internal NginxLogging Logging { get; set; }
-        /// <summary> Gets or sets the storage account. </summary>
+        /// <summary> Gets or sets the logging storage account. </summary>
         public NginxStorageAccount LoggingStorageAccount
         {
             get => Logging is null ? default : Logging.StorageAccount;

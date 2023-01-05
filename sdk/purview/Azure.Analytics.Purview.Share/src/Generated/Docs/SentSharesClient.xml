@@ -402,7 +402,7 @@ This sample shows how to call DeleteAsync with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = await client.DeleteAsync(WaitUntil.Completed, "<sentShareName>");
+var operation = await client.DeleteAsync(WaitUntil.Started, "<sentShareName>");
 
 var response = await operation.WaitForCompletionResponseAsync();
 Console.WriteLine(response.Status)
@@ -419,7 +419,7 @@ This sample shows how to call Delete with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new SentSharesClient("<https://my-service.azure.com>", credential);
 
-var operation = client.Delete(WaitUntil.Completed, "<sentShareName>");
+var operation = client.Delete(WaitUntil.Started, "<sentShareName>");
 
 var response = operation.WaitForCompletionResponse();
 Console.WriteLine(response.Status)

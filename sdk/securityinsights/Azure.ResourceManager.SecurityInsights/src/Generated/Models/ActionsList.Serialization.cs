@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         internal static ActionsList DeserializeActionsList(JsonElement element)
         {
             Optional<string> nextLink = default;
-            IReadOnlyList<ActionResponseData> value = default;
+            IReadOnlyList<SecurityInsightsAlertRuleActionData> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"))
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("value"))
                 {
-                    List<ActionResponseData> array = new List<ActionResponseData>();
+                    List<SecurityInsightsAlertRuleActionData> array = new List<SecurityInsightsAlertRuleActionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActionResponseData.DeserializeActionResponseData(item));
+                        array.Add(SecurityInsightsAlertRuleActionData.DeserializeSecurityInsightsAlertRuleActionData(item));
                     }
                     value = array;
                     continue;
