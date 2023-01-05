@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of KustoLanguageExtension. </summary>
         /// <param name="languageExtensionName"> The language extension name. </param>
         /// <param name="languageExtensionImageName"> The language extension image name. </param>
-        internal KustoLanguageExtension(KustoLanguageExtensionName? languageExtensionName, LanguageExtensionImageName? languageExtensionImageName)
+        internal KustoLanguageExtension(KustoLanguageExtensionName? languageExtensionName, KustoLanguageExtensionImageName? languageExtensionImageName)
         {
             LanguageExtensionName = languageExtensionName;
             LanguageExtensionImageName = languageExtensionImageName;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> The language extension name. </summary>
         public KustoLanguageExtensionName? LanguageExtensionName { get; set; }
         /// <summary> The language extension image name. </summary>
-        public LanguageExtensionImageName? LanguageExtensionImageName { get; set; }
+        public KustoLanguageExtensionImageName? LanguageExtensionImageName { get; set; }
     }
 }

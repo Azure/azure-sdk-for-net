@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> Describes The SKU capabilities object. </summary>
-    public partial class ResourceSkuCapabilities
+    public partial class KustoResourceSkuCapabilities
     {
-        /// <summary> Initializes a new instance of ResourceSkuCapabilities. </summary>
-        internal ResourceSkuCapabilities()
+        /// <summary> Initializes a new instance of KustoResourceSkuCapabilities. </summary>
+        internal KustoResourceSkuCapabilities()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceSkuCapabilities. </summary>
+        /// <summary> Initializes a new instance of KustoResourceSkuCapabilities. </summary>
         /// <param name="name"> An invariant to describe the feature. </param>
         /// <param name="value"> An invariant if the feature is measured by quantity. </param>
-        internal ResourceSkuCapabilities(string name, string value)
+        internal KustoResourceSkuCapabilities(string name, string value)
         {
             Name = name;
             Value = value;

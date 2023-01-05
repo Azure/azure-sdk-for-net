@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class ResourceSkuCapabilities
+    public partial class KustoResourceSkuCapabilities
     {
-        internal static ResourceSkuCapabilities DeserializeResourceSkuCapabilities(JsonElement element)
+        internal static KustoResourceSkuCapabilities DeserializeKustoResourceSkuCapabilities(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> value = default;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new ResourceSkuCapabilities(name.Value, value.Value);
+            return new KustoResourceSkuCapabilities(name.Value, value.Value);
         }
     }
 }

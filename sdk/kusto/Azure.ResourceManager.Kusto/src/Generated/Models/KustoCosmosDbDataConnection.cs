@@ -13,15 +13,15 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> Class representing a CosmosDb data connection. </summary>
-    public partial class CosmosDbDataConnection : KustoDataConnectionData
+    public partial class KustoCosmosDbDataConnection : KustoDataConnectionData
     {
-        /// <summary> Initializes a new instance of CosmosDbDataConnection. </summary>
-        public CosmosDbDataConnection()
+        /// <summary> Initializes a new instance of KustoCosmosDbDataConnection. </summary>
+        public KustoCosmosDbDataConnection()
         {
             Kind = DataConnectionKind.CosmosDb;
         }
 
-        /// <summary> Initializes a new instance of CosmosDbDataConnection. </summary>
+        /// <summary> Initializes a new instance of KustoCosmosDbDataConnection. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="cosmosDbContainer"> The name of an existing container in the Cosmos DB database. </param>
         /// <param name="retrievalStartOn"> Optional. If defined, the data connection retrieves Cosmos DB documents created or updated after the specified retrieval start date. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        internal CosmosDbDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, string tableName, string mappingRuleName, string managedIdentityResourceId, string managedIdentityObjectId, string cosmosDbAccountResourceId, string cosmosDbDatabase, string cosmosDbContainer, DateTimeOffset? retrievalStartOn, KustoProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind)
+        internal KustoCosmosDbDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, string tableName, string mappingRuleName, ResourceIdentifier managedIdentityResourceId, Guid? managedIdentityObjectId, ResourceIdentifier cosmosDbAccountResourceId, string cosmosDbDatabase, string cosmosDbContainer, DateTimeOffset? retrievalStartOn, KustoProvisioningState? provisioningState) : base(id, name, resourceType, systemData, location, kind)
         {
             TableName = tableName;
             MappingRuleName = mappingRuleName;
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> The name of an existing mapping rule to use when ingesting the retrieved data. </summary>
         public string MappingRuleName { get; set; }
         /// <summary> The resource ID of a managed system or user-assigned identity. The identity is used to authenticate with Cosmos DB. </summary>
-        public string ManagedIdentityResourceId { get; set; }
+        public ResourceIdentifier ManagedIdentityResourceId { get; set; }
         /// <summary> The object ID of the managed identity resource. </summary>
-        public string ManagedIdentityObjectId { get; }
+        public Guid? ManagedIdentityObjectId { get; }
         /// <summary> The resource ID of the Cosmos DB account used to create the data connection. </summary>
-        public string CosmosDbAccountResourceId { get; set; }
+        public ResourceIdentifier CosmosDbAccountResourceId { get; set; }
         /// <summary> The name of an existing database in the Cosmos DB account. </summary>
         public string CosmosDbDatabase { get; set; }
         /// <summary> The name of an existing container in the Cosmos DB database. </summary>

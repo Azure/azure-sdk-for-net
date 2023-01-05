@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.Kusto
 
             // invoke the operation
             string dataConnectionName = "dataConnectionTest";
-            KustoDataConnectionData data = new CosmosDbDataConnection()
+            KustoDataConnectionData data = new KustoCosmosDbDataConnection()
             {
                 TableName = "TestTable",
                 MappingRuleName = "TestMapping",
-                ManagedIdentityResourceId = "/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/managedidentityTest1",
-                CosmosDbAccountResourceId = "/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.DocumentDb/databaseAccounts/cosmosDbAccountTest1",
+                ManagedIdentityResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/managedidentityTest1"),
+                CosmosDbAccountResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.DocumentDb/databaseAccounts/cosmosDbAccountTest1"),
                 CosmosDbDatabase = "cosmosDbDatabaseTest",
                 CosmosDbContainer = "cosmosDbContainerTest",
                 RetrievalStartOn = DateTimeOffset.Parse("2022-07-29T12:00:00.6554616Z"),

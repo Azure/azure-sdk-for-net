@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Kusto.Models
         {
             AzureLocation location = default;
             Optional<IReadOnlyList<string>> zones = default;
-            Optional<IReadOnlyList<ResourceSkuZoneDetails>> zoneDetails = default;
+            Optional<IReadOnlyList<KustoResourceSkuZoneDetails>> zoneDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Kusto.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ResourceSkuZoneDetails> array = new List<ResourceSkuZoneDetails>();
+                    List<KustoResourceSkuZoneDetails> array = new List<KustoResourceSkuZoneDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuZoneDetails.DeserializeResourceSkuZoneDetails(item));
+                        array.Add(KustoResourceSkuZoneDetails.DeserializeKustoResourceSkuZoneDetails(item));
                     }
                     zoneDetails = array;
                     continue;

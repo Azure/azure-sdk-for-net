@@ -187,6 +187,10 @@ rename-mapping:
   EventHubDataFormat.SINGLEJSON: SingleJson
   EventHubDataFormat.ORC: Orc
   EventHubDataFormat.W3CLOGFILE: W3CLogFile
+  CosmosDbDataConnection: KustoCosmosDbDataConnection
+  CosmosDbDataConnection.properties.managedIdentityResourceId: -|arm-id
+  CosmosDbDataConnection.properties.managedIdentityObjectId: -|uuid
+  CosmosDbDataConnection.properties.cosmosDbAccountResourceId: -|arm-id
   FollowerDatabaseDefinition: KustoFollowerDatabaseDefinition
   FollowerDatabaseDefinition.clusterResourceId: -|arm-id
   IotHubDataConnection: KustoIotHubDataConnection
@@ -214,6 +218,10 @@ rename-mapping:
   TrustedExternalTenant: KustoClusterTrustedExternalTenant
   CallerRole: KustoDatabaseCallerRole
   DatabaseShareOrigin: KustoDatabaseShareOrigin
+  LanguageExtensionImageName: KustoLanguageExtensionImageName
+  ResourceSkuCapabilities: KustoResourceSkuCapabilities
+  ResourceSkuZoneDetails: KustoResourceSkuZoneDetails
+  SkuDescriptionList: kustoSkuDescriptionList
 
 
 format-by-name-rules:

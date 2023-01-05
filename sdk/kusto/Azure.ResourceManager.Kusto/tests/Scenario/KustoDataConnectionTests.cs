@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             var cosmosDbDataConnectionName = GenerateAssetName("sdkCosmosDbDataConnection");
 
-            var cosmosDbDataConnectionDataCreate = new CosmosDbDataConnection()
+            var cosmosDbDataConnectionDataCreate = new KustoCosmosDbDataConnection()
             {
                 CosmosDbAccountResourceId = TE.CosmosDbAccountId,
                 CosmosDbDatabase = TE.CosmosDbDatabaseName,
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 TableName = TE.TableName
             };
 
-            var cosmosDbDataConnectionDataUpdate = new CosmosDbDataConnection()
+            var cosmosDbDataConnectionDataUpdate = new KustoCosmosDbDataConnection()
             {
                 CosmosDbAccountResourceId = TE.CosmosDbAccountId,
                 CosmosDbDatabase = TE.CosmosDbDatabaseName,
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             };
 
             Task<ArmOperation<KustoDataConnectionResource>> CreateOrUpdateCosmosDbDataConnectionAsync(
-                string cosmosDbDataConnectionName, CosmosDbDataConnection cosmosDbDataConnectionData
+                string cosmosDbDataConnectionName, KustoCosmosDbDataConnection cosmosDbDataConnectionData
             ) => dataConnectionCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed, cosmosDbDataConnectionName, cosmosDbDataConnectionData
             );
@@ -309,8 +309,8 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         }
         private static void ValidateCosmosDbDataConnection(
             string cosmosDbDataConnectionName,
-            CosmosDbDataConnection expectedCosmosDbDataConnectionData,
-            CosmosDbDataConnection actualCosmosDbDataConnectionData)
+            KustoCosmosDbDataConnection expectedCosmosDbDataConnectionData,
+            KustoCosmosDbDataConnection actualCosmosDbDataConnectionData)
         {
             AssertEquality(expectedCosmosDbDataConnectionData.TableName, actualCosmosDbDataConnectionData.TableName);
             AssertEquality(expectedCosmosDbDataConnectionData.MappingRuleName, actualCosmosDbDataConnectionData.MappingRuleName);
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             AssertEquality(expectedCosmosDbDataConnectionData.CosmosDbAccountResourceId, actualCosmosDbDataConnectionData.CosmosDbAccountResourceId);
             AssertEquality(expectedCosmosDbDataConnectionData.CosmosDbDatabase, actualCosmosDbDataConnectionData.CosmosDbDatabase);
             AssertEquality(expectedCosmosDbDataConnectionData.CosmosDbContainer, actualCosmosDbDataConnectionData.CosmosDbContainer);
-            Assert.IsTrue(!string.IsNullOrWhiteSpace(actualCosmosDbDataConnectionData.ManagedIdentityObjectId));
+            Assert.IsTrue(actualCosmosDbDataConnectionData.ManagedIdentityObjectId.HasValue);
             Assert.NotNull(actualCosmosDbDataConnectionData.RetrievalStartOn);
         }
     }
