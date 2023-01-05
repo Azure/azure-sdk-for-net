@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Purview;
 using Azure.ResourceManager.Purview.Models;
 
-namespace Azure.ResourceManager.Purview
+namespace Azure.ResourceManager.Purview.Samples
 {
     public partial class Sample_PurviewPrivateEndpointConnectionCollection
     {
@@ -25,8 +26,10 @@ namespace Azure.ResourceManager.Purview
             // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/stable/2021-07-01/examples/PrivateEndpointConnections_ListByAccount.json
             // this example is just showing the usage of "PrivateEndpointConnections_ListByAccount" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this PurviewAccountResource created on azure
             // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
@@ -60,8 +63,10 @@ namespace Azure.ResourceManager.Purview
             // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/stable/2021-07-01/examples/PrivateEndpointConnections_Get.json
             // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this PurviewAccountResource created on azure
             // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
@@ -93,8 +98,10 @@ namespace Azure.ResourceManager.Purview
             // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/stable/2021-07-01/examples/PrivateEndpointConnections_Get.json
             // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this PurviewAccountResource created on azure
             // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
@@ -122,8 +129,10 @@ namespace Azure.ResourceManager.Purview
             // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/stable/2021-07-01/examples/PrivateEndpointConnections_CreateOrUpdate.json
             // this example is just showing the usage of "PrivateEndpointConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this PurviewAccountResource created on azure
             // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
