@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-93faf6bbf5109c02f7228f48e3cc6a71-f3b55cbccd8c3917-00",
-        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230104.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "72f863a6fddb27cfae1850f4f988ccad",
+        "traceparent": "00-53d26a3c41257ee6ff996584f9609360-ede29d14ecf6b9ce-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230105.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b18be840a32a174c441c636507a09719",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -16,19 +16,19 @@
       "ResponseHeaders": {
         "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview, 2022-11-01",
         "Connection": "keep-alive",
-        "Content-Length": "536",
+        "Content-Length": "541",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 04 Jan 2023 14:48:09 GMT",
-        "mise-correlation-id": "923bab31-b2d0-4321-8daf-90c1b8e4a7f7",
+        "Date": "Thu, 05 Jan 2023 11:42:58 GMT",
+        "mise-correlation-id": "b1068458-92c7-4277-a4dc-f906c1396dc9",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b6bab4df-2937-46bc-8177-96e0ef4b3210"
+        "x-ms-correlation-request-id": "c2a13ec1-6433-4e0a-96db-6c239d07ed51"
       },
       "ResponseBody": {
-        "url": "https://stcnteuapdata0901.blob.core.windows.net/e2e1ae12-1199-46e9-bfbe-4cabea366ada/c5256c1c-ea06-4363-b481-cd2f5f1557e6?skoid=fe06edb5-033b-4f33-bef0-9489f8feffb8\u0026sktid=33e01921-4d64-4f8c-a055-5bdaffd5e33d\u0026skt=2023-01-04T14%3A48%3A09Z\u0026ske=2023-01-04T14%3A58%3A09Z\u0026sks=b\u0026skv=2021-08-06\u0026sv=2021-08-06\u0026se=2023-01-04T14%3A58%3A09Z\u0026sr=b\u0026sp=r\u0026sig=r8X87nZLSOHbPDcl%2BxOGLvzGjF6Ki0Kl%2Bk4nD78kEqE%3D",
+        "url": "https://maltccstorageaccounteuap.blob.core.windows.net/b1f7d9a4-337e-46ea-9a61-ea61662a4702/90f974c6-39e6-4c48-a5d6-83ec43a48f81?skoid=fe06edb5-033b-4f33-bef0-9489f8feffb8\u0026sktid=33e01921-4d64-4f8c-a055-5bdaffd5e33d\u0026skt=2023-01-05T11%3A04%3A36Z\u0026ske=2023-01-06T01%3A04%3A36Z\u0026sks=b\u0026skv=2021-08-06\u0026sv=2021-08-06\u0026se=2023-01-05T11%3A52%3A58Z\u0026sr=b\u0026sp=r\u0026sig=yzqs1UrFr6mMvRNGCt0wSNgzQyXVlobdzWH%2F8B6x5dU%3D",
         "fileName": "sample.jmx",
         "fileType": "JMX_FILE",
-        "expireDateTime": "2023-01-04T14:58:09.5927146",
+        "expireDateTime": "2023-01-05T11:52:58.7671222",
         "validationStatus": "VALIDATION_SUCCESS"
       }
     }
@@ -36,6 +36,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "LOADTESTSERVICE_ENDPOINT": "f3395a15-535c-46ea-aaf4-db52915c248b.eastus2euap.cnt-canary.loadtesting.azure.com",
-    "RandomSeed": "1220729250"
+    "RandomSeed": "435883192"
   }
 }
