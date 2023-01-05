@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
     /// <summary>
     /// A class representing a collection of <see cref="AgFoodPlatformPrivateEndpointConnectionResource" /> and their operations.
     /// Each <see cref="AgFoodPlatformPrivateEndpointConnectionResource" /> in the collection will belong to the same instance of <see cref="FarmBeatResource" />.
-    /// To get an <see cref="AgFoodPlatformPrivateEndpointConnectionCollection" /> instance call the GetAgFoodPlatformPrivateEndpointConnections method from an instance of <see cref="FarmBeatResource" />.
+    /// To get a <see cref="AgFoodPlatformPrivateEndpointConnectionCollection" /> instance call the GetAgFoodPlatformPrivateEndpointConnections method from an instance of <see cref="FarmBeatResource" />.
     /// </summary>
     public partial class AgFoodPlatformPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<AgFoodPlatformPrivateEndpointConnectionResource>, IAsyncEnumerable<AgFoodPlatformPrivateEndpointConnectionResource>
     {
