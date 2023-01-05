@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary>
-    /// TestRunOperation.
+    /// Represents a long-running operation for TestRun.
     /// </summary>
     public class TestRunOperation : Operation<BinaryData>
     {
