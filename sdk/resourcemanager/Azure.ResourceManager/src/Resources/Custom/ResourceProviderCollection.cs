@@ -108,37 +108,7 @@ namespace Azure.ResourceManager.Resources
         [System.ObsoleteAttribute("This method is obsolete as the `top` parameter is no longer supported in new service versions and will be removed in a future release.", false)]
         public virtual AsyncPageable<ResourceProviderResource> GetAllAsync(int top, string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ResourceProviderResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceProviderProvidersRestClient.ListAsync(Id.SubscriptionId, top, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ResourceProviderResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceProviderProvidersRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            return GetAllAsync(expand, cancellationToken);
         }
 
         /// <summary>
@@ -154,37 +124,7 @@ namespace Azure.ResourceManager.Resources
         [System.ObsoleteAttribute("This method is obsolete as the `top` parameter is no longer supported in new service versions and will be removed in a future release.", false)]
         public virtual Pageable<ResourceProviderResource> GetAll(int top, string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<ResourceProviderResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _resourceProviderProvidersRestClient.List(Id.SubscriptionId, top, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ResourceProviderResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _resourceProviderProvidersRestClient.ListNextPage(nextLink, Id.SubscriptionId, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ResourceProviderResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            return GetAll(expand, cancellationToken);
         }
     }
 }
