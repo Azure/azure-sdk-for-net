@@ -1225,10 +1225,10 @@ namespace Azure.ResourceManager.Kusto.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public KustoLanguageExtensionImageName(string value) { throw null; }
-        public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName Python3108 { get { throw null; } }
-        public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName Python365 { get { throw null; } }
-        public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName Python3912 { get { throw null; } }
-        public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName Python3912IncludeDeepLearning { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName Python3_10_8 { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName Python3_6_5 { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName Python3_9_12 { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName Python3_9_12IncludeDeepLearning { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName R { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

@@ -23,21 +23,13 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         private const string RValue = "R";
-        private const string Python365Value = "Python3_6_5";
-        private const string Python3912Value = "Python3_9_12";
-        private const string Python3912IncludeDeepLearningValue = "Python3_9_12IncludeDeepLearning";
-        private const string Python3108Value = "Python3_10_8";
+        private const string Python3_6_5Value = "Python3_6_5";
+        private const string Python3_9_12Value = "Python3_9_12";
+        private const string Python3_9_12IncludeDeepLearningValue = "Python3_9_12IncludeDeepLearning";
+        private const string Python3_10_8Value = "Python3_10_8";
 
         /// <summary> R. </summary>
         public static KustoLanguageExtensionImageName R { get; } = new KustoLanguageExtensionImageName(RValue);
-        /// <summary> Python3_6_5. </summary>
-        public static KustoLanguageExtensionImageName Python365 { get; } = new KustoLanguageExtensionImageName(Python365Value);
-        /// <summary> Python3_9_12. </summary>
-        public static KustoLanguageExtensionImageName Python3912 { get; } = new KustoLanguageExtensionImageName(Python3912Value);
-        /// <summary> Python3_9_12IncludeDeepLearning. </summary>
-        public static KustoLanguageExtensionImageName Python3912IncludeDeepLearning { get; } = new KustoLanguageExtensionImageName(Python3912IncludeDeepLearningValue);
-        /// <summary> Python3_10_8. </summary>
-        public static KustoLanguageExtensionImageName Python3108 { get; } = new KustoLanguageExtensionImageName(Python3108Value);
         /// <summary> Determines if two <see cref="KustoLanguageExtensionImageName"/> values are the same. </summary>
         public static bool operator ==(KustoLanguageExtensionImageName left, KustoLanguageExtensionImageName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoLanguageExtensionImageName"/> values are not the same. </summary>
