@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroupAsync(subscription, "testRg", AzureLocation.WestUS);
             string containerGroupName = Recording.GenerateAssetName("containergrp");
-            var containerGroupData = CreateContainerGroupData(containerGroupName, ContainerGroupPriority.Regular);
+            var containerGroupData = CreateContainerGroupData(containerGroupName, ContainerGroupPriority.Regular, isConfidentialSku: true, ccepolicy: null);
             var containerGroups = rg.GetContainerGroups();
             ContainerGroupResource containerGroup = (await containerGroups.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName, containerGroupData)).Value;
 
@@ -55,6 +55,21 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             ResourceGroupResource rg = await CreateResourceGroupAsync(subscription, "testRg", AzureLocation.WestUS);
             string containerGroupName = Recording.GenerateAssetName("containergrp");
             var containerGroupData = CreateContainerGroupData(containerGroupName, ContainerGroupPriority.Spot);
+            var containerGroups = rg.GetContainerGroups();
+            ContainerGroupResource containerGroup = (await containerGroups.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName, containerGroupData)).Value;
+
+            ContainerGroupResource deletedContainerGroup = (await containerGroup.DeleteAsync(WaitUntil.Completed)).Value;
+            VerifyContainerGroupProperties(containerGroup.Data, deletedContainerGroup.Data);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task Delete_ConfidentialContainer()
+        {
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroupAsync(subscription, "testRg", AzureLocation.WestUS);
+            string containerGroupName = Recording.GenerateAssetName("containergrp");
+            var containerGroupData = CreateContainerGroupData(containerGroupName, ContainerGroupPriority.Regular, isConfidentialSku: true, ccepolicy: null);
             var containerGroups = rg.GetContainerGroups();
             ContainerGroupResource containerGroup = (await containerGroups.CreateOrUpdateAsync(WaitUntil.Completed, containerGroupName, containerGroupData)).Value;
 

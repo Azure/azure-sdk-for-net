@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             return containerGroup;
         }
 
-        protected static ContainerGroupData CreateContainerGroupData(string containerGroupName, ContainerGroupPriority priority, bool doNotEncrypt = false)
+        protected static ContainerGroupData CreateContainerGroupData(string containerGroupName, ContainerGroupPriority priority, bool isConfidentialSku = false, string ccepolicy = null, bool doNotEncrypt = false)
         {
             var containers = new ContainerInstanceContainer[]
             {
@@ -98,6 +98,9 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                 keyName: "testencryptionkey",
                 keyVersion: "804d3f1d5ce2456b9bc3dc9e35aaa67e");
 
+            var confidentialComputeProperties = ccepolicy == null && isConfidentialSku ? new ConfidentialComputeProperties() : new ConfidentialComputeProperties(ccepolicy);
+            var containerGroupSku = isConfidentialSku ? ContainerGroupSku.Confidential : containerGroupSku;
+
             var containerGroup = new ContainerGroupData(
                 location: "westus",
                 containers: containers,
@@ -134,7 +137,9 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                     }
                 },
                 EncryptionProperties = encryptionProps,
-                Priority = priority
+                Priority = priority,
+                ConfidentlalComputeProperties =  confidentialComputeProperties,
+                containerGroupSku = containerGroupSku
             };
             return containerGroup;
         }
@@ -167,6 +172,8 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
             Assert.AreEqual(expected.InitContainers[0].Name, actual.InitContainers[0].Name);
             Assert.AreEqual(expected.InitContainers[0].Image, actual.InitContainers[0].Image);
             Assert.AreEqual(expected.Priority, actual.Priority);
+            Assert.AreEqual(expected.ConfidentialComputeProperties.CcePolicy, actual.ConfidentialComputeProperties.CcePolicy);
+            Assert.AreEqual(expected.ContainerGroupSku, actual.ContainerGroupSku)
         }
     }
 }
