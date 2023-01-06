@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Search;
 using Azure.ResourceManager.Search.Models;
 
-namespace Azure.ResourceManager.Search
+namespace Azure.ResourceManager.Search.Samples
 {
     public partial class Sample_SearchPrivateEndpointConnectionResource
     {
@@ -25,8 +26,10 @@ namespace Azure.ResourceManager.Search
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2020-08-01/examples/UpdatePrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateEndpointConnections_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SearchPrivateEndpointConnectionResource created on azure
             // for more information of creating SearchPrivateEndpointConnectionResource, please refer to the document of SearchPrivateEndpointConnectionResource
@@ -67,8 +70,10 @@ namespace Azure.ResourceManager.Search
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2020-08-01/examples/GetPrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SearchPrivateEndpointConnectionResource created on azure
             // for more information of creating SearchPrivateEndpointConnectionResource, please refer to the document of SearchPrivateEndpointConnectionResource
@@ -97,8 +102,10 @@ namespace Azure.ResourceManager.Search
             // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2020-08-01/examples/DeletePrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateEndpointConnections_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SearchPrivateEndpointConnectionResource created on azure
             // for more information of creating SearchPrivateEndpointConnectionResource, please refer to the document of SearchPrivateEndpointConnectionResource
