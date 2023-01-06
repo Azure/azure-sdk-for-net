@@ -1061,6 +1061,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string RemoteFabricLocation { get { throw null; } }
         public string RemoteFabricName { get { throw null; } }
     }
+    public partial class A2AExtendedLocationDetails
+    {
+        internal A2AExtendedLocationDetails() { }
+        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ExtendedLocation PrimaryExtendedLocation { get { throw null; } }
+        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ExtendedLocation RecoveryExtendedLocation { get { throw null; } }
+    }
     public partial class A2APolicyCreationInput : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.PolicyProviderSpecificInput
     {
         public A2APolicyCreationInput(Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SetMultiVmSyncStatus multiVmSyncStatus) { }
@@ -1639,6 +1645,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal AzureFabricSpecificDetails() { }
         public System.Collections.Generic.IReadOnlyList<string> ContainerIds { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AExtendedLocationDetails> ExtendedLocations { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.A2AZoneDetails> Zones { get { throw null; } }
     }
@@ -4324,7 +4331,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class RecoveryPlanA2ADetails : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.RecoveryPlanProviderSpecificDetails
     {
         internal RecoveryPlanA2ADetails() { }
+        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ExtendedLocation PrimaryExtendedLocation { get { throw null; } }
         public string PrimaryZone { get { throw null; } }
+        public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.ExtendedLocation RecoveryExtendedLocation { get { throw null; } }
         public string RecoveryZone { get { throw null; } }
     }
     public partial class RecoveryPlanA2AFailoverInput : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.RecoveryPlanProviderSpecificFailoverInput
@@ -5532,6 +5541,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtDiskInput> DisksToInclude { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.LicenseType? LicenseType { get { throw null; } set { } }
         public string PerformAutoResync { get { throw null; } set { } }
+        public string PerformSqlBulkRegistration { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> SeedDiskTags { get { throw null; } }
         public string SnapshotRunAsAccountId { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SqlServerLicenseType? SqlServerLicenseType { get { throw null; } set { } }

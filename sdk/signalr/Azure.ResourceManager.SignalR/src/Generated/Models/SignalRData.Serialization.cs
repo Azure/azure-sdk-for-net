@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.SignalR
 
         internal static SignalRData DeserializeSignalRData(JsonElement element)
         {
-            Optional<ResourceSku> sku = default;
-            Optional<ServiceKind> kind = default;
+            Optional<SignalRResourceSku> sku = default;
+            Optional<SignalRServiceKind> kind = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -118,22 +118,22 @@ namespace Azure.ResourceManager.SignalR
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<SignalRProvisioningState> provisioningState = default;
             Optional<string> externalIP = default;
             Optional<string> hostName = default;
             Optional<int> publicPort = default;
             Optional<int> serverPort = default;
             Optional<string> version = default;
             Optional<IReadOnlyList<SignalRPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<IReadOnlyList<SharedPrivateLinkResourceData>> sharedPrivateLinkResources = default;
+            Optional<IReadOnlyList<SignalRSharedPrivateLinkResourceData>> sharedPrivateLinkResources = default;
             Optional<SignalRTlsSettings> tls = default;
             Optional<string> hostNamePrefix = default;
             Optional<IList<SignalRFeature>> features = default;
-            Optional<LiveTraceConfiguration> liveTraceConfiguration = default;
-            Optional<ResourceLogConfiguration> resourceLogConfiguration = default;
+            Optional<SignalRLiveTraceConfiguration> liveTraceConfiguration = default;
+            Optional<SignalRResourceLogCategoryListResult> resourceLogConfiguration = default;
             Optional<SignalRCorsSettings> cors = default;
             Optional<ServerlessUpstreamSettings> upstream = default;
-            Optional<SignalRNetworkACLs> networkACLs = default;
+            Optional<SignalRNetworkAcls> networkACLs = default;
             Optional<string> publicNetworkAccess = default;
             Optional<bool> disableLocalAuth = default;
             Optional<bool> disableAadAuth = default;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SignalR
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = ResourceSku.DeserializeResourceSku(property.Value);
+                    sku = SignalRResourceSku.DeserializeSignalRResourceSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SignalR
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    kind = new ServiceKind(property.Value.GetString());
+                    kind = new SignalRServiceKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SignalR
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new SignalRProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("externalIP"))
@@ -290,10 +290,10 @@ namespace Azure.ResourceManager.SignalR
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SharedPrivateLinkResourceData> array = new List<SharedPrivateLinkResourceData>();
+                            List<SignalRSharedPrivateLinkResourceData> array = new List<SignalRSharedPrivateLinkResourceData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SharedPrivateLinkResourceData.DeserializeSharedPrivateLinkResourceData(item));
+                                array.Add(SignalRSharedPrivateLinkResourceData.DeserializeSignalRSharedPrivateLinkResourceData(item));
                             }
                             sharedPrivateLinkResources = array;
                             continue;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.SignalR
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            liveTraceConfiguration = LiveTraceConfiguration.DeserializeLiveTraceConfiguration(property0.Value);
+                            liveTraceConfiguration = SignalRLiveTraceConfiguration.DeserializeSignalRLiveTraceConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceLogConfiguration"))
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.SignalR
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            resourceLogConfiguration = ResourceLogConfiguration.DeserializeResourceLogConfiguration(property0.Value);
+                            resourceLogConfiguration = SignalRResourceLogCategoryListResult.DeserializeSignalRResourceLogCategoryListResult(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cors"))
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.SignalR
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            networkACLs = SignalRNetworkACLs.DeserializeSignalRNetworkACLs(property0.Value);
+                            networkACLs = SignalRNetworkAcls.DeserializeSignalRNetworkAcls(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"))

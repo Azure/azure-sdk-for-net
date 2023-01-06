@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> name = default;
             Optional<IList<string>> command = default;
             Optional<IList<string>> args = default;
-            Optional<IList<EnvironmentVar>> env = default;
-            Optional<ContainerResources> resources = default;
+            Optional<IList<ContainerAppEnvironmentVariable>> env = default;
+            Optional<AppContainerResources> resources = default;
             Optional<IList<ContainerAppVolumeMount>> volumeMounts = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<EnvironmentVar> array = new List<EnvironmentVar>();
+                    List<ContainerAppEnvironmentVariable> array = new List<ContainerAppEnvironmentVariable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EnvironmentVar.DeserializeEnvironmentVar(item));
+                        array.Add(ContainerAppEnvironmentVariable.DeserializeContainerAppEnvironmentVariable(item));
                     }
                     env = array;
                     continue;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resources = ContainerResources.DeserializeContainerResources(property.Value);
+                    resources = AppContainerResources.DeserializeAppContainerResources(property.Value);
                     continue;
                 }
                 if (property.NameEquals("volumeMounts"))

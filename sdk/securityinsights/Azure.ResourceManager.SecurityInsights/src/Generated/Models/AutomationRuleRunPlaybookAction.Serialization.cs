@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static AutomationRuleRunPlaybookAction DeserializeAutomationRuleRunPlaybookAction(JsonElement element)
         {
-            Optional<PlaybookActionProperties> actionConfiguration = default;
+            Optional<AutomationRuleRunPlaybookActionProperties> actionConfiguration = default;
             int order = default;
             ActionType actionType = default;
             foreach (var property in element.EnumerateObject())
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    actionConfiguration = PlaybookActionProperties.DeserializePlaybookActionProperties(property.Value);
+                    actionConfiguration = AutomationRuleRunPlaybookActionProperties.DeserializeAutomationRuleRunPlaybookActionProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("order"))

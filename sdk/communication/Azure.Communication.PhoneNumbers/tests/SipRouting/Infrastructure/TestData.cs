@@ -20,6 +20,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         public readonly SipTrunkRoute RuleNavigateToTrunk1;
         public readonly SipTrunkRoute RuleNavigateToAllTrunks;
         public readonly SipTrunkRoute RuleNavigateToNewTrunk;
+        public readonly SipTrunkRoute RuleWithoutTrunks;
 
         public TestData(Guid random)
         {
@@ -47,6 +48,11 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
                 description: "Handle all numbers'",
                 numberPattern: @"\+[1-9][0-9]{3,23}",
                 trunks: new List<string> { NewTrunk.Fqdn });
+            RuleWithoutTrunks = new SipTrunkRoute(
+                name: "Rule without trunks",
+                description: "Handle all numbers'",
+                numberPattern: @"\+[1-9][0-9]{3,23}",
+                trunks: new List<string> ());
         }
     }
 }

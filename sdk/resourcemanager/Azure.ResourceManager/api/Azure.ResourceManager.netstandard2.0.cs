@@ -40,6 +40,7 @@ namespace Azure.ResourceManager
         public ArmClientOptions() { }
         public Azure.ResourceManager.ArmEnvironment? Environment { get { throw null; } set { } }
         public void SetApiVersion(Azure.Core.ResourceType resourceType, string apiVersion) { }
+        public void SetApiVersionsFromProfile(Azure.ResourceManager.AzureStackProfile profile) { }
     }
     public abstract partial class ArmCollection
     {
@@ -107,6 +108,10 @@ namespace Azure.ResourceManager
         public virtual Azure.ResourceManager.Resources.PolicyAssignmentCollection GetPolicyAssignments() { throw null; }
         public virtual Azure.ResourceManager.Resources.TagResource GetTagResource() { throw null; }
         protected virtual bool TryGetApiVersion(Azure.Core.ResourceType resourceType, out string apiVersion) { throw null; }
+    }
+    public enum AzureStackProfile
+    {
+        Profile20200901Hybrid = 0,
     }
 }
 namespace Azure.ResourceManager.ManagementGroups
