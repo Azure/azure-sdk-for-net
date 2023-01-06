@@ -7,15 +7,17 @@ using System.Text;
 
 namespace Azure.Core.Dynamic
 {
-    internal struct JsonDataChange<T> : IJsonDataChange
+    internal struct JsonDataChange
     {
-        public string Property { get; set; }
+        public string Path { get; set; }
 
-        public T? Value { get; set; }
-    }
+        public object? Value { get; set; }
 
-    internal interface IJsonDataChange
-    {
-        public string Property { get; set; }
+        /// <summary>
+        /// The change invalidates the existing node's JsonElement
+        /// due to changes in JsonValueKind or path structure.
+        /// If this is true, Value holds a new JsonElement.
+        /// </summary>
+        public bool ReplacesJsonElement { get; set; }
     }
 }

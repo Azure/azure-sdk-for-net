@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Azure.Core.Dynamic;
+using System.Text.Json;
 using NUnit.Framework;
 
 namespace Azure.Core.Experimental.Tests
@@ -103,16 +105,37 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(3.0, jd.RootElement.GetProperty("Foo").GetDouble());
         }
 
-        //[Test]
-        //public void CanAddPropertyToObject()
-        //{
-        //    string json = @"
-        //        {
-        //          ""Foo"" : 1.2
-        //        }";
+        [Test]
+        public void CanAddPropertyToObject()
+        {
+            string json = @"
+                {
+                  ""Foo"" : 1.2
+                }";
 
-        //    var jd = JsonData.Parse(json);
-        //}
+            var jd = JsonData.Parse(json);
+
+            // Has same semantics as Dictionary
+            // https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.dictionary-2.item?view=net-7.0#property-value
+            jd.RootElement.SetProperty("Bar", "hi");
+
+            // Assert:
+
+            // 1. Old property is present.
+            Assert.AreEqual(1.2, jd.RootElement.GetProperty("Foo").GetDouble());
+
+            // 2. New property is present.
+            Assert.IsNotNull(jd.RootElement.GetProperty("Bar"));
+            Assert.AreEqual("hi", jd.RootElement.GetProperty("Bar").GetString());
+
+            // 3. Type serializes out correctly.
+            using MemoryStream stream = new();
+            jd.WriteTo(stream);
+            var val = new BinaryData(stream.GetBuffer()).ToString();
+            var dict = JsonSerializer.Deserialize<Dictionary<string, object>>(val);
+            Assert.AreEqual(1.2, dict["Foo"]);
+            Assert.AreEqual("hi", dict["Bar"]);
+        }
 
         [Test]
         public void CanSetObject()

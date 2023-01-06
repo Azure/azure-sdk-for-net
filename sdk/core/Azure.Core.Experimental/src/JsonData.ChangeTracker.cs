@@ -19,39 +19,37 @@ namespace Azure.Core.Dynamic
     {
         internal class ChangeTracker
         {
-            private List<IJsonDataChange>? _changes;
-            private List<IJsonDataChange>? _removals;
+            private List<JsonDataChange>? _changes;
 
             internal bool HasChanges => _changes != null && _changes.Count > 0;
 
-            internal bool TryGetChange<T>(string path, out T? value)
+            //internal bool TryGetChange(string path, out object? value)
+            //{
+            //    if (_changes == null)
+            //    {
+            //        value = null;
+            //        return false;
+            //    }
+
+            //    for (int i = _changes.Count - 1; i >= 0; i--)
+            //    {
+            //        var change = _changes[i];
+            //        if (change.Path == path)
+            //        {
+            //            value = change.Value;
+            //            return true;
+            //        }
+            //    }
+
+            //    value = null;
+            //    return false;
+            //}
+
+            internal bool TryGetChange(ReadOnlySpan<byte> path, out JsonDataChange change)
             {
                 if (_changes == null)
                 {
-                    value = default;
-                    return false;
-                }
-
-                for (int i = _changes.Count - 1; i >= 0; i--)
-                {
-                    var change = _changes[i];
-                    if (change.Property == path)
-                    {
-                        // TODO: does this do boxing?
-                        value = ((JsonDataChange<T>)change).Value;
-                        return true;
-                    }
-                }
-
-                value = default;
-                return false;
-            }
-
-            internal bool TryGetChange<T>(ReadOnlySpan<byte> path, out T? value)
-            {
-                if (_changes == null)
-                {
-                    value = default;
+                    change = default;
                     return false;
                 }
 
@@ -67,47 +65,68 @@ namespace Azure.Core.Dynamic
 
                 for (int i = _changes.Count - 1; i >= 0; i--)
                 {
-                    var change = _changes[i];
-                    if (change.Property == pathStr)
+                    var c = _changes[i];
+                    if (c.Path == pathStr)
                     //if (change.Property.AsSpan().SequenceEqual(utf16))
                     {
-                        // TODO: does this do boxing?
-                        value = ((JsonDataChange<T>)change).Value;
+                        change = c;
                         return true;
                     }
                 }
 
-                value = default;
+                change = default;
                 return false;
             }
 
-            internal void AddChange<T>(string path, JsonElement element, T? value)
+            internal bool TryGetChange(string path, out JsonDataChange change)
             {
-                // Assignment of an object or an array is special, because it potentially
-                // changes the structure of the JSON.
-                // TODO: Handle the case where a primitive leaf node is assigned
-                // an object or an array ... this changes the structure as well.
-
-                // We handle this here as a removal and a change.  The presence of a removal
-                // indicates that the structure of the JSON has changed and additional care
-                // must be taken for any child elements of the removed element.
-                if (element.ValueKind == JsonValueKind.Object ||
-                    element.ValueKind == JsonValueKind.Array)
+                if (_changes == null)
                 {
-                    if (_removals == null)
-                    {
-                        _removals = new List<IJsonDataChange>();
-                    }
-
-                    _removals.Add(new JsonDataChange<T>() { Property = path, Value = default });
+                    change = default;
+                    return false;
                 }
+
+                for (int i = _changes.Count - 1; i >= 0; i--)
+                {
+                    var c = _changes[i];
+                    if (c.Path == path)
+                    {
+                        change = c;
+                        return true;
+                    }
+                }
+
+                change = default;
+                return false;
+            }
+
+            internal void AddChange(string path, object? value, bool replaceJsonElement = false)
+            {
+                //// Assignment of an object or an array is special, because it potentially
+                //// changes the structure of the JSON.
+                //// TODO: Handle the case where a primitive leaf node is assigned
+                //// an object or an array ... this changes the structure as well.
+
+                //// We handle this here as a removal and a change.  The presence of a removal
+                //// indicates that the structure of the JSON has changed and additional care
+                //// must be taken for any child elements of the removed element.
+                //if (element.ValueKind == JsonValueKind.Object ||
+                //    element.ValueKind == JsonValueKind.Array)
+                //{
+                //    if (_removals == null)
+                //    {
+                //        _removals = new List<JsonDataChange>();
+                //    }
+
+                //    _removals.Add(new JsonDataChange() { Path = path, Value = null });
+                //}
 
                 if (_changes == null)
                 {
-                    _changes = new List<IJsonDataChange>();
+                    _changes = new List<JsonDataChange>();
                 }
 
-                _changes.Add(new JsonDataChange<T>() { Property = path, Value = value });
+                _changes.Add(new JsonDataChange() { Path = path, Value = value, ReplacesJsonElement = replaceJsonElement });
             }
         }
     }

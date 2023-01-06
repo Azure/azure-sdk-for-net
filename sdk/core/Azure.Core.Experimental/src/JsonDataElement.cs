@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.Core.Dynamic
@@ -17,6 +18,11 @@ namespace Azure.Core.Dynamic
 
         private readonly JsonData.ChangeTracker Changes => _root.Changes;
 
+        // TODO: we will need to look up whether a parent has changed.
+#pragma warning disable CA1822 // Mark members as static
+        private bool IsValid => true;
+#pragma warning restore CA1822 // Mark members as static
+
         internal JsonDataElement(JsonData root, JsonElement element, string path)
         {
             _element = element;
@@ -31,11 +37,17 @@ namespace Azure.Core.Dynamic
                 throw new InvalidOperationException($"Expected an 'Object' type but was {_element.ValueKind}.");
             }
 
+            // Note: if we are in this element, we can assume we've already
+            // addressed those changes.
+
             // TODO: (Issue) relying on paths means mutations can be misinterpreted, e.g.
             // what if a property of an object is changed first, and then the object is replaced.
             // the property change will "apply" to the new object.
             // I think we can deal with this by more clever merge logic, but it will be tricky
             var path = _path.Length == 0 ? name : _path + "." + name;
+
+            // TODO: Check for changes?
+            //if (Changes.Tra)
 
             //// If the object referred to has been changed, we need to refer to
             //// the new object. (See CanAssignObject test case.)
@@ -77,9 +89,14 @@ namespace Azure.Core.Dynamic
 
         internal double GetDouble()
         {
-            if (Changes.TryGetChange(_path, out double value))
+            if (Changes.TryGetChange(_path, out JsonDataChange change))
             {
-                return value;
+                if (change.Value == null)
+                {
+                    throw new InvalidCastException("Property has been removed");
+                }
+
+                return (double)change.Value;
             }
 
             return _element.GetDouble();
@@ -87,9 +104,14 @@ namespace Azure.Core.Dynamic
 
         internal int GetInt32()
         {
-            if (Changes.TryGetChange(_path, out int value))
+            if (Changes.TryGetChange(_path, out JsonDataChange change))
             {
-                return value;
+                if (change.Value == null)
+                {
+                    throw new InvalidCastException("Property has been removed");
+                }
+
+                return (int)change.Value;
             }
 
             return _element.GetInt32();
@@ -97,20 +119,49 @@ namespace Azure.Core.Dynamic
 
         internal string? GetString()
         {
-            if (Changes.TryGetChange(_path, out string? value))
+            if (Changes.TryGetChange(_path, out JsonDataChange change))
             {
-                return value;
+                return (string?)change.Value;
             }
 
             return _element.GetString();
         }
 
-        internal void Set(double value) => Changes.AddChange(_path, _element, value);
+        internal void SetProperty(string name, object value)
+        {
+            if (_element.ValueKind != JsonValueKind.Object)
+            {
+                throw new InvalidOperationException($"Expected an 'Object' type but was {_element.ValueKind}.");
+            }
 
-        internal void Set(int value) => Changes.AddChange(_path, _element, value);
+            var path = _path.Length == 0 ? name : _path + "." + name;
 
-        internal void Set(string value) => Changes.AddChange(_path, _element, value);
+            // Per copying Dictionary semantics, if the property already exists, just replace the value.
+            // If the property already exists, just set it.
 
-        internal void Set(object value) => Changes.AddChange(_path, _element, value);
+            if (_element.TryGetProperty(name, out _))
+            {
+                Changes.AddChange(path, value);
+            }
+
+            // If it's not already there, we'll add a different kind of change.
+            // We are adding a property to this object.  The change reflects an update
+            // to the object's JsonElement.  Get the new JsonElement.
+            Dictionary<string, object> dict = JsonSerializer.Deserialize<Dictionary<string, object>>(_element.ToString());
+            dict[name] = value;
+
+            var bytes = JsonSerializer.SerializeToUtf8Bytes(dict);
+            var newElement = JsonDocument.Parse(bytes).RootElement;
+
+            Changes.AddChange(_path, newElement, true);
+        }
+
+        internal void Set(double value) => Changes.AddChange(_path, value);
+
+        internal void Set(int value) => Changes.AddChange(_path, value);
+
+        internal void Set(string value) => Changes.AddChange(_path, value);
+
+        internal void Set(object value) => Changes.AddChange(_path, value);
     }
 }

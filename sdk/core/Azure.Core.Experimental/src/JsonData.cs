@@ -28,7 +28,29 @@ namespace Azure.Core.Dynamic
 
         internal ChangeTracker Changes { get; } = new();
 
-        internal JsonDataElement RootElement => new JsonDataElement(this, _element, "");
+        // TODO: need to check the root element for changes, e.g. if it is an object,
+        // it could have had properties added, or an array could have had elements added.
+        internal JsonDataElement RootElement
+        {
+            get
+            {
+                if (Changes.TryGetChange(string.Empty, out JsonDataChange change))
+                {
+                    if (change.Value == null)
+                    {
+                        // TODO: handle this.
+                        //throw new InvalidCastException("Property has been removed");
+                    }
+
+                    if (change.ReplacesJsonElement)
+                    {
+                        return new JsonDataElement(this, (JsonElement)change.Value!, "");
+                    }
+                }
+
+                return new JsonDataElement(this, _element, "");
+            }
+        }
 
         internal void WriteTo(Stream stream, StandardFormat format = default)
         {
@@ -77,7 +99,7 @@ namespace Azure.Core.Dynamic
             int pathLength = 0;
             ReadOnlySpan<byte> currentPropertyName = Span<byte>.Empty;
 
-            Value change = default;
+            JsonDataChange change = default;
             bool changed = false;
             while (reader.Read())
             {
@@ -100,12 +122,13 @@ namespace Azure.Core.Dynamic
                             pathLength += currentPropertyName.Length;
                         }
                         changed = Changes.TryGetChange(path.Slice(0, pathLength), out change);
+                        // TODO: Handle nulls
 
                         writer.WritePropertyName(currentPropertyName);
                         break;
                     case JsonTokenType.String:
                         if (changed)
-                            writer.WriteStringValue(change.As<string>());
+                            writer.WriteStringValue((string)change.Value!);
                         else
                             writer.WriteStringValue(reader.ValueSpan);
 
@@ -120,7 +143,7 @@ namespace Azure.Core.Dynamic
                         break;
                     case JsonTokenType.Number:
                         if (changed)
-                            writer.WriteNumberValue(change.As<double>());
+                            writer.WriteNumberValue((double)change.Value!);
                         else
                             writer.WriteStringValue(reader.ValueSpan);
 
@@ -165,7 +188,7 @@ namespace Azure.Core.Dynamic
         internal static JsonData Parse(BinaryData utf8Json)
         {
             var doc = JsonDocument.Parse(utf8Json);
-            return new JsonData(doc);
+            return new JsonData(doc, utf8Json);
         }
 
         /// <summary>
@@ -176,16 +199,19 @@ namespace Azure.Core.Dynamic
         internal static JsonData Parse(string json)
         {
             var doc = JsonDocument.Parse(json);
-            return new JsonData(doc);
+            return new JsonData(doc, new BinaryData(json));
         }
 
         /// <summary>
         ///  Creates a new JsonData object which represents the value of the given JsonDocument.
         /// </summary>
         /// <param name="jsonDocument">The JsonDocument to convert.</param>
+        /// <param name="utf8Json">A UTF-8 encoded string representing a JSON value</param>
         /// <remarks>A JsonDocument can be constructed from a JSON string using <see cref="JsonDocument.Parse(string, JsonDocumentOptions)"/>.</remarks>
-        internal JsonData(JsonDocument jsonDocument) : this(jsonDocument.RootElement)
+        internal JsonData(JsonDocument jsonDocument, BinaryData utf8Json) : this(jsonDocument.RootElement)
         {
+            _original = utf8Json.ToArray();
+            _element = jsonDocument.RootElement;
         }
 
         /// <summary>
@@ -210,13 +236,6 @@ namespace Azure.Core.Dynamic
             Type inputType = type ?? (value == null ? typeof(object) : value.GetType());
             _original = JsonSerializer.SerializeToUtf8Bytes(value, inputType, options);
             _element = JsonDocument.Parse(_original).RootElement;
-        }
-
-        private JsonData(JsonElement element)
-        {
-            // Note: you can't call the line below unless element is of type string.
-            //_utf8 = element.GetBytesFromBase64();
-            _element = element;
         }
 
         /// <summary>
