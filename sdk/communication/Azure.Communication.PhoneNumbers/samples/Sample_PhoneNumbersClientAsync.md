@@ -24,7 +24,6 @@ var capabilities = new PhoneNumberCapabilities(calling: PhoneNumberCapabilityTyp
 
 var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities);
 await searchOperation.WaitForCompletionAsync();
-await WaitForCompletionAsync(searchOperation);
 ```
 
 ## Purchase phone numbers
@@ -34,8 +33,6 @@ Phone numbers can be acquired through purchasing a reservation.
 ```C# Snippet:StartPurchaseSearchAsync
 var purchaseOperation = await client.StartPurchasePhoneNumbersAsync(searchOperation.Value.SearchId);
 await purchaseOperation.WaitForCompletionResponseAsync();
-await WaitForCompletionResponseAsync(purchaseOperation!);
-Assert.AreEqual(purchaseOperation.GetRawResponse().Status, 200);
 ```
 
 ## Listing purchased phone numbers
@@ -59,7 +56,6 @@ Phone number's capabilities can be updated by started by `StartUpdateCapabilitie
 var updateCapabilitiesOperation = await client.StartUpdateCapabilitiesAsync(purchasedPhoneNumber, calling: PhoneNumberCapabilityType.Outbound, sms: PhoneNumberCapabilityType.InboundOutbound);
 
 await updateCapabilitiesOperation.WaitForCompletionAsync();
-await WaitForCompletionAsync(updateCapabilitiesOperation);
 ```
 
 ## Release phone numbers
