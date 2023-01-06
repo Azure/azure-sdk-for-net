@@ -103,6 +103,17 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(3.0, jd.RootElement.GetProperty("Foo").GetDouble());
         }
 
+        //[Test]
+        //public void CanAddPropertyToObject()
+        //{
+        //    string json = @"
+        //        {
+        //          ""Foo"" : 1.2
+        //        }";
+
+        //    var jd = JsonData.Parse(json);
+        //}
+
         [Test]
         public void CanSetObject()
         {
@@ -124,7 +135,7 @@ namespace Azure.Core.Experimental.Tests
 
             // This should fail
             // TODO: Is this the exception type we'd like?
-            Assert.Throws<KeyNotFoundException>(()=> jd.RootElement.GetProperty("Baz").GetProperty("A"));
+            Assert.Throws<KeyNotFoundException>(() => jd.RootElement.GetProperty("Baz").GetProperty("A"));
         }
 
         [Test]

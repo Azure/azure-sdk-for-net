@@ -15,6 +15,8 @@ namespace Azure.Core.Dynamic
         private readonly JsonElement _element;
         private readonly string _path;
 
+        private readonly JsonData.ChangeTracker Changes => _root.Changes;
+
         internal JsonDataElement(JsonData root, JsonElement element, string path)
         {
             _element = element;
@@ -75,7 +77,7 @@ namespace Azure.Core.Dynamic
 
         internal double GetDouble()
         {
-            if (_root.TryGetChange(_path, out double value))
+            if (Changes.TryGetChange(_path, out double value))
             {
                 return value;
             }
@@ -85,7 +87,7 @@ namespace Azure.Core.Dynamic
 
         internal int GetInt32()
         {
-            if (_root.TryGetChange(_path, out int value))
+            if (Changes.TryGetChange(_path, out int value))
             {
                 return value;
             }
@@ -95,7 +97,7 @@ namespace Azure.Core.Dynamic
 
         internal string? GetString()
         {
-            if (_root.TryGetChange(_path, out string? value))
+            if (Changes.TryGetChange(_path, out string? value))
             {
                 return value;
             }
@@ -103,12 +105,12 @@ namespace Azure.Core.Dynamic
             return _element.GetString();
         }
 
-        internal void Set(double value) => _root.Set(_path, _element, value);
+        internal void Set(double value) => Changes.AddChange(_path, _element, value);
 
-        internal void Set(int value) => _root.Set(_path, _element, value);
+        internal void Set(int value) => Changes.AddChange(_path, _element, value);
 
-        internal void Set(string value) => _root.Set(_path, _element, value);
+        internal void Set(string value) => Changes.AddChange(_path, _element, value);
 
-        internal void Set(object value) => _root.Set(_path, _element, value);
+        internal void Set(object value) => Changes.AddChange(_path, _element, value);
     }
 }
