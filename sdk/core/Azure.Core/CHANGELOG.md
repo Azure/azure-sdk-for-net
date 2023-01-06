@@ -5,6 +5,9 @@
 ### Features Added
 
 - Made `RedirectPolicy` public to provide `SetAllowAutoRedirect()` method to library authors.
+- Added `RetryPolicy` property to `ClientOptions` to allow library authors to set a custom retry policy.
+- Added `MessageProcessingContext` type and `ProcessingContext` property to `HttpMessage` which contains information about the message as it traverses through the pipeline.
+- Added `SetProperty` and `TryGetProperty` overloads to `HttpMessage` to allow setting property values using a `Type` as the key.
 
 ### Breaking Changes
 

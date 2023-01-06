@@ -134,11 +134,16 @@ namespace Azure.ResourceManager.Kusto
         /// <summary> A boolean value that indicates if the purge operations are enabled. </summary>
         public bool? IsPurgeEnabled { get; set; }
         /// <summary> List of the cluster&apos;s language extensions. </summary>
-        internal KustoLanguageExtensionList LanguageExtensions { get; }
+        internal KustoLanguageExtensionList LanguageExtensions { get; set; }
         /// <summary> The list of language extensions. </summary>
         public IList<KustoLanguageExtension> LanguageExtensionsValue
         {
-            get => LanguageExtensions?.Value;
+            get
+            {
+                if (LanguageExtensions is null)
+                    LanguageExtensions = new KustoLanguageExtensionList();
+                return LanguageExtensions.Value;
+            }
         }
 
         /// <summary> A boolean value that indicates if double encryption is enabled. </summary>
