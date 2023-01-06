@@ -632,5 +632,76 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
             #endregion
         }
+
+        [Test]
+        public void TestSessionProcessorHandlers()
+        {
+            #region Snippet:ServiceBus_TestSessionProcessorHandlers
+            Mock<ServiceBusSessionReceiver> mockSessionReceiver = new();
+
+            mockSessionReceiver
+                .Setup(receiver => receiver.CompleteMessageAsync(
+                    It.IsAny<ServiceBusReceivedMessage>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+            async Task MessageHandler(ProcessSessionMessageEventArgs args)
+            {
+                var body = args.Message.Body.ToString();
+
+                // we can evaluate application logic and use that to determine how to settle the message.
+                await args.CompleteMessageAsync(args.Message);
+
+                // we can also set arbitrary session state using this receiver
+                // the state is specific to the session, and not any particular message
+                await args.SetSessionStateAsync(new BinaryData("some state"));
+            }
+
+            Task ErrorHandler(ProcessErrorEventArgs args)
+            {
+                // the error source tells me at what point in the processing an error occurred
+                Console.WriteLine(args.ErrorSource);
+                // the fully qualified namespace is available
+                Console.WriteLine(args.FullyQualifiedNamespace);
+                // as well as the entity path
+                Console.WriteLine(args.EntityPath);
+                Console.WriteLine(args.Exception.ToString());
+                return Task.CompletedTask;
+            }
+
+            ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMessage(
+                    body: new BinaryData("message"),
+                    messageId: "messageId",
+                    partitionKey: "hellokey",
+                    correlationId: "correlationId",
+                    contentType: "contentType",
+                    replyTo: "replyTo"
+                    //...
+                    );
+
+            CancellationTokenSource source = new();
+
+            ProcessSessionMessageEventArgs processArgs = new(
+                message: message,
+                receiver: mockSessionReceiver.Object,
+                cancellationToken: source.Token);
+
+            Assert.DoesNotThrowAsync(async () => await MessageHandler(processArgs));
+
+            string fullyQualifiedNamespace = "full-qualified-namespace";
+            string entityPath = "entity-path";
+            ServiceBusErrorSource errorSource = new();
+
+            ProcessErrorEventArgs errorArgs = new(
+                exception: new Exception("sample exception"),
+                errorSource: errorSource,
+                fullyQualifiedNamespace: fullyQualifiedNamespace,
+                entityPath: entityPath,
+                cancellationToken: source.Token);
+
+            Assert.DoesNotThrowAsync(async () => await ErrorHandler(errorArgs));
+
+            #endregion
+        }
     }
 }
