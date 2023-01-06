@@ -25,6 +25,7 @@ namespace Azure.Core.Dynamic
     {
         private Memory<byte> _original;
         private List<IJsonDataChange>? _changes;
+        private List<IJsonDataChange>? _removals;
         private JsonElement _element;
 
         internal JsonDataElement RootElement => new JsonDataElement(this, _element, "");
@@ -88,12 +89,32 @@ namespace Azure.Core.Dynamic
             return false;
         }
 
-        internal void Set<T>(string path, T value)
+        internal void Set<T>(string path, JsonElement element, T? value)
         {
+            // Assignment of an object or an array is special, because it potentially
+            // changes the structure of the JSON.
+            // TODO: Handle the case where a primitive leaf node is assigned
+            // an object or an array ... this changes the structure as well.
+
+            // We handle this here as a removal and a change.  The presence of a removal
+            // indicates that the structure of the JSON has changed and additional care
+            // must be taken for any child elements of the removed element.
+            if (element.ValueKind == JsonValueKind.Object ||
+                element.ValueKind == JsonValueKind.Array)
+            {
+                if (_removals == null)
+                {
+                    _removals = new List<IJsonDataChange>();
+                }
+
+                _removals.Add(new JsonDataChange<T>() { Property = path, Value = default });
+            }
+
             if (_changes == null)
             {
                 _changes = new List<IJsonDataChange>();
             }
+
             _changes.Add(new JsonDataChange<T>() { Property = path, Value = value });
         }
 
@@ -112,6 +133,7 @@ namespace Azure.Core.Dynamic
                 stream.Flush();
                 return;
             }
+
             WriteTheHardWay(writer);
         }
 
@@ -132,6 +154,10 @@ namespace Azure.Core.Dynamic
 
         private void WriteTheHardWay(Utf8JsonWriter writer)
         {
+            // TODO: Handle arrays
+            // TODO: Handle additions
+            // TODO: Handle removals
+
             var original = _original.Span;
             Utf8JsonReader reader = new Utf8JsonReader(original);
 

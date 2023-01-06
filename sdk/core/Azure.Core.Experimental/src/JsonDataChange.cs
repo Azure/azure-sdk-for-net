@@ -11,7 +11,7 @@ namespace Azure.Core.Dynamic
     {
         public string Property { get; set; }
 
-        public T Value { get; set; }
+        public T? Value { get; set; }
     }
 
     internal interface IJsonDataChange

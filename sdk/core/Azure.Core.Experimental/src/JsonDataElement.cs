@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 
 namespace Azure.Core.Dynamic
@@ -26,6 +24,11 @@ namespace Azure.Core.Dynamic
 
         internal JsonDataElement GetProperty(string name)
         {
+            if (_element.ValueKind != JsonValueKind.Object)
+            {
+                throw new InvalidOperationException($"Expected an 'Object' type but was {_element.ValueKind}.");
+            }
+
             // TODO: (Issue) relying on paths means mutations can be misinterpreted, e.g.
             // what if a property of an object is changed first, and then the object is replaced.
             // the property change will "apply" to the new object.
@@ -76,6 +79,7 @@ namespace Azure.Core.Dynamic
             {
                 return value;
             }
+
             return _element.GetDouble();
         }
 
@@ -85,6 +89,7 @@ namespace Azure.Core.Dynamic
             {
                 return value;
             }
+
             return _element.GetInt32();
         }
 
@@ -94,15 +99,16 @@ namespace Azure.Core.Dynamic
             {
                 return value;
             }
+
             return _element.GetString();
         }
 
-        internal void Set(double value) => _root.Set(_path, value);
+        internal void Set(double value) => _root.Set(_path, _element, value);
 
-        internal void Set(int value) => _root.Set(_path, value);
+        internal void Set(int value) => _root.Set(_path, _element, value);
 
-        internal void Set(string value) => _root.Set(_path, value);
+        internal void Set(string value) => _root.Set(_path, _element, value);
 
-        internal void Set(object value) => _root.Set(_path, value);
+        internal void Set(object value) => _root.Set(_path, _element, value);
     }
 }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using Azure.Core.Dynamic;
 using NUnit.Framework;
@@ -49,6 +50,36 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(2.0, jd.RootElement.GetProperty("Foo").GetDouble());
             Assert.AreEqual("Hello", jd.RootElement.GetProperty("Bar").GetString());
             Assert.AreEqual(5.1, jd.RootElement.GetProperty("Baz").GetProperty("A").GetDouble());
+        }
+
+        [Test]
+        public void CanSetProperty_StringToNumber()
+        {
+            // TODO: This will change how serialization works
+
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public void CanSetProperty_StringToBool()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public void CanSetProperty_StringToObject()
+        {
+            // This modifies the JSON structure
+
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public void CanSetProperty_StringToArray()
+        {
+            // This modifies the JSON structure
+
+            throw new NotImplementedException();
         }
 
         [Test]
