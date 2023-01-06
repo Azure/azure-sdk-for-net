@@ -14,11 +14,8 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     internal class EventBacklog
     {
-        // TODO: Upper limit on backlog;
-
         private TimeSpan _expiringTimeout;
 
-        // TODO: do not use valuetuple?
         private ConcurrentDictionary<string, (CallAutomationEventBase, Timer)> _eventBacklog;
 
         internal EventBacklog(TimeSpan defaultExpiringTimeout = default)

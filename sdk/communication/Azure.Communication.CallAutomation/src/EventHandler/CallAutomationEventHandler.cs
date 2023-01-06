@@ -200,6 +200,7 @@ namespace Azure.Communication.CallAutomation
                 // see if events have arrived earlier and saved in backlog
                 if (_eventBacklog.GetAndRemoveEvent(eventTypesToWaitFor, callConnectionId, operationContext, out var backlogEvent))
                 {
+                    _eventReceived -= handler;
                     awaiter.Dispose();
                     return backlogEvent.Value;
                 }
@@ -210,6 +211,7 @@ namespace Azure.Communication.CallAutomation
 
                     // matching event found. Remove from EventHandler & Backlogs.
                     _eventReceived -= handler;
+                    awaiter.Dispose();
                     _eventBacklog.RemoveEvent(matchingEvent.eventArgsId);
 
                     return matchingEvent.callAutomationEvent;
