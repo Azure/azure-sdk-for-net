@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <summary> Initializes a new instance of LimitJsonObject. </summary>
         /// <param name="limitObjectType"> The limit object type. </param>
         /// <returns> A new <see cref="Models.LimitJsonObject"/> instance for mocking. </returns>
-        public static LimitJsonObject LimitJsonObject(string limitObjectType = null)
+        public static LimitJsonObject LimitJsonObject(string limitObjectType = "Unknown")
         {
             return new UnknownLimitJsonObject(limitObjectType);
         }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <returns> A new <see cref="Models.LimitObject"/> instance for mocking. </returns>
         public static LimitObject LimitObject(int value = default, QuotaLimitType? limitType = null)
         {
-            return new LimitObject("LimitValue", value, limitType);
+            return new LimitObject(LimitType.LimitValue, value, limitType);
         }
     }
 }

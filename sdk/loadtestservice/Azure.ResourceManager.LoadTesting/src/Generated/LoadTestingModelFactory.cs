@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new LoadTestingQuotaBucketDimensions(subscriptionId, location);
         }
 
-        /// <summary> Initializes a new instance of LoadTestingQuotaAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of LoadTestingQuotaAvailabilityResult. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="isAvailable"> True/False indicating whether the quota request be granted based on availability. </param>
         /// <param name="availabilityStatus"> Message indicating additional details to add to quota support request. </param>
-        /// <returns> A new <see cref="Models.LoadTestingQuotaAvailabilityResponse"/> instance for mocking. </returns>
-        public static LoadTestingQuotaAvailabilityResponse LoadTestingQuotaAvailabilityResponse(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isAvailable = null, string availabilityStatus = null)
+        /// <returns> A new <see cref="Models.LoadTestingQuotaAvailabilityResult"/> instance for mocking. </returns>
+        public static LoadTestingQuotaAvailabilityResult LoadTestingQuotaAvailabilityResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isAvailable = null, string availabilityStatus = null)
         {
-            return new LoadTestingQuotaAvailabilityResponse(id, name, resourceType, systemData, isAvailable, availabilityStatus);
+            return new LoadTestingQuotaAvailabilityResult(id, name, resourceType, systemData, isAvailable, availabilityStatus);
         }
 
         /// <summary> Initializes a new instance of LoadTestingResourceData. </summary>

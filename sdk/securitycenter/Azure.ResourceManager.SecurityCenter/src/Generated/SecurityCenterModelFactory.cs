@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SecurityCenterResourceDetails. </summary>
         /// <param name="source"> The platform where the assessed resource resides. </param>
         /// <returns> A new <see cref="Models.SecurityCenterResourceDetails"/> instance for mocking. </returns>
-        public static SecurityCenterResourceDetails SecurityCenterResourceDetails(string source = null)
+        public static SecurityCenterResourceDetails SecurityCenterResourceDetails(string source = "Unknown")
         {
             return new UnknownResourceDetails(source);
         }
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SecuritySubAssessmentAdditionalInfo. </summary>
         /// <param name="assessedResourceType"> Sub-assessment resource type. </param>
         /// <returns> A new <see cref="Models.SecuritySubAssessmentAdditionalInfo"/> instance for mocking. </returns>
-        public static SecuritySubAssessmentAdditionalInfo SecuritySubAssessmentAdditionalInfo(string assessedResourceType = null)
+        public static SecuritySubAssessmentAdditionalInfo SecuritySubAssessmentAdditionalInfo(string assessedResourceType = "Unknown")
         {
             return new UnknownAdditionalData(assessedResourceType);
         }
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SecurityAutomationAction. </summary>
         /// <param name="actionType"> The type of the action that will be triggered by the Automation. </param>
         /// <returns> A new <see cref="Models.SecurityAutomationAction"/> instance for mocking. </returns>
-        public static SecurityAutomationAction SecurityAutomationAction(string actionType = null)
+        public static SecurityAutomationAction SecurityAutomationAction(string actionType = "Unknown")
         {
             return new UnknownAutomationAction(actionType);
         }
@@ -1286,7 +1286,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="kind"> The kind of the external solution. </param>
         /// <param name="location"> Location where the resource is stored. </param>
         /// <returns> A new <see cref="Models.ExternalSecuritySolution"/> instance for mocking. </returns>
-        public static ExternalSecuritySolution ExternalSecuritySolution(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null)
+        public static ExternalSecuritySolution ExternalSecuritySolution(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", AzureLocation? location = null)
         {
             return new ExternalSecuritySolution(id, name, resourceType, systemData, kind, location);
         }
@@ -1414,7 +1414,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
         /// <param name="authenticationType"> Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials. </param>
         /// <returns> A new <see cref="Models.AuthenticationDetailsProperties"/> instance for mocking. </returns>
-        public static AuthenticationDetailsProperties AuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState = null, IEnumerable<SecurityCenterCloudPermission> grantedPermissions = null, string authenticationType = null)
+        public static AuthenticationDetailsProperties AuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState = null, IEnumerable<SecurityCenterCloudPermission> grantedPermissions = null, string authenticationType = "Unknown")
         {
             grantedPermissions ??= new List<SecurityCenterCloudPermission>();
 
@@ -1627,7 +1627,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SecurityAlertResourceIdentifier. </summary>
         /// <param name="resourceIdentifierType"> There can be multiple identifiers of different type per alert, this field specify the identifier type. </param>
         /// <returns> A new <see cref="Models.SecurityAlertResourceIdentifier"/> instance for mocking. </returns>
-        public static SecurityAlertResourceIdentifier SecurityAlertResourceIdentifier(string resourceIdentifierType = null)
+        public static SecurityAlertResourceIdentifier SecurityAlertResourceIdentifier(string resourceIdentifierType = "Unknown")
         {
             return new UnknownAlertResourceIdentifier(resourceIdentifierType);
         }
@@ -1661,7 +1661,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> the kind of the settings string. </param>
         /// <returns> A new <see cref="SecurityCenter.SecuritySettingData"/> instance for mocking. </returns>
-        public static SecuritySettingData SecuritySettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
+        public static SecuritySettingData SecuritySettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
             return new SecuritySettingData(id, name, resourceType, systemData, kind);
         }
@@ -1750,7 +1750,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
         /// <returns> A new <see cref="Models.SecurityCenterCloudOffering"/> instance for mocking. </returns>
-        public static SecurityCenterCloudOffering SecurityCenterCloudOffering(string offeringType = null, string description = null)
+        public static SecurityCenterCloudOffering SecurityCenterCloudOffering(string offeringType = "Unknown", string description = null)
         {
             return new UnknownCloudOffering(offeringType, description);
         }
@@ -1758,7 +1758,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of SecurityConnectorEnvironment. </summary>
         /// <param name="environmentType"> The type of the environment data. </param>
         /// <returns> A new <see cref="Models.SecurityConnectorEnvironment"/> instance for mocking. </returns>
-        public static SecurityConnectorEnvironment SecurityConnectorEnvironment(string environmentType = null)
+        public static SecurityConnectorEnvironment SecurityConnectorEnvironment(string environmentType = "Unknown")
         {
             return new UnknownEnvironmentData(environmentType);
         }
@@ -2136,7 +2136,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.SqlServerVulnerabilityProperties"/> instance for mocking. </returns>
         public static SqlServerVulnerabilityProperties SqlServerVulnerabilityProperties(string sqlServerVulnerabilityType = null, string query = null)
         {
-            return new SqlServerVulnerabilityProperties("SqlServerVulnerability", sqlServerVulnerabilityType, query);
+            return new SqlServerVulnerabilityProperties(AssessedResourceType.SqlServerVulnerability, sqlServerVulnerabilityType, query);
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryVulnerabilityProperties. </summary>
@@ -2155,7 +2155,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             cve ??= new List<SecurityCve>();
             vendorReferences ??= new List<VendorReference>();
 
-            return new ContainerRegistryVulnerabilityProperties("ContainerRegistryVulnerability", containerRegistryVulnerabilityPropertiesType, cvss, isPatchable, cve?.ToList(), publishedOn, vendorReferences?.ToList(), repositoryName, imageDigest);
+            return new ContainerRegistryVulnerabilityProperties(AssessedResourceType.ContainerRegistryVulnerability, containerRegistryVulnerabilityPropertiesType, cvss, isPatchable, cve?.ToList(), publishedOn, vendorReferences?.ToList(), repositoryName, imageDigest);
         }
 
         /// <summary> Initializes a new instance of SecurityCvss. </summary>
@@ -2208,7 +2208,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.SecurityAutomationActionLogicApp"/> instance for mocking. </returns>
         public static SecurityAutomationActionLogicApp SecurityAutomationActionLogicApp(ResourceIdentifier logicAppResourceId = null, Uri uri = null)
         {
-            return new SecurityAutomationActionLogicApp("LogicApp", logicAppResourceId, uri);
+            return new SecurityAutomationActionLogicApp(ActionType.LogicApp, logicAppResourceId, uri);
         }
 
         /// <summary> Initializes a new instance of SecurityAutomationActionEventHub. </summary>
@@ -2218,7 +2218,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.SecurityAutomationActionEventHub"/> instance for mocking. </returns>
         public static SecurityAutomationActionEventHub SecurityAutomationActionEventHub(ResourceIdentifier eventHubResourceId = null, string sasPolicyName = null, string connectionString = null)
         {
-            return new SecurityAutomationActionEventHub("EventHub", eventHubResourceId, sasPolicyName, connectionString);
+            return new SecurityAutomationActionEventHub(ActionType.EventHub, eventHubResourceId, sasPolicyName, connectionString);
         }
 
         /// <summary> Initializes a new instance of SecurityAutomationActionWorkspace. </summary>
@@ -2226,7 +2226,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.SecurityAutomationActionWorkspace"/> instance for mocking. </returns>
         public static SecurityAutomationActionWorkspace SecurityAutomationActionWorkspace(ResourceIdentifier workspaceResourceId = null)
         {
-            return new SecurityAutomationActionWorkspace("Workspace", workspaceResourceId);
+            return new SecurityAutomationActionWorkspace(ActionType.Workspace, workspaceResourceId);
         }
 
         /// <summary> Initializes a new instance of CefExternalSecuritySolution. </summary>
@@ -2239,7 +2239,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.CefExternalSecuritySolution"/> instance for mocking. </returns>
         public static CefExternalSecuritySolution CefExternalSecuritySolution(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, CefSolutionProperties properties = null)
         {
-            return new CefExternalSecuritySolution(id, name, resourceType, systemData, "CEF", location, properties);
+            return new CefExternalSecuritySolution(id, name, resourceType, systemData, Models.ExternalSecuritySolutionKind?.Cef, location, properties);
         }
 
         /// <summary> Initializes a new instance of CefSolutionProperties. </summary>
@@ -2281,7 +2281,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.AtaExternalSecuritySolution"/> instance for mocking. </returns>
         public static AtaExternalSecuritySolution AtaExternalSecuritySolution(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, AtaSolutionProperties properties = null)
         {
-            return new AtaExternalSecuritySolution(id, name, resourceType, systemData, "ATA", location, properties);
+            return new AtaExternalSecuritySolution(id, name, resourceType, systemData, Models.ExternalSecuritySolutionKind?.Ata, location, properties);
         }
 
         /// <summary> Initializes a new instance of AtaSolutionProperties. </summary>
@@ -2308,7 +2308,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.AadExternalSecuritySolution"/> instance for mocking. </returns>
         public static AadExternalSecuritySolution AadExternalSecuritySolution(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, AadSolutionProperties properties = null)
         {
-            return new AadExternalSecuritySolution(id, name, resourceType, systemData, "AAD", location, properties);
+            return new AadExternalSecuritySolution(id, name, resourceType, systemData, Models.ExternalSecuritySolutionKind?.Aad, location, properties);
         }
 
         /// <summary> Initializes a new instance of AadSolutionProperties. </summary>
@@ -2336,7 +2336,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             grantedPermissions ??= new List<SecurityCenterCloudPermission>();
 
-            return new AwsCredsAuthenticationDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), "awsCreds", accountId, awsAccessKeyId, awsSecretAccessKey);
+            return new AwsCredsAuthenticationDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), AuthenticationType.AwsCreds, accountId, awsAccessKeyId, awsSecretAccessKey);
         }
 
         /// <summary> Initializes a new instance of AwsAssumeRoleAuthenticationDetailsProperties. </summary>
@@ -2350,7 +2350,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             grantedPermissions ??= new List<SecurityCenterCloudPermission>();
 
-            return new AwsAssumeRoleAuthenticationDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), "awsAssumeRole", accountId, awsAssumeRoleArn, awsExternalId);
+            return new AwsAssumeRoleAuthenticationDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), AuthenticationType.AwsAssumeRole, accountId, awsAssumeRoleArn, awsExternalId);
         }
 
         /// <summary> Initializes a new instance of GcpCredentialsDetailsProperties. </summary>
@@ -2372,7 +2372,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             grantedPermissions ??= new List<SecurityCenterCloudPermission>();
 
-            return new GcpCredentialsDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), "gcpCredentials", organizationId, gcpCredentialType, projectId, privateKeyId, privateKey, clientEmail, clientId, authUri, tokenUri, authProviderX509CertUri, clientX509CertUri);
+            return new GcpCredentialsDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), AuthenticationType.GcpCredentials, organizationId, gcpCredentialType, projectId, privateKeyId, privateKey, clientEmail, clientId, authUri, tokenUri, authProviderX509CertUri, clientX509CertUri);
         }
 
         /// <summary> Initializes a new instance of AzureResourceIdentifier. </summary>
@@ -2380,7 +2380,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.AzureResourceIdentifier"/> instance for mocking. </returns>
         public static AzureResourceIdentifier AzureResourceIdentifier(ResourceIdentifier azureResourceId = null)
         {
-            return new AzureResourceIdentifier("AzureResource", azureResourceId);
+            return new AzureResourceIdentifier(ResourceIdentifierType.AzureResource, azureResourceId);
         }
 
         /// <summary> Initializes a new instance of LogAnalyticsIdentifier. </summary>
@@ -2391,7 +2391,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.LogAnalyticsIdentifier"/> instance for mocking. </returns>
         public static LogAnalyticsIdentifier LogAnalyticsIdentifier(Guid? workspaceId = null, string workspaceSubscriptionId = null, string workspaceResourceGroup = null, Guid? agentId = null)
         {
-            return new LogAnalyticsIdentifier("LogAnalytics", workspaceId, workspaceSubscriptionId, workspaceResourceGroup, agentId);
+            return new LogAnalyticsIdentifier(ResourceIdentifierType.LogAnalytics, workspaceId, workspaceSubscriptionId, workspaceResourceGroup, agentId);
         }
 
         /// <summary> Initializes a new instance of DataExportSettings. </summary>
@@ -2403,7 +2403,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DataExportSettings"/> instance for mocking. </returns>
         public static DataExportSettings DataExportSettings(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isEnabled = null)
         {
-            return new DataExportSettings(id, name, resourceType, systemData, "DataExportSettings", isEnabled);
+            return new DataExportSettings(id, name, resourceType, systemData, SettingKind.DataExportSettings, isEnabled);
         }
 
         /// <summary> Initializes a new instance of SecurityAlertSyncSettings. </summary>
@@ -2415,7 +2415,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.SecurityAlertSyncSettings"/> instance for mocking. </returns>
         public static SecurityAlertSyncSettings SecurityAlertSyncSettings(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isEnabled = null)
         {
-            return new SecurityAlertSyncSettings(id, name, resourceType, systemData, "AlertSyncSettings", isEnabled);
+            return new SecurityAlertSyncSettings(id, name, resourceType, systemData, SettingKind.AlertSyncSettings, isEnabled);
         }
 
         /// <summary> Initializes a new instance of AwsEnvironment. </summary>
@@ -2427,13 +2427,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.AwsEnvironment"/> instance for mocking. </returns>
         public static AwsEnvironment AwsEnvironment(AwsOrganizationalInfo organizationalData = null)
         {
-            return new AwsEnvironment("AwsAccount", organizationalData);
+            return new AwsEnvironment(EnvironmentType.AwsAccount, organizationalData);
         }
 
         /// <summary> Initializes a new instance of AwsOrganizationalInfo. </summary>
         /// <param name="organizationMembershipType"> The multi cloud account&apos;s membership type in the organization. </param>
         /// <returns> A new <see cref="Models.AwsOrganizationalInfo"/> instance for mocking. </returns>
-        public static AwsOrganizationalInfo AwsOrganizationalInfo(string organizationMembershipType = null)
+        public static AwsOrganizationalInfo AwsOrganizationalInfo(string organizationMembershipType = "Unknown")
         {
             return new UnknownAwsOrganizationalData(organizationMembershipType);
         }
@@ -2446,7 +2446,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             excludedAccountIds ??= new List<string>();
 
-            return new AwsOrganizationalDataMaster("Organization", stacksetName, excludedAccountIds?.ToList());
+            return new AwsOrganizationalDataMaster(OrganizationMembershipType.Organization, stacksetName, excludedAccountIds?.ToList());
         }
 
         /// <summary> Initializes a new instance of AwsOrganizationalDataMember. </summary>
@@ -2454,7 +2454,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.AwsOrganizationalDataMember"/> instance for mocking. </returns>
         public static AwsOrganizationalDataMember AwsOrganizationalDataMember(string parentHierarchyId = null)
         {
-            return new AwsOrganizationalDataMember("Member", parentHierarchyId);
+            return new AwsOrganizationalDataMember(OrganizationMembershipType.Member, parentHierarchyId);
         }
 
         /// <summary> Initializes a new instance of GcpProjectEnvironment. </summary>
@@ -2467,13 +2467,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.GcpProjectEnvironment"/> instance for mocking. </returns>
         public static GcpProjectEnvironment GcpProjectEnvironment(GcpOrganizationalInfo organizationalData = null, GcpProjectDetails projectDetails = null)
         {
-            return new GcpProjectEnvironment("GcpProject", organizationalData, projectDetails);
+            return new GcpProjectEnvironment(EnvironmentType.GcpProject, organizationalData, projectDetails);
         }
 
         /// <summary> Initializes a new instance of GcpOrganizationalInfo. </summary>
         /// <param name="organizationMembershipType"> The multi cloud account&apos;s membership type in the organization. </param>
         /// <returns> A new <see cref="Models.GcpOrganizationalInfo"/> instance for mocking. </returns>
-        public static GcpOrganizationalInfo GcpOrganizationalInfo(string organizationMembershipType = null)
+        public static GcpOrganizationalInfo GcpOrganizationalInfo(string organizationMembershipType = "Unknown")
         {
             return new UnknownGcpOrganizationalData(organizationMembershipType);
         }
@@ -2497,7 +2497,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         {
             excludedProjectNumbers ??= new List<string>();
 
-            return new GcpParentOrganizationalInfo("Organization", excludedProjectNumbers?.ToList(), serviceAccountEmailAddress, workloadIdentityProviderId);
+            return new GcpParentOrganizationalInfo(OrganizationMembershipType.Organization, excludedProjectNumbers?.ToList(), serviceAccountEmailAddress, workloadIdentityProviderId);
         }
 
         /// <summary> Initializes a new instance of GcpMemberOrganizationalInfo. </summary>
@@ -2506,21 +2506,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.GcpMemberOrganizationalInfo"/> instance for mocking. </returns>
         public static GcpMemberOrganizationalInfo GcpMemberOrganizationalInfo(string parentHierarchyId = null, string managementProjectNumber = null)
         {
-            return new GcpMemberOrganizationalInfo("Member", parentHierarchyId, managementProjectNumber);
+            return new GcpMemberOrganizationalInfo(OrganizationMembershipType.Member, parentHierarchyId, managementProjectNumber);
         }
 
         /// <summary> Initializes a new instance of GithubScopeEnvironment. </summary>
         /// <returns> A new <see cref="Models.GithubScopeEnvironment"/> instance for mocking. </returns>
         public static GithubScopeEnvironment GithubScopeEnvironment()
         {
-            return new GithubScopeEnvironment("GithubScope");
+            return new GithubScopeEnvironment(EnvironmentType.GithubScope);
         }
 
         /// <summary> Initializes a new instance of AzureDevOpsScopeEnvironment. </summary>
         /// <returns> A new <see cref="Models.AzureDevOpsScopeEnvironment"/> instance for mocking. </returns>
         public static AzureDevOpsScopeEnvironment AzureDevOpsScopeEnvironment()
         {
-            return new AzureDevOpsScopeEnvironment("AzureDevOpsScope");
+            return new AzureDevOpsScopeEnvironment(EnvironmentType.AzureDevOpsScope);
         }
 
         /// <summary> Initializes a new instance of CspmMonitorAwsOffering. </summary>
@@ -2529,7 +2529,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.CspmMonitorAwsOffering"/> instance for mocking. </returns>
         public static CspmMonitorAwsOffering CspmMonitorAwsOffering(string description = null, string cloudRoleArn = null)
         {
-            return new CspmMonitorAwsOffering("CspmMonitorAws", description, cloudRoleArn != null ? new CspmMonitorAwsOfferingNativeCloudConnection(cloudRoleArn) : null);
+            return new CspmMonitorAwsOffering(OfferingType.CspmMonitorAws, description, cloudRoleArn != null ? new CspmMonitorAwsOfferingNativeCloudConnection(cloudRoleArn) : null);
         }
 
         /// <summary> Initializes a new instance of DefenderForContainersAwsOffering. </summary>
@@ -2547,7 +2547,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderForContainersAwsOffering"/> instance for mocking. </returns>
         public static DefenderForContainersAwsOffering DefenderForContainersAwsOffering(string description = null, string kubernetesServiceCloudRoleArn = null, string kubernetesScubaReaderCloudRoleArn = null, string cloudRoleArn = null, string kinesisToS3CloudRoleArn = null, string containerVulnerabilityAssessmentCloudRoleArn = null, string containerVulnerabilityAssessmentTaskCloudRoleArn = null, bool? isContainerVulnerabilityAssessmentEnabled = null, bool? isAutoProvisioningEnabled = null, long? kubeAuditRetentionTime = null, string scubaExternalId = null)
         {
-            return new DefenderForContainersAwsOffering("DefenderForContainersAws", description, kubernetesServiceCloudRoleArn != null ? new DefenderForContainersAwsOfferingKubernetesService(kubernetesServiceCloudRoleArn) : null, kubernetesScubaReaderCloudRoleArn != null ? new DefenderForContainersAwsOfferingKubernetesScubaReader(kubernetesScubaReaderCloudRoleArn) : null, cloudRoleArn != null ? new DefenderForContainersAwsOfferingCloudWatchToKinesis(cloudRoleArn) : null, kinesisToS3CloudRoleArn != null ? new DefenderForContainersAwsOfferingKinesisToS3(kinesisToS3CloudRoleArn) : null, containerVulnerabilityAssessmentCloudRoleArn != null ? new DefenderForContainersAwsOfferingContainerVulnerabilityAssessment(containerVulnerabilityAssessmentCloudRoleArn) : null, containerVulnerabilityAssessmentTaskCloudRoleArn != null ? new DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask(containerVulnerabilityAssessmentTaskCloudRoleArn) : null, isContainerVulnerabilityAssessmentEnabled, isAutoProvisioningEnabled, kubeAuditRetentionTime, scubaExternalId);
+            return new DefenderForContainersAwsOffering(OfferingType.DefenderForContainersAws, description, kubernetesServiceCloudRoleArn != null ? new DefenderForContainersAwsOfferingKubernetesService(kubernetesServiceCloudRoleArn) : null, kubernetesScubaReaderCloudRoleArn != null ? new DefenderForContainersAwsOfferingKubernetesScubaReader(kubernetesScubaReaderCloudRoleArn) : null, cloudRoleArn != null ? new DefenderForContainersAwsOfferingCloudWatchToKinesis(cloudRoleArn) : null, kinesisToS3CloudRoleArn != null ? new DefenderForContainersAwsOfferingKinesisToS3(kinesisToS3CloudRoleArn) : null, containerVulnerabilityAssessmentCloudRoleArn != null ? new DefenderForContainersAwsOfferingContainerVulnerabilityAssessment(containerVulnerabilityAssessmentCloudRoleArn) : null, containerVulnerabilityAssessmentTaskCloudRoleArn != null ? new DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask(containerVulnerabilityAssessmentTaskCloudRoleArn) : null, isContainerVulnerabilityAssessmentEnabled, isAutoProvisioningEnabled, kubeAuditRetentionTime, scubaExternalId);
         }
 
         /// <summary> Initializes a new instance of DefenderForServersAwsOffering. </summary>
@@ -2561,7 +2561,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderForServersAwsOffering"/> instance for mocking. </returns>
         public static DefenderForServersAwsOffering DefenderForServersAwsOffering(string description = null, string defenderForServersCloudRoleArn = null, DefenderForServersAwsOfferingArcAutoProvisioning arcAutoProvisioning = null, DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning vaAutoProvisioning = null, DefenderForServersAwsOfferingMdeAutoProvisioning mdeAutoProvisioning = null, AvailableSubPlanType? availableSubPlanType = null, DefenderForServersAwsOfferingVmScanners vmScanners = null)
         {
-            return new DefenderForServersAwsOffering("DefenderForServersAws", description, defenderForServersCloudRoleArn != null ? new AwsDefenderForServersInfo(defenderForServersCloudRoleArn) : null, arcAutoProvisioning, vaAutoProvisioning, mdeAutoProvisioning, availableSubPlanType != null ? new DefenderForServersAwsOfferingSubPlan(availableSubPlanType) : null, vmScanners);
+            return new DefenderForServersAwsOffering(OfferingType.DefenderForServersAws, description, defenderForServersCloudRoleArn != null ? new AwsDefenderForServersInfo(defenderForServersCloudRoleArn) : null, arcAutoProvisioning, vaAutoProvisioning, mdeAutoProvisioning, availableSubPlanType != null ? new DefenderForServersAwsOfferingSubPlan(availableSubPlanType) : null, vmScanners);
         }
 
         /// <summary> Initializes a new instance of DefenderForServersAwsOfferingArcAutoProvisioning. </summary>
@@ -2619,7 +2619,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderForDatabasesAwsOffering"/> instance for mocking. </returns>
         public static DefenderForDatabasesAwsOffering DefenderForDatabasesAwsOffering(string description = null, DefenderForDatabasesAwsOfferingArcAutoProvisioning arcAutoProvisioning = null, DefenderForDatabasesAwsOfferingRds rds = null)
         {
-            return new DefenderForDatabasesAwsOffering("DefenderForDatabasesAws", description, arcAutoProvisioning, rds);
+            return new DefenderForDatabasesAwsOffering(OfferingType.DefenderForDatabasesAws, description, arcAutoProvisioning, rds);
         }
 
         /// <summary> Initializes a new instance of DefenderForDatabasesAwsOfferingArcAutoProvisioning. </summary>
@@ -2646,7 +2646,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.InformationProtectionAwsOffering"/> instance for mocking. </returns>
         public static InformationProtectionAwsOffering InformationProtectionAwsOffering(string description = null, string informationProtectionCloudRoleArn = null)
         {
-            return new InformationProtectionAwsOffering("InformationProtectionAws", description, informationProtectionCloudRoleArn != null ? new AwsInformationProtection(informationProtectionCloudRoleArn) : null);
+            return new InformationProtectionAwsOffering(OfferingType.InformationProtectionAws, description, informationProtectionCloudRoleArn != null ? new AwsInformationProtection(informationProtectionCloudRoleArn) : null);
         }
 
         /// <summary> Initializes a new instance of CspmMonitorGcpOffering. </summary>
@@ -2655,7 +2655,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.CspmMonitorGcpOffering"/> instance for mocking. </returns>
         public static CspmMonitorGcpOffering CspmMonitorGcpOffering(string description = null, CspmMonitorGcpOfferingNativeCloudConnection nativeCloudConnection = null)
         {
-            return new CspmMonitorGcpOffering("CspmMonitorGcp", description, nativeCloudConnection);
+            return new CspmMonitorGcpOffering(OfferingType.CspmMonitorGcp, description, nativeCloudConnection);
         }
 
         /// <summary> Initializes a new instance of CspmMonitorGcpOfferingNativeCloudConnection. </summary>
@@ -2677,7 +2677,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderForServersGcpOffering"/> instance for mocking. </returns>
         public static DefenderForServersGcpOffering DefenderForServersGcpOffering(string description = null, GcpDefenderForServersInfo defenderForServers = null, bool? isEnabled = null, DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning vulnerabilityAssessmentAutoProvisioning = null, DefenderForServersGcpOfferingMdeAutoProvisioning mdeAutoProvisioning = null, AvailableSubPlanType? availableSubPlanType = null)
         {
-            return new DefenderForServersGcpOffering("DefenderForServersGcp", description, defenderForServers, isEnabled != null ? new DefenderForServersGcpOfferingArcAutoProvisioning(isEnabled) : null, vulnerabilityAssessmentAutoProvisioning, mdeAutoProvisioning, availableSubPlanType != null ? new DefenderForServersGcpOfferingSubPlan(availableSubPlanType) : null);
+            return new DefenderForServersGcpOffering(OfferingType.DefenderForServersGcp, description, defenderForServers, isEnabled != null ? new DefenderForServersGcpOfferingArcAutoProvisioning(isEnabled) : null, vulnerabilityAssessmentAutoProvisioning, mdeAutoProvisioning, availableSubPlanType != null ? new DefenderForServersGcpOfferingSubPlan(availableSubPlanType) : null);
         }
 
         /// <summary> Initializes a new instance of GcpDefenderForServersInfo. </summary>
@@ -2714,7 +2714,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderForDatabasesGcpOffering"/> instance for mocking. </returns>
         public static DefenderForDatabasesGcpOffering DefenderForDatabasesGcpOffering(string description = null, bool? isEnabled = null, GcpDefenderForDatabasesArcAutoProvisioning defenderForDatabasesArcAutoProvisioning = null)
         {
-            return new DefenderForDatabasesGcpOffering("DefenderForDatabasesGcp", description, isEnabled != null ? new DefenderForDatabasesGcpOfferingArcAutoProvisioning(isEnabled) : null, defenderForDatabasesArcAutoProvisioning);
+            return new DefenderForDatabasesGcpOffering(OfferingType.DefenderForDatabasesGcp, description, isEnabled != null ? new DefenderForDatabasesGcpOfferingArcAutoProvisioning(isEnabled) : null, defenderForDatabasesArcAutoProvisioning);
         }
 
         /// <summary> Initializes a new instance of GcpDefenderForDatabasesArcAutoProvisioning. </summary>
@@ -2736,7 +2736,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderForContainersGcpOffering"/> instance for mocking. </returns>
         public static DefenderForContainersGcpOffering DefenderForContainersGcpOffering(string description = null, DefenderForContainersGcpOfferingNativeCloudConnection nativeCloudConnection = null, DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection dataPipelineNativeCloudConnection = null, bool? isAuditLogsAutoProvisioningEnabled = null, bool? isDefenderAgentAutoProvisioningEnabled = null, bool? isPolicyAgentAutoProvisioningEnabled = null)
         {
-            return new DefenderForContainersGcpOffering("DefenderForContainersGcp", description, nativeCloudConnection, dataPipelineNativeCloudConnection, isAuditLogsAutoProvisioningEnabled, isDefenderAgentAutoProvisioningEnabled, isPolicyAgentAutoProvisioningEnabled);
+            return new DefenderForContainersGcpOffering(OfferingType.DefenderForContainersGcp, description, nativeCloudConnection, dataPipelineNativeCloudConnection, isAuditLogsAutoProvisioningEnabled, isDefenderAgentAutoProvisioningEnabled, isPolicyAgentAutoProvisioningEnabled);
         }
 
         /// <summary> Initializes a new instance of DefenderForContainersGcpOfferingNativeCloudConnection. </summary>
@@ -2762,7 +2762,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.CspmMonitorGithubOffering"/> instance for mocking. </returns>
         public static CspmMonitorGithubOffering CspmMonitorGithubOffering(string description = null)
         {
-            return new CspmMonitorGithubOffering("CspmMonitorGithub", description);
+            return new CspmMonitorGithubOffering(OfferingType.CspmMonitorGithub, description);
         }
 
         /// <summary> Initializes a new instance of CspmMonitorAzureDevOpsOffering. </summary>
@@ -2770,7 +2770,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.CspmMonitorAzureDevOpsOffering"/> instance for mocking. </returns>
         public static CspmMonitorAzureDevOpsOffering CspmMonitorAzureDevOpsOffering(string description = null)
         {
-            return new CspmMonitorAzureDevOpsOffering("CspmMonitorAzureDevOps", description);
+            return new CspmMonitorAzureDevOpsOffering(OfferingType.CspmMonitorAzureDevOps, description);
         }
 
         /// <summary> Initializes a new instance of DefenderCspmAwsOffering. </summary>
@@ -2779,7 +2779,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderCspmAwsOffering"/> instance for mocking. </returns>
         public static DefenderCspmAwsOffering DefenderCspmAwsOffering(string description = null, DefenderCspmAwsOfferingVmScanners vmScanners = null)
         {
-            return new DefenderCspmAwsOffering("DefenderCspmAws", description, vmScanners);
+            return new DefenderCspmAwsOffering(OfferingType.DefenderCspmAws, description, vmScanners);
         }
 
         /// <summary> Initializes a new instance of DefenderCspmAwsOfferingVmScanners. </summary>
@@ -2808,7 +2808,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderCspmGcpOffering"/> instance for mocking. </returns>
         public static DefenderCspmGcpOffering DefenderCspmGcpOffering(string description = null)
         {
-            return new DefenderCspmGcpOffering("DefenderCspmGcp", description);
+            return new DefenderCspmGcpOffering(OfferingType.DefenderCspmGcp, description);
         }
 
         /// <summary> Initializes a new instance of DefenderForDevOpsGithubOffering. </summary>
@@ -2816,7 +2816,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderForDevOpsGithubOffering"/> instance for mocking. </returns>
         public static DefenderForDevOpsGithubOffering DefenderForDevOpsGithubOffering(string description = null)
         {
-            return new DefenderForDevOpsGithubOffering("DefenderForDevOpsGithub", description);
+            return new DefenderForDevOpsGithubOffering(OfferingType.DefenderForDevOpsGithub, description);
         }
 
         /// <summary> Initializes a new instance of DefenderForDevOpsAzureDevOpsOffering. </summary>
@@ -2824,7 +2824,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.DefenderForDevOpsAzureDevOpsOffering"/> instance for mocking. </returns>
         public static DefenderForDevOpsAzureDevOpsOffering DefenderForDevOpsAzureDevOpsOffering(string description = null)
         {
-            return new DefenderForDevOpsAzureDevOpsOffering("DefenderForDevOpsAzureDevOps", description);
+            return new DefenderForDevOpsAzureDevOpsOffering(OfferingType.DefenderForDevOpsAzureDevOps, description);
         }
 
         /// <summary> Initializes a new instance of AzureResourceDetails. </summary>
@@ -2832,7 +2832,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.AzureResourceDetails"/> instance for mocking. </returns>
         public static AzureResourceDetails AzureResourceDetails(string id = null)
         {
-            return new AzureResourceDetails("Azure", id);
+            return new AzureResourceDetails(Source.Azure, id);
         }
 
         /// <summary> Initializes a new instance of OnPremiseResourceDetails. </summary>
@@ -2843,7 +2843,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.OnPremiseResourceDetails"/> instance for mocking. </returns>
         public static OnPremiseResourceDetails OnPremiseResourceDetails(ResourceIdentifier workspaceId = null, Guid vmUuid = default, string sourceComputerId = null, string machineName = null)
         {
-            return new OnPremiseResourceDetails("OnPremise", workspaceId, vmUuid, sourceComputerId, machineName);
+            return new OnPremiseResourceDetails(Source.OnPremise, workspaceId, vmUuid, sourceComputerId, machineName);
         }
 
         /// <summary> Initializes a new instance of OnPremiseSqlResourceDetails. </summary>
@@ -2856,7 +2856,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.OnPremiseSqlResourceDetails"/> instance for mocking. </returns>
         public static OnPremiseSqlResourceDetails OnPremiseSqlResourceDetails(ResourceIdentifier workspaceId = null, Guid vmUuid = default, string sourceComputerId = null, string machineName = null, string serverName = null, string databaseName = null)
         {
-            return new OnPremiseSqlResourceDetails("OnPremiseSql", workspaceId, vmUuid, sourceComputerId, machineName, serverName, databaseName);
+            return new OnPremiseSqlResourceDetails(Source.OnPremiseSql, workspaceId, vmUuid, sourceComputerId, machineName, serverName, databaseName);
         }
     }
 }

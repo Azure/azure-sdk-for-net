@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
         /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
-        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
+        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. DO NOT USE PublicNetworkAccess on Namespace API. Please use the NetworkRuleSet API to enable or disable PublicNetworkAccess. </param>
         /// <returns> A new <see cref="Relay.RelayNamespaceData"/> instance for mocking. </returns>
         public static RelayNamespaceData RelayNamespaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RelaySku sku = null, string provisioningState = null, string status = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string serviceBusEndpoint = null, string metricId = null, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections = null, RelayPublicNetworkAccess? publicNetworkAccess = null)
         {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
         /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
-        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
+        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. DO NOT USE PublicNetworkAccess on Namespace API. Please use the NetworkRuleSet API to enable or disable PublicNetworkAccess. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.RelayNamespacePatch"/> instance for mocking. </returns>
         public static RelayNamespacePatch RelayNamespacePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RelaySku sku = null, string provisioningState = null, string status = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string serviceBusEndpoint = null, string metricId = null, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections = null, RelayPublicNetworkAccess? publicNetworkAccess = null, IDictionary<string, string> tags = null)
@@ -176,13 +176,14 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
+        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
         /// <param name="ipRules"> List of IpRules. </param>
         /// <returns> A new <see cref="Relay.RelayNetworkRuleSetData"/> instance for mocking. </returns>
-        public static RelayNetworkRuleSetData RelayNetworkRuleSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RelayNetworkRuleSetDefaultAction? defaultAction = null, IEnumerable<RelayNetworkRuleSetIPRule> ipRules = null)
+        public static RelayNetworkRuleSetData RelayNetworkRuleSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RelayNetworkRuleSetDefaultAction? defaultAction = null, RelayPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<RelayNetworkRuleSetIPRule> ipRules = null)
         {
             ipRules ??= new List<RelayNetworkRuleSetIPRule>();
 
-            return new RelayNetworkRuleSetData(id, name, resourceType, systemData, defaultAction, ipRules?.ToList());
+            return new RelayNetworkRuleSetData(id, name, resourceType, systemData, defaultAction, publicNetworkAccess, ipRules?.ToList());
         }
 
         /// <summary> Initializes a new instance of RelayNetworkRuleSetIPRule. </summary>

@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of StreamAnalyticsDataSerialization. </summary>
         /// <param name="eventSerializationType"> Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests. </param>
         /// <returns> A new <see cref="Models.StreamAnalyticsDataSerialization"/> instance for mocking. </returns>
-        public static StreamAnalyticsDataSerialization StreamAnalyticsDataSerialization(string eventSerializationType = null)
+        public static StreamAnalyticsDataSerialization StreamAnalyticsDataSerialization(string eventSerializationType = "Unknown")
         {
             return new UnknownSerialization(eventSerializationType);
         }
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <returns> A new <see cref="Models.ParquetFormatSerialization"/> instance for mocking. </returns>
         public static ParquetFormatSerialization ParquetFormatSerialization(BinaryData properties = null)
         {
-            return new ParquetFormatSerialization("Parquet", properties);
+            return new ParquetFormatSerialization(EventSerializationType.Parquet, properties);
         }
 
         /// <summary> Initializes a new instance of CustomClrFormatSerialization. </summary>
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <returns> A new <see cref="Models.CustomClrFormatSerialization"/> instance for mocking. </returns>
         public static CustomClrFormatSerialization CustomClrFormatSerialization(string serializationDllPath = null, string serializationClassName = null)
         {
-            return new CustomClrFormatSerialization("CustomClr", serializationDllPath, serializationClassName);
+            return new CustomClrFormatSerialization(EventSerializationType.CustomClr, serializationDllPath, serializationClassName);
         }
 
         /// <summary> Initializes a new instance of CsvFormatSerialization. </summary>
@@ -833,7 +833,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <returns> A new <see cref="Models.CsvFormatSerialization"/> instance for mocking. </returns>
         public static CsvFormatSerialization CsvFormatSerialization(string fieldDelimiter = null, StreamAnalyticsDataSerializationEncoding? encoding = null)
         {
-            return new CsvFormatSerialization("Csv", fieldDelimiter, encoding);
+            return new CsvFormatSerialization(EventSerializationType.Csv, fieldDelimiter, encoding);
         }
 
         /// <summary> Initializes a new instance of JsonFormatSerialization. </summary>
@@ -842,7 +842,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <returns> A new <see cref="Models.JsonFormatSerialization"/> instance for mocking. </returns>
         public static JsonFormatSerialization JsonFormatSerialization(StreamAnalyticsDataSerializationEncoding? encoding = null, JsonOutputSerializationFormat? format = null)
         {
-            return new JsonFormatSerialization("Json", encoding, format);
+            return new JsonFormatSerialization(EventSerializationType.Json, encoding, format);
         }
 
         /// <summary> Initializes a new instance of AvroFormatSerialization. </summary>
@@ -850,7 +850,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <returns> A new <see cref="Models.AvroFormatSerialization"/> instance for mocking. </returns>
         public static AvroFormatSerialization AvroFormatSerialization(BinaryData properties = null)
         {
-            return new AvroFormatSerialization("Avro", properties);
+            return new AvroFormatSerialization(EventSerializationType.Avro, properties);
         }
 
         /// <summary> Initializes a new instance of SqlReferenceInputDataSource. </summary>

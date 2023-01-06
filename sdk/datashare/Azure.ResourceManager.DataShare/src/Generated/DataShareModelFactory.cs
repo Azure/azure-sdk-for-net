@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of data set. </param>
         /// <returns> A new <see cref="DataShare.ShareDataSetData"/> instance for mocking. </returns>
-        public static ShareDataSetData ShareDataSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
+        public static ShareDataSetData ShareDataSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
             return new ShareDataSetData(id, name, resourceType, systemData, kind);
         }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of data set mapping. </param>
         /// <returns> A new <see cref="DataShare.ShareDataSetMappingData"/> instance for mocking. </returns>
-        public static ShareDataSetMappingData ShareDataSetMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
+        public static ShareDataSetMappingData ShareDataSetMappingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
             return new ShareDataSetMappingData(id, name, resourceType, systemData, kind);
         }
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> Initializes a new instance of SourceShareSynchronizationSetting. </summary>
         /// <param name="kind"> Kind of synchronization setting on share. </param>
         /// <returns> A new <see cref="Models.SourceShareSynchronizationSetting"/> instance for mocking. </returns>
-        public static SourceShareSynchronizationSetting SourceShareSynchronizationSetting(string kind = null)
+        public static SourceShareSynchronizationSetting SourceShareSynchronizationSetting(string kind = "Unknown")
         {
             return new UnknownSourceShareSynchronizationSetting(kind);
         }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of synchronization setting. </param>
         /// <returns> A new <see cref="DataShare.DataShareSynchronizationSettingData"/> instance for mocking. </returns>
-        public static DataShareSynchronizationSettingData DataShareSynchronizationSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
+        public static DataShareSynchronizationSettingData DataShareSynchronizationSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
             return new DataShareSynchronizationSettingData(id, name, resourceType, systemData, kind);
         }
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of synchronization on trigger. </param>
         /// <returns> A new <see cref="DataShare.DataShareTriggerData"/> instance for mocking. </returns>
-        public static DataShareTriggerData DataShareTriggerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
+        public static DataShareTriggerData DataShareTriggerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
             return new DataShareTriggerData(id, name, resourceType, systemData, kind);
         }
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.AdlsGen1FileDataSet"/> instance for mocking. </returns>
         public static AdlsGen1FileDataSet AdlsGen1FileDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string accountName = null, Guid? dataSetId = null, string fileName = null, string folderPath = null, string resourceGroup = null, string subscriptionId = null)
         {
-            return new AdlsGen1FileDataSet(id, name, resourceType, systemData, "AdlsGen1File", accountName, dataSetId, fileName, folderPath, resourceGroup, subscriptionId);
+            return new AdlsGen1FileDataSet(id, name, resourceType, systemData, DataSetKind.AdlsGen1File, accountName, dataSetId, fileName, folderPath, resourceGroup, subscriptionId);
         }
 
         /// <summary> Initializes a new instance of AdlsGen1FolderDataSet. </summary>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.AdlsGen1FolderDataSet"/> instance for mocking. </returns>
         public static AdlsGen1FolderDataSet AdlsGen1FolderDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string accountName = null, Guid? dataSetId = null, string folderPath = null, string resourceGroup = null, string subscriptionId = null)
         {
-            return new AdlsGen1FolderDataSet(id, name, resourceType, systemData, "AdlsGen1Folder", accountName, dataSetId, folderPath, resourceGroup, subscriptionId);
+            return new AdlsGen1FolderDataSet(id, name, resourceType, systemData, DataSetKind.AdlsGen1Folder, accountName, dataSetId, folderPath, resourceGroup, subscriptionId);
         }
 
         /// <summary> Initializes a new instance of AdlsGen2FileDataSet. </summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.AdlsGen2FileDataSet"/> instance for mocking. </returns>
         public static AdlsGen2FileDataSet AdlsGen2FileDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? dataSetId = null, string filePath = null, string fileSystem = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new AdlsGen2FileDataSet(id, name, resourceType, systemData, "AdlsGen2File", dataSetId, filePath, fileSystem, resourceGroup, storageAccountName, subscriptionId);
+            return new AdlsGen2FileDataSet(id, name, resourceType, systemData, DataSetKind.AdlsGen2File, dataSetId, filePath, fileSystem, resourceGroup, storageAccountName, subscriptionId);
         }
 
         /// <summary> Initializes a new instance of AdlsGen2FileDataSetMapping. </summary>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.AdlsGen2FileDataSetMapping"/> instance for mocking. </returns>
         public static AdlsGen2FileDataSetMapping AdlsGen2FileDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, string filePath = null, string fileSystem = null, DataShareOutputType? outputType = null, DataShareProvisioningState? provisioningState = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new AdlsGen2FileDataSetMapping(id, name, resourceType, systemData, "AdlsGen2File", dataSetId, dataSetMappingStatus, filePath, fileSystem, outputType, provisioningState, resourceGroup, storageAccountName, subscriptionId);
+            return new AdlsGen2FileDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.AdlsGen2File, dataSetId, dataSetMappingStatus, filePath, fileSystem, outputType, provisioningState, resourceGroup, storageAccountName, subscriptionId);
         }
 
         /// <summary> Initializes a new instance of AdlsGen2FileSystemDataSet. </summary>
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.AdlsGen2FileSystemDataSet"/> instance for mocking. </returns>
         public static AdlsGen2FileSystemDataSet AdlsGen2FileSystemDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? dataSetId = null, string fileSystem = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new AdlsGen2FileSystemDataSet(id, name, resourceType, systemData, "AdlsGen2FileSystem", dataSetId, fileSystem, resourceGroup, storageAccountName, subscriptionId);
+            return new AdlsGen2FileSystemDataSet(id, name, resourceType, systemData, DataSetKind.AdlsGen2FileSystem, dataSetId, fileSystem, resourceGroup, storageAccountName, subscriptionId);
         }
 
         /// <summary> Initializes a new instance of AdlsGen2FileSystemDataSetMapping. </summary>
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.AdlsGen2FileSystemDataSetMapping"/> instance for mocking. </returns>
         public static AdlsGen2FileSystemDataSetMapping AdlsGen2FileSystemDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, string fileSystem = null, DataShareProvisioningState? provisioningState = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new AdlsGen2FileSystemDataSetMapping(id, name, resourceType, systemData, "AdlsGen2FileSystem", dataSetId, dataSetMappingStatus, fileSystem, provisioningState, resourceGroup, storageAccountName, subscriptionId);
+            return new AdlsGen2FileSystemDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.AdlsGen2FileSystem, dataSetId, dataSetMappingStatus, fileSystem, provisioningState, resourceGroup, storageAccountName, subscriptionId);
         }
 
         /// <summary> Initializes a new instance of AdlsGen2FolderDataSet. </summary>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.AdlsGen2FolderDataSet"/> instance for mocking. </returns>
         public static AdlsGen2FolderDataSet AdlsGen2FolderDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? dataSetId = null, string fileSystem = null, string folderPath = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new AdlsGen2FolderDataSet(id, name, resourceType, systemData, "AdlsGen2Folder", dataSetId, fileSystem, folderPath, resourceGroup, storageAccountName, subscriptionId);
+            return new AdlsGen2FolderDataSet(id, name, resourceType, systemData, DataSetKind.AdlsGen2Folder, dataSetId, fileSystem, folderPath, resourceGroup, storageAccountName, subscriptionId);
         }
 
         /// <summary> Initializes a new instance of AdlsGen2FolderDataSetMapping. </summary>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.AdlsGen2FolderDataSetMapping"/> instance for mocking. </returns>
         public static AdlsGen2FolderDataSetMapping AdlsGen2FolderDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, string fileSystem = null, string folderPath = null, DataShareProvisioningState? provisioningState = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new AdlsGen2FolderDataSetMapping(id, name, resourceType, systemData, "AdlsGen2Folder", dataSetId, dataSetMappingStatus, fileSystem, folderPath, provisioningState, resourceGroup, storageAccountName, subscriptionId);
+            return new AdlsGen2FolderDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.AdlsGen2Folder, dataSetId, dataSetMappingStatus, fileSystem, folderPath, provisioningState, resourceGroup, storageAccountName, subscriptionId);
         }
 
         /// <summary> Initializes a new instance of BlobContainerDataSet. </summary>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.BlobContainerDataSet"/> instance for mocking. </returns>
         public static BlobContainerDataSet BlobContainerDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string containerName = null, Guid? dataSetId = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new BlobContainerDataSet(id, name, resourceType, systemData, "Container", containerName, dataSetId, resourceGroup, storageAccountName, subscriptionId);
+            return new BlobContainerDataSet(id, name, resourceType, systemData, DataSetKind.Container, containerName, dataSetId, resourceGroup, storageAccountName, subscriptionId);
         }
 
         /// <summary> Initializes a new instance of BlobContainerDataSetMapping. </summary>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.BlobContainerDataSetMapping"/> instance for mocking. </returns>
         public static BlobContainerDataSetMapping BlobContainerDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string containerName = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, DataShareProvisioningState? provisioningState = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new BlobContainerDataSetMapping(id, name, resourceType, systemData, "Container", containerName, dataSetId, dataSetMappingStatus, provisioningState, resourceGroup, storageAccountName, subscriptionId);
+            return new BlobContainerDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.Container, containerName, dataSetId, dataSetMappingStatus, provisioningState, resourceGroup, storageAccountName, subscriptionId);
         }
 
         /// <summary> Initializes a new instance of BlobDataSet. </summary>
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.BlobDataSet"/> instance for mocking. </returns>
         public static BlobDataSet BlobDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string containerName = null, Guid? dataSetId = null, string filePath = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new BlobDataSet(id, name, resourceType, systemData, "Blob", containerName, dataSetId, filePath, resourceGroup, storageAccountName, subscriptionId);
+            return new BlobDataSet(id, name, resourceType, systemData, DataSetKind.Blob, containerName, dataSetId, filePath, resourceGroup, storageAccountName, subscriptionId);
         }
 
         /// <summary> Initializes a new instance of BlobDataSetMapping. </summary>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.BlobDataSetMapping"/> instance for mocking. </returns>
         public static BlobDataSetMapping BlobDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string containerName = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, string filePath = null, DataShareOutputType? outputType = null, DataShareProvisioningState? provisioningState = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new BlobDataSetMapping(id, name, resourceType, systemData, "Blob", containerName, dataSetId, dataSetMappingStatus, filePath, outputType, provisioningState, resourceGroup, storageAccountName, subscriptionId);
+            return new BlobDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.Blob, containerName, dataSetId, dataSetMappingStatus, filePath, outputType, provisioningState, resourceGroup, storageAccountName, subscriptionId);
         }
 
         /// <summary> Initializes a new instance of BlobFolderDataSet. </summary>
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.BlobFolderDataSet"/> instance for mocking. </returns>
         public static BlobFolderDataSet BlobFolderDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string containerName = null, Guid? dataSetId = null, string prefix = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new BlobFolderDataSet(id, name, resourceType, systemData, "BlobFolder", containerName, dataSetId, prefix, resourceGroup, storageAccountName, subscriptionId);
+            return new BlobFolderDataSet(id, name, resourceType, systemData, DataSetKind.BlobFolder, containerName, dataSetId, prefix, resourceGroup, storageAccountName, subscriptionId);
         }
 
         /// <summary> Initializes a new instance of BlobFolderDataSetMapping. </summary>
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.BlobFolderDataSetMapping"/> instance for mocking. </returns>
         public static BlobFolderDataSetMapping BlobFolderDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string containerName = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, string prefix = null, DataShareProvisioningState? provisioningState = null, string resourceGroup = null, string storageAccountName = null, string subscriptionId = null)
         {
-            return new BlobFolderDataSetMapping(id, name, resourceType, systemData, "BlobFolder", containerName, dataSetId, dataSetMappingStatus, prefix, provisioningState, resourceGroup, storageAccountName, subscriptionId);
+            return new BlobFolderDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.BlobFolder, containerName, dataSetId, dataSetMappingStatus, prefix, provisioningState, resourceGroup, storageAccountName, subscriptionId);
         }
 
         /// <summary> Initializes a new instance of KustoClusterDataSet. </summary>
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.KustoClusterDataSet"/> instance for mocking. </returns>
         public static KustoClusterDataSet KustoClusterDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? dataSetId = null, ResourceIdentifier kustoClusterResourceId = null, AzureLocation? location = null, DataShareProvisioningState? provisioningState = null)
         {
-            return new KustoClusterDataSet(id, name, resourceType, systemData, "KustoCluster", dataSetId, kustoClusterResourceId, location, provisioningState);
+            return new KustoClusterDataSet(id, name, resourceType, systemData, DataSetKind.KustoCluster, dataSetId, kustoClusterResourceId, location, provisioningState);
         }
 
         /// <summary> Initializes a new instance of KustoClusterDataSetMapping. </summary>
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.KustoClusterDataSetMapping"/> instance for mocking. </returns>
         public static KustoClusterDataSetMapping KustoClusterDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, ResourceIdentifier kustoClusterResourceId = null, AzureLocation? location = null, DataShareProvisioningState? provisioningState = null)
         {
-            return new KustoClusterDataSetMapping(id, name, resourceType, systemData, "KustoCluster", dataSetId, dataSetMappingStatus, kustoClusterResourceId, location, provisioningState);
+            return new KustoClusterDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.KustoCluster, dataSetId, dataSetMappingStatus, kustoClusterResourceId, location, provisioningState);
         }
 
         /// <summary> Initializes a new instance of KustoDatabaseDataSet. </summary>
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.KustoDatabaseDataSet"/> instance for mocking. </returns>
         public static KustoDatabaseDataSet KustoDatabaseDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? dataSetId = null, ResourceIdentifier kustoDatabaseResourceId = null, AzureLocation? location = null, DataShareProvisioningState? provisioningState = null)
         {
-            return new KustoDatabaseDataSet(id, name, resourceType, systemData, "KustoDatabase", dataSetId, kustoDatabaseResourceId, location, provisioningState);
+            return new KustoDatabaseDataSet(id, name, resourceType, systemData, DataSetKind.KustoDatabase, dataSetId, kustoDatabaseResourceId, location, provisioningState);
         }
 
         /// <summary> Initializes a new instance of KustoDatabaseDataSetMapping. </summary>
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.KustoDatabaseDataSetMapping"/> instance for mocking. </returns>
         public static KustoDatabaseDataSetMapping KustoDatabaseDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, ResourceIdentifier kustoClusterResourceId = null, AzureLocation? location = null, DataShareProvisioningState? provisioningState = null)
         {
-            return new KustoDatabaseDataSetMapping(id, name, resourceType, systemData, "KustoDatabase", dataSetId, dataSetMappingStatus, kustoClusterResourceId, location, provisioningState);
+            return new KustoDatabaseDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.KustoDatabase, dataSetId, dataSetMappingStatus, kustoClusterResourceId, location, provisioningState);
         }
 
         /// <summary> Initializes a new instance of KustoTableDataSet. </summary>
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.KustoTableDataSet"/> instance for mocking. </returns>
         public static KustoTableDataSet KustoTableDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? dataSetId = null, ResourceIdentifier kustoDatabaseResourceId = null, AzureLocation? location = null, DataShareProvisioningState? provisioningState = null, TableLevelSharingProperties tableLevelSharingProperties = null)
         {
-            return new KustoTableDataSet(id, name, resourceType, systemData, "KustoTable", dataSetId, kustoDatabaseResourceId, location, provisioningState, tableLevelSharingProperties);
+            return new KustoTableDataSet(id, name, resourceType, systemData, DataSetKind.KustoTable, dataSetId, kustoDatabaseResourceId, location, provisioningState, tableLevelSharingProperties);
         }
 
         /// <summary> Initializes a new instance of TableLevelSharingProperties. </summary>
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.KustoTableDataSetMapping"/> instance for mocking. </returns>
         public static KustoTableDataSetMapping KustoTableDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, ResourceIdentifier kustoClusterResourceId = null, AzureLocation? location = null, DataShareProvisioningState? provisioningState = null)
         {
-            return new KustoTableDataSetMapping(id, name, resourceType, systemData, "KustoTable", dataSetId, dataSetMappingStatus, kustoClusterResourceId, location, provisioningState);
+            return new KustoTableDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.KustoTable, dataSetId, dataSetMappingStatus, kustoClusterResourceId, location, provisioningState);
         }
 
         /// <summary> Initializes a new instance of ScheduledSourceSynchronizationSetting. </summary>
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.ScheduledSourceSynchronizationSetting"/> instance for mocking. </returns>
         public static ScheduledSourceSynchronizationSetting ScheduledSourceSynchronizationSetting(DataShareSynchronizationRecurrenceInterval? recurrenceInterval = null, DateTimeOffset? synchronizeOn = null)
         {
-            return new ScheduledSourceSynchronizationSetting("ScheduleBased", recurrenceInterval, synchronizeOn);
+            return new ScheduledSourceSynchronizationSetting(SourceShareSynchronizationSettingKind.ScheduleBased, recurrenceInterval, synchronizeOn);
         }
 
         /// <summary> Initializes a new instance of ScheduledSynchronizationSetting. </summary>
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.ScheduledSynchronizationSetting"/> instance for mocking. </returns>
         public static ScheduledSynchronizationSetting ScheduledSynchronizationSetting(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DataShareProvisioningState? provisioningState = null, DataShareSynchronizationRecurrenceInterval recurrenceInterval = default, DateTimeOffset synchronizeOn = default, string userName = null)
         {
-            return new ScheduledSynchronizationSetting(id, name, resourceType, systemData, "ScheduleBased", createdOn, provisioningState, recurrenceInterval, synchronizeOn, userName);
+            return new ScheduledSynchronizationSetting(id, name, resourceType, systemData, SynchronizationSettingKind.ScheduleBased, createdOn, provisioningState, recurrenceInterval, synchronizeOn, userName);
         }
 
         /// <summary> Initializes a new instance of ScheduledTrigger. </summary>
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.ScheduledTrigger"/> instance for mocking. </returns>
         public static ScheduledTrigger ScheduledTrigger(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DataShareProvisioningState? provisioningState = null, DataShareSynchronizationRecurrenceInterval recurrenceInterval = default, SynchronizationMode? synchronizationMode = null, DateTimeOffset synchronizeOn = default, DataShareTriggerStatus? triggerStatus = null, string userName = null)
         {
-            return new ScheduledTrigger(id, name, resourceType, systemData, "ScheduleBased", createdOn, provisioningState, recurrenceInterval, synchronizationMode, synchronizeOn, triggerStatus, userName);
+            return new ScheduledTrigger(id, name, resourceType, systemData, TriggerKind.ScheduleBased, createdOn, provisioningState, recurrenceInterval, synchronizationMode, synchronizeOn, triggerStatus, userName);
         }
 
         /// <summary> Initializes a new instance of SqlDBTableDataSet. </summary>
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.SqlDBTableDataSet"/> instance for mocking. </returns>
         public static SqlDBTableDataSet SqlDBTableDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string databaseName = null, Guid? dataSetId = null, string schemaName = null, ResourceIdentifier sqlServerResourceId = null, string tableName = null)
         {
-            return new SqlDBTableDataSet(id, name, resourceType, systemData, "SqlDBTable", databaseName, dataSetId, schemaName, sqlServerResourceId, tableName);
+            return new SqlDBTableDataSet(id, name, resourceType, systemData, DataSetKind.SqlDBTable, databaseName, dataSetId, schemaName, sqlServerResourceId, tableName);
         }
 
         /// <summary> Initializes a new instance of SqlDBTableDataSetMapping. </summary>
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.SqlDBTableDataSetMapping"/> instance for mocking. </returns>
         public static SqlDBTableDataSetMapping SqlDBTableDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string databaseName = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, DataShareProvisioningState? provisioningState = null, string schemaName = null, ResourceIdentifier sqlServerResourceId = null, string tableName = null)
         {
-            return new SqlDBTableDataSetMapping(id, name, resourceType, systemData, "SqlDBTable", databaseName, dataSetId, dataSetMappingStatus, provisioningState, schemaName, sqlServerResourceId, tableName);
+            return new SqlDBTableDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.SqlDBTable, databaseName, dataSetId, dataSetMappingStatus, provisioningState, schemaName, sqlServerResourceId, tableName);
         }
 
         /// <summary> Initializes a new instance of SqlDWTableDataSet. </summary>
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.SqlDWTableDataSet"/> instance for mocking. </returns>
         public static SqlDWTableDataSet SqlDWTableDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? dataSetId = null, string dataWarehouseName = null, string schemaName = null, ResourceIdentifier sqlServerResourceId = null, string tableName = null)
         {
-            return new SqlDWTableDataSet(id, name, resourceType, systemData, "SqlDWTable", dataSetId, dataWarehouseName, schemaName, sqlServerResourceId, tableName);
+            return new SqlDWTableDataSet(id, name, resourceType, systemData, DataSetKind.SqlDWTable, dataSetId, dataWarehouseName, schemaName, sqlServerResourceId, tableName);
         }
 
         /// <summary> Initializes a new instance of SqlDWTableDataSetMapping. </summary>
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.SqlDWTableDataSetMapping"/> instance for mocking. </returns>
         public static SqlDWTableDataSetMapping SqlDWTableDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, string dataWarehouseName = null, DataShareProvisioningState? provisioningState = null, string schemaName = null, ResourceIdentifier sqlServerResourceId = null, string tableName = null)
         {
-            return new SqlDWTableDataSetMapping(id, name, resourceType, systemData, "SqlDWTable", dataSetId, dataSetMappingStatus, dataWarehouseName, provisioningState, schemaName, sqlServerResourceId, tableName);
+            return new SqlDWTableDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.SqlDWTable, dataSetId, dataSetMappingStatus, dataWarehouseName, provisioningState, schemaName, sqlServerResourceId, tableName);
         }
 
         /// <summary> Initializes a new instance of SynapseWorkspaceSqlPoolTableDataSet. </summary>
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.SynapseWorkspaceSqlPoolTableDataSet"/> instance for mocking. </returns>
         public static SynapseWorkspaceSqlPoolTableDataSet SynapseWorkspaceSqlPoolTableDataSet(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? dataSetId = null, ResourceIdentifier synapseWorkspaceSqlPoolTableResourceId = null)
         {
-            return new SynapseWorkspaceSqlPoolTableDataSet(id, name, resourceType, systemData, "SynapseWorkspaceSqlPoolTable", dataSetId, synapseWorkspaceSqlPoolTableResourceId);
+            return new SynapseWorkspaceSqlPoolTableDataSet(id, name, resourceType, systemData, DataSetKind.SynapseWorkspaceSqlPoolTable, dataSetId, synapseWorkspaceSqlPoolTableResourceId);
         }
 
         /// <summary> Initializes a new instance of SynapseWorkspaceSqlPoolTableDataSetMapping. </summary>
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <returns> A new <see cref="Models.SynapseWorkspaceSqlPoolTableDataSetMapping"/> instance for mocking. </returns>
         public static SynapseWorkspaceSqlPoolTableDataSetMapping SynapseWorkspaceSqlPoolTableDataSetMapping(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid dataSetId = default, DataSetMappingStatus? dataSetMappingStatus = null, DataShareProvisioningState? provisioningState = null, ResourceIdentifier synapseWorkspaceSqlPoolTableResourceId = null)
         {
-            return new SynapseWorkspaceSqlPoolTableDataSetMapping(id, name, resourceType, systemData, "SynapseWorkspaceSqlPoolTable", dataSetId, dataSetMappingStatus, provisioningState, synapseWorkspaceSqlPoolTableResourceId);
+            return new SynapseWorkspaceSqlPoolTableDataSetMapping(id, name, resourceType, systemData, DataSetMappingKind.SynapseWorkspaceSqlPoolTable, dataSetId, dataSetMappingStatus, provisioningState, synapseWorkspaceSqlPoolTableResourceId);
         }
     }
 }

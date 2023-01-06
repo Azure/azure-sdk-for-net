@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>
         /// <returns> A new <see cref="Models.RoleManagementPolicyRule"/> instance for mocking. </returns>
-        public static RoleManagementPolicyRule RoleManagementPolicyRule(string id = null, string ruleType = null, RoleManagementPolicyRuleTarget target = null)
+        public static RoleManagementPolicyRule RoleManagementPolicyRule(string id = null, string ruleType = "Unknown", RoleManagementPolicyRuleTarget target = null)
         {
             return new UnknownRoleManagementPolicyRule(id, ruleType, target);
         }
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.RoleManagementPolicyApprovalRule"/> instance for mocking. </returns>
         public static RoleManagementPolicyApprovalRule RoleManagementPolicyApprovalRule(string id = null, RoleManagementPolicyRuleTarget target = null, RoleManagementApprovalSettings settings = null)
         {
-            return new RoleManagementPolicyApprovalRule(id, "RoleManagementPolicyApprovalRule", target, settings);
+            return new RoleManagementPolicyApprovalRule(id, RoleManagementPolicyRuleType.RoleManagementPolicyApprovalRule, target, settings);
         }
 
         /// <summary> Initializes a new instance of RoleManagementApprovalSettings. </summary>
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.RoleManagementPolicyAuthenticationContextRule"/> instance for mocking. </returns>
         public static RoleManagementPolicyAuthenticationContextRule RoleManagementPolicyAuthenticationContextRule(string id = null, RoleManagementPolicyRuleTarget target = null, bool? isEnabled = null, string claimValue = null)
         {
-            return new RoleManagementPolicyAuthenticationContextRule(id, "RoleManagementPolicyAuthenticationContextRule", target, isEnabled, claimValue);
+            return new RoleManagementPolicyAuthenticationContextRule(id, RoleManagementPolicyRuleType.RoleManagementPolicyAuthenticationContextRule, target, isEnabled, claimValue);
         }
 
         /// <summary> Initializes a new instance of RoleManagementPolicyEnablementRule. </summary>
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             enablementRules ??= new List<RoleAssignmentEnablementRuleType>();
 
-            return new RoleManagementPolicyEnablementRule(id, "RoleManagementPolicyEnablementRule", target, enablementRules?.ToList());
+            return new RoleManagementPolicyEnablementRule(id, RoleManagementPolicyRuleType.RoleManagementPolicyEnablementRule, target, enablementRules?.ToList());
         }
 
         /// <summary> Initializes a new instance of RoleManagementPolicyExpirationRule. </summary>
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <returns> A new <see cref="Models.RoleManagementPolicyExpirationRule"/> instance for mocking. </returns>
         public static RoleManagementPolicyExpirationRule RoleManagementPolicyExpirationRule(string id = null, RoleManagementPolicyRuleTarget target = null, bool? isExpirationRequired = null, TimeSpan? maximumDuration = null)
         {
-            return new RoleManagementPolicyExpirationRule(id, "RoleManagementPolicyExpirationRule", target, isExpirationRequired, maximumDuration);
+            return new RoleManagementPolicyExpirationRule(id, RoleManagementPolicyRuleType.RoleManagementPolicyExpirationRule, target, isExpirationRequired, maximumDuration);
         }
 
         /// <summary> Initializes a new instance of RoleManagementPolicyNotificationRule. </summary>
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.Authorization.Models
         {
             notificationRecipients ??= new List<string>();
 
-            return new RoleManagementPolicyNotificationRule(id, "RoleManagementPolicyNotificationRule", target, notificationDeliveryType, notificationLevel, recipientType, notificationRecipients?.ToList(), areDefaultRecipientsEnabled);
+            return new RoleManagementPolicyNotificationRule(id, RoleManagementPolicyRuleType.RoleManagementPolicyNotificationRule, target, notificationDeliveryType, notificationLevel, recipientType, notificationRecipients?.ToList(), areDefaultRecipientsEnabled);
         }
     }
 }

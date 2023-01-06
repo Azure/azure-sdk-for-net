@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.SignalR.Models
     /// <summary> Model factory for generated models. </summary>
     public static partial class SignalRModelFactory
     {
-        /// <summary> Initializes a new instance of NameAvailability. </summary>
-        /// <param name="nameAvailable"> Indicates whether the name is available or not. </param>
+        /// <summary> Initializes a new instance of SignalRNameAvailabilityResult. </summary>
+        /// <param name="isNameAvailable"> Indicates whether the name is available or not. </param>
         /// <param name="reason"> The reason of the availability. Required if name is not available. </param>
         /// <param name="message"> The message of the operation. </param>
-        /// <returns> A new <see cref="Models.NameAvailability"/> instance for mocking. </returns>
-        public static NameAvailability NameAvailability(bool? nameAvailable = null, string reason = null, string message = null)
+        /// <returns> A new <see cref="Models.SignalRNameAvailabilityResult"/> instance for mocking. </returns>
+        public static SignalRNameAvailabilityResult SignalRNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
         {
-            return new NameAvailability(nameAvailable, reason, message);
+            return new SignalRNameAvailabilityResult(isNameAvailable, reason, message);
         }
 
         /// <summary> Initializes a new instance of SignalRUsage. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="name"> Localizable String object containing the name and a localized value. </param>
         /// <param name="unit"> Representing the units of the usage quota. Possible values are: Count, Bytes, Seconds, Percent, CountPerSecond, BytesPerSecond. </param>
         /// <returns> A new <see cref="Models.SignalRUsage"/> instance for mocking. </returns>
-        public static SignalRUsage SignalRUsage(string id = null, long? currentValue = null, long? limit = null, SignalRUsageName name = null, string unit = null)
+        public static SignalRUsage SignalRUsage(ResourceIdentifier id = null, long? currentValue = null, long? limit = null, SignalRUsageName name = null, string unit = null)
         {
             return new SignalRUsage(id, currentValue, limit, name, unit);
         }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="version"> Version of the resource. Probably you need the same or higher version of client SDKs. </param>
         /// <param name="privateEndpointConnections"> Private endpoint connections to the resource. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources. </param>
-        /// <param name="clientCertEnabled"> TLS settings for the resource. </param>
+        /// <param name="isClientCertEnabled"> TLS settings for the resource. </param>
         /// <param name="hostNamePrefix"> Deprecated. </param>
         /// <param name="features">
         /// List of the featureFlags.
@@ -97,20 +97,20 @@ namespace Azure.ResourceManager.SignalR.Models
         /// When set as true, connection with AuthType=aad won&apos;t work.
         /// </param>
         /// <returns> A new <see cref="SignalR.SignalRData"/> instance for mocking. </returns>
-        public static SignalRData SignalRData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceSku sku = null, ServiceKind? kind = null, ManagedServiceIdentity identity = null, ProvisioningState? provisioningState = null, string externalIP = null, string hostName = null, int? publicPort = null, int? serverPort = null, string version = null, IEnumerable<SignalRPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<SharedPrivateLinkResourceData> sharedPrivateLinkResources = null, bool? clientCertEnabled = null, string hostNamePrefix = null, IEnumerable<SignalRFeature> features = null, LiveTraceConfiguration liveTraceConfiguration = null, IEnumerable<ResourceLogCategory> resourceLogCategories = null, IEnumerable<string> corsAllowedOrigins = null, IEnumerable<UpstreamTemplate> upstreamTemplates = null, SignalRNetworkACLs networkACLs = null, string publicNetworkAccess = null, bool? disableLocalAuth = null, bool? disableAadAuth = null)
+        public static SignalRData SignalRData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SignalRResourceSku sku = null, SignalRServiceKind? kind = null, ManagedServiceIdentity identity = null, SignalRProvisioningState? provisioningState = null, string externalIP = null, string hostName = null, int? publicPort = null, int? serverPort = null, string version = null, IEnumerable<SignalRPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources = null, bool? isClientCertEnabled = null, string hostNamePrefix = null, IEnumerable<SignalRFeature> features = null, SignalRLiveTraceConfiguration liveTraceConfiguration = null, IEnumerable<SignalRResourceLogCategory> resourceLogCategories = null, IEnumerable<string> corsAllowedOrigins = null, IEnumerable<SignalRUpstreamTemplate> upstreamTemplates = null, SignalRNetworkAcls networkACLs = null, string publicNetworkAccess = null, bool? disableLocalAuth = null, bool? disableAadAuth = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<SignalRPrivateEndpointConnectionData>();
-            sharedPrivateLinkResources ??= new List<SharedPrivateLinkResourceData>();
+            sharedPrivateLinkResources ??= new List<SignalRSharedPrivateLinkResourceData>();
             features ??= new List<SignalRFeature>();
-            resourceLogCategories ??= new List<ResourceLogCategory>();
+            resourceLogCategories ??= new List<SignalRResourceLogCategory>();
             corsAllowedOrigins ??= new List<string>();
-            upstreamTemplates ??= new List<UpstreamTemplate>();
+            upstreamTemplates ??= new List<SignalRUpstreamTemplate>();
 
-            return new SignalRData(id, name, resourceType, systemData, tags, location, sku, kind, identity, provisioningState, externalIP, hostName, publicPort, serverPort, version, privateEndpointConnections?.ToList(), sharedPrivateLinkResources?.ToList(), clientCertEnabled != null ? new SignalRTlsSettings(clientCertEnabled) : null, hostNamePrefix, features?.ToList(), liveTraceConfiguration, resourceLogCategories != null ? new ResourceLogConfiguration(resourceLogCategories?.ToList()) : null, corsAllowedOrigins != null ? new SignalRCorsSettings(corsAllowedOrigins?.ToList()) : null, upstreamTemplates != null ? new ServerlessUpstreamSettings(upstreamTemplates?.ToList()) : null, networkACLs, publicNetworkAccess, disableLocalAuth, disableAadAuth);
+            return new SignalRData(id, name, resourceType, systemData, tags, location, sku, kind, identity, provisioningState, externalIP, hostName, publicPort, serverPort, version, privateEndpointConnections?.ToList(), sharedPrivateLinkResources?.ToList(), isClientCertEnabled != null ? new SignalRTlsSettings(isClientCertEnabled) : null, hostNamePrefix, features?.ToList(), liveTraceConfiguration, resourceLogCategories != null ? new SignalRResourceLogCategoryListResult(resourceLogCategories?.ToList()) : null, corsAllowedOrigins != null ? new SignalRCorsSettings(corsAllowedOrigins?.ToList()) : null, upstreamTemplates != null ? new ServerlessUpstreamSettings(upstreamTemplates?.ToList()) : null, networkACLs, publicNetworkAccess, disableLocalAuth, disableAadAuth);
         }
 
-        /// <summary> Initializes a new instance of ResourceSku. </summary>
+        /// <summary> Initializes a new instance of SignalRResourceSku. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
         /// 
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.SignalR.Models
         ///     Free: 1
         ///     Standard: 1,2,5,10,20,50,100
         /// </param>
-        /// <returns> A new <see cref="Models.ResourceSku"/> instance for mocking. </returns>
-        public static ResourceSku ResourceSku(string name = null, SignalRSkuTier? tier = null, string size = null, string family = null, int? capacity = null)
+        /// <returns> A new <see cref="Models.SignalRResourceSku"/> instance for mocking. </returns>
+        public static SignalRResourceSku SignalRResourceSku(string name = null, SignalRSkuTier? tier = null, string size = null, string family = null, int? capacity = null)
         {
-            return new ResourceSku(name, tier, size, family, capacity);
+            return new SignalRResourceSku(name, tier, size, family, capacity);
         }
 
         /// <summary> Initializes a new instance of SignalRPrivateEndpointConnectionData. </summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="groupIds"> Group IDs. </param>
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <returns> A new <see cref="SignalR.SignalRPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static SignalRPrivateEndpointConnectionData SignalRPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisioningState? provisioningState = null, ResourceIdentifier privateEndpointId = null, IEnumerable<string> groupIds = null, SignalRPrivateLinkServiceConnectionState connectionState = null)
+        public static SignalRPrivateEndpointConnectionData SignalRPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SignalRProvisioningState? provisioningState = null, ResourceIdentifier privateEndpointId = null, IEnumerable<string> groupIds = null, SignalRPrivateLinkServiceConnectionState connectionState = null)
         {
             groupIds ??= new List<string>();
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRPrivateLinkServiceConnectionState(status, description, actionsRequired);
         }
 
-        /// <summary> Initializes a new instance of SharedPrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of SignalRSharedPrivateLinkResourceData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>
         /// <param name="status"> Status of the shared private link resource. </param>
-        /// <returns> A new <see cref="SignalR.SharedPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static SharedPrivateLinkResourceData SharedPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, string privateLinkResourceId = null, ProvisioningState? provisioningState = null, string requestMessage = null, SharedPrivateLinkResourceStatus? status = null)
+        /// <returns> A new <see cref="SignalR.SignalRSharedPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static SignalRSharedPrivateLinkResourceData SignalRSharedPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, ResourceIdentifier privateLinkResourceId = null, SignalRProvisioningState? provisioningState = null, string requestMessage = null, SignalRSharedPrivateLinkResourceStatus? status = null)
         {
-            return new SharedPrivateLinkResourceData(id, name, resourceType, systemData, groupId, privateLinkResourceId, provisioningState, requestMessage, status);
+            return new SignalRSharedPrivateLinkResourceData(id, name, resourceType, systemData, groupId, privateLinkResourceId, provisioningState, requestMessage, status);
         }
 
         /// <summary> Initializes a new instance of SignalRFeature. </summary>
@@ -190,14 +190,14 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="value"> Value of the feature flag. See Azure SignalR service document https://docs.microsoft.com/azure/azure-signalr/ for allowed values. </param>
         /// <param name="properties"> Optional properties related to this feature. </param>
         /// <returns> A new <see cref="Models.SignalRFeature"/> instance for mocking. </returns>
-        public static SignalRFeature SignalRFeature(FeatureFlag flag = default, string value = null, IDictionary<string, string> properties = null)
+        public static SignalRFeature SignalRFeature(SignalRFeatureFlag flag = default, string value = null, IDictionary<string, string> properties = null)
         {
             properties ??= new Dictionary<string, string>();
 
             return new SignalRFeature(flag, value, properties);
         }
 
-        /// <summary> Initializes a new instance of LiveTraceConfiguration. </summary>
+        /// <summary> Initializes a new instance of SignalRLiveTraceConfiguration. </summary>
         /// <param name="enabled">
         /// Indicates whether or not enable live trace.
         /// When it&apos;s set to true, live trace client can connect to the service.
@@ -206,15 +206,15 @@ namespace Azure.ResourceManager.SignalR.Models
         /// Case insensitive.
         /// </param>
         /// <param name="categories"> Gets or sets the list of category configurations. </param>
-        /// <returns> A new <see cref="Models.LiveTraceConfiguration"/> instance for mocking. </returns>
-        public static LiveTraceConfiguration LiveTraceConfiguration(string enabled = null, IEnumerable<LiveTraceCategory> categories = null)
+        /// <returns> A new <see cref="Models.SignalRLiveTraceConfiguration"/> instance for mocking. </returns>
+        public static SignalRLiveTraceConfiguration SignalRLiveTraceConfiguration(string enabled = null, IEnumerable<SignalRLiveTraceCategory> categories = null)
         {
-            categories ??= new List<LiveTraceCategory>();
+            categories ??= new List<SignalRLiveTraceCategory>();
 
-            return new LiveTraceConfiguration(enabled, categories?.ToList());
+            return new SignalRLiveTraceConfiguration(enabled, categories?.ToList());
         }
 
-        /// <summary> Initializes a new instance of LiveTraceCategory. </summary>
+        /// <summary> Initializes a new instance of SignalRLiveTraceCategory. </summary>
         /// <param name="name">
         /// Gets or sets the live trace category&apos;s name.
         /// Available values: ConnectivityLogs, MessagingLogs.
@@ -225,13 +225,13 @@ namespace Azure.ResourceManager.SignalR.Models
         /// Available values: true, false.
         /// Case insensitive.
         /// </param>
-        /// <returns> A new <see cref="Models.LiveTraceCategory"/> instance for mocking. </returns>
-        public static LiveTraceCategory LiveTraceCategory(string name = null, string enabled = null)
+        /// <returns> A new <see cref="Models.SignalRLiveTraceCategory"/> instance for mocking. </returns>
+        public static SignalRLiveTraceCategory SignalRLiveTraceCategory(string name = null, string enabled = null)
         {
-            return new LiveTraceCategory(name, enabled);
+            return new SignalRLiveTraceCategory(name, enabled);
         }
 
-        /// <summary> Initializes a new instance of ResourceLogCategory. </summary>
+        /// <summary> Initializes a new instance of SignalRResourceLogCategory. </summary>
         /// <param name="name">
         /// Gets or sets the resource log category&apos;s name.
         /// Available values: ConnectivityLogs, MessagingLogs.
@@ -242,13 +242,13 @@ namespace Azure.ResourceManager.SignalR.Models
         /// Available values: true, false.
         /// Case insensitive.
         /// </param>
-        /// <returns> A new <see cref="Models.ResourceLogCategory"/> instance for mocking. </returns>
-        public static ResourceLogCategory ResourceLogCategory(string name = null, string enabled = null)
+        /// <returns> A new <see cref="Models.SignalRResourceLogCategory"/> instance for mocking. </returns>
+        public static SignalRResourceLogCategory SignalRResourceLogCategory(string name = null, string enabled = null)
         {
-            return new ResourceLogCategory(name, enabled);
+            return new SignalRResourceLogCategory(name, enabled);
         }
 
-        /// <summary> Initializes a new instance of UpstreamTemplate. </summary>
+        /// <summary> Initializes a new instance of SignalRUpstreamTemplate. </summary>
         /// <param name="hubPattern">
         /// Gets or sets the matching pattern for hub names. If not set, it matches any hub.
         /// There are 3 kind of patterns supported:
@@ -275,59 +275,59 @@ namespace Azure.ResourceManager.SignalR.Models
         /// For example, if the urlTemplate is `http://example.com/{hub}/api/{event}`, with a client request from hub `chat` connects, it will first POST to this URL: `http://example.com/chat/api/connect`.
         /// </param>
         /// <param name="auth"> Upstream auth settings. If not set, no auth is used for upstream messages. </param>
-        /// <returns> A new <see cref="Models.UpstreamTemplate"/> instance for mocking. </returns>
-        public static UpstreamTemplate UpstreamTemplate(string hubPattern = null, string eventPattern = null, string categoryPattern = null, string urlTemplate = null, UpstreamAuthSettings auth = null)
+        /// <returns> A new <see cref="Models.SignalRUpstreamTemplate"/> instance for mocking. </returns>
+        public static SignalRUpstreamTemplate SignalRUpstreamTemplate(string hubPattern = null, string eventPattern = null, string categoryPattern = null, string urlTemplate = null, SignalRUpstreamAuthSettings auth = null)
         {
-            return new UpstreamTemplate(hubPattern, eventPattern, categoryPattern, urlTemplate, auth);
+            return new SignalRUpstreamTemplate(hubPattern, eventPattern, categoryPattern, urlTemplate, auth);
         }
 
-        /// <summary> Initializes a new instance of UpstreamAuthSettings. </summary>
+        /// <summary> Initializes a new instance of SignalRUpstreamAuthSettings. </summary>
         /// <param name="authType"> Upstream auth type enum. </param>
         /// <param name="managedIdentityResource"> Managed identity settings for upstream. </param>
-        /// <returns> A new <see cref="Models.UpstreamAuthSettings"/> instance for mocking. </returns>
-        public static UpstreamAuthSettings UpstreamAuthSettings(UpstreamAuthType? authType = null, string managedIdentityResource = null)
+        /// <returns> A new <see cref="Models.SignalRUpstreamAuthSettings"/> instance for mocking. </returns>
+        public static SignalRUpstreamAuthSettings SignalRUpstreamAuthSettings(SignalRUpstreamAuthType? authType = null, string managedIdentityResource = null)
         {
-            return new UpstreamAuthSettings(authType, managedIdentityResource != null ? new ManagedIdentitySettings(managedIdentityResource) : null);
+            return new SignalRUpstreamAuthSettings(authType, managedIdentityResource != null ? new ManagedIdentitySettings(managedIdentityResource) : null);
         }
 
-        /// <summary> Initializes a new instance of SignalRNetworkACLs. </summary>
+        /// <summary> Initializes a new instance of SignalRNetworkAcls. </summary>
         /// <param name="defaultAction"> Azure Networking ACL Action. </param>
         /// <param name="publicNetwork"> Network ACL. </param>
         /// <param name="privateEndpoints"> ACLs for requests from private endpoints. </param>
-        /// <returns> A new <see cref="Models.SignalRNetworkACLs"/> instance for mocking. </returns>
-        public static SignalRNetworkACLs SignalRNetworkACLs(ACLAction? defaultAction = null, NetworkACL publicNetwork = null, IEnumerable<PrivateEndpointACL> privateEndpoints = null)
+        /// <returns> A new <see cref="Models.SignalRNetworkAcls"/> instance for mocking. </returns>
+        public static SignalRNetworkAcls SignalRNetworkAcls(SignalRNetworkAclAction? defaultAction = null, SignalRNetworkAcl publicNetwork = null, IEnumerable<SignalRPrivateEndpointAcl> privateEndpoints = null)
         {
-            privateEndpoints ??= new List<PrivateEndpointACL>();
+            privateEndpoints ??= new List<SignalRPrivateEndpointAcl>();
 
-            return new SignalRNetworkACLs(defaultAction, publicNetwork, privateEndpoints?.ToList());
+            return new SignalRNetworkAcls(defaultAction, publicNetwork, privateEndpoints?.ToList());
         }
 
-        /// <summary> Initializes a new instance of NetworkACL. </summary>
+        /// <summary> Initializes a new instance of SignalRNetworkAcl. </summary>
         /// <param name="allow"> Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         /// <param name="deny"> Denied request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
-        /// <returns> A new <see cref="Models.NetworkACL"/> instance for mocking. </returns>
-        public static NetworkACL NetworkACL(IEnumerable<SignalRRequestType> allow = null, IEnumerable<SignalRRequestType> deny = null)
+        /// <returns> A new <see cref="Models.SignalRNetworkAcl"/> instance for mocking. </returns>
+        public static SignalRNetworkAcl SignalRNetworkAcl(IEnumerable<SignalRRequestType> allow = null, IEnumerable<SignalRRequestType> deny = null)
         {
             allow ??= new List<SignalRRequestType>();
             deny ??= new List<SignalRRequestType>();
 
-            return new NetworkACL(allow?.ToList(), deny?.ToList());
+            return new SignalRNetworkAcl(allow?.ToList(), deny?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointACL. </summary>
+        /// <summary> Initializes a new instance of SignalRPrivateEndpointAcl. </summary>
         /// <param name="allow"> Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         /// <param name="deny"> Denied request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         /// <param name="name"> Name of the private endpoint connection. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpointACL"/> instance for mocking. </returns>
-        public static PrivateEndpointACL PrivateEndpointACL(IEnumerable<SignalRRequestType> allow = null, IEnumerable<SignalRRequestType> deny = null, string name = null)
+        /// <returns> A new <see cref="Models.SignalRPrivateEndpointAcl"/> instance for mocking. </returns>
+        public static SignalRPrivateEndpointAcl SignalRPrivateEndpointAcl(IEnumerable<SignalRRequestType> allow = null, IEnumerable<SignalRRequestType> deny = null, string name = null)
         {
             allow ??= new List<SignalRRequestType>();
             deny ??= new List<SignalRRequestType>();
 
-            return new PrivateEndpointACL(allow?.ToList(), deny?.ToList(), name);
+            return new SignalRPrivateEndpointAcl(allow?.ToList(), deny?.ToList(), name);
         }
 
-        /// <summary> Initializes a new instance of CustomCertificateData. </summary>
+        /// <summary> Initializes a new instance of SignalRCustomCertificateData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -336,13 +336,13 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="keyVaultBaseUri"> Base uri of the KeyVault that stores certificate. </param>
         /// <param name="keyVaultSecretName"> Certificate secret name. </param>
         /// <param name="keyVaultSecretVersion"> Certificate secret version. </param>
-        /// <returns> A new <see cref="SignalR.CustomCertificateData"/> instance for mocking. </returns>
-        public static CustomCertificateData CustomCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisioningState? provisioningState = null, Uri keyVaultBaseUri = null, string keyVaultSecretName = null, string keyVaultSecretVersion = null)
+        /// <returns> A new <see cref="SignalR.SignalRCustomCertificateData"/> instance for mocking. </returns>
+        public static SignalRCustomCertificateData SignalRCustomCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SignalRProvisioningState? provisioningState = null, Uri keyVaultBaseUri = null, string keyVaultSecretName = null, string keyVaultSecretVersion = null)
         {
-            return new CustomCertificateData(id, name, resourceType, systemData, provisioningState, keyVaultBaseUri, keyVaultSecretName, keyVaultSecretVersion);
+            return new SignalRCustomCertificateData(id, name, resourceType, systemData, provisioningState, keyVaultBaseUri, keyVaultSecretName, keyVaultSecretVersion);
         }
 
-        /// <summary> Initializes a new instance of CustomDomainData. </summary>
+        /// <summary> Initializes a new instance of SignalRCustomDomainData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -350,10 +350,10 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="domainName"> The custom domain name. </param>
         /// <param name="customCertificateId"> Reference to a resource. </param>
-        /// <returns> A new <see cref="SignalR.CustomDomainData"/> instance for mocking. </returns>
-        public static CustomDomainData CustomDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisioningState? provisioningState = null, string domainName = null, ResourceIdentifier customCertificateId = null)
+        /// <returns> A new <see cref="SignalR.SignalRCustomDomainData"/> instance for mocking. </returns>
+        public static SignalRCustomDomainData SignalRCustomDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SignalRProvisioningState? provisioningState = null, string domainName = null, ResourceIdentifier customCertificateId = null)
         {
-            return new CustomDomainData(id, name, resourceType, systemData, provisioningState, domainName, customCertificateId != null ? ResourceManagerModelFactory.WritableSubResource(customCertificateId) : null);
+            return new SignalRCustomDomainData(id, name, resourceType, systemData, provisioningState, domainName, customCertificateId != null ? ResourceManagerModelFactory.WritableSubResource(customCertificateId) : null);
         }
 
         /// <summary> Initializes a new instance of SignalRKeys. </summary>
@@ -410,23 +410,23 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="sku"> The billing information of the resource. </param>
         /// <param name="capacity"> Describes scaling information of a sku. </param>
         /// <returns> A new <see cref="Models.SignalRSku"/> instance for mocking. </returns>
-        public static SignalRSku SignalRSku(string resourceType = null, ResourceSku sku = null, SkuCapacity capacity = null)
+        public static SignalRSku SignalRSku(ResourceType? resourceType = null, SignalRResourceSku sku = null, SignalRSkuCapacity capacity = null)
         {
             return new SignalRSku(resourceType, sku, capacity);
         }
 
-        /// <summary> Initializes a new instance of SkuCapacity. </summary>
+        /// <summary> Initializes a new instance of SignalRSkuCapacity. </summary>
         /// <param name="minimum"> The lowest permitted capacity for this resource. </param>
         /// <param name="maximum"> The highest permitted capacity for this resource. </param>
         /// <param name="default"> The default capacity. </param>
         /// <param name="allowedValues"> Allows capacity value list. </param>
         /// <param name="scaleType"> The scale type applicable to the sku. </param>
-        /// <returns> A new <see cref="Models.SkuCapacity"/> instance for mocking. </returns>
-        public static SkuCapacity SkuCapacity(int? minimum = null, int? maximum = null, int? @default = null, IEnumerable<int> allowedValues = null, ScaleType? scaleType = null)
+        /// <returns> A new <see cref="Models.SignalRSkuCapacity"/> instance for mocking. </returns>
+        public static SignalRSkuCapacity SignalRSkuCapacity(int? minimum = null, int? maximum = null, int? @default = null, IEnumerable<int> allowedValues = null, SignalRScaleType? scaleType = null)
         {
             allowedValues ??= new List<int>();
 
-            return new SkuCapacity(minimum, maximum, @default, allowedValues?.ToList(), scaleType);
+            return new SignalRSkuCapacity(minimum, maximum, @default, allowedValues?.ToList(), scaleType);
         }
     }
 }

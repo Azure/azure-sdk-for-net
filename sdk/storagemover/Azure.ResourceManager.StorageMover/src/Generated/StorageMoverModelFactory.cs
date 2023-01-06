@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="description"> A description for the Endpoint. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <returns> A new <see cref="Models.EndpointBaseProperties"/> instance for mocking. </returns>
-        public static EndpointBaseProperties EndpointBaseProperties(string endpointType = null, string description = null, StorageMoverProvisioningState? provisioningState = null)
+        public static EndpointBaseProperties EndpointBaseProperties(string endpointType = "Unknown", string description = null, StorageMoverProvisioningState? provisioningState = null)
         {
             return new UnknownEndpointBaseProperties(endpointType, description, provisioningState);
         }
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.AzureStorageBlobContainerEndpointProperties"/> instance for mocking. </returns>
         public static AzureStorageBlobContainerEndpointProperties AzureStorageBlobContainerEndpointProperties(string description = null, StorageMoverProvisioningState? provisioningState = null, string storageAccountResourceId = null, string blobContainerName = null)
         {
-            return new AzureStorageBlobContainerEndpointProperties("AzureStorageBlobContainer", description, provisioningState, storageAccountResourceId, blobContainerName);
+            return new AzureStorageBlobContainerEndpointProperties(EndpointType.AzureStorageBlobContainer, description, provisioningState, storageAccountResourceId, blobContainerName);
         }
 
         /// <summary> Initializes a new instance of NfsMountEndpointProperties. </summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.NfsMountEndpointProperties"/> instance for mocking. </returns>
         public static NfsMountEndpointProperties NfsMountEndpointProperties(string description = null, StorageMoverProvisioningState? provisioningState = null, string host = null, NfsVersion? nfsVersion = null, string export = null)
         {
-            return new NfsMountEndpointProperties("NfsMount", description, provisioningState, host, nfsVersion, export);
+            return new NfsMountEndpointProperties(EndpointType.NfsMount, description, provisioningState, host, nfsVersion, export);
         }
     }
 }

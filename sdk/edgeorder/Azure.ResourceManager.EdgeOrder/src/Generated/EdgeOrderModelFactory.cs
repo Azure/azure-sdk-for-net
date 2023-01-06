@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>
         /// <returns> A new <see cref="Models.EdgeOrderProductMeterDetails"/> instance for mocking. </returns>
-        public static EdgeOrderProductMeterDetails EdgeOrderProductMeterDetails(string billingType = null, double? multiplier = null, EdgeOrderProductChargingType? chargingType = null)
+        public static EdgeOrderProductMeterDetails EdgeOrderProductMeterDetails(string billingType = "Unknown", double? multiplier = null, EdgeOrderProductChargingType? chargingType = null)
         {
             return new UnknownMeterDetails(billingType, multiplier, chargingType);
         }
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <returns> A new <see cref="Models.Pav2MeterDetails"/> instance for mocking. </returns>
         public static Pav2MeterDetails Pav2MeterDetails(double? multiplier = null, EdgeOrderProductChargingType? chargingType = null, Guid? meterGuid = null)
         {
-            return new Pav2MeterDetails("Pav2", multiplier, chargingType, meterGuid);
+            return new Pav2MeterDetails(BillingType.Pav2, multiplier, chargingType, meterGuid);
         }
 
         /// <summary> Initializes a new instance of PurchaseMeterDetails. </summary>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <returns> A new <see cref="Models.PurchaseMeterDetails"/> instance for mocking. </returns>
         public static PurchaseMeterDetails PurchaseMeterDetails(double? multiplier = null, EdgeOrderProductChargingType? chargingType = null, string productId = null, string skuId = null, string termId = null)
         {
-            return new PurchaseMeterDetails("Purchase", multiplier, chargingType, productId, skuId, termId);
+            return new PurchaseMeterDetails(BillingType.Purchase, multiplier, chargingType, productId, skuId, termId);
         }
     }
 }

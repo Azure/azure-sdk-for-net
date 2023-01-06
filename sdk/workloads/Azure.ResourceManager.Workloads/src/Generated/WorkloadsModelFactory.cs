@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of SapSizingRecommendationResult. </summary>
         /// <param name="deploymentType"> The deployment Type. </param>
         /// <returns> A new <see cref="Models.SapSizingRecommendationResult"/> instance for mocking. </returns>
-        public static SapSizingRecommendationResult SapSizingRecommendationResult(string deploymentType = null)
+        public static SapSizingRecommendationResult SapSizingRecommendationResult(string deploymentType = "Unknown")
         {
             return new UnknownSapSizingRecommendationResult(deploymentType);
         }
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <summary> Initializes a new instance of SapConfiguration. </summary>
         /// <param name="configurationType"> The configuration Type. </param>
         /// <returns> A new <see cref="Models.SapConfiguration"/> instance for mocking. </returns>
-        public static SapConfiguration SapConfiguration(string configurationType = null)
+        public static SapConfiguration SapConfiguration(string configurationType = "Unknown")
         {
             return new UnknownSapConfiguration(configurationType);
         }
@@ -684,13 +684,13 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <returns> A new <see cref="Models.WindowsConfiguration"/> instance for mocking. </returns>
         public static WindowsConfiguration WindowsConfiguration()
         {
-            return new WindowsConfiguration("Windows");
+            return new WindowsConfiguration(OSType.Windows);
         }
 
         /// <summary> Initializes a new instance of OSConfiguration. </summary>
         /// <param name="osType"> The OS Type. </param>
         /// <returns> A new <see cref="Models.OSConfiguration"/> instance for mocking. </returns>
-        public static OSConfiguration OSConfiguration(string osType = null)
+        public static OSConfiguration OSConfiguration(string osType = "Unknown")
         {
             return new UnknownOSConfiguration(osType);
         }
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.Workloads.Models
         {
             sshPublicKeys ??= new List<SshPublicKey>();
 
-            return new LinuxConfiguration("Linux", disablePasswordAuthentication, sshPublicKeys != null ? new SshConfiguration(sshPublicKeys?.ToList()) : null, sshKeyPair);
+            return new LinuxConfiguration(OSType.Linux, disablePasswordAuthentication, sshPublicKeys != null ? new SshConfiguration(sshPublicKeys?.ToList()) : null, sshKeyPair);
         }
 
         /// <summary> Initializes a new instance of SshKeyPair. </summary>
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <returns> A new <see cref="Models.SingleServerRecommendationResult"/> instance for mocking. </returns>
         public static SingleServerRecommendationResult SingleServerRecommendationResult(string vmSku = null)
         {
-            return new SingleServerRecommendationResult("SingleServer", vmSku);
+            return new SingleServerRecommendationResult(SapDeploymentType.SingleServer, vmSku);
         }
 
         /// <summary> Initializes a new instance of ThreeTierRecommendationResult. </summary>
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <returns> A new <see cref="Models.ThreeTierRecommendationResult"/> instance for mocking. </returns>
         public static ThreeTierRecommendationResult ThreeTierRecommendationResult(string dbVmSku = null, long? databaseInstanceCount = null, string centralServerVmSku = null, long? centralServerInstanceCount = null, string applicationServerVmSku = null, long? applicationServerInstanceCount = null)
         {
-            return new ThreeTierRecommendationResult("ThreeTier", dbVmSku, databaseInstanceCount, centralServerVmSku, centralServerInstanceCount, applicationServerVmSku, applicationServerInstanceCount);
+            return new ThreeTierRecommendationResult(SapDeploymentType.ThreeTier, dbVmSku, databaseInstanceCount, centralServerVmSku, centralServerInstanceCount, applicationServerVmSku, applicationServerInstanceCount);
         }
 
         /// <summary> Initializes a new instance of SingleServerConfiguration. </summary>
@@ -768,14 +768,14 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <returns> A new <see cref="Models.SingleServerConfiguration"/> instance for mocking. </returns>
         public static SingleServerConfiguration SingleServerConfiguration(string appResourceGroup = null, bool? isSecondaryIPEnabled = null, SapDatabaseType? databaseType = null, ResourceIdentifier subnetId = null, VirtualMachineConfiguration virtualMachineConfiguration = null)
         {
-            return new SingleServerConfiguration("SingleServer", appResourceGroup, isSecondaryIPEnabled != null ? new NetworkConfiguration(isSecondaryIPEnabled) : null, databaseType, subnetId, virtualMachineConfiguration);
+            return new SingleServerConfiguration(SapDeploymentType.SingleServer, appResourceGroup, isSecondaryIPEnabled != null ? new NetworkConfiguration(isSecondaryIPEnabled) : null, databaseType, subnetId, virtualMachineConfiguration);
         }
 
         /// <summary> Initializes a new instance of InfrastructureConfiguration. </summary>
         /// <param name="deploymentType"> The deployment Type. </param>
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
         /// <returns> A new <see cref="Models.InfrastructureConfiguration"/> instance for mocking. </returns>
-        public static InfrastructureConfiguration InfrastructureConfiguration(string deploymentType = null, string appResourceGroup = null)
+        public static InfrastructureConfiguration InfrastructureConfiguration(string deploymentType = "Unknown", string appResourceGroup = null)
         {
             return new UnknownInfrastructureConfiguration(deploymentType, appResourceGroup);
         }
@@ -801,13 +801,13 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <returns> A new <see cref="Models.ThreeTierConfiguration"/> instance for mocking. </returns>
         public static ThreeTierConfiguration ThreeTierConfiguration(string appResourceGroup = null, bool? isSecondaryIPEnabled = null, CentralServerConfiguration centralServer = null, ApplicationServerConfiguration applicationServer = null, DatabaseConfiguration databaseServer = null, SapHighAvailabilityType? highAvailabilityType = null)
         {
-            return new ThreeTierConfiguration("ThreeTier", appResourceGroup, isSecondaryIPEnabled != null ? new NetworkConfiguration(isSecondaryIPEnabled) : null, centralServer, applicationServer, databaseServer, highAvailabilityType.HasValue ? new HighAvailabilityConfiguration(highAvailabilityType.Value) : null);
+            return new ThreeTierConfiguration(SapDeploymentType.ThreeTier, appResourceGroup, isSecondaryIPEnabled != null ? new NetworkConfiguration(isSecondaryIPEnabled) : null, centralServer, applicationServer, databaseServer, highAvailabilityType.HasValue ? new HighAvailabilityConfiguration(highAvailabilityType.Value) : null);
         }
 
         /// <summary> Initializes a new instance of SoftwareConfiguration. </summary>
         /// <param name="softwareInstallationType"> The SAP software installation Type. </param>
         /// <returns> A new <see cref="Models.SoftwareConfiguration"/> instance for mocking. </returns>
-        public static SoftwareConfiguration SoftwareConfiguration(string softwareInstallationType = null)
+        public static SoftwareConfiguration SoftwareConfiguration(string softwareInstallationType = "Unknown")
         {
             return new UnknownSoftwareConfiguration(softwareInstallationType);
         }
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <returns> A new <see cref="Models.ServiceInitiatedSoftwareConfiguration"/> instance for mocking. </returns>
         public static ServiceInitiatedSoftwareConfiguration ServiceInitiatedSoftwareConfiguration(Uri bomUri = null, string softwareVersion = null, string sapBitsStorageAccountId = null, string sapFqdn = null, string sshPrivateKey = null, HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration = null)
         {
-            return new ServiceInitiatedSoftwareConfiguration("ServiceInitiated", bomUri, softwareVersion, sapBitsStorageAccountId, sapFqdn, sshPrivateKey, highAvailabilitySoftwareConfiguration);
+            return new ServiceInitiatedSoftwareConfiguration(SapSoftwareInstallationType.ServiceInitiated, bomUri, softwareVersion, sapBitsStorageAccountId, sapFqdn, sshPrivateKey, highAvailabilitySoftwareConfiguration);
         }
 
         /// <summary> Initializes a new instance of SapInstallWithoutOSConfigSoftwareConfiguration. </summary>
@@ -833,7 +833,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <returns> A new <see cref="Models.SapInstallWithoutOSConfigSoftwareConfiguration"/> instance for mocking. </returns>
         public static SapInstallWithoutOSConfigSoftwareConfiguration SapInstallWithoutOSConfigSoftwareConfiguration(Uri bomUri = null, string sapBitsStorageAccountId = null, string softwareVersion = null, HighAvailabilitySoftwareConfiguration highAvailabilitySoftwareConfiguration = null)
         {
-            return new SapInstallWithoutOSConfigSoftwareConfiguration("SAPInstallWithoutOSConfig", bomUri, sapBitsStorageAccountId, softwareVersion, highAvailabilitySoftwareConfiguration);
+            return new SapInstallWithoutOSConfigSoftwareConfiguration(SapSoftwareInstallationType.SapInstallWithoutOSConfig, bomUri, sapBitsStorageAccountId, softwareVersion, highAvailabilitySoftwareConfiguration);
         }
 
         /// <summary> Initializes a new instance of DiscoveryConfiguration. </summary>
@@ -842,7 +842,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <returns> A new <see cref="Models.DiscoveryConfiguration"/> instance for mocking. </returns>
         public static DiscoveryConfiguration DiscoveryConfiguration(string centralServerVmId = null, AzureLocation? appLocation = null)
         {
-            return new DiscoveryConfiguration("Discovery", centralServerVmId, appLocation);
+            return new DiscoveryConfiguration(SapConfigurationType.Discovery, centralServerVmId, appLocation);
         }
 
         /// <summary> Initializes a new instance of DeploymentConfiguration. </summary>
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <returns> A new <see cref="Models.DeploymentConfiguration"/> instance for mocking. </returns>
         public static DeploymentConfiguration DeploymentConfiguration(AzureLocation? appLocation = null, InfrastructureConfiguration infrastructureConfiguration = null, SoftwareConfiguration softwareConfiguration = null)
         {
-            return new DeploymentConfiguration("Deployment", appLocation, infrastructureConfiguration, softwareConfiguration);
+            return new DeploymentConfiguration(SapConfigurationType.Deployment, appLocation, infrastructureConfiguration, softwareConfiguration);
         }
 
         /// <summary> Initializes a new instance of DeploymentWithOSConfiguration. </summary>
@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <returns> A new <see cref="Models.DeploymentWithOSConfiguration"/> instance for mocking. </returns>
         public static DeploymentWithOSConfiguration DeploymentWithOSConfiguration(AzureLocation? appLocation = null, InfrastructureConfiguration infrastructureConfiguration = null, SoftwareConfiguration softwareConfiguration = null, OSSapConfiguration osSapConfiguration = null)
         {
-            return new DeploymentWithOSConfiguration("DeploymentWithOSConfig", appLocation, infrastructureConfiguration, softwareConfiguration, osSapConfiguration);
+            return new DeploymentWithOSConfiguration(SapConfigurationType.DeploymentWithOSConfig, appLocation, infrastructureConfiguration, softwareConfiguration, osSapConfiguration);
         }
 
         /// <summary> Initializes a new instance of OSSapConfiguration. </summary>

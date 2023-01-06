@@ -906,7 +906,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryTaskStepProperties"/> instance for mocking. </returns>
-        public static ContainerRegistryTaskStepProperties ContainerRegistryTaskStepProperties(string containerRegistryTaskStepType = null, IEnumerable<ContainerRegistryBaseImageDependency> baseImageDependencies = null, string contextPath = null, string contextAccessToken = null)
+        public static ContainerRegistryTaskStepProperties ContainerRegistryTaskStepProperties(string containerRegistryTaskStepType = "Unknown", IEnumerable<ContainerRegistryBaseImageDependency> baseImageDependencies = null, string contextPath = null, string contextAccessToken = null)
         {
             baseImageDependencies ??= new List<ContainerRegistryBaseImageDependency>();
 
@@ -1190,7 +1190,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             imageNames ??= new List<string>();
             arguments ??= new List<ContainerRegistryRunArgument>();
 
-            return new ContainerRegistryDockerBuildStep("Docker", baseImageDependencies?.ToList(), contextPath, contextAccessToken, imageNames?.ToList(), isPushEnabled, noCache, dockerFilePath, target, arguments?.ToList());
+            return new ContainerRegistryDockerBuildStep(ContainerRegistryTaskStepType.Docker, baseImageDependencies?.ToList(), contextPath, contextAccessToken, imageNames?.ToList(), isPushEnabled, noCache, dockerFilePath, target, arguments?.ToList());
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryFileTaskStep. </summary>
@@ -1206,7 +1206,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             baseImageDependencies ??= new List<ContainerRegistryBaseImageDependency>();
             values ??= new List<ContainerRegistryTaskOverridableValue>();
 
-            return new ContainerRegistryFileTaskStep("FileTask", baseImageDependencies?.ToList(), contextPath, contextAccessToken, taskFilePath, valuesFilePath, values?.ToList());
+            return new ContainerRegistryFileTaskStep(ContainerRegistryTaskStepType.FileTask, baseImageDependencies?.ToList(), contextPath, contextAccessToken, taskFilePath, valuesFilePath, values?.ToList());
         }
 
         /// <summary> Initializes a new instance of ContainerRegistryEncodedTaskStep. </summary>
@@ -1222,7 +1222,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             baseImageDependencies ??= new List<ContainerRegistryBaseImageDependency>();
             values ??= new List<ContainerRegistryTaskOverridableValue>();
 
-            return new ContainerRegistryEncodedTaskStep("EncodedTask", baseImageDependencies?.ToList(), contextPath, contextAccessToken, encodedTaskContent, encodedValuesContent, values?.ToList());
+            return new ContainerRegistryEncodedTaskStep(ContainerRegistryTaskStepType.EncodedTask, baseImageDependencies?.ToList(), contextPath, contextAccessToken, encodedTaskContent, encodedValuesContent, values?.ToList());
         }
     }
 }

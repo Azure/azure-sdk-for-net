@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="backupPolicyType"> Describes the mode of backups. </param>
         /// <param name="migrationState"> The object representing the state of the migration between the backup policies. </param>
         /// <returns> A new <see cref="Models.CosmosDBAccountBackupPolicy"/> instance for mocking. </returns>
-        public static CosmosDBAccountBackupPolicy CosmosDBAccountBackupPolicy(string backupPolicyType = null, BackupPolicyMigrationState migrationState = null)
+        public static CosmosDBAccountBackupPolicy CosmosDBAccountBackupPolicy(string backupPolicyType = "Unknown", BackupPolicyMigrationState migrationState = null)
         {
             return new UnknownBackupPolicy(backupPolicyType, migrationState);
         }
@@ -2040,7 +2040,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="status"> Describes the status of a service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.CosmosDBServiceProperties"/> instance for mocking. </returns>
-        public static CosmosDBServiceProperties CosmosDBServiceProperties(DateTimeOffset? createdOn = null, CosmosDBServiceSize? instanceSize = null, int? instanceCount = null, string serviceType = null, CosmosDBServiceStatus? status = null, IDictionary<string, BinaryData> additionalProperties = null)
+        public static CosmosDBServiceProperties CosmosDBServiceProperties(DateTimeOffset? createdOn = null, CosmosDBServiceSize? instanceSize = null, int? instanceCount = null, string serviceType = "Unknown", CosmosDBServiceStatus? status = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
@@ -2053,7 +2053,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.PeriodicModeBackupPolicy"/> instance for mocking. </returns>
         public static PeriodicModeBackupPolicy PeriodicModeBackupPolicy(BackupPolicyMigrationState migrationState = null, PeriodicModeProperties periodicModeProperties = null)
         {
-            return new PeriodicModeBackupPolicy("Periodic", migrationState, periodicModeProperties);
+            return new PeriodicModeBackupPolicy(BackupPolicyType.Periodic, migrationState, periodicModeProperties);
         }
 
         /// <summary> Initializes a new instance of PeriodicModeProperties. </summary>
@@ -2071,7 +2071,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.ContinuousModeBackupPolicy"/> instance for mocking. </returns>
         public static ContinuousModeBackupPolicy ContinuousModeBackupPolicy(BackupPolicyMigrationState migrationState = null)
         {
-            return new ContinuousModeBackupPolicy("Continuous", migrationState);
+            return new ContinuousModeBackupPolicy(BackupPolicyType.Continuous, migrationState);
         }
 
         /// <summary> Initializes a new instance of DataTransferServiceProperties. </summary>
@@ -2087,7 +2087,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             additionalProperties ??= new Dictionary<string, BinaryData>();
             locations ??= new List<DataTransferRegionalService>();
 
-            return new DataTransferServiceProperties(createdOn, instanceSize, instanceCount, "DataTransfer", status, additionalProperties, locations?.ToList());
+            return new DataTransferServiceProperties(createdOn, instanceSize, instanceCount, CosmosDBServiceType.DataTransfer, status, additionalProperties, locations?.ToList());
         }
 
         /// <summary> Initializes a new instance of DataTransferRegionalService. </summary>
@@ -2124,7 +2124,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             additionalProperties ??= new Dictionary<string, BinaryData>();
             locations ??= new List<SqlDedicatedGatewayRegionalService>();
 
-            return new SqlDedicatedGatewayServiceProperties(createdOn, instanceSize, instanceCount, "SqlDedicatedGateway", status, additionalProperties, sqlDedicatedGatewayEndpoint, locations?.ToList());
+            return new SqlDedicatedGatewayServiceProperties(createdOn, instanceSize, instanceCount, CosmosDBServiceType.SqlDedicatedGateway, status, additionalProperties, sqlDedicatedGatewayEndpoint, locations?.ToList());
         }
 
         /// <summary> Initializes a new instance of SqlDedicatedGatewayRegionalService. </summary>
@@ -2152,7 +2152,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             additionalProperties ??= new Dictionary<string, BinaryData>();
             locations ??= new List<GraphApiComputeRegionalService>();
 
-            return new GraphApiComputeServiceProperties(createdOn, instanceSize, instanceCount, "GraphAPICompute", status, additionalProperties, graphApiComputeEndpoint, locations?.ToList());
+            return new GraphApiComputeServiceProperties(createdOn, instanceSize, instanceCount, CosmosDBServiceType.GraphApiCompute, status, additionalProperties, graphApiComputeEndpoint, locations?.ToList());
         }
 
         /// <summary> Initializes a new instance of GraphApiComputeRegionalService. </summary>
@@ -2179,7 +2179,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             additionalProperties ??= new Dictionary<string, BinaryData>();
             locations ??= new List<MaterializedViewsBuilderRegionalService>();
 
-            return new MaterializedViewsBuilderServiceProperties(createdOn, instanceSize, instanceCount, "MaterializedViewsBuilder", status, additionalProperties, locations?.ToList());
+            return new MaterializedViewsBuilderServiceProperties(createdOn, instanceSize, instanceCount, CosmosDBServiceType.MaterializedViewsBuilder, status, additionalProperties, locations?.ToList());
         }
 
         /// <summary> Initializes a new instance of MaterializedViewsBuilderRegionalService. </summary>

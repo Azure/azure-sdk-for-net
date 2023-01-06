@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Specifies the kind of blueprint artifact. </param>
         /// <returns> A new <see cref="Blueprint.ArtifactData"/> instance for mocking. </returns>
-        public static ArtifactData ArtifactData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
+        public static ArtifactData ArtifactData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
             return new ArtifactData(id, name, resourceType, systemData, kind);
         }
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             dependsOn ??= new List<string>();
             parameters ??= new Dictionary<string, ParameterValue>();
 
-            return new TemplateArtifact(id, name, resourceType, systemData, "template", displayName, description, dependsOn?.ToList(), template, resourceGroup, parameters);
+            return new TemplateArtifact(id, name, resourceType, systemData, ArtifactKind.Template, displayName, description, dependsOn?.ToList(), template, resourceGroup, parameters);
         }
 
         /// <summary> Initializes a new instance of RoleAssignmentArtifact. </summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Blueprint.Models
         {
             dependsOn ??= new List<string>();
 
-            return new RoleAssignmentArtifact(id, name, resourceType, systemData, "roleAssignment", displayName, description, dependsOn?.ToList(), roleDefinitionId, principalIds, resourceGroup);
+            return new RoleAssignmentArtifact(id, name, resourceType, systemData, ArtifactKind.RoleAssignment, displayName, description, dependsOn?.ToList(), roleDefinitionId, principalIds, resourceGroup);
         }
 
         /// <summary> Initializes a new instance of PolicyAssignmentArtifact. </summary>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             dependsOn ??= new List<string>();
             parameters ??= new Dictionary<string, ParameterValue>();
 
-            return new PolicyAssignmentArtifact(id, name, resourceType, systemData, "policyAssignment", displayName, description, dependsOn?.ToList(), policyDefinitionId, parameters, resourceGroup);
+            return new PolicyAssignmentArtifact(id, name, resourceType, systemData, ArtifactKind.PolicyAssignment, displayName, description, dependsOn?.ToList(), policyDefinitionId, parameters, resourceGroup);
         }
     }
 }

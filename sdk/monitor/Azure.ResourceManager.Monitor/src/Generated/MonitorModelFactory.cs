@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="odataType"> specifies the type of the alert criteria. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.MetricAlertCriteria"/> instance for mocking. </returns>
-        public static MetricAlertCriteria MetricAlertCriteria(string odataType = null, IDictionary<string, BinaryData> additionalProperties = null)
+        public static MetricAlertCriteria MetricAlertCriteria(string odataType = "Unknown", IDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
@@ -1363,7 +1363,7 @@ namespace Azure.ResourceManager.Monitor.Models
             additionalProperties ??= new Dictionary<string, BinaryData>();
             allOf ??= new List<MetricCriteria>();
 
-            return new MetricAlertSingleResourceMultipleMetricCriteria("Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria", additionalProperties, allOf?.ToList());
+            return new MetricAlertSingleResourceMultipleMetricCriteria(MonitorOdataType.MicrosoftAzureMonitorSingleResourceMultipleMetricCriteria, additionalProperties, allOf?.ToList());
         }
 
         /// <summary> Initializes a new instance of MetricCriteria. </summary>
@@ -1382,7 +1382,7 @@ namespace Azure.ResourceManager.Monitor.Models
             dimensions ??= new List<MetricDimension>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new MetricCriteria("StaticThresholdCriterion", name, metricName, metricNamespace, timeAggregation, dimensions?.ToList(), skipMetricValidation, additionalProperties, @operator, threshold);
+            return new MetricCriteria(CriterionType.StaticThresholdCriterion, name, metricName, metricNamespace, timeAggregation, dimensions?.ToList(), skipMetricValidation, additionalProperties, @operator, threshold);
         }
 
         /// <summary> Initializes a new instance of MultiMetricCriteria. </summary>
@@ -1395,7 +1395,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="skipMetricValidation"> Allows creating an alert rule on a custom metric that isn&apos;t yet emitted, by causing the metric validation to be skipped. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.MultiMetricCriteria"/> instance for mocking. </returns>
-        public static MultiMetricCriteria MultiMetricCriteria(string criterionType = null, string name = null, string metricName = null, string metricNamespace = null, MetricCriteriaTimeAggregationType timeAggregation = default, IEnumerable<MetricDimension> dimensions = null, bool? skipMetricValidation = null, IDictionary<string, BinaryData> additionalProperties = null)
+        public static MultiMetricCriteria MultiMetricCriteria(string criterionType = "Unknown", string name = null, string metricName = null, string metricNamespace = null, MetricCriteriaTimeAggregationType timeAggregation = default, IEnumerable<MetricDimension> dimensions = null, bool? skipMetricValidation = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             dimensions ??= new List<MetricDimension>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
@@ -1413,7 +1413,7 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new WebtestLocationAvailabilityCriteria("Microsoft.Azure.Monitor.WebtestLocationAvailabilityCriteria", additionalProperties, webTestId, componentId, failedLocationCount);
+            return new WebtestLocationAvailabilityCriteria(MonitorOdataType.MicrosoftAzureMonitorWebtestLocationAvailabilityCriteria, additionalProperties, webTestId, componentId, failedLocationCount);
         }
 
         /// <summary> Initializes a new instance of MetricAlertMultipleResourceMultipleMetricCriteria. </summary>
@@ -1429,7 +1429,7 @@ namespace Azure.ResourceManager.Monitor.Models
             additionalProperties ??= new Dictionary<string, BinaryData>();
             allOf ??= new List<MultiMetricCriteria>();
 
-            return new MetricAlertMultipleResourceMultipleMetricCriteria("Microsoft.Azure.Monitor.MultipleResourceMultipleMetricCriteria", additionalProperties, allOf?.ToList());
+            return new MetricAlertMultipleResourceMultipleMetricCriteria(MonitorOdataType.MicrosoftAzureMonitorMultipleResourceMultipleMetricCriteria, additionalProperties, allOf?.ToList());
         }
 
         /// <summary> Initializes a new instance of DynamicMetricCriteria. </summary>
@@ -1450,7 +1450,7 @@ namespace Azure.ResourceManager.Monitor.Models
             dimensions ??= new List<MetricDimension>();
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new DynamicMetricCriteria("DynamicThresholdCriterion", name, metricName, metricNamespace, timeAggregation, dimensions?.ToList(), skipMetricValidation, additionalProperties, @operator, alertSensitivity, failingPeriods, ignoreDataBefore);
+            return new DynamicMetricCriteria(CriterionType.DynamicThresholdCriterion, name, metricName, metricNamespace, timeAggregation, dimensions?.ToList(), skipMetricValidation, additionalProperties, @operator, alertSensitivity, failingPeriods, ignoreDataBefore);
         }
     }
 }

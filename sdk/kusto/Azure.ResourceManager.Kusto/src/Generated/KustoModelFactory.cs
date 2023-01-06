@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the database. </param>
         /// <returns> A new <see cref="Kusto.KustoDatabaseData"/> instance for mocking. </returns>
-        public static KustoDatabaseData KustoDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = null)
+        public static KustoDatabaseData KustoDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = "Unknown")
         {
             return new KustoDatabaseData(id, name, resourceType, systemData, location, kind);
         }
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Kind of the endpoint for the data connection. </param>
         /// <returns> A new <see cref="Kusto.KustoDataConnectionData"/> instance for mocking. </returns>
-        public static KustoDataConnectionData KustoDataConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = null)
+        public static KustoDataConnectionData KustoDataConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = "Unknown")
         {
             return new KustoDataConnectionData(id, name, resourceType, systemData, location, kind);
         }
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <returns> A new <see cref="Models.KustoReadWriteDatabase"/> instance for mocking. </returns>
         public static KustoReadWriteDatabase KustoReadWriteDatabase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, KustoProvisioningState? provisioningState = null, TimeSpan? softDeletePeriod = null, TimeSpan? hotCachePeriod = null, float? statisticsSize = null, bool? isFollowed = null)
         {
-            return new KustoReadWriteDatabase(id, name, resourceType, systemData, location, "ReadWrite", provisioningState, softDeletePeriod, hotCachePeriod, statisticsSize != null ? new DatabaseStatistics(statisticsSize) : null, isFollowed);
+            return new KustoReadWriteDatabase(id, name, resourceType, systemData, location, KustoKind.ReadWrite, provisioningState, softDeletePeriod, hotCachePeriod, statisticsSize != null ? new DatabaseStatistics(statisticsSize) : null, isFollowed);
         }
 
         /// <summary> Initializes a new instance of KustoReadOnlyFollowingDatabase. </summary>
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <returns> A new <see cref="Models.KustoReadOnlyFollowingDatabase"/> instance for mocking. </returns>
         public static KustoReadOnlyFollowingDatabase KustoReadOnlyFollowingDatabase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, KustoProvisioningState? provisioningState = null, TimeSpan? softDeletePeriod = null, TimeSpan? hotCachePeriod = null, float? statisticsSize = null, string leaderClusterResourceId = null, string attachedDatabaseConfigurationName = null, KustoDatabasePrincipalsModificationKind? principalsModificationKind = null, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = null, string originalDatabaseName = null, KustoDatabaseShareOrigin? databaseShareOrigin = null)
         {
-            return new KustoReadOnlyFollowingDatabase(id, name, resourceType, systemData, location, "ReadOnlyFollowing", provisioningState, softDeletePeriod, hotCachePeriod, statisticsSize != null ? new DatabaseStatistics(statisticsSize) : null, leaderClusterResourceId, attachedDatabaseConfigurationName, principalsModificationKind, tableLevelSharingProperties, originalDatabaseName, databaseShareOrigin);
+            return new KustoReadOnlyFollowingDatabase(id, name, resourceType, systemData, location, KustoKind.ReadOnlyFollowing, provisioningState, softDeletePeriod, hotCachePeriod, statisticsSize != null ? new DatabaseStatistics(statisticsSize) : null, leaderClusterResourceId, attachedDatabaseConfigurationName, principalsModificationKind, tableLevelSharingProperties, originalDatabaseName, databaseShareOrigin);
         }
 
         /// <summary> Initializes a new instance of KustoEventHubDataConnection. </summary>
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Kusto.Models
         {
             eventSystemProperties ??= new List<string>();
 
-            return new KustoEventHubDataConnection(id, name, resourceType, systemData, location, "EventHub", eventHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, eventSystemProperties?.ToList(), compression, provisioningState, managedIdentityResourceId, managedIdentityObjectId, databaseRouting, retrievalStartOn);
+            return new KustoEventHubDataConnection(id, name, resourceType, systemData, location, DataConnectionKind.EventHub, eventHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, eventSystemProperties?.ToList(), compression, provisioningState, managedIdentityResourceId, managedIdentityObjectId, databaseRouting, retrievalStartOn);
         }
 
         /// <summary> Initializes a new instance of KustoIotHubDataConnection. </summary>
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.Kusto.Models
         {
             eventSystemProperties ??= new List<string>();
 
-            return new KustoIotHubDataConnection(id, name, resourceType, systemData, location, "IotHub", iotHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, eventSystemProperties?.ToList(), sharedAccessPolicyName, databaseRouting, retrievalStartOn, provisioningState);
+            return new KustoIotHubDataConnection(id, name, resourceType, systemData, location, DataConnectionKind.IotHub, iotHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, eventSystemProperties?.ToList(), sharedAccessPolicyName, databaseRouting, retrievalStartOn, provisioningState);
         }
 
         /// <summary> Initializes a new instance of KustoEventGridDataConnection. </summary>
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <returns> A new <see cref="Models.KustoEventGridDataConnection"/> instance for mocking. </returns>
         public static KustoEventGridDataConnection KustoEventGridDataConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceIdentifier storageAccountResourceId = null, ResourceIdentifier eventGridResourceId = null, ResourceIdentifier eventHubResourceId = null, string consumerGroup = null, string tableName = null, string mappingRuleName = null, KustoEventGridDataFormat? dataFormat = null, bool? isFirstRecordIgnored = null, BlobStorageEventType? blobStorageEventType = null, ResourceIdentifier managedIdentityResourceId = null, Guid? managedIdentityObjectId = null, KustoDatabaseRouting? databaseRouting = null, KustoProvisioningState? provisioningState = null)
         {
-            return new KustoEventGridDataConnection(id, name, resourceType, systemData, location, "EventGrid", storageAccountResourceId, eventGridResourceId, eventHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, isFirstRecordIgnored, blobStorageEventType, managedIdentityResourceId, managedIdentityObjectId, databaseRouting, provisioningState);
+            return new KustoEventGridDataConnection(id, name, resourceType, systemData, location, DataConnectionKind.EventGrid, storageAccountResourceId, eventGridResourceId, eventHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, isFirstRecordIgnored, blobStorageEventType, managedIdentityResourceId, managedIdentityObjectId, databaseRouting, provisioningState);
         }
     }
 }

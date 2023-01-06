@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ManagedServices.Models
     /// <summary> Model factory for generated models. </summary>
     public static partial class ManagedServicesModelFactory
     {
-        /// <summary> Initializes a new instance of RegistrationDefinitionData. </summary>
+        /// <summary> Initializes a new instance of ManagedServicesRegistrationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The properties of a registration definition. </param>
         /// <param name="plan"> The details for the Managed Services offer’s plan in Azure Marketplace. </param>
-        /// <returns> A new <see cref="ManagedServices.RegistrationDefinitionData"/> instance for mocking. </returns>
-        public static RegistrationDefinitionData RegistrationDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RegistrationDefinitionProperties properties = null, ManagedServicesPlan plan = null)
+        /// <returns> A new <see cref="ManagedServices.ManagedServicesRegistrationData"/> instance for mocking. </returns>
+        public static ManagedServicesRegistrationData ManagedServicesRegistrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServicesRegistrationProperties properties = null, ManagedServicesPlan plan = null)
         {
-            return new RegistrationDefinitionData(id, name, resourceType, systemData, properties, plan);
+            return new ManagedServicesRegistrationData(id, name, resourceType, systemData, properties, plan);
         }
 
-        /// <summary> Initializes a new instance of RegistrationDefinitionProperties. </summary>
+        /// <summary> Initializes a new instance of ManagedServicesRegistrationProperties. </summary>
         /// <param name="description"> The description of the registration definition. </param>
         /// <param name="authorizations"> The collection of authorization objects describing the access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
         /// <param name="eligibleAuthorizations"> The collection of eligible authorization objects describing the just-in-time access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
@@ -40,96 +40,96 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <param name="manageeTenantId"> The identifier of the managed tenant. </param>
         /// <param name="manageeTenantName"> The name of the managed tenant. </param>
         /// <param name="managedByTenantName"> The name of the managedBy tenant. </param>
-        /// <returns> A new <see cref="Models.RegistrationDefinitionProperties"/> instance for mocking. </returns>
-        public static RegistrationDefinitionProperties RegistrationDefinitionProperties(string description = null, IEnumerable<Authorization> authorizations = null, IEnumerable<EligibleAuthorization> eligibleAuthorizations = null, string registrationDefinitionName = null, string managedByTenantId = null, ProvisioningState? provisioningState = null, string manageeTenantId = null, string manageeTenantName = null, string managedByTenantName = null)
+        /// <returns> A new <see cref="Models.ManagedServicesRegistrationProperties"/> instance for mocking. </returns>
+        public static ManagedServicesRegistrationProperties ManagedServicesRegistrationProperties(string description = null, IEnumerable<ManagedServicesAuthorization> authorizations = null, IEnumerable<ManagedServicesEligibleAuthorization> eligibleAuthorizations = null, string registrationDefinitionName = null, Guid managedByTenantId = default, ManagedServicesProvisioningState? provisioningState = null, Guid? manageeTenantId = null, string manageeTenantName = null, string managedByTenantName = null)
         {
-            authorizations ??= new List<Authorization>();
-            eligibleAuthorizations ??= new List<EligibleAuthorization>();
+            authorizations ??= new List<ManagedServicesAuthorization>();
+            eligibleAuthorizations ??= new List<ManagedServicesEligibleAuthorization>();
 
-            return new RegistrationDefinitionProperties(description, authorizations?.ToList(), eligibleAuthorizations?.ToList(), registrationDefinitionName, managedByTenantId, provisioningState, manageeTenantId, manageeTenantName, managedByTenantName);
+            return new ManagedServicesRegistrationProperties(description, authorizations?.ToList(), eligibleAuthorizations?.ToList(), registrationDefinitionName, managedByTenantId, provisioningState, manageeTenantId, manageeTenantName, managedByTenantName);
         }
 
-        /// <summary> Initializes a new instance of Authorization. </summary>
+        /// <summary> Initializes a new instance of ManagedServicesAuthorization. </summary>
         /// <param name="principalId"> The identifier of the Azure Active Directory principal. </param>
         /// <param name="principalIdDisplayName"> The display name of the Azure Active Directory principal. </param>
         /// <param name="roleDefinitionId"> The identifier of the Azure built-in role that defines the permissions that the Azure Active Directory principal will have on the projected scope. </param>
         /// <param name="delegatedRoleDefinitionIds"> The delegatedRoleDefinitionIds field is required when the roleDefinitionId refers to the User Access Administrator Role. It is the list of role definition ids which define all the permissions that the user in the authorization can assign to other principals. </param>
-        /// <returns> A new <see cref="Models.Authorization"/> instance for mocking. </returns>
-        public static Authorization Authorization(string principalId = null, string principalIdDisplayName = null, string roleDefinitionId = null, IEnumerable<Guid> delegatedRoleDefinitionIds = null)
+        /// <returns> A new <see cref="Models.ManagedServicesAuthorization"/> instance for mocking. </returns>
+        public static ManagedServicesAuthorization ManagedServicesAuthorization(Guid principalId = default, string principalIdDisplayName = null, string roleDefinitionId = null, IEnumerable<Guid> delegatedRoleDefinitionIds = null)
         {
             delegatedRoleDefinitionIds ??= new List<Guid>();
 
-            return new Authorization(principalId, principalIdDisplayName, roleDefinitionId, delegatedRoleDefinitionIds?.ToList());
+            return new ManagedServicesAuthorization(principalId, principalIdDisplayName, roleDefinitionId, delegatedRoleDefinitionIds?.ToList());
         }
 
-        /// <summary> Initializes a new instance of EligibleAuthorization. </summary>
+        /// <summary> Initializes a new instance of ManagedServicesEligibleAuthorization. </summary>
         /// <param name="principalId"> The identifier of the Azure Active Directory principal. </param>
         /// <param name="principalIdDisplayName"> The display name of the Azure Active Directory principal. </param>
         /// <param name="roleDefinitionId"> The identifier of the Azure built-in role that defines the permissions that the Azure Active Directory principal will have on the projected scope. </param>
         /// <param name="justInTimeAccessPolicy"> The just-in-time access policy setting. </param>
-        /// <returns> A new <see cref="Models.EligibleAuthorization"/> instance for mocking. </returns>
-        public static EligibleAuthorization EligibleAuthorization(string principalId = null, string principalIdDisplayName = null, string roleDefinitionId = null, JustInTimeAccessPolicy justInTimeAccessPolicy = null)
+        /// <returns> A new <see cref="Models.ManagedServicesEligibleAuthorization"/> instance for mocking. </returns>
+        public static ManagedServicesEligibleAuthorization ManagedServicesEligibleAuthorization(Guid principalId = default, string principalIdDisplayName = null, string roleDefinitionId = null, ManagedServicesJustInTimeAccessPolicy justInTimeAccessPolicy = null)
         {
-            return new EligibleAuthorization(principalId, principalIdDisplayName, roleDefinitionId, justInTimeAccessPolicy);
+            return new ManagedServicesEligibleAuthorization(principalId, principalIdDisplayName, roleDefinitionId, justInTimeAccessPolicy);
         }
 
-        /// <summary> Initializes a new instance of JustInTimeAccessPolicy. </summary>
+        /// <summary> Initializes a new instance of ManagedServicesJustInTimeAccessPolicy. </summary>
         /// <param name="multiFactorAuthProvider"> The multi-factor authorization provider to be used for just-in-time access requests. </param>
         /// <param name="maximumActivationDuration"> The maximum access duration in ISO 8601 format for just-in-time access requests. </param>
         /// <param name="managedByTenantApprovers"> The list of managedByTenant approvers for the eligible authorization. </param>
-        /// <returns> A new <see cref="Models.JustInTimeAccessPolicy"/> instance for mocking. </returns>
-        public static JustInTimeAccessPolicy JustInTimeAccessPolicy(MultiFactorAuthProvider multiFactorAuthProvider = default, TimeSpan? maximumActivationDuration = null, IEnumerable<EligibleApprover> managedByTenantApprovers = null)
+        /// <returns> A new <see cref="Models.ManagedServicesJustInTimeAccessPolicy"/> instance for mocking. </returns>
+        public static ManagedServicesJustInTimeAccessPolicy ManagedServicesJustInTimeAccessPolicy(MultiFactorAuthProvider multiFactorAuthProvider = default, TimeSpan? maximumActivationDuration = null, IEnumerable<ManagedServicesEligibleApprover> managedByTenantApprovers = null)
         {
-            managedByTenantApprovers ??= new List<EligibleApprover>();
+            managedByTenantApprovers ??= new List<ManagedServicesEligibleApprover>();
 
-            return new JustInTimeAccessPolicy(multiFactorAuthProvider, maximumActivationDuration, managedByTenantApprovers?.ToList());
+            return new ManagedServicesJustInTimeAccessPolicy(multiFactorAuthProvider, maximumActivationDuration, managedByTenantApprovers?.ToList());
         }
 
-        /// <summary> Initializes a new instance of EligibleApprover. </summary>
+        /// <summary> Initializes a new instance of ManagedServicesEligibleApprover. </summary>
         /// <param name="principalId"> The identifier of the Azure Active Directory principal. </param>
         /// <param name="principalIdDisplayName"> The display name of the Azure Active Directory principal. </param>
-        /// <returns> A new <see cref="Models.EligibleApprover"/> instance for mocking. </returns>
-        public static EligibleApprover EligibleApprover(string principalId = null, string principalIdDisplayName = null)
+        /// <returns> A new <see cref="Models.ManagedServicesEligibleApprover"/> instance for mocking. </returns>
+        public static ManagedServicesEligibleApprover ManagedServicesEligibleApprover(Guid principalId = default, string principalIdDisplayName = null)
         {
-            return new EligibleApprover(principalId, principalIdDisplayName);
+            return new ManagedServicesEligibleApprover(principalId, principalIdDisplayName);
         }
 
-        /// <summary> Initializes a new instance of RegistrationAssignmentData. </summary>
+        /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The properties of a registration assignment. </param>
-        /// <returns> A new <see cref="ManagedServices.RegistrationAssignmentData"/> instance for mocking. </returns>
-        public static RegistrationAssignmentData RegistrationAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RegistrationAssignmentProperties properties = null)
+        /// <returns> A new <see cref="ManagedServices.ManagedServicesRegistrationAssignmentData"/> instance for mocking. </returns>
+        public static ManagedServicesRegistrationAssignmentData ManagedServicesRegistrationAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServicesRegistrationAssignmentProperties properties = null)
         {
-            return new RegistrationAssignmentData(id, name, resourceType, systemData, properties);
+            return new ManagedServicesRegistrationAssignmentData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of RegistrationAssignmentProperties. </summary>
-        /// <param name="registrationDefinitionId"> The fully qualified path of the registration definition. </param>
+        /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentProperties. </summary>
+        /// <param name="registrationId"> The fully qualified path of the registration definition. </param>
         /// <param name="provisioningState"> The current provisioning state of the registration assignment. </param>
         /// <param name="registrationDefinition"> The registration definition associated with the registration assignment. </param>
-        /// <returns> A new <see cref="Models.RegistrationAssignmentProperties"/> instance for mocking. </returns>
-        public static RegistrationAssignmentProperties RegistrationAssignmentProperties(string registrationDefinitionId = null, ProvisioningState? provisioningState = null, RegistrationAssignmentPropertiesRegistrationDefinition registrationDefinition = null)
+        /// <returns> A new <see cref="Models.ManagedServicesRegistrationAssignmentProperties"/> instance for mocking. </returns>
+        public static ManagedServicesRegistrationAssignmentProperties ManagedServicesRegistrationAssignmentProperties(ResourceIdentifier registrationId = null, ManagedServicesProvisioningState? provisioningState = null, ManagedServicesRegistrationAssignmentRegistrationData registrationDefinition = null)
         {
-            return new RegistrationAssignmentProperties(registrationDefinitionId, provisioningState, registrationDefinition);
+            return new ManagedServicesRegistrationAssignmentProperties(registrationId, provisioningState, registrationDefinition);
         }
 
-        /// <summary> Initializes a new instance of RegistrationAssignmentPropertiesRegistrationDefinition. </summary>
+        /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentRegistrationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The properties of the registration definition associated with the registration assignment. </param>
         /// <param name="plan"> The details for the Managed Services offer’s plan in Azure Marketplace. </param>
-        /// <returns> A new <see cref="Models.RegistrationAssignmentPropertiesRegistrationDefinition"/> instance for mocking. </returns>
-        public static RegistrationAssignmentPropertiesRegistrationDefinition RegistrationAssignmentPropertiesRegistrationDefinition(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RegistrationAssignmentPropertiesRegistrationDefinitionProperties properties = null, ManagedServicesPlan plan = null)
+        /// <returns> A new <see cref="Models.ManagedServicesRegistrationAssignmentRegistrationData"/> instance for mocking. </returns>
+        public static ManagedServicesRegistrationAssignmentRegistrationData ManagedServicesRegistrationAssignmentRegistrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServicesRegistrationAssignmentRegistrationProperties properties = null, ManagedServicesPlan plan = null)
         {
-            return new RegistrationAssignmentPropertiesRegistrationDefinition(id, name, resourceType, systemData, properties, plan);
+            return new ManagedServicesRegistrationAssignmentRegistrationData(id, name, resourceType, systemData, properties, plan);
         }
 
-        /// <summary> Initializes a new instance of RegistrationAssignmentPropertiesRegistrationDefinitionProperties. </summary>
+        /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentRegistrationProperties. </summary>
         /// <param name="description"> The description of the registration definition. </param>
         /// <param name="authorizations"> The collection of authorization objects describing the access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
         /// <param name="eligibleAuthorizations"> The collection of eligible authorization objects describing the just-in-time access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
@@ -139,42 +139,42 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <param name="manageeTenantName"> The name of the managed tenant. </param>
         /// <param name="managedByTenantId"> The identifier of the managedBy tenant. </param>
         /// <param name="managedByTenantName"> The name of the managedBy tenant. </param>
-        /// <returns> A new <see cref="Models.RegistrationAssignmentPropertiesRegistrationDefinitionProperties"/> instance for mocking. </returns>
-        public static RegistrationAssignmentPropertiesRegistrationDefinitionProperties RegistrationAssignmentPropertiesRegistrationDefinitionProperties(string description = null, IEnumerable<Authorization> authorizations = null, IEnumerable<EligibleAuthorization> eligibleAuthorizations = null, string registrationDefinitionName = null, ProvisioningState? provisioningState = null, string manageeTenantId = null, string manageeTenantName = null, string managedByTenantId = null, string managedByTenantName = null)
+        /// <returns> A new <see cref="Models.ManagedServicesRegistrationAssignmentRegistrationProperties"/> instance for mocking. </returns>
+        public static ManagedServicesRegistrationAssignmentRegistrationProperties ManagedServicesRegistrationAssignmentRegistrationProperties(string description = null, IEnumerable<ManagedServicesAuthorization> authorizations = null, IEnumerable<ManagedServicesEligibleAuthorization> eligibleAuthorizations = null, string registrationDefinitionName = null, ManagedServicesProvisioningState? provisioningState = null, Guid? manageeTenantId = null, string manageeTenantName = null, Guid? managedByTenantId = null, string managedByTenantName = null)
         {
-            authorizations ??= new List<Authorization>();
-            eligibleAuthorizations ??= new List<EligibleAuthorization>();
+            authorizations ??= new List<ManagedServicesAuthorization>();
+            eligibleAuthorizations ??= new List<ManagedServicesEligibleAuthorization>();
 
-            return new RegistrationAssignmentPropertiesRegistrationDefinitionProperties(description, authorizations?.ToList(), eligibleAuthorizations?.ToList(), registrationDefinitionName, provisioningState, manageeTenantId, manageeTenantName, managedByTenantId, managedByTenantName);
+            return new ManagedServicesRegistrationAssignmentRegistrationProperties(description, authorizations?.ToList(), eligibleAuthorizations?.ToList(), registrationDefinitionName, provisioningState, manageeTenantId, manageeTenantName, managedByTenantId, managedByTenantName);
         }
 
-        /// <summary> Initializes a new instance of MarketplaceRegistrationDefinitionData. </summary>
+        /// <summary> Initializes a new instance of ManagedServicesMarketplaceRegistrationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The properties of the marketplace registration definition. </param>
         /// <param name="plan"> The details for the Managed Services offer’s plan in Azure Marketplace. </param>
-        /// <returns> A new <see cref="ManagedServices.MarketplaceRegistrationDefinitionData"/> instance for mocking. </returns>
-        public static MarketplaceRegistrationDefinitionData MarketplaceRegistrationDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MarketplaceRegistrationDefinitionProperties properties = null, ManagedServicesPlan plan = null)
+        /// <returns> A new <see cref="ManagedServices.ManagedServicesMarketplaceRegistrationData"/> instance for mocking. </returns>
+        public static ManagedServicesMarketplaceRegistrationData ManagedServicesMarketplaceRegistrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServicesMarketplaceRegistrationProperties properties = null, ManagedServicesPlan plan = null)
         {
-            return new MarketplaceRegistrationDefinitionData(id, name, resourceType, systemData, properties, plan);
+            return new ManagedServicesMarketplaceRegistrationData(id, name, resourceType, systemData, properties, plan);
         }
 
-        /// <summary> Initializes a new instance of MarketplaceRegistrationDefinitionProperties. </summary>
+        /// <summary> Initializes a new instance of ManagedServicesMarketplaceRegistrationProperties. </summary>
         /// <param name="managedByTenantId"> The identifier of the managedBy tenant. </param>
         /// <param name="authorizations"> The collection of authorization objects describing the access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
         /// <param name="eligibleAuthorizations"> The collection of eligible authorization objects describing the just-in-time access Azure Active Directory principals in the managedBy tenant will receive on the delegated resource in the managed tenant. </param>
         /// <param name="offerDisplayName"> The marketplace offer display name. </param>
         /// <param name="publisherDisplayName"> The marketplace publisher display name. </param>
         /// <param name="planDisplayName"> The marketplace plan display name. </param>
-        /// <returns> A new <see cref="Models.MarketplaceRegistrationDefinitionProperties"/> instance for mocking. </returns>
-        public static MarketplaceRegistrationDefinitionProperties MarketplaceRegistrationDefinitionProperties(string managedByTenantId = null, IEnumerable<Authorization> authorizations = null, IEnumerable<EligibleAuthorization> eligibleAuthorizations = null, string offerDisplayName = null, string publisherDisplayName = null, string planDisplayName = null)
+        /// <returns> A new <see cref="Models.ManagedServicesMarketplaceRegistrationProperties"/> instance for mocking. </returns>
+        public static ManagedServicesMarketplaceRegistrationProperties ManagedServicesMarketplaceRegistrationProperties(Guid managedByTenantId = default, IEnumerable<ManagedServicesAuthorization> authorizations = null, IEnumerable<ManagedServicesEligibleAuthorization> eligibleAuthorizations = null, string offerDisplayName = null, string publisherDisplayName = null, string planDisplayName = null)
         {
-            authorizations ??= new List<Authorization>();
-            eligibleAuthorizations ??= new List<EligibleAuthorization>();
+            authorizations ??= new List<ManagedServicesAuthorization>();
+            eligibleAuthorizations ??= new List<ManagedServicesEligibleAuthorization>();
 
-            return new MarketplaceRegistrationDefinitionProperties(managedByTenantId, authorizations?.ToList(), eligibleAuthorizations?.ToList(), offerDisplayName, publisherDisplayName, planDisplayName);
+            return new ManagedServicesMarketplaceRegistrationProperties(managedByTenantId, authorizations?.ToList(), eligibleAuthorizations?.ToList(), offerDisplayName, publisherDisplayName, planDisplayName);
         }
     }
 }

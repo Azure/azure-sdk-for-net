@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of EventGridInputSchemaMapping. </summary>
         /// <param name="inputSchemaMappingType"> Type of the custom mapping. </param>
         /// <returns> A new <see cref="Models.EventGridInputSchemaMapping"/> instance for mocking. </returns>
-        public static EventGridInputSchemaMapping EventGridInputSchemaMapping(string inputSchemaMappingType = null)
+        public static EventGridInputSchemaMapping EventGridInputSchemaMapping(string inputSchemaMappingType = "Unknown")
         {
             return new UnknownInputSchemaMapping(inputSchemaMappingType);
         }
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="name"> Name of the delivery attribute or header. </param>
         /// <param name="mappingType"> Type of the delivery attribute or header name. </param>
         /// <returns> A new <see cref="Models.DeliveryAttributeMapping"/> instance for mocking. </returns>
-        public static DeliveryAttributeMapping DeliveryAttributeMapping(string name = null, string mappingType = null)
+        public static DeliveryAttributeMapping DeliveryAttributeMapping(string name = null, string mappingType = "Unknown")
         {
             return new UnknownDeliveryAttributeMapping(name, mappingType);
         }
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of EventSubscriptionDestination. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
         /// <returns> A new <see cref="Models.EventSubscriptionDestination"/> instance for mocking. </returns>
-        public static EventSubscriptionDestination EventSubscriptionDestination(string endpointType = null)
+        public static EventSubscriptionDestination EventSubscriptionDestination(string endpointType = "Unknown")
         {
             return new UnknownEventSubscriptionDestination(endpointType);
         }
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
         /// <returns> A new <see cref="Models.AdvancedFilter"/> instance for mocking. </returns>
-        public static AdvancedFilter AdvancedFilter(string operatorType = null, string key = null)
+        public static AdvancedFilter AdvancedFilter(string operatorType = "Unknown", string key = null)
         {
             return new UnknownAdvancedFilter(operatorType, key);
         }
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of DeadLetterDestination. </summary>
         /// <param name="endpointType"> Type of the endpoint for the dead letter destination. </param>
         /// <returns> A new <see cref="Models.DeadLetterDestination"/> instance for mocking. </returns>
-        public static DeadLetterDestination DeadLetterDestination(string endpointType = null)
+        public static DeadLetterDestination DeadLetterDestination(string endpointType = "Unknown")
         {
             return new UnknownDeadLetterDestination(endpointType);
         }
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <returns> A new <see cref="Models.EventGridJsonInputSchemaMapping"/> instance for mocking. </returns>
         public static EventGridJsonInputSchemaMapping EventGridJsonInputSchemaMapping(string idSourceField = null, string topicSourceField = null, string eventTimeSourceField = null, JsonFieldWithDefault eventType = null, JsonFieldWithDefault subject = null, JsonFieldWithDefault dataVersion = null)
         {
-            return new EventGridJsonInputSchemaMapping("Json", idSourceField != null ? new JsonField(idSourceField) : null, topicSourceField != null ? new JsonField(topicSourceField) : null, eventTimeSourceField != null ? new JsonField(eventTimeSourceField) : null, eventType, subject, dataVersion);
+            return new EventGridJsonInputSchemaMapping(InputSchemaMappingType.Json, idSourceField != null ? new JsonField(idSourceField) : null, topicSourceField != null ? new JsonField(topicSourceField) : null, eventTimeSourceField != null ? new JsonField(eventTimeSourceField) : null, eventType, subject, dataVersion);
         }
 
         /// <summary> Initializes a new instance of StaticDeliveryAttributeMapping. </summary>
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <returns> A new <see cref="Models.StaticDeliveryAttributeMapping"/> instance for mocking. </returns>
         public static StaticDeliveryAttributeMapping StaticDeliveryAttributeMapping(string name = null, string value = null, bool? isSecret = null)
         {
-            return new StaticDeliveryAttributeMapping(name, "Static", value, isSecret);
+            return new StaticDeliveryAttributeMapping(name, DeliveryAttributeMappingType.Static, value, isSecret);
         }
 
         /// <summary> Initializes a new instance of DynamicDeliveryAttributeMapping. </summary>
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <returns> A new <see cref="Models.DynamicDeliveryAttributeMapping"/> instance for mocking. </returns>
         public static DynamicDeliveryAttributeMapping DynamicDeliveryAttributeMapping(string name = null, string sourceField = null)
         {
-            return new DynamicDeliveryAttributeMapping(name, "Dynamic", sourceField);
+            return new DynamicDeliveryAttributeMapping(name, DeliveryAttributeMappingType.Dynamic, sourceField);
         }
 
         /// <summary> Initializes a new instance of NumberInAdvancedFilter. </summary>
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             values ??= new List<double>();
 
-            return new NumberInAdvancedFilter("NumberIn", key, values?.ToList());
+            return new NumberInAdvancedFilter(AdvancedFilterOperatorType.NumberIn, key, values?.ToList());
         }
 
         /// <summary> Initializes a new instance of StorageBlobDeadLetterDestination. </summary>
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <returns> A new <see cref="Models.StorageBlobDeadLetterDestination"/> instance for mocking. </returns>
         public static StorageBlobDeadLetterDestination StorageBlobDeadLetterDestination(ResourceIdentifier resourceId = null, string blobContainerName = null)
         {
-            return new StorageBlobDeadLetterDestination("StorageBlob", resourceId, blobContainerName);
+            return new StorageBlobDeadLetterDestination(DeadLetterEndPointType.StorageBlob, resourceId, blobContainerName);
         }
 
         /// <summary> Initializes a new instance of NumberNotInAdvancedFilter. </summary>
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             values ??= new List<double>();
 
-            return new NumberNotInAdvancedFilter("NumberNotIn", key, values?.ToList());
+            return new NumberNotInAdvancedFilter(AdvancedFilterOperatorType.NumberNotIn, key, values?.ToList());
         }
 
         /// <summary> Initializes a new instance of NumberLessThanAdvancedFilter. </summary>
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <returns> A new <see cref="Models.NumberLessThanAdvancedFilter"/> instance for mocking. </returns>
         public static NumberLessThanAdvancedFilter NumberLessThanAdvancedFilter(string key = null, double? value = null)
         {
-            return new NumberLessThanAdvancedFilter("NumberLessThan", key, value);
+            return new NumberLessThanAdvancedFilter(AdvancedFilterOperatorType.NumberLessThan, key, value);
         }
 
         /// <summary> Initializes a new instance of NumberGreaterThanAdvancedFilter. </summary>
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <returns> A new <see cref="Models.NumberGreaterThanAdvancedFilter"/> instance for mocking. </returns>
         public static NumberGreaterThanAdvancedFilter NumberGreaterThanAdvancedFilter(string key = null, double? value = null)
         {
-            return new NumberGreaterThanAdvancedFilter("NumberGreaterThan", key, value);
+            return new NumberGreaterThanAdvancedFilter(AdvancedFilterOperatorType.NumberGreaterThan, key, value);
         }
 
         /// <summary> Initializes a new instance of NumberLessThanOrEqualsAdvancedFilter. </summary>
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <returns> A new <see cref="Models.NumberLessThanOrEqualsAdvancedFilter"/> instance for mocking. </returns>
         public static NumberLessThanOrEqualsAdvancedFilter NumberLessThanOrEqualsAdvancedFilter(string key = null, double? value = null)
         {
-            return new NumberLessThanOrEqualsAdvancedFilter("NumberLessThanOrEquals", key, value);
+            return new NumberLessThanOrEqualsAdvancedFilter(AdvancedFilterOperatorType.NumberLessThanOrEquals, key, value);
         }
 
         /// <summary> Initializes a new instance of NumberGreaterThanOrEqualsAdvancedFilter. </summary>
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <returns> A new <see cref="Models.NumberGreaterThanOrEqualsAdvancedFilter"/> instance for mocking. </returns>
         public static NumberGreaterThanOrEqualsAdvancedFilter NumberGreaterThanOrEqualsAdvancedFilter(string key = null, double? value = null)
         {
-            return new NumberGreaterThanOrEqualsAdvancedFilter("NumberGreaterThanOrEquals", key, value);
+            return new NumberGreaterThanOrEqualsAdvancedFilter(AdvancedFilterOperatorType.NumberGreaterThanOrEquals, key, value);
         }
 
         /// <summary> Initializes a new instance of BoolEqualsAdvancedFilter. </summary>
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <returns> A new <see cref="Models.BoolEqualsAdvancedFilter"/> instance for mocking. </returns>
         public static BoolEqualsAdvancedFilter BoolEqualsAdvancedFilter(string key = null, bool? value = null)
         {
-            return new BoolEqualsAdvancedFilter("BoolEquals", key, value);
+            return new BoolEqualsAdvancedFilter(AdvancedFilterOperatorType.BoolEquals, key, value);
         }
 
         /// <summary> Initializes a new instance of StringInAdvancedFilter. </summary>
@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             values ??= new List<string>();
 
-            return new StringInAdvancedFilter("StringIn", key, values?.ToList());
+            return new StringInAdvancedFilter(AdvancedFilterOperatorType.StringIn, key, values?.ToList());
         }
 
         /// <summary> Initializes a new instance of StringNotInAdvancedFilter. </summary>
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             values ??= new List<string>();
 
-            return new StringNotInAdvancedFilter("StringNotIn", key, values?.ToList());
+            return new StringNotInAdvancedFilter(AdvancedFilterOperatorType.StringNotIn, key, values?.ToList());
         }
 
         /// <summary> Initializes a new instance of StringBeginsWithAdvancedFilter. </summary>
@@ -810,7 +810,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             values ??= new List<string>();
 
-            return new StringBeginsWithAdvancedFilter("StringBeginsWith", key, values?.ToList());
+            return new StringBeginsWithAdvancedFilter(AdvancedFilterOperatorType.StringBeginsWith, key, values?.ToList());
         }
 
         /// <summary> Initializes a new instance of StringEndsWithAdvancedFilter. </summary>
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             values ??= new List<string>();
 
-            return new StringEndsWithAdvancedFilter("StringEndsWith", key, values?.ToList());
+            return new StringEndsWithAdvancedFilter(AdvancedFilterOperatorType.StringEndsWith, key, values?.ToList());
         }
 
         /// <summary> Initializes a new instance of StringContainsAdvancedFilter. </summary>
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             values ??= new List<string>();
 
-            return new StringContainsAdvancedFilter("StringContains", key, values?.ToList());
+            return new StringContainsAdvancedFilter(AdvancedFilterOperatorType.StringContains, key, values?.ToList());
         }
 
         /// <summary> Initializes a new instance of NumberInRangeAdvancedFilter. </summary>
@@ -843,7 +843,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             values ??= new List<IList<double>>();
 
-            return new NumberInRangeAdvancedFilter("NumberInRange", key, values?.ToList());
+            return new NumberInRangeAdvancedFilter(AdvancedFilterOperatorType.NumberInRange, key, values?.ToList());
         }
 
         /// <summary> Initializes a new instance of NumberNotInRangeAdvancedFilter. </summary>
@@ -854,7 +854,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             values ??= new List<IList<double>>();
 
-            return new NumberNotInRangeAdvancedFilter("NumberNotInRange", key, values?.ToList());
+            return new NumberNotInRangeAdvancedFilter(AdvancedFilterOperatorType.NumberNotInRange, key, values?.ToList());
         }
 
         /// <summary> Initializes a new instance of StringNotBeginsWithAdvancedFilter. </summary>
@@ -865,7 +865,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             values ??= new List<string>();
 
-            return new StringNotBeginsWithAdvancedFilter("StringNotBeginsWith", key, values?.ToList());
+            return new StringNotBeginsWithAdvancedFilter(AdvancedFilterOperatorType.StringNotBeginsWith, key, values?.ToList());
         }
 
         /// <summary> Initializes a new instance of StringNotEndsWithAdvancedFilter. </summary>
@@ -876,7 +876,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             values ??= new List<string>();
 
-            return new StringNotEndsWithAdvancedFilter("StringNotEndsWith", key, values?.ToList());
+            return new StringNotEndsWithAdvancedFilter(AdvancedFilterOperatorType.StringNotEndsWith, key, values?.ToList());
         }
 
         /// <summary> Initializes a new instance of StringNotContainsAdvancedFilter. </summary>
@@ -887,7 +887,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             values ??= new List<string>();
 
-            return new StringNotContainsAdvancedFilter("StringNotContains", key, values?.ToList());
+            return new StringNotContainsAdvancedFilter(AdvancedFilterOperatorType.StringNotContains, key, values?.ToList());
         }
 
         /// <summary> Initializes a new instance of IsNullOrUndefinedAdvancedFilter. </summary>
@@ -895,7 +895,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <returns> A new <see cref="Models.IsNullOrUndefinedAdvancedFilter"/> instance for mocking. </returns>
         public static IsNullOrUndefinedAdvancedFilter IsNullOrUndefinedAdvancedFilter(string key = null)
         {
-            return new IsNullOrUndefinedAdvancedFilter("IsNullOrUndefined", key);
+            return new IsNullOrUndefinedAdvancedFilter(AdvancedFilterOperatorType.IsNullOrUndefined, key);
         }
 
         /// <summary> Initializes a new instance of IsNotNullAdvancedFilter. </summary>
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <returns> A new <see cref="Models.IsNotNullAdvancedFilter"/> instance for mocking. </returns>
         public static IsNotNullAdvancedFilter IsNotNullAdvancedFilter(string key = null)
         {
-            return new IsNotNullAdvancedFilter("IsNotNull", key);
+            return new IsNotNullAdvancedFilter(AdvancedFilterOperatorType.IsNotNull, key);
         }
 
         /// <summary> Initializes a new instance of WebHookEventSubscriptionDestination. </summary>
@@ -923,7 +923,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             deliveryAttributeMappings ??= new List<DeliveryAttributeMapping>();
 
-            return new WebHookEventSubscriptionDestination("WebHook", endpoint, baseEndpoint, maxEventsPerBatch, preferredBatchSizeInKilobytes, azureActiveDirectoryTenantId, uriOrAzureActiveDirectoryApplicationId, deliveryAttributeMappings?.ToList());
+            return new WebHookEventSubscriptionDestination(EndpointType.WebHook, endpoint, baseEndpoint, maxEventsPerBatch, preferredBatchSizeInKilobytes, azureActiveDirectoryTenantId, uriOrAzureActiveDirectoryApplicationId, deliveryAttributeMappings?.ToList());
         }
 
         /// <summary> Initializes a new instance of EventHubEventSubscriptionDestination. </summary>
@@ -938,7 +938,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             deliveryAttributeMappings ??= new List<DeliveryAttributeMapping>();
 
-            return new EventHubEventSubscriptionDestination("EventHub", resourceId, deliveryAttributeMappings?.ToList());
+            return new EventHubEventSubscriptionDestination(EndpointType.EventHub, resourceId, deliveryAttributeMappings?.ToList());
         }
 
         /// <summary> Initializes a new instance of StorageQueueEventSubscriptionDestination. </summary>
@@ -948,7 +948,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <returns> A new <see cref="Models.StorageQueueEventSubscriptionDestination"/> instance for mocking. </returns>
         public static StorageQueueEventSubscriptionDestination StorageQueueEventSubscriptionDestination(ResourceIdentifier resourceId = null, string queueName = null, long? queueMessageTimeToLiveInSeconds = null)
         {
-            return new StorageQueueEventSubscriptionDestination("StorageQueue", resourceId, queueName, queueMessageTimeToLiveInSeconds);
+            return new StorageQueueEventSubscriptionDestination(EndpointType.StorageQueue, resourceId, queueName, queueMessageTimeToLiveInSeconds);
         }
 
         /// <summary> Initializes a new instance of HybridConnectionEventSubscriptionDestination. </summary>
@@ -963,7 +963,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             deliveryAttributeMappings ??= new List<DeliveryAttributeMapping>();
 
-            return new HybridConnectionEventSubscriptionDestination("HybridConnection", resourceId, deliveryAttributeMappings?.ToList());
+            return new HybridConnectionEventSubscriptionDestination(EndpointType.HybridConnection, resourceId, deliveryAttributeMappings?.ToList());
         }
 
         /// <summary> Initializes a new instance of ServiceBusQueueEventSubscriptionDestination. </summary>
@@ -978,7 +978,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             deliveryAttributeMappings ??= new List<DeliveryAttributeMapping>();
 
-            return new ServiceBusQueueEventSubscriptionDestination("ServiceBusQueue", resourceId, deliveryAttributeMappings?.ToList());
+            return new ServiceBusQueueEventSubscriptionDestination(EndpointType.ServiceBusQueue, resourceId, deliveryAttributeMappings?.ToList());
         }
 
         /// <summary> Initializes a new instance of ServiceBusTopicEventSubscriptionDestination. </summary>
@@ -993,7 +993,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             deliveryAttributeMappings ??= new List<DeliveryAttributeMapping>();
 
-            return new ServiceBusTopicEventSubscriptionDestination("ServiceBusTopic", resourceId, deliveryAttributeMappings?.ToList());
+            return new ServiceBusTopicEventSubscriptionDestination(EndpointType.ServiceBusTopic, resourceId, deliveryAttributeMappings?.ToList());
         }
 
         /// <summary> Initializes a new instance of AzureFunctionEventSubscriptionDestination. </summary>
@@ -1010,7 +1010,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             deliveryAttributeMappings ??= new List<DeliveryAttributeMapping>();
 
-            return new AzureFunctionEventSubscriptionDestination("AzureFunction", resourceId, maxEventsPerBatch, preferredBatchSizeInKilobytes, deliveryAttributeMappings?.ToList());
+            return new AzureFunctionEventSubscriptionDestination(EndpointType.AzureFunction, resourceId, maxEventsPerBatch, preferredBatchSizeInKilobytes, deliveryAttributeMappings?.ToList());
         }
     }
 }

@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.IntegrationRuntimeDefinition"/> instance for mocking. </returns>
-        public static IntegrationRuntimeDefinition IntegrationRuntimeDefinition(string runtimeType = null, string description = null, IDictionary<string, BinaryData> additionalProperties = null)
+        public static IntegrationRuntimeDefinition IntegrationRuntimeDefinition(string runtimeType = "Unknown", string description = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="state"> The state of integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.IntegrationRuntimeStatus"/> instance for mocking. </returns>
-        public static IntegrationRuntimeStatus IntegrationRuntimeStatus(string runtimeType = null, string dataFactoryName = null, IntegrationRuntimeState? state = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static IntegrationRuntimeStatus IntegrationRuntimeStatus(string runtimeType = "Unknown", string dataFactoryName = null, IntegrationRuntimeState? state = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
         /// <returns> A new <see cref="Models.SsisObjectMetadata"/> instance for mocking. </returns>
-        public static SsisObjectMetadata SsisObjectMetadata(string metadataType = null, long? id = null, string name = null, string description = null)
+        public static SsisObjectMetadata SsisObjectMetadata(string metadataType = "Unknown", long? id = null, string name = null, string description = null)
         {
             return new UnknownSsisObjectMetadata(metadataType, id, name, description);
         }
@@ -3507,7 +3507,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new ManagedIntegrationRuntime("Managed", description, additionalProperties, state, managedVirtualNetwork, computeProperties, ssisProperties, customerVirtualNetworkSubnetId != null ? new IntegrationRuntimeCustomerVirtualNetwork(customerVirtualNetworkSubnetId) : null);
+            return new ManagedIntegrationRuntime(IntegrationRuntimeType.Managed, description, additionalProperties, state, managedVirtualNetwork, computeProperties, ssisProperties, customerVirtualNetworkSubnetId != null ? new IntegrationRuntimeCustomerVirtualNetwork(customerVirtualNetworkSubnetId) : null);
         }
 
         /// <summary> Initializes a new instance of IntegrationRuntimeComputeProperties. </summary>
@@ -3687,7 +3687,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SelfHostedIntegrationRuntime("SelfHosted", description, additionalProperties, linkedInfo);
+            return new SelfHostedIntegrationRuntime(IntegrationRuntimeType.SelfHosted, description, additionalProperties, linkedInfo);
         }
 
         /// <summary> Initializes a new instance of LinkedIntegrationRuntimeType. </summary>
@@ -3730,7 +3730,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             nodes ??= new List<ManagedIntegrationRuntimeNode>();
             otherErrors ??= new List<ManagedIntegrationRuntimeError>();
 
-            return new ManagedIntegrationRuntimeStatus("Managed", dataFactoryName, state, additionalProperties, createdOn, nodes?.ToList(), otherErrors?.ToList(), lastOperation);
+            return new ManagedIntegrationRuntimeStatus(IntegrationRuntimeType.Managed, dataFactoryName, state, additionalProperties, createdOn, nodes?.ToList(), otherErrors?.ToList(), lastOperation);
         }
 
         /// <summary> Initializes a new instance of ManagedIntegrationRuntimeNode. </summary>
@@ -3808,7 +3808,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             serviceUris ??= new List<Uri>();
             links ??= new List<LinkedIntegrationRuntime>();
 
-            return new SelfHostedIntegrationRuntimeStatus("SelfHosted", dataFactoryName, state, additionalProperties, createdOn, taskQueueId, internalChannelEncryption, version, nodes?.ToList(), scheduledUpdateOn, updateDelayOffset, localTimeZoneOffset, capabilities, serviceUris?.ToList(), autoUpdate, versionStatus, links?.ToList(), pushedVersion, latestVersion, autoUpdateEta);
+            return new SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeType.SelfHosted, dataFactoryName, state, additionalProperties, createdOn, taskQueueId, internalChannelEncryption, version, nodes?.ToList(), scheduledUpdateOn, updateDelayOffset, localTimeZoneOffset, capabilities, serviceUris?.ToList(), autoUpdate, versionStatus, links?.ToList(), pushedVersion, latestVersion, autoUpdateEta);
         }
 
         /// <summary> Initializes a new instance of LinkedIntegrationRuntime. </summary>
@@ -3830,7 +3830,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <returns> A new <see cref="Models.SsisFolder"/> instance for mocking. </returns>
         public static SsisFolder SsisFolder(long? id = null, string name = null, string description = null)
         {
-            return new SsisFolder("Folder", id, name, description);
+            return new SsisFolder(SsisObjectMetadataType.Folder, id, name, description);
         }
 
         /// <summary> Initializes a new instance of SsisProject. </summary>
@@ -3847,7 +3847,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             environmentRefs ??= new List<SsisEnvironmentReference>();
             parameters ??= new List<SsisParameterInfo>();
 
-            return new SsisProject("Project", id, name, description, folderId, version, environmentRefs?.ToList(), parameters?.ToList());
+            return new SsisProject(SsisObjectMetadataType.Project, id, name, description, folderId, version, environmentRefs?.ToList(), parameters?.ToList());
         }
 
         /// <summary> Initializes a new instance of SsisEnvironmentReference. </summary>
@@ -3893,7 +3893,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             parameters ??= new List<SsisParameterInfo>();
 
-            return new SsisPackage("Package", id, name, description, folderId, projectVersion, projectId, parameters?.ToList());
+            return new SsisPackage(SsisObjectMetadataType.Package, id, name, description, folderId, projectVersion, projectId, parameters?.ToList());
         }
 
         /// <summary> Initializes a new instance of SsisEnvironment. </summary>
@@ -3907,7 +3907,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             variables ??= new List<SsisVariable>();
 
-            return new SsisEnvironment("Environment", id, name, description, folderId, variables?.ToList());
+            return new SsisEnvironment(SsisObjectMetadataType.Environment, id, name, description, folderId, variables?.ToList());
         }
 
         /// <summary> Initializes a new instance of SsisVariable. </summary>
@@ -4920,7 +4920,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="uri"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
         /// <returns> A new <see cref="Models.WebLinkedServiceTypeProperties"/> instance for mocking. </returns>
-        public static WebLinkedServiceTypeProperties WebLinkedServiceTypeProperties(BinaryData uri = null, string authenticationType = null)
+        public static WebLinkedServiceTypeProperties WebLinkedServiceTypeProperties(BinaryData uri = null, string authenticationType = "Unknown")
         {
             return new UnknownWebLinkedServiceTypeProperties(uri, authenticationType);
         }
@@ -4930,7 +4930,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <returns> A new <see cref="Models.WebAnonymousAuthentication"/> instance for mocking. </returns>
         public static WebAnonymousAuthentication WebAnonymousAuthentication(BinaryData uri = null)
         {
-            return new WebAnonymousAuthentication(uri, "Anonymous");
+            return new WebAnonymousAuthentication(uri, WebAuthenticationType.Anonymous);
         }
 
         /// <summary> Initializes a new instance of WebBasicAuthentication. </summary>
@@ -4944,7 +4944,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <returns> A new <see cref="Models.WebBasicAuthentication"/> instance for mocking. </returns>
         public static WebBasicAuthentication WebBasicAuthentication(BinaryData uri = null, BinaryData username = null, FactorySecretBaseDefinition password = null)
         {
-            return new WebBasicAuthentication(uri, "Basic", username, password);
+            return new WebBasicAuthentication(uri, WebAuthenticationType.Basic, username, password);
         }
 
         /// <summary> Initializes a new instance of WebClientCertificateAuthentication. </summary>
@@ -4962,7 +4962,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <returns> A new <see cref="Models.WebClientCertificateAuthentication"/> instance for mocking. </returns>
         public static WebClientCertificateAuthentication WebClientCertificateAuthentication(BinaryData uri = null, FactorySecretBaseDefinition pfx = null, FactorySecretBaseDefinition password = null)
         {
-            return new WebClientCertificateAuthentication(uri, "ClientCertificate", pfx, password);
+            return new WebClientCertificateAuthentication(uri, WebAuthenticationType.ClientCertificate, pfx, password);
         }
 
         /// <summary> Initializes a new instance of CassandraLinkedService. </summary>

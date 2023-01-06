@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <summary> Initializes a new instance of StepProperties. </summary>
         /// <param name="stepType"> The type of step. </param>
         /// <returns> A new <see cref="Models.StepProperties"/> instance for mocking. </returns>
-        public static StepProperties StepProperties(string stepType = null)
+        public static StepProperties StepProperties(string stepType = "Unknown")
         {
             return new UnknownStepProperties(stepType);
         }
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <returns> A new <see cref="Models.HealthCheckStepProperties"/> instance for mocking. </returns>
         public static HealthCheckStepProperties HealthCheckStepProperties(HealthCheckStepAttributes attributes = null)
         {
-            return new HealthCheckStepProperties("HealthCheck", attributes);
+            return new HealthCheckStepProperties(StepType.HealthCheck, attributes);
         }
 
         /// <summary> Initializes a new instance of HealthCheckStepAttributes. </summary>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <summary> Initializes a new instance of RestRequestAuthentication. </summary>
         /// <param name="authType"> The authentication type. </param>
         /// <returns> A new <see cref="Models.RestRequestAuthentication"/> instance for mocking. </returns>
-        public static RestRequestAuthentication RestRequestAuthentication(string authType = null)
+        public static RestRequestAuthentication RestRequestAuthentication(string authType = "Unknown")
         {
             return new UnknownRestRequestAuthentication(authType);
         }
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <returns> A new <see cref="Models.RolloutIdentityAuthentication"/> instance for mocking. </returns>
         public static RolloutIdentityAuthentication RolloutIdentityAuthentication()
         {
-            return new RolloutIdentityAuthentication("RolloutIdentity");
+            return new RolloutIdentityAuthentication(RestAuthType.RolloutIdentity);
         }
 
         /// <summary> Initializes a new instance of ApiKeyAuthentication. </summary>
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <returns> A new <see cref="Models.ApiKeyAuthentication"/> instance for mocking. </returns>
         public static ApiKeyAuthentication ApiKeyAuthentication(string name = null, RestAuthLocation @in = default, string value = null)
         {
-            return new ApiKeyAuthentication("ApiKey", name, @in, value);
+            return new ApiKeyAuthentication(RestAuthType.ApiKey, name, @in, value);
         }
 
         /// <summary> Initializes a new instance of WaitStepProperties. </summary>
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <returns> A new <see cref="Models.WaitStepProperties"/> instance for mocking. </returns>
         public static WaitStepProperties WaitStepProperties(TimeSpan? attributesDuration = null)
         {
-            return new WaitStepProperties("Wait", attributesDuration.HasValue ? new WaitStepAttributes(attributesDuration.Value) : null);
+            return new WaitStepProperties(StepType.Wait, attributesDuration.HasValue ? new WaitStepAttributes(attributesDuration.Value) : null);
         }
     }
 }

@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Initializes a new instance of Filter. </summary>
         /// <param name="filterType"> Enum that discriminates between filter types. Currently only `Simple` type is supported. </param>
         /// <returns> A new <see cref="Models.Filter"/> instance for mocking. </returns>
-        public static Filter Filter(string filterType = null)
+        public static Filter Filter(string filterType = "Unknown")
         {
             return new UnknownFilter(filterType);
         }
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             parametersZones ??= new List<string>();
 
-            return new SimpleFilter("Simple", parametersZones != null ? new SimpleFilterParameters(parametersZones?.ToList()) : null);
+            return new SimpleFilter(FilterType.Simple, parametersZones != null ? new SimpleFilterParameters(parametersZones?.ToList()) : null);
         }
     }
 }

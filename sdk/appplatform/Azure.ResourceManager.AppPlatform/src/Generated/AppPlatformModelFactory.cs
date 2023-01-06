@@ -727,7 +727,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="isReadOnly"> Indicates whether the persistent disk is a readOnly one. </param>
         /// <param name="mountOptions"> These are the mount options for a persistent disk. </param>
         /// <returns> A new <see cref="Models.AppCustomPersistentDiskProperties"/> instance for mocking. </returns>
-        public static AppCustomPersistentDiskProperties AppCustomPersistentDiskProperties(string underlyingResourceType = null, string mountPath = null, bool? isReadOnly = null, IEnumerable<string> mountOptions = null)
+        public static AppCustomPersistentDiskProperties AppCustomPersistentDiskProperties(string underlyingResourceType = "Unknown", string mountPath = null, bool? isReadOnly = null, IEnumerable<string> mountOptions = null)
         {
             mountOptions ??= new List<string>();
 
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformStorageProperties. </summary>
         /// <param name="storageType"> The type of the storage. </param>
         /// <returns> A new <see cref="Models.AppPlatformStorageProperties"/> instance for mocking. </returns>
-        public static AppPlatformStorageProperties AppPlatformStorageProperties(string storageType = null)
+        public static AppPlatformStorageProperties AppPlatformStorageProperties(string storageType = "Unknown")
         {
             return new UnknownStorageProperties(storageType);
         }
@@ -985,7 +985,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppInstanceProbeAction. </summary>
         /// <param name="probeActionType"> The type of the action to take to perform the health check. </param>
         /// <returns> A new <see cref="Models.AppInstanceProbeAction"/> instance for mocking. </returns>
-        public static AppInstanceProbeAction AppInstanceProbeAction(string probeActionType = null)
+        public static AppInstanceProbeAction AppInstanceProbeAction(string probeActionType = "Unknown")
         {
             return new UnknownProbeAction(probeActionType);
         }
@@ -1416,7 +1416,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppPlatformStorageAccount"/> instance for mocking. </returns>
         public static AppPlatformStorageAccount AppPlatformStorageAccount(string accountName = null, string accountKey = null)
         {
-            return new AppPlatformStorageAccount("StorageAccount", accountName, accountKey);
+            return new AppPlatformStorageAccount(StorageType.StorageAccount, accountName, accountKey);
         }
 
         /// <summary> Initializes a new instance of AppPlatformAzureFileVolume. </summary>
@@ -1429,7 +1429,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             mountOptions ??= new List<string>();
 
-            return new AppPlatformAzureFileVolume("AzureFileVolume", mountPath, isReadOnly, mountOptions?.ToList(), shareName);
+            return new AppPlatformAzureFileVolume(UnderlyingResourceType.AzureFileVolume, mountPath, isReadOnly, mountOptions?.ToList(), shareName);
         }
 
         /// <summary> Initializes a new instance of AppPlatformUploadedUserSourceInfo. </summary>
@@ -1532,7 +1532,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <returns> A new <see cref="Models.AppInstanceHttpGetAction"/> instance for mocking. </returns>
         public static AppInstanceHttpGetAction AppInstanceHttpGetAction(string path = null, AppInstanceHttpSchemeType? scheme = null)
         {
-            return new AppInstanceHttpGetAction("HTTPGetAction", path, scheme);
+            return new AppInstanceHttpGetAction(ProbeActionType.HttpGetAction, path, scheme);
         }
 
         /// <summary> Initializes a new instance of AppInstanceExecAction. </summary>
@@ -1542,14 +1542,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         {
             command ??= new List<string>();
 
-            return new AppInstanceExecAction("ExecAction", command?.ToList());
+            return new AppInstanceExecAction(ProbeActionType.ExecAction, command?.ToList());
         }
 
         /// <summary> Initializes a new instance of AppInstanceTcpSocketAction. </summary>
         /// <returns> A new <see cref="Models.AppInstanceTcpSocketAction"/> instance for mocking. </returns>
         public static AppInstanceTcpSocketAction AppInstanceTcpSocketAction()
         {
-            return new AppInstanceTcpSocketAction("TCPSocketAction");
+            return new AppInstanceTcpSocketAction(ProbeActionType.TCPSocketAction);
         }
     }
 }

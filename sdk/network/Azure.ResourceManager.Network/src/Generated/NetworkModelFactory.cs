@@ -2660,7 +2660,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> The name of the rule collection. </param>
         /// <param name="priority"> Priority of the Firewall Policy Rule Collection resource. </param>
         /// <returns> A new <see cref="Models.FirewallPolicyRuleCollectionInfo"/> instance for mocking. </returns>
-        public static FirewallPolicyRuleCollectionInfo FirewallPolicyRuleCollectionInfo(string ruleCollectionType = null, string name = null, int? priority = null)
+        public static FirewallPolicyRuleCollectionInfo FirewallPolicyRuleCollectionInfo(string ruleCollectionType = "Unknown", string name = null, int? priority = null)
         {
             return new UnknownFirewallPolicyRuleCollection(ruleCollectionType, name, priority);
         }
@@ -5420,7 +5420,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             rules ??= new List<FirewallPolicyRule>();
 
-            return new FirewallPolicyNatRuleCollectionInfo("FirewallPolicyNatRuleCollection", name, priority, actionType != null ? new FirewallPolicyNatRuleCollectionAction(actionType) : null, rules?.ToList());
+            return new FirewallPolicyNatRuleCollectionInfo(FirewallPolicyRuleCollectionType.FirewallPolicyNatRuleCollection, name, priority, actionType != null ? new FirewallPolicyNatRuleCollectionAction(actionType) : null, rules?.ToList());
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyRule. </summary>
@@ -5428,7 +5428,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="description"> Description of the rule. </param>
         /// <param name="ruleType"> Rule Type. </param>
         /// <returns> A new <see cref="Models.FirewallPolicyRule"/> instance for mocking. </returns>
-        public static FirewallPolicyRule FirewallPolicyRule(string name = null, string description = null, string ruleType = null)
+        public static FirewallPolicyRule FirewallPolicyRule(string name = null, string description = null, string ruleType = "Unknown")
         {
             return new UnknownFirewallPolicyRule(name, description, ruleType);
         }
@@ -5447,7 +5447,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             rules ??= new List<FirewallPolicyRule>();
 
-            return new FirewallPolicyFilterRuleCollectionInfo("FirewallPolicyFilterRuleCollection", name, priority, actionType != null ? new FirewallPolicyFilterRuleCollectionAction(actionType) : null, rules?.ToList());
+            return new FirewallPolicyFilterRuleCollectionInfo(FirewallPolicyRuleCollectionType.FirewallPolicyFilterRuleCollection, name, priority, actionType != null ? new FirewallPolicyFilterRuleCollectionAction(actionType) : null, rules?.ToList());
         }
 
         /// <summary> Initializes a new instance of ApplicationRule. </summary>
@@ -5474,7 +5474,7 @@ namespace Azure.ResourceManager.Network.Models
             sourceIPGroups ??= new List<string>();
             webCategories ??= new List<string>();
 
-            return new ApplicationRule(name, description, "ApplicationRule", sourceAddresses?.ToList(), destinationAddresses?.ToList(), protocols?.ToList(), targetFqdns?.ToList(), targetUrls?.ToList(), fqdnTags?.ToList(), sourceIPGroups?.ToList(), terminateTLS, webCategories?.ToList());
+            return new ApplicationRule(name, description, FirewallPolicyRuleType.ApplicationRule, sourceAddresses?.ToList(), destinationAddresses?.ToList(), protocols?.ToList(), targetFqdns?.ToList(), targetUrls?.ToList(), fqdnTags?.ToList(), sourceIPGroups?.ToList(), terminateTLS, webCategories?.ToList());
         }
 
         /// <summary> Initializes a new instance of FirewallPolicyRuleApplicationProtocol. </summary>
@@ -5506,7 +5506,7 @@ namespace Azure.ResourceManager.Network.Models
             destinationPorts ??= new List<string>();
             sourceIPGroups ??= new List<string>();
 
-            return new NatRule(name, description, "NatRule", ipProtocols?.ToList(), sourceAddresses?.ToList(), destinationAddresses?.ToList(), destinationPorts?.ToList(), translatedAddress, translatedPort, sourceIPGroups?.ToList(), translatedFqdn);
+            return new NatRule(name, description, FirewallPolicyRuleType.NatRule, ipProtocols?.ToList(), sourceAddresses?.ToList(), destinationAddresses?.ToList(), destinationPorts?.ToList(), translatedAddress, translatedPort, sourceIPGroups?.ToList(), translatedFqdn);
         }
 
         /// <summary> Initializes a new instance of NetworkRule. </summary>
@@ -5530,7 +5530,7 @@ namespace Azure.ResourceManager.Network.Models
             destinationIPGroups ??= new List<string>();
             destinationFqdns ??= new List<string>();
 
-            return new NetworkRule(name, description, "NetworkRule", ipProtocols?.ToList(), sourceAddresses?.ToList(), destinationAddresses?.ToList(), destinationPorts?.ToList(), sourceIPGroups?.ToList(), destinationIPGroups?.ToList(), destinationFqdns?.ToList());
+            return new NetworkRule(name, description, FirewallPolicyRuleType.NetworkRule, ipProtocols?.ToList(), sourceAddresses?.ToList(), destinationAddresses?.ToList(), destinationPorts?.ToList(), sourceIPGroups?.ToList(), destinationIPGroups?.ToList(), destinationFqdns?.ToList());
         }
     }
 }

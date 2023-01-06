@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     /// <summary> Model factory for generated models. </summary>
     public static partial class ResourceGraphModelFactory
     {
-        /// <summary> Initializes a new instance of QueryResponse. </summary>
+        /// <summary> Initializes a new instance of ResourceQueryResult. </summary>
         /// <param name="totalRecords"> Number of total records matching the query. </param>
         /// <param name="count"> Number of records returned in the current response. In the case of paging, this is the number of records in the current page. </param>
         /// <param name="resultTruncated"> Indicates whether the query results are truncated. </param>
@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// Please note <see cref="Facet"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FacetError"/> and <see cref="FacetResult"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.QueryResponse"/> instance for mocking. </returns>
-        public static QueryResponse QueryResponse(long totalRecords = default, long count = default, ResultTruncated resultTruncated = default, string skipToken = null, BinaryData data = null, IEnumerable<Facet> facets = null)
+        /// <returns> A new <see cref="Models.ResourceQueryResult"/> instance for mocking. </returns>
+        public static ResourceQueryResult ResourceQueryResult(long totalRecords = default, long count = default, ResultTruncated resultTruncated = default, string skipToken = null, BinaryData data = null, IEnumerable<Facet> facets = null)
         {
             facets ??= new List<Facet>();
 
-            return new QueryResponse(totalRecords, count, resultTruncated, skipToken, data, facets?.ToList());
+            return new ResourceQueryResult(totalRecords, count, resultTruncated, skipToken, data, facets?.ToList());
         }
 
         /// <summary> Initializes a new instance of Facet. </summary>
@@ -42,16 +42,16 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             return new UnknownFacet(expression, resultType);
         }
 
-        /// <summary> Initializes a new instance of ErrorDetails. </summary>
+        /// <summary> Initializes a new instance of FacetErrorDetails. </summary>
         /// <param name="code"> Error code identifying the specific error. </param>
         /// <param name="message"> A human readable error message. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.ErrorDetails"/> instance for mocking. </returns>
-        public static ErrorDetails ErrorDetails(string code = null, string message = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        /// <returns> A new <see cref="Models.FacetErrorDetails"/> instance for mocking. </returns>
+        public static FacetErrorDetails FacetErrorDetails(string code = null, string message = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new ErrorDetails(code, message, additionalProperties);
+            return new FacetErrorDetails(code, message, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of FacetResult. </summary>
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="errors"> An array containing detected facet errors with details. </param>
         /// <returns> A new <see cref="Models.FacetError"/> instance for mocking. </returns>
-        public static FacetError FacetError(string expression = null, IEnumerable<ErrorDetails> errors = null)
+        public static FacetError FacetError(string expression = null, IEnumerable<FacetErrorDetails> errors = null)
         {
-            errors ??= new List<ErrorDetails>();
+            errors ??= new List<FacetErrorDetails>();
 
             return new FacetError(expression, "FacetError", errors?.ToList());
         }

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Initializes a new instance of TargetServiceBaseInfo. </summary>
         /// <param name="targetServiceType"> The target service type. </param>
         /// <returns> A new <see cref="Models.TargetServiceBaseInfo"/> instance for mocking. </returns>
-        public static TargetServiceBaseInfo TargetServiceBaseInfo(string targetServiceType = null)
+        public static TargetServiceBaseInfo TargetServiceBaseInfo(string targetServiceType = "Unknown")
         {
             return new UnknownTargetServiceBase(targetServiceType);
         }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Initializes a new instance of AuthBaseInfo. </summary>
         /// <param name="authType"> The authentication type. </param>
         /// <returns> A new <see cref="Models.AuthBaseInfo"/> instance for mocking. </returns>
-        public static AuthBaseInfo AuthBaseInfo(string authType = null)
+        public static AuthBaseInfo AuthBaseInfo(string authType = "Unknown")
         {
             return new UnknownAuthInfoBase(authType);
         }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Initializes a new instance of AzureResourceBaseProperties. </summary>
         /// <param name="azureResourceType"> The azure resource type. </param>
         /// <returns> A new <see cref="Models.AzureResourceBaseProperties"/> instance for mocking. </returns>
-        public static AzureResourceBaseProperties AzureResourceBaseProperties(string azureResourceType = null)
+        public static AzureResourceBaseProperties AzureResourceBaseProperties(string azureResourceType = "Unknown")
         {
             return new UnknownAzureResourcePropertiesBase(azureResourceType);
         }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.AzureResourceInfo"/> instance for mocking. </returns>
         public static AzureResourceInfo AzureResourceInfo(ResourceIdentifier id = null, AzureResourceBaseProperties resourceProperties = null)
         {
-            return new AzureResourceInfo("AzureResource", id, resourceProperties);
+            return new AzureResourceInfo(TargetServiceType.AzureResource, id, resourceProperties);
         }
 
         /// <summary> Initializes a new instance of AzureKeyVaultProperties. </summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.AzureKeyVaultProperties"/> instance for mocking. </returns>
         public static AzureKeyVaultProperties AzureKeyVaultProperties(bool? doesConnectAsKubernetesCsiDriver = null)
         {
-            return new AzureKeyVaultProperties("KeyVault", doesConnectAsKubernetesCsiDriver);
+            return new AzureKeyVaultProperties(AzureResourceType.KeyVault, doesConnectAsKubernetesCsiDriver);
         }
 
         /// <summary> Initializes a new instance of ConfluentBootstrapServerInfo. </summary>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.ConfluentBootstrapServerInfo"/> instance for mocking. </returns>
         public static ConfluentBootstrapServerInfo ConfluentBootstrapServerInfo(string endpoint = null)
         {
-            return new ConfluentBootstrapServerInfo("ConfluentBootstrapServer", endpoint);
+            return new ConfluentBootstrapServerInfo(TargetServiceType.ConfluentBootstrapServer, endpoint);
         }
 
         /// <summary> Initializes a new instance of ConfluentSchemaRegistryInfo. </summary>
@@ -151,13 +151,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.ConfluentSchemaRegistryInfo"/> instance for mocking. </returns>
         public static ConfluentSchemaRegistryInfo ConfluentSchemaRegistryInfo(string endpoint = null)
         {
-            return new ConfluentSchemaRegistryInfo("ConfluentSchemaRegistry", endpoint);
+            return new ConfluentSchemaRegistryInfo(TargetServiceType.ConfluentSchemaRegistry, endpoint);
         }
 
         /// <summary> Initializes a new instance of SecretBaseInfo. </summary>
         /// <param name="secretType"> The secret type. </param>
         /// <returns> A new <see cref="Models.SecretBaseInfo"/> instance for mocking. </returns>
-        public static SecretBaseInfo SecretBaseInfo(string secretType = null)
+        public static SecretBaseInfo SecretBaseInfo(string secretType = "Unknown")
         {
             return new UnknownSecretInfoBase(secretType);
         }
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.RawValueSecretInfo"/> instance for mocking. </returns>
         public static RawValueSecretInfo RawValueSecretInfo(string value = null)
         {
-            return new RawValueSecretInfo("rawValue", value);
+            return new RawValueSecretInfo(LinkerSecretType.RawValue, value);
         }
 
         /// <summary> Initializes a new instance of KeyVaultSecretReferenceSecretInfo. </summary>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.KeyVaultSecretReferenceSecretInfo"/> instance for mocking. </returns>
         public static KeyVaultSecretReferenceSecretInfo KeyVaultSecretReferenceSecretInfo(string name = null, string version = null)
         {
-            return new KeyVaultSecretReferenceSecretInfo("keyVaultSecretReference", name, version);
+            return new KeyVaultSecretReferenceSecretInfo(LinkerSecretType.KeyVaultSecretReference, name, version);
         }
 
         /// <summary> Initializes a new instance of KeyVaultSecretUriSecretInfo. </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.KeyVaultSecretUriSecretInfo"/> instance for mocking. </returns>
         public static KeyVaultSecretUriSecretInfo KeyVaultSecretUriSecretInfo(string value = null)
         {
-            return new KeyVaultSecretUriSecretInfo("keyVaultSecretUri", value);
+            return new KeyVaultSecretUriSecretInfo(LinkerSecretType.KeyVaultSecretUri, value);
         }
 
         /// <summary> Initializes a new instance of SecretAuthInfo. </summary>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.SecretAuthInfo"/> instance for mocking. </returns>
         public static SecretAuthInfo SecretAuthInfo(string name = null, SecretBaseInfo secretInfo = null)
         {
-            return new SecretAuthInfo("secret", name, secretInfo);
+            return new SecretAuthInfo(LinkerAuthType.Secret, name, secretInfo);
         }
 
         /// <summary> Initializes a new instance of UserAssignedIdentityAuthInfo. </summary>
@@ -206,14 +206,14 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.UserAssignedIdentityAuthInfo"/> instance for mocking. </returns>
         public static UserAssignedIdentityAuthInfo UserAssignedIdentityAuthInfo(string clientId = null, string subscriptionId = null)
         {
-            return new UserAssignedIdentityAuthInfo("userAssignedIdentity", clientId, subscriptionId);
+            return new UserAssignedIdentityAuthInfo(LinkerAuthType.UserAssignedIdentity, clientId, subscriptionId);
         }
 
         /// <summary> Initializes a new instance of SystemAssignedIdentityAuthInfo. </summary>
         /// <returns> A new <see cref="Models.SystemAssignedIdentityAuthInfo"/> instance for mocking. </returns>
         public static SystemAssignedIdentityAuthInfo SystemAssignedIdentityAuthInfo()
         {
-            return new SystemAssignedIdentityAuthInfo("systemAssignedIdentity");
+            return new SystemAssignedIdentityAuthInfo(LinkerAuthType.SystemAssignedIdentity);
         }
 
         /// <summary> Initializes a new instance of ServicePrincipalSecretAuthInfo. </summary>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.ServicePrincipalSecretAuthInfo"/> instance for mocking. </returns>
         public static ServicePrincipalSecretAuthInfo ServicePrincipalSecretAuthInfo(string clientId = null, Guid principalId = default, string secret = null)
         {
-            return new ServicePrincipalSecretAuthInfo("servicePrincipalSecret", clientId, principalId, secret);
+            return new ServicePrincipalSecretAuthInfo(LinkerAuthType.ServicePrincipalSecret, clientId, principalId, secret);
         }
 
         /// <summary> Initializes a new instance of ServicePrincipalCertificateAuthInfo. </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <returns> A new <see cref="Models.ServicePrincipalCertificateAuthInfo"/> instance for mocking. </returns>
         public static ServicePrincipalCertificateAuthInfo ServicePrincipalCertificateAuthInfo(string clientId = null, Guid principalId = default, string certificate = null)
         {
-            return new ServicePrincipalCertificateAuthInfo("servicePrincipalCertificate", clientId, principalId, certificate);
+            return new ServicePrincipalCertificateAuthInfo(LinkerAuthType.ServicePrincipalCertificate, clientId, principalId, certificate);
         }
     }
 }

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="startOn"> Start time for recurrence. </param>
         /// <param name="endOn"> End time for recurrence. </param>
         /// <returns> A new <see cref="Models.AlertProcessingRuleRecurrence"/> instance for mocking. </returns>
-        public static AlertProcessingRuleRecurrence AlertProcessingRuleRecurrence(string recurrenceType = null, TimeSpan? startOn = null, TimeSpan? endOn = null)
+        public static AlertProcessingRuleRecurrence AlertProcessingRuleRecurrence(string recurrenceType = "Unknown", TimeSpan? startOn = null, TimeSpan? endOn = null)
         {
             return new UnknownRecurrence(recurrenceType, startOn, endOn);
         }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of AlertProcessingRuleAction. </summary>
         /// <param name="actionType"> Action that should be applied. </param>
         /// <returns> A new <see cref="Models.AlertProcessingRuleAction"/> instance for mocking. </returns>
-        public static AlertProcessingRuleAction AlertProcessingRuleAction(string actionType = null)
+        public static AlertProcessingRuleAction AlertProcessingRuleAction(string actionType = "Unknown")
         {
             return new UnknownAction(actionType);
         }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary> Initializes a new instance of ServiceAlertMetadataProperties. </summary>
         /// <param name="metadataIdentifier"> Identification of the information to be retrieved by API call. </param>
         /// <returns> A new <see cref="Models.ServiceAlertMetadataProperties"/> instance for mocking. </returns>
-        public static ServiceAlertMetadataProperties ServiceAlertMetadataProperties(string metadataIdentifier = null)
+        public static ServiceAlertMetadataProperties ServiceAlertMetadataProperties(string metadataIdentifier = "Unknown")
         {
             return new UnknownAlertsMetaDataProperties(metadataIdentifier);
         }
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <returns> A new <see cref="Models.DailyRecurrence"/> instance for mocking. </returns>
         public static DailyRecurrence DailyRecurrence(TimeSpan? startOn = null, TimeSpan? endOn = null)
         {
-            return new DailyRecurrence("Daily", startOn, endOn);
+            return new DailyRecurrence(RecurrenceType.Daily, startOn, endOn);
         }
 
         /// <summary> Initializes a new instance of AlertProcessingRuleWeeklyRecurrence. </summary>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             daysOfWeek ??= new List<AlertsManagementDayOfWeek>();
 
-            return new AlertProcessingRuleWeeklyRecurrence("Weekly", startOn, endOn, daysOfWeek?.ToList());
+            return new AlertProcessingRuleWeeklyRecurrence(RecurrenceType.Weekly, startOn, endOn, daysOfWeek?.ToList());
         }
 
         /// <summary> Initializes a new instance of AlertProcessingRuleMonthlyRecurrence. </summary>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             daysOfMonth ??= new List<int>();
 
-            return new AlertProcessingRuleMonthlyRecurrence("Monthly", startOn, endOn, daysOfMonth?.ToList());
+            return new AlertProcessingRuleMonthlyRecurrence(RecurrenceType.Monthly, startOn, endOn, daysOfMonth?.ToList());
         }
 
         /// <summary> Initializes a new instance of AlertProcessingRuleAddGroupsAction. </summary>
@@ -364,14 +364,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             actionGroupIds ??= new List<ResourceIdentifier>();
 
-            return new AlertProcessingRuleAddGroupsAction("AddActionGroups", actionGroupIds?.ToList());
+            return new AlertProcessingRuleAddGroupsAction(AlertProcessingRuleActionType.AddActionGroups, actionGroupIds?.ToList());
         }
 
         /// <summary> Initializes a new instance of AlertProcessingRuleRemoveAllGroupsAction. </summary>
         /// <returns> A new <see cref="Models.AlertProcessingRuleRemoveAllGroupsAction"/> instance for mocking. </returns>
         public static AlertProcessingRuleRemoveAllGroupsAction AlertProcessingRuleRemoveAllGroupsAction()
         {
-            return new AlertProcessingRuleRemoveAllGroupsAction("RemoveAllActionGroups");
+            return new AlertProcessingRuleRemoveAllGroupsAction(AlertProcessingRuleActionType.RemoveAllActionGroups);
         }
 
         /// <summary> Initializes a new instance of MonitorServiceList. </summary>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             data ??= new List<MonitorServiceDetails>();
 
-            return new MonitorServiceList("MonitorServiceList", data?.ToList());
+            return new MonitorServiceList(ServiceAlertMetadataIdentifier.MonitorServiceList, data?.ToList());
         }
 
         /// <summary> Initializes a new instance of MonitorServiceDetails. </summary>

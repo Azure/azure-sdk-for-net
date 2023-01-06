@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="identity"> Identity of the Extension resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="plan"> The plan information. </param>
         /// <param name="extensionType"> Type of the Extension, of which this resource is an instance of.  It must be one of the Extension Types registered with Microsoft.KubernetesConfiguration by the Extension publisher. </param>
         /// <param name="autoUpgradeMinorVersion"> Flag to note if this extension participates in auto upgrade of minor version, or not. </param>
         /// <param name="releaseTrain"> ReleaseTrain this extension participates in for auto-upgrade (e.g. Stable, Preview, etc.) - only if autoUpgradeMinorVersion is &apos;true&apos;. </param>
@@ -31,22 +32,23 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <param name="scope"> Scope at which the extension is installed. </param>
         /// <param name="configurationSettings"> Configuration settings, as name-value pairs for configuring this extension. </param>
         /// <param name="configurationProtectedSettings"> Configuration settings that are sensitive, as name-value pairs for configuring this extension. </param>
-        /// <param name="installedVersion"> Installed version of the extension. </param>
+        /// <param name="currentVersion"> Currently installed version of the extension. </param>
         /// <param name="provisioningState"> Status of installation of this extension. </param>
         /// <param name="statuses"> Status from this extension. </param>
         /// <param name="errorInfo"> Error information from the Agent - e.g. errors during installation. </param>
         /// <param name="customLocationSettings"> Custom Location settings properties. </param>
         /// <param name="packageUri"> Uri of the Helm package. </param>
         /// <param name="aksAssignedIdentity"> Identity of the Extension resource in an AKS cluster. Current supported identity types: SystemAssigned, UserAssigned. </param>
+        /// <param name="isSystemExtension"> Flag to note if this extension is a system extension. </param>
         /// <returns> A new <see cref="KubernetesConfiguration.KubernetesClusterExtensionData"/> instance for mocking. </returns>
-        public static KubernetesClusterExtensionData KubernetesClusterExtensionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, string extensionType = null, bool? autoUpgradeMinorVersion = null, string releaseTrain = null, string version = null, KubernetesClusterExtensionScope scope = null, IDictionary<string, string> configurationSettings = null, IDictionary<string, string> configurationProtectedSettings = null, string installedVersion = null, KubernetesConfigurationProvisioningState? provisioningState = null, IEnumerable<KubernetesClusterExtensionStatus> statuses = null, ResponseError errorInfo = null, IReadOnlyDictionary<string, string> customLocationSettings = null, Uri packageUri = null, ManagedServiceIdentity aksAssignedIdentity = null)
+        public static KubernetesClusterExtensionData KubernetesClusterExtensionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, ArmPlan plan = null, string extensionType = null, bool? autoUpgradeMinorVersion = null, string releaseTrain = null, string version = null, KubernetesClusterExtensionScope scope = null, IDictionary<string, string> configurationSettings = null, IDictionary<string, string> configurationProtectedSettings = null, string currentVersion = null, KubernetesConfigurationProvisioningState? provisioningState = null, IEnumerable<KubernetesClusterExtensionStatus> statuses = null, ResponseError errorInfo = null, IReadOnlyDictionary<string, string> customLocationSettings = null, Uri packageUri = null, ManagedServiceIdentity aksAssignedIdentity = null, bool? isSystemExtension = null)
         {
             configurationSettings ??= new Dictionary<string, string>();
             configurationProtectedSettings ??= new Dictionary<string, string>();
             statuses ??= new List<KubernetesClusterExtensionStatus>();
             customLocationSettings ??= new Dictionary<string, string>();
 
-            return new KubernetesClusterExtensionData(id, name, resourceType, systemData, identity, extensionType, autoUpgradeMinorVersion, releaseTrain, version, scope, configurationSettings, configurationProtectedSettings, installedVersion, provisioningState, statuses?.ToList(), errorInfo, customLocationSettings, packageUri, aksAssignedIdentity);
+            return new KubernetesClusterExtensionData(id, name, resourceType, systemData, identity, plan, extensionType, autoUpgradeMinorVersion, releaseTrain, version, scope, configurationSettings, configurationProtectedSettings, currentVersion, provisioningState, statuses?.ToList(), errorInfo, customLocationSettings, packageUri, aksAssignedIdentity, isSystemExtension);
         }
 
         /// <summary> Initializes a new instance of KubernetesClusterExtensionScope. </summary>

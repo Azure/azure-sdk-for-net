@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="policyId"> ID of the backup policy with which this item is backed up. </param>
         /// <param name="protectionState"> Backup state of this backup item. </param>
         /// <returns> A new <see cref="Models.ProtectionIntent"/> instance for mocking. </returns>
-        public static ProtectionIntent ProtectionIntent(string protectionIntentItemType = null, BackupManagementType? backupManagementType = null, string sourceResourceId = null, string itemId = null, string policyId = null, ProtectionStatus? protectionState = null)
+        public static ProtectionIntent ProtectionIntent(string protectionIntentItemType = "Unknown", BackupManagementType? backupManagementType = null, string sourceResourceId = null, string itemId = null, string policyId = null, ProtectionStatus? protectionState = null)
         {
             return new UnknownProtectionIntent(protectionIntentItemType, backupManagementType, sourceResourceId, itemId, policyId, protectionState);
         }
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isDpmUpgradeAvailable"> To check if backup engine upgrade available. </param>
         /// <param name="extendedInfo"> Extended info of the backupengine. </param>
         /// <returns> A new <see cref="Models.BackupEngineBase"/> instance for mocking. </returns>
-        public static BackupEngineBase BackupEngineBase(string friendlyName = null, BackupManagementType? backupManagementType = null, string registrationStatus = null, string backupEngineState = null, string healthStatus = null, string backupEngineType = null, bool? canReRegister = null, string backupEngineId = null, string dpmVersion = null, string azureBackupAgentVersion = null, bool? isAzureBackupAgentUpgradeAvailable = null, bool? isDpmUpgradeAvailable = null, BackupEngineExtendedInfo extendedInfo = null)
+        public static BackupEngineBase BackupEngineBase(string friendlyName = null, BackupManagementType? backupManagementType = null, string registrationStatus = null, string backupEngineState = null, string healthStatus = null, string backupEngineType = "Unknown", bool? canReRegister = null, string backupEngineId = null, string dpmVersion = null, string azureBackupAgentVersion = null, bool? isAzureBackupAgentUpgradeAvailable = null, bool? isDpmUpgradeAvailable = null, BackupEngineExtendedInfo extendedInfo = null)
         {
             return new UnknownBackupEngineBase(friendlyName, backupManagementType, registrationStatus, backupEngineState, healthStatus, backupEngineType, canReRegister, backupEngineId, dpmVersion, azureBackupAgentVersion, isAzureBackupAgentUpgradeAvailable, isDpmUpgradeAvailable, extendedInfo);
         }
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="healthStatus"> Status of health of the container. </param>
         /// <param name="containerId"> Fabric Id of the container such as ARM Id. </param>
         /// <returns> A new <see cref="Models.ProtectableContainer"/> instance for mocking. </returns>
-        public static ProtectableContainer ProtectableContainer(string friendlyName = null, BackupManagementType? backupManagementType = null, string protectableContainerType = null, string healthStatus = null, string containerId = null)
+        public static ProtectableContainer ProtectableContainer(string friendlyName = null, BackupManagementType? backupManagementType = null, string protectableContainerType = "Unknown", string healthStatus = null, string containerId = null)
         {
             return new UnknownProtectableContainer(friendlyName, backupManagementType, protectableContainerType, healthStatus, containerId);
         }
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// </param>
         /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
         /// <returns> A new <see cref="Models.ProtectionContainer"/> instance for mocking. </returns>
-        public static ProtectionContainer ProtectionContainer(string friendlyName = null, BackupManagementType? backupManagementType = null, string registrationStatus = null, string healthStatus = null, string containerType = null, string protectableObjectType = null)
+        public static ProtectionContainer ProtectionContainer(string friendlyName = null, BackupManagementType? backupManagementType = null, string registrationStatus = null, string healthStatus = null, string containerType = "Unknown", string protectableObjectType = null)
         {
             return new UnknownProtectionContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType);
         }
@@ -2786,7 +2786,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             dpmServers ??= new List<string>();
 
-            return new AzureBackupServerContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, "AzureBackupServerContainer", protectableObjectType, canReRegister, containerId, protectedItemCount, dpmAgentVersion, dpmServers?.ToList(), upgradeAvailable, protectionStatus, extendedInfoLastRefreshedOn != null ? new DpmContainerExtendedInfo(extendedInfoLastRefreshedOn) : null);
+            return new AzureBackupServerContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, ProtectableContainerType.AzureBackupServerContainer, protectableObjectType, canReRegister, containerId, protectedItemCount, dpmAgentVersion, dpmServers?.ToList(), upgradeAvailable, protectionStatus, extendedInfoLastRefreshedOn != null ? new DpmContainerExtendedInfo(extendedInfoLastRefreshedOn) : null);
         }
 
         /// <summary> Initializes a new instance of DpmContainer. </summary>
@@ -2808,7 +2808,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             dpmServers ??= new List<string>();
 
-            return new DpmContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, "DPMContainer", protectableObjectType, canReRegister, containerId, protectedItemCount, dpmAgentVersion, dpmServers?.ToList(), upgradeAvailable, protectionStatus, extendedInfoLastRefreshedOn != null ? new DpmContainerExtendedInfo(extendedInfoLastRefreshedOn) : null);
+            return new DpmContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, ProtectableContainerType.DpmContainer, protectableObjectType, canReRegister, containerId, protectedItemCount, dpmAgentVersion, dpmServers?.ToList(), upgradeAvailable, protectionStatus, extendedInfoLastRefreshedOn != null ? new DpmContainerExtendedInfo(extendedInfoLastRefreshedOn) : null);
         }
 
         /// <summary> Initializes a new instance of AzureBackupServerEngine. </summary>
@@ -2827,7 +2827,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.AzureBackupServerEngine"/> instance for mocking. </returns>
         public static AzureBackupServerEngine AzureBackupServerEngine(string friendlyName = null, BackupManagementType? backupManagementType = null, string registrationStatus = null, string backupEngineState = null, string healthStatus = null, bool? canReRegister = null, string backupEngineId = null, string dpmVersion = null, string azureBackupAgentVersion = null, bool? isAzureBackupAgentUpgradeAvailable = null, bool? isDpmUpgradeAvailable = null, BackupEngineExtendedInfo extendedInfo = null)
         {
-            return new AzureBackupServerEngine(friendlyName, backupManagementType, registrationStatus, backupEngineState, healthStatus, "AzureBackupServerEngine", canReRegister, backupEngineId, dpmVersion, azureBackupAgentVersion, isAzureBackupAgentUpgradeAvailable, isDpmUpgradeAvailable, extendedInfo);
+            return new AzureBackupServerEngine(friendlyName, backupManagementType, registrationStatus, backupEngineState, healthStatus, BackupEngineType.AzureBackupServerEngine, canReRegister, backupEngineId, dpmVersion, azureBackupAgentVersion, isAzureBackupAgentUpgradeAvailable, isDpmUpgradeAvailable, extendedInfo);
         }
 
         /// <summary> Initializes a new instance of AzureFileShareBackupRequest. </summary>
@@ -2873,7 +2873,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.AzureIaaSClassicComputeVmContainer"/> instance for mocking. </returns>
         public static AzureIaaSClassicComputeVmContainer AzureIaaSClassicComputeVmContainer(string friendlyName = null, BackupManagementType? backupManagementType = null, string registrationStatus = null, string healthStatus = null, string protectableObjectType = null, string virtualMachineId = null, string virtualMachineVersion = null, string resourceGroup = null)
         {
-            return new AzureIaaSClassicComputeVmContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, "Microsoft.ClassicCompute/virtualMachines", protectableObjectType, virtualMachineId, virtualMachineVersion, resourceGroup);
+            return new AzureIaaSClassicComputeVmContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, ProtectableContainerType.MicrosoftClassicComputeVirtualMachines, protectableObjectType, virtualMachineId, virtualMachineVersion, resourceGroup);
         }
 
         /// <summary> Initializes a new instance of IaasVmContainer. </summary>
@@ -2888,7 +2888,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.IaasVmContainer"/> instance for mocking. </returns>
         public static IaasVmContainer IaasVmContainer(string friendlyName = null, BackupManagementType? backupManagementType = null, string registrationStatus = null, string healthStatus = null, string protectableObjectType = null, string virtualMachineId = null, string virtualMachineVersion = null, string resourceGroup = null)
         {
-            return new IaasVmContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, "IaasVMContainer", protectableObjectType, virtualMachineId, virtualMachineVersion, resourceGroup);
+            return new IaasVmContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, ProtectableContainerType.IaasVmContainer, protectableObjectType, virtualMachineId, virtualMachineVersion, resourceGroup);
         }
 
         /// <summary> Initializes a new instance of AzureIaaSClassicComputeVmProtectableItem. </summary>
@@ -2931,7 +2931,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.AzureIaaSComputeVmContainer"/> instance for mocking. </returns>
         public static AzureIaaSComputeVmContainer AzureIaaSComputeVmContainer(string friendlyName = null, BackupManagementType? backupManagementType = null, string registrationStatus = null, string healthStatus = null, string protectableObjectType = null, string virtualMachineId = null, string virtualMachineVersion = null, string resourceGroup = null)
         {
-            return new AzureIaaSComputeVmContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, "Microsoft.Compute/virtualMachines", protectableObjectType, virtualMachineId, virtualMachineVersion, resourceGroup);
+            return new AzureIaaSComputeVmContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, ProtectableContainerType.MicrosoftComputeVirtualMachines, protectableObjectType, virtualMachineId, virtualMachineVersion, resourceGroup);
         }
 
         /// <summary> Initializes a new instance of AzureIaaSComputeVmProtectableItem. </summary>
@@ -2962,7 +2962,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.AzureSqlAGWorkloadContainerProtectionContainer"/> instance for mocking. </returns>
         public static AzureSqlAGWorkloadContainerProtectionContainer AzureSqlAGWorkloadContainerProtectionContainer(string friendlyName = null, BackupManagementType? backupManagementType = null, string registrationStatus = null, string healthStatus = null, string protectableObjectType = null, string sourceResourceId = null, DateTimeOffset? lastUpdatedOn = null, AzureWorkloadContainerExtendedInfo extendedInfo = null, WorkloadType? workloadType = null, OperationType? operationType = null)
         {
-            return new AzureSqlAGWorkloadContainerProtectionContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, "SQLAGWorkLoadContainer", protectableObjectType, sourceResourceId, lastUpdatedOn, extendedInfo, workloadType, operationType);
+            return new AzureSqlAGWorkloadContainerProtectionContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, ProtectableContainerType.SqlAGWorkLoadContainer, protectableObjectType, sourceResourceId, lastUpdatedOn, extendedInfo, workloadType, operationType);
         }
 
         /// <summary> Initializes a new instance of AzureWorkloadContainer. </summary>
@@ -2979,7 +2979,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.AzureWorkloadContainer"/> instance for mocking. </returns>
         public static AzureWorkloadContainer AzureWorkloadContainer(string friendlyName = null, BackupManagementType? backupManagementType = null, string registrationStatus = null, string healthStatus = null, string protectableObjectType = null, string sourceResourceId = null, DateTimeOffset? lastUpdatedOn = null, AzureWorkloadContainerExtendedInfo extendedInfo = null, WorkloadType? workloadType = null, OperationType? operationType = null)
         {
-            return new AzureWorkloadContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, "AzureWorkloadContainer", protectableObjectType, sourceResourceId, lastUpdatedOn, extendedInfo, workloadType, operationType);
+            return new AzureWorkloadContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, ProtectableContainerType.AzureWorkloadContainer, protectableObjectType, sourceResourceId, lastUpdatedOn, extendedInfo, workloadType, operationType);
         }
 
         /// <summary> Initializes a new instance of AzureWorkloadContainerExtendedInfo. </summary>
@@ -3054,7 +3054,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.AzureSqlContainer"/> instance for mocking. </returns>
         public static AzureSqlContainer AzureSqlContainer(string friendlyName = null, BackupManagementType? backupManagementType = null, string registrationStatus = null, string healthStatus = null, string protectableObjectType = null)
         {
-            return new AzureSqlContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, "AzureSqlContainer", protectableObjectType);
+            return new AzureSqlContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, ProtectableContainerType.AzureSqlContainer, protectableObjectType);
         }
 
         /// <summary> Initializes a new instance of AzureStorageContainer. </summary>
@@ -3071,7 +3071,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.AzureStorageContainer"/> instance for mocking. </returns>
         public static AzureStorageContainer AzureStorageContainer(string friendlyName = null, BackupManagementType? backupManagementType = null, string registrationStatus = null, string healthStatus = null, string protectableObjectType = null, string sourceResourceId = null, string storageAccountVersion = null, string resourceGroup = null, long? protectedItemCount = null, AcquireStorageAccountLock? acquireStorageAccountLock = null)
         {
-            return new AzureStorageContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, "StorageContainer", protectableObjectType, sourceResourceId, storageAccountVersion, resourceGroup, protectedItemCount, acquireStorageAccountLock);
+            return new AzureStorageContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, ProtectableContainerType.StorageContainer, protectableObjectType, sourceResourceId, storageAccountVersion, resourceGroup, protectedItemCount, acquireStorageAccountLock);
         }
 
         /// <summary> Initializes a new instance of AzureStorageProtectableContainer. </summary>
@@ -3082,7 +3082,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.AzureStorageProtectableContainer"/> instance for mocking. </returns>
         public static AzureStorageProtectableContainer AzureStorageProtectableContainer(string friendlyName = null, BackupManagementType? backupManagementType = null, string healthStatus = null, string containerId = null)
         {
-            return new AzureStorageProtectableContainer(friendlyName, backupManagementType, "StorageContainer", healthStatus, containerId);
+            return new AzureStorageProtectableContainer(friendlyName, backupManagementType, ProtectableContainerType.StorageContainer, healthStatus, containerId);
         }
 
         /// <summary> Initializes a new instance of AzureVmAppContainerProtectableContainer. </summary>
@@ -3093,7 +3093,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.AzureVmAppContainerProtectableContainer"/> instance for mocking. </returns>
         public static AzureVmAppContainerProtectableContainer AzureVmAppContainerProtectableContainer(string friendlyName = null, BackupManagementType? backupManagementType = null, string healthStatus = null, string containerId = null)
         {
-            return new AzureVmAppContainerProtectableContainer(friendlyName, backupManagementType, "VMAppContainer", healthStatus, containerId);
+            return new AzureVmAppContainerProtectableContainer(friendlyName, backupManagementType, ProtectableContainerType.VmAppContainer, healthStatus, containerId);
         }
 
         /// <summary> Initializes a new instance of AzureVmAppContainerProtectionContainer. </summary>
@@ -3110,7 +3110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.AzureVmAppContainerProtectionContainer"/> instance for mocking. </returns>
         public static AzureVmAppContainerProtectionContainer AzureVmAppContainerProtectionContainer(string friendlyName = null, BackupManagementType? backupManagementType = null, string registrationStatus = null, string healthStatus = null, string protectableObjectType = null, string sourceResourceId = null, DateTimeOffset? lastUpdatedOn = null, AzureWorkloadContainerExtendedInfo extendedInfo = null, WorkloadType? workloadType = null, OperationType? operationType = null)
         {
-            return new AzureVmAppContainerProtectionContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, "VMAppContainer", protectableObjectType, sourceResourceId, lastUpdatedOn, extendedInfo, workloadType, operationType);
+            return new AzureVmAppContainerProtectionContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, ProtectableContainerType.VmAppContainer, protectableObjectType, sourceResourceId, lastUpdatedOn, extendedInfo, workloadType, operationType);
         }
 
         /// <summary> Initializes a new instance of AzureVmWorkloadItem. </summary>
@@ -3455,7 +3455,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.AzureRecoveryServiceVaultProtectionIntent"/> instance for mocking. </returns>
         public static AzureRecoveryServiceVaultProtectionIntent AzureRecoveryServiceVaultProtectionIntent(BackupManagementType? backupManagementType = null, string sourceResourceId = null, string itemId = null, string policyId = null, ProtectionStatus? protectionState = null)
         {
-            return new AzureRecoveryServiceVaultProtectionIntent("RecoveryServiceVaultItem", backupManagementType, sourceResourceId, itemId, policyId, protectionState);
+            return new AzureRecoveryServiceVaultProtectionIntent(ProtectionIntentItemType.RecoveryServiceVaultItem, backupManagementType, sourceResourceId, itemId, policyId, protectionState);
         }
 
         /// <summary> Initializes a new instance of AzureResourceProtectionIntent. </summary>
@@ -3468,7 +3468,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.AzureResourceProtectionIntent"/> instance for mocking. </returns>
         public static AzureResourceProtectionIntent AzureResourceProtectionIntent(BackupManagementType? backupManagementType = null, string sourceResourceId = null, string itemId = null, string policyId = null, ProtectionStatus? protectionState = null, string friendlyName = null)
         {
-            return new AzureResourceProtectionIntent("AzureResourceItem", backupManagementType, sourceResourceId, itemId, policyId, protectionState, friendlyName);
+            return new AzureResourceProtectionIntent(ProtectionIntentItemType.AzureResourceItem, backupManagementType, sourceResourceId, itemId, policyId, protectionState, friendlyName);
         }
 
         /// <summary> Initializes a new instance of AzureWorkloadContainerAutoProtectionIntent. </summary>
@@ -3480,7 +3480,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.AzureWorkloadContainerAutoProtectionIntent"/> instance for mocking. </returns>
         public static AzureWorkloadContainerAutoProtectionIntent AzureWorkloadContainerAutoProtectionIntent(BackupManagementType? backupManagementType = null, string sourceResourceId = null, string itemId = null, string policyId = null, ProtectionStatus? protectionState = null)
         {
-            return new AzureWorkloadContainerAutoProtectionIntent("AzureWorkloadContainerAutoProtectionIntent", backupManagementType, sourceResourceId, itemId, policyId, protectionState);
+            return new AzureWorkloadContainerAutoProtectionIntent(ProtectionIntentItemType.AzureWorkloadContainerAutoProtectionIntent, backupManagementType, sourceResourceId, itemId, policyId, protectionState);
         }
 
         /// <summary> Initializes a new instance of AzureWorkloadAutoProtectionIntent. </summary>
@@ -3492,7 +3492,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.AzureWorkloadAutoProtectionIntent"/> instance for mocking. </returns>
         public static AzureWorkloadAutoProtectionIntent AzureWorkloadAutoProtectionIntent(BackupManagementType? backupManagementType = null, string sourceResourceId = null, string itemId = null, string policyId = null, ProtectionStatus? protectionState = null)
         {
-            return new AzureWorkloadAutoProtectionIntent("AzureWorkloadAutoProtectionIntent", backupManagementType, sourceResourceId, itemId, policyId, protectionState);
+            return new AzureWorkloadAutoProtectionIntent(ProtectionIntentItemType.AzureWorkloadAutoProtectionIntent, backupManagementType, sourceResourceId, itemId, policyId, protectionState);
         }
 
         /// <summary> Initializes a new instance of AzureWorkloadSQLAutoProtectionIntent. </summary>
@@ -3505,7 +3505,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.AzureWorkloadSQLAutoProtectionIntent"/> instance for mocking. </returns>
         public static AzureWorkloadSQLAutoProtectionIntent AzureWorkloadSQLAutoProtectionIntent(BackupManagementType? backupManagementType = null, string sourceResourceId = null, string itemId = null, string policyId = null, ProtectionStatus? protectionState = null, WorkloadItemType? workloadItemType = null)
         {
-            return new AzureWorkloadSQLAutoProtectionIntent("AzureWorkloadSQLAutoProtectionIntent", backupManagementType, sourceResourceId, itemId, policyId, protectionState, workloadItemType);
+            return new AzureWorkloadSQLAutoProtectionIntent(ProtectionIntentItemType.AzureWorkloadSQLAutoProtectionIntent, backupManagementType, sourceResourceId, itemId, policyId, protectionState, workloadItemType);
         }
 
         /// <summary> Initializes a new instance of ClientScriptForConnect. </summary>
@@ -3550,7 +3550,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.DpmBackupEngine"/> instance for mocking. </returns>
         public static DpmBackupEngine DpmBackupEngine(string friendlyName = null, BackupManagementType? backupManagementType = null, string registrationStatus = null, string backupEngineState = null, string healthStatus = null, bool? canReRegister = null, string backupEngineId = null, string dpmVersion = null, string azureBackupAgentVersion = null, bool? isAzureBackupAgentUpgradeAvailable = null, bool? isDpmUpgradeAvailable = null, BackupEngineExtendedInfo extendedInfo = null)
         {
-            return new DpmBackupEngine(friendlyName, backupManagementType, registrationStatus, backupEngineState, healthStatus, "DpmBackupEngine", canReRegister, backupEngineId, dpmVersion, azureBackupAgentVersion, isAzureBackupAgentUpgradeAvailable, isDpmUpgradeAvailable, extendedInfo);
+            return new DpmBackupEngine(friendlyName, backupManagementType, registrationStatus, backupEngineState, healthStatus, BackupEngineType.DpmBackupEngine, canReRegister, backupEngineId, dpmVersion, azureBackupAgentVersion, isAzureBackupAgentUpgradeAvailable, isDpmUpgradeAvailable, extendedInfo);
         }
 
         /// <summary> Initializes a new instance of GenericContainer. </summary>
@@ -3564,7 +3564,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.GenericContainer"/> instance for mocking. </returns>
         public static GenericContainer GenericContainer(string friendlyName = null, BackupManagementType? backupManagementType = null, string registrationStatus = null, string healthStatus = null, string protectableObjectType = null, string fabricName = null, GenericContainerExtendedInfo extendedInformation = null)
         {
-            return new GenericContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, "GenericContainer", protectableObjectType, fabricName, extendedInformation);
+            return new GenericContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, ProtectableContainerType.GenericContainer, protectableObjectType, fabricName, extendedInformation);
         }
 
         /// <summary> Initializes a new instance of GenericContainerExtendedInfo. </summary>
@@ -3616,7 +3616,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             mabContainerHealthDetails ??= new List<MabContainerHealthDetails>();
 
-            return new MabContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, "Windows", protectableObjectType, canReRegister, containerId, protectedItemCount, agentVersion, extendedInfo, mabContainerHealthDetails?.ToList(), containerHealthState);
+            return new MabContainer(friendlyName, backupManagementType, registrationStatus, healthStatus, ProtectableContainerType.Windows, protectableObjectType, canReRegister, containerId, protectedItemCount, agentVersion, extendedInfo, mabContainerHealthDetails?.ToList(), containerHealthState);
         }
 
         /// <summary> Initializes a new instance of MabContainerExtendedInfo. </summary>

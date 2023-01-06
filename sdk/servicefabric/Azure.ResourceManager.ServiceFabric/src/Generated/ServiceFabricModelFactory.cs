@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Initializes a new instance of PartitionSchemeDescription. </summary>
         /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
         /// <returns> A new <see cref="Models.PartitionSchemeDescription"/> instance for mocking. </returns>
-        public static PartitionSchemeDescription PartitionSchemeDescription(string partitionScheme = null)
+        public static PartitionSchemeDescription PartitionSchemeDescription(string partitionScheme = "Unknown")
         {
             return new UnknownPartitionSchemeDescription(partitionScheme);
         }
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Initializes a new instance of ServicePlacementPolicyDescription. </summary>
         /// <param name="policyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
         /// <returns> A new <see cref="Models.ServicePlacementPolicyDescription"/> instance for mocking. </returns>
-        public static ServicePlacementPolicyDescription ServicePlacementPolicyDescription(string policyType = null)
+        public static ServicePlacementPolicyDescription ServicePlacementPolicyDescription(string policyType = "Unknown")
         {
             return new UnknownServicePlacementPolicyDescription(policyType);
         }
@@ -610,14 +610,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         {
             names ??= new List<string>();
 
-            return new NamedPartitionSchemeDescription("Named", count, names?.ToList());
+            return new NamedPartitionSchemeDescription(ApplicationPartitionScheme.Named, count, names?.ToList());
         }
 
         /// <summary> Initializes a new instance of SingletonPartitionSchemeDescription. </summary>
         /// <returns> A new <see cref="Models.SingletonPartitionSchemeDescription"/> instance for mocking. </returns>
         public static SingletonPartitionSchemeDescription SingletonPartitionSchemeDescription()
         {
-            return new SingletonPartitionSchemeDescription("Singleton");
+            return new SingletonPartitionSchemeDescription(ApplicationPartitionScheme.Singleton);
         }
 
         /// <summary> Initializes a new instance of UniformInt64RangePartitionSchemeDescription. </summary>
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <returns> A new <see cref="Models.UniformInt64RangePartitionSchemeDescription"/> instance for mocking. </returns>
         public static UniformInt64RangePartitionSchemeDescription UniformInt64RangePartitionSchemeDescription(int count = default, string lowKey = null, string highKey = null)
         {
-            return new UniformInt64RangePartitionSchemeDescription("UniformInt64Range", count, lowKey, highKey);
+            return new UniformInt64RangePartitionSchemeDescription(ApplicationPartitionScheme.UniformInt64Range, count, lowKey, highKey);
         }
     }
 }

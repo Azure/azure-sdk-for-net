@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="kind"> Type of the script. </param>
         /// <returns> A new <see cref="Resources.ArmDeploymentScriptData"/> instance for mocking. </returns>
-        public static ArmDeploymentScriptData ArmDeploymentScriptData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ArmDeploymentScriptManagedIdentity identity = null, AzureLocation location = default, IDictionary<string, string> tags = null, string kind = null)
+        public static ArmDeploymentScriptData ArmDeploymentScriptData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ArmDeploymentScriptManagedIdentity identity = null, AzureLocation location = default, IDictionary<string, string> tags = null, string kind = "Unknown")
         {
             tags ??= new Dictionary<string, string>();
 
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.Resources.Models
             supportingScriptUris ??= new List<Uri>();
             environmentVariables ??= new List<ScriptEnvironmentVariable>();
 
-            return new AzurePowerShellScript(id, name, resourceType, systemData, identity, location, tags, "AzurePowerShell", containerGroupName != null ? new ContainerConfiguration(containerGroupName) : null, storageAccountSettings, cleanupPreference, provisioningState, status, outputs, primaryScriptUri, supportingScriptUris?.ToList(), scriptContent, arguments, environmentVariables?.ToList(), forceUpdateTag, retentionInterval, timeout, azPowerShellVersion);
+            return new AzurePowerShellScript(id, name, resourceType, systemData, identity, location, tags, ScriptType.AzurePowerShell, containerGroupName != null ? new ContainerConfiguration(containerGroupName) : null, storageAccountSettings, cleanupPreference, provisioningState, status, outputs, primaryScriptUri, supportingScriptUris?.ToList(), scriptContent, arguments, environmentVariables?.ToList(), forceUpdateTag, retentionInterval, timeout, azPowerShellVersion);
         }
 
         /// <summary> Initializes a new instance of ScriptStorageConfiguration. </summary>
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.Resources.Models
             supportingScriptUris ??= new List<Uri>();
             environmentVariables ??= new List<ScriptEnvironmentVariable>();
 
-            return new AzureCliScript(id, name, resourceType, systemData, identity, location, tags, "AzureCLI", containerGroupName != null ? new ContainerConfiguration(containerGroupName) : null, storageAccountSettings, cleanupPreference, provisioningState, status, outputs, primaryScriptUri, supportingScriptUris?.ToList(), scriptContent, arguments, environmentVariables?.ToList(), forceUpdateTag, retentionInterval, timeout, azCliVersion);
+            return new AzureCliScript(id, name, resourceType, systemData, identity, location, tags, ScriptType.AzureCLI, containerGroupName != null ? new ContainerConfiguration(containerGroupName) : null, storageAccountSettings, cleanupPreference, provisioningState, status, outputs, primaryScriptUri, supportingScriptUris?.ToList(), scriptContent, arguments, environmentVariables?.ToList(), forceUpdateTag, retentionInterval, timeout, azCliVersion);
         }
     }
 }
