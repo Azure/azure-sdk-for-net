@@ -504,6 +504,71 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             Assert.NotNull(ex);
         }
 
+        [TestCaseSource(nameof(TestData_MuteParticipant))]
+        public void MuteParticipantAsync_202Accepted(CommunicationIdentifier participant)
+        {
+            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+
+            // TODO: to fill this when working on SDK.
+            //var response = callConnection.UnmuteParticipant(participant);
+            //Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            //Assert.AreEqual(OperationContext, response.Value.OperationContext);
+            NotImplementedException? ex = Assert.ThrowsAsync<NotImplementedException>(async () => await callConnection.MuteParticipantAsync(participant));
+            Assert.NotNull(ex);
+        }
+
+        [Test]
+        public void MuteAllParticipantsAsync_NoInitiator_202Accepted()
+        {
+            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+
+            // TODO: to fill this when working on SDK.
+            //var response = callConnection.MuteAllParticipants();
+            //Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            //Assert.AreEqual(OperationContext, response.Value.OperationContext);
+            NotImplementedException? ex = Assert.Throws<NotImplementedException>(() => callConnection.MuteAllParticipantsAsync());
+            Assert.NotNull(ex);
+        }
+
+        [TestCaseSource(nameof(TestData_MuteParticipant))]
+        public void MuteAllParticipantsAsync_WithInitiator_202Accepted(CommunicationIdentifier initiator)
+        {
+            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+
+            // TODO: to fill this when working on SDK.
+            //var response = callConnection.MuteAllParticipants(initiator);
+            //Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            //Assert.AreEqual(OperationContext, response.Value.OperationContext);
+            NotImplementedException? ex = Assert.Throws<NotImplementedException>(() => callConnection.MuteAllParticipantsAsync(initiator));
+            Assert.NotNull(ex);
+        }
+
+        [TestCaseSource(nameof(TestData_MuteParticipant))]
+        public void UnmuteParticipantAsync_202Accepted(CommunicationIdentifier participant)
+        {
+            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+
+            // TODO: to fill this when working on SDK.
+            //var response = callConnection.MuteParticipant(participant);
+            //Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            //Assert.AreEqual(OperationContext, response.Value.OperationContext);
+            NotImplementedException? ex = Assert.Throws<NotImplementedException>(() => callConnection.UnmuteParticipantAsync(participant));
+            Assert.NotNull(ex);
+        }
+
+        [Test]
+        public void UnmuteAllParticipantsAsync_202Accepted()
+        {
+            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+
+            // TODO: to fill this when working on SDK.
+            //var response = callConnection.UnmuteAllParticipants();
+            //Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            //Assert.AreEqual(OperationContext, response.Value.OperationContext);
+            NotImplementedException? ex = Assert.Throws<NotImplementedException>(() => callConnection.UnmuteAllParticipantsAsync());
+            Assert.NotNull(ex);
+        }
+
         private CallConnection CreateMockCallConnection(int responseCode, string? responseContent = null, string callConnectionId = "9ec7da16-30be-4e74-a941-285cfc4bffc5")
         {
             return CreateMockCallAutomationClient(responseCode, responseContent).GetCallConnection(callConnectionId);

@@ -667,5 +667,52 @@ namespace Azure.Communication.CallAutomation
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Mute a single participant on the call.
+        /// </summary>
+        /// <param name="participant"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public virtual Task<Response<MuteParticipantsResponse>> MuteParticipantAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Unmute a single participant on the call.
+        /// </summary>
+        /// <param name="participant"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public virtual Task<Response<UnmuteParticipantsResponse>> UnmuteParticipantAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Mute all participants on the call.
+        /// </summary>
+        /// <param name="initiator"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public virtual Task<Response<MuteParticipantsResponse>> MuteAllParticipantsAsync(CommunicationIdentifier initiator = default, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Unmute all participants on the call.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public virtual Task<Response<UnmuteParticipantsResponse>> UnmuteAllParticipantsAsync(CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
