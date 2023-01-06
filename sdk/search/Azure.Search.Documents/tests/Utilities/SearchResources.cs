@@ -386,7 +386,7 @@ namespace Azure.Search.Documents.Tests
         private async Task<SearchResources> CreateSearchServiceAndIndexAsync(
             bool isSample, Func<string, SearchIndex> getIndex = null)
         {
-            getIndex ??= isSample ? SearchResourcesSample.GetHotelIndexForSample : GetHotelIndex;
+            getIndex ??= isSample ? SearchResourcesSample.GetHotelIndex : GetHotelIndex;
 
             // Create the index
             if (TestFixture.Mode != RecordedTestMode.Playback)

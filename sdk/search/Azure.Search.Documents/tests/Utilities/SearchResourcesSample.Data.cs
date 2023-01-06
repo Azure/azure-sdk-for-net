@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Tests.Samples
         /// </summary>
         /// <param name="name">The name of the index to create.</param>
         /// <returns>A <see cref="SearchIndex"/> for the Hotels sample data.</returns>
-        internal static SearchIndex GetHotelIndexForSample(string name) =>
+        internal static SearchIndex GetHotelIndex(string name) =>
             new SearchIndex(name)
             {
                 Fields =
