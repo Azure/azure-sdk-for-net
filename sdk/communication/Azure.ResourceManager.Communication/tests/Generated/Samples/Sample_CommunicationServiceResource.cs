@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Communication;
 using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Communication
+namespace Azure.ResourceManager.Communication.Samples
 {
     public partial class Sample_CommunicationServiceResource
     {
@@ -26,8 +27,10 @@ namespace Azure.ResourceManager.Communication
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2021-10-01-preview/examples/communicationServices/checkNameAvailabilityAvailable.json
             // this example is just showing the usage of "CommunicationServices_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
@@ -54,8 +57,10 @@ namespace Azure.ResourceManager.Communication
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2021-10-01-preview/examples/communicationServices/checkNameAvailabilityUnavailable.json
             // this example is just showing the usage of "CommunicationServices_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
@@ -82,8 +87,10 @@ namespace Azure.ResourceManager.Communication
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2021-10-01-preview/examples/communicationServices/linkNotificationHub.json
             // this example is just showing the usage of "CommunicationServices_LinkNotificationHub" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CommunicationServiceResource created on azure
             // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
@@ -108,8 +115,10 @@ namespace Azure.ResourceManager.Communication
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2021-10-01-preview/examples/communicationServices/listBySubscription.json
             // this example is just showing the usage of "CommunicationServices_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
@@ -138,8 +147,10 @@ namespace Azure.ResourceManager.Communication
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2021-10-01-preview/examples/communicationServices/update.json
             // this example is just showing the usage of "CommunicationServices_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CommunicationServiceResource created on azure
             // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
@@ -175,8 +186,10 @@ namespace Azure.ResourceManager.Communication
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2021-10-01-preview/examples/communicationServices/get.json
             // this example is just showing the usage of "CommunicationServices_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CommunicationServiceResource created on azure
             // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
@@ -204,8 +217,10 @@ namespace Azure.ResourceManager.Communication
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2021-10-01-preview/examples/communicationServices/delete.json
             // this example is just showing the usage of "CommunicationServices_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CommunicationServiceResource created on azure
             // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
@@ -229,8 +244,10 @@ namespace Azure.ResourceManager.Communication
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2021-10-01-preview/examples/communicationServices/listKeys.json
             // this example is just showing the usage of "CommunicationServices_ListKeys" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CommunicationServiceResource created on azure
             // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
@@ -254,8 +271,10 @@ namespace Azure.ResourceManager.Communication
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2021-10-01-preview/examples/communicationServices/regenerateKey.json
             // this example is just showing the usage of "CommunicationServices_RegenerateKey" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CommunicationServiceResource created on azure
             // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
