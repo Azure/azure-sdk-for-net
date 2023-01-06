@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation.Tests.Infrastructure
@@ -12,13 +13,22 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         protected const string CallConnectionId = "someCallConnectionId";
         protected const string OperationContext = "someOperationContext";
         protected const string CorelationId = "someCorelationId";
+        protected const int defaultTestTimeout = 3;
 
-        protected CallAutomationClient CreateMockCallAutomationClient()
+        protected CallAutomationClient CreateMockCallAutomationClient(CallAutomationClientOptions? options = default)
         {
-            return new CallAutomationClient(ConnectionString);
+            if (options == default)
+            {
+                options = new CallAutomationClientOptions();
+                options.EventHandlerOptions.TimeoutException = TimeSpan.FromSeconds(defaultTestTimeout);
+            }
+
+            return new CallAutomationClient(ConnectionString, options);
         }
 
-        protected void SendAndProcessEvent(CallAutomationEventHandler eventHandler, CallAutomationEventBase eventToBeSent)
+        protected void SendAndProcessEvent(
+            CallAutomationEventHandler eventHandler,
+            CallAutomationEventBase eventToBeSent)
         {
             eventHandler.ProcessEvents(new List<CallAutomationEventBase>() { eventToBeSent });
         }
