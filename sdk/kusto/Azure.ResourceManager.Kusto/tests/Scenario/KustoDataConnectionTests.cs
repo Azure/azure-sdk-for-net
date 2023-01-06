@@ -184,21 +184,21 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
             var cosmosDbDataConnectionName = GenerateAssetName("sdkCosmosDbDataConnection");
 
-            var cosmosDbDataConnectionDataCreate = new KustoCosmosDbDataConnection()
+            var cosmosDbDataConnectionDataCreate = new KustoCosmosDBDataConnection()
             {
-                CosmosDbAccountResourceId = TE.CosmosDbAccountId,
-                CosmosDbDatabase = TE.CosmosDbDatabaseName,
-                CosmosDbContainer = TE.CosmosDbContainerName,
+                CosmosDBAccountResourceId = TE.CosmosDbAccountId,
+                CosmosDBDatabase = TE.CosmosDbDatabaseName,
+                CosmosDBContainer = TE.CosmosDbContainerName,
                 Location = Location,
                 ManagedIdentityResourceId = TE.UserAssignedIdentityId,
                 TableName = TE.TableName
             };
 
-            var cosmosDbDataConnectionDataUpdate = new KustoCosmosDbDataConnection()
+            var cosmosDbDataConnectionDataUpdate = new KustoCosmosDBDataConnection()
             {
-                CosmosDbAccountResourceId = TE.CosmosDbAccountId,
-                CosmosDbDatabase = TE.CosmosDbDatabaseName,
-                CosmosDbContainer = TE.CosmosDbContainerName,
+                CosmosDBAccountResourceId = TE.CosmosDbAccountId,
+                CosmosDBDatabase = TE.CosmosDbDatabaseName,
+                CosmosDBContainer = TE.CosmosDbContainerName,
                 Location = Location,
                 ManagedIdentityResourceId = TE.UserAssignedIdentityId,
                 TableName = TE.TableName,
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             };
 
             Task<ArmOperation<KustoDataConnectionResource>> CreateOrUpdateCosmosDbDataConnectionAsync(
-                string cosmosDbDataConnectionName, KustoCosmosDbDataConnection cosmosDbDataConnectionData
+                string cosmosDbDataConnectionName, KustoCosmosDBDataConnection cosmosDbDataConnectionData
             ) => dataConnectionCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed, cosmosDbDataConnectionName, cosmosDbDataConnectionData
             );
@@ -309,15 +309,15 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         }
         private static void ValidateCosmosDbDataConnection(
             string cosmosDbDataConnectionName,
-            KustoCosmosDbDataConnection expectedCosmosDbDataConnectionData,
-            KustoCosmosDbDataConnection actualCosmosDbDataConnectionData)
+            KustoCosmosDBDataConnection expectedCosmosDbDataConnectionData,
+            KustoCosmosDBDataConnection actualCosmosDbDataConnectionData)
         {
             AssertEquality(expectedCosmosDbDataConnectionData.TableName, actualCosmosDbDataConnectionData.TableName);
             AssertEquality(expectedCosmosDbDataConnectionData.MappingRuleName, actualCosmosDbDataConnectionData.MappingRuleName);
             AssertEquality(expectedCosmosDbDataConnectionData.ManagedIdentityResourceId, actualCosmosDbDataConnectionData.ManagedIdentityResourceId);
-            AssertEquality(expectedCosmosDbDataConnectionData.CosmosDbAccountResourceId, actualCosmosDbDataConnectionData.CosmosDbAccountResourceId);
-            AssertEquality(expectedCosmosDbDataConnectionData.CosmosDbDatabase, actualCosmosDbDataConnectionData.CosmosDbDatabase);
-            AssertEquality(expectedCosmosDbDataConnectionData.CosmosDbContainer, actualCosmosDbDataConnectionData.CosmosDbContainer);
+            AssertEquality(expectedCosmosDbDataConnectionData.CosmosDBAccountResourceId, actualCosmosDbDataConnectionData.CosmosDBAccountResourceId);
+            AssertEquality(expectedCosmosDbDataConnectionData.CosmosDBDatabase, actualCosmosDbDataConnectionData.CosmosDBDatabase);
+            AssertEquality(expectedCosmosDbDataConnectionData.CosmosDBContainer, actualCosmosDbDataConnectionData.CosmosDBContainer);
             Assert.IsTrue(actualCosmosDbDataConnectionData.ManagedIdentityObjectId.HasValue);
             Assert.NotNull(actualCosmosDbDataConnectionData.RetrievalStartOn);
         }

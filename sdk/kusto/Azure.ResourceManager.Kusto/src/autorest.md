@@ -253,6 +253,7 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  Db: DB
 
 directive:
   - from: kusto.json

@@ -828,12 +828,12 @@ namespace Azure.ResourceManager.Kusto.Models
         public string EnginePublicIPId { get { throw null; } set { } }
         public string SubnetId { get { throw null; } set { } }
     }
-    public partial class KustoCosmosDbDataConnection : Azure.ResourceManager.Kusto.KustoDataConnectionData
+    public partial class KustoCosmosDBDataConnection : Azure.ResourceManager.Kusto.KustoDataConnectionData
     {
-        public KustoCosmosDbDataConnection() { }
-        public Azure.Core.ResourceIdentifier CosmosDbAccountResourceId { get { throw null; } set { } }
-        public string CosmosDbContainer { get { throw null; } set { } }
-        public string CosmosDbDatabase { get { throw null; } set { } }
+        public KustoCosmosDBDataConnection() { }
+        public Azure.Core.ResourceIdentifier CosmosDBAccountResourceId { get { throw null; } set { } }
+        public string CosmosDBContainer { get { throw null; } set { } }
+        public string CosmosDBDatabase { get { throw null; } set { } }
         public System.Guid? ManagedIdentityObjectId { get { throw null; } }
         public Azure.Core.ResourceIdentifier ManagedIdentityResourceId { get { throw null; } set { } }
         public string MappingRuleName { get { throw null; } set { } }
