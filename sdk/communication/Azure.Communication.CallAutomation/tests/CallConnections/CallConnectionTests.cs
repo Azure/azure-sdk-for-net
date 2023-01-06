@@ -439,6 +439,71 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             Assert.AreEqual(connectionId, response.CallConnectionId);
         }
 
+        [TestCaseSource(nameof(TestData_MuteParticipant))]
+        public void MuteParticipant_202Accepted(CommunicationIdentifier participant)
+        {
+            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+
+            // TODO: to fill this when working on SDK.
+            //var response = callConnection.UnmuteParticipant(participant);
+            //Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            //Assert.AreEqual(OperationContext, response.Value.OperationContext);
+            NotImplementedException? ex = Assert.Throws<NotImplementedException>(() => callConnection.MuteParticipant(participant));
+            Assert.NotNull(ex);
+        }
+
+        [Test]
+        public void MuteAllParticipants_NoInitiator_202Accepted()
+        {
+            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+
+            // TODO: to fill this when working on SDK.
+            //var response = callConnection.MuteAllParticipants();
+            //Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            //Assert.AreEqual(OperationContext, response.Value.OperationContext);
+            NotImplementedException? ex = Assert.Throws<NotImplementedException>(() => callConnection.MuteAllParticipants());
+            Assert.NotNull(ex);
+        }
+
+        [TestCaseSource(nameof(TestData_MuteParticipant))]
+        public void MuteAllParticipants_WithInitiator_202Accepted(CommunicationIdentifier initiator)
+        {
+            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+
+            // TODO: to fill this when working on SDK.
+            //var response = callConnection.MuteAllParticipants(initiator);
+            //Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            //Assert.AreEqual(OperationContext, response.Value.OperationContext);
+            NotImplementedException? ex = Assert.Throws<NotImplementedException>(() => callConnection.MuteAllParticipants(initiator));
+            Assert.NotNull(ex);
+        }
+
+        [TestCaseSource(nameof(TestData_MuteParticipant))]
+        public void UnmuteParticipant_202Accepted(CommunicationIdentifier participant)
+        {
+            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+
+            // TODO: to fill this when working on SDK.
+            //var response = callConnection.MuteParticipant(participant);
+            //Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            //Assert.AreEqual(OperationContext, response.Value.OperationContext);
+            NotImplementedException? ex = Assert.Throws<NotImplementedException>(() => callConnection.UnmuteParticipant(participant));
+            Assert.NotNull(ex);
+        }
+
+        [Test]
+        public void UnmuteAllParticipants_202Accepted()
+        {
+            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+
+            // TODO: to fill this when working on SDK.
+            //var response = callConnection.UnmuteAllParticipants();
+            //Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            //Assert.AreEqual(OperationContext, response.Value.OperationContext);
+            NotImplementedException? ex = Assert.Throws<NotImplementedException>(() => callConnection.UnmuteAllParticipants());
+            Assert.NotNull(ex);
+        }
+
         private CallConnection CreateMockCallConnection(int responseCode, string? responseContent = null, string callConnectionId = "9ec7da16-30be-4e74-a941-285cfc4bffc5")
         {
             return CreateMockCallAutomationClient(responseCode, responseContent).GetCallConnection(callConnectionId);
@@ -495,6 +560,17 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 new object?[]
                 {
                     new CommunicationIdentifier[] { new CommunicationUserIdentifier("userId"), new PhoneNumberIdentifier("+1234567") }
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_MuteParticipant()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    new CommunicationUserIdentifier("userId")
                 },
             };
         }

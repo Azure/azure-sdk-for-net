@@ -625,5 +625,47 @@ namespace Azure.Communication.CallAutomation
                 throw;
             }
         }
+
+        /// <summary>
+        /// Mute a single participant on the call.
+        /// </summary>
+        /// <param name="participant"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public virtual Response<MuteParticipantsResponse> MuteParticipant(CommunicationIdentifier participant)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Unmute a single participant on the call.
+        /// </summary>
+        /// <param name="participant"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public virtual Response<UnmuteParticipantsResponse> UnmuteParticipant(CommunicationIdentifier participant)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Mute all participants on the call.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public virtual Response<MuteParticipantsResponse> MuteAllParticipants(CommunicationIdentifier initiator = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Unmute all participants on the call.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public virtual Response<UnmuteParticipantsResponse> UnmuteAllParticipants()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
