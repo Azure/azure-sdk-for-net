@@ -27,21 +27,21 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             );
         }
 
-        /// <summary> Gets a collection of ExtensionResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of KubernetesClusterExtensionResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
         /// <param name="clusterResourceName"> The Kubernetes cluster resource name - i.e. managedClusters, connectedClusters, provisionedClusters. </param>
         /// <param name="clusterName"> The name of the kubernetes cluster. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is null. </exception>
-        /// <returns> An object representing collection of ExtensionResources and their operations over a ExtensionResource. </returns>
-        public static ExtensionCollection GetExtensions(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName)
+        /// <returns> An object representing collection of KubernetesClusterExtensionResources and their operations over a KubernetesClusterExtensionResource. </returns>
+        public static KubernetesClusterExtensionCollection GetKubernetesClusterExtensions(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName)
         {
             Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
             Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            return GetExtensionClient(resourceGroupResource).GetExtensions(clusterRp, clusterResourceName, clusterName);
+            return GetExtensionClient(resourceGroupResource).GetKubernetesClusterExtensions(clusterRp, clusterResourceName, clusterName);
         }
 
         /// <summary>
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="extensionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ExtensionResource>> GetExtensionAsync(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string extensionName, CancellationToken cancellationToken = default)
+        public static async Task<Response<KubernetesClusterExtensionResource>> GetKubernetesClusterExtensionAsync(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string extensionName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetExtensions(clusterRp, clusterResourceName, clusterName).GetAsync(extensionName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetKubernetesClusterExtensions(clusterRp, clusterResourceName, clusterName).GetAsync(extensionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -77,26 +77,26 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="extensionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ExtensionResource> GetExtension(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string extensionName, CancellationToken cancellationToken = default)
+        public static Response<KubernetesClusterExtensionResource> GetKubernetesClusterExtension(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string extensionName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetExtensions(clusterRp, clusterResourceName, clusterName).Get(extensionName, cancellationToken);
+            return resourceGroupResource.GetKubernetesClusterExtensions(clusterRp, clusterResourceName, clusterName).Get(extensionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of FluxConfigurationResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of KubernetesFluxConfigurationResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
         /// <param name="clusterResourceName"> The Kubernetes cluster resource name - i.e. managedClusters, connectedClusters, provisionedClusters. </param>
         /// <param name="clusterName"> The name of the kubernetes cluster. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is null. </exception>
-        /// <returns> An object representing collection of FluxConfigurationResources and their operations over a FluxConfigurationResource. </returns>
-        public static FluxConfigurationCollection GetFluxConfigurations(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName)
+        /// <returns> An object representing collection of KubernetesFluxConfigurationResources and their operations over a KubernetesFluxConfigurationResource. </returns>
+        public static KubernetesFluxConfigurationCollection GetKubernetesFluxConfigurations(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName)
         {
             Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
             Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            return GetExtensionClient(resourceGroupResource).GetFluxConfigurations(clusterRp, clusterResourceName, clusterName);
+            return GetExtensionClient(resourceGroupResource).GetKubernetesFluxConfigurations(clusterRp, clusterResourceName, clusterName);
         }
 
         /// <summary>
@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="fluxConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="fluxConfigurationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<FluxConfigurationResource>> GetFluxConfigurationAsync(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, CancellationToken cancellationToken = default)
+        public static async Task<Response<KubernetesFluxConfigurationResource>> GetKubernetesFluxConfigurationAsync(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetFluxConfigurations(clusterRp, clusterResourceName, clusterName).GetAsync(fluxConfigurationName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetKubernetesFluxConfigurations(clusterRp, clusterResourceName, clusterName).GetAsync(fluxConfigurationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -132,26 +132,26 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="fluxConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="fluxConfigurationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<FluxConfigurationResource> GetFluxConfiguration(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, CancellationToken cancellationToken = default)
+        public static Response<KubernetesFluxConfigurationResource> GetKubernetesFluxConfiguration(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetFluxConfigurations(clusterRp, clusterResourceName, clusterName).Get(fluxConfigurationName, cancellationToken);
+            return resourceGroupResource.GetKubernetesFluxConfigurations(clusterRp, clusterResourceName, clusterName).Get(fluxConfigurationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SourceControlConfigurationResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of KubernetesSourceControlConfigurationResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
         /// <param name="clusterResourceName"> The Kubernetes cluster resource name - i.e. managedClusters, connectedClusters, provisionedClusters. </param>
         /// <param name="clusterName"> The name of the kubernetes cluster. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is null. </exception>
-        /// <returns> An object representing collection of SourceControlConfigurationResources and their operations over a SourceControlConfigurationResource. </returns>
-        public static SourceControlConfigurationCollection GetSourceControlConfigurations(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName)
+        /// <returns> An object representing collection of KubernetesSourceControlConfigurationResources and their operations over a KubernetesSourceControlConfigurationResource. </returns>
+        public static KubernetesSourceControlConfigurationCollection GetKubernetesSourceControlConfigurations(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName)
         {
             Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
             Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
-            return GetExtensionClient(resourceGroupResource).GetSourceControlConfigurations(clusterRp, clusterResourceName, clusterName);
+            return GetExtensionClient(resourceGroupResource).GetKubernetesSourceControlConfigurations(clusterRp, clusterResourceName, clusterName);
         }
 
         /// <summary>
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="sourceControlConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="sourceControlConfigurationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SourceControlConfigurationResource>> GetSourceControlConfigurationAsync(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, CancellationToken cancellationToken = default)
+        public static async Task<Response<KubernetesSourceControlConfigurationResource>> GetKubernetesSourceControlConfigurationAsync(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSourceControlConfigurations(clusterRp, clusterResourceName, clusterName).GetAsync(sourceControlConfigurationName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetKubernetesSourceControlConfigurations(clusterRp, clusterResourceName, clusterName).GetAsync(sourceControlConfigurationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -187,63 +187,63 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="sourceControlConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/>, <paramref name="clusterName"/> or <paramref name="sourceControlConfigurationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SourceControlConfigurationResource> GetSourceControlConfiguration(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, CancellationToken cancellationToken = default)
+        public static Response<KubernetesSourceControlConfigurationResource> GetKubernetesSourceControlConfiguration(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSourceControlConfigurations(clusterRp, clusterResourceName, clusterName).Get(sourceControlConfigurationName, cancellationToken);
+            return resourceGroupResource.GetKubernetesSourceControlConfigurations(clusterRp, clusterResourceName, clusterName).Get(sourceControlConfigurationName, cancellationToken);
         }
 
-        #region ExtensionResource
+        #region KubernetesClusterExtensionResource
         /// <summary>
-        /// Gets an object representing an <see cref="ExtensionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExtensionResource.CreateResourceIdentifier" /> to create an <see cref="ExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KubernetesClusterExtensionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KubernetesClusterExtensionResource.CreateResourceIdentifier" /> to create a <see cref="KubernetesClusterExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExtensionResource" /> object. </returns>
-        public static ExtensionResource GetExtensionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="KubernetesClusterExtensionResource" /> object. </returns>
+        public static KubernetesClusterExtensionResource GetKubernetesClusterExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ExtensionResource.ValidateResourceId(id);
-                return new ExtensionResource(client, id);
+                KubernetesClusterExtensionResource.ValidateResourceId(id);
+                return new KubernetesClusterExtensionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region FluxConfigurationResource
+        #region KubernetesFluxConfigurationResource
         /// <summary>
-        /// Gets an object representing a <see cref="FluxConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FluxConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="FluxConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KubernetesFluxConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KubernetesFluxConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="KubernetesFluxConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FluxConfigurationResource" /> object. </returns>
-        public static FluxConfigurationResource GetFluxConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="KubernetesFluxConfigurationResource" /> object. </returns>
+        public static KubernetesFluxConfigurationResource GetKubernetesFluxConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                FluxConfigurationResource.ValidateResourceId(id);
-                return new FluxConfigurationResource(client, id);
+                KubernetesFluxConfigurationResource.ValidateResourceId(id);
+                return new KubernetesFluxConfigurationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region SourceControlConfigurationResource
+        #region KubernetesSourceControlConfigurationResource
         /// <summary>
-        /// Gets an object representing a <see cref="SourceControlConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SourceControlConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SourceControlConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KubernetesSourceControlConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KubernetesSourceControlConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="KubernetesSourceControlConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SourceControlConfigurationResource" /> object. </returns>
-        public static SourceControlConfigurationResource GetSourceControlConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="KubernetesSourceControlConfigurationResource" /> object. </returns>
+        public static KubernetesSourceControlConfigurationResource GetKubernetesSourceControlConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                SourceControlConfigurationResource.ValidateResourceId(id);
-                return new SourceControlConfigurationResource(client, id);
+                KubernetesSourceControlConfigurationResource.ValidateResourceId(id);
+                return new KubernetesSourceControlConfigurationResource(client, id);
             }
             );
         }

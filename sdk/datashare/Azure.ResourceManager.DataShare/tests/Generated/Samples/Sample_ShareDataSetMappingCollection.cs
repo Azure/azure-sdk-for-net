@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.DataShare.Models;
 
-namespace Azure.ResourceManager.DataShare
+namespace Azure.ResourceManager.DataShare.Samples
 {
     public partial class Sample_ShareDataSetMappingCollection
     {
@@ -25,8 +26,10 @@ namespace Azure.ResourceManager.DataShare
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSetMappings_Get.json
             // this example is just showing the usage of "DataSetMappings_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareSubscriptionResource created on azure
             // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
@@ -59,8 +62,10 @@ namespace Azure.ResourceManager.DataShare
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSetMappings_Get.json
             // this example is just showing the usage of "DataSetMappings_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareSubscriptionResource created on azure
             // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
@@ -89,8 +94,10 @@ namespace Azure.ResourceManager.DataShare
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSetMappings_Create.json
             // this example is just showing the usage of "DataSetMappings_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareSubscriptionResource created on azure
             // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
@@ -106,10 +113,7 @@ namespace Azure.ResourceManager.DataShare
 
             // invoke the operation
             string dataSetMappingName = "DatasetMapping1";
-            ShareDataSetMappingData data = new ShareDataSetMappingData()
-            {
-                Kind = DataSetMappingKind.Blob,
-            };
+            ShareDataSetMappingData data = new BlobDataSetMapping("C1", Guid.Parse("a08f184b-0567-4b11-ba22-a1199336d226"), "file21", "SampleResourceGroup", "storage2", "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a");
             ArmOperation<ShareDataSetMappingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataSetMappingName, data);
             ShareDataSetMappingResource result = lro.Value;
 
@@ -128,8 +132,10 @@ namespace Azure.ResourceManager.DataShare
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSetMappings_SqlDB_Create.json
             // this example is just showing the usage of "DataSetMappings_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareSubscriptionResource created on azure
             // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
@@ -145,10 +151,7 @@ namespace Azure.ResourceManager.DataShare
 
             // invoke the operation
             string dataSetMappingName = "DatasetMapping1";
-            ShareDataSetMappingData data = new ShareDataSetMappingData()
-            {
-                Kind = DataSetMappingKind.SqlDBTable,
-            };
+            ShareDataSetMappingData data = new SqlDBTableDataSetMapping("Database1", Guid.Parse("a08f184b-0567-4b11-ba22-a1199336d226"), "dbo", new ResourceIdentifier("/subscriptions/433a8dfd-e5d5-4e77-ad86-90acdc75eb1a/resourceGroups/SampleResourceGroup/providers/Microsoft.Sql/servers/Server1"), "Table1");
             ArmOperation<ShareDataSetMappingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataSetMappingName, data);
             ShareDataSetMappingResource result = lro.Value;
 
@@ -167,8 +170,10 @@ namespace Azure.ResourceManager.DataShare
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSetMappings_SqlDWDataSetToAdlsGen2File_Create.json
             // this example is just showing the usage of "DataSetMappings_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareSubscriptionResource created on azure
             // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
@@ -184,9 +189,9 @@ namespace Azure.ResourceManager.DataShare
 
             // invoke the operation
             string dataSetMappingName = "DatasetMapping1";
-            ShareDataSetMappingData data = new ShareDataSetMappingData()
+            ShareDataSetMappingData data = new AdlsGen2FileDataSetMapping(Guid.Parse("a08f184b-0567-4b11-ba22-a1199336d226"), "file21", "fileSystem", "SampleResourceGroup", "storage2", "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a")
             {
-                Kind = DataSetMappingKind.AdlsGen2File,
+                OutputType = DataShareOutputType.Csv,
             };
             ArmOperation<ShareDataSetMappingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataSetMappingName, data);
             ShareDataSetMappingResource result = lro.Value;
@@ -206,8 +211,10 @@ namespace Azure.ResourceManager.DataShare
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSetMappings_SqlDW_Create.json
             // this example is just showing the usage of "DataSetMappings_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareSubscriptionResource created on azure
             // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
@@ -223,10 +230,7 @@ namespace Azure.ResourceManager.DataShare
 
             // invoke the operation
             string dataSetMappingName = "DatasetMapping1";
-            ShareDataSetMappingData data = new ShareDataSetMappingData()
-            {
-                Kind = DataSetMappingKind.SqlDWTable,
-            };
+            ShareDataSetMappingData data = new SqlDWTableDataSetMapping(Guid.Parse("a08f184b-0567-4b11-ba22-a1199336d226"), "DataWarehouse1", "dbo", new ResourceIdentifier("/subscriptions/433a8dfd-e5d5-4e77-ad86-90acdc75eb1a/resourceGroups/SampleResourceGroup/providers/Microsoft.Sql/servers/Server1"), "Table1");
             ArmOperation<ShareDataSetMappingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataSetMappingName, data);
             ShareDataSetMappingResource result = lro.Value;
 
@@ -245,8 +249,10 @@ namespace Azure.ResourceManager.DataShare
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSetMappings_SynapseWorkspaceSqlPoolTable_Create.json
             // this example is just showing the usage of "DataSetMappings_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareSubscriptionResource created on azure
             // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
@@ -262,10 +268,7 @@ namespace Azure.ResourceManager.DataShare
 
             // invoke the operation
             string dataSetMappingName = "datasetMappingName1";
-            ShareDataSetMappingData data = new ShareDataSetMappingData()
-            {
-                Kind = DataSetMappingKind.SynapseWorkspaceSqlPoolTable,
-            };
+            ShareDataSetMappingData data = new SynapseWorkspaceSqlPoolTableDataSetMapping(Guid.Parse("3dc64e49-1fc3-4186-b3dc-d388c4d3076a"), new ResourceIdentifier("/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/SampleResourceGroup/providers/Microsoft.Synapse/workspaces/ExampleWorkspace/sqlPools/ExampleSqlPool/schemas/dbo/tables/table1"));
             ArmOperation<ShareDataSetMappingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataSetMappingName, data);
             ShareDataSetMappingResource result = lro.Value;
 
@@ -284,8 +287,10 @@ namespace Azure.ResourceManager.DataShare
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSetMappings_ListByShareSubscription.json
             // this example is just showing the usage of "DataSetMappings_ListByShareSubscription" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareSubscriptionResource created on azure
             // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource

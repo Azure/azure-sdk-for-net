@@ -20,16 +20,16 @@ parameters:
 jobs:
 - job: PreparePipelines
   pool:
-    name: azsdk-pool-mms-ubuntu-2004-general
-    vmImage: MMSUbuntu20.04
+    name: azsdk-pool-mms-ubuntu-2204-general
+    vmImage: MMSUbuntu22.04
   steps:
-    - template: install-pipeline-generation.yml
+    - template: /eng/common/pipelines/templates/steps/install-pipeline-generation.yml
     - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
     # This covers our public repos.
     - ${{ if not(endsWith(parameters.Repository, '-pr'))}}:
       - script: >
-          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator
-          --organization https://dev.azure.com/azure-sdk
+          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
+          --organization azure-sdk
           --project public
           --prefix ${{parameters.Prefix}}
           --devopspath "\${{parameters.Prefix}}"
@@ -47,8 +47,8 @@ jobs:
         env:
           PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
       - script: >
-          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator
-          --organization https://dev.azure.com/azure-sdk
+          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
+          --organization azure-sdk
           --project internal
           --prefix ${{parameters.Prefix}}
           --devopspath "\${{parameters.Prefix}}"
@@ -66,8 +66,8 @@ jobs:
         env:
           PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
       - script: >
-          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator
-          --organization https://dev.azure.com/azure-sdk
+          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
+          --organization azure-sdk
           --project internal
           --prefix ${{parameters.Prefix}}
           --devopspath "\${{parameters.Prefix}}"
@@ -86,8 +86,8 @@ jobs:
         env:
           PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
       - script: >
-          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator
-          --organization https://dev.azure.com/azure-sdk
+          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
+          --organization azure-sdk
           --project internal
           --prefix ${{parameters.Prefix}}
           --devopspath "\${{parameters.Prefix}}"
@@ -106,8 +106,8 @@ jobs:
         env:
           PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
       - script: >
-          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator
-          --organization https://dev.azure.com/azure-sdk
+          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
+          --organization azure-sdk
           --project internal
           --prefix ${{parameters.Prefix}}
           --devopspath "\${{parameters.Prefix}}"
@@ -130,8 +130,8 @@ jobs:
     # This covers our -pr repositories.
     - ${{ if endsWith(parameters.Repository, '-pr')}}:
       - script: >
-          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator
-          --organization https://dev.azure.com/azure-sdk
+          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
+          --organization azure-sdk
           --project internal
           --prefix ${{parameters.Prefix}}-pr
           --devopspath "\${{parameters.Prefix}}\pr"
@@ -150,8 +150,8 @@ jobs:
         env:
           PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
       - script: >
-          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator
-          --organization https://dev.azure.com/azure-sdk
+          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
+          --organization azure-sdk
           --project internal
           --prefix ${{parameters.Prefix}}-pr
           --devopspath "\${{parameters.Prefix}}\pr"
@@ -170,8 +170,8 @@ jobs:
         env:
           PATVAR: $(azuresdk-azure-sdk-devops-pipeline-generation-pat)
       - script: >
-          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator
-          --organization https://dev.azure.com/azure-sdk
+          $(Pipeline.Workspace)/pipeline-generator/pipeline-generator generate
+          --organization azure-sdk
           --project internal
           --prefix ${{parameters.Prefix}}-pr
           --devopspath "\${{parameters.Prefix}}\pr"

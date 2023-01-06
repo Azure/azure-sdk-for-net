@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Kusto;
 using Azure.ResourceManager.Kusto.Models;
 
-namespace Azure.ResourceManager.Kusto
+namespace Azure.ResourceManager.Kusto.Samples
 {
     public partial class Sample_KustoDataConnectionResource
     {
@@ -25,8 +26,10 @@ namespace Azure.ResourceManager.Kusto
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDataConnectionsEventGridGet.json
             // this example is just showing the usage of "DataConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this KustoDataConnectionResource created on azure
             // for more information of creating KustoDataConnectionResource, please refer to the document of KustoDataConnectionResource
@@ -56,8 +59,10 @@ namespace Azure.ResourceManager.Kusto
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDataConnectionsGet.json
             // this example is just showing the usage of "DataConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this KustoDataConnectionResource created on azure
             // for more information of creating KustoDataConnectionResource, please refer to the document of KustoDataConnectionResource
@@ -87,8 +92,10 @@ namespace Azure.ResourceManager.Kusto
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDataConnectionsEventGridUpdate.json
             // this example is just showing the usage of "DataConnections_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this KustoDataConnectionResource created on azure
             // for more information of creating KustoDataConnectionResource, please refer to the document of KustoDataConnectionResource
@@ -101,10 +108,20 @@ namespace Azure.ResourceManager.Kusto
             KustoDataConnectionResource kustoDataConnection = client.GetKustoDataConnectionResource(kustoDataConnectionResourceId);
 
             // invoke the operation
-            KustoDataConnectionData data = new KustoDataConnectionData()
+            KustoDataConnectionData data = new KustoEventGridDataConnection()
             {
+                StorageAccountResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.Storage/storageAccounts/teststorageaccount"),
+                EventGridResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.Storage/storageAccounts/teststorageaccount/providers/Microsoft.EventGrid/eventSubscriptions/eventSubscriptionTest"),
+                EventHubResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.EventHub/namespaces/eventhubTestns1/eventhubs/eventhubTest2"),
+                ConsumerGroup = "$Default",
+                TableName = "TestTable",
+                MappingRuleName = "TestMapping",
+                DataFormat = KustoEventGridDataFormat.Json,
+                IsFirstRecordIgnored = false,
+                BlobStorageEventType = BlobStorageEventType.MicrosoftStorageBlobCreated,
+                ManagedIdentityResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/managedidentityTest1"),
+                DatabaseRouting = KustoDatabaseRouting.Single,
                 Location = new AzureLocation("westus"),
-                Kind = DataConnectionKind.EventGrid,
             };
             ArmOperation<KustoDataConnectionResource> lro = await kustoDataConnection.UpdateAsync(WaitUntil.Completed, data);
             KustoDataConnectionResource result = lro.Value;
@@ -124,8 +141,10 @@ namespace Azure.ResourceManager.Kusto
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDataConnectionsUpdate.json
             // this example is just showing the usage of "DataConnections_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this KustoDataConnectionResource created on azure
             // for more information of creating KustoDataConnectionResource, please refer to the document of KustoDataConnectionResource
@@ -138,10 +157,12 @@ namespace Azure.ResourceManager.Kusto
             KustoDataConnectionResource kustoDataConnection = client.GetKustoDataConnectionResource(kustoDataConnectionResourceId);
 
             // invoke the operation
-            KustoDataConnectionData data = new KustoDataConnectionData()
+            KustoDataConnectionData data = new KustoEventHubDataConnection()
             {
+                EventHubResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.EventHub/namespaces/eventhubTestns1/eventhubs/eventhubTest1"),
+                ConsumerGroup = "testConsumerGroup1",
+                ManagedIdentityResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/managedidentityTest1"),
                 Location = new AzureLocation("westus"),
-                Kind = DataConnectionKind.EventHub,
             };
             ArmOperation<KustoDataConnectionResource> lro = await kustoDataConnection.UpdateAsync(WaitUntil.Completed, data);
             KustoDataConnectionResource result = lro.Value;
@@ -161,8 +182,10 @@ namespace Azure.ResourceManager.Kusto
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2022-07-07/examples/KustoDataConnectionsDelete.json
             // this example is just showing the usage of "DataConnections_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this KustoDataConnectionResource created on azure
             // for more information of creating KustoDataConnectionResource, please refer to the document of KustoDataConnectionResource

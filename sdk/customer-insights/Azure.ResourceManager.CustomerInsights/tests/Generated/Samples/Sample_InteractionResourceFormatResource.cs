@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.CustomerInsights;
 using Azure.ResourceManager.CustomerInsights.Models;
 
-namespace Azure.ResourceManager.CustomerInsights
+namespace Azure.ResourceManager.CustomerInsights.Samples
 {
     public partial class Sample_InteractionResourceFormatResource
     {
@@ -25,8 +26,10 @@ namespace Azure.ResourceManager.CustomerInsights
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/InteractionsCreateOrUpdate.json
             // this example is just showing the usage of "Interactions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this InteractionResourceFormatResource created on azure
             // for more information of creating InteractionResourceFormatResource, please refer to the document of InteractionResourceFormatResource
@@ -76,8 +79,10 @@ IsRequired = true,
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/InteractionsGet.json
             // this example is just showing the usage of "Interactions_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this InteractionResourceFormatResource created on azure
             // for more information of creating InteractionResourceFormatResource, please refer to the document of InteractionResourceFormatResource
@@ -106,8 +111,10 @@ IsRequired = true,
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/InteractionsSuggestRelationshipLinks.json
             // this example is just showing the usage of "Interactions_SuggestRelationshipLinks" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this InteractionResourceFormatResource created on azure
             // for more information of creating InteractionResourceFormatResource, please refer to the document of InteractionResourceFormatResource

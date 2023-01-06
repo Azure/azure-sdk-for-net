@@ -31,7 +31,21 @@ namespace Azure.Core
             }
             if (!query.Contains(signature))
             {
-                query = string.IsNullOrEmpty(query) ? '?' + signature : query + '&' + signature;
+                bool setSignature = false;
+                // check if the signature has updated since we started processing this message
+                if (message.ProcessingContext.StartTime.Ticks < _credential.SignatureUpdated)
+                {
+                    string previousSig = _credential.PreviousSignature;
+                    if (query.Contains(previousSig))
+                    {
+                        query = query.Replace(previousSig, signature);
+                        setSignature = true;
+                    }
+                }
+                if (!setSignature)
+                {
+                    query = string.IsNullOrEmpty(query) ? '?' + signature : query + '&' + signature;
+                }
                 message.Request.Uri.Query = query;
             }
 
