@@ -467,7 +467,7 @@ namespace Azure.Core
         public System.Threading.CancellationToken CancellationToken { get { throw null; } }
         public bool HasResponse { get { throw null; } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
-        public Azure.Core.ProcessingContext ProcessingContext { get { throw null; } }
+        public Azure.Core.MessageProcessingContext ProcessingContext { get { throw null; } }
         public Azure.Core.Request Request { get { throw null; } }
         public Azure.Response Response { get { throw null; } set { } }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
@@ -484,18 +484,18 @@ namespace Azure.Core
         PerRetry = 1,
         BeforeTransport = 2,
     }
-    public static partial class MultipartResponse
-    {
-        public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProcessingContext
+    public readonly partial struct MessageProcessingContext
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public int RetryNumber { get { throw null; } set { } }
         public System.DateTimeOffset StartTime { get { throw null; } }
+    }
+    public static partial class MultipartResponse
+    {
+        public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public abstract partial class Request : System.IDisposable
     {
