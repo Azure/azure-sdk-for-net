@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ManagedEnvironmentStorageProperties DeserializeManagedEnvironmentStorageProperties(JsonElement element)
         {
-            Optional<AzureFileProperties> azureFile = default;
+            Optional<ContainerAppAzureFileProperties> azureFile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureFile"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    azureFile = AzureFileProperties.DeserializeAzureFileProperties(property.Value);
+                    azureFile = ContainerAppAzureFileProperties.DeserializeContainerAppAzureFileProperties(property.Value);
                     continue;
                 }
             }

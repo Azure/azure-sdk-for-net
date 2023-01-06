@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of ManagedEnvironmentStorageProperties. </summary>
         /// <param name="azureFile"> Azure file properties. </param>
-        internal ManagedEnvironmentStorageProperties(AzureFileProperties azureFile)
+        internal ManagedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile)
         {
             AzureFile = azureFile;
         }
 
         /// <summary> Azure file properties. </summary>
-        public AzureFileProperties AzureFile { get; set; }
+        public ContainerAppAzureFileProperties AzureFile { get; set; }
     }
 }

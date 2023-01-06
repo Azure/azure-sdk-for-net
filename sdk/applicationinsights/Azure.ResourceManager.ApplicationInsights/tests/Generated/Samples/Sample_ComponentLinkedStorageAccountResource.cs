@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ApplicationInsights;
 using Azure.ResourceManager.ApplicationInsights.Models;
 
-namespace Azure.ResourceManager.ApplicationInsights
+namespace Azure.ResourceManager.ApplicationInsights.Samples
 {
     public partial class Sample_ComponentLinkedStorageAccountResource
     {
@@ -25,8 +26,10 @@ namespace Azure.ResourceManager.ApplicationInsights
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/preview/2020-03-01-preview/examples/ComponentLinkedStorageAccountsGet.json
             // this example is just showing the usage of "ComponentLinkedStorageAccounts_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ComponentLinkedStorageAccountResource created on azure
             // for more information of creating ComponentLinkedStorageAccountResource, please refer to the document of ComponentLinkedStorageAccountResource
@@ -55,8 +58,10 @@ namespace Azure.ResourceManager.ApplicationInsights
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/preview/2020-03-01-preview/examples/ComponentLinkedStorageAccountsUpdate.json
             // this example is just showing the usage of "ComponentLinkedStorageAccounts_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ComponentLinkedStorageAccountResource created on azure
             // for more information of creating ComponentLinkedStorageAccountResource, please refer to the document of ComponentLinkedStorageAccountResource
@@ -89,8 +94,10 @@ namespace Azure.ResourceManager.ApplicationInsights
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/preview/2020-03-01-preview/examples/ComponentLinkedStorageAccountsDelete.json
             // this example is just showing the usage of "ComponentLinkedStorageAccounts_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ComponentLinkedStorageAccountResource created on azure
             // for more information of creating ComponentLinkedStorageAccountResource, please refer to the document of ComponentLinkedStorageAccountResource

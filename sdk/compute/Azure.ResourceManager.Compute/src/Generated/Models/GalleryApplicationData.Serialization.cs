@@ -64,6 +64,16 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("supportedOSType");
                 writer.WriteStringValue(SupportedOSType.Value.ToSerialString());
             }
+            if (Optional.IsCollectionDefined(CustomActions))
+            {
+                writer.WritePropertyName("customActions");
+                writer.WriteStartArray();
+                foreach (var item in CustomActions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -82,6 +92,7 @@ namespace Azure.ResourceManager.Compute
             Optional<Uri> releaseNoteUri = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
             Optional<SupportedOperatingSystemType> supportedOSType = default;
+            Optional<IList<GalleryApplicationCustomAction>> customActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -188,11 +199,26 @@ namespace Azure.ResourceManager.Compute
                             supportedOSType = property0.Value.GetString().ToSupportedOperatingSystemType();
                             continue;
                         }
+                        if (property0.NameEquals("customActions"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<GalleryApplicationCustomAction> array = new List<GalleryApplicationCustomAction>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(GalleryApplicationCustomAction.DeserializeGalleryApplicationCustomAction(item));
+                            }
+                            customActions = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new GalleryApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(endOfLifeDate), Optional.ToNullable(supportedOSType));
+            return new GalleryApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(endOfLifeDate), Optional.ToNullable(supportedOSType), Optional.ToList(customActions));
         }
     }
 }

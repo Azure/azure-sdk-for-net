@@ -101,6 +101,22 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override string SessionId { get; protected set; }
         public override DateTimeOffset SessionLockedUntil { get; protected set; }
 
+        public override int PrefetchCount
+        {
+            get => _prefetchCount;
+            set
+            {
+                Argument.AssertAtLeast(value, 0, nameof(PrefetchCount));
+                _prefetchCount = value;
+                if (_receiveLink.TryGetOpenedObject(out var link))
+                {
+                    link.SetTotalLinkCredit((uint)value, true, true);
+                }
+            }
+        }
+
+        private volatile int _prefetchCount;
+
         private Exception LinkException { get; set; }
 
         /// <summary>
@@ -172,6 +188,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _isSessionReceiver = isSessionReceiver;
             _isProcessor = isProcessor;
             _receiveMode = receiveMode;
+            _prefetchCount = (int)prefetchCount;
             Identifier = identifier;
             RequestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
             SessionId = sessionId;
