@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    internal partial class SkuDescriptionList
+    internal partial class KustoSkuDescriptionList
     {
-        internal static SkuDescriptionList DeserializeSkuDescriptionList(JsonElement element)
+        internal static KustoSkuDescriptionList DeserializeKustoSkuDescriptionList(JsonElement element)
         {
             Optional<IReadOnlyList<KustoSkuDescription>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     continue;
                 }
             }
-            return new SkuDescriptionList(Optional.ToList(value));
+            return new KustoSkuDescriptionList(Optional.ToList(value));
         }
     }
 }
