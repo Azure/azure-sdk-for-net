@@ -159,7 +159,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             }
 
             #endregion Snippet:StartPurchaseSearch
-            
+
             Assert.AreEqual(purchaseOperation.GetRawResponse().Status, 200);
 
             #region Snippet:GetPurchasedPhoneNumbers
