@@ -827,7 +827,7 @@ function UpdateExistingSDKByInputFiles()
         $serviceType = $matches["serviceType"]
         $projectFolder = Join-Path $sdkRootPath $sdkPath
         $projectFolder = Resolve-Path -Path $projectFolder
-        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix "$downloadUrlPrefix" -servieType $serviceType -generatedSDKPackages $generatedSDKPackages
+        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix "$downloadUrlPrefix" -serviceType $serviceType -generatedSDKPackages $generatedSDKPackages
     }
     
 }
