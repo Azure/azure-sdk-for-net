@@ -70,11 +70,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 batchSizeBytes: 500,
                 batchMessageStore: backingList,
                 batchOptions: new CreateMessageBatchOptions(),
-                tryAddCallback: _=> backingList.Count < batchCountThreshold
-                {
-                    int messageCount = backingList.Count;
-                    return messageCount < batchCountThreshold;
-                });
+                tryAddCallback: _=> backingList.Count < batchCountThreshold);
 
             mockSender
                 .Setup(sender => sender.CreateMessageBatchAsync(
