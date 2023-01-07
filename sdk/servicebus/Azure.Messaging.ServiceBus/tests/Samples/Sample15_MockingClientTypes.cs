@@ -62,7 +62,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 .Setup(client => client.CreateSender(It.IsAny<string>()))
                 .Returns(mockSender.Object);
 
-            List<ServiceBusMessage> backingList = new List<ServiceBusMessage>();
+            List<ServiceBusMessage> backingList = new();
 
             int batchCountThreshold = 5;
 
@@ -95,9 +95,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
             ServiceBusSender sender = client.CreateSender("mockQueueName");
 
-            CancellationTokenSource cancellationTokenSource = new();
-
-            ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync(cancellationTokenSource.Token);
+            ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync(CancellationToken.None);
 
             List<ServiceBusMessage> sourceMessages = new();
 
@@ -283,16 +281,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 await sender.SendMessageAsync(message);
             }
 
-            CancellationTokenSource cancellationTokenSource = new();
             TimeSpan maxWait = TimeSpan.FromSeconds(30);
 
-            ServiceBusSessionReceiver sessionReceiver = await client.AcceptNextSessionAsync(mockQueueName, new ServiceBusSessionReceiverOptions(), cancellationTokenSource.Token);
+            ServiceBusSessionReceiver sessionReceiver = await client.AcceptNextSessionAsync(mockQueueName, new ServiceBusSessionReceiverOptions(), CancellationToken.None);
 
-            ServiceBusReceivedMessage receivedMessage = await sessionReceiver.ReceiveMessageAsync(maxWait, cancellationTokenSource.Token);
+            ServiceBusReceivedMessage receivedMessage = await sessionReceiver.ReceiveMessageAsync(maxWait, CancellationToken.None);
 
             BinaryData setState = new("MockState");
-            await sessionReceiver.SetSessionStateAsync(setState, cancellationTokenSource.Token);
-            BinaryData state = await sessionReceiver.GetSessionStateAsync(cancellationTokenSource.Token);
+            await sessionReceiver.SetSessionStateAsync(setState, CancellationToken.None);
+            BinaryData state = await sessionReceiver.GetSessionStateAsync(CancellationToken.None);
 
             Assert.AreEqual(setState, state);
 
@@ -463,10 +460,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     It.IsAny<string>(),
                     It.IsAny<CreateRuleOptions>(),
                     It.IsAny<CancellationToken>()))
-                .Callback<String, String, CreateRuleOptions, CancellationToken>((topic, sub, opts, ct) =>
+                .Callback<string, string, CreateRuleOptions, CancellationToken>((topic, sub, opts, ct) =>
                 {
                     RuleProperties mockRuleProperties = ServiceBusModelFactory.RuleProperties(opts);
-                    ;
 
                     mockRuleResponse.Setup(r => r.Value).Returns(mockRuleProperties);
                 })
@@ -566,12 +562,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     //...
                     );
 
-            CancellationTokenSource source = new();
-
             ProcessMessageEventArgs processArgs = new(
                 message: message,
                 receiver: mockReceiver.Object,
-                cancellationToken: source.Token);
+                cancellationToken: CancellationToken.None);
 
             Assert.DoesNotThrowAsync(async () => await MessageHandler(processArgs));
 
@@ -637,12 +631,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     //...
                     );
 
-            CancellationTokenSource source = new();
-
             ProcessSessionMessageEventArgs processArgs = new(
                 message: message,
                 receiver: mockSessionReceiver.Object,
-                cancellationToken: source.Token);
+                cancellationToken: CancellationToken.None);
 
             Assert.DoesNotThrowAsync(async () => await MessageHandler(processArgs));
 
@@ -655,7 +647,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 errorSource: errorSource,
                 fullyQualifiedNamespace: fullyQualifiedNamespace,
                 entityPath: entityPath,
-                cancellationToken: source.Token);
+                cancellationToken: CancellationToken.None);
 
             Assert.DoesNotThrowAsync(async () => await ErrorHandler(errorArgs));
 
