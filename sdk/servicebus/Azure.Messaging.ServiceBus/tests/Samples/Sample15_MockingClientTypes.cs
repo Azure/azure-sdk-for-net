@@ -313,17 +313,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     It.IsAny<CancellationToken>()))
                 .Callback<CreateTopicOptions, CancellationToken>((opts, ct) =>
                 {
-                    TopicProperties mockTopicProperties = ServiceBusModelFactory.TopicProperties(
-                        name: opts.Name,
-                        maxSizeInMegabytes: opts.MaxSizeInMegabytes,
-                        requiresDuplicateDetection: opts.RequiresDuplicateDetection,
-                        defaultMessageTimeToLive: opts.DefaultMessageTimeToLive,
-                        autoDeleteOnIdle: opts.AutoDeleteOnIdle,
-                        duplicateDetectionHistoryTimeWindow: opts.DuplicateDetectionHistoryTimeWindow,
-                        enableBatchedOperations: opts.EnableBatchedOperations,
-                        status: EntityStatus.Active,
-                        enablePartitioning: opts.EnablePartitioning,
-                        maxMessageSizeInKilobytes: opts.MaxMessageSizeInKilobytes ?? 0);
+                    TopicProperties mockTopicProperties = ServiceBusModelFactory.TopicProperties(opts);
 
                     mockTopicResponse.Setup(r => r.Value).Returns(mockTopicProperties);
                 })
@@ -335,20 +325,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     It.IsAny<CancellationToken>()))
                 .Callback<CreateSubscriptionOptions, CancellationToken>((opts, ct) =>
                 {
-                    SubscriptionProperties mockSubscriptionProperties = ServiceBusModelFactory.SubscriptionProperties(
-                        topicName: opts.TopicName,
-                        subscriptionName: opts.SubscriptionName,
-                        lockDuration: opts.LockDuration,
-                        requiresSession: opts.RequiresSession,
-                        defaultMessageTimeToLive: opts.DefaultMessageTimeToLive,
-                        autoDeleteOnIdle: opts.AutoDeleteOnIdle,
-                        deadLetteringOnMessageExpiration: opts.DeadLetteringOnMessageExpiration,
-                        maxDeliveryCount: opts.MaxDeliveryCount,
-                        enableBatchedOperations: opts.EnableBatchedOperations,
-                        status: EntityStatus.Active,
-                        forwardTo: opts.ForwardTo,
-                        forwardDeadLetteredMessagesTo: opts.ForwardDeadLetteredMessagesTo,
-                        userMetadata: opts.UserMetadata);
+                    SubscriptionProperties mockSubscriptionProperties = ServiceBusModelFactory.SubscriptionProperties(opts);
 
                     mockSuscriptionResponse.Setup(r => r.Value).Returns(mockSubscriptionProperties);
                 })
@@ -446,23 +423,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     It.IsAny<CancellationToken>()))
                 .Callback<CreateQueueOptions, CancellationToken>((opts, ct) =>
                 {
-                    QueueProperties mockQueueProperties = ServiceBusModelFactory.QueueProperties(
-                        name: opts.Name,
-                        lockDuration: opts.LockDuration,
-                        maxSizeInMegabytes: opts.MaxSizeInMegabytes,
-                        requiresSession: opts.RequiresSession,
-                        requiresDuplicateDetection: opts.RequiresDuplicateDetection,
-                        defaultMessageTimeToLive: opts.DefaultMessageTimeToLive,
-                        autoDeleteOnIdle: opts.AutoDeleteOnIdle,
-                        deadLetteringOnMessageExpiration: opts.DeadLetteringOnMessageExpiration,
-                        duplicateDetectionHistoryTimeWindow: opts.DuplicateDetectionHistoryTimeWindow,
-                        maxDeliveryCount: opts.MaxDeliveryCount,
-                        enableBatchedOperations: opts.EnableBatchedOperations,
-                        status: EntityStatus.Active,
-                        forwardTo: opts.ForwardTo,
-                        forwardDeadLetteredMessagesTo: opts.ForwardDeadLetteredMessagesTo,
-                        userMetadata: opts.UserMetadata,
-                        enablePartitioning: opts.EnablePartitioning);
+                    QueueProperties mockQueueProperties = ServiceBusModelFactory.QueueProperties(opts);
                     ;
 
                     mockQueueResponse.Setup(r => r.Value).Returns(mockQueueProperties);
@@ -504,10 +465,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     It.IsAny<CancellationToken>()))
                 .Callback<String, String, CreateRuleOptions, CancellationToken>((topic, sub, opts, ct) =>
                 {
-                    RuleProperties mockRuleProperties = ServiceBusModelFactory.RuleProperties(
-                        name: opts.Name,
-                        filter: opts.Filter,
-                        action: opts.Action);
+                    RuleProperties mockRuleProperties = ServiceBusModelFactory.RuleProperties(opts);
                     ;
 
                     mockRuleResponse.Setup(r => r.Value).Returns(mockRuleProperties);

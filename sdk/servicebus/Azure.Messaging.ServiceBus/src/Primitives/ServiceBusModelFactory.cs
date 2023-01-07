@@ -182,6 +182,31 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.QueueProperties"/> instance for mocking.
         /// </summary>
+        public static QueueProperties QueueProperties(
+            CreateQueueOptions options) =>
+            new QueueProperties(options.Name)
+            {
+                LockDuration = options.LockDuration,
+                MaxSizeInMegabytes = options.MaxSizeInMegabytes,
+                RequiresDuplicateDetection = options.RequiresDuplicateDetection,
+                RequiresSession = options.RequiresSession,
+                DefaultMessageTimeToLive = options.DefaultMessageTimeToLive,
+                AutoDeleteOnIdle = options.AutoDeleteOnIdle,
+                DeadLetteringOnMessageExpiration = options.DeadLetteringOnMessageExpiration,
+                DuplicateDetectionHistoryTimeWindow = options.DuplicateDetectionHistoryTimeWindow,
+                MaxDeliveryCount = options.MaxDeliveryCount,
+                EnableBatchedOperations = options.EnableBatchedOperations,
+                AuthorizationRules = new AuthorizationRules(), // this cannot be created by the user
+                Status = options.Status,
+                ForwardTo = options.ForwardTo,
+                ForwardDeadLetteredMessagesTo = options.ForwardDeadLetteredMessagesTo,
+                UserMetadata = options.UserMetadata,
+                EnablePartitioning = options.EnablePartitioning
+            };
+
+        /// <summary>
+        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.QueueProperties"/> instance for mocking.
+        /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static QueueProperties QueueProperties(
             string name,
@@ -278,7 +303,25 @@ namespace Azure.Messaging.ServiceBus
             };
 
         /// <summary>
-        /// Creates a new <see cref="SubscriptionProperties"/> instance for mocking.
+        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.TopicProperties"/> instance for mocking.
+        /// </summary>
+        public static TopicProperties TopicProperties(CreateTopicOptions options) =>
+            new TopicProperties(options.Name)
+            {
+                MaxSizeInMegabytes = options.MaxSizeInMegabytes,
+                RequiresDuplicateDetection = options.RequiresDuplicateDetection,
+                DefaultMessageTimeToLive = options.DefaultMessageTimeToLive,
+                AutoDeleteOnIdle = options.AutoDeleteOnIdle,
+                DuplicateDetectionHistoryTimeWindow = options.DuplicateDetectionHistoryTimeWindow,
+                EnableBatchedOperations = options.EnableBatchedOperations,
+                AuthorizationRules = new AuthorizationRules(), // this cannot be created by the user
+                Status = options.Status,
+                EnablePartitioning = options.EnablePartitioning,
+                MaxMessageSizeInKilobytes = options.MaxMessageSizeInKilobytes
+            };
+
+        /// <summary>
+        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.SubscriptionProperties"/> instance for mocking.
         /// </summary>
         public static SubscriptionProperties SubscriptionProperties(
             string topicName,
@@ -310,7 +353,27 @@ namespace Azure.Messaging.ServiceBus
             };
 
         /// <summary>
-        /// Creates a new <see cref="RuleProperties"/> instance for mocking.
+        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.SubscriptionProperties"/> instance for mocking.
+        /// </summary>
+        public static SubscriptionProperties SubscriptionProperties(
+            CreateSubscriptionOptions options) =>
+            new SubscriptionProperties(options.TopicName, options.SubscriptionName)
+            {
+                LockDuration = options.LockDuration,
+                RequiresSession = options.RequiresSession,
+                DefaultMessageTimeToLive = options.DefaultMessageTimeToLive,
+                AutoDeleteOnIdle = options.AutoDeleteOnIdle,
+                DeadLetteringOnMessageExpiration = options.DeadLetteringOnMessageExpiration,
+                MaxDeliveryCount = options.MaxDeliveryCount,
+                EnableBatchedOperations = options.EnableBatchedOperations,
+                Status = options.Status,
+                ForwardTo = options.ForwardTo,
+                ForwardDeadLetteredMessagesTo = options.ForwardDeadLetteredMessagesTo,
+                UserMetadata = options.UserMetadata
+            };
+
+        /// <summary>
+        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.RuleProperties"/> instance for mocking.
         /// </summary>
         public static RuleProperties RuleProperties(
             string name,
@@ -319,6 +382,16 @@ namespace Azure.Messaging.ServiceBus
             new RuleProperties(name, filter)
             {
                 Action = action
+            };
+
+        /// <summary>
+        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.RuleProperties"/> instance for mocking.
+        /// </summary>
+        public static RuleProperties RuleProperties(
+            CreateRuleOptions options) =>
+            new RuleProperties(options.Name, options.Filter)
+            {
+                Action = options.Action
             };
 
         /// <summary>
