@@ -12,11 +12,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Network Security Perimeter related configurations of a given namespace. </summary>
-    public partial class EventHubsNetworkSecurityPerimeterConfiguration : TrackedResourceData
+    public partial class EventHubsNetworkSecurityPerimeterConfiguration : ResourceData
     {
         /// <summary> Initializes a new instance of EventHubsNetworkSecurityPerimeterConfiguration. </summary>
-        /// <param name="location"> The location. </param>
-        public EventHubsNetworkSecurityPerimeterConfiguration(AzureLocation location) : base(location)
+        public EventHubsNetworkSecurityPerimeterConfiguration()
         {
             ProvisioningIssues = new ChangeTrackingList<EventHubsProvisioningIssue>();
         }
@@ -26,14 +25,12 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> Provisioning state of NetworkSecurityPerimeter configuration propagation. </param>
         /// <param name="provisioningIssues"> List of Provisioning Issues if any. </param>
         /// <param name="networkSecurityPerimeter"> NetworkSecurityPerimeter related information. </param>
         /// <param name="resourceAssociation"> Information about resource association. </param>
         /// <param name="profile"> Information about current network profile. </param>
-        internal EventHubsNetworkSecurityPerimeterConfiguration(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IList<EventHubsProvisioningIssue> provisioningIssues, EventHubsNetworkSecurityPerimeter networkSecurityPerimeter, EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation, EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile profile) : base(id, name, resourceType, systemData, tags, location)
+        internal EventHubsNetworkSecurityPerimeterConfiguration(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventHubsNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IList<EventHubsProvisioningIssue> provisioningIssues, EventHubsNetworkSecurityPerimeter networkSecurityPerimeter, EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation, EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile profile) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ProvisioningIssues = provisioningIssues;

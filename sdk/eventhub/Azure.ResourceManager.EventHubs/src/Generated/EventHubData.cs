@@ -34,8 +34,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="partitionCount"> Number of partitions created for the Event Hub, allowed values are from 1 to 32 partitions. </param>
         /// <param name="status"> Enumerates the possible values for the status of the Event Hub. </param>
         /// <param name="captureDescription"> Properties of capture description. </param>
+        /// <param name="retentionDescription"> Event Hub retention settings. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal EventHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> partitionIds, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, long? messageRetentionInDays, long? partitionCount, EventHubEntityStatus? status, CaptureDescription captureDescription, AzureLocation? location) : base(id, name, resourceType, systemData)
+        internal EventHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> partitionIds, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, long? messageRetentionInDays, long? partitionCount, EventHubEntityStatus? status, CaptureDescription captureDescription, RetentionDescription retentionDescription, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             PartitionIds = partitionIds;
             CreatedOn = createdOn;
@@ -44,6 +45,7 @@ namespace Azure.ResourceManager.EventHubs
             PartitionCount = partitionCount;
             Status = status;
             CaptureDescription = captureDescription;
+            RetentionDescription = retentionDescription;
             Location = location;
         }
 
@@ -61,6 +63,8 @@ namespace Azure.ResourceManager.EventHubs
         public EventHubEntityStatus? Status { get; set; }
         /// <summary> Properties of capture description. </summary>
         public CaptureDescription CaptureDescription { get; set; }
+        /// <summary> Event Hub retention settings. </summary>
+        public RetentionDescription RetentionDescription { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
         public AzureLocation? Location { get; }
     }

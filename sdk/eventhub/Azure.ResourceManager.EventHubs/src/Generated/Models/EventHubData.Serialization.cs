@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("captureDescription");
                 writer.WriteObjectValue(CaptureDescription);
             }
+            if (Optional.IsDefined(RetentionDescription))
+            {
+                writer.WritePropertyName("retentionDescription");
+                writer.WriteObjectValue(RetentionDescription);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -59,6 +64,7 @@ namespace Azure.ResourceManager.EventHubs
             Optional<long> partitionCount = default;
             Optional<EventHubEntityStatus> status = default;
             Optional<CaptureDescription> captureDescription = default;
+            Optional<RetentionDescription> retentionDescription = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -180,11 +186,21 @@ namespace Azure.ResourceManager.EventHubs
                             captureDescription = CaptureDescription.DeserializeCaptureDescription(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("retentionDescription"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            retentionDescription = RetentionDescription.DeserializeRetentionDescription(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new EventHubData(id, name, type, systemData.Value, Optional.ToList(partitionIds), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(messageRetentionInDays), Optional.ToNullable(partitionCount), Optional.ToNullable(status), captureDescription.Value, Optional.ToNullable(location));
+            return new EventHubData(id, name, type, systemData.Value, Optional.ToList(partitionIds), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(messageRetentionInDays), Optional.ToNullable(partitionCount), Optional.ToNullable(status), captureDescription.Value, retentionDescription.Value, Optional.ToNullable(location));
         }
     }
 }

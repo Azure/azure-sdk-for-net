@@ -30,7 +30,13 @@ namespace Azure.ResourceManager.EventHubs.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
             EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
-            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
+            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation)
+            {
+                Sku = new EventHubsSku("Premium")
+                {
+                    Name = "Premium"
+                }
+            })).Value;
             _eventHubCollection = eventHubNamespace.GetEventHubs();
         }
 
@@ -62,7 +68,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
         public async Task CreateEventhubWithParameter()
         {
             //prepare a storage account
-            string accountName = Recording.GenerateAssetName("storage");
+            string accountName = Recording.GenerateAssetName("eventhubstorage");
 
             GenericResourceData input = new GenericResourceData(AzureLocation.EastUS2)
             {
@@ -79,11 +85,10 @@ namespace Azure.ResourceManager.EventHubs.Tests
             ResourceIdentifier storageAccountId = _resourceGroup.Id.AppendProviderResource("Microsoft.Storage", "storageAccounts", accountName);
             GenericResource account = (await Client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountId, input)).Value;
 
-            //create eventhub
+            //create eventhub with Cleanup policy Compaction.
             string eventHubName = Recording.GenerateAssetName("eventhub");
             EventHubData parameter = new EventHubData()
             {
-                MessageRetentionInDays = 4,
                 PartitionCount = 4,
                 Status = EventHubEntityStatus.Active,
                 CaptureDescription = new CaptureDescription()
@@ -99,6 +104,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
                         ArchiveNameFormat = "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}",
                         StorageAccountResourceId = new ResourceIdentifier(account.Id.ToString())
                     }
+                },
+                RetentionDescription = new RetentionDescription()
+                {
+                    CleanupPolicy = "Compact",
+                    RetentionTimeInHours = 2,
+                    TombstoneRetentionTimeInHours = 3
                 }
             };
             EventHubResource eventHub = (await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubName, parameter)).Value;
@@ -107,7 +118,6 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.NotNull(eventHub);
             Assert.AreEqual(eventHub.Id.Name, eventHubName);
             Assert.AreEqual(eventHub.Data.Status, parameter.Status);
-            Assert.AreEqual(eventHub.Data.MessageRetentionInDays, parameter.MessageRetentionInDays);
             Assert.AreEqual(eventHub.Data.PartitionCount, parameter.PartitionCount);
             Assert.AreEqual(eventHub.Data.CaptureDescription.IntervalInSeconds, parameter.CaptureDescription.IntervalInSeconds);
             Assert.AreEqual(eventHub.Data.CaptureDescription.SizeLimitInBytes, parameter.CaptureDescription.SizeLimitInBytes);
@@ -115,7 +125,35 @@ namespace Azure.ResourceManager.EventHubs.Tests
             Assert.AreEqual(eventHub.Data.CaptureDescription.Destination.BlobContainer, parameter.CaptureDescription.Destination.BlobContainer);
             Assert.AreEqual(eventHub.Data.CaptureDescription.Destination.StorageAccountResourceId, parameter.CaptureDescription.Destination.StorageAccountResourceId);
             Assert.AreEqual(eventHub.Data.CaptureDescription.Destination.ArchiveNameFormat, parameter.CaptureDescription.Destination.ArchiveNameFormat);
+            Assert.AreEqual(eventHub.Data.RetentionDescription.CleanupPolicy, parameter.RetentionDescription.CleanupPolicy);
+            Assert.AreEqual(eventHub.Data.RetentionDescription.RetentionTimeInHours, parameter.RetentionDescription.RetentionTimeInHours);
+            Assert.AreEqual(eventHub.Data.RetentionDescription.TombstoneRetentionTimeInHours, parameter.RetentionDescription.TombstoneRetentionTimeInHours);
 
+            //EventHub with Delete Cleanup Policy.
+            string eventHubName1 = Recording.GenerateAssetName("eventhub");
+            EventHubData parameter1 = new EventHubData()
+            {
+                PartitionCount = 2,
+                Status = EventHubEntityStatus.Active,
+                RetentionDescription = new RetentionDescription()
+                {
+                    CleanupPolicy = "Delete",
+                    RetentionTimeInHours = 2
+                }
+            };
+            EventHubResource eventHub1 = (await _eventHubCollection.CreateOrUpdateAsync(WaitUntil.Completed, eventHubName1, parameter1)).Value;
+
+            //validate
+            Assert.NotNull(eventHub1);
+            Assert.AreEqual(eventHub1.Id.Name, eventHubName1);
+            Assert.AreEqual(eventHub1.Data.Status, parameter1.Status);
+            Assert.AreEqual(eventHub1.Data.PartitionCount, parameter1.PartitionCount);
+            Assert.AreEqual(eventHub1.Data.RetentionDescription.CleanupPolicy, parameter1.RetentionDescription.CleanupPolicy);
+            Assert.AreEqual(eventHub1.Data.RetentionDescription.RetentionTimeInHours, parameter1.RetentionDescription.RetentionTimeInHours);
+
+            //Delete eventhub
+            await eventHub1.DeleteAsync(WaitUntil.Completed);
+            await eventHub.DeleteAsync(WaitUntil.Completed);
             await account.DeleteAsync(WaitUntil.Completed);
         }
 
