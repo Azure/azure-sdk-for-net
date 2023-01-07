@@ -4,8 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Azure.Core.Dynamic;
 using System.Text.Json;
+using Azure.Core.Dynamic;
 using NUnit.Framework;
 
 namespace Azure.Core.Experimental.Tests
@@ -55,36 +55,6 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        public void CanSetProperty_StringToNumber()
-        {
-            // TODO: This will change how serialization works
-
-            throw new NotImplementedException();
-        }
-
-        [Test]
-        public void CanSetProperty_StringToBool()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Test]
-        public void CanSetProperty_StringToObject()
-        {
-            // This modifies the JSON structure
-
-            throw new NotImplementedException();
-        }
-
-        [Test]
-        public void CanSetProperty_StringToArray()
-        {
-            // This modifies the JSON structure
-
-            throw new NotImplementedException();
-        }
-
-        [Test]
         public void CanSetPropertyMultipleTimes()
         {
             string json = @"
@@ -128,7 +98,7 @@ namespace Azure.Core.Experimental.Tests
             Assert.IsNotNull(jd.RootElement.GetProperty("Bar"));
             Assert.AreEqual("hi", jd.RootElement.GetProperty("Bar").GetString());
 
-            // 3. Type serializes out correctly.
+            // 3. Type round-trips correctly.
             using MemoryStream stream = new();
             jd.WriteTo(stream);
             var val = new BinaryData(stream.GetBuffer()).ToString();
@@ -138,27 +108,91 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        public void CanSetObject()
+        public void CanRemovePropertyFromObject()
         {
             string json = @"
                 {
-                  ""Baz"" : {
-                     ""A"" : 3.0
-                  },
                   ""Foo"" : 1.2,
                   ""Bar"" : ""Hi!""
                 }";
 
             var jd = JsonData.Parse(json);
 
+            // Removal per https://www.rfc-editor.org/rfc/rfc7386
+            jd.RootElement.GetProperty("Bar").Set(null);
+
+            // Assert:
+
+            // 1. Old property is present.
+            Assert.AreEqual(1.2, jd.RootElement.GetProperty("Foo").GetDouble());
+
+            // 2. New property not present.
+            // TODO: right now this should be null, but we discussed a null sentinel API
+            Assert.IsNull(jd.RootElement.GetProperty("Bar"));
+            Assert.AreEqual("hi", jd.RootElement.GetProperty("Bar").GetString());
+
+            // 3. Type round-trips correctly.
+            using MemoryStream stream = new();
+            jd.WriteTo(stream);
+            var val = new BinaryData(stream.GetBuffer()).ToString();
+            var dict = JsonSerializer.Deserialize<Dictionary<string, object>>(val);
+            Assert.AreEqual(1.2, dict["Foo"]);
+            Assert.IsFalse(dict.TryGetValue("Bar", out var _));
+        }
+
+        [Test]
+        public void CanReplaceObject()
+        {
+            string json = @"
+                {
+                  ""Baz"" : {
+                     ""A"" : 3.0
+                  },
+                  ""Foo"" : 1.2
+                }";
+
+            var jd = JsonData.Parse(json);
+
             jd.RootElement.GetProperty("Baz").Set(new { B = 5.0 });
 
-            // Last write wins
+            // Assert:
+
+            // 1. Old property is present.
+            Assert.AreEqual(1.2, jd.RootElement.GetProperty("Foo").GetDouble());
+
+            // 2. Object structure has been rewritten
+            Assert.IsNull(jd.RootElement.GetProperty("Baz").GetProperty("A"));
             Assert.AreEqual(5.0, jd.RootElement.GetProperty("Baz").GetProperty("B").GetDouble());
 
-            // This should fail
-            // TODO: Is this the exception type we'd like?
-            Assert.Throws<KeyNotFoundException>(() => jd.RootElement.GetProperty("Baz").GetProperty("A"));
+            // 3. Type round-trips correctly.
+            using MemoryStream stream = new();
+            jd.WriteTo(stream);
+            var val = new BinaryData(stream.GetBuffer()).ToString();
+            BazB baz = JsonSerializer.Deserialize<BazB>(val);
+            Assert.AreEqual(1.2, baz.Foo);
+            Assert.AreEqual(5.0, baz.Baz.B);
+        }
+
+        private class BazA
+        {
+            public double Foo { get; set; }
+            public A_ Baz { get; set; }
+        }
+
+        private class BazB
+        {
+            public double Foo { get; set; }
+            public B_ Baz { get; set; }
+        }
+
+        private class A_
+        {
+            public double A { get; set; }
+        }
+
+        private class B_
+        {
+            public double B { get; set; }
         }
 
         [Test]
@@ -232,6 +266,36 @@ namespace Azure.Core.Experimental.Tests
 
             Assert.AreEqual(6, jd.RootElement.GetProperty("Foo").GetIndexElement(0).GetInt32());
             Assert.AreEqual(6, a.GetProperty("Foo").GetIndexElement(0).GetInt32());
+        }
+
+        [Test]
+        public void CanSetProperty_StringToNumber()
+        {
+            // TODO: This will change how serialization works
+
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public void CanSetProperty_StringToBool()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public void CanSetProperty_StringToObject()
+        {
+            // This modifies the JSON structure
+
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        public void CanSetProperty_StringToArray()
+        {
+            // This modifies the JSON structure
+
+            throw new NotImplementedException();
         }
     }
 }
