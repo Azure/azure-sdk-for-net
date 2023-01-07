@@ -424,7 +424,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 .Callback<CreateQueueOptions, CancellationToken>((opts, ct) =>
                 {
                     QueueProperties mockQueueProperties = ServiceBusModelFactory.QueueProperties(opts);
-                    ;
 
                     mockQueueResponse.Setup(r => r.Value).Returns(mockQueueProperties);
                 })
