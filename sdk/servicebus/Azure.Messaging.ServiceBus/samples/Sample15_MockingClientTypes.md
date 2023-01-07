@@ -124,11 +124,7 @@ ServiceBusMessageBatch mockBatch = ServiceBusModelFactory.ServiceBusMessageBatch
     batchSizeBytes: 500,
     batchMessageStore: backingList,
     batchOptions: new CreateMessageBatchOptions(),
-    tryAddCallback: message =>
-    {
-        int messageCount = backingList.Count;
-        return messageCount < batchCountThreshold;
-    });
+    tryAddCallback: _=> backingList.Count < batchCountThreshold);
 
 mockSender
     .Setup(sender => sender.CreateMessageBatchAsync(
@@ -399,7 +395,6 @@ mockAdministrationClient
     .Callback<CreateQueueOptions, CancellationToken>((opts, ct) =>
     {
         QueueProperties mockQueueProperties = ServiceBusModelFactory.QueueProperties(opts);
-        ;
 
         mockQueueResponse.Setup(r => r.Value).Returns(mockQueueProperties);
     })
