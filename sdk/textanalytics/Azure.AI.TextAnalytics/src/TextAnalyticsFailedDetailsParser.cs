@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.TextAnalytics;
-using Azure.AI.TextAnalytics.Legacy;
 using Azure.AI.TextAnalytics.Models;
 
 #nullable enable
@@ -38,24 +37,46 @@ namespace Azure.Core.Pipeline
                         return true;
                     }
 
-                    if (doc.RootElement.TryGetProperty("errors", out JsonElement errorElements))
+                    if (doc.RootElement.TryGetProperty("errors", out JsonElement errorsElement))
                     {
                         var errors = new List<Error>();
-                        foreach (var item in errorElements.EnumerateArray())
+                        foreach (JsonElement item in errorsElement.EnumerateArray())
                         {
-                            errors.Add(Error.DeserializeError(item));
+                            // This element could be the Error object that we are looking for, but it could also be an
+                            // InputError or a DocumentError object that is wrapping it instead. Therefore, we must
+                            // first check if the element has a property called "error". If it does, the value would
+                            // correspond to the actual Error object.
+                            if (item.TryGetProperty("error", out errorElement))
+                            {
+                                errors.Add(Error.DeserializeError(errorElement));
+                            }
+                            else
+                            {
+                                errors.Add(Error.DeserializeError(item));
+                            }
                         }
 
                         GetResponseError(errors, out error, out data);
                         return true;
                     }
 
-                    if (doc.RootElement.TryGetProperty("results", out JsonElement results) && results.TryGetProperty("errors", out errorElements))
+                    if (doc.RootElement.TryGetProperty("results", out JsonElement results) && results.TryGetProperty("errors", out errorsElement))
                     {
                         var errors = new List<Error>();
-                        foreach (var item in errorElements.EnumerateArray())
+                        foreach (JsonElement item in errorsElement.EnumerateArray())
                         {
-                            errors.Add(InputError.DeserializeInputError(item).Error);
+                            // This element could be the Error object that we are looking for, but it could also be an
+                            // InputError or a DocumentError object that is wrapping it instead. Therefore, we must
+                            // first check if the element has a property called "error". If it does, the value would
+                            // correspond to the actual Error object.
+                            if (item.TryGetProperty("error", out errorElement))
+                            {
+                                errors.Add(Error.DeserializeError(errorElement));
+                            }
+                            else
+                            {
+                                errors.Add(Error.DeserializeError(item));
+                            }
                         }
 
                         GetResponseError(errors, out error, out data);
@@ -79,9 +100,10 @@ namespace Azure.Core.Pipeline
         private static void GetResponseError(List<Error> errors, out ResponseError? responseError, out IDictionary<string, string> data)
         {
             data = new Dictionary<string, string>();
+
             if (errors.Count > 0)
             {
-                var textAnalyticsError = Transforms.ConvertToError(errors[0]);
+                TextAnalyticsError textAnalyticsError = Transforms.ConvertToError(errors[0]);
                 responseError = new ResponseError(textAnalyticsError.ErrorCode.ToString(), textAnalyticsError.Message);
                 if (!string.IsNullOrEmpty(textAnalyticsError.Target))
                 {
@@ -94,7 +116,7 @@ namespace Azure.Core.Pipeline
             }
 
             int index = 0;
-            foreach (var error in errors)
+            foreach (Error error in errors)
             {
                 data.Add($"error-{index}", $"{error.Code}: {error.Message}");
                 index++;
