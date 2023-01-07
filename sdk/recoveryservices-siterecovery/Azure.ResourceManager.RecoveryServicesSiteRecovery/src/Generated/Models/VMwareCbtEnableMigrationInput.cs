@@ -53,6 +53,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public LicenseType? LicenseType { get; set; }
         /// <summary> The SQL Server license type. </summary>
         public SqlServerLicenseType? SqlServerLicenseType { get; set; }
+        /// <summary> A value indicating whether bulk SQL RP registration to be done. </summary>
+        public string PerformSqlBulkRegistration { get; set; }
         /// <summary> The data mover run as account Id. </summary>
         public string DataMoverRunAsAccountId { get; }
         /// <summary> The snapshot run as account Id. </summary>

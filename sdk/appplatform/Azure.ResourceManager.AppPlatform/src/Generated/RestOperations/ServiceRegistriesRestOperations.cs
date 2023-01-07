@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01-preview";
+            _apiVersion = apiVersion ?? "2022-12-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="serviceRegistryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="serviceRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceRegistryResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string serviceRegistryName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppPlatformServiceRegistryData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string serviceRegistryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        ServiceRegistryResourceData value = default;
+                        AppPlatformServiceRegistryData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServiceRegistryResourceData.DeserializeServiceRegistryResourceData(document.RootElement);
+                        value = AppPlatformServiceRegistryData.DeserializeAppPlatformServiceRegistryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ServiceRegistryResourceData)null, message.Response);
+                    return Response.FromValue((AppPlatformServiceRegistryData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="serviceRegistryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="serviceRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceRegistryResourceData> Get(string subscriptionId, string resourceGroupName, string serviceName, string serviceRegistryName, CancellationToken cancellationToken = default)
+        public Response<AppPlatformServiceRegistryData> Get(string subscriptionId, string resourceGroupName, string serviceName, string serviceRegistryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -113,13 +113,13 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 case 200:
                     {
-                        ServiceRegistryResourceData value = default;
+                        AppPlatformServiceRegistryData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceRegistryResourceData.DeserializeServiceRegistryResourceData(document.RootElement);
+                        value = AppPlatformServiceRegistryData.DeserializeAppPlatformServiceRegistryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ServiceRegistryResourceData)null, message.Response);
+                    return Response.FromValue((AppPlatformServiceRegistryData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

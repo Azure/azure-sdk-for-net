@@ -4,7 +4,12 @@
 
 ### Features Added
 
+- `ContainerRegistryBlobClient.UploadBlob()` method now uploads a blob using multiple requests if it exceeds the maximum chunk size.  Chunk size defaults to 4MB and can be modified by passing `UploadBlobOptions`.
+- Added `Pipeline` property to `ContainerRegistryClient` and `ContainerRegistryBlobClient` to enable advanced message processing scenarios.
+
 ### Breaking Changes
+
+- Changed type of `Manifest` property on `DownloadManifestResult` from `OciManifest` to `ArtifactManfest` to accommodate non-OCI manifest types in the future.  Callers must now downcast `Manifest` to the appropriate type.
 
 ### Bugs Fixed
 
@@ -30,6 +35,7 @@
 ## 1.0.0-beta.5 (2021-11-18)
 
 ### Features Added
+
 - Updated the supported service version to "2021-07-01".
 - Added support to create instances of `ArtifactManifestProperties` using the `ContainerRegistryModelFactory`.
 
@@ -43,7 +49,7 @@
 
 ### Features Added
 
-- Added an overload for `UploadManifest(Async) method that takes the manifest `Stream` as an input.
+- Added an overload for `UploadManifest(Async)` method that takes the manifest `Stream` as an input.
 - Added methods in `ContainerRegistryModelFactory` that create instances of `DownloadBlobResult`, `DownloadManifestResult`, `UploadBlobResult` and `UploadManifestResult` for mocking.
 - Added `DownloadManifestOptions` type to allow callers to  pass-in either a tag or a digest in `DownloadManifest(Async)`.
 - Added `ManifestStream` as a property in `DownloadManifestResult` that contains the raw manifest stream from the service response.

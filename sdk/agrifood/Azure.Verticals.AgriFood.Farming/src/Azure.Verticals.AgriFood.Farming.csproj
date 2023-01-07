@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Azure.Core.Experimental" />
   </ItemGroup>
 
   <!-- These packages are included as part net6.0; the external references are not needed. -->

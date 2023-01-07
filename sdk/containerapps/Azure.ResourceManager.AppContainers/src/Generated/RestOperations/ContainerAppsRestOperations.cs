@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-01-preview";
+            _apiVersion = apiVersion ?? "2022-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -452,6 +452,7 @@ namespace Azure.ResourceManager.AppContainers
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                     return message.Response;
                 default:
@@ -478,6 +479,7 @@ namespace Azure.ResourceManager.AppContainers
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 200:
                 case 202:
                     return message.Response;
                 default:
@@ -518,7 +520,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerAppName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CustomHostnameAnalysisResult>> ListCustomHostNameAnalysisAsync(string subscriptionId, string resourceGroupName, string containerAppName, string customHostname = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerAppCustomHostnameAnalysisResult>> ListCustomHostNameAnalysisAsync(string subscriptionId, string resourceGroupName, string containerAppName, string customHostname = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -530,9 +532,9 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        CustomHostnameAnalysisResult value = default;
+                        ContainerAppCustomHostnameAnalysisResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CustomHostnameAnalysisResult.DeserializeCustomHostnameAnalysisResult(document.RootElement);
+                        value = ContainerAppCustomHostnameAnalysisResult.DeserializeContainerAppCustomHostnameAnalysisResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -548,7 +550,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerAppName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerAppName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CustomHostnameAnalysisResult> ListCustomHostNameAnalysis(string subscriptionId, string resourceGroupName, string containerAppName, string customHostname = null, CancellationToken cancellationToken = default)
+        public Response<ContainerAppCustomHostnameAnalysisResult> ListCustomHostNameAnalysis(string subscriptionId, string resourceGroupName, string containerAppName, string customHostname = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -560,9 +562,9 @@ namespace Azure.ResourceManager.AppContainers
             {
                 case 200:
                     {
-                        CustomHostnameAnalysisResult value = default;
+                        ContainerAppCustomHostnameAnalysisResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CustomHostnameAnalysisResult.DeserializeCustomHostnameAnalysisResult(document.RootElement);
+                        value = ContainerAppCustomHostnameAnalysisResult.DeserializeContainerAppCustomHostnameAnalysisResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

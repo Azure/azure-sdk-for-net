@@ -14,7 +14,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Holds transfer information
     /// </summary>
-    public class DataTransfer
+    public class DataTransfer : IAsyncDisposable
     {
         /// <summary>
         /// Defines whether the DataTransfer has completed.
@@ -22,17 +22,22 @@ namespace Azure.Storage.DataMovement
         public bool HasCompleted => _state.HasCompleted;
 
         /// <summary>
-        /// DataTransfer Identification
+        /// Defines the current Transfer Status of the Data Transfer.
+        /// </summary>
+        public StorageTransferStatus TransferStatus => _state.Status;
+
+        /// <summary>
+        /// DataTransfer Identification.
         /// </summary>
         public string Id => _state.Id;
 
         /// <summary>
-        /// Defines the current state of the transfer
+        /// Defines the current state of the transfer.
         /// </summary>
         internal DataTransferState _state;
 
         /// <summary>
-        /// Only to be created internally by the transfer manager
+        /// Only to be created internally by the transfer manager.
         /// </summary>
         internal DataTransfer()
         {
@@ -55,6 +60,16 @@ namespace Azure.Storage.DataMovement
         internal DataTransfer(string id, long bytesTransferred)
         {
             _state = new DataTransferState(id, bytesTransferred);
+        }
+
+        /// <summary>
+        /// Disposes the DataTransfer object.
+        /// </summary>
+        /// <returns></returns>
+        public async ValueTask DisposeAsync()
+        {
+            await _state.DisposeAsync().ConfigureAwait(false);
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
