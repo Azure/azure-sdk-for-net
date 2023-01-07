@@ -44,7 +44,6 @@ while (!purchaseOperation.HasCompleted)
     SleepIfNotInPlaybackMode();
     purchaseOperation.UpdateStatus();
 }
-Assert.AreEqual(purchaseOperation.GetRawResponse().Status, 200);
 ```
 
 ## Listing purchased phone numbers

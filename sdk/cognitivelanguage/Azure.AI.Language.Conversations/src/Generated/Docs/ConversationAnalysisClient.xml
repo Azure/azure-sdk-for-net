@@ -461,7 +461,7 @@ var data = new {
     },
 };
 
-var operation = await client.StartAnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
+var operation = await client.StartAnalyzeConversationAsync(WaitUntil.Started, RequestContent.Create(data));
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -515,7 +515,7 @@ var data = new {
     },
 };
 
-var operation = await client.StartAnalyzeConversationAsync(WaitUntil.Completed, RequestContent.Create(data));
+var operation = await client.StartAnalyzeConversationAsync(WaitUntil.Started, RequestContent.Create(data));
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -636,7 +636,7 @@ var data = new {
     },
 };
 
-var operation = client.StartAnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
+var operation = client.StartAnalyzeConversation(WaitUntil.Started, RequestContent.Create(data));
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -690,7 +690,7 @@ var data = new {
     },
 };
 
-var operation = client.StartAnalyzeConversation(WaitUntil.Completed, RequestContent.Create(data));
+var operation = client.StartAnalyzeConversation(WaitUntil.Started, RequestContent.Create(data));
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -787,7 +787,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAnalysisClient(endpoint, credential);
 
-var operation = await client.CancelAnalyzeConversationJobAsync(WaitUntil.Completed, Guid.NewGuid());
+var operation = await client.CancelAnalyzeConversationJobAsync(WaitUntil.Started, Guid.NewGuid());
 
 var response = await operation.WaitForCompletionResponseAsync();
 Console.WriteLine(response.Status)
@@ -805,7 +805,7 @@ var credential = new AzureKeyCredential("<key>");
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConversationAnalysisClient(endpoint, credential);
 
-var operation = client.CancelAnalyzeConversationJob(WaitUntil.Completed, Guid.NewGuid());
+var operation = client.CancelAnalyzeConversationJob(WaitUntil.Started, Guid.NewGuid());
 
 var response = operation.WaitForCompletionResponse();
 Console.WriteLine(response.Status)

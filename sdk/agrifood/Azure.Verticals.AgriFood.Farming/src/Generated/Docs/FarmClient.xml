@@ -133,7 +133,7 @@ var data = new {
     startYear = 1234,
 };
 
-var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Started, "<jobId>", RequestContent.Create(data));
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -161,7 +161,7 @@ var data = new {
     },
 };
 
-var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+var operation = await client.CreateDataIngestionJobAsync(WaitUntil.Started, "<jobId>", RequestContent.Create(data));
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -253,7 +253,7 @@ var data = new {
     startYear = 1234,
 };
 
-var operation = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+var operation = client.CreateDataIngestionJob(WaitUntil.Started, "<jobId>", RequestContent.Create(data));
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -281,7 +281,7 @@ var data = new {
     },
 };
 
-var operation = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+var operation = client.CreateDataIngestionJob(WaitUntil.Started, "<jobId>", RequestContent.Create(data));
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
