@@ -97,7 +97,7 @@ if ($relatedCadlProjectFolder) {
       -sdkRootPath $sdkPath `
       -path $relativeSdkPath `
       -downloadUrlPrefix $downloadUrlPrefix `
-      -servieType "data-plane" `
+      -serviceType "data-plane" `
       -generatedSDKPackages $generatedSDKPackages
 }
 $outputJson = [PSCustomObject]@{
