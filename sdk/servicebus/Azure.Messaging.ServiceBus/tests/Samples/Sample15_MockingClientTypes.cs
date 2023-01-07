@@ -70,7 +70,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 batchSizeBytes: 500,
                 batchMessageStore: backingList,
                 batchOptions: new CreateMessageBatchOptions(),
-                tryAddCallback: message =>
+                tryAddCallback: _=> backingList.Count < batchCountThreshold
                 {
                     int messageCount = backingList.Count;
                     return messageCount < batchCountThreshold;
@@ -421,7 +421,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 .Callback<CreateQueueOptions, CancellationToken>((opts, ct) =>
                 {
                     QueueProperties mockQueueProperties = ServiceBusModelFactory.QueueProperties(opts);
-                    ;
 
                     mockQueueResponse.Setup(r => r.Value).Returns(mockQueueProperties);
                 })
