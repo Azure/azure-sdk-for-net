@@ -173,7 +173,7 @@ jobs:
 
   - task: PublishPipelineArtifact@1
     inputs:
-      targetPath: $(System.DefaultWorkingDirectory)/profile.zip
+      targetPath: $(System.DefaultWorkingDirectory)/${{ parameters.Language }}-profile.zip
       artifactName: ${{ parameters.Language }}-profile.zip
     condition: ${{ parameters.Profile }}
 
