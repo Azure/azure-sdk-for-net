@@ -1,0 +1,83 @@
+{
+  "projectFileVersion": "2022-05-01",
+  "stringIndexType": "Utf16CodeUnit",
+  "metadata": {
+    "projectKind": "CustomEntityRecognition",
+    "storageInputContainerName": "ct-data-assets",
+    "settings": {},
+    "projectName": "LoanAgreements",
+    "multilingual": false,
+    "description": "This is a sample dataset provided by the Azure Language service team to help users get started with [Custom named entity recognition](https://aka.ms/ct-docs). The provided sample dataset contains 20 loan agreements drawn up between two entities.",
+    "language": "en-us"
+  },
+  "assets": {
+    "projectKind": "CustomEntityRecognition",
+    "entities": [
+      {
+        "category": "Date"
+      },
+      {
+        "category": "LenderName"
+      },
+      {
+        "category": "LenderAddress"
+      }
+    ],
+    "documents": [
+      {
+        "location": "01.txt",
+        "language": "en-us",
+        "entities": [
+          {
+            "regionOffset": 0,
+            "regionLength": 1793,
+            "labels": [
+              {
+                "category": "Date",
+                "offset": 5,
+                "length": 9
+              },
+              {
+                "category": "LenderName",
+                "offset": 273,
+                "length": 14
+              },
+              {
+                "category": "LenderAddress",
+                "offset": 314,
+                "length": 15
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "location": "02.txt",
+        "language": "en-us",
+        "entities": [
+          {
+            "regionOffset": 0,
+            "regionLength": 1804,
+            "labels": [
+              {
+                "category": "Date",
+                "offset": 5,
+                "length": 10
+              },
+              {
+                "category": "LenderName",
+                "offset": 284,
+                "length": 10
+              },
+              {
+                "category": "LenderAddress",
+                "offset": 321,
+                "length": 20
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
