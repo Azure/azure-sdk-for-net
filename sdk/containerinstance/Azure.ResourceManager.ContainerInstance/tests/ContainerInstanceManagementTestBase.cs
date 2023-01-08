@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                 keyName: "testencryptionkey",
                 keyVersion: "804d3f1d5ce2456b9bc3dc9e35aaa67e");
 
-            var confidentialComputeProperties = ccepolicy == null && isConfidentialSku ? new ConfidentialComputeProperties() : new ConfidentialComputeProperties(ccepolicy);
+            var confidentialComputeProperties = isConfidentialSku ? null: new ConfidentialComputeProperties(ccepolicy);
             var containerGroupSku = isConfidentialSku ? ContainerGroupSku.Confidential : containerGroupSku;
 
             var containerGroup = new ContainerGroupData(
