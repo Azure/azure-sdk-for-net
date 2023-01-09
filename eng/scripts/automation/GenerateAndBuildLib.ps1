@@ -669,7 +669,7 @@ function Invoke-GenerateAndBuildSDK () {
         # $packageName = $package.packageName
         Write-Host "projectFolder:$projectFolder"
 
-        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix $downloadUrlPrefix -generatedSDKPackages $generatedSDKPackages
+        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix $downloadUrlPrefix -serviceType $serviceType -generatedSDKPackages $generatedSDKPackages
     }
 }
 
@@ -680,6 +680,7 @@ function GeneratePackage()
         [string]$sdkRootPath,
         [string]$path,
         [string]$downloadUrlPrefix="",
+        [string]$serviceType="data-plane",
         [switch]$skipGenerate,
         [object]$generatedSDKPackages
     )
@@ -774,9 +775,13 @@ function GeneratePackage()
         full = $full
         lite = $full
     }
+    $ciFilePath = "sdk/$service/ci.yml"
+    if ( $serviceType -eq "resource-manager" ) {
+        $ciFilePath = "sdk/$service/ci.mgmt.yml"
+    }
     $generatedSDKPackages.Add(@{packageName="$packageName"; 
                                 result=$result;
-                                path=@("$path", "sdk/$service/ci.yml");
+                                path=@("$path", "$ciFilePath");
                                 packageFolder="$projectFolder";
                                 artifacts=$artifacts;
                                 apiViewArtifact=$apiViewArtifact;
@@ -798,7 +803,7 @@ function UpdateExistingSDKByInputFiles()
     $autorestFilesPath = Get-ChildItem -Path "$sdkRootPath/sdk"  -Filter autorest.md -Recurse | Resolve-Path -Relative
     Write-Host "Updating autorest.md files for all the changed swaggers."
     
-    $sdksInfo = @()
+    $sdksInfo = @{}
     $regexToFindSha = "https:\/\/[^`"]*[\/][0-9a-f]{4,40}[\/]"
     foreach ($path in $autorestFilesPath) {
         $fileContent = Get-Content $path
@@ -811,8 +816,8 @@ function UpdateExistingSDKByInputFiles()
                     $fileContent -replace $regexToFindSha, "$repoHttpsUrl/blob/$headSha/" | Set-Content -Path $path
 
                     $sdkpath = (get-item $path).Directory.Parent.FullName | Resolve-Path -Relative
-                    if (!$sdksInfo.Contains($sdkpath)) {
-                        $sdksInfo += @($sdkpath)
+                    if (!$sdksInfo.ContainsKey($sdkpath)) {
+                        $sdksInfo.Add($sdkpath, $inputFilePath)
                     }
                     break
                 }
@@ -821,11 +826,14 @@ function UpdateExistingSDKByInputFiles()
     }
 
     # generate SDK
-    foreach ($sdkpath in $sdksInfo) {
+    foreach ($sdkPath in $sdksInfo.Keys) {
         $path = , $sdkPath
+        $inputFile = $sdksInfo["$sdkPath"]
+        $inputFile -match "specification/(?<service>.*)/(?<serviceType>.*)"
+        $serviceType = $matches["serviceType"]
         $projectFolder = Join-Path $sdkRootPath $sdkPath
         $projectFolder = Resolve-Path -Path $projectFolder
-        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
+        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkRootPath -path $path -downloadUrlPrefix "$downloadUrlPrefix" -serviceType $serviceType -generatedSDKPackages $generatedSDKPackages
     }
     
 }

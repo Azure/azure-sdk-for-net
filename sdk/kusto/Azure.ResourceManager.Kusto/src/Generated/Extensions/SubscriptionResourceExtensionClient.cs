@@ -22,6 +22,8 @@ namespace Azure.ResourceManager.Kusto
     {
         private ClientDiagnostics _kustoClusterClustersClientDiagnostics;
         private ClustersRestOperations _kustoClusterClustersRestClient;
+        private ClientDiagnostics _skusClientDiagnostics;
+        private SkusRestOperations _skusRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -37,6 +39,8 @@ namespace Azure.ResourceManager.Kusto
 
         private ClientDiagnostics KustoClusterClustersClientDiagnostics => _kustoClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoClusterResource.ResourceType.Namespace, Diagnostics);
         private ClustersRestOperations KustoClusterClustersRestClient => _kustoClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(KustoClusterResource.ResourceType));
+        private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Kusto", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private SkusRestOperations SkusRestClient => _skusRestClient ??= new SkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -198,6 +202,62 @@ namespace Azure.ResourceManager.Kusto
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Lists eligible region SKUs for Kusto resource provider by Azure region.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/skus
+        /// Operation Id: Skus_List
+        /// </summary>
+        /// <param name="location"> Azure location (region) name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<KustoSkuDescription> GetSkusAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<KustoSkuDescription>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkus");
+                scope.Start();
+                try
+                {
+                    var response = await SkusRestClient.ListAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
+        /// Lists eligible region SKUs for Kusto resource provider by Azure region.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/skus
+        /// Operation Id: Skus_List
+        /// </summary>
+        /// <param name="location"> Azure location (region) name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<KustoSkuDescription> GetSkus(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Page<KustoSkuDescription> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkus");
+                scope.Start();
+                try
+                {
+                    var response = SkusRestClient.List(Id.SubscriptionId, location, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
     }
 }
