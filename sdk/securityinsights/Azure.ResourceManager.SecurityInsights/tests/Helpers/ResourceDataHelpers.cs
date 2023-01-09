@@ -47,63 +47,44 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
             var data = new MicrosoftSecurityIncidentCreationAlertRule()
             {
                 ProductFilter = "Microsoft Cloud App Security",
-                Enabled = true,
+                IsEnabled = true,
                 DisplayName = "SDKTest"
             };
             return data;
         }
         #endregion
 
-        #region ActionResponseData
-        public static void AssertActionResponseData(ActionResponseData data1, ActionResponseData data2)
-        {
-            AssertResource(data1, data2);
-            Assert.AreEqual(data1.LogicAppResourceId, data2?.LogicAppResourceId);
-            Assert.AreEqual(data1.WorkflowId, data2.WorkflowId);
-        }
-        public static ActionResponseCreateOrUpdateContent GetActionResponseData(string resourcegroup)
-        {
-            var data = new ActionResponseCreateOrUpdateContent()
-            {
-                TriggerUri = new Uri("https://prod-21.westus2.logic.azure.com:443/workflows/e26c9f2e051e40eebaba9ed9b065c491/triggers/When_Azure_Sentinel_incident_creation_rule_was_triggered/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_Azure_Sentinel_incident_creation_rule_was_triggered%2Frun&sv=1.0&sig=6sGE8BueGEYWNZ0mY8-JYrse4mTk3obUBib9BF5PciQ"),
-                LogicAppResourceId = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/" + resourcegroup + "/providers/Microsoft.Logic/workflows/DotNetSDKTestsPlaybook"
-            };
-            return data;
-        }
-        #endregion
-
         #region AutomationRuleData
-        public static void AssertAutomationRuleData(AutomationRuleData data1, AutomationRuleData data2)
+        public static void AssertAutomationRuleData(SecurityInsightsAutomationRuleData data1, SecurityInsightsAutomationRuleData data2)
         {
             AssertResource(data1, data2);
             Assert.AreEqual(data1.DisplayName, data2.DisplayName);
             Assert.AreEqual(data1.Order, data2.Order);
-            Assert.AreEqual(data1.LastModifiedTimeUtc, data2.LastModifiedTimeUtc);
         }
-        public static AutomationRuleData GetAutomationRuleData(string resourcegroup)
+        public static SecurityInsightsAutomationRuleData GetAutomationRuleData(string resourcegroup)
         {
-            var trigger = new AutomationRuleTriggeringLogic(false, TriggersOn.Incidents, TriggersWhen.Created);
+            var trigger = new SecurityInsightsAutomationRuleTriggeringLogic(false, TriggersOn.Incidents, TriggersWhen.Created);
             IEnumerable<AutomationRuleModifyPropertiesAction> action = new List<AutomationRuleModifyPropertiesAction>()
             {
                 new AutomationRuleModifyPropertiesAction(1)
                 {
-                    ActionConfiguration = new IncidentPropertiesAction()
+                    ActionConfiguration = new SecurityInsightsIncidentActionConfiguration()
                     {
                         Labels =
                         {
-                            new IncidentLabel("testlabel1")
+                            new SecurityInsightsIncidentLabel("testlabel1")
                         }
                     }
                 }
             };
-            var data = new AutomationRuleData("SDK Test", 1, trigger, action)
+            var data = new SecurityInsightsAutomationRuleData("SDK Test", 1, trigger, action)
             {
             };
             return data;
         }
         #endregion
         #region BookmarkData
-        public static void AssertBookmarkData(BookmarkData data1, BookmarkData data2)
+        public static void AssertBookmarkData(SecurityInsightsBookmarkData data1, SecurityInsightsBookmarkData data2)
         {
             AssertResource(data1, data2);
             Assert.AreEqual(data1.DisplayName, data2.DisplayName);
@@ -111,9 +92,9 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
             Assert.AreEqual(data1.Query, data2.Query);
             Assert.AreEqual(data1.QueryResult, data2.QueryResult);
         }
-        public static BookmarkData GetBookmarkData()
+        public static SecurityInsightsBookmarkData GetBookmarkData()
         {
-            var data = new BookmarkData()
+            var data = new SecurityInsightsBookmarkData()
             {
                 DisplayName = "SDKTestBookmark",
                 Query = "SecurityEvent | take 10",
@@ -123,7 +104,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         #endregion
 
         #region IncidentData
-        public static void AssertIncidentData(IncidentData data1, IncidentData data2)
+        public static void AssertIncidentData(SecurityInsightsIncidentData data1, SecurityInsightsIncidentData data2)
         {
             AssertResource(data1, data2);
             Assert.AreEqual(data1.Title, data2.Title);
@@ -131,9 +112,9 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
             Assert.AreEqual(data1.Description, data2.Description);
             Assert.AreEqual(data1.ClassificationComment, data2.ClassificationComment);
         }
-        public static IncidentData GetIncidentData()
+        public static SecurityInsightsIncidentData GetIncidentData()
         {
-            var data = new IncidentData()
+            var data = new SecurityInsightsIncidentData()
             {
                 Title = "SDKCreateIncidentTest",
                 Status = "Active",
@@ -144,35 +125,33 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         #endregion
 
         #region DataConnectorData
-        public static void AssertDataConnectorData(DataConnectorData data1, DataConnectorData data2)
+        public static void AssertDataConnectorData(SecurityInsightsDataConnectorData data1, SecurityInsightsDataConnectorData data2)
         {
             AssertResource(data1, data2);
             Assert.AreEqual(data1.Kind, data2.Kind);
         }
-        public static DataConnectorData GetDataConnectorData()
+        public static SecurityInsightsDataConnectorData GetDataConnectorData()
         {
-            var data = new ASCDataConnector()
+            var data = new SecurityInsightsAscDataConnector()
             {
                 SubscriptionId = "db1ab6f0-4769-4b27-930e-01e2ef9c123c",
-                DataTypes = new AlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(DataTypeState.Enabled))
+                DataTypes = new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon()
+                {
+                    State = SecurityInsightsDataTypeConnectionState.Enabled
+                })
             };
             return data;
         }
         #endregion
 
         #region ThreatIntelligenceIndicatorData
-        public static void AssertThreatIntelligenceIndicatorData(ThreatIntelligenceIndicatorData data1, ThreatIntelligenceIndicatorData data2)
+        public static void AssertThreatIntelligenceIndicatorData(SecurityInsightsThreatIntelligenceIndicatorBaseData data1, SecurityInsightsThreatIntelligenceIndicatorBaseData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.DisplayName, data2.DisplayName);
-            Assert.AreEqual(data1.Description, data2.Description);
-            Assert.AreEqual(data1.Source, data2.Source);
-            Assert.AreEqual(data1.FriendlyName, data2.FriendlyName);
-            Assert.AreEqual(data1.Pattern, data2.Pattern);
         }
-        public static ThreatIntelligenceIndicatorData GetThreatIntelligenceIndicatorData()
+        public static SecurityInsightsThreatIntelligenceIndicatorData GetThreatIntelligenceIndicatorData()
         {
-            var data = new ThreatIntelligenceIndicatorData()
+            var data = new SecurityInsightsThreatIntelligenceIndicatorData()
             {
                 DisplayName = "SDK Test",
                 PatternType = "ipv4-addr",
@@ -181,14 +160,14 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
                 {
                     "unknown"
                 },
-                ValidFrom = DateTime.Now.ToString(),
+                ValidFrom = DateTime.Now,
                 Source = "Azure Sentinel"
             };
             return data;
         }
         #endregion
         #region WatchlistItemData
-        public static void AssertWatchlistItemData(WatchlistItemData data1, WatchlistItemData data2)
+        public static void AssertWatchlistItemData(SecurityInsightsWatchlistItemData data1, SecurityInsightsWatchlistItemData data2)
         {
             AssertResource(data1, data2);
             Assert.AreEqual(data1.IsDeleted, data2.IsDeleted);
@@ -196,9 +175,9 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
             Assert.AreEqual(data1.TenantId, data2.TenantId);
             Assert.AreEqual(data1.WatchlistItemType, data2.WatchlistItemType);
         }
-        public static WatchlistItemData GetWatchlistItemData()
+        public static SecurityInsightsWatchlistItemData GetWatchlistItemData()
         {
-            return new WatchlistItemData()
+            return new SecurityInsightsWatchlistItemData()
             {
                 ItemsKeyValue = BinaryData.FromString("{\"ipaddress\":\"1.1.1.2\"}")
             };
@@ -228,16 +207,16 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         #endregion
 
         #region SentinelOnboardingStateData
-        public static void AssertSentinelOnboardingStateData(SentinelOnboardingStateData data1, SentinelOnboardingStateData data2)
+        public static void AssertSentinelOnboardingStateData(SecurityInsightsSentinelOnboardingStateData data1, SecurityInsightsSentinelOnboardingStateData data2)
         {
             AssertResource(data1, data2);
-            Assert.AreEqual(data1.CustomerManagedKey, data2.CustomerManagedKey);
+            Assert.AreEqual(data1.IsCustomerManagedKeySet, data2.IsCustomerManagedKeySet);
         }
-        public static SentinelOnboardingStateData GetSentinelOnboardingStateData()
+        public static SecurityInsightsSentinelOnboardingStateData GetSentinelOnboardingStateData()
         {
-            return new SentinelOnboardingStateData()
+            return new SecurityInsightsSentinelOnboardingStateData()
             {
-                CustomerManagedKey = false,
+                IsCustomerManagedKeySet = false,
             };
         }
         #endregion

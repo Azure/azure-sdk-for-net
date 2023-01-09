@@ -6,13 +6,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.OperationalInsights;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
-using Azure.ResourceManager.OperationalInsights.Models;
 using Azure.ResourceManager.SecurityInsights.Tests.Helpers;
 using NUnit.Framework;
-using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
 {
@@ -28,25 +27,35 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var resourceGroup = await CreateResourceGroupAsync();
             return resourceGroup;
         }
+        #region Workspace
         private OperationalInsightsWorkspaceCollection GetWorkspaceCollectionAsync(ResourceGroupResource resourceGroup)
         {
             return resourceGroup.GetOperationalInsightsWorkspaces();
         }
-        private SentinelOnboardingStateCollection GetSentinelOnboardingStateCollectionAsync(ResourceGroupResource resourceGroup, string workspaceName)
+        private async Task<OperationalInsightsWorkspaceResource> GetWorkspaceResourceAsync(ResourceGroupResource resourceGroup)
         {
-            return resourceGroup.GetSentinelOnboardingStates(workspaceName);
-        }
-
-        private async Task<SentinelOnboardingStateResource> CreateSentinelOnboardingStateResourceAsync(string onboardName)
-        {
-            var resourceGroup = await GetResourceGroupAsync();
-            var groupName = resourceGroup.Data.Name;
             var workspaceCollection = GetWorkspaceCollectionAsync(resourceGroup);
             var workspaceName1 = groupName + "-ws";
             var workspaceInput = GetWorkspaceData();
             var lrow = await workspaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName1, workspaceInput);
             OperationalInsightsWorkspaceResource workspace = lrow.Value;
-            var collection = GetSentinelOnboardingStateCollectionAsync(resourceGroup, workspaceName1);
+            return workspace;
+        }
+        #endregion
+        private SecurityInsightsSentinelOnboardingStateCollection GetSentinelOnboardingStateCollectionAsync(OperationalInsightsWorkspaceSecurityInsightsResource operationalInsights)
+        {
+            return operationalInsights.GetSecurityInsightsSentinelOnboardingStates();
+        }
+
+        private async Task<SecurityInsightsSentinelOnboardingStateResource> CreateSentinelOnboardingStateResourceAsync(string onboardName)
+        {
+            var resourceGroup = await GetResourceGroupAsync();
+            var workspace = await GetWorkspaceResourceAsync(resourceGroup);
+            var groupName = resourceGroup.Data.Name;
+            var workspaceName = groupName + "-ws";
+            var ResourceID = CreateResourceIdentifier("db1ab6f0-4769-4b27-930e-01e2ef9c123c", groupName, workspaceName);
+            var operationalInsights = new OperationalInsightsWorkspaceSecurityInsightsResource(Client, ResourceID);
+            var collection = GetSentinelOnboardingStateCollectionAsync(operationalInsights);
             var input = ResourceDataHelpers.GetSentinelOnboardingStateData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, onboardName, input);
             return lro.Value;
@@ -58,7 +67,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             //1.Get
             var onboardName = "default";
             var onboard1 = await CreateSentinelOnboardingStateResourceAsync(onboardName);
-            SentinelOnboardingStateResource Onboard2 = await onboard1.GetAsync();
+            SecurityInsightsSentinelOnboardingStateResource Onboard2 = await onboard1.GetAsync();
 
             ResourceDataHelpers.AssertSentinelOnboardingStateData(onboard1.Data, Onboard2.Data);
             //2.Delete

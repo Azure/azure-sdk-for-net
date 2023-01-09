@@ -8,10 +8,8 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
-using Azure.ResourceManager.OperationalInsights.Models;
 using Azure.ResourceManager.SecurityInsights.Tests.Helpers;
 using NUnit.Framework;
-using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
 {
@@ -27,39 +25,9 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var resourceGroup = await CreateResourceGroupAsync();
             return resourceGroup;
         }
-        #region Workspace
-        private OperationalInsightsWorkspaceCollection GetWorkspaceCollectionAsync(ResourceGroupResource resourceGroup)
+        private SecurityInsightsBookmarkCollection GetBookmarkCollectionAsync(OperationalInsightsWorkspaceSecurityInsightsResource operationalInsights)
         {
-            return resourceGroup.GetOperationalInsightsWorkspaces();
-        }
-        private async Task<OperationalInsightsWorkspaceResource> GetWorkspaceResourceAsync(ResourceGroupResource resourceGroup)
-        {
-            var workspaceCollection = GetWorkspaceCollectionAsync(resourceGroup);
-            var workspaceName1 = groupName + "-ws";
-            var workspaceInput = GetWorkspaceData();
-            var lrow = await workspaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName1, workspaceInput);
-            OperationalInsightsWorkspaceResource workspace = lrow.Value;
-            return workspace;
-        }
-        #endregion
-        #region Onboard
-        private SentinelOnboardingStateCollection GetSentinelOnboardingStateCollectionAsync(ResourceGroupResource resourceGroup, string workspaceName)
-        {
-            return resourceGroup.GetSentinelOnboardingStates(workspaceName);
-        }
-        private async Task<SentinelOnboardingStateResource> GetSentinelOnboardingStateResourceAsync(ResourceGroupResource resourceGroup, string workspaceName)
-        {
-            var onboardCollection = GetSentinelOnboardingStateCollectionAsync(resourceGroup, workspaceName);
-            var onboardName = "default";
-            var onboardInput = ResourceDataHelpers.GetSentinelOnboardingStateData();
-            var lroo = await onboardCollection.CreateOrUpdateAsync(WaitUntil.Completed, onboardName, onboardInput);
-            SentinelOnboardingStateResource onboard1 = lroo.Value;
-            return onboard1;
-        }
-        #endregion
-        private BookmarkCollection GetBookmarkCollectionAsync(ResourceGroupResource resourceGroup, string workspaceName)
-        {
-            return resourceGroup.GetBookmarks(workspaceName);
+            return operationalInsights.GetSecurityInsightsBookmarks();
         }
 
         [TestCase]
@@ -67,19 +35,20 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
         {
             //0.prepare
             var resourceGroup = await GetResourceGroupAsync();
-            var workspace = await GetWorkspaceResourceAsync(resourceGroup);
-            SentinelOnboardingStateResource sOS = await GetSentinelOnboardingStateResourceAsync(resourceGroup, workspace.Data.Name);
+            var workspaceName = groupName + "ws";
+            var ResourceID = CreateResourceIdentifier("db1ab6f0-4769-4b27-930e-01e2ef9c123c", groupName, workspaceName);
+            var operationalInsights = new OperationalInsightsWorkspaceSecurityInsightsResource(Client, ResourceID);
             //1.CreateOrUpdate
-            var collection = GetBookmarkCollectionAsync(resourceGroup, workspace.Data.Name);
+            var collection = GetBookmarkCollectionAsync(operationalInsights);
             var name = "6a8d6ea6-04d5-49d7-8169-ffca8b0ced59";
             var name2 = "6a8d6ea6-04d5-49d7-8169-ffca8b0ced61";
             var name3 = "6a8d6ea6-04d5-49d7-8169-ffca8b0ced62";
             var input = ResourceDataHelpers.GetBookmarkData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
-            BookmarkResource bookmark1 = lro.Value;
+            SecurityInsightsBookmarkResource bookmark1 = lro.Value;
             Assert.AreEqual(name, bookmark1.Data.Name);
             //2.Get
-            BookmarkResource bookmark2 = await collection.GetAsync(name);
+            SecurityInsightsBookmarkResource bookmark2 = await collection.GetAsync(name);
             ResourceDataHelpers.AssertBookmarkData(bookmark1.Data, bookmark2.Data);
             //3.GetAll
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);

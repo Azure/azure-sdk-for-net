@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.OperationalInsights;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
@@ -26,43 +25,13 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var resourceGroup = await CreateResourceGroupAsync();
             return resourceGroup;
         }
-        #region Workspace
-        private OperationalInsightsWorkspaceCollection GetWorkspaceCollectionAsync(ResourceGroupResource resourceGroup)
+        private async Task<SecurityInsightsWatchlistItemCollection> GetWatchlistItemCollectionAsync(OperationalInsightsWorkspaceSecurityInsightsResource operationalInsights)
         {
-            return resourceGroup.GetOperationalInsightsWorkspaces();
-        }
-        private async Task<OperationalInsightsWorkspaceResource> GetWorkspaceResourceAsync(ResourceGroupResource resourceGroup)
-        {
-            var workspaceCollection = GetWorkspaceCollectionAsync(resourceGroup);
-            var workspaceName1 = groupName + "-ws";
-            var workspaceInput = GetWorkspaceData();
-            var lrow = await workspaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName1, workspaceInput);
-            OperationalInsightsWorkspaceResource workspace = lrow.Value;
-            return workspace;
-        }
-        #endregion
-        #region Onboard
-        private SentinelOnboardingStateCollection GetSentinelOnboardingStateCollectionAsync(ResourceGroupResource resourceGroup, string workspaceName)
-        {
-            return resourceGroup.GetSentinelOnboardingStates(workspaceName);
-        }
-        private async Task<SentinelOnboardingStateResource> GetSentinelOnboardingStateResourceAsync(ResourceGroupResource resourceGroup, string workspaceName)
-        {
-            var onboardCollection = GetSentinelOnboardingStateCollectionAsync(resourceGroup, workspaceName);
-            var onboardName = "default";
-            var onboardInput = ResourceDataHelpers.GetSentinelOnboardingStateData();
-            var lroo = await onboardCollection.CreateOrUpdateAsync(WaitUntil.Completed, onboardName, onboardInput);
-            SentinelOnboardingStateResource onboard1 = lroo.Value;
-            return onboard1;
-        }
-        #endregion
-        private async Task<WatchlistItemCollection> GetWatchlistItemCollectionAsync(ResourceGroupResource resourceGroup, string workspaceName)
-        {
-            var collection = resourceGroup.GetWatchlists(workspaceName);
+            var collection = operationalInsights.GetSecurityInsightsWatchlists();
             var input = ResourceDataHelpers.GetWatchlistData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testWatchlists-"), input);
             var watchlistResource =  lro.Value;
-            return watchlistResource.GetWatchlistItems();
+            return watchlistResource.GetSecurityInsightsWatchlistItems();
         }
 
         [TestCase]
@@ -70,19 +39,20 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
         {
             //0.prepare
             var resourceGroup = await GetResourceGroupAsync();
-            var workspace = await GetWorkspaceResourceAsync(resourceGroup);
-            SentinelOnboardingStateResource sOS = await GetSentinelOnboardingStateResourceAsync(resourceGroup, workspace.Data.Name);
+            var workspaceName = groupName + "ws";
+            var ResourceID = CreateResourceIdentifier("db1ab6f0-4769-4b27-930e-01e2ef9c123c", groupName, workspaceName);
+            var operationalInsights = new OperationalInsightsWorkspaceSecurityInsightsResource(Client, ResourceID);
             //1.CreateOrUpdate
-            var collection = await GetWatchlistItemCollectionAsync(resourceGroup, workspace.Data.Name);
+            var collection = await GetWatchlistItemCollectionAsync(operationalInsights);
             var name = "6d37a904-d199-43ff-892b-53653b784122";
             var name2 = "6d37a904-d199-43ff-892b-53653b784126";
             var name3 = "6d37a904-d199-43ff-892b-53653b784128";
             var input = ResourceDataHelpers.GetWatchlistItemData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
-            WatchlistItemResource item1 = lro.Value;
+            SecurityInsightsWatchlistItemResource item1 = lro.Value;
             Assert.AreEqual(name, item1.Data.Name);
             //2.Get
-            WatchlistItemResource item2 = await collection.GetAsync(name);
+            SecurityInsightsWatchlistItemResource item2 = await collection.GetAsync(name);
             ResourceDataHelpers.AssertWatchlistItemData(item1.Data, item2.Data);
             //3.GetAll
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);

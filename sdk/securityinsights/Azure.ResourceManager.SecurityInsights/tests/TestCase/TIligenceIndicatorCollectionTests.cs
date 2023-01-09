@@ -14,9 +14,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
 {
-    public class WatchlistCollectionTests : SecurityInsightsManagementTestBase
+    public class TIligenceIndicatorCollectionTests : SecurityInsightsManagementTestBase
     {
-        public WatchlistCollectionTests(bool isAsync)
+        public TIligenceIndicatorCollectionTests(bool isAsync)
             : base(isAsync, RecordedTestMode.Record)
         {
         }
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             return resourceGroup;
         }
 
-        private SecurityInsightsWatchlistCollection GetWatchlistCollectionAsync(OperationalInsightsWorkspaceSecurityInsightsResource operationalInsights)
+        private SecurityInsightsThreatIntelligenceIndicatorCollection GetThreatIntelligenceIndicatorCollectionAsync(OperationalInsightsWorkspaceSecurityInsightsResource operationalInsights)
         {
-            return operationalInsights.GetSecurityInsightsWatchlists();
+            return operationalInsights.GetSecurityInsightsThreatIntelligenceIndicators();
         }
 
         [TestCase]
-        public async Task WatchlistCollectionApiTests()
+        public async Task ThreatIntelligenceCollectionApiTests()
         {
             //0.prepare
             var resourceGroup = await GetResourceGroupAsync();
@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var ResourceID = CreateResourceIdentifier("db1ab6f0-4769-4b27-930e-01e2ef9c123c", groupName, workspaceName);
             var operationalInsights = new OperationalInsightsWorkspaceSecurityInsightsResource(Client, ResourceID);
             //1.CreateOrUpdate
-            var collection = GetWatchlistCollectionAsync(operationalInsights);
-            var name = Recording.GenerateAssetName("Watchlists-");
-            var name2 = Recording.GenerateAssetName("Watchlists-");
-            var name3 = Recording.GenerateAssetName("Watchlists-");
-            var input = ResourceDataHelpers.GetWatchlistData();
+            var collection = GetThreatIntelligenceIndicatorCollectionAsync(operationalInsights);
+            var name = Recording.GenerateAssetName("SecurityInsightsThreatIntelligenceIndicator-");
+            var name2 = Recording.GenerateAssetName("SecurityInsightsThreatIntelligenceIndicator-");
+            var name3 = Recording.GenerateAssetName("SecurityInsightsThreatIntelligenceIndicator-");
+            var input = ResourceDataHelpers.GetThreatIntelligenceIndicatorData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
-            SecurityInsightsWatchlistResource watch1 = lro.Value;
-            Assert.AreEqual(name, watch1.Data.Name);
+            SecurityInsightsThreatIntelligenceIndicatorResource threat1 = lro.Value;
+            Assert.AreEqual(name, threat1.Data.Name);
             //2.Get
-            SecurityInsightsWatchlistResource watch2 = await collection.GetAsync(name);
-            ResourceDataHelpers.AssertWatchlistData(watch1.Data, watch2.Data);
+            SecurityInsightsThreatIntelligenceIndicatorResource threat2 = await collection.GetAsync(name);
+            ResourceDataHelpers.AssertThreatIntelligenceIndicatorData(threat1.Data, threat2.Data);
             //3.GetAll
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name2, input);

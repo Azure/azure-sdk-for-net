@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -12,9 +13,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
 {
-    public class SIAlertRulesResourceTests : SecurityInsightsManagementTestBase
+    public class TIligenceIndicatorResource : SecurityInsightsManagementTestBase
     {
-        public SIAlertRulesResourceTests(bool isAsync)
+        public TIligenceIndicatorResource(bool isAsync)
             : base(isAsync, RecordedTestMode.Record)
         {
         }
@@ -24,16 +25,17 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var resourceGroup = await CreateResourceGroupAsync();
             return resourceGroup;
         }
-        private async Task<SecurityInsightsAlertRuleResource> CreateSecurityInsightsAlertRuleAsync(OperationalInsightsWorkspaceSecurityInsightsResource operationalInsights, string alertRulesName)
+
+        private async Task<SecurityInsightsThreatIntelligenceIndicatorResource> CreateThreatIntelligenceAsync(OperationalInsightsWorkspaceSecurityInsightsResource operationalInsights, string watchName)
         {
-            var collection = operationalInsights.GetSecurityInsightsAlertRules();
-            var input = ResourceDataHelpers.GetSecurityInsightsAlertRuleData();
-            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, alertRulesName, input);
+            var collection = operationalInsights.GetSecurityInsightsThreatIntelligenceIndicators();
+            var input = ResourceDataHelpers.GetThreatIntelligenceIndicatorData();
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, watchName, input);
             return lro.Value;
         }
 
         [TestCase]
-        public async Task SIAlertRulesResourceApiTests()
+        public async Task ThreatIntelligenceResourceApiTests()
         {
             //0.prepare
             var resourceGroup = await GetResourceGroupAsync();
@@ -41,13 +43,13 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var ResourceID = CreateResourceIdentifier("db1ab6f0-4769-4b27-930e-01e2ef9c123c", groupName, workspaceName);
             var operationalInsights = new OperationalInsightsWorkspaceSecurityInsightsResource(Client, ResourceID);
             //1.Get
-            var alertRulesName = Recording.GenerateAssetName("testAlertRules-");
-            var alertRules1 = await CreateSecurityInsightsAlertRuleAsync(operationalInsights, alertRulesName);
-            SecurityInsightsAlertRuleResource alertRules2 = await alertRules1.GetAsync();
+            var watchName = Recording.GenerateAssetName("testThreatIntelligenceIndicator-");
+            var watch1 = await CreateThreatIntelligenceAsync(operationalInsights, watchName);
+            SecurityInsightsThreatIntelligenceIndicatorResource watch2 = await watch1.GetAsync();
 
-            ResourceDataHelpers.AssertSecurityInsightsAlertRuleData(alertRules1.Data, alertRules2.Data);
+            ResourceDataHelpers.AssertThreatIntelligenceIndicatorData(watch1.Data, watch2.Data);
             //2.Delete
-            await alertRules1.DeleteAsync(WaitUntil.Completed);
+            await watch1.DeleteAsync(WaitUntil.Completed);
         }
     }
 }

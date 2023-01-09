@@ -5,8 +5,8 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.OperationalInsights;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.OperationalInsights;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
 using Azure.ResourceManager.SecurityInsights.Tests.Helpers;
@@ -41,24 +41,20 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
         }
         #endregion
         #region Onboard
-        private SentinelOnboardingStateCollection GetSentinelOnboardingStateCollectionAsync(ResourceGroupResource resourceGroup, string workspaceName)
+        private async Task<SecurityInsightsSentinelOnboardingStateResource> GetSentinelOnboardingStateResourceAsync(OperationalInsightsWorkspaceSecurityInsightsResource operationalInsights)
         {
-            return resourceGroup.GetSentinelOnboardingStates(workspaceName);
-        }
-        private async Task<SentinelOnboardingStateResource> GetSentinelOnboardingStateResourceAsync(ResourceGroupResource resourceGroup, string workspaceName)
-        {
-            var onboardCollection = GetSentinelOnboardingStateCollectionAsync(resourceGroup, workspaceName);
+            var onboardCollection = operationalInsights.GetSecurityInsightsSentinelOnboardingStates();
             var onboardName = "default";
             var onboardInput = ResourceDataHelpers.GetSentinelOnboardingStateData();
             var lroo = await onboardCollection.CreateOrUpdateAsync(WaitUntil.Completed, onboardName, onboardInput);
-            SentinelOnboardingStateResource onboard1 = lroo.Value;
+            SecurityInsightsSentinelOnboardingStateResource onboard1 = lroo.Value;
             return onboard1;
         }
         #endregion
 
-        private AutomationRuleCollection GetAutomationRuleCollectionAsync(ResourceGroupResource resourceGroup, string workspaceName)
+        private SecurityInsightsAutomationRuleCollection GetAutomationRuleCollectionAsync(OperationalInsightsWorkspaceSecurityInsightsResource operationalInsights)
         {
-            return resourceGroup.GetAutomationRules(workspaceName);
+            return operationalInsights.GetSecurityInsightsAutomationRules();
         }
 
         [TestCase]
@@ -67,18 +63,21 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             //0.prepare
             var resourceGroup = await GetResourceGroupAsync();
             var workspace = await GetWorkspaceResourceAsync(resourceGroup);
-            SentinelOnboardingStateResource sOS = await GetSentinelOnboardingStateResourceAsync(resourceGroup, workspace.Data.Name);
+            var workspaceName = groupName + "ws";
+            var ResourceID = CreateResourceIdentifier("db1ab6f0-4769-4b27-930e-01e2ef9c123c", groupName, workspaceName);
+            var operationalInsights = new OperationalInsightsWorkspaceSecurityInsightsResource(Client, ResourceID);
+            var sOS = await GetSentinelOnboardingStateResourceAsync(operationalInsights);
             //1.CreateOrUpdate
-            var collection = GetAutomationRuleCollectionAsync(resourceGroup, workspace.Data.Name);
+            var collection = GetAutomationRuleCollectionAsync(operationalInsights);
             var name = Recording.GenerateAssetName("automationrules-");
             var name2 = Recording.GenerateAssetName("automationrules-");
             var name3 = Recording.GenerateAssetName("automationrules-");
             var input = ResourceDataHelpers.GetAutomationRuleData(resourceGroup.Data.Name);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
-            AutomationRuleResource automation1 = lro.Value;
+            SecurityInsightsAutomationRuleResource automation1 = lro.Value;
             Assert.AreEqual(name, automation1.Data.Name);
             //2.Get
-            AutomationRuleResource automation2 = await collection.GetAsync(name);
+            SecurityInsightsAutomationRuleResource automation2 = await collection.GetAsync(name);
             ResourceDataHelpers.AssertAutomationRuleData(automation1.Data, automation2.Data);
             //3.GetAll
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);

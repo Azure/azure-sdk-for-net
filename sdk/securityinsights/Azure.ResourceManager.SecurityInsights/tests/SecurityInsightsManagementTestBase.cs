@@ -8,8 +8,8 @@ using Azure.ResourceManager.TestFramework;
 using Azure.ResourceManager.OperationalInsights;
 using NUnit.Framework;
 using System.Threading.Tasks;
-using Azure.ResourceManager.OperationalInsights.Models;
 using System;
+using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Tests
 {
@@ -23,6 +23,12 @@ namespace Azure.ResourceManager.SecurityInsights.Tests
         protected SecurityInsightsManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+        }
+
+        public ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName)
+        {
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}";
+            return new ResourceIdentifier(resourceId);
         }
 
         protected SecurityInsightsManagementTestBase(bool isAsync)
