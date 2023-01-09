@@ -455,40 +455,58 @@ namespace Azure.Search.Documents.Tests
 
                 if (populate)
                 {
-                    object[] hotels = isSample ? SearchResourcesSample.TestDocumentsForSample : TestDocuments;
-                    List<Task> tasks = new List<Task>(hotels.Length);
-
-                    foreach (object obj in hotels)
+                    if (isSample)
                     {
-                        Task task = Task.Run(async () =>
+                        Samples.Hotel[] hotels = SearchResourcesSample.TestDocumentsForSample;
+                        List<Task> tasks = new List<Task>(hotels.Length);
+
+                        foreach (Samples.Hotel hotel in hotels)
                         {
-                            using MemoryStream stream = new MemoryStream();
-                            await JsonSerializer
-                                .SerializeAsync(stream, obj, JsonSerialization.SerializerOptions, cts.Token)
-                                .ConfigureAwait(false);
-
-                            stream.Seek(0, SeekOrigin.Begin);
-
-                            if (isSample)
+                            Task task = Task.Run(async () =>
                             {
-                                Samples.Hotel hotel = (Samples.Hotel)obj;
+                                using MemoryStream stream = new MemoryStream();
+                                await JsonSerializer
+                                    .SerializeAsync(stream, hotel, JsonSerialization.SerializerOptions, cts.Token)
+                                    .ConfigureAwait(false);
+
+                                stream.Seek(0, SeekOrigin.Begin);
+
                                 await client
                                     .UploadBlobAsync(hotel.HotelId, stream, cts.Token)
                                     .ConfigureAwait(false);
-                            }
-                            else
-                            {
-                                Hotel hotel = (Hotel)obj;
-                                await client
-                                    .UploadBlobAsync(hotel.HotelId, stream, cts.Token)
-                                    .ConfigureAwait(false);
-                            }
-                        });
+                            });
 
-                        tasks.Add(task);
+                            tasks.Add(task);
+                        }
+
+                        await Task.WhenAll(tasks);
                     }
+                    else
+                    {
+                        Hotel[] hotels = TestDocuments;
+                        List<Task> tasks = new List<Task>(hotels.Length);
 
-                    await Task.WhenAll(tasks);
+                        foreach (Hotel hotel in hotels)
+                        {
+                            Task task = Task.Run(async () =>
+                            {
+                                using MemoryStream stream = new MemoryStream();
+                                await JsonSerializer
+                                    .SerializeAsync(stream, hotel, JsonSerialization.SerializerOptions, cts.Token)
+                                    .ConfigureAwait(false);
+
+                                stream.Seek(0, SeekOrigin.Begin);
+
+                                await client
+                                    .UploadBlobAsync(hotel.HotelId, stream, cts.Token)
+                                    .ConfigureAwait(false);
+                            });
+
+                            tasks.Add(task);
+                        }
+
+                        await Task.WhenAll(tasks);
+                    }
                 }
             }
 
