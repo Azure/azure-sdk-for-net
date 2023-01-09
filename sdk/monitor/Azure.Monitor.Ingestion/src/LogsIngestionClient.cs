@@ -14,8 +14,8 @@ namespace Azure.Monitor.Ingestion
 {
     /// <summary> The IngestionUsingDataCollectionRules service client. </summary>
     [CodeGenClient("IngestionUsingDataCollectionRulesClient")]
-    [CodeGenSuppress("Upload", typeof(string), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("UploadAsync", typeof(string), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
+    //[CodeGenSuppress("Upload", typeof(string), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
+    //[CodeGenSuppress("UploadAsync", typeof(string), typeof(string), typeof(RequestContent), typeof(string), typeof(RequestContext))]
     public partial class LogsIngestionClient
     {
         /// <summary> Initializes a new instance of LogsIngestionClient for mocking. </summary>
@@ -408,6 +408,7 @@ namespace Azure.Monitor.Ingestion
         /// <param name="ruleId"> The immutable Id of the Data Collection Rule resource. </param>
         /// <param name="streamName"> The streamDeclaration name as defined in the Data Collection Rule. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="contentEncoding">If content is already gzipped, put "gzip". Default behavior is to gzip all input.</param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -442,15 +443,16 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual async Task<Response> UploadAsync(string ruleId, string streamName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> UploadAsync(string ruleId, string streamName, RequestContent content, string contentEncoding = null, RequestContext context = null)
         {
-            return await UploadRequestContentAsync(ruleId, streamName, content, true, context).ConfigureAwait(false);
+            return await UploadRequestContentAsync(ruleId, streamName, content, true, context, contentEncoding).ConfigureAwait(false);
         }
 
         /// <summary> Ingestion API used to directly ingest data using Data Collection Rules. </summary>
         /// <param name="ruleId"> The immutable Id of the Data Collection Rule resource. </param>
         /// <param name="streamName"> The streamDeclaration name as defined in the Data Collection Rule. </param>
         /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="contentEncoding">If content is already gzipped, put "gzip". Default behavior is to gzip all input.</param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/>, <paramref name="streamName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> or <paramref name="streamName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -485,12 +487,12 @@ namespace Azure.Monitor.Ingestion
         /// ]]></code>
         /// </example>
         /// <remarks> See error response code and error response message for more detail. </remarks>
-        public virtual Response Upload(string ruleId, string streamName, RequestContent content, RequestContext context = null)
+        public virtual Response Upload(string ruleId, string streamName, RequestContent content, string contentEncoding = null, RequestContext context = null)
         {
-            return UploadRequestContentAsync(ruleId, streamName, content, false, context).EnsureCompleted();
+            return UploadRequestContentAsync(ruleId, streamName, content, false, context, contentEncoding).EnsureCompleted();
         }
 
-        internal virtual async Task<Response> UploadRequestContentAsync(string ruleId, string streamName, RequestContent content, bool async, RequestContext context = null)
+        internal virtual async Task<Response> UploadRequestContentAsync(string ruleId, string streamName, RequestContent content, bool async, RequestContext context = null, string contentEncoding = null)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
             Argument.AssertNotNullOrEmpty(streamName, nameof(streamName));
@@ -500,7 +502,9 @@ namespace Azure.Monitor.Ingestion
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadRequest(ruleId, streamName, content, "gzip", context);
+                // if "gzip" is passed in for contentEncoding the content is already gzipped, so we don't want to gzip it again
+                string encoding = (contentEncoding.Equals("gzip")? null : "gzip");
+                using HttpMessage message = CreateUploadRequest(ruleId, streamName, content, encoding, context);
                 if (async)
                 {
                     return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);

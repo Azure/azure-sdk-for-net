@@ -192,5 +192,7 @@ namespace Azure.Monitor.Ingestion.Tests
             Assert.AreEqual(204, response.Status);
             Assert.IsFalse(response.IsError);
         }
+        //GZipUtf8JsonRequestContent gzContent = new(content);
+        //request.Content = gzContent;
     }
 }
