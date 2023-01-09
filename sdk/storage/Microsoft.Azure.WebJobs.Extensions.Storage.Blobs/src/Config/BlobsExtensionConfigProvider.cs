@@ -108,6 +108,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
             rule.BindToInput<MultiBlobContext>(this); // Intermediate private context to capture state
             rule.AddOpenConverter<MultiBlobContext, IEnumerable<BlobCollectionType>>(typeof(BlobCollectionConverter<>), this);
+            rule.AddOpenConverter<MultiBlobContext, BlobCollectionType[]>(typeof(BlobCollectionConverter<>), this);
 
             rule.BindToInput<ParameterBindingData>((attr) => ConvertToParameterBindingData(attr)); // Precedence, must beat BindToStream
 
@@ -284,7 +285,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
         // Converter to produce an IEnumerable<T> for binding to multiple blobs.
         // T must have been matched by MultiBlobType
-        private class BlobCollectionConverter<T> : IAsyncConverter<MultiBlobContext, IEnumerable<T>>
+        private class BlobCollectionConverter<T> : IAsyncConverter<MultiBlobContext, IEnumerable<T>>, IAsyncConverter<MultiBlobContext, T[]>
         {
             private readonly FuncAsyncConverter<BlobBaseClient, T> _converter;
 
@@ -298,7 +299,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
                 }
             }
 
-            public async Task<IEnumerable<T>> ConvertAsync(MultiBlobContext context, CancellationToken cancellationToken)
+            async Task<T[]> IAsyncConverter<MultiBlobContext, T[]>.ConvertAsync(MultiBlobContext context, CancellationToken cancellationToken)
+            {
+                // Query the blob container using the blob prefix (if specified)
+                // Note that we're explicitly using useFlatBlobListing=true to collapse
+                // sub directories.
+                string prefix = context.Prefix;
+                var container = context.Container;
+                IAsyncEnumerable<BlobItem> blobItems = container.GetBlobsAsync(prefix: prefix, cancellationToken: cancellationToken);
+
+                // create an IEnumerable<T> of the correct type, performing any required conversions on the blobs
+                var list = await ConvertBlobs(blobItems, container).ConfigureAwait(false);
+                return list.ToArray();
+            }
+
+            async Task<IEnumerable<T>> IAsyncConverter<MultiBlobContext, IEnumerable<T>>.ConvertAsync(MultiBlobContext context, CancellationToken cancellationToken)
             {
                 // Query the blob container using the blob prefix (if specified)
                 // Note that we're explicitly using useFlatBlobListing=true to collapse
