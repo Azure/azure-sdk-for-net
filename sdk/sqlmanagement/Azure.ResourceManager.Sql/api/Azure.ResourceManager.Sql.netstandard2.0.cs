@@ -2877,6 +2877,7 @@ namespace Azure.ResourceManager.Sql
         public long? MaxSizeBytes { get { throw null; } set { } }
         public double? MinCapacity { get { throw null; } set { } }
         public System.DateTimeOffset? PausedOn { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.AlwaysEncryptedEnclaveType? PreferredEnclaveType { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.DatabaseReadScale? ReadScale { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RecoverableDatabaseId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RecoveryServicesRecoveryPointId { get { throw null; } set { } }
@@ -5141,6 +5142,24 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(Azure.ResourceManager.Sql.Models.AggregationFunctionType left, Azure.ResourceManager.Sql.Models.AggregationFunctionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Sql.Models.AggregationFunctionType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Sql.Models.AggregationFunctionType left, Azure.ResourceManager.Sql.Models.AggregationFunctionType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AlwaysEncryptedEnclaveType : System.IEquatable<Azure.ResourceManager.Sql.Models.AlwaysEncryptedEnclaveType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AlwaysEncryptedEnclaveType(string value) { throw null; }
+        public static Azure.ResourceManager.Sql.Models.AlwaysEncryptedEnclaveType Default { get { throw null; } }
+        public static Azure.ResourceManager.Sql.Models.AlwaysEncryptedEnclaveType VBS { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Sql.Models.AlwaysEncryptedEnclaveType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Sql.Models.AlwaysEncryptedEnclaveType left, Azure.ResourceManager.Sql.Models.AlwaysEncryptedEnclaveType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Sql.Models.AlwaysEncryptedEnclaveType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Sql.Models.AlwaysEncryptedEnclaveType left, Azure.ResourceManager.Sql.Models.AlwaysEncryptedEnclaveType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -7707,6 +7726,7 @@ namespace Azure.ResourceManager.Sql.Models
         public long? MaxSizeBytes { get { throw null; } set { } }
         public double? MinCapacity { get { throw null; } set { } }
         public System.DateTimeOffset? PausedOn { get { throw null; } }
+        public Azure.ResourceManager.Sql.Models.AlwaysEncryptedEnclaveType? PreferredEnclaveType { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.DatabaseReadScale? ReadScale { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RecoverableDatabaseId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RecoveryServicesRecoveryPointId { get { throw null; } set { } }

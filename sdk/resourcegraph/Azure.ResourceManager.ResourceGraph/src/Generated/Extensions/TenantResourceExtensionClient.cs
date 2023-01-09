@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.ResourceGraph
         /// </summary>
         /// <param name="content"> Request specifying query and its options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<QueryResponse>> ResourcesAsync(QueryContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceQueryResult>> GetResourcesAsync(ResourceQueryContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.Resources");
+            using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetResources");
             scope.Start();
             try
             {
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.ResourceGraph
         /// </summary>
         /// <param name="content"> Request specifying query and its options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<QueryResponse> Resources(QueryContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceQueryResult> GetResources(ResourceQueryContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.Resources");
+            using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetResources");
             scope.Start();
             try
             {
@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.ResourceGraph
         /// </summary>
         /// <param name="content"> Request specifying the query and its options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BinaryData>> ResourcesHistoryAsync(ResourcesHistoryContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BinaryData>> GetResourceHistoryAsync(ResourcesHistoryContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.ResourcesHistory");
+            using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetResourceHistory");
             scope.Start();
             try
             {
@@ -119,9 +119,9 @@ namespace Azure.ResourceManager.ResourceGraph
         /// </summary>
         /// <param name="content"> Request specifying the query and its options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BinaryData> ResourcesHistory(ResourcesHistoryContent content, CancellationToken cancellationToken = default)
+        public virtual Response<BinaryData> GetResourceHistory(ResourcesHistoryContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.ResourcesHistory");
+            using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetResourceHistory");
             scope.Start();
             try
             {

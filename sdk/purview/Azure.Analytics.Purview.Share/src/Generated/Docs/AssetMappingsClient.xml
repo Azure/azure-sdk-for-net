@@ -244,7 +244,7 @@ var data = new {
     kind = "AdlsGen2Account",
 };
 
-var operation = await client.CreateAsync(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
+var operation = await client.CreateAsync(WaitUntil.Started, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -267,7 +267,7 @@ var data = new {
     kind = "AdlsGen2Account",
 };
 
-var operation = await client.CreateAsync(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
+var operation = await client.CreateAsync(WaitUntil.Started, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -387,7 +387,7 @@ var data = new {
     kind = "AdlsGen2Account",
 };
 
-var operation = client.Create(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
+var operation = client.Create(WaitUntil.Started, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -410,7 +410,7 @@ var data = new {
     kind = "AdlsGen2Account",
 };
 
-var operation = client.Create(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
+var operation = client.Create(WaitUntil.Started, "<receivedShareName>", "<assetMappingName>", RequestContent.Create(data));
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -520,7 +520,7 @@ This sample shows how to call DeleteAsync with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
 
-var operation = await client.DeleteAsync(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>");
+var operation = await client.DeleteAsync(WaitUntil.Started, "<receivedShareName>", "<assetMappingName>");
 
 var response = await operation.WaitForCompletionResponseAsync();
 Console.WriteLine(response.Status)
@@ -537,7 +537,7 @@ This sample shows how to call Delete with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new AssetMappingsClient("<https://my-service.azure.com>", credential);
 
-var operation = client.Delete(WaitUntil.Completed, "<receivedShareName>", "<assetMappingName>");
+var operation = client.Delete(WaitUntil.Started, "<receivedShareName>", "<assetMappingName>");
 
 var response = operation.WaitForCompletionResponse();
 Console.WriteLine(response.Status)
