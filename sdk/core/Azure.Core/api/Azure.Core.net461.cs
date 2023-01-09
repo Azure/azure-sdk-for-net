@@ -40,11 +40,7 @@ namespace Azure
     {
         public AzureSasCredential(string signature) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public string PreviousSignature { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Signature { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public long SignatureUpdated { get { throw null; } }
         public void Update(string signature) { }
     }
     [System.FlagsAttribute]
