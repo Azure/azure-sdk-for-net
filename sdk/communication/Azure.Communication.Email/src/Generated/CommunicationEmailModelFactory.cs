@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using System;
+using System.Collections.Generic;
+using System.Linq;
 using Azure.Communication.Email.Models;
 
 namespace Azure.Communication.Email
@@ -13,19 +14,28 @@ namespace Azure.Communication.Email
     /// <summary> Model factory for read-only models. </summary>
     public static partial class CommunicationEmailModelFactory
     {
-        /// <summary> Initializes a new instance of SendStatusResult. </summary>
-        /// <param name="messageId"> System generated id of an email message sent. </param>
-        /// <param name="status"> The type indicating the status of a request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>
-        /// <returns> A new <see cref="Models.SendStatusResult"/> instance for mocking. </returns>
-        public static SendStatusResult SendStatusResult(string messageId = null, SendStatus status = default)
+        /// <summary> Initializes a new instance of OperationStatus. </summary>
+        /// <param name="id"> The unique id of the operation. </param>
+        /// <param name="status"> Status of operation. </param>
+        /// <param name="error"> Error details when status is a non-success terminal state. </param>
+        /// <returns> A new <see cref="Models.OperationStatus"/> instance for mocking. </returns>
+        public static OperationStatus OperationStatus(string id = null, EmailSendOperationStatus status = default, CommunicationError error = null)
         {
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
+            return new OperationStatus(id, status, error);
+        }
 
-            return new SendStatusResult(messageId, status);
+        /// <summary> Initializes a new instance of CommunicationError. </summary>
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
+        /// <param name="target"> The error target. </param>
+        /// <param name="details"> Further details about specific errors that led to this error. </param>
+        /// <param name="innerError"> The inner error if any. </param>
+        /// <returns> A new <see cref="Models.CommunicationError"/> instance for mocking. </returns>
+        public static CommunicationError CommunicationError(string code = null, string message = null, string target = null, IEnumerable<CommunicationError> details = null, CommunicationError innerError = null)
+        {
+            details ??= new List<CommunicationError>();
+
+            return new CommunicationError(code, message, target, details?.ToList(), innerError);
         }
     }
 }

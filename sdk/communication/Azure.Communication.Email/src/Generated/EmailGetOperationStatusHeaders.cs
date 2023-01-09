@@ -10,15 +10,13 @@ using Azure.Core;
 
 namespace Azure.Communication.Email
 {
-    internal partial class EmailSendHeaders
+    internal partial class EmailGetOperationStatusHeaders
     {
         private readonly Response _response;
-        public EmailSendHeaders(Response response)
+        public EmailGetOperationStatusHeaders(Response response)
         {
             _response = response;
         }
-        /// <summary> Location url of where to poll the status of this operation from. </summary>
-        public string OperationLocation => _response.Headers.TryGetValue("Operation-Location", out string value) ? value : null;
         /// <summary> Minimum amount of time in seconds to wait before polling for operation status again. </summary>
         public int? RetryAfter => _response.Headers.TryGetValue("retry-after", out int? value) ? value : null;
     }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.Email.Models
 {
-    internal partial class CommunicationError
+    public partial class CommunicationError
     {
         internal static CommunicationError DeserializeCommunicationError(JsonElement element)
         {

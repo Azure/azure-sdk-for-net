@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Communication.Email.Models
 {
     /// <summary> The Communication Services error. </summary>
-    internal partial class CommunicationError
+    public partial class CommunicationError
     {
         /// <summary> Initializes a new instance of CommunicationError. </summary>
         /// <param name="code"> The error code. </param>
