@@ -272,230 +272,6 @@ BinaryData state = await sessionReceiver.GetSessionStateAsync(CancellationToken.
 Assert.AreEqual(setState, state);
 ```
 
-## Sending and Receiving messages using topics and subscriptions
-
-```C# Snippet:ServiceBus_MockingTopicSubscriptionSend
-Mock<ServiceBusAdministrationClient> mockAdministrationClient = new();
-Mock<Response<TopicProperties>> mockTopicResponse = new();
-Mock<Response<SubscriptionProperties>> mockSuscriptionResponse = new();
-
-mockAdministrationClient
-    .Setup(client => client.CreateTopicAsync(
-        It.IsAny<CreateTopicOptions>(),
-        It.IsAny<CancellationToken>()))
-    .Callback<CreateTopicOptions, CancellationToken>((opts, ct) =>
-    {
-        TopicProperties mockTopicProperties = ServiceBusModelFactory.TopicProperties(opts);
-
-        mockTopicResponse.Setup(r => r.Value).Returns(mockTopicProperties);
-    })
-    .ReturnsAsync(mockTopicResponse.Object);
-
-mockAdministrationClient
-    .Setup(client => client.CreateSubscriptionAsync(
-        It.IsAny<CreateSubscriptionOptions>(),
-        It.IsAny<CancellationToken>()))
-    .Callback<CreateSubscriptionOptions, CancellationToken>((opts, ct) =>
-    {
-        SubscriptionProperties mockSubscriptionProperties = ServiceBusModelFactory.SubscriptionProperties(opts);
-
-        mockSuscriptionResponse.Setup(r => r.Value).Returns(mockSubscriptionProperties);
-    })
-    .ReturnsAsync(mockSuscriptionResponse.Object);
-
-var adminClient = mockAdministrationClient.Object;
-
-Mock<ServiceBusClient> mockServiceBusClient = new();
-Mock<ServiceBusSender> mockSender = new();
-Mock<ServiceBusReceiver> mockReceiver = new();
-
-mockServiceBusClient
-    .Setup(client => client.CreateSender(It.IsAny<string>()))
-    .Returns(mockSender.Object);
-
-mockSender
-    .Setup(sender => sender.SendMessageAsync(
-        It.IsAny<ServiceBusMessage>(),
-        It.IsAny<CancellationToken>()))
-    .Returns(Task.CompletedTask);
-
-mockServiceBusClient
-    .Setup(client => client.CreateReceiver(
-        It.IsAny<string>(),
-        It.IsAny<string>()))
-    .Returns(mockReceiver.Object);
-
-async IAsyncEnumerable<ServiceBusReceivedMessage> mockReturn()
-{
-    ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMessage(
-        body: new BinaryData("message1"),
-        messageId: "messageId1",
-        partitionKey: "hellokey",
-        correlationId: "correlationId",
-        contentType: "contentType",
-        replyTo: "replyTo"
-        // see the Service Bus Model Factory for more options ...
-        );
-
-    // IAsyncEnumerable types can only be returned by async functions, use this no-op await statement to
-    // force the method to be async.
-
-    await Task.Yield();
-
-    // yield allows more than one message to be returned, only one is being returned here for brevity
-
-    yield return message;
-}
-
-mockReceiver
-    .Setup(receiver => receiver.ReceiveMessagesAsync(
-        It.IsAny<CancellationToken>()))
-    .Returns(mockReturn);
-
-var serviceBusClient = mockServiceBusClient.Object;
-
-// The rest of this snippet illustrates how to send and receive messages using the mocked
-// topic and subscription methods above, this would be where application methods sending and
-// receiving to topics and subscriptions would be called.
-
-string topicName = "topic";
-var topicOptions = new CreateTopicOptions(topicName);
-topicOptions.AuthorizationRules.Add(new SharedAccessAuthorizationRule(
-    "allClaims",
-    new[] { AccessRights.Manage, AccessRights.Send, AccessRights.Listen }));
-TopicProperties createdTopic = await adminClient.CreateTopicAsync(topicOptions);
-
-string subscriptionName = "subscription";
-var subscriptionOptions = new CreateSubscriptionOptions(topicName, subscriptionName)
-{
-    UserMetadata= "some metadata"
-};
-SubscriptionProperties createdSubscription = await adminClient.CreateSubscriptionAsync(subscriptionOptions);
-
-ServiceBusSender sender = serviceBusClient.CreateSender(topicName);
-
-await sender.SendMessageAsync(new ServiceBusMessage("body"));
-
-ServiceBusReceiver receiver = serviceBusClient.CreateReceiver(topicName, subscriptionName);
-
-ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
-```
-
-
-## Queue Creation Mocking
-
-```C# Snippet:ServiceBus_MockingQueueCreation
-Mock<ServiceBusAdministrationClient> mockAdministrationClient = new();
-Mock<Response<QueueProperties>> mockQueueResponse = new();
-
-mockAdministrationClient
-    .Setup(client => client.CreateQueueAsync(
-        It.IsAny<CreateQueueOptions>(),
-        It.IsAny<CancellationToken>()))
-    .Callback<CreateQueueOptions, CancellationToken>((opts, ct) =>
-    {
-        QueueProperties mockQueueProperties = ServiceBusModelFactory.QueueProperties(opts);
-
-        mockQueueResponse.Setup(r => r.Value).Returns(mockQueueProperties);
-    })
-    .ReturnsAsync(mockQueueResponse.Object);
-
-ServiceBusAdministrationClient administrationClient = mockAdministrationClient.Object;
-
-// The rest of this snippet illustrates how to create a queue using the mocked service bus
-// administration client above, this would be where application methods creating a queue would be
-// called.
-
-string queueName = "queue";
-CreateQueueOptions options = new(queueName)
-{
-    UserMetadata = "some metadata"
-};
-
-options.AuthorizationRules.Add(new SharedAccessAuthorizationRule(
-    "allClaims",
-    new[] { AccessRights.Manage, AccessRights.Send, AccessRights.Listen }));
-
-QueueProperties createQueue = await administrationClient.CreateQueueAsync(options);
-```
-
-## Rule Creation Mocking
-
-```C# Snippet:ServiceBus_MockingRules
-Mock<ServiceBusAdministrationClient> mockAdministrationClient = new();
-Mock<Response<RuleProperties>> mockRuleResponse = new();
-
-mockAdministrationClient
-    .Setup(client => client.CreateRuleAsync(
-        It.IsAny<string>(),
-        It.IsAny<string>(),
-        It.IsAny<CreateRuleOptions>(),
-        It.IsAny<CancellationToken>()))
-    .Callback<string, string, CreateRuleOptions, CancellationToken>((topic, sub, opts, ct) =>
-    {
-        RuleProperties mockRuleProperties = ServiceBusModelFactory.RuleProperties(opts);
-
-        mockRuleResponse.Setup(r => r.Value).Returns(mockRuleProperties);
-    })
-    .ReturnsAsync(mockRuleResponse.Object);
-
-ServiceBusAdministrationClient administrationClient = mockAdministrationClient.Object;
-
-// The rest of this snippet illustrates how to create a rule using the mocked service bus
-// administration client above, this would be where application methods creating a rule would be
-// called.
-
-string ruleName = "rule";
-CreateRuleOptions options = new(ruleName)
-{
-    Filter = new CorrelationRuleFilter { Subject = "subject" }
-};
-
-string topic = "topic";
-string subscription = "subscription";
-RuleProperties createRule = await administrationClient.CreateRuleAsync(topic, subscription, options);
-```
-
-## Rule Manager Mocking
-
-```C# Snippet:ServiceBus_MockingRuleManager
-Mock<ServiceBusClient> mockClient = new();
-Mock<ServiceBusRuleManager> mockRuleManager = new();
-
-mockRuleManager
-    .Setup(rm => rm.DeleteRuleAsync(
-        It.IsAny<string>(),
-        It.IsAny<CancellationToken>()))
-    .Returns(Task.CompletedTask);
-
-mockRuleManager
-    .Setup(rm => rm.CreateRuleAsync(
-        It.IsAny<string>(),
-        It.IsAny<RuleFilter>(),
-        It.IsAny<CancellationToken>()))
-    .Returns(Task.CompletedTask);
-
-mockClient
-    .Setup(client => client.CreateRuleManager(
-        It.IsAny<string>(),
-        It.IsAny<string>()))
-    .Returns(mockRuleManager.Object);
-
-ServiceBusClient client = mockClient.Object;
-
-// The rest of this snippet illustrates how to create and use a rule manager using the mocked service
-// bus client above, this would be where application methods using a rule manager would be called.
-
-string topic = "topic";
-string subscription = "subscription";
-
-ServiceBusRuleManager ruleManager = client.CreateRuleManager(topic, subscription);
-
-await ruleManager.DeleteRuleAsync(RuleProperties.DefaultRuleName);
-await ruleManager.CreateRuleAsync("filter", new CorrelationRuleFilter { Subject = "subject" });
-```
-
-
 ## Testing message handlers
 
 For the `ServiceBusProcessor`:
@@ -616,4 +392,226 @@ ProcessErrorEventArgs errorArgs = new(
     cancellationToken: CancellationToken.None);
 
 Assert.DoesNotThrowAsync(async () => await ErrorHandler(errorArgs));
+```
+
+## Sending and Receiving messages using topics and subscriptions
+
+```C# Snippet:ServiceBus_MockingTopicSubscriptionSend
+Mock<ServiceBusAdministrationClient> mockAdministrationClient = new();
+Mock<Response<TopicProperties>> mockTopicResponse = new();
+Mock<Response<SubscriptionProperties>> mockSuscriptionResponse = new();
+
+mockAdministrationClient
+    .Setup(client => client.CreateTopicAsync(
+        It.IsAny<CreateTopicOptions>(),
+        It.IsAny<CancellationToken>()))
+    .Callback<CreateTopicOptions, CancellationToken>((opts, ct) =>
+    {
+        TopicProperties mockTopicProperties = ServiceBusModelFactory.TopicProperties(opts);
+
+        mockTopicResponse.Setup(r => r.Value).Returns(mockTopicProperties);
+    })
+    .ReturnsAsync(mockTopicResponse.Object);
+
+mockAdministrationClient
+    .Setup(client => client.CreateSubscriptionAsync(
+        It.IsAny<CreateSubscriptionOptions>(),
+        It.IsAny<CancellationToken>()))
+    .Callback<CreateSubscriptionOptions, CancellationToken>((opts, ct) =>
+    {
+        SubscriptionProperties mockSubscriptionProperties = ServiceBusModelFactory.SubscriptionProperties(opts);
+
+        mockSuscriptionResponse.Setup(r => r.Value).Returns(mockSubscriptionProperties);
+    })
+    .ReturnsAsync(mockSuscriptionResponse.Object);
+
+var adminClient = mockAdministrationClient.Object;
+
+Mock<ServiceBusClient> mockServiceBusClient = new();
+Mock<ServiceBusSender> mockSender = new();
+Mock<ServiceBusReceiver> mockReceiver = new();
+
+mockServiceBusClient
+    .Setup(client => client.CreateSender(It.IsAny<string>()))
+    .Returns(mockSender.Object);
+
+mockSender
+    .Setup(sender => sender.SendMessageAsync(
+        It.IsAny<ServiceBusMessage>(),
+        It.IsAny<CancellationToken>()))
+    .Returns(Task.CompletedTask);
+
+mockServiceBusClient
+    .Setup(client => client.CreateReceiver(
+        It.IsAny<string>(),
+        It.IsAny<string>()))
+    .Returns(mockReceiver.Object);
+
+async IAsyncEnumerable<ServiceBusReceivedMessage> mockReturn()
+{
+    ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMessage(
+        body: new BinaryData("message1"),
+        messageId: "messageId1",
+        partitionKey: "hellokey",
+        correlationId: "correlationId",
+        contentType: "contentType",
+        replyTo: "replyTo"
+        // see the Service Bus Model Factory for more options ...
+        );
+
+    // IAsyncEnumerable types can only be returned by async functions, use this no-op await statement to
+    // force the method to be async.
+
+    await Task.Yield();
+
+    // yield allows more than one message to be returned, only one is being returned here for brevity
+
+    yield return message;
+}
+
+mockReceiver
+    .Setup(receiver => receiver.ReceiveMessagesAsync(
+        It.IsAny<CancellationToken>()))
+    .Returns(mockReturn);
+
+var serviceBusClient = mockServiceBusClient.Object;
+
+// The rest of this snippet illustrates how to send and receive messages using the mocked
+// topic and subscription methods above, this would be where application methods sending and
+// receiving to topics and subscriptions would be called.
+
+string topicName = "topic";
+var topicOptions = new CreateTopicOptions(topicName);
+topicOptions.AuthorizationRules.Add(new SharedAccessAuthorizationRule(
+    "allClaims",
+    new[] { AccessRights.Manage, AccessRights.Send, AccessRights.Listen }));
+TopicProperties createdTopic = await adminClient.CreateTopicAsync(topicOptions);
+
+string subscriptionName = "subscription";
+var subscriptionOptions = new CreateSubscriptionOptions(topicName, subscriptionName)
+{
+    UserMetadata= "some metadata"
+};
+SubscriptionProperties createdSubscription = await adminClient.CreateSubscriptionAsync(subscriptionOptions);
+
+ServiceBusSender sender = serviceBusClient.CreateSender(topicName);
+
+await sender.SendMessageAsync(new ServiceBusMessage("body"));
+
+ServiceBusReceiver receiver = serviceBusClient.CreateReceiver(topicName, subscriptionName);
+
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
+```
+
+## Queue Creation Mocking
+
+```C# Snippet:ServiceBus_MockingQueueCreation
+Mock<ServiceBusAdministrationClient> mockAdministrationClient = new();
+Mock<Response<QueueProperties>> mockQueueResponse = new();
+
+mockAdministrationClient
+    .Setup(client => client.CreateQueueAsync(
+        It.IsAny<CreateQueueOptions>(),
+        It.IsAny<CancellationToken>()))
+    .Callback<CreateQueueOptions, CancellationToken>((opts, ct) =>
+    {
+        QueueProperties mockQueueProperties = ServiceBusModelFactory.QueueProperties(opts);
+
+        mockQueueResponse.Setup(r => r.Value).Returns(mockQueueProperties);
+    })
+    .ReturnsAsync(mockQueueResponse.Object);
+
+ServiceBusAdministrationClient administrationClient = mockAdministrationClient.Object;
+
+// The rest of this snippet illustrates how to create a queue using the mocked service bus
+// administration client above, this would be where application methods creating a queue would be
+// called.
+
+string queueName = "queue";
+CreateQueueOptions options = new(queueName)
+{
+    UserMetadata = "some metadata"
+};
+
+options.AuthorizationRules.Add(new SharedAccessAuthorizationRule(
+    "allClaims",
+    new[] { AccessRights.Manage, AccessRights.Send, AccessRights.Listen }));
+
+QueueProperties createQueue = await administrationClient.CreateQueueAsync(options);
+```
+
+## Rule Creation Mocking
+
+```C# Snippet:ServiceBus_MockingRules
+Mock<ServiceBusAdministrationClient> mockAdministrationClient = new();
+Mock<Response<RuleProperties>> mockRuleResponse = new();
+
+mockAdministrationClient
+    .Setup(client => client.CreateRuleAsync(
+        It.IsAny<string>(),
+        It.IsAny<string>(),
+        It.IsAny<CreateRuleOptions>(),
+        It.IsAny<CancellationToken>()))
+    .Callback<string, string, CreateRuleOptions, CancellationToken>((topic, sub, opts, ct) =>
+    {
+        RuleProperties mockRuleProperties = ServiceBusModelFactory.RuleProperties(opts);
+
+        mockRuleResponse.Setup(r => r.Value).Returns(mockRuleProperties);
+    })
+    .ReturnsAsync(mockRuleResponse.Object);
+
+ServiceBusAdministrationClient administrationClient = mockAdministrationClient.Object;
+
+// The rest of this snippet illustrates how to create a rule using the mocked service bus
+// administration client above, this would be where application methods creating a rule would be
+// called.
+
+string ruleName = "rule";
+CreateRuleOptions options = new(ruleName)
+{
+    Filter = new CorrelationRuleFilter { Subject = "subject" }
+};
+
+string topic = "topic";
+string subscription = "subscription";
+RuleProperties createRule = await administrationClient.CreateRuleAsync(topic, subscription, options);
+```
+
+## Rule Manager Mocking
+
+```C# Snippet:ServiceBus_MockingRuleManager
+Mock<ServiceBusClient> mockClient = new();
+Mock<ServiceBusRuleManager> mockRuleManager = new();
+
+mockRuleManager
+    .Setup(rm => rm.DeleteRuleAsync(
+        It.IsAny<string>(),
+        It.IsAny<CancellationToken>()))
+    .Returns(Task.CompletedTask);
+
+mockRuleManager
+    .Setup(rm => rm.CreateRuleAsync(
+        It.IsAny<string>(),
+        It.IsAny<RuleFilter>(),
+        It.IsAny<CancellationToken>()))
+    .Returns(Task.CompletedTask);
+
+mockClient
+    .Setup(client => client.CreateRuleManager(
+        It.IsAny<string>(),
+        It.IsAny<string>()))
+    .Returns(mockRuleManager.Object);
+
+ServiceBusClient client = mockClient.Object;
+
+// The rest of this snippet illustrates how to create and use a rule manager using the mocked service
+// bus client above, this would be where application methods using a rule manager would be called.
+
+string topic = "topic";
+string subscription = "subscription";
+
+ServiceBusRuleManager ruleManager = client.CreateRuleManager(topic, subscription);
+
+await ruleManager.DeleteRuleAsync(RuleProperties.DefaultRuleName);
+await ruleManager.CreateRuleAsync("filter", new CorrelationRuleFilter { Subject = "subject" });
 ```
