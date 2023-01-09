@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "256",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-2f2306519191164d4077bb418f5d3199-13f392f08ee89828-00",
-        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230105.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "6ba7df607075712de2c3cb9d8929c69f",
+        "traceparent": "00-97977d675b61b59d0ae456d58f5205e1-3b8415ae11a986d9-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230106.1 (.NET 6.0.12; Linux 5.15.79.1-microsoft-standard-WSL2 #1 SMP Wed Nov 23 01:01:46 UTC 2022)",
+        "x-ms-client-request-id": "bb2718b78f7a15562050d44a1b2f4a24",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -32,11 +32,11 @@
         "Connection": "keep-alive",
         "Content-Length": "436",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 05 Jan 2023 07:50:10 GMT",
-        "mise-correlation-id": "496cbc78-90b5-4f3d-9c14-eacee48539d3",
+        "Date": "Thu, 05 Jan 2023 19:20:01 GMT",
+        "mise-correlation-id": "73da0fcd-1269-494e-bc11-cf148f9a7411",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "051f4609-dbef-49ff-b2f4-71b3a6f04c36"
+        "x-ms-correlation-request-id": "b09b2b2e-ffd3-4c7a-b1f1-bfcef3f205be"
       },
       "ResponseBody": {
         "passFailCriteria": {
@@ -53,8 +53,8 @@
         "testId": "test-from-csharp-sdk-testing-framework",
         "description": "This test was created through loadtesting C# SDK",
         "displayName": "Dotnet Testing Framework Loadtest",
-        "createdDateTime": "2023-01-05T07:50:02.563Z",
-        "lastModifiedDateTime": "2023-01-05T07:50:10.698Z"
+        "createdDateTime": "2023-01-05T19:19:57.078Z",
+        "lastModifiedDateTime": "2023-01-05T19:20:01.471Z"
       }
     },
     {
@@ -63,9 +63,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-6bf35f413d3bed611c905e2c3b625990-5c853f5dcf0dc098-00",
-        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230105.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "98f024de2e6e7661117f858cc0218dc0",
+        "traceparent": "00-c9e056bb8d7558ca96a952b3de2ba300-eb97825a91dc6ccb-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230106.1 (.NET 6.0.12; Linux 5.15.79.1-microsoft-standard-WSL2 #1 SMP Wed Nov 23 01:01:46 UTC 2022)",
+        "x-ms-client-request-id": "1b7f8ac3a357fe27f6e03313d00ec9d2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -75,11 +75,11 @@
         "Connection": "keep-alive",
         "Content-Length": "436",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 05 Jan 2023 07:50:11 GMT",
-        "mise-correlation-id": "437b9a03-d580-4605-858f-a8c414b22a9c",
+        "Date": "Thu, 05 Jan 2023 19:20:01 GMT",
+        "mise-correlation-id": "13144bf7-8f3a-4a37-a890-7e5253d753fa",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f0f62275-71d3-4e7e-ad66-9618f5bd9114"
+        "x-ms-correlation-request-id": "5157a114-cf2d-48b8-9b99-8a53fe685834"
       },
       "ResponseBody": {
         "passFailCriteria": {
@@ -96,14 +96,14 @@
         "testId": "test-from-csharp-sdk-testing-framework",
         "description": "This test was created through loadtesting C# SDK",
         "displayName": "Dotnet Testing Framework Loadtest",
-        "createdDateTime": "2023-01-05T07:50:02.563Z",
-        "lastModifiedDateTime": "2023-01-05T07:50:10.698Z"
+        "createdDateTime": "2023-01-05T19:19:57.078Z",
+        "lastModifiedDateTime": "2023-01-05T19:20:01.471Z"
       }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "LOADTESTSERVICE_ENDPOINT": "f3395a15-535c-46ea-aaf4-db52915c248b.eastus2euap.cnt-canary.loadtesting.azure.com",
-    "RandomSeed": "255986277"
+    "RandomSeed": "1356988798"
   }
 }
