@@ -110,6 +110,8 @@ namespace Azure.Search.Documents.Tests.Samples
             [SimpleField(IsFilterable = true, IsSortable = true)]
             public GeoPoint GeoLocation { get; set; }
 
+            public int? Rating { get; set; }
+
             // Complex fields are included automatically in an index if not ignored.
             public HotelAddress Address { get; set; }
         }
@@ -174,7 +176,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 Size = 5, // Take only 5 results
                 OrderBy = { "Rating desc" } // Sort by Rating from high to low
             };
-            SearchResults<Samples.Hotel> response = client.Search<Samples.Hotel>("luxury", options);
+            SearchResults<Hotel> response = client.Search<Hotel>("luxury", options);
             // ...
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Options
         }

@@ -252,6 +252,8 @@ public class Hotel
     [SimpleField(IsFilterable = true, IsSortable = true)]
     public GeoPoint GeoLocation { get; set; }
 
+    public int? Rating { get; set; }
+
     // Complex fields are included automatically in an index if not ignored.
     public HotelAddress Address { get; set; }
 }
