@@ -8110,7 +8110,7 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
     {
         public SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent() { }
-        public bool? LatestScan { get { throw null; } set { } }
+        public bool? IsLatestScan { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<System.Collections.Generic.IList<string>>> Results { get { throw null; } }
     }
     public partial class SqlVulnerabilityAssessmentBaselineDetails
@@ -8139,7 +8139,7 @@ namespace Azure.ResourceManager.Sql.Models
     public partial class SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
     {
         public SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent() { }
-        public bool? LatestScan { get { throw null; } set { } }
+        public bool? IsLatestScan { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> Results { get { throw null; } }
     }
     public partial class SqlVulnerabilityAssessmentBenchmarkReference
