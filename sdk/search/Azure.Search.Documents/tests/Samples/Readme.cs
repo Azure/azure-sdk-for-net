@@ -174,7 +174,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 Size = 5, // Take only 5 results
                 OrderBy = { "Rating desc" } // Sort by Rating from high to low
             };
-            SearchResults<Hotel> response = client.Search<Hotel>("luxury", options);
+            SearchResults<Samples.Hotel> response = client.Search<Samples.Hotel>("luxury", options);
             // ...
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Options
         }
