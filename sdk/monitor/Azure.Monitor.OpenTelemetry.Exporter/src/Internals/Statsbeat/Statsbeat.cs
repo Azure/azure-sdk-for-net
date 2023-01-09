@@ -132,7 +132,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             if (s_statsBeat_ConnectionString == null)
             {
-                ConnectionStringParser.GetValues(connectionString, out string instrumentationKey, out string ingestionEndpoint);
+                ConnectionStringParser.GetValues(connectionString, out string instrumentationKey, out _, out _);
 
                 s_customer_Ikey = instrumentationKey;
 

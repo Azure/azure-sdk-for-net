@@ -23,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
         /// <exception cref="InvalidOperationException">
         /// Any exceptions that occur while parsing the connection string will be wrapped and re-thrown.
         /// </exception>
-        public static void GetValues(string connectionString, out string instrumentationKey, out string ingestionEndpoint)
+        public static void GetValues(string connectionString, out string instrumentationKey, out string ingestionEndpoint, out string aadAudience)
         {
             try
             {
@@ -39,6 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
                 var connString = AzureCoreConnectionString.Parse(connectionString);
                 instrumentationKey = connString.GetInstrumentationKey();
                 ingestionEndpoint = connString.GetIngestionEndpoint();
+                aadAudience = connString.GetAADAudience();
             }
             catch (Exception ex)
             {
@@ -46,6 +47,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
                 throw new InvalidOperationException("Connection String Error: " + ex.Message, ex);
             }
         }
+
+        internal static string GetAADAudience(this AzureCoreConnectionString connectionString) => connectionString.GetNonRequired(Constants.AADAudienceKey);
 
         internal static string GetInstrumentationKey(this AzureCoreConnectionString connectionString) => connectionString.GetRequired(Constants.InstrumentationKeyKey);
 

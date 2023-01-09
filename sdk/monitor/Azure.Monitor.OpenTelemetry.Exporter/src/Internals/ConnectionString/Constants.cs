@@ -11,6 +11,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
         internal const string DefaultIngestionEndpoint = "https://dc.services.visualstudio.com/";
 
         /// <summary>
+        /// Default AAD Audience for Ingestion (aka Breeze).
+        /// IMPORTANT: This value only works in the Public Azure Cloud.
+        /// For Sovereign Azure Clouds, this value MUST come from the Connection String.
+        /// </summary>
+        internal const string DefaultAADAudience = "https://monitor.azure.com//.default";
+
+        /// <summary>
         /// Sub-domain for Ingestion endpoint (aka Breeze). (https://dc.applicationinsights.azure.com/).
         /// </summary>
         internal const string IngestionPrefix = "dc";
@@ -36,12 +43,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
         internal const string LocationKey = "Location";
 
         /// <summary>
+        /// This is the key that a customer would use to specify an AAD Audience in the connection string.
+        /// </summary>
+        internal const string AADAudienceKey = "AADAudience";
+
+        /// <summary>
         /// Maximum allowed length for connection string.
         /// </summary>
         /// <remarks>
-        /// Currently 8 accepted keywords (~200 characters).
-        /// Assuming 200 characters per value (~1600 characters).
-        /// Total theoretical max length: (1600 + 200) = 1800.
+        /// Currently 9 accepted keywords (~200 characters).
+        /// Assuming 200 characters per value (~1800 characters).
+        /// Total theoretical max length = (1800 + 200) = 2000.
         /// Setting an over-exaggerated max length to protect against malicious injections (2^12 = 4096).
         /// </remarks>
         internal const int ConnectionStringMaxLength = 4096;

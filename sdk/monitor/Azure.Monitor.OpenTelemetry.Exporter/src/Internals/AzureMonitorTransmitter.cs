@@ -38,14 +38,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             options.Retry.MaxRetries = 0;
-            ConnectionStringParser.GetValues(options.ConnectionString, out _instrumentationKey, out string ingestionEndpoint);
+            ConnectionStringParser.GetValues(options.ConnectionString, out _instrumentationKey, out string ingestionEndpoint, out string aadAudience);
 
             HttpPipeline pipeline;
             if (credential != null)
             {
                 var httpPipelinePolicy = new HttpPipelinePolicy[]
                                              {
-                                                 new BearerTokenAuthenticationPolicy(credential, "https://monitor.azure.com//.default"),
+                                                 new BearerTokenAuthenticationPolicy(credential, aadAudience ?? Constants.DefaultAADAudience),
                                                  new IngestionRedirectPolicy()
                                              };
 
