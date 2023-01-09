@@ -37,8 +37,6 @@ ServiceBusMessage message = new ServiceBusMessage("Hello world!");
 
 await sender.SendMessageAsync(message);
 ```
-
-
 ## Receiving messages from a queue
 
 ```C# Snippet:ServiceBus_MockingReceiveFromQueue
