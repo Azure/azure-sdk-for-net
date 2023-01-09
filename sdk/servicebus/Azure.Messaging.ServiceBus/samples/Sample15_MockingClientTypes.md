@@ -114,6 +114,7 @@ mockClient
     .Setup(client => client.CreateSender(It.IsAny<string>()))
     .Returns(mockSender.Object);
 
+// This list is modified by the batch and will contain all messages added to the batch.
 List<ServiceBusMessage> backingList = new();
 
 int batchCountThreshold = 5;
