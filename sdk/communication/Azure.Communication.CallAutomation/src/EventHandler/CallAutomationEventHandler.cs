@@ -34,8 +34,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="events">Incoming CloudEvent object.</param>
         public void ProcessEvents(IEnumerable<CloudEvent> events)
         {
-            var recievedEvent = CallAutomationEventParser.ParseMany(events.ToArray());
-            ProcessEvents(recievedEvent);
+            var receivedEvent = CallAutomationEventParser.ParseMany(events.ToArray());
+            ProcessEvents(receivedEvent);
         }
 
         /// <summary>
@@ -44,12 +44,12 @@ namespace Azure.Communication.CallAutomation
         /// <param name="events">Incoming CallAutomationEventBase object.</param>
         public void ProcessEvents(IEnumerable<CallAutomationEventBase> events)
         {
-            CallAutomationEventBase recievedEvent = events.FirstOrDefault();
+            CallAutomationEventBase receivedEvent = events.FirstOrDefault();
 
-            if (recievedEvent != null)
+            if (receivedEvent != null)
             {
                 string internalEventId = Guid.NewGuid().ToString();
-                _ = _eventBacklog.AddEvent(internalEventId, recievedEvent);
+                _ = _eventBacklog.AddEvent(internalEventId, receivedEvent);
 
                 var handlers = Interlocked.CompareExchange(ref _eventReceived, null, null);
                 if (handlers != null)
@@ -58,19 +58,19 @@ namespace Azure.Communication.CallAutomation
                     var args = new CallAutomationEventArgs
                     {
                         eventArgsId = internalEventId,
-                        callAutomationEvent = recievedEvent
+                        callAutomationEvent = receivedEvent
                     };
                     handlers(this, args);
                 }
 
                 // if this call is disconnect, remove all related items in memory
-                if (recievedEvent is CallDisconnected)
+                if (receivedEvent is CallDisconnected)
                 {
                     // remove from eventsbacklog
                     _eventBacklog.RemoveEvent(internalEventId);
 
                     // remove from ongoingevent list
-                    RemoveFromOngoingEvent(recievedEvent.CallConnectionId);
+                    RemoveFromOngoingEvent(receivedEvent.CallConnectionId);
                 }
             }
         }
@@ -84,7 +84,7 @@ namespace Azure.Communication.CallAutomation
         public void SetOngoingEventHandler<TEvent>(string callConnectionId, Action<TEvent> eventHandler) where TEvent : CallAutomationEventBase
         {
             var ongoingAwaiter = new EventAwaiterOngoing<TEvent>(callConnectionId, eventHandler);
-            EventHandler<CallAutomationEventArgs> handler = (o, arg) => ongoingAwaiter.OnEventRecieved(o, arg);
+            EventHandler<CallAutomationEventArgs> handler = (o, arg) => ongoingAwaiter.OnEventReceived(o, arg);
 
             // on new addition, add it to the dictionary
             // on update, update the last eventhandler with new eventhandler
@@ -190,7 +190,7 @@ namespace Azure.Communication.CallAutomation
         {
             // initialize awaiter and get event handler of it
             var awaiter = new EventAwaiter(eventTypesToWaitFor, callConnectionId, operationContext, _exceptionTimeout);
-            EventHandler<CallAutomationEventArgs> handler = (o, arg) => awaiter.OnEventRecieved(o, arg);
+            EventHandler<CallAutomationEventArgs> handler = (o, arg) => awaiter.OnEventReceived(o, arg);
 
             try
             {

@@ -14,13 +14,16 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     internal class EventBacklog
     {
+        private const int DEFAULT_TIMEOUT = 5;
+        private const int MAXIMUM_EVENTBACKLOGS_AT_ONCE = 10000;
+
         private TimeSpan _expiringTimeout;
 
         private ConcurrentDictionary<string, (CallAutomationEventBase, Timer)> _eventBacklog;
 
         internal EventBacklog(TimeSpan defaultExpiringTimeout = default)
         {
-            _expiringTimeout = defaultExpiringTimeout == default ? TimeSpan.FromSeconds(5) : defaultExpiringTimeout;
+            _expiringTimeout = defaultExpiringTimeout == default ? TimeSpan.FromSeconds(DEFAULT_TIMEOUT) : defaultExpiringTimeout;
             _eventBacklog = new ConcurrentDictionary<string, (CallAutomationEventBase, Timer)>();
         }
 
@@ -32,10 +35,17 @@ namespace Azure.Communication.CallAutomation
         /// <returns></returns>
         internal bool AddEvent(string backlogEventId, CallAutomationEventBase eventsToBeSaved)
         {
-            // Set Timer for this events. Expires after awhile and deletes itself from the Dictionary.
-            var expiringTimer = new Timer(new TimerCallback(TimerProc), backlogEventId, (int)_expiringTimeout.TotalMilliseconds, 0);
+            if (_eventBacklog.Count < MAXIMUM_EVENTBACKLOGS_AT_ONCE)
+            {
+                // Set Timer for this events. Expires after awhile and deletes itself from the Dictionary.
+                var expiringTimer = new Timer(new TimerCallback(TimerProc), backlogEventId, (int)_expiringTimeout.TotalMilliseconds, 0);
 
-            return _eventBacklog.TryAdd(backlogEventId, (eventsToBeSaved, expiringTimer));
+                return _eventBacklog.TryAdd(backlogEventId, (eventsToBeSaved, expiringTimer));
+            }
+            else
+            {
+                return false;
+            }
         }
 
         internal bool GetAndRemoveEvent(IEnumerable<Type> eventTypes, string callConnectionId, string operationContext, out KeyValuePair<string, CallAutomationEventBase> matchingEvent)

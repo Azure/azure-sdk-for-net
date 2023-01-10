@@ -10,7 +10,7 @@ namespace Azure.Communication.CallAutomation
         private string _callConnectionId;
         private Action<TEvent> _eventHandler;
 
-        internal Action<object, CallAutomationEventArgs> OnEventRecieved => OnEventsReceived;
+        internal Action<object, CallAutomationEventArgs> OnEventReceived => OnEventsReceived;
 
         internal EventAwaiterOngoing(string callConnectionId, Action<TEvent> eventHandler)
         {
