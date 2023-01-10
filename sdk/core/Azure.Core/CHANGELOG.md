@@ -1,16 +1,10 @@
 # Release History
 
-## 1.27.0-beta.1 (Unreleased)
+## 1.27.0 (2023-01-10)
 
 ### Features Added
 
 - Made `RedirectPolicy` public to provide `SetAllowAutoRedirect()` method to library authors.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.26.0 (2022-11-08)
 
