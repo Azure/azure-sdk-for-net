@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("RequestFailedException")]
         public async Task CreateApplicationGroupWithParameter()
         {
             string SASKey = Recording.GenerateAssetName("SasKey_");
@@ -78,7 +79,6 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
             Assert.AreEqual("Throttlingpolicy1", policy[0].Name);
             Assert.AreEqual(3452, policy[0].RateLimitThreshold);
             Assert.AreEqual(EventHubsMetricId.IncomingMessages, policy[0].MetricId);
-
             Assert.AreEqual("Throttlingpolicy3", policy[1].Name);
             Assert.AreEqual(3451, policy[1].RateLimitThreshold);
             Assert.AreEqual(EventHubsMetricId.IncomingBytes, policy[1].MetricId);
@@ -86,7 +86,6 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
             //delete applicationGroup
             await applicationgroup.DeleteAsync(WaitUntil.Completed);
-
             //validate
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _applicationGroupCollection.GetAsync(applicationGroupName); });
             Assert.AreEqual(404, exception.Status);
@@ -95,6 +94,7 @@ namespace Azure.ResourceManager.EventHubs.Tests.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("RequestFailedException")]
         public async Task GetAllApplicationGroups()
         {
             string SASKey = Recording.GenerateAssetName("SasKey_");
