@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "dataprotection/resource-manager" -AutoRestVersion "v2" -SdkGenerationDirectory "$PSScriptRoot\Generated" -ConfigFileTag "package-preview-2022-11" -Namespace "Azure.ResourceManager.DataProtectionBackup" 
