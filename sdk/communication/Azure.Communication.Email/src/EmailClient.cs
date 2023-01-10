@@ -92,51 +92,6 @@ namespace Azure.Communication.Email
             : this(endpoint, options.BuildHttpPipeline(tokenCredential), options)
         { }
 
-        /// <summary> Gets the status of a message sent previously. </summary>
-        /// <param name="messageId"> System generated message id (GUID) returned from a previous call to send email. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SendStatusResult>> GetSendStatusAsync(string messageId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.GetSendStatus");
-            scope.Start();
-            try
-            {
-                if (string.IsNullOrWhiteSpace(messageId))
-                {
-                    throw new ArgumentException("MessageId cannot be null or empty");
-                }
-
-                return await RestClient.GetSendStatusAsync(messageId, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets the status of a message sent previously. </summary>
-        /// <param name="messageId"> System generated message id (GUID) returned from a previous call to send email. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SendStatusResult> GetSendStatus(string messageId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope("EmailClient.GetSendStatus");
-            scope.Start();
-            try
-            {
-                if (string.IsNullOrWhiteSpace(messageId))
-                {
-                    throw new ArgumentException("MessageId cannot be null or empty");
-                }
-
-                return RestClient.GetSendStatus(messageId, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
 
         /// <summary> Queues an email message to be sent to one or more recipients. </summary>
         /// <param name="message"> Message payload for sending an email. </param>
@@ -260,9 +215,8 @@ namespace Azure.Communication.Email
         {
             ValidateEmailMessage(message);
             ResponseWithHeaders<EmailSendHeaders> response = (await RestClient.SendAsync(
-                Guid.NewGuid().ToString(),
-                DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture),
                 message,
+                Guid.NewGuid(),
                 cancellationToken).ConfigureAwait(false));
 
             Response rawResponse = response.GetRawResponse();
@@ -278,9 +232,8 @@ namespace Azure.Communication.Email
         {
             ValidateEmailMessage(message);
             ResponseWithHeaders<EmailSendHeaders> response = RestClient.Send(
-                Guid.NewGuid().ToString(),
-                DateTimeOffset.UtcNow.ToString("r", CultureInfo.InvariantCulture),
                 message,
+                Guid.NewGuid(),
                 cancellationToken);
 
             Response rawResponse = response.GetRawResponse();

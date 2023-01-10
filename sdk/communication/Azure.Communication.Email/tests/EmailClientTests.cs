@@ -201,23 +201,6 @@ namespace Azure.Communication.Email.Tests
             Assert.IsTrue(exception?.Message.Contains(errorMessage));
         }
 
-        [Test]
-        public void GetMessageStatus_InvalidMessageId()
-        {
-            EmailClient emailClient = CreateEmailClient();
-
-            if (IsAsync)
-            {
-                Assert.ThrowsAsync<ArgumentException>(async () => await emailClient.GetSendStatusAsync(string.Empty));
-                Assert.ThrowsAsync<ArgumentException>(async () => await emailClient.GetSendStatusAsync(null));
-            }
-            else
-            {
-                Assert.Throws<ArgumentException>(() => emailClient.GetSendStatus(string.Empty));
-                Assert.Throws<ArgumentException>(() => emailClient.GetSendStatus(null));
-            }
-        }
-
         private EmailClient CreateEmailClient(HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             var mockResponse = new MockResponse((int)statusCode);
