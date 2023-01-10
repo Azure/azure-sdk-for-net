@@ -149,7 +149,7 @@ pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-CadlDataPlaneGenerate
 - `cadlRelativeFolder` takes the relative path of the cadl project folder in spec repo. e.g. specification/cognitiveservices/AnomalyDetector
 - `-additionalSubDirectories` takes the relative paths of the additional directories needed by the cadl project, such as share library folder, separated by semicolon if there is more than one folder.
 - `-commit` takes the git commit hash  (e.g. ac8e06a2ed0fc1c54663c98f12c8a073f8026b90)
-- `-repo` takes the `<owner>/<repo>` of the spec repo. e.g. Azure/azure-rest-api-specs
+- `-repo` takes the `<owner>/<repo>` of the REST API specification repository. (e.g. Azure/azure-rest-api-specs)
 - `-specRoot` takes the file system path of the spec repo. e.g. /home/azure-rest-api-specs
 - You need to provide one of (`-commit`, `-repo`) pair to refer to an URL path of the cadl project and `-specRoot` parameters. If you provide both, `-specRoot` will be ignored.
 
