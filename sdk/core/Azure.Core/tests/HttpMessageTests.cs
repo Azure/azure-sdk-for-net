@@ -27,6 +27,24 @@ namespace Azure.Core.Tests
             Assert.AreEqual("value", value);
         }
 
+         [Test]
+        public void TryGetTypeKeyedPropertyReturnsFalseIfNotExist()
+        {
+            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
+
+            Assert.False(message.TryGetProperty(typeof(string), out _));
+        }
+
+        [Test]
+        public void TryGetTypeKeyedPropertyReturnsValueIfSet()
+        {
+            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
+            message.SetProperty(typeof(string), "value");
+
+            Assert.True(message.TryGetProperty(typeof(string), out object value));
+            Assert.AreEqual("value", value);
+        }
+
         [Test]
         public void TryGetPropertyIsCaseSensitive()
         {

@@ -14,12 +14,8 @@ namespace Azure.Core
     /// </summary>
     public sealed class HttpMessage : IDisposable
     {
-        /// <summary>
-        /// This dictionary is keyed with <c>Type</c> for a couple of reasons. Primarily, it allows values to be stored such that even if the accessor methods
-        /// become public, storing values keyed by internal types make them inaccessible to other assemblies. This protects internal values from being overwritten
-        /// by external code. See the <see cref="TelemetryDetails"/> and <see cref="UserAgentValueKey"/> types for an example of this usage.
-        /// </summary>
-        private Dictionary<Type, object>? _typeProperties;
+        private Dictionary<string, object>? _properties;
+        private readonly ArrayBackedPropertyBag<long, object> _propertyBag = new();
 
         private Response? _response;
 
@@ -127,13 +123,12 @@ namespace Azure.Core
         /// <returns><c>true</c> if property exists, otherwise. <c>false</c>.</returns>
         public bool TryGetProperty(string name, out object? value)
         {
-            value = null;
-            if (_typeProperties == null || !_typeProperties.TryGetValue(typeof(MessagePropertyKey), out var rawValue))
+            if (_properties == null)
             {
+                value = null;
                 return false;
             }
-            var properties = (Dictionary<string, object>)rawValue!;
-            return properties.TryGetValue(name, out value);
+            return _properties.TryGetValue(name, out value);
         }
 
         /// <summary>
@@ -143,18 +138,8 @@ namespace Azure.Core
         /// <param name="value">The property value.</param>
         public void SetProperty(string name, object value)
         {
-            _typeProperties ??= new Dictionary<Type, object>();
-            Dictionary<string, object> properties;
-            if (!_typeProperties.TryGetValue(typeof(MessagePropertyKey), out var rawValue))
-            {
-                properties = new Dictionary<string, object>();
-                _typeProperties[typeof(MessagePropertyKey)] = properties;
-            }
-            else
-            {
-                properties = (Dictionary<string, object>)rawValue!;
-            }
-            properties[name] = value;
+            _properties ??= new Dictionary<string, object>();
+            _properties[name] = value;
         }
 
         /// <summary>
@@ -162,11 +147,16 @@ namespace Azure.Core
         /// </summary>
         /// <param name="type">The property type.</param>
         /// <param name="value">The property value.</param>
+        /// <remarks>
+        /// The key value is of type <c>Type</c> for a couple of reasons. Primarily, it allows values to be stored such that though the accessor methods
+        /// are public, storing values keyed by internal types make them inaccessible to other assemblies. This protects internal values from being overwritten
+        /// by external code. See the <see cref="TelemetryDetails"/> and <see cref="UserAgentValueKey"/> types for an example of this usage. Secondly, <c>Type</c>
+        /// comparisons are faster than string comparisons.
+        /// </remarks>
         /// <returns><c>true</c> if property exists, otherwise. <c>false</c>.</returns>
         public bool TryGetProperty(Type type, out object? value)
         {
-            value = null;
-            return _typeProperties?.TryGetValue(type, out value) == true;
+            return _propertyBag.TryGetValue((long)type.TypeHandle.Value, out value);
         }
 
         /// <summary>
@@ -177,8 +167,7 @@ namespace Azure.Core
         /// <param name="value">The property value.</param>
         public void SetProperty(Type type, object value)
         {
-            _typeProperties ??= new Dictionary<Type, object>();
-            _typeProperties[type] = value;
+            _propertyBag.Add((long)type.TypeHandle.Value, value);
         }
 
         /// <summary>
@@ -260,8 +249,8 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Exists as a private key entry into the <see cref="HttpMessage._typeProperties"/> dictionary for stashing string keyed entries in the Type keyed dictionary.
+        /// Exists as a private key entry into the <see cref="HttpMessage._properties"/> dictionary for stashing string keyed entries in the Type keyed dictionary.
         /// </summary>
-        private class MessagePropertyKey {}
+        private class MessagePropertyKey { }
     }
 }
