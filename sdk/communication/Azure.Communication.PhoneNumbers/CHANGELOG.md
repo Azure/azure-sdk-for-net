@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0-beta.3 (2023-01-10)
 - Adds support for Azure Communication Services Phone Numbers Browse API Methods.
 
 ### Features Added
