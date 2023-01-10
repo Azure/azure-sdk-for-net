@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The response payload for removing participants of the call. </summary>
+    /// <summary> The response payload for unmuting participants from the call. </summary>
     public partial class UnmuteParticipantsResponse
     {
         /// <summary> Initializes a new instance of UnmuteParticipantsResponse. </summary>

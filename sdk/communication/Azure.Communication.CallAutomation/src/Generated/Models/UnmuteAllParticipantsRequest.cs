@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The request payload for adding participants to the call. </summary>
+    /// <summary> The request payload for unmuting all participants from the call. </summary>
     public partial class UnmuteAllParticipantsRequest
     {
         /// <summary> Initializes a new instance of UnmuteAllParticipantsRequest. </summary>

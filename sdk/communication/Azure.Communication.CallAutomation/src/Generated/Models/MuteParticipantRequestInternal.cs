@@ -5,20 +5,27 @@
 
 #nullable disable
 
+using System;
 using Azure.Communication;
+using Azure.Core;
 
 namespace Azure.Communication.CallAutomation.Models
 {
-    /// <summary> The request payload for adding participants to the call. </summary>
+    /// <summary> The request payload for muting participants from the call. </summary>
     internal partial class MuteParticipantRequestInternal
     {
         /// <summary> Initializes a new instance of MuteParticipantRequestInternal. </summary>
-        public MuteParticipantRequestInternal()
+        /// <param name="targetParticipant"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
+        public MuteParticipantRequestInternal(CommunicationIdentifierModel targetParticipant)
         {
+            Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
+
+            TargetParticipant = targetParticipant;
         }
 
-        /// <summary> Gets or sets the target participant. </summary>
-        public CommunicationIdentifierModel TargetParticipant { get; set; }
+        /// <summary> Gets the target participant. </summary>
+        public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; set; }
     }

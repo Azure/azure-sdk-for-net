@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation.Models
 {
-    /// <summary> The request payload for adding participants to the call. </summary>
+    /// <summary> The request payload for unmuting participant from the call. </summary>
     internal partial class UnmuteParticipantRequestInternal
     {
         /// <summary> Initializes a new instance of UnmuteParticipantRequestInternal. </summary>

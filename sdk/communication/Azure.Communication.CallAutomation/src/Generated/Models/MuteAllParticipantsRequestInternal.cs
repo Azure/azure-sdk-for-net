@@ -9,7 +9,7 @@ using Azure.Communication;
 
 namespace Azure.Communication.CallAutomation.Models
 {
-    /// <summary> The request payload for adding participants to the call. </summary>
+    /// <summary> The request payload for muting participants from the call. </summary>
     internal partial class MuteAllParticipantsRequestInternal
     {
         /// <summary> Initializes a new instance of MuteAllParticipantsRequestInternal. </summary>
