@@ -12,8 +12,7 @@ namespace Azure.Security.KeyVault.Administration
 {
     /// <summary>
     /// The KeyVaultAccessControlClient provides synchronous and asynchronous methods to view and manage Role Based Access for the Azure Key Vault.
-    /// The client supports creating, listing, updating, and deleting <see cref="KeyVaultRoleAssignment"/>.
-    /// The client also supports listing <see cref="KeyVaultRoleDefinition" />.
+    /// The client supports creating, listing, updating, and deleting <see cref="KeyVaultRoleAssignment"/> and <see cref="KeyVaultRoleDefinition" />.
     /// </summary>
     public class KeyVaultAccessControlClient
     {
@@ -22,9 +21,9 @@ namespace Azure.Security.KeyVault.Administration
         private readonly RoleAssignmentsRestClient _assignmentsRestClient;
 
         /// <summary>
-        /// The vault Uri.
+        /// Gets the vault URI.
         /// </summary>
-        /// <value></value>
+        /// <value>The vault URI.</value>
         public virtual Uri VaultUri { get; }
 
         /// <summary>
@@ -72,7 +71,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Get all role definitions that are applicable at scope and above.
         /// </summary>
-        /// <param name="roleScope"> The scope of the role assignments. </param>
+        /// <param name="roleScope"> The scope of the role definitions. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> is null.</exception>
@@ -112,7 +111,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Get all role definitions that are applicable at scope and above.
         /// </summary>
-        /// <param name="roleScope"> The scope of the role definition. </param>
+        /// <param name="roleScope"> The scope of the role definitions. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="roleScope"/> is null.</exception>
@@ -154,7 +153,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Get a specific role definition.
         /// </summary>
-        /// <param name="roleScope"> The scope of the role assignments. </param>
+        /// <param name="roleScope"> The scope of the role definition. </param>
         /// <param name="roleDefinitionName">The role definition name.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -305,8 +304,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// Deletes a role definition.
         /// </summary>
-        /// <param name="roleScope"></param>
-        /// <param name="roleDefinitionName"></param>
+        /// <param name="roleScope">The scope of the role to delete.</param>
+        /// <param name="roleDefinitionName">The name used of the role definition to delete.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response{TResult}"/> containing the result of the operation.</returns>
         public virtual Response DeleteRoleDefinition(KeyVaultRoleScope roleScope, Guid roleDefinitionName, CancellationToken cancellationToken = default)
@@ -325,7 +324,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Gets the <see cref="KeyVaultRoleAssignment"/>s for a scope.
+        /// Gets the role assignments for a scope.
         /// </summary>
         /// <param name="roleScope"> The scope of the role assignments. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -364,8 +363,8 @@ namespace Azure.Security.KeyVault.Administration
             });
         }
 
-        /// <summary>0
-        /// Gets the <see cref="KeyVaultRoleAssignment"/>s for a scope.
+        /// <summary>
+        /// Gets the role assignments for a scope.
         /// </summary>
         /// <param name="roleScope"> The scope of the role assignments. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -407,7 +406,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Creates a <see cref="KeyVaultRoleAssignment"/>.
+        /// Creates a role assignment.
         /// </summary>
         /// <param name="roleScope">The scope of the role assignment to create.</param>
         /// <param name="roleDefinitionId">The role definition ID used in the role assignment.</param>
@@ -440,7 +439,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Creates a <see cref="KeyVaultRoleAssignment"/>.
+        /// Creates a role assignment.
         /// </summary>
         /// <param name="roleScope">The scope of the role assignment to create.</param>
         /// <param name="roleDefinitionId">The role definition ID used in the role assignment.</param>
