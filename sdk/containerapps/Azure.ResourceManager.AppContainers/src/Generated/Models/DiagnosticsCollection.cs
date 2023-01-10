@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of DiagnosticsCollection. </summary>
         /// <param name="value"> Collection of diagnostic data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DiagnosticsCollection(IEnumerable<DiagnosticData> value)
+        internal DiagnosticsCollection(IEnumerable<ContainerAppDiagnosticData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of DiagnosticsCollection. </summary>
         /// <param name="value"> Collection of diagnostic data. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal DiagnosticsCollection(IReadOnlyList<DiagnosticData> value, string nextLink)
+        internal DiagnosticsCollection(IReadOnlyList<ContainerAppDiagnosticData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of diagnostic data. </summary>
-        public IReadOnlyList<DiagnosticData> Value { get; }
+        public IReadOnlyList<ContainerAppDiagnosticData> Value { get; }
         /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }

@@ -340,7 +340,7 @@ var data = new {
     endDateTime = "2022-05-10T18:57:31.2311892Z",
 };
 
-var operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+var operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Started, "<jobId>", RequestContent.Create(data));
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -380,7 +380,7 @@ var data = new {
     },
 };
 
-var operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+var operation = await client.CreateSatelliteDataIngestionJobAsync(WaitUntil.Started, "<jobId>", RequestContent.Create(data));
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -492,7 +492,7 @@ var data = new {
     endDateTime = "2022-05-10T18:57:31.2311892Z",
 };
 
-var operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+var operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Started, "<jobId>", RequestContent.Create(data));
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -532,7 +532,7 @@ var data = new {
     },
 };
 
-var operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+var operation = client.CreateSatelliteDataIngestionJob(WaitUntil.Started, "<jobId>", RequestContent.Create(data));
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;

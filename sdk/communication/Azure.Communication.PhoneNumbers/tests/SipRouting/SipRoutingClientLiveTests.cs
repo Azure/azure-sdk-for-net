@@ -33,18 +33,8 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         public async Task ClearConfiguration()
         {
             var client = CreateClient();
-            var routes = await client.GetRoutesAsync();
-            var trunks = await client.GetTrunksAsync();
-            if (routes.Value.Count > 0)
-            {
-                var response = await client.SetRoutesAsync(new List<SipTrunkRoute>());
-                Assert.AreEqual(200, response.Status);
-            }
-            if (trunks.Value.Count > 0)
-            {
-                var response = await client.SetTrunksAsync(new List<SipTrunk>());
-                Assert.AreEqual(200, response.Status);
-            }
+            Assert.AreEqual(200, (await client.SetRoutesAsync(new List<SipTrunkRoute>())).Status);
+            Assert.AreEqual(200, (await client.SetTrunksAsync(new List<SipTrunk>())).Status);
         }
 
         [Test]
@@ -166,6 +156,62 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
             Assert.IsNotNull(newTrunks);
             Assert.AreEqual(1, newTrunks.Count);
             Assert.IsTrue(TrunkAreEqual(TestData!.NewTrunk, newTrunks[0]));
+        }
+
+        [Test]
+        public async Task ClearSipTrunksForResource()
+        {
+            var client = CreateClient();
+            client.SetTrunksAsync(TestData!.TrunkList).Wait();
+
+            await client.SetTrunksAsync(new List<SipTrunk>()).ConfigureAwait(false);
+
+            var response = await client.GetTrunksAsync().ConfigureAwait(false);
+            var newTrunks = response.Value;
+            Assert.IsNotNull(newTrunks);
+            Assert.IsEmpty(newTrunks);
+        }
+
+        [Test]
+        public async Task ClearSipTrunksForResourceWhenAlreadyEmpty()
+        {
+            var client = CreateClient();
+            await ClearConfiguration();
+
+            await client.SetTrunksAsync(new List<SipTrunk>()).ConfigureAwait(false);
+
+            var response = await client.GetTrunksAsync().ConfigureAwait(false);
+            var newTrunks = response.Value;
+            Assert.IsNotNull(newTrunks);
+            Assert.IsEmpty(newTrunks);
+        }
+
+        [Test]
+        public async Task ClearSipRoutesForResource()
+        {
+            var client = CreateClient();
+            client.SetRoutesAsync(new List<SipTrunkRoute> { TestData!.RuleWithoutTrunks }).Wait();
+
+            await client.SetRoutesAsync(new List<SipTrunkRoute>()).ConfigureAwait(false);
+
+            var response = await client.GetRoutesAsync().ConfigureAwait(false);
+            var newRoutes = response.Value;
+            Assert.IsNotNull(newRoutes);
+            Assert.IsEmpty(newRoutes);
+        }
+
+        [Test]
+        public async Task ClearSipRoutesForResourceWhenAlreadyEmpty()
+        {
+            var client = CreateClient();
+            await ClearConfiguration();
+
+            await client.SetRoutesAsync(new List<SipTrunkRoute>()).ConfigureAwait(false);
+
+            var response = await client.GetRoutesAsync().ConfigureAwait(false);
+            var newRoutes = response.Value;
+            Assert.IsNotNull(newRoutes);
+            Assert.IsEmpty(newRoutes);
         }
     }
 }
