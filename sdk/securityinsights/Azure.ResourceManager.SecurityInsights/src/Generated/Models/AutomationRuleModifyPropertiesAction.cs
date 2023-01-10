@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Describes an automation rule action to modify an object&apos;s properties. </summary>
-    public partial class AutomationRuleModifyPropertiesAction : AutomationRuleAction
+    public partial class AutomationRuleModifyPropertiesAction : SecurityInsightsAutomationRuleAction
     {
         /// <summary> Initializes a new instance of AutomationRuleModifyPropertiesAction. </summary>
         /// <param name="order"></param>
@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="order"></param>
         /// <param name="actionType"> The type of the automation rule action. </param>
         /// <param name="actionConfiguration"></param>
-        internal AutomationRuleModifyPropertiesAction(int order, ActionType actionType, IncidentPropertiesAction actionConfiguration) : base(order, actionType)
+        internal AutomationRuleModifyPropertiesAction(int order, ActionType actionType, SecurityInsightsIncidentActionConfiguration actionConfiguration) : base(order, actionType)
         {
             ActionConfiguration = actionConfiguration;
             ActionType = actionType;
         }
 
         /// <summary> Gets or sets the action configuration. </summary>
-        public IncidentPropertiesAction ActionConfiguration { get; set; }
+        public SecurityInsightsIncidentActionConfiguration ActionConfiguration { get; set; }
     }
 }

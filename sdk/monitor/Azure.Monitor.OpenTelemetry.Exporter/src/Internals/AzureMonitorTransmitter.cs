@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -212,6 +214,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
                         result = _fileBlobProvider.SaveTelemetry(content, retryInterval);
                         break;
+                    case ResponseStatusCodes.Unauthorized:
+                    case ResponseStatusCodes.Forbidden:
                     case ResponseStatusCodes.InternalServerError:
                     case ResponseStatusCodes.BadGateway:
                     case ResponseStatusCodes.ServiceUnavailable:
@@ -276,6 +280,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                         retryInterval = HttpPipelineHelper.GetRetryInterval(httpMessage.Response);
                         blob.TryLease(retryInterval);
                         break;
+                    case ResponseStatusCodes.Unauthorized:
+                    case ResponseStatusCodes.Forbidden:
                     case ResponseStatusCodes.InternalServerError:
                     case ResponseStatusCodes.BadGateway:
                     case ResponseStatusCodes.ServiceUnavailable:

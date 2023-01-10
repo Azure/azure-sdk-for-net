@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MachineLearningCompute;
 using Azure.ResourceManager.MachineLearningCompute.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.MachineLearningCompute
+namespace Azure.ResourceManager.MachineLearningCompute.Samples
 {
     public partial class Sample_OperationalizationClusterResource
     {
@@ -26,8 +27,10 @@ namespace Azure.ResourceManager.MachineLearningCompute
             // Generated from example definition: specification/machinelearningcompute/resource-manager/Microsoft.MachineLearningCompute/preview/2017-08-01-preview/examples/OperationalizationClusters_Get.json
             // this example is just showing the usage of "OperationalizationClusters_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this OperationalizationClusterResource created on azure
             // for more information of creating OperationalizationClusterResource, please refer to the document of OperationalizationClusterResource
@@ -55,8 +58,10 @@ namespace Azure.ResourceManager.MachineLearningCompute
             // Generated from example definition: specification/machinelearningcompute/resource-manager/Microsoft.MachineLearningCompute/preview/2017-08-01-preview/examples/OperationalizationClusters_Update.json
             // this example is just showing the usage of "OperationalizationClusters_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this OperationalizationClusterResource created on azure
             // for more information of creating OperationalizationClusterResource, please refer to the document of OperationalizationClusterResource
@@ -91,8 +96,10 @@ namespace Azure.ResourceManager.MachineLearningCompute
             // Generated from example definition: specification/machinelearningcompute/resource-manager/Microsoft.MachineLearningCompute/preview/2017-08-01-preview/examples/OperationalizationClusters_Delete.json
             // this example is just showing the usage of "OperationalizationClusters_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this OperationalizationClusterResource created on azure
             // for more information of creating OperationalizationClusterResource, please refer to the document of OperationalizationClusterResource
@@ -116,8 +123,10 @@ namespace Azure.ResourceManager.MachineLearningCompute
             // Generated from example definition: specification/machinelearningcompute/resource-manager/Microsoft.MachineLearningCompute/preview/2017-08-01-preview/examples/OperationalizationClusters_ListKeys.json
             // this example is just showing the usage of "OperationalizationClusters_ListKeys" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this OperationalizationClusterResource created on azure
             // for more information of creating OperationalizationClusterResource, please refer to the document of OperationalizationClusterResource
@@ -141,8 +150,10 @@ namespace Azure.ResourceManager.MachineLearningCompute
             // Generated from example definition: specification/machinelearningcompute/resource-manager/Microsoft.MachineLearningCompute/preview/2017-08-01-preview/examples/OperationalizationClusters_CheckSystemServicesUpdatesAvailable.json
             // this example is just showing the usage of "OperationalizationClusters_CheckSystemServicesUpdatesAvailable" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this OperationalizationClusterResource created on azure
             // for more information of creating OperationalizationClusterResource, please refer to the document of OperationalizationClusterResource
@@ -166,8 +177,10 @@ namespace Azure.ResourceManager.MachineLearningCompute
             // Generated from example definition: specification/machinelearningcompute/resource-manager/Microsoft.MachineLearningCompute/preview/2017-08-01-preview/examples/OperationalizationClusters_UpdateSystemServices.json
             // this example is just showing the usage of "OperationalizationClusters_UpdateSystemServices" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this OperationalizationClusterResource created on azure
             // for more information of creating OperationalizationClusterResource, please refer to the document of OperationalizationClusterResource
@@ -192,8 +205,10 @@ namespace Azure.ResourceManager.MachineLearningCompute
             // Generated from example definition: specification/machinelearningcompute/resource-manager/Microsoft.MachineLearningCompute/preview/2017-08-01-preview/examples/OperationalizationClusters_ListBySubscription.json
             // this example is just showing the usage of "OperationalizationClusters_ListBySubscriptionId" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource

@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    // Data plane generated client. The Boundaries service client.
+    // Data plane generated client.
     /// <summary> The Boundaries service client. </summary>
     public partial class BoundariesClient
     {

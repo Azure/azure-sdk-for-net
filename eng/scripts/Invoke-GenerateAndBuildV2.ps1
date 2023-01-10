@@ -115,8 +115,6 @@ if ($relatedCadlProjectFolder) {
         $cadlFolder = Resolve-Path (Join-Path $swaggerDir $cadlRelativeFolder)
         $newPackageOutput = "newPackageOutput.json"
 
-        Push-Location $cadlFolder
-        trap {Pop-Location}
         $cadlProjectYaml = Get-Content -Path (Join-Path "$cadlFolder" "cadl-project.yaml") -Raw
 
         Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
@@ -131,16 +129,22 @@ if ($relatedCadlProjectFolder) {
             $service = $directories[-3];
             $namespace = $directories[-2];
         }
-        New-CADLPackageFolder -service $service -namespace $namespace -sdkPath $sdkPath -cadlInput $cadlFolder/main.cadl -outputJsonFile $newpackageoutput
+        New-CADLPackageFolder `
+            -service $service `
+            -namespace $namespace `
+            -sdkPath $sdkPath `
+            -relatedCadlProjectFolder $cadlRelativeFolder `
+            -specRoot $swaggerDir `
+            -outputJsonFile $newpackageoutput
         $newPackageOutputJson = Get-Content $newPackageOutput -Raw | ConvertFrom-Json
         $relativeSdkPath = $newPackageOutputJson.path
-        npm install
-        npx cadl compile --output-path $sdkPath --emit @azure-tools/cadl-csharp .
-        if ( !$?) {
-            Throw "Failed to generate sdk for cadl. exit code: $?"
-        }
-        GeneratePackage -projectFolder $projectFolder -sdkRootPath $sdkPath -path $relativeSdkPath -downloadUrlPrefix $downloadUrlPrefix -skipGenerate -generatedSDKPackages $generatedSDKPackages
-        Pop-Location
+        GeneratePackage `
+            -projectFolder $projectFolder `
+            -sdkRootPath $sdkPath `
+            -path $relativeSdkPath `
+            -downloadUrlPrefix $downloadUrlPrefix `
+            -serviceType "data-plane" `
+            -generatedSDKPackages $generatedSDKPackages
     }
 }
 $outputJson = [PSCustomObject]@{
