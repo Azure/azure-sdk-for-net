@@ -57,11 +57,14 @@ namespace Azure.Communication.Identity.Tests
         }
 
         [Test]
-        [TestCase(AuthMethod.ConnectionString, "chat", TestName = "GettingTokenWithSingleScopeWithConnectionString")]
-        [TestCase(AuthMethod.KeyCredential, "chat", TestName = "GettingTokenWithSingleScopeWithKeyCredential")]
-        [TestCase(AuthMethod.TokenCredential, "chat", TestName = "GettingTokenWithSingleScopeWithTokenCredential")]
+        [TestCase(AuthMethod.ConnectionString, "chat", TestName = "GettingTokenWithSingleChatScopeWithConnectionString")]
+        [TestCase(AuthMethod.ConnectionString, "voip", TestName = "GettingTokenWithSingleVoIPScopeWithConnectionString")]
         [TestCase(AuthMethod.ConnectionString, "chat", "voip", TestName = "GettingTokenWithMultipleScopesWithConnectionString")]
+        [TestCase(AuthMethod.KeyCredential, "chat", TestName = "GettingTokenWithSingleChatScopeWithKeyCredential")]
+        [TestCase(AuthMethod.KeyCredential, "voip", TestName = "GettingTokenWithSingleVoIPScopeWithKeyCredential")]
         [TestCase(AuthMethod.KeyCredential, "chat", "voip", TestName = "GettingTokenWithMultipleScopesWithKeyCredential")]
+        [TestCase(AuthMethod.TokenCredential, "chat", TestName = "GettingTokenWithSingleChatScopeWithTokenCredential")]
+        [TestCase(AuthMethod.TokenCredential, "voip", TestName = "GettingTokenWithSingleVoIPScopeWithTokenCredential")]
         [TestCase(AuthMethod.TokenCredential, "chat", "voip", TestName = "GettingTokenWithMultipleScopesWithTokenCredential")]
         public async Task GetTokenGeneratesTokenAndIdentityWithScopes(AuthMethod authMethod, params string[] scopes)
         {
@@ -121,6 +124,29 @@ namespace Azure.Communication.Identity.Tests
                 return;
             }
             Assert.Fail("RevokeTokensAsync should have thrown an exception.");
+        }
+
+        [Test]
+        [TestCase("chat", TestName = "CreateUserAndTokenWithChatScope")]
+        [TestCase("voip", TestName = "CreateUserAndTokenWithVoIPScope")]
+        [TestCase("chat", "voip", TestName = "CreateUserAndTokenWithMultipleScopes")]
+        public async Task CreateUserAndTokenWithDifferentScopes(params string[] scopes)
+        {
+            CommunicationIdentityClient client = CreateClientWithConnectionString();
+            Response<CommunicationUserIdentifierAndToken> accessToken = await client.CreateUserAndTokenAsync(scopes: scopes.Select(x => new CommunicationTokenScope(x)));
+
+            Assert.IsNotNull(accessToken.Value.AccessToken);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(accessToken.Value.AccessToken.Token));
+            ValidateScopesIfNotSanitized();
+
+            void ValidateScopesIfNotSanitized()
+            {
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    JwtTokenParser.JwtPayload payload = JwtTokenParser.DecodeJwtPayload(accessToken.Value.AccessToken.Token);
+                    CollectionAssert.AreEquivalent(scopes, payload.Scopes);
+                }
+            }
         }
 
         [Test]
