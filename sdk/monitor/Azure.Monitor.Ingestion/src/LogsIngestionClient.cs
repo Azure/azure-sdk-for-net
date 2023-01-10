@@ -60,10 +60,6 @@ namespace Azure.Monitor.Ingestion
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            if (contentEncoding != null)
-            {
-                request.Headers.Add("Content-Encoding", contentEncoding);
-            }
             // If any encoding is specified, avoid gzipping. If contentEncoding == "gzip" that means content is already gzipped, so we shouldn't gzip again
             if (contentEncoding == null)
             {
@@ -74,6 +70,7 @@ namespace Azure.Monitor.Ingestion
             }
             else
             {
+                request.Headers.Add("Content-Encoding", contentEncoding);
                 request.Content = content;
             }
             return message;
