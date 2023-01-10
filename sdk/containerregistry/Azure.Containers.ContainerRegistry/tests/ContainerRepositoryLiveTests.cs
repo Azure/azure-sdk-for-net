@@ -109,6 +109,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
                 // Act
                 await repository.DeleteAsync();
+                await Delay(5000);
 
                 await Delay(5000);
 
