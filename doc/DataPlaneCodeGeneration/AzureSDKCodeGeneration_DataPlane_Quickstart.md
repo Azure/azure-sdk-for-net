@@ -39,7 +39,7 @@ This tutorial has following sections:
 
 ## Setup your repository
 
-- Fork and clone an [azure-sdk-for-net](https://github.com/Azure/azure-sdk-for-net) repo. Follow the instructions in the [.NET CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/issues/12903) to fork and clone the `azure-sdk-for-net` repo.
+- Fork and clone the [azure-sdk-for-net](https://github.com/Azure/azure-sdk-for-net) repository. Instructions for doing so can be found in the [.NET CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md).
 - Create a branch to work in.
 
 ## Create starter package  
