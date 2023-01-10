@@ -153,7 +153,7 @@ pwsh /home/azure-sdk-for-net/eng/scripts/automation/Invoke-CadlDataPlaneGenerate
 - `-specRoot` takes the file system path of the spec repo. e.g. /home/azure-rest-api-specs
 - You need to provide one of (`-commit`, `-repo`) pair to refer to an URL path of the cadl project and `-specRoot` parameters. If you provide both, `-specRoot` will be ignored.
 
-When you run the `eng\scripts\automation\Invoke-CadlDataPlaneGenerateSDKPackage.ps1` script, it will:
+When you run `eng\scripts\automation\Invoke-CadlDataPlaneGenerateSDKPackage.ps1`, it will:
 
 - Create a project folder, install template files from `sdk/template/Azure.Template`, and create `.csproj` and `.sln` files for your new library.
 
