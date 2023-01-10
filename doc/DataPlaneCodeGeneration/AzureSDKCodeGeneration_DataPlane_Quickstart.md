@@ -121,7 +121,7 @@ emitters:
 
 #### Create sdk starter package
   
-We will use dotnet project template [Azure.Template](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template) to automatically create the project.
+We will use the Azure SDK template [Azure.Template](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template) to create the initial project skeleton.
 
 You can run `eng\scripts\automation\Invoke-CadlDataPlaneGenerateSDKPackage.ps1` to generate the starting SDK client library package directly as following:
 
