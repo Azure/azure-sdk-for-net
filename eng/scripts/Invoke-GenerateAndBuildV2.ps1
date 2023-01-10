@@ -143,6 +143,7 @@ if ($relatedCadlProjectFolder) {
             -sdkRootPath $sdkPath `
             -path $relativeSdkPath `
             -downloadUrlPrefix $downloadUrlPrefix `
+            -serviceType "data-plane" `
             -generatedSDKPackages $generatedSDKPackages
     }
 }
