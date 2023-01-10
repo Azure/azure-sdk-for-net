@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.OperationalInsights;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
     public class DataConnectorCollectionTests : SecurityInsightsManagementTestBase
     {
         public DataConnectorCollectionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -25,6 +26,33 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var resourceGroup = await CreateResourceGroupAsync();
             return resourceGroup;
         }
+
+        #region Workspace
+        private OperationalInsightsWorkspaceCollection GetWorkspaceCollectionAsync(ResourceGroupResource resourceGroup)
+        {
+            return resourceGroup.GetOperationalInsightsWorkspaces();
+        }
+        private async Task<OperationalInsightsWorkspaceResource> GetWorkspaceResourceAsync(ResourceGroupResource resourceGroup)
+        {
+            var workspaceCollection = GetWorkspaceCollectionAsync(resourceGroup);
+            var workspaceName1 = groupName + "-ws";
+            var workspaceInput = GetWorkspaceData();
+            var lrow = await workspaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName1, workspaceInput);
+            OperationalInsightsWorkspaceResource workspace = lrow.Value;
+            return workspace;
+        }
+        #endregion
+        #region Onboard
+        private async Task<SecurityInsightsSentinelOnboardingStateResource> GetSentinelOnboardingStateResourceAsync(OperationalInsightsWorkspaceSecurityInsightsResource operationalInsights)
+        {
+            var onboardCollection = operationalInsights.GetSecurityInsightsSentinelOnboardingStates();
+            var onboardName = "default";
+            var onboardInput = ResourceDataHelpers.GetSentinelOnboardingStateData();
+            var lroo = await onboardCollection.CreateOrUpdateAsync(WaitUntil.Completed, onboardName, onboardInput);
+            SecurityInsightsSentinelOnboardingStateResource onboard1 = lroo.Value;
+            return onboard1;
+        }
+        #endregion
         private SecurityInsightsDataConnectorCollection GetDataConnectorCollectionAsync(OperationalInsightsWorkspaceSecurityInsightsResource operationalInsights)
         {
             return operationalInsights.GetSecurityInsightsDataConnectors();
@@ -35,9 +63,11 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
         {
             //0.prepare
             var resourceGroup = await GetResourceGroupAsync();
-            var workspaceName = groupName + "ws";
+            var workspaceName = groupName + "-ws";
             var ResourceID = CreateResourceIdentifier("db1ab6f0-4769-4b27-930e-01e2ef9c123c", groupName, workspaceName);
             var operationalInsights = new OperationalInsightsWorkspaceSecurityInsightsResource(Client, ResourceID);
+            var workspace = await GetWorkspaceResourceAsync(resourceGroup);
+            var sOS = await GetSentinelOnboardingStateResourceAsync(operationalInsights);
             //1.CreateOrUpdate
             var collection = GetDataConnectorCollectionAsync(operationalInsights);
             var name = Recording.GenerateAssetName("DataConnectors-");

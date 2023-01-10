@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
     public class AutomationRuleCollectionTests : SecurityInsightsManagementTestBase
     {
         public AutomationRuleCollectionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
         private async Task<ResourceGroupResource> GetResourceGroupAsync()
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             //0.prepare
             var resourceGroup = await GetResourceGroupAsync();
             var workspace = await GetWorkspaceResourceAsync(resourceGroup);
-            var workspaceName = groupName + "ws";
+            var workspaceName = groupName + "-ws";
             var ResourceID = CreateResourceIdentifier("db1ab6f0-4769-4b27-930e-01e2ef9c123c", groupName, workspaceName);
             var operationalInsights = new OperationalInsightsWorkspaceSecurityInsightsResource(Client, ResourceID);
             var sOS = await GetSentinelOnboardingStateResourceAsync(operationalInsights);
