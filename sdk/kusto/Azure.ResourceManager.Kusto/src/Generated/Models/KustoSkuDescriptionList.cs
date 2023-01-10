@@ -11,17 +11,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> The list of the EngagementFabric SKU descriptions. </summary>
-    internal partial class SkuDescriptionList
+    internal partial class KustoSkuDescriptionList
     {
-        /// <summary> Initializes a new instance of SkuDescriptionList. </summary>
-        internal SkuDescriptionList()
+        /// <summary> Initializes a new instance of KustoSkuDescriptionList. </summary>
+        internal KustoSkuDescriptionList()
         {
             Value = new ChangeTrackingList<KustoSkuDescription>();
         }
 
-        /// <summary> Initializes a new instance of SkuDescriptionList. </summary>
+        /// <summary> Initializes a new instance of KustoSkuDescriptionList. </summary>
         /// <param name="value"> SKU descriptions. </param>
-        internal SkuDescriptionList(IReadOnlyList<KustoSkuDescription> value)
+        internal KustoSkuDescriptionList(IReadOnlyList<KustoSkuDescription> value)
         {
             Value = value;
         }

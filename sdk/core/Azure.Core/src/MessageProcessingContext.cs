@@ -8,7 +8,7 @@ namespace Azure.Core
     /// <summary>
     /// Contains information related to the processing of the <see cref="HttpMessage"/> as it traverses the pipeline.
     /// </summary>
-    public readonly struct ProcessingContext
+    public readonly struct MessageProcessingContext
     {
         /// <summary>
         /// The time that the pipeline processing started for the message.
@@ -16,7 +16,7 @@ namespace Azure.Core
         public DateTimeOffset StartTime
         {
             get => _message.ProcessingStartTime;
-            set => _message.ProcessingStartTime = value;
+            internal set => _message.ProcessingStartTime = value;
         }
 
         /// <summary>
@@ -31,10 +31,10 @@ namespace Azure.Core
         private readonly HttpMessage _message;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="ProcessingContext"/>.
+        /// Initializes a new instance of <see cref="MessageProcessingContext"/>.
         /// </summary>
         /// <param name="message">The message that the context is attached to.</param>
-        internal ProcessingContext(HttpMessage message)
+        internal MessageProcessingContext(HttpMessage message)
         {
             _message = message;
         }
