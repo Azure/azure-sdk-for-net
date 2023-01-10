@@ -5,6 +5,6 @@
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.ContainerInstance</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider Microsoft.ContainerInstance</Description>
-    <PackageTags>azure;management;arm;resource manager;containerinstance</PackageTags>
+    <PackageTags>azure;management;arm;resource manager;containerinstance;2022-10-01-preview</PackageTags>
   </PropertyGroup>
 </Project>

@@ -29,14 +29,16 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// <summary>
         /// Initializes a new instance of the Usage class.
         /// </summary>
+        /// <param name="id">Id of the usage result</param>
         /// <param name="unit">Unit of the usage result</param>
         /// <param name="currentValue">The current usage of the
         /// resource</param>
         /// <param name="limit">The maximum permitted usage of the
         /// resource.</param>
         /// <param name="name">The name object of the resource</param>
-        public Usage(string unit = default(string), int? currentValue = default(int?), int? limit = default(int?), UsageName name = default(UsageName))
+        public Usage(string id = default(string), string unit = default(string), int? currentValue = default(int?), int? limit = default(int?), UsageName name = default(UsageName))
         {
+            Id = id;
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
@@ -48,6 +50,12 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets id of the usage result
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
         /// <summary>
         /// Gets unit of the usage result

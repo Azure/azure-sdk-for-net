@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// registry.</param>
         /// <param name="identityUrl">The identity URL for the private
         /// registry.</param>
-        public ImageRegistryCredential(string server, string username, string password = default(string), string identity = default(string), string identityUrl = default(string))
+        public ImageRegistryCredential(string server, string username = default(string), string password = default(string), string identity = default(string), string identityUrl = default(string))
         {
             Server = server;
             Username = username;
@@ -97,10 +97,6 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
             if (Server == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Server");
-            }
-            if (Username == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Username");
             }
         }
     }

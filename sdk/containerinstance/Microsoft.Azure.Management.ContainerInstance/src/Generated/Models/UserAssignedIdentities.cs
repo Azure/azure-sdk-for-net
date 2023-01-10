@@ -13,26 +13,30 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class ContainerGroupIdentityUserAssignedIdentitiesValue
+    /// <summary>
+    /// The list of user identities associated with the container group. The
+    /// user identity dictionary key references will be ARM resource ids in the
+    /// form:
+    /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+    /// </summary>
+    public partial class UserAssignedIdentities
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// ContainerGroupIdentityUserAssignedIdentitiesValue class.
+        /// Initializes a new instance of the UserAssignedIdentities class.
         /// </summary>
-        public ContainerGroupIdentityUserAssignedIdentitiesValue()
+        public UserAssignedIdentities()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// ContainerGroupIdentityUserAssignedIdentitiesValue class.
+        /// Initializes a new instance of the UserAssignedIdentities class.
         /// </summary>
         /// <param name="principalId">The principal id of user assigned
         /// identity.</param>
         /// <param name="clientId">The client id of user assigned
         /// identity.</param>
-        public ContainerGroupIdentityUserAssignedIdentitiesValue(string principalId = default(string), string clientId = default(string))
+        public UserAssignedIdentities(string principalId = default(string), string clientId = default(string))
         {
             PrincipalId = principalId;
             ClientId = clientId;

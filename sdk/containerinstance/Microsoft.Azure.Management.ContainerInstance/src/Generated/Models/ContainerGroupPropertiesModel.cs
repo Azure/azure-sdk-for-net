@@ -18,33 +18,29 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
     using System.Linq;
 
     /// <summary>
-    /// A container group.
+    /// The container group properties
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ContainerGroup
+    public partial class ContainerGroupPropertiesModel
     {
         /// <summary>
-        /// Initializes a new instance of the ContainerGroup class.
+        /// Initializes a new instance of the ContainerGroupPropertiesModel
+        /// class.
         /// </summary>
-        public ContainerGroup()
+        public ContainerGroupPropertiesModel()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ContainerGroup class.
+        /// Initializes a new instance of the ContainerGroupPropertiesModel
+        /// class.
         /// </summary>
         /// <param name="containers">The containers within the container
         /// group.</param>
         /// <param name="osType">The operating system type required by the
         /// containers in the container group. Possible values include:
         /// 'Windows', 'Linux'</param>
-        /// <param name="id">The resource id.</param>
-        /// <param name="name">The resource name.</param>
-        /// <param name="type">The resource type.</param>
-        /// <param name="location">The resource location.</param>
-        /// <param name="tags">The resource tags.</param>
-        /// <param name="zones">The zones for the container group.</param>
         /// <param name="identity">The identity of the container group, if
         /// configured.</param>
         /// <param name="provisioningState">The provisioning state of the
@@ -80,14 +76,8 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// confidential container group</param>
         /// <param name="priority">The priority of the container group.
         /// Possible values include: 'Regular', 'Spot'</param>
-        public ContainerGroup(IList<Container> containers, string osType, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> zones = default(IList<string>), ContainerGroupIdentity identity = default(ContainerGroupIdentity), string provisioningState = default(string), IList<ImageRegistryCredential> imageRegistryCredentials = default(IList<ImageRegistryCredential>), string restartPolicy = default(string), IpAddress ipAddress = default(IpAddress), IList<Volume> volumes = default(IList<Volume>), ContainerGroupPropertiesInstanceView instanceView = default(ContainerGroupPropertiesInstanceView), ContainerGroupDiagnostics diagnostics = default(ContainerGroupDiagnostics), IList<ContainerGroupSubnetId> subnetIds = default(IList<ContainerGroupSubnetId>), DnsConfiguration dnsConfig = default(DnsConfiguration), string sku = default(string), EncryptionProperties encryptionProperties = default(EncryptionProperties), IList<InitContainerDefinition> initContainers = default(IList<InitContainerDefinition>), IList<DeploymentExtensionSpec> extensions = default(IList<DeploymentExtensionSpec>), ConfidentialComputeProperties confidentialComputeProperties = default(ConfidentialComputeProperties), string priority = default(string))
+        public ContainerGroupPropertiesModel(IList<Container> containers, string osType, ContainerGroupIdentity identity = default(ContainerGroupIdentity), string provisioningState = default(string), IList<ImageRegistryCredential> imageRegistryCredentials = default(IList<ImageRegistryCredential>), string restartPolicy = default(string), IpAddress ipAddress = default(IpAddress), IList<Volume> volumes = default(IList<Volume>), ContainerGroupPropertiesInstanceView instanceView = default(ContainerGroupPropertiesInstanceView), ContainerGroupDiagnostics diagnostics = default(ContainerGroupDiagnostics), IList<ContainerGroupSubnetId> subnetIds = default(IList<ContainerGroupSubnetId>), DnsConfiguration dnsConfig = default(DnsConfiguration), string sku = default(string), EncryptionProperties encryptionProperties = default(EncryptionProperties), IList<InitContainerDefinition> initContainers = default(IList<InitContainerDefinition>), IList<DeploymentExtensionSpec> extensions = default(IList<DeploymentExtensionSpec>), ConfidentialComputeProperties confidentialComputeProperties = default(ConfidentialComputeProperties), string priority = default(string))
         {
-            Id = id;
-            Name = name;
-            Type = type;
-            Location = location;
-            Tags = tags;
-            Zones = zones;
             Identity = identity;
             ProvisioningState = provisioningState;
             Containers = containers;
@@ -113,42 +103,6 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets the resource id.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets the resource name.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets the resource type.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the resource location.
-        /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets the resource tags.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// Gets or sets the zones for the container group.
-        /// </summary>
-        [JsonProperty(PropertyName = "zones")]
-        public IList<string> Zones { get; set; }
 
         /// <summary>
         /// Gets or sets the identity of the container group, if configured.

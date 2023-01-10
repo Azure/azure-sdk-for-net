@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
 {
 
     /// <summary>
-    /// Defines values for ContainerGroupSku.
+    /// Defines values for ContainerGroupPriority.
     /// </summary>
-    public static class ContainerGroupSku
+    public static class ContainerGroupPriority
     {
-        public const string Standard = "Standard";
-        public const string Dedicated = "Dedicated";
-        public const string Confidential = "Confidential";
+        public const string Regular = "Regular";
+        public const string Spot = "Spot";
     }
 }

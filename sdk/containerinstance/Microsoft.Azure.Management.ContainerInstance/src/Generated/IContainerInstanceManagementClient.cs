@@ -90,5 +90,10 @@ namespace Microsoft.Azure.Management.ContainerInstance
         /// </summary>
         IContainersOperations Containers { get; }
 
+        /// <summary>
+        /// Gets the ISubnetServiceAssociationLinkOperations.
+        /// </summary>
+        ISubnetServiceAssociationLinkOperations SubnetServiceAssociationLink { get; }
+
     }
 }

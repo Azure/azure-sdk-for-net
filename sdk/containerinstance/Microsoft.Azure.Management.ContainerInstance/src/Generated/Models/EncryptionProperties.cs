@@ -33,11 +33,13 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// <param name="vaultBaseUrl">The keyvault base url.</param>
         /// <param name="keyName">The encryption key name.</param>
         /// <param name="keyVersion">The encryption key version.</param>
-        public EncryptionProperties(string vaultBaseUrl, string keyName, string keyVersion)
+        /// <param name="identity">The keyvault managed identity.</param>
+        public EncryptionProperties(string vaultBaseUrl, string keyName, string keyVersion, string identity = default(string))
         {
             VaultBaseUrl = vaultBaseUrl;
             KeyName = keyName;
             KeyVersion = keyVersion;
+            Identity = identity;
             CustomInit();
         }
 
@@ -63,6 +65,12 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// </summary>
         [JsonProperty(PropertyName = "keyVersion")]
         public string KeyVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets the keyvault managed identity.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public string Identity { get; set; }
 
         /// <summary>
         /// Validate the object.

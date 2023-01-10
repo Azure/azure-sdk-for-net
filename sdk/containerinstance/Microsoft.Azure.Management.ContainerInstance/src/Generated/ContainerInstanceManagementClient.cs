@@ -94,6 +94,11 @@ namespace Microsoft.Azure.Management.ContainerInstance
         public virtual IContainersOperations Containers { get; private set; }
 
         /// <summary>
+        /// Gets the ISubnetServiceAssociationLinkOperations.
+        /// </summary>
+        public virtual ISubnetServiceAssociationLinkOperations SubnetServiceAssociationLink { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the ContainerInstanceManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -338,8 +343,9 @@ namespace Microsoft.Azure.Management.ContainerInstance
             Operations = new Operations(this);
             Location = new LocationOperations(this);
             Containers = new ContainersOperations(this);
+            SubnetServiceAssociationLink = new SubnetServiceAssociationLinkOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-10-01";
+            ApiVersion = "2022-10-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

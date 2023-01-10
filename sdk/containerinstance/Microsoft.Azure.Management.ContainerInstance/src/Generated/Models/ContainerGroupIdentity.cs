@@ -44,10 +44,8 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
         /// group. Possible values include: 'SystemAssigned', 'UserAssigned',
         /// 'SystemAssigned, UserAssigned', 'None'</param>
         /// <param name="userAssignedIdentities">The list of user identities
-        /// associated with the container group. The user identity dictionary
-        /// key references will be ARM resource ids in the form:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.</param>
-        public ContainerGroupIdentity(string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?), IDictionary<string, ContainerGroupIdentityUserAssignedIdentitiesValue> userAssignedIdentities = default(IDictionary<string, ContainerGroupIdentityUserAssignedIdentitiesValue>))
+        /// associated with the container group.</param>
+        public ContainerGroupIdentity(string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?), IDictionary<string, UserAssignedIdentities> userAssignedIdentities = default(IDictionary<string, UserAssignedIdentities>))
         {
             PrincipalId = principalId;
             TenantId = tenantId;
@@ -88,12 +86,10 @@ namespace Microsoft.Azure.Management.ContainerInstance.Models
 
         /// <summary>
         /// Gets or sets the list of user identities associated with the
-        /// container group. The user identity dictionary key references will
-        /// be ARM resource ids in the form:
-        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.
+        /// container group.
         /// </summary>
         [JsonProperty(PropertyName = "userAssignedIdentities")]
-        public IDictionary<string, ContainerGroupIdentityUserAssignedIdentitiesValue> UserAssignedIdentities { get; set; }
+        public IDictionary<string, UserAssignedIdentities> UserAssignedIdentities { get; set; }
 
     }
 }
