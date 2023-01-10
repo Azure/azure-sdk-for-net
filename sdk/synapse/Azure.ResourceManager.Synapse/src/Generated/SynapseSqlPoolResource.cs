@@ -544,20 +544,20 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Delete a SQL pool
+        /// Delete a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolResource&gt;() against the Value property of the result to get specified type.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}
         /// Operation Id: SqlPools_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<SynapseSqlPoolResource>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BinaryData>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseSqlPoolSqlPoolsClientDiagnostics.CreateScope("SynapseSqlPoolResource.Delete");
             scope.Start();
             try
             {
                 var response = await _synapseSqlPoolSqlPoolsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseSqlPoolResource>(new SynapseSqlPoolOperationSource(Client), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -570,20 +570,20 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Delete a SQL pool
+        /// Delete a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolResource&gt;() against the Value property of the result to get specified type.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}
         /// Operation Id: SqlPools_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<SynapseSqlPoolResource> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BinaryData> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseSqlPoolSqlPoolsClientDiagnostics.CreateScope("SynapseSqlPoolResource.Delete");
             scope.Start();
             try
             {
                 var response = _synapseSqlPoolSqlPoolsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseSqlPoolResource>(new SynapseSqlPoolOperationSource(Client), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -656,20 +656,20 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Pause a SQL pool
+        /// Pause a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolResource&gt;() against the Value property of the result to get specified type.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/pause
         /// Operation Id: SqlPools_Pause
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<SynapseSqlPoolResource>> PauseAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BinaryData>> PauseAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseSqlPoolSqlPoolsClientDiagnostics.CreateScope("SynapseSqlPoolResource.Pause");
             scope.Start();
             try
             {
                 var response = await _synapseSqlPoolSqlPoolsRestClient.PauseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseSqlPoolResource>(new SynapseSqlPoolOperationSource(Client), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreatePauseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreatePauseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -682,20 +682,20 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Pause a SQL pool
+        /// Pause a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolResource&gt;() against the Value property of the result to get specified type.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/pause
         /// Operation Id: SqlPools_Pause
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<SynapseSqlPoolResource> Pause(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BinaryData> Pause(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseSqlPoolSqlPoolsClientDiagnostics.CreateScope("SynapseSqlPoolResource.Pause");
             scope.Start();
             try
             {
                 var response = _synapseSqlPoolSqlPoolsRestClient.Pause(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseSqlPoolResource>(new SynapseSqlPoolOperationSource(Client), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreatePauseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreatePauseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -708,20 +708,20 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Resume a SQL pool
+        /// Resume a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolResource&gt;() against the Value property of the result to get specified type.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/resume
         /// Operation Id: SqlPools_Resume
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<SynapseSqlPoolResource>> ResumeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BinaryData>> ResumeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseSqlPoolSqlPoolsClientDiagnostics.CreateScope("SynapseSqlPoolResource.Resume");
             scope.Start();
             try
             {
                 var response = await _synapseSqlPoolSqlPoolsRestClient.ResumeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<SynapseSqlPoolResource>(new SynapseSqlPoolOperationSource(Client), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -734,20 +734,20 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Resume a SQL pool
+        /// Resume a SQL pool. You can call ToObjectFromJson&lt;SynapseSqlPoolResource&gt;() against the Value property of the result to get specified type.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/resume
         /// Operation Id: SqlPools_Resume
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<SynapseSqlPoolResource> Resume(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BinaryData> Resume(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _synapseSqlPoolSqlPoolsClientDiagnostics.CreateScope("SynapseSqlPoolResource.Resume");
             scope.Start();
             try
             {
                 var response = _synapseSqlPoolSqlPoolsRestClient.Resume(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SynapseArmOperation<SynapseSqlPoolResource>(new SynapseSqlPoolOperationSource(Client), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<BinaryData>(new BinaryDataOperationSource(), _synapseSqlPoolSqlPoolsClientDiagnostics, Pipeline, _synapseSqlPoolSqlPoolsRestClient.CreateResumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

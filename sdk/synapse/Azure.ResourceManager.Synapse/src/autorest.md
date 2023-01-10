@@ -423,6 +423,9 @@ list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}
 
 directive:
+  - remove-operation: Get_IntegrationRuntimeStart
+  - remove-operation: Get_IntegrationRuntimeStop
+  - remove-operation: Get_IntegrationRuntimeEnableInteractivequery
   - remove-operation: Operations_List
   - remove-operation: Operations_GetLocationHeaderResult
   - remove-operation: Operations_GetAzureAsyncHeaderResult
@@ -458,6 +461,59 @@ directive:
     where: $.paths..parameters[?(@.name === 'securityAlertPolicyName')]
     transform: >
       $['x-ms-enum']['name'] = 'SqlServerSecurityAlertPolicyName';
+  # Fix the breaking changes relative to version 1.0.0
+  - from: bigDataPool.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/bigDataPools/{bigDataPoolName}'].delete
+    transform: >
+      $.description += ' You can call ToObjectFromJson<SynapseBigDataPoolInfoResource>() against the Value property of the result to get specified type.';
+      $.responses['200'].schema = {
+          "type": "object"
+      };
+      $.responses['202'].schema = {
+          "type": "object"
+      };
+  - from: firewallRule.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/firewallRules/{ruleName}'].delete
+    transform: >
+      $.description += '. You can call ToObjectFromJson<SynapseIPFirewallRuleInfoResource>() against the Value property of the result to get specified type.';
+      $.responses['200'].schema = {
+          "type": "object"
+      };
+  - from: sqlPool.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}'].delete
+    transform: >
+      $.description += '. You can call ToObjectFromJson<SynapseSqlPoolResource>() against the Value property of the result to get specified type.';
+      $.responses['200'].schema = {
+          "type": "object"
+      };
+      $.responses['202'].schema = {
+          "type": "object"
+      };
+  - from: sqlPool.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/pause'].post
+    transform: >
+      $.description += '. You can call ToObjectFromJson<SynapseSqlPoolResource>() against the Value property of the result to get specified type.';
+      $.responses['200'].schema = {
+          "type": "object"
+      };
+      $.responses['202'].schema = {
+          "type": "object"
+      };
+  - from: sqlPool.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/resume'].post
+    transform: >
+      $.description += '. You can call ToObjectFromJson<SynapseSqlPoolResource>() against the Value property of the result to get specified type.';
+      $.responses['200'].schema = {
+          "type": "object"
+      };
+      $.responses['202'].schema = {
+          "type": "object"
+      };
+  - from: integrationRuntime.json
+    where: $.definitions
+    transform: >
+      $.IntegrationRuntimeResource.properties.properties['x-ms-client-flatten'] = false;
+      $.IntegrationRuntimeStatusResponse.properties.properties['x-ms-client-flatten'] = false;
 
 ```
 
