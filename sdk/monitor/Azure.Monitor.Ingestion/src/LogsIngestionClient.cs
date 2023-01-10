@@ -64,9 +64,11 @@ namespace Azure.Monitor.Ingestion
             {
                 request.Headers.Add("Content-Encoding", contentEncoding);
             }
-            // if contentEncoding == "gzip" that means content is already gzipped, so we shouldn't gzip again
-            if (contentEncoding != "gzip")
+            // If any encoding is specified, avoid gzipping. If contentEncoding == "gzip" that means content is already gzipped, so we shouldn't gzip again
+            if (contentEncoding == null)
             {
+                // contentEncoding is now "gzip"
+                request.Headers.Add("Content-Encoding", "gzip");
                 GZipUtf8JsonRequestContent gzContent = new(content);
                 request.Content = gzContent;
             }
