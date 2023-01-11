@@ -116,7 +116,7 @@ namespace Azure.Core
         {
             public override void Write(Utf8JsonWriter writer, DecodedResponse model, JsonSerializerOptions options)
             {
-                throw new NotImplementedException("This converter should only be used for deserialization.");
+                throw new InvalidOperationException("This converter should only be used for deserialization.");
             }
             public override DecodedResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

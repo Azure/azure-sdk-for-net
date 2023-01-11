@@ -17,9 +17,6 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary> A Class representing a GenericResource along with the instance operations that can be performed on it. </summary>
     public partial class GenericResource : ArmResource
-#if NET7_0_OR_GREATER
-    , IOperationSourceProvider<GenericResource>
-#endif
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ResourcesRestOperations _resourcesRestClient;
@@ -70,9 +67,6 @@ namespace Azure.ResourceManager.Resources
                 return _data;
             }
         }
-#if NET7_0_OR_GREATER
-        static IOperationSource<GenericResource> IOperationSourceProvider<GenericResource>.GetOperationSource(ArmClient client) => new GenericResourceOperationSource(client);
-#endif
 
 #pragma warning disable CA1801 // Review unused parameters
         internal static void ValidateResourceId(ResourceIdentifier id)

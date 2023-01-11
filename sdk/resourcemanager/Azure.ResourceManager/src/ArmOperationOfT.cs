@@ -26,7 +26,7 @@ namespace Azure.ResourceManager
         {
         }
 
-        private ArmOperation(OperationInternal<T> operation)
+        internal ArmOperation(OperationInternal<T> operation)
         {
             _operation = operation;
         }
@@ -40,25 +40,6 @@ namespace Azure.ResourceManager
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
             _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, resourceTypeName, fallbackStrategy: new ExponentialDelayStrategy());
-        }
-
-        /// <summary> Initializes a new instance of ArmOperation. </summary>
-        public static ArmOperation<T> Rehydrate(ArmClient client, string id)
-        {
-#if NET7_0_OR_GREATER
-            var method = typeof(T).GetMethod($"Azure.Core.IOperationSourceProvider<{typeof(T).FullName}>.GetOperationSource", BindingFlags.NonPublic | BindingFlags.Static);
-            if (method == null)
-                throw new InvalidOperationException($"The type {typeof(T).FullName} does not implement the GetOperationSource method of IOperationSourceProvider.");
-            var source = method.Invoke(null, new object[] { client }) as IOperationSource<T>;
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id, out string finalResponse);
-            // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
-            var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
-            DecodedResponse response;
-            var operation = finalResponse == null ? new OperationInternal<T>(clientDiagnostics, nextLinkOperation, null, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy()) : OperationInternal<T>.Succeeded(response = JsonSerializer.Deserialize<DecodedResponse>(finalResponse)!, source.CreateResult(response, CancellationToken.None));
-            return new ArmOperation<T>(operation);
-#else
-            throw new InvalidOperationException("LRO rehydration is not supported in this version of .NET. Please upgrade to .NET 7.0 or later.");
-#endif
         }
 
         /// <inheritdoc />

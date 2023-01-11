@@ -6,19 +6,33 @@
 #nullable disable
 
 using System;
+using System.IO;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ResourceGroupExportResult
-#if NET7_0_OR_GREATER
-     : IOperationSourceProvider<ResourceGroupExportResult>
-#endif
+    public partial class ResourceGroupExportResult : ISerializable<ResourceGroupExportResult>
     {
 #if NET7_0_OR_GREATER
-        static IOperationSource<ResourceGroupExportResult> IOperationSourceProvider<ResourceGroupExportResult>.GetOperationSource(ArmClient client) => new ResourceGroupExportResultOperationSource();
+        static ResourceGroupExportResult ISerializable<ResourceGroupExportResult>.Deserialize(ReadOnlyMemory<byte> data)
+        {
+            using var document = JsonDocument.Parse(data);
+            return ResourceGroupExportResult.DeserializeResourceGroupExportResult(document.RootElement);
+        }
+
+        static ResourceGroupExportResult ISerializable<ResourceGroupExportResult>.Deserialize(Stream data)
+        {
+            using var document = JsonDocument.Parse(data);
+            return ResourceGroupExportResult.DeserializeResourceGroupExportResult(document.RootElement);
+        }
 #endif
+
+        void ISerializable<ResourceGroupExportResult>.Serialize(Span<byte> buffer)
+        {
+            throw new InvalidOperationException("Serialization of ResourceGroupExportResult is not supported");
+        }
+
     }
 }

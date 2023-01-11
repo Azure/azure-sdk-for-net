@@ -18,14 +18,7 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary> A Class representing a ResourceGroupResource along with the instance operations that can be performed on it. </summary>
     public partial class ResourceGroupResource : ArmResource
-#if NET7_0_OR_GREATER
-    , IOperationSourceProvider<ResourceGroupResource>
-#endif
     {
-#if NET7_0_OR_GREATER
-        static IOperationSource<ResourceGroupResource> IOperationSourceProvider<ResourceGroupResource>.GetOperationSource(ArmClient client) => new ResourceGroupOperationSource(client);
-#endif
-
         /// RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/resources
         /// ContextualPath: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}
         /// OperationId: Resources_ListByResourceGroup
