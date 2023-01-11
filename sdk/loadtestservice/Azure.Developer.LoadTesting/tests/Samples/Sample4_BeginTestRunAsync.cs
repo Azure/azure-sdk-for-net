@@ -38,7 +38,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             try
             {
                 TestRunOperation operation = await loadTestRunClient.BeginTestRunAsync(
-                        testRunId, RequestContent.Create(data)
+                        WaitUntil.Started, testRunId, RequestContent.Create(data)
                    );
 
                 // get inital response

@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "256",
         "Content-Type": "application/merge-patch\u002Bjson",
-        "traceparent": "00-dc4ccafda42d1766cede12669df85736-83bf560c0037999a-00",
-        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230106.1 (.NET 6.0.12; Linux 5.15.79.1-microsoft-standard-WSL2 #1 SMP Wed Nov 23 01:01:46 UTC 2022)",
-        "x-ms-client-request-id": "1649acccacc5ba5c5ec717033a9a1ad4",
+        "traceparent": "00-1f83d37d1d6e8939d17789747fbe299a-7e2bc10162fe1f9d-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20230111.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "68fada455f3733072173dba0b8c83986",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -32,18 +32,18 @@
         "Connection": "keep-alive",
         "Content-Length": "730",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 05 Jan 2023 19:20:07 GMT",
-        "mise-correlation-id": "8ba6e303-6ada-412c-9858-a00eb28df9c8",
+        "Date": "Wed, 11 Jan 2023 13:27:25 GMT",
+        "mise-correlation-id": "2fcfd8ad-c682-4f9c-95f5-97764abae678",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d5dda68b-3a9c-4281-a98e-9c1db6de05db"
+        "x-ms-correlation-request-id": "9b03dc5e-972c-4e0d-9a74-f2280228b334"
       },
-      "ResponseBody": "{\u0022passFailCriteria\u0022:{\u0022passFailMetrics\u0022:{}},\u0022loadTestConfiguration\u0022:{\u0022engineInstances\u0022:1,\u0022splitAllCSVs\u0022:false,\u0022quickStartTest\u0022:false},\u0022inputArtifacts\u0022:{\u0022testScriptFileInfo\u0022:{\u0022url\u0022:\u0022https://maltccstorageaccounteuap.blob.core.windows.net/dd4b5778-e800-4fee-9b61-c9f0eb86f0cb/7f0a7dc4-26e1-45d3-9812-44d81614c2e2?skoid=fe06edb5-033b-4f33-bef0-9489f8feffb8\u0026sktid=33e01921-4d64-4f8c-a055-5bdaffd5e33d\u0026skt=2023-01-05T17%3A15%3A57Z\u0026ske=2023-01-06T07%3A15%3A57Z\u0026sks=b\u0026skv=2021-08-06\u0026sv=2021-08-06\u0026se=2023-01-05T20%3A20%3A07Z\u0026sr=b\u0026sp=r\u0026sig=Sanitized test was created through loadtesting C# SDK\u0022,\u0022displayName\u0022:\u0022Dotnet Testing Framework Loadtest\u0022,\u0022createdDateTime\u0022:\u00222023-01-05T19:19:57.078Z\u0022,\u0022lastModifiedDateTime\u0022:\u00222023-01-05T19:20:07.494Z\u0022}"
+      "ResponseBody": "{\u0022passFailCriteria\u0022:{\u0022passFailMetrics\u0022:{}},\u0022loadTestConfiguration\u0022:{\u0022engineInstances\u0022:1,\u0022splitAllCSVs\u0022:false,\u0022quickStartTest\u0022:false},\u0022inputArtifacts\u0022:{\u0022testScriptFileInfo\u0022:{\u0022url\u0022:\u0022https://maltccstorageaccounteuap.blob.core.windows.net/5e9afad5-01a3-4cdb-b0f5-3f6eef1106be/1d4f4f87-875a-445c-8f95-742c9c62d2e3?skoid=fe06edb5-033b-4f33-bef0-9489f8feffb8\u0026sktid=33e01921-4d64-4f8c-a055-5bdaffd5e33d\u0026skt=2023-01-11T06%3A53%3A41Z\u0026ske=2023-01-11T21%3A23%3A41Z\u0026sks=b\u0026skv=2021-08-06\u0026sv=2021-08-06\u0026se=2023-01-11T14%3A27%3A25Z\u0026sr=b\u0026sp=r\u0026sig=Sanitized test was created through loadtesting C# SDK\u0022,\u0022displayName\u0022:\u0022Dotnet Testing Framework Loadtest\u0022,\u0022createdDateTime\u0022:\u00222023-01-11T13:27:11.119Z\u0022,\u0022lastModifiedDateTime\u0022:\u00222023-01-11T13:27:25.499Z\u0022}"
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "LOADTESTSERVICE_ENDPOINT": "f3395a15-535c-46ea-aaf4-db52915c248b.eastus2euap.cnt-canary.loadtesting.azure.com",
-    "RandomSeed": "1044841247"
+    "RandomSeed": "1241734436"
   }
 }

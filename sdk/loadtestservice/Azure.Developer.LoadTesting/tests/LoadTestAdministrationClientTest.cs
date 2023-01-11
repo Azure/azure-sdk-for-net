@@ -267,15 +267,15 @@ namespace Azure.Developer.LoadTesting.Tests
         }
 
         [Test]
-        public async Task BeginUploadTestFile()
+        public async Task UploadTestFile()
         {
             LoadTestAdministrationClient loadTestAdministrationClient = CreateAdministrationClient();
             await _testHelper.SetupTestingLoadTestResourceAsync(loadTestAdministrationClient, _testId);
 
             FileUploadOperation fileUploadOperation = await loadTestAdministrationClient.BeginUploadTestFileAsync(
-                _testId, _fileName, RequestContent.Create(
+                WaitUntil.Completed, _testId, _fileName, RequestContent.Create(
                     File.OpenRead(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), _fileName))
-                    ), waitUntil: WaitUntil.Completed
+                    )
                 );
 
             Assert.IsTrue(fileUploadOperation.HasValue);
@@ -286,7 +286,7 @@ namespace Azure.Developer.LoadTesting.Tests
 
             await _testHelper.SetupTestingLoadTestResourceAsync(loadTestAdministrationClient, _testId);
             fileUploadOperation = await loadTestAdministrationClient.BeginUploadTestFileAsync(
-                   _testId, _fileName, RequestContent.Create(
+                   WaitUntil.Started, _testId, _fileName, RequestContent.Create(
                         File.OpenRead(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), _fileName))
                     )
                 );

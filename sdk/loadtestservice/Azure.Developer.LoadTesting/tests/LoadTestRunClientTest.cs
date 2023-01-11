@@ -56,13 +56,13 @@ namespace Azure.Developer.LoadTesting.Tests
             await _testHelper.SetupLoadTestResourceAndTestScriptAsync(_loadTestAdministrationClient, _testId, _fileName);
 
             TestRunOperation testRunOperation = await loadTestRunClient.BeginTestRunAsync(
-                _testRunId, RequestContent.Create(
+                WaitUntil.Completed, _testRunId, RequestContent.Create(
                     new
                     {
                         testId = _testId,
                         displayName = "Run created from dotnet testing framework"
                     }
-                ), waitUntil: WaitUntil.Completed);
+                ));
 
             Assert.IsTrue(testRunOperation.HasValue);
             Assert.NotNull(testRunOperation.Value);
@@ -71,7 +71,7 @@ namespace Azure.Developer.LoadTesting.Tests
             await loadTestRunClient.DeleteTestRunAsync(_testRunId);
             await _testHelper.SetupLoadTestResourceAndTestScriptAsync(_loadTestAdministrationClient, _testId, _fileName);
             testRunOperation = await loadTestRunClient.BeginTestRunAsync(
-                    _testRunId, RequestContent.Create(
+                   WaitUntil.Completed, _testRunId, RequestContent.Create(
                         new
                         {
                             testId = _testId,

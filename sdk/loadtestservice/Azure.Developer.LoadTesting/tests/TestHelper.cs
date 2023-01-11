@@ -64,18 +64,18 @@ namespace Azure.Developer.LoadTesting.Tests.Helper
         public void SetupTestScript(LoadTestAdministrationClient loadTestAdministrationClient, string testId, string fileName, WaitUntil waitUntil = WaitUntil.Started)
         {
             loadTestAdministrationClient.BeginUploadTestFile(
-                testId, fileName, RequestContent.Create(
+                waitUntil, testId, fileName, RequestContent.Create(
                     File.OpenRead(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), fileName))
-                    ), waitUntil: waitUntil
+                    )
                 );
         }
 
         public async Task SetupTestScriptAsync(LoadTestAdministrationClient loadTestAdministrationClient, string testId, string fileName, WaitUntil waitUntil = WaitUntil.Started)
         {
             await loadTestAdministrationClient.BeginUploadTestFileAsync(
-                 testId, fileName, RequestContent.Create(
+                 waitUntil, testId, fileName, RequestContent.Create(
                     File.OpenRead(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), fileName))
-                    ), waitUntil: waitUntil
+                    )
                 );
         }
 
@@ -95,26 +95,26 @@ namespace Azure.Developer.LoadTesting.Tests.Helper
         {
             await SetupTestingLoadTestResourceAsync(loadTestAdministrationClient, testId);
             await SetupTestScriptAsync(loadTestAdministrationClient, testId, filename, waitUntil: WaitUntil.Completed);
-            await loadTestRunClient.BeginTestRunAsync(testRunId, RequestContent.Create(
+            await loadTestRunClient.BeginTestRunAsync(waitUntil, testRunId, RequestContent.Create(
                     new
                     {
                         testId = testId,
                         displayName = "Run created from dotnet testing framework"
                     }
-                ), waitUntil: waitUntil);
+                ));
         }
 
         public void SetupTestRunWithLoadTest(LoadTestAdministrationClient loadTestAdministrationClient, string testId, string filename, LoadTestRunClient loadTestRunClient, string testRunId, WaitUntil waitUntil)
         {
             SetupTestingLoadTestResource(loadTestAdministrationClient, testId);
             SetupTestScript(loadTestAdministrationClient, testId, filename, waitUntil: WaitUntil.Completed);
-            loadTestRunClient.BeginTestRun(testRunId, RequestContent.Create(
+            loadTestRunClient.BeginTestRun(waitUntil, testRunId, RequestContent.Create(
                     new
                     {
                         testId = testId,
                         displayName = "Run created from dotnet testing framework"
                     }
-                ), waitUntil: waitUntil);
+                ));
         }
     }
 }
