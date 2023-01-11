@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -118,37 +117,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ManagedDatabaseMoveOperationResultResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedDatabaseMoveOperationResultResource> GetAllAsync(bool? onlyLatestPerDatabase = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedDatabaseMoveOperationResultResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseMoveOperationResultManagedDatabaseMoveOperationsClientDiagnostics.CreateScope("ManagedDatabaseMoveOperationResultCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseMoveOperationResultManagedDatabaseMoveOperationsRestClient.ListByLocationAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName), onlyLatestPerDatabase, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseMoveOperationResultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedDatabaseMoveOperationResultResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseMoveOperationResultManagedDatabaseMoveOperationsClientDiagnostics.CreateScope("ManagedDatabaseMoveOperationResultCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseMoveOperationResultManagedDatabaseMoveOperationsRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName), onlyLatestPerDatabase, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseMoveOperationResultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseMoveOperationResultManagedDatabaseMoveOperationsRestClient.CreateListByLocationRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName), onlyLatestPerDatabase, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseMoveOperationResultManagedDatabaseMoveOperationsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName), onlyLatestPerDatabase, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseMoveOperationResultResource(Client, ManagedDatabaseMoveOperationResultData.DeserializeManagedDatabaseMoveOperationResultData(e)), _managedDatabaseMoveOperationResultManagedDatabaseMoveOperationsClientDiagnostics, Pipeline, "ManagedDatabaseMoveOperationResultCollection.GetAll", "value", "nextLink");
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedDatabaseMoveOperationResultResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedDatabaseMoveOperationResultResource> GetAll(bool? onlyLatestPerDatabase = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagedDatabaseMoveOperationResultResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseMoveOperationResultManagedDatabaseMoveOperationsClientDiagnostics.CreateScope("ManagedDatabaseMoveOperationResultCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseMoveOperationResultManagedDatabaseMoveOperationsRestClient.ListByLocation(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName), onlyLatestPerDatabase, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseMoveOperationResultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedDatabaseMoveOperationResultResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseMoveOperationResultManagedDatabaseMoveOperationsClientDiagnostics.CreateScope("ManagedDatabaseMoveOperationResultCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseMoveOperationResultManagedDatabaseMoveOperationsRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName), onlyLatestPerDatabase, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseMoveOperationResultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseMoveOperationResultManagedDatabaseMoveOperationsRestClient.CreateListByLocationRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName), onlyLatestPerDatabase, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseMoveOperationResultManagedDatabaseMoveOperationsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_locationName), onlyLatestPerDatabase, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseMoveOperationResultResource(Client, ManagedDatabaseMoveOperationResultData.DeserializeManagedDatabaseMoveOperationResultData(e)), _managedDatabaseMoveOperationResultManagedDatabaseMoveOperationsClientDiagnostics, Pipeline, "ManagedDatabaseMoveOperationResultCollection.GetAll", "value", "nextLink");
         }
 
         /// <summary>

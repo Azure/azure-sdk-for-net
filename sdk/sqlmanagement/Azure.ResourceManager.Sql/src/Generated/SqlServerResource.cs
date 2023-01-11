@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -1403,22 +1402,8 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SqlServerUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerUsage> GetServerUsagesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlServerUsage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serverUsagesClientDiagnostics.CreateScope("SqlServerResource.GetServerUsages");
-                scope.Start();
-                try
-                {
-                    var response = await _serverUsagesRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverUsagesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SqlServerUsage.DeserializeSqlServerUsage, _serverUsagesClientDiagnostics, Pipeline, "SqlServerResource.GetServerUsages", "value", null);
         }
 
         /// <summary>
@@ -1430,22 +1415,8 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlServerUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerUsage> GetServerUsages(CancellationToken cancellationToken = default)
         {
-            Page<SqlServerUsage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serverUsagesClientDiagnostics.CreateScope("SqlServerResource.GetServerUsages");
-                scope.Start();
-                try
-                {
-                    var response = _serverUsagesRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverUsagesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SqlServerUsage.DeserializeSqlServerUsage, _serverUsagesClientDiagnostics, Pipeline, "SqlServerResource.GetServerUsages", "value", null);
         }
 
         /// <summary>
@@ -1457,37 +1428,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ServerOperationData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServerOperationData> GetServerOperationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServerOperationData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serverOperationsClientDiagnostics.CreateScope("SqlServerResource.GetServerOperations");
-                scope.Start();
-                try
-                {
-                    var response = await _serverOperationsRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ServerOperationData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _serverOperationsClientDiagnostics.CreateScope("SqlServerResource.GetServerOperations");
-                scope.Start();
-                try
-                {
-                    var response = await _serverOperationsRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverOperationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverOperationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ServerOperationData.DeserializeServerOperationData, _serverOperationsClientDiagnostics, Pipeline, "SqlServerResource.GetServerOperations", "value", "nextLink");
         }
 
         /// <summary>
@@ -1499,37 +1442,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ServerOperationData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServerOperationData> GetServerOperations(CancellationToken cancellationToken = default)
         {
-            Page<ServerOperationData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _serverOperationsClientDiagnostics.CreateScope("SqlServerResource.GetServerOperations");
-                scope.Start();
-                try
-                {
-                    var response = _serverOperationsRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ServerOperationData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _serverOperationsClientDiagnostics.CreateScope("SqlServerResource.GetServerOperations");
-                scope.Start();
-                try
-                {
-                    var response = _serverOperationsRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverOperationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverOperationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ServerOperationData.DeserializeServerOperationData, _serverOperationsClientDiagnostics, Pipeline, "SqlServerResource.GetServerOperations", "value", "nextLink");
         }
 
         /// <summary>
@@ -1661,37 +1576,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SqlServerDatabaseReplicationLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerDatabaseReplicationLinkResource> GetReplicationLinksAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlServerDatabaseReplicationLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics.CreateScope("SqlServerResource.GetReplicationLinks");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerDatabaseReplicationLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlServerDatabaseReplicationLinkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics.CreateScope("SqlServerResource.GetReplicationLinks");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.ListByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerDatabaseReplicationLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerDatabaseReplicationLinkResource(Client, SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(e)), _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, "SqlServerResource.GetReplicationLinks", "value", "nextLink");
         }
 
         /// <summary>
@@ -1703,37 +1590,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlServerDatabaseReplicationLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerDatabaseReplicationLinkResource> GetReplicationLinks(CancellationToken cancellationToken = default)
         {
-            Page<SqlServerDatabaseReplicationLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics.CreateScope("SqlServerResource.GetReplicationLinks");
-                scope.Start();
-                try
-                {
-                    var response = _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerDatabaseReplicationLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlServerDatabaseReplicationLinkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics.CreateScope("SqlServerResource.GetReplicationLinks");
-                scope.Start();
-                try
-                {
-                    var response = _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.ListByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerDatabaseReplicationLinkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDatabaseReplicationLinkReplicationLinksRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerDatabaseReplicationLinkResource(Client, SqlServerDatabaseReplicationLinkData.DeserializeSqlServerDatabaseReplicationLinkData(e)), _sqlServerDatabaseReplicationLinkReplicationLinksClientDiagnostics, Pipeline, "SqlServerResource.GetReplicationLinks", "value", "nextLink");
         }
 
         /// <summary>
@@ -1799,37 +1658,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SqlDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlDatabaseResource> GetInaccessibleDatabasesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlDatabaseResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlServerResource.GetInaccessibleDatabases");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlDatabaseDatabasesRestClient.ListInaccessibleByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlDatabaseResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlServerResource.GetInaccessibleDatabases");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlDatabaseDatabasesRestClient.ListInaccessibleByServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseDatabasesRestClient.CreateListInaccessibleByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseDatabasesRestClient.CreateListInaccessibleByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseResource(Client, SqlDatabaseData.DeserializeSqlDatabaseData(e)), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, "SqlServerResource.GetInaccessibleDatabases", "value", "nextLink");
         }
 
         /// <summary>
@@ -1841,37 +1672,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlDatabaseResource> GetInaccessibleDatabases(CancellationToken cancellationToken = default)
         {
-            Page<SqlDatabaseResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlServerResource.GetInaccessibleDatabases");
-                scope.Start();
-                try
-                {
-                    var response = _sqlDatabaseDatabasesRestClient.ListInaccessibleByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlDatabaseResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlDatabaseDatabasesClientDiagnostics.CreateScope("SqlServerResource.GetInaccessibleDatabases");
-                scope.Start();
-                try
-                {
-                    var response = _sqlDatabaseDatabasesRestClient.ListInaccessibleByServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseDatabasesRestClient.CreateListInaccessibleByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseDatabasesRestClient.CreateListInaccessibleByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseResource(Client, SqlDatabaseData.DeserializeSqlDatabaseData(e)), _sqlDatabaseDatabasesClientDiagnostics, Pipeline, "SqlServerResource.GetInaccessibleDatabases", "value", "nextLink");
         }
 
         /// <summary>
