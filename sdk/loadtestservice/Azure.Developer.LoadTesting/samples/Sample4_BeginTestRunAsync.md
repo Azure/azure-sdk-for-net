@@ -30,7 +30,7 @@ var data = new
 try
 {
     TestRunOperation operation = await loadTestRunClient.BeginTestRunAsync(
-            testRunId, RequestContent.Create(data)
+            WaitUntil.Started, testRunId, RequestContent.Create(data)
        );
 
     // get inital response

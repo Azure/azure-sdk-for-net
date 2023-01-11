@@ -23,6 +23,7 @@ namespace Azure.Developer.LoadTesting
         public virtual TestRunOperation BeginTestRun(WaitUntil waitUntil, string testRunId, RequestContent content, TimeSpan? timeSpan = null, string oldTestRunId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.BeginTestRun");
             scope.Start();
@@ -63,6 +64,7 @@ namespace Azure.Developer.LoadTesting
         public virtual async Task<TestRunOperation> BeginTestRunAsync(WaitUntil waitUntil, string testRunId, RequestContent content, TimeSpan? timeSpan = null, string oldTestRunId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.BeginTestRun");
             scope.Start();
