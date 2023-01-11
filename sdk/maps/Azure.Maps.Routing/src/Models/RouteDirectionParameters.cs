@@ -7,10 +7,12 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.GeoJson;
+using Azure.Maps.Routing.Models;
 
-namespace Azure.Maps.Routing.Models
+namespace Azure.Maps.Routing
 {
     /// <summary> Post body parameters for Route directions. </summary>
+    [CodeGenModel("RouteDirectionParameters")]
     public partial class RouteDirectionParameters
     {
         /// <summary> Initializes a new instance of RouteDirectionParameters. </summary>

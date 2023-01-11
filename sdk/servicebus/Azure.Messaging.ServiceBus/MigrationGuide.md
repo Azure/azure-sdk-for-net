@@ -96,7 +96,7 @@ Authenticate with Active Directory:
 ```C# Snippet:ServiceBusAuthAAD
 // Create a ServiceBusClient that will authenticate through Active Directory
 string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
-ServiceBusClient client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 ```
 
 Authenticate with connection string:
@@ -104,7 +104,7 @@ Authenticate with connection string:
 ```C# Snippet:ServiceBusAuthConnString
 // Create a ServiceBusClient that will authenticate using a connection string
 string connectionString = "<connection_string>";
-ServiceBusClient client = new ServiceBusClient(connectionString);
+await using var client = new ServiceBusClient(connectionString);
 ```
 
 #### Administration client

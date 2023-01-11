@@ -1,0 +1,128 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/:analyze-text?api-version=2022-10-01-preview\u0026showStats=true",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "292",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-f689507f7aeb64a7dc6a32155c002b93-4c3a2b78ee0f4363-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.3.0-alpha.20221129.1 (.NET 6.0.11; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6567e179ab089c98b9f5269af524a71f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "0",
+              "text": "The WHO is issuing a warning about monkeypox.",
+              "language": "en"
+            },
+            {
+              "id": "1",
+              "text": "Mo Salah plays in Liverpool FC in England.",
+              "language": "en"
+            }
+          ]
+        },
+        "parameters": {
+          "categories": [
+            "Health",
+            "Politics",
+            "Music",
+            "Sports"
+          ]
+        },
+        "kind": "DynamicClassification"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "058d298e-cd90-4083-9e71-7d73a4e04b1c",
+        "Content-Length": "785",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=0,CognitiveServices.TextAnalytics.TextRecords=2",
+        "Date": "Wed, 30 Nov 2022 00:38:36 GMT",
+        "Set-Cookie": ".AspNetCore.Mvc.CookieTempDataProvider=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; samesite=lax; httponly",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "360",
+        "x-ms-region": "West US 2"
+      },
+      "ResponseBody": {
+        "kind": "DynamicClassificationResults",
+        "results": {
+          "statistics": {
+            "documentsCount": 2,
+            "validDocumentsCount": 2,
+            "erroneousDocumentsCount": 0,
+            "transactionsCount": 0
+          },
+          "documents": [
+            {
+              "id": "0",
+              "classifications": [
+                {
+                  "category": "Health",
+                  "confidenceScore": 0.8
+                },
+                {
+                  "category": "Sports",
+                  "confidenceScore": 0.07
+                },
+                {
+                  "category": "Music",
+                  "confidenceScore": 0.07
+                },
+                {
+                  "category": "Politics",
+                  "confidenceScore": 0.06
+                }
+              ],
+              "statistics": {
+                "charactersCount": 45,
+                "transactionsCount": 1
+              },
+              "warnings": []
+            },
+            {
+              "id": "1",
+              "classifications": [
+                {
+                  "category": "Sports",
+                  "confidenceScore": 0.99
+                },
+                {
+                  "category": "Music",
+                  "confidenceScore": 0.0
+                },
+                {
+                  "category": "Health",
+                  "confidenceScore": 0.0
+                },
+                {
+                  "category": "Politics",
+                  "confidenceScore": 0.0
+                }
+              ],
+              "statistics": {
+                "charactersCount": 42,
+                "transactionsCount": 1
+              },
+              "warnings": []
+            }
+          ],
+          "errors": [],
+          "modelVersion": "2022-10-01-preview"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "862988256",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
+  }
+}

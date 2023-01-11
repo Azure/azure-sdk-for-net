@@ -30,16 +30,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
                     case "RolloutIdentity": return RolloutIdentityAuthentication.DeserializeRolloutIdentityAuthentication(element);
                 }
             }
-            RestAuthType type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString().ToRestAuthType();
-                    continue;
-                }
-            }
-            return new UnknownRestRequestAuthentication(type);
+            return UnknownRestRequestAuthentication.DeserializeUnknownRestRequestAuthentication(element);
         }
     }
 }

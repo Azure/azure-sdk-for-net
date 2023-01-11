@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RulesCalculationOn))
+            if (Optional.IsDefined(RulesCalculatedOn))
             {
                 writer.WritePropertyName("rulesCalculationTime");
-                writer.WriteStringValue(RulesCalculationOn.Value, "O");
+                writer.WriteStringValue(RulesCalculatedOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(EffectiveNetworkSecurityGroups))
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<Rule>> rules = default;
+            Optional<IList<RecommendedSecurityRule>> rules = default;
             Optional<DateTimeOffset> rulesCalculationTime = default;
             Optional<IList<EffectiveNetworkSecurityGroups>> effectiveNetworkSecurityGroups = default;
             foreach (var property in element.EnumerateObject())
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Rule> array = new List<Rule>();
+                            List<RecommendedSecurityRule> array = new List<RecommendedSecurityRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Rule.DeserializeRule(item));
+                                array.Add(RecommendedSecurityRule.DeserializeRecommendedSecurityRule(item));
                             }
                             rules = array;
                             continue;

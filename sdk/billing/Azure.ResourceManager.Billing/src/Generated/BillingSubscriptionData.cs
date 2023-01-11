@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="termEndOn"> The end date of the term in UTC time. </param>
         /// <param name="subscriptionEnrollmentAccountStatus"> The current enrollment account status of the subscription. This field is available only for the Enterprise Agreement billing accounts. </param>
         /// <param name="enrollmentAccountStartOn"> The enrollment Account and the subscription association start date. This field is available only for the Enterprise Agreement billing accounts. </param>
-        internal BillingSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AutoRenew? autoRenew, string beneficiaryTenantId, string billingFrequency, string billingProfileId, IReadOnlyDictionary<string, string> billingPolicies, string billingProfileDisplayName, string billingProfileName, string consumptionCostCenter, string customerId, string customerDisplayName, string displayName, string enrollmentAccountId, string enrollmentAccountDisplayName, string invoiceSectionId, string invoiceSectionDisplayName, string invoiceSectionName, Amount lastMonthCharges, Amount monthToDateCharges, NextBillingCycleDetails nextBillingCycleDetails, string offerId, string productCategory, string productType, string productTypeId, DateTimeOffset? purchaseOn, long? quantity, Reseller reseller, RenewalTermDetails renewalTermDetails, string skuDescription, string skuId, BillingSubscriptionStatus? status, string subscriptionId, IReadOnlyList<string> suspensionReasons, TimeSpan? termDuration, DateTimeOffset? termStartOn, DateTimeOffset? termEndOn, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus, DateTimeOffset? enrollmentAccountStartOn) : base(id, name, resourceType, systemData)
+        internal BillingSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingSubscriptionAutoRenewState? autoRenew, string beneficiaryTenantId, string billingFrequency, ResourceIdentifier billingProfileId, IReadOnlyDictionary<string, string> billingPolicies, string billingProfileDisplayName, string billingProfileName, string consumptionCostCenter, string customerId, string customerDisplayName, string displayName, string enrollmentAccountId, string enrollmentAccountDisplayName, ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, string invoiceSectionName, BillingAmount lastMonthCharges, BillingAmount monthToDateCharges, NextBillingCycleDetails nextBillingCycleDetails, string offerId, string productCategory, string productType, string productTypeId, DateTimeOffset? purchaseOn, long? quantity, CreatedSubscriptionReseller reseller, SubscriptionRenewalTermDetails renewalTermDetails, string skuDescription, string skuId, BillingSubscriptionStatus? status, string subscriptionId, IReadOnlyList<string> suspensionReasons, TimeSpan? termDuration, DateTimeOffset? termStartOn, DateTimeOffset? termEndOn, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus, DateTimeOffset? enrollmentAccountStartOn) : base(id, name, resourceType, systemData)
         {
             AutoRenew = autoRenew;
             BeneficiaryTenantId = beneficiaryTenantId;
@@ -107,13 +107,13 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Indicates whether auto renewal is turned on or off for a subscription. </summary>
-        public AutoRenew? AutoRenew { get; set; }
+        public BillingSubscriptionAutoRenewState? AutoRenew { get; set; }
         /// <summary> The provisioning tenant of the subscription. </summary>
         public string BeneficiaryTenantId { get; set; }
         /// <summary> The billing frequency of the subscription in the ISO8601 format. Example: P1M, P3M, P1Y. </summary>
         public string BillingFrequency { get; set; }
         /// <summary> The ID of the billing profile to which the subscription is billed. This field is only applicable for Microsoft Customer Agreement billing accounts. </summary>
-        public string BillingProfileId { get; set; }
+        public ResourceIdentifier BillingProfileId { get; set; }
         /// <summary> Dictionary of billing policies associated with the subscription. </summary>
         public IReadOnlyDictionary<string, string> BillingPolicies { get; }
         /// <summary> The display name of the billing profile to which the subscription is billed. This field is only applicable for Microsoft Customer Agreement billing accounts. </summary>
@@ -133,15 +133,15 @@ namespace Azure.ResourceManager.Billing
         /// <summary> The enrollment Account name associated with the subscription. This field is available only for the Enterprise Agreement billing accounts. </summary>
         public string EnrollmentAccountDisplayName { get; }
         /// <summary> The ID of the invoice section to which the subscription is billed. The field is applicable only for Microsoft Partner Agreement billing accounts. </summary>
-        public string InvoiceSectionId { get; set; }
+        public ResourceIdentifier InvoiceSectionId { get; set; }
         /// <summary> The display name of the invoice section to which the subscription is billed. The field is applicable only for Microsoft Partner Agreement billing accounts. </summary>
         public string InvoiceSectionDisplayName { get; }
         /// <summary> The name of the invoice section to which the subscription is billed. The field is applicable only for Microsoft Partner Agreement billing accounts. </summary>
         public string InvoiceSectionName { get; }
         /// <summary> The last month&apos;s charges. This field is only available for usage based subscriptions of Microsoft Customer Agreement billing accounts. </summary>
-        public Amount LastMonthCharges { get; }
+        public BillingAmount LastMonthCharges { get; }
         /// <summary> The current month to date charges. This field is only available for usage based subscriptions of Microsoft Customer Agreement billing accounts. </summary>
-        public Amount MonthToDateCharges { get; }
+        public BillingAmount MonthToDateCharges { get; }
         /// <summary> Next billing cycle details of the subscription. </summary>
         internal NextBillingCycleDetails NextBillingCycleDetails { get; }
         /// <summary> The billing frequency of the subscription in the next billing cycle. </summary>
@@ -163,9 +163,9 @@ namespace Azure.ResourceManager.Billing
         /// <summary> The number of licenses purchased for the subscription. </summary>
         public long? Quantity { get; set; }
         /// <summary> The reseller for which the subscription is created. The field is available for Microsoft Partner Agreement billing accounts. </summary>
-        public Reseller Reseller { get; }
+        public CreatedSubscriptionReseller Reseller { get; }
         /// <summary> The term details of the subscription at the next renewal. </summary>
-        public RenewalTermDetails RenewalTermDetails { get; }
+        public SubscriptionRenewalTermDetails RenewalTermDetails { get; }
         /// <summary> The SKU description of the product for which the subscription is purchased. This field is only available for Microsoft Customer Agreement billing accounts. </summary>
         public string SkuDescription { get; }
         /// <summary> The SKU ID of the product for which the subscription is purchased. This field is only available for Microsoft Customer Agreement billing accounts. </summary>

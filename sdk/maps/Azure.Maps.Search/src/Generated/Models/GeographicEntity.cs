@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Search.Models
+namespace Azure.Maps.Search
 {
     /// <summary> The GeographicEntityType. </summary>
     public readonly partial struct GeographicEntity : IEquatable<GeographicEntity>

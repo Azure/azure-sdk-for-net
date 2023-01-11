@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualNetworkLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            virtualNetworkLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                     }

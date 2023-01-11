@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(IncrementNodeConfigurationBuild))
+            if (Optional.IsDefined(IsIncrementNodeConfigurationBuildRequired))
             {
                 writer.WritePropertyName("incrementNodeConfigurationBuild");
-                writer.WriteBooleanValue(IncrementNodeConfigurationBuild.Value);
+                writer.WriteBooleanValue(IsIncrementNodeConfigurationBuildRequired.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

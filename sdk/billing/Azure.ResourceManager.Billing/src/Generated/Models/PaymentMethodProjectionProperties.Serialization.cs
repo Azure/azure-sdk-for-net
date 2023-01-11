@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         internal static PaymentMethodProjectionProperties DeserializePaymentMethodProjectionProperties(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<PaymentMethodFamily> family = default;
             Optional<string> type = default;
             Optional<string> accountHolderName = default;
@@ -54,7 +54,12 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("family"))

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Defines a Sampling Algorithm that generates values randomly. </summary>
+    /// <summary>
+    /// Defines a Sampling Algorithm that generates values randomly
+    /// Serialized Name: RandomSamplingAlgorithm
+    /// </summary>
     public partial class RandomSamplingAlgorithm : SamplingAlgorithm
     {
         /// <summary> Initializes a new instance of RandomSamplingAlgorithm. </summary>
@@ -17,9 +20,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of RandomSamplingAlgorithm. </summary>
-        /// <param name="samplingAlgorithmType"> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </param>
-        /// <param name="rule"> The specific type of random algorithm. </param>
-        /// <param name="seed"> An optional integer to use as the seed for random number generation. </param>
+        /// <param name="samplingAlgorithmType">
+        /// [Required] The algorithm used for generating hyperparameter values, along with configuration properties
+        /// Serialized Name: SamplingAlgorithm.samplingAlgorithmType
+        /// </param>
+        /// <param name="rule">
+        /// The specific type of random algorithm
+        /// Serialized Name: RandomSamplingAlgorithm.rule
+        /// </param>
+        /// <param name="seed">
+        /// An optional integer to use as the seed for random number generation
+        /// Serialized Name: RandomSamplingAlgorithm.seed
+        /// </param>
         internal RandomSamplingAlgorithm(SamplingAlgorithmType samplingAlgorithmType, RandomSamplingAlgorithmRule? rule, int? seed) : base(samplingAlgorithmType)
         {
             Rule = rule;
@@ -27,9 +39,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SamplingAlgorithmType = samplingAlgorithmType;
         }
 
-        /// <summary> The specific type of random algorithm. </summary>
+        /// <summary>
+        /// The specific type of random algorithm
+        /// Serialized Name: RandomSamplingAlgorithm.rule
+        /// </summary>
         public RandomSamplingAlgorithmRule? Rule { get; set; }
-        /// <summary> An optional integer to use as the seed for random number generation. </summary>
+        /// <summary>
+        /// An optional integer to use as the seed for random number generation
+        /// Serialized Name: RandomSamplingAlgorithm.seed
+        /// </summary>
         public int? Seed { get; set; }
     }
 }

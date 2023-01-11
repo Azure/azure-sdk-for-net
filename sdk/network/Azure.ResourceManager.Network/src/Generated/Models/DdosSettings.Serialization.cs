@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ddosCustomPolicy = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    ddosCustomPolicy = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("protectionCoverage"))

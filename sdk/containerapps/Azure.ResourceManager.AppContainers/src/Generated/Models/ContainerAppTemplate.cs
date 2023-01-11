@@ -20,18 +20,21 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppTemplate. </summary>
         public ContainerAppTemplate()
         {
+            InitContainers = new ChangeTrackingList<ContainerAppInitContainer>();
             Containers = new ChangeTrackingList<ContainerAppContainer>();
             Volumes = new ChangeTrackingList<ContainerAppVolume>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppTemplate. </summary>
         /// <param name="revisionSuffix"> User friendly suffix that is appended to the revision name. </param>
+        /// <param name="initContainers"> List of specialized containers that run before app containers. </param>
         /// <param name="containers"> List of container definitions for the Container App. </param>
         /// <param name="scale"> Scaling properties for the Container App. </param>
         /// <param name="volumes"> List of volume definitions for the Container App. </param>
-        internal ContainerAppTemplate(string revisionSuffix, IList<ContainerAppContainer> containers, ContainerAppScale scale, IList<ContainerAppVolume> volumes)
+        internal ContainerAppTemplate(string revisionSuffix, IList<ContainerAppInitContainer> initContainers, IList<ContainerAppContainer> containers, ContainerAppScale scale, IList<ContainerAppVolume> volumes)
         {
             RevisionSuffix = revisionSuffix;
+            InitContainers = initContainers;
             Containers = containers;
             Scale = scale;
             Volumes = volumes;
@@ -39,6 +42,8 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> User friendly suffix that is appended to the revision name. </summary>
         public string RevisionSuffix { get; set; }
+        /// <summary> List of specialized containers that run before app containers. </summary>
+        public IList<ContainerAppInitContainer> InitContainers { get; }
         /// <summary> List of container definitions for the Container App. </summary>
         public IList<ContainerAppContainer> Containers { get; }
         /// <summary> Scaling properties for the Container App. </summary>

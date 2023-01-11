@@ -67,6 +67,8 @@ namespace Azure.ResourceManager.Redis.Tests
             Assert.AreEqual(scResponse.Id, linkServerWithProperties.Data.LinkedRedisCacheId);
             Assert.AreEqual(AzureLocation.SouthCentralUS, linkServerWithProperties.Data.LinkedRedisCacheLocation);
             Assert.AreEqual(RedisLinkedServerRole.Secondary, linkServerWithProperties.Data.ServerRole);
+            Assert.False(string.IsNullOrEmpty(linkServerWithProperties.Data.GeoReplicatedPrimaryHostName));
+            Assert.False(string.IsNullOrEmpty(linkServerWithProperties.Data.PrimaryHostName));
 
             // test get response from primary
             var primaryLinkProperties = (await linkCollection.GetAsync(redisCacheName2)).Value;

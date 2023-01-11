@@ -13,7 +13,11 @@ using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.EventHubs.Tests.Helpers;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.KeyVault;
+using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.Models;
 using Azure.Core;
+using Azure.ResourceManager.ManagedServiceIdentities;
 
 namespace Azure.ResourceManager.EventHubs.Tests
 {
@@ -259,6 +263,322 @@ namespace Azure.ResourceManager.EventHubs.Tests
                 Assert.AreEqual(keys2.PrimaryKey, keys3.PrimaryKey);
                 Assert.AreNotEqual(keys2.SecondaryKey, keys3.SecondaryKey);
             }
+
+            var updatePrimaryKey = GenerateRandomKey();
+            EventHubsAccessKeys currentKeys = keys3;
+
+            EventHubsAccessKeys keys4 = await authorizationRule.RegenerateKeysAsync(new EventHubsRegenerateAccessKeyContent(EventHubsAccessKeyType.PrimaryKey)
+            {
+                Key = updatePrimaryKey
+            });
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.AreEqual(updatePrimaryKey, keys4.PrimaryKey);
+                Assert.AreEqual(currentKeys.SecondaryKey, keys4.SecondaryKey);
+            }
+
+            currentKeys = keys4;
+            var updateSecondaryKey = GenerateRandomKey();
+            EventHubsAccessKeys keys5 = await authorizationRule.RegenerateKeysAsync(new EventHubsRegenerateAccessKeyContent(EventHubsAccessKeyType.SecondaryKey)
+            {
+                Key = updateSecondaryKey
+            });
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.AreEqual(updateSecondaryKey, keys5.SecondaryKey);
+                Assert.AreEqual(currentKeys.PrimaryKey, keys5.PrimaryKey);
+            }
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task StandardNamespaceCreateOrUpdateParameters()
+        {
+            //create namespace
+            _resourceGroup = await CreateResourceGroupAsync();
+            EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
+            Assert.AreEqual(DefaultLocation, eventHubNamespace.Data.Location);
+            AssertDefaultNamespaceProperties(eventHubNamespace.Data, EventHubsSkuName.Standard);
+
+            //Set Disable Local Auth on the standard namespace
+            eventHubNamespace.Data.DisableLocalAuth = true;
+            EventHubsNamespaceResource updatedNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, eventHubNamespace.Data)).Value;
+            AssertNamespacePropertiesOnUpdate(eventHubNamespace.Data, updatedNamespace.Data);
+
+            //Enable AutoInflate on Standard Namespace
+            eventHubNamespace.Data.IsAutoInflateEnabled = true;
+            eventHubNamespace.Data.MaximumThroughputUnits = 10;
+            updatedNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, eventHubNamespace.Data)).Value;
+            AssertNamespacePropertiesOnUpdate(eventHubNamespace.Data, updatedNamespace.Data);
+
+            //delete namespace
+            await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
+
+            //validate if deleted successfully
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await namespaceCollection.GetAsync(namespaceName); });
+            Assert.AreEqual(404, exception.Status);
+            Assert.IsFalse(await namespaceCollection.ExistsAsync(namespaceName));
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task ZoneRedundantStandardNamespace()
+        {
+            //create namespace
+            _resourceGroup = await CreateResourceGroupAsync();
+            EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation)
+            {
+                ZoneRedundant = true
+            })).Value;
+
+            Assert.AreEqual(DefaultLocation, eventHubNamespace.Data.Location);
+            Assert.True(eventHubNamespace.Data.ZoneRedundant);
+
+            //delete namespace
+            await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
+
+            //validate if deleted successfully
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await namespaceCollection.GetAsync(namespaceName); });
+            Assert.AreEqual(404, exception.Status);
+            Assert.IsFalse(await namespaceCollection.ExistsAsync(namespaceName));
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task PremiumNamespaceCreateOrUpdate()
+        {
+            //create namespace
+            _resourceGroup = await CreateResourceGroupAsync();
+            EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+            EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation)
+            {
+                Sku = new EventHubsSku(EventHubsSkuName.Premium)
+                {
+                    Tier = EventHubsSkuTier.Premium,
+                    Capacity = 1
+                }
+            })).Value;
+            AssertDefaultNamespaceProperties(eventHubNamespace.Data, EventHubsSkuName.Premium);
+
+            //delete namespace
+            await eventHubNamespace.DeleteAsync(WaitUntil.Completed);
+
+            //validate if deleted successfully
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await namespaceCollection.GetAsync(namespaceName); });
+            Assert.AreEqual(404, exception.Status);
+            Assert.IsFalse(await namespaceCollection.ExistsAsync(namespaceName));
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task NamespaceSystemAssignedEncryptionTests()
+        {
+            //This test uses a pre-created KeyVault resource. In the event the resource cannot be accessed or is deleted
+            //Please create a new key vault in the subscription that the SDK repo is supposed to use
+            //And update the KeyVault and KeyName in the EventHubsTestBase
+            EventHubsNamespaceResource resource = null;
+
+            _resourceGroup = await CreateResourceGroupAsync();
+            ResourceGroupResource _sdk_Resource_Group = await GetResourceGroupAsync("ps-testing");
+            EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
+            KeyVaultCollection kvCollection = _sdk_Resource_Group.GetKeyVaults();
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+
+            EventHubsNamespaceData namespaceData = new EventHubsNamespaceData(DefaultLocation)
+            {
+                Sku = new EventHubsSku("Premium")
+                {
+                    Tier = "Premium",
+                    Capacity = 1
+                },
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+            };
+
+            ArmOperation<EventHubsNamespaceResource> eventHubsNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, namespaceData).ConfigureAwait(false));
+
+            Assert.AreEqual(namespaceName, eventHubsNamespace.Value.Data.Name);
+            Assert.AreEqual(EventHubsSkuName.Premium, eventHubsNamespace.Value.Data.Sku.Name);
+            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, eventHubsNamespace.Value.Data.Identity.ManagedServiceIdentityType);
+
+            namespaceData = eventHubsNamespace.Value.Data;
+
+            IdentityAccessPermissions identityAccessPermissions = new IdentityAccessPermissions();
+            identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.WrapKey);
+            identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.UnwrapKey);
+            identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.Get);
+
+            KeyVaultAccessPolicy property = new KeyVaultAccessPolicy((Guid)namespaceData.Identity.TenantId, namespaceData.Identity.PrincipalId.ToString(), identityAccessPermissions);
+            Response<KeyVaultResource> kvResponse = await kvCollection.GetAsync(VaultName).ConfigureAwait(false);
+            KeyVaultData kvData = kvResponse.Value.Data;
+            kvData.Properties.AccessPolicies.Add(property);
+            KeyVaultCreateOrUpdateContent parameters = new KeyVaultCreateOrUpdateContent(AzureLocation.EastUS, kvData.Properties);
+            ArmOperation<KeyVaultResource> rawUpdateVault = await kvCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
+
+            namespaceData.Encryption = new EventHubsEncryption()
+            {
+                KeySource = EventHubsKeySource.MicrosoftKeyVault
+            };
+
+            namespaceData.Encryption.KeyVaultProperties.Add(new EventHubsKeyVaultProperties()
+            {
+                KeyName = Key1,
+                KeyVaultUri = kvData.Properties.VaultUri
+            });
+
+            namespaceData.Encryption.KeyVaultProperties.Add(new EventHubsKeyVaultProperties()
+            {
+                KeyName = Key2,
+                KeyVaultUri = kvData.Properties.VaultUri
+            });
+
+            resource = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, namespaceData).ConfigureAwait(false)).Value;
+            AssertNamespaceMSIOnUpdates(namespaceData, resource.Data);
+
+            await resource.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task UserAssignedEncryptionTests()
+        {
+            EventHubsNamespaceResource resource = null;
+            //UserAssignedIdentityResource identityResource = null;
+
+            _resourceGroup = await CreateResourceGroupAsync();
+            ResourceGroupResource _sdk_Resource_Group = await GetResourceGroupAsync("ps-testing");
+            EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
+            KeyVaultCollection kvCollection = _sdk_Resource_Group.GetKeyVaults();
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+
+            string identityName_1 = Recording.GenerateAssetName("identity1");
+            string identityName_2 = Recording.GenerateAssetName("identity2");
+            UserAssignedIdentityCollection identityCollection = _resourceGroup.GetUserAssignedIdentities();
+
+            ArmOperation<UserAssignedIdentityResource> identityResponse_1 = (await identityCollection.CreateOrUpdateAsync(WaitUntil.Completed, identityName_1, new UserAssignedIdentityData(DefaultLocation)));
+            ArmOperation<UserAssignedIdentityResource> identityResponse_2 = (await identityCollection.CreateOrUpdateAsync(WaitUntil.Completed, identityName_2, new UserAssignedIdentityData(DefaultLocation)));
+
+            IdentityAccessPermissions identityAccessPermissions = new IdentityAccessPermissions();
+            identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.WrapKey);
+            identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.UnwrapKey);
+            identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.Get);
+
+            KeyVaultAccessPolicy property = new KeyVaultAccessPolicy((Guid)identityResponse_1.Value.Data.TenantId, identityResponse_1.Value.Data.PrincipalId.ToString(), identityAccessPermissions);
+            Response<KeyVaultResource> kvResponse = await kvCollection.GetAsync(VaultName).ConfigureAwait(false);
+            KeyVaultData kvData = kvResponse.Value.Data;
+            kvData.Properties.AccessPolicies.Add(property);
+            KeyVaultCreateOrUpdateContent parameters = new KeyVaultCreateOrUpdateContent(AzureLocation.EastUS, kvData.Properties);
+            ArmOperation<KeyVaultResource> rawUpdateVault = await kvCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
+
+            EventHubsNamespaceData eventHubsNamespaceData = new EventHubsNamespaceData(DefaultLocation)
+            {
+                Sku = new EventHubsSku("Premium")
+                {
+                    Tier = "Premium",
+                    Capacity = 1
+                },
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
+            };
+
+            eventHubsNamespaceData.Identity.UserAssignedIdentities.Add(new KeyValuePair<ResourceIdentifier, UserAssignedIdentity>(identityResponse_1.Value.Data.Id, new UserAssignedIdentity()));
+            eventHubsNamespaceData.Identity.UserAssignedIdentities.Add(new KeyValuePair<ResourceIdentifier, UserAssignedIdentity>(identityResponse_2.Value.Data.Id, new UserAssignedIdentity()));
+
+            eventHubsNamespaceData.Encryption = new EventHubsEncryption()
+            {
+                KeySource = EventHubsKeySource.MicrosoftKeyVault
+            };
+
+            eventHubsNamespaceData.Encryption.KeyVaultProperties.Add(new EventHubsKeyVaultProperties()
+            {
+                KeyName = Key1,
+                KeyVaultUri = kvData.Properties.VaultUri,
+                Identity = new UserAssignedIdentityProperties(identityResponse_1.Value.Data.Id.ToString())
+            });
+
+            eventHubsNamespaceData.Encryption.KeyVaultProperties.Add(new EventHubsKeyVaultProperties()
+            {
+                KeyName = Key2,
+                KeyVaultUri = kvData.Properties.VaultUri,
+                Identity = new UserAssignedIdentityProperties(identityResponse_1.Value.Data.Id.ToString())
+            });
+
+            resource = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, eventHubsNamespaceData)).Value;
+            AssertNamespaceMSIOnUpdates(eventHubsNamespaceData, resource.Data);
+            await resource.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
+        }
+
+        public void AssertDefaultNamespaceProperties(EventHubsNamespaceData namespaceData, EventHubsSkuName SkuName)
+        {
+            if (SkuName == EventHubsSkuName.Standard)
+            {
+                Assert.AreEqual(EventHubsSkuName.Standard, namespaceData.Sku.Name);
+                Assert.AreEqual(1, namespaceData.Sku.Capacity);
+                Assert.False(namespaceData.ZoneRedundant);
+                Assert.False(namespaceData.DisableLocalAuth);
+                Assert.False(namespaceData.IsAutoInflateEnabled);
+                Assert.AreEqual(0, namespaceData.MaximumThroughputUnits);
+                Assert.True(namespaceData.KafkaEnabled);
+            }
+            else
+            {
+                Assert.AreEqual(EventHubsSkuName.Premium, namespaceData.Sku.Name);
+                Assert.AreEqual(1, namespaceData.Sku.Capacity);
+                Assert.True(namespaceData.ZoneRedundant);
+                Assert.False(namespaceData.DisableLocalAuth);
+                Assert.False(namespaceData.IsAutoInflateEnabled);
+                Assert.AreEqual(0, namespaceData.MaximumThroughputUnits);
+                Assert.True(namespaceData.KafkaEnabled);
+            }
+        }
+
+        public void AssertNamespacePropertiesOnUpdate(EventHubsNamespaceData expectedNamespace, EventHubsNamespaceData actualNamespace)
+        {
+            Assert.AreEqual(expectedNamespace.Sku.Name, actualNamespace.Sku.Name);
+            Assert.AreEqual(expectedNamespace.Sku.Capacity, actualNamespace.Sku.Capacity);
+            Assert.AreEqual(expectedNamespace.ZoneRedundant, actualNamespace.ZoneRedundant);
+            Assert.AreEqual(expectedNamespace.DisableLocalAuth, actualNamespace.DisableLocalAuth);
+            Assert.AreEqual(expectedNamespace.IsAutoInflateEnabled, actualNamespace.IsAutoInflateEnabled);
+            Assert.AreEqual(expectedNamespace.MaximumThroughputUnits, actualNamespace.MaximumThroughputUnits);
+            Assert.AreEqual(expectedNamespace.KafkaEnabled, actualNamespace.KafkaEnabled);
+        }
+
+        public void AssertNamespaceMSIOnUpdates(EventHubsNamespaceData expectedNamespace, EventHubsNamespaceData actualNamespace)
+        {
+            if (expectedNamespace.Identity != null)
+            {
+                Assert.IsNotNull(actualNamespace.Identity);
+                Assert.AreEqual(expectedNamespace.Identity.ManagedServiceIdentityType, actualNamespace.Identity.ManagedServiceIdentityType);
+                Assert.AreEqual(expectedNamespace.Identity.PrincipalId, actualNamespace.Identity.PrincipalId);
+                Assert.AreEqual(expectedNamespace.Identity.TenantId, actualNamespace.Identity.TenantId);
+
+                if (expectedNamespace.Identity.UserAssignedIdentities != null)
+                {
+                    Assert.NotNull(actualNamespace.Identity.UserAssignedIdentities);
+                    Assert.AreEqual(expectedNamespace.Identity.UserAssignedIdentities.Count, actualNamespace.Identity.UserAssignedIdentities.Count);
+                }
+                else
+                {
+                    Assert.Null(actualNamespace.Identity.UserAssignedIdentities);
+                }
+
+                if (expectedNamespace.Encryption != null)
+                {
+                    Assert.NotNull(actualNamespace.Encryption);
+                    Assert.AreEqual(expectedNamespace.Encryption.KeyVaultProperties.Count, actualNamespace.Encryption.KeyVaultProperties.Count);
+                }
+                else
+                {
+                    Assert.Null(actualNamespace.Encryption);
+                }
+            }
+            else
+            {
+                Assert.Null(actualNamespace.Identity);
+            }
         }
 
         [Test]
@@ -341,28 +661,32 @@ namespace Azure.ResourceManager.EventHubs.Tests
         [TestCase(null)]
         [TestCase(true)]
         [TestCase(false)]
+        [RecordedTest]
         public async Task AddSetRemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
             //create namespace
             _resourceGroup = await CreateResourceGroupAsync();
             EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
-            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt2");
             EventHubsNamespaceResource eventHubNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(DefaultLocation))).Value;
 
             //add a tag
-            eventHubNamespace = await eventHubNamespace.AddTagAsync("key", "value");
+            eventHubNamespace = await eventHubNamespace.AddTagAsync("key1", "value1");
             Assert.AreEqual(eventHubNamespace.Data.Tags.Count, 1);
-            Assert.AreEqual(eventHubNamespace.Data.Tags["key"], "value");
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.AreEqual(eventHubNamespace.Data.Tags["key1"], "value1");
+            }
 
             //set the tag
-            eventHubNamespace.Data.Tags.Add("key1", "value1");
+            eventHubNamespace.Data.Tags.Add("key2", "value2");
             eventHubNamespace = await eventHubNamespace.SetTagsAsync(eventHubNamespace.Data.Tags);
             Assert.AreEqual(eventHubNamespace.Data.Tags.Count, 2);
-            Assert.AreEqual(eventHubNamespace.Data.Tags["key1"], "value1");
+            Assert.AreEqual(eventHubNamespace.Data.Tags["key2"], "value2");
 
             //remove a tag
-            eventHubNamespace = await eventHubNamespace.RemoveTagAsync("key");
+            eventHubNamespace = await eventHubNamespace.RemoveTagAsync("key1");
             Assert.AreEqual(eventHubNamespace.Data.Tags.Count, 1);
 
             //wait until provision state is succeeded

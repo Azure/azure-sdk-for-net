@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<string> systemSource = default;
             Optional<string> actionTaken = default;
             Optional<string> logAnalyticsQuery = default;
-            Optional<IReadOnlyList<IotSecurityAggregatedAlertPropertiesTopDevicesListItem>> topDevicesList = default;
+            Optional<IReadOnlyList<IotSecurityAggregatedAlertTopDevice>> topDevicesList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.SecurityCenter
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<IotSecurityAggregatedAlertPropertiesTopDevicesListItem> array = new List<IotSecurityAggregatedAlertPropertiesTopDevicesListItem>();
+                            List<IotSecurityAggregatedAlertTopDevice> array = new List<IotSecurityAggregatedAlertTopDevice>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IotSecurityAggregatedAlertPropertiesTopDevicesListItem.DeserializeIotSecurityAggregatedAlertPropertiesTopDevicesListItem(item));
+                                array.Add(IotSecurityAggregatedAlertTopDevice.DeserializeIotSecurityAggregatedAlertTopDevice(item));
                             }
                             topDevicesList = array;
                             continue;

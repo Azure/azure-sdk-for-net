@@ -9,7 +9,6 @@ csharp: true
 library-name: EventGrid
 namespace: Azure.ResourceManager.EventGrid
 require: https://github.com/Azure/azure-rest-api-specs/blob/df70965d3a207eb2a628c96aa6ed935edc6b7911/specification/eventgrid/resource-manager/readme.md
-tag: package-2022-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -25,12 +24,12 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}|Microsoft.EventGrid/partnerNamespaces/privateLinkResources: PartnerNamespacePrivateLinkResource
 
 override-operation-name:
-  EventSubscriptions_ListGlobalByResourceGroupForTopicType: GetGlobalEventSubscriptionsForTopicType
-  EventSubscriptions_ListRegionalByResourceGroup: GetRegionalEventSubscriptions
-  EventSubscriptions_ListRegionalByResourceGroupForTopicType: GetRegionalEventSubscriptionsForTopicType
-  EventSubscriptions_ListGlobalBySubscriptionForTopicType: GetGlobalEventSubscriptionsForTopicType
-  EventSubscriptions_ListRegionalBySubscription: GetRegionalEventSubscriptions
-  EventSubscriptions_ListRegionalBySubscriptionForTopicType: GetRegionalEventSubscriptionsForTopicType
+  EventSubscriptions_ListGlobalByResourceGroupForTopicType: GetGlobalEventSubscriptionsDataForTopicType
+  EventSubscriptions_ListRegionalByResourceGroup: GetRegionalEventSubscriptionsData
+  EventSubscriptions_ListRegionalByResourceGroupForTopicType: GetRegionalEventSubscriptionsDataForTopicType
+  EventSubscriptions_ListGlobalBySubscriptionForTopicType: GetGlobalEventSubscriptionsDataForTopicType
+  EventSubscriptions_ListRegionalBySubscription: GetRegionalEventSubscriptionsData
+  EventSubscriptions_ListRegionalBySubscriptionForTopicType: GetRegionalEventSubscriptionsDataForTopicType
   Topics_ListEventTypes: GetEventTypes
 
 format-by-name-rules:
@@ -75,7 +74,8 @@ rename-mapping:
   Domain.properties.disableLocalAuth: IsLocalAuthDisabled
   Domain.properties.endpoint: Endpoint|Uri
   DomainUpdateParameters.properties.disableLocalAuth: IsLocalAuthDisabled
-  EventSubscriptionUpdateParameters: EventSubscriptionPatch
+  EventSubscription: EventGridSubscription
+  EventSubscriptionUpdateParameters: EventGridSubscriptionPatch
   EventSubscriptionUpdateParameters.expirationTimeUtc: ExpireOn
   DomainRegenerateKeyRequest: EventGridDomainRegenerateKeyContent
   ConnectionState: EventGridPrivateEndpointConnectionState
@@ -129,7 +129,7 @@ directive:
     where: $.paths..parameters[?(@.name=='scope')]
     transform: >
       $['x-ms-skip-url-encoding'] = true;
-  # PrivateEndpointConnection defines enum type but PrivateLinkResources not, should fix it in swagger 
+  # PrivateEndpointConnection defines enum type but PrivateLinkResources not, should fix it in swagger
   - from: EventGrid.json
     where: $.paths..parameters[?(@.name=='parentType')]
     transform: >
@@ -148,5 +148,5 @@ directive:
       $.properties.principalId.readOnly = true;
       $.properties.tenantId.readOnly = true;
     reason: Remove the setter to ensure this type can be replaced by the common type.
-  
+
 ```

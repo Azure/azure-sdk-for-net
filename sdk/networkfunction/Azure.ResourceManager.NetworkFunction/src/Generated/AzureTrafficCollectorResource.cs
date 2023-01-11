@@ -231,18 +231,18 @@ namespace Azure.ResourceManager.NetworkFunction
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}
         /// Operation Id: AzureTrafficCollectors_UpdateTags
         /// </summary>
-        /// <param name="patch"> Parameters supplied to update Azure Traffic Collector tags. </param>
+        /// <param name="tagsObject"> Parameters supplied to update Azure Traffic Collector tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<AzureTrafficCollectorResource>> UpdateAsync(AzureTrafficCollectorPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual async Task<Response<AzureTrafficCollectorResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
             using var scope = _azureTrafficCollectorClientDiagnostics.CreateScope("AzureTrafficCollectorResource.Update");
             scope.Start();
             try
             {
-                var response = await _azureTrafficCollectorRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var response = await _azureTrafficCollectorRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -257,18 +257,18 @@ namespace Azure.ResourceManager.NetworkFunction
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkFunction/azureTrafficCollectors/{azureTrafficCollectorName}
         /// Operation Id: AzureTrafficCollectors_UpdateTags
         /// </summary>
-        /// <param name="patch"> Parameters supplied to update Azure Traffic Collector tags. </param>
+        /// <param name="tagsObject"> Parameters supplied to update Azure Traffic Collector tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<AzureTrafficCollectorResource> Update(AzureTrafficCollectorPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
+        public virtual Response<AzureTrafficCollectorResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
 
             using var scope = _azureTrafficCollectorClientDiagnostics.CreateScope("AzureTrafficCollectorResource.Update");
             scope.Start();
             try
             {
-                var response = _azureTrafficCollectorRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var response = _azureTrafficCollectorRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
                 return Response.FromValue(new AzureTrafficCollectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AzureTrafficCollectorPatch();
+                    var patch = new TagsObject();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AzureTrafficCollectorPatch();
+                    var patch = new TagsObject();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AzureTrafficCollectorPatch();
+                    var patch = new TagsObject();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AzureTrafficCollectorPatch();
+                    var patch = new TagsObject();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AzureTrafficCollectorPatch();
+                    var patch = new TagsObject();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AzureTrafficCollectorPatch();
+                    var patch = new TagsObject();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

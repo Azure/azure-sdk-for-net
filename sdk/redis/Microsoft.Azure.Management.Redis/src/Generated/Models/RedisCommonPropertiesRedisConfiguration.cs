@@ -40,11 +40,14 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <param name="rdbBackupEnabled">Specifies whether the rdb backup is
         /// enabled</param>
         /// <param name="rdbBackupFrequency">Specifies the frequency for
-        /// creating rdb backup</param>
+        /// creating rdb backup in minutes. Valid values: (15, 30, 60, 360,
+        /// 720, 1440)</param>
         /// <param name="rdbBackupMaxSnapshotCount">Specifies the maximum
         /// number of snapshots for rdb backup</param>
         /// <param name="rdbStorageConnectionString">The storage account
         /// connection string for storing rdb file</param>
+        /// <param name="aofBackupEnabled">Specifies whether the aof backup is
+        /// enabled</param>
         /// <param name="aofStorageConnectionString0">First storage account
         /// connection string</param>
         /// <param name="aofStorageConnectionString1">Second storage account
@@ -64,13 +67,18 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <param name="preferredDataPersistenceAuthMethod">Preferred auth
         /// method to communicate to storage account used for data persistence,
         /// specify SAS or ManagedIdentity, default value is SAS</param>
-        public RedisCommonPropertiesRedisConfiguration(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string rdbBackupEnabled = default(string), string rdbBackupFrequency = default(string), string rdbBackupMaxSnapshotCount = default(string), string rdbStorageConnectionString = default(string), string aofStorageConnectionString0 = default(string), string aofStorageConnectionString1 = default(string), string maxfragmentationmemoryReserved = default(string), string maxmemoryPolicy = default(string), string maxmemoryReserved = default(string), string maxmemoryDelta = default(string), string maxclients = default(string), string preferredDataArchiveAuthMethod = default(string), string preferredDataPersistenceAuthMethod = default(string))
+        /// <param name="zonalConfiguration">Zonal Configuration</param>
+        /// <param name="authnotrequired">Specifies whether the authentication
+        /// is disabled. Setting this property is highly discouraged from
+        /// security point of view.</param>
+        public RedisCommonPropertiesRedisConfiguration(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string rdbBackupEnabled = default(string), string rdbBackupFrequency = default(string), string rdbBackupMaxSnapshotCount = default(string), string rdbStorageConnectionString = default(string), string aofBackupEnabled = default(string), string aofStorageConnectionString0 = default(string), string aofStorageConnectionString1 = default(string), string maxfragmentationmemoryReserved = default(string), string maxmemoryPolicy = default(string), string maxmemoryReserved = default(string), string maxmemoryDelta = default(string), string maxclients = default(string), string preferredDataArchiveAuthMethod = default(string), string preferredDataPersistenceAuthMethod = default(string), string zonalConfiguration = default(string), string authnotrequired = default(string))
         {
             AdditionalProperties = additionalProperties;
             RdbBackupEnabled = rdbBackupEnabled;
             RdbBackupFrequency = rdbBackupFrequency;
             RdbBackupMaxSnapshotCount = rdbBackupMaxSnapshotCount;
             RdbStorageConnectionString = rdbStorageConnectionString;
+            AofBackupEnabled = aofBackupEnabled;
             AofStorageConnectionString0 = aofStorageConnectionString0;
             AofStorageConnectionString1 = aofStorageConnectionString1;
             MaxfragmentationmemoryReserved = maxfragmentationmemoryReserved;
@@ -80,6 +88,8 @@ namespace Microsoft.Azure.Management.Redis.Models
             Maxclients = maxclients;
             PreferredDataArchiveAuthMethod = preferredDataArchiveAuthMethod;
             PreferredDataPersistenceAuthMethod = preferredDataPersistenceAuthMethod;
+            ZonalConfiguration = zonalConfiguration;
+            Authnotrequired = authnotrequired;
             CustomInit();
         }
 
@@ -102,7 +112,8 @@ namespace Microsoft.Azure.Management.Redis.Models
         public string RdbBackupEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the frequency for creating rdb backup
+        /// Gets or sets specifies the frequency for creating rdb backup in
+        /// minutes. Valid values: (15, 30, 60, 360, 720, 1440)
         /// </summary>
         [JsonProperty(PropertyName = "rdb-backup-frequency")]
         public string RdbBackupFrequency { get; set; }
@@ -120,6 +131,12 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         [JsonProperty(PropertyName = "rdb-storage-connection-string")]
         public string RdbStorageConnectionString { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether the aof backup is enabled
+        /// </summary>
+        [JsonProperty(PropertyName = "aof-backup-enabled")]
+        public string AofBackupEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets first storage account connection string
@@ -176,12 +193,26 @@ namespace Microsoft.Azure.Management.Redis.Models
         public string PreferredDataArchiveAuthMethod { get; private set; }
 
         /// <summary>
-        /// Gets preferred auth method to communicate to storage account used
-        /// for data persistence, specify SAS or ManagedIdentity, default value
-        /// is SAS
+        /// Gets or sets preferred auth method to communicate to storage
+        /// account used for data persistence, specify SAS or ManagedIdentity,
+        /// default value is SAS
         /// </summary>
         [JsonProperty(PropertyName = "preferred-data-persistence-auth-method")]
-        public string PreferredDataPersistenceAuthMethod { get; private set; }
+        public string PreferredDataPersistenceAuthMethod { get; set; }
+
+        /// <summary>
+        /// Gets zonal Configuration
+        /// </summary>
+        [JsonProperty(PropertyName = "zonal-configuration")]
+        public string ZonalConfiguration { get; private set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether the authentication is disabled.
+        /// Setting this property is highly discouraged from security point of
+        /// view.
+        /// </summary>
+        [JsonProperty(PropertyName = "authnotrequired")]
+        public string Authnotrequired { get; set; }
 
     }
 }

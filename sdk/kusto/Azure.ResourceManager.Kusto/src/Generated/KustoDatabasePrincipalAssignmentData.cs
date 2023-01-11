@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="principalId"> The principal ID assigned to the database principal. It can be a user email, application ID, or security group name. </param>
+        /// <param name="databasePrincipalId"> The principal ID assigned to the database principal. It can be a user email, application ID, or security group name. </param>
         /// <param name="role"> Database principal role. </param>
         /// <param name="tenantId"> The tenant id of the principal. </param>
         /// <param name="principalType"> Principal type. </param>
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="principalName"> The principal name. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="aadObjectId"> The service principal object id in AAD (Azure active directory). </param>
-        internal KustoDatabasePrincipalAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? principalId, KustoDatabasePrincipalRole? role, Guid? tenantId, KustoPrincipalAssignmentType? principalType, string tenantName, string principalName, KustoProvisioningState? provisioningState, Guid? aadObjectId) : base(id, name, resourceType, systemData)
+        internal KustoDatabasePrincipalAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string databasePrincipalId, KustoDatabasePrincipalRole? role, Guid? tenantId, KustoPrincipalAssignmentType? principalType, string tenantName, string principalName, KustoProvisioningState? provisioningState, Guid? aadObjectId) : base(id, name, resourceType, systemData)
         {
-            PrincipalId = principalId;
+            DatabasePrincipalId = databasePrincipalId;
             Role = role;
             TenantId = tenantId;
             PrincipalType = principalType;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> The principal ID assigned to the database principal. It can be a user email, application ID, or security group name. </summary>
-        public Guid? PrincipalId { get; set; }
+        public string DatabasePrincipalId { get; set; }
         /// <summary> Database principal role. </summary>
         public KustoDatabasePrincipalRole? Role { get; set; }
         /// <summary> The tenant id of the principal. </summary>

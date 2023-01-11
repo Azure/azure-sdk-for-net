@@ -28,10 +28,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="configuration"/> is null. </exception>
         public SapVirtualInstanceData(AzureLocation location, SapEnvironmentType environment, SapProductType sapProduct, SapConfiguration configuration) : base(location)
         {
-            if (configuration == null)
-            {
-                throw new ArgumentNullException(nameof(configuration));
-            }
+            Argument.AssertNotNull(configuration, nameof(configuration));
 
             Environment = environment;
             SapProduct = sapProduct;

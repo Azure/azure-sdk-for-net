@@ -13,7 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.WebPubSub
 {
-    // Data plane generated client. The HealthApi service client.
+    // Data plane generated client.
     /// <summary> The HealthApi service client. </summary>
     internal partial class HealthApiClient
     {
@@ -58,15 +58,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call GetServiceStatusAsync.
-        /// <code><![CDATA[
-        /// var client = new HealthApiClient("<https://my-service.azure.com>");
-        /// 
-        /// Response response = await client.GetServiceStatusAsync();
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/HealthApiClient.xml" path="doc/members/member[@name='GetServiceStatusAsync(RequestContext)']/*" />
         public virtual async Task<Response> GetServiceStatusAsync(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("HealthApiClient.GetServiceStatus");
@@ -87,15 +79,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <example>
-        /// This sample shows how to call GetServiceStatus.
-        /// <code><![CDATA[
-        /// var client = new HealthApiClient("<https://my-service.azure.com>");
-        /// 
-        /// Response response = client.GetServiceStatus();
-        /// Console.WriteLine(response.Status);
-        /// ]]></code>
-        /// </example>
+        /// <include file="Docs/HealthApiClient.xml" path="doc/members/member[@name='GetServiceStatus(RequestContext)']/*" />
         public virtual Response GetServiceStatus(RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("HealthApiClient.GetServiceStatus");

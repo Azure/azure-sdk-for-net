@@ -54,17 +54,17 @@ namespace Azure.ResourceManager.Reservations.Tests
                 Quantity = 1
             };
 
-            var calculateRefundRequest = new CalculateRefundContent
+            var calculateRefundRequest = new ReservationCalculateRefundContent
             {
                 Id = fullyQualifiedOrderId,
-                Properties = new CalculateRefundRequestProperties
+                Properties = new ReservationCalculateRefundRequestProperties
                 {
                     Scope = "Reservation",
                     ReservationToReturn = riToReturn
                 }
             };
 
-            var calculateRefundResponse = await orderDetail.Value.PostCalculateRefundAsync(calculateRefundRequest);
+            var calculateRefundResponse = await orderDetail.Value.CalculateRefundAsync(calculateRefundRequest);
 
             Assert.IsNotNull(calculateRefundResponse.Value);
             Assert.AreEqual(200, calculateRefundResponse.GetRawResponse().Status);
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.Reservations.Tests
             Assert.AreEqual(50000, calculateRefundResponse.Value.Properties.PolicyResultProperties.MaxRefundLimit.Amount);
             Assert.AreEqual("USD", calculateRefundResponse.Value.Properties.PolicyResultProperties.MaxRefundLimit.CurrencyCode);
 
-            var refundRequest = new RefundContent
+            var refundRequest = new ReservationRefundContent
             {
-                Properties = new RefundRequestProperties
+                Properties = new ReservationRefundRequestProperties
                 {
                     SessionId = calculateRefundResponse.Value.Properties.SessionId,
                     Scope = "Reservation",
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Reservations.Tests
                 }
             };
 
-            var refundResponse = await orderDetail.Value.PostReturnAsync(refundRequest);
+            var refundResponse = await orderDetail.Value.ReturnAsync(refundRequest);
 
             Assert.IsNotNull(refundResponse.Value);
             Assert.AreEqual(202, refundResponse.GetRawResponse().Status);

@@ -38,6 +38,8 @@ namespace Azure.ResourceManager.Peering
         private readonly PeeringsRestOperations _peeringRestClient;
         private readonly ClientDiagnostics _receivedRoutesClientDiagnostics;
         private readonly ReceivedRoutesRestOperations _receivedRoutesRestClient;
+        private readonly ClientDiagnostics _rpUnbilledPrefixesClientDiagnostics;
+        private readonly RpUnbilledPrefixesRestOperations _rpUnbilledPrefixesRestClient;
         private readonly PeeringData _data;
 
         /// <summary> Initializes a new instance of the <see cref="PeeringResource"/> class for mocking. </summary>
@@ -64,6 +66,8 @@ namespace Azure.ResourceManager.Peering
             _peeringRestClient = new PeeringsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, peeringApiVersion);
             _receivedRoutesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _receivedRoutesRestClient = new ReceivedRoutesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _rpUnbilledPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _rpUnbilledPrefixesRestClient = new RpUnbilledPrefixesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -402,6 +406,92 @@ namespace Azure.ResourceManager.Peering
                 try
                 {
                     var response = _receivedRoutesRestClient.ListByPeeringNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, prefix, asPath, originAsValidationState, rpkiValidationState, skipToken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Lists all of the RP unbilled prefixes for the specified peering
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/rpUnbilledPrefixes
+        /// Operation Id: RpUnbilledPrefixes_List
+        /// </summary>
+        /// <param name="consolidate"> Flag to enable consolidation prefixes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="RoutingPreferenceUnbilledPrefix" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RoutingPreferenceUnbilledPrefix> GetRpUnbilledPrefixesAsync(bool? consolidate = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<RoutingPreferenceUnbilledPrefix>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _rpUnbilledPrefixesClientDiagnostics.CreateScope("PeeringResource.GetRpUnbilledPrefixes");
+                scope.Start();
+                try
+                {
+                    var response = await _rpUnbilledPrefixesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consolidate, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<RoutingPreferenceUnbilledPrefix>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _rpUnbilledPrefixesClientDiagnostics.CreateScope("PeeringResource.GetRpUnbilledPrefixes");
+                scope.Start();
+                try
+                {
+                    var response = await _rpUnbilledPrefixesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consolidate, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Lists all of the RP unbilled prefixes for the specified peering
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}/rpUnbilledPrefixes
+        /// Operation Id: RpUnbilledPrefixes_List
+        /// </summary>
+        /// <param name="consolidate"> Flag to enable consolidation prefixes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RoutingPreferenceUnbilledPrefix" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RoutingPreferenceUnbilledPrefix> GetRpUnbilledPrefixes(bool? consolidate = null, CancellationToken cancellationToken = default)
+        {
+            Page<RoutingPreferenceUnbilledPrefix> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _rpUnbilledPrefixesClientDiagnostics.CreateScope("PeeringResource.GetRpUnbilledPrefixes");
+                scope.Start();
+                try
+                {
+                    var response = _rpUnbilledPrefixesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consolidate, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<RoutingPreferenceUnbilledPrefix> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _rpUnbilledPrefixesClientDiagnostics.CreateScope("PeeringResource.GetRpUnbilledPrefixes");
+                scope.Start();
+                try
+                {
+                    var response = _rpUnbilledPrefixesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consolidate, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

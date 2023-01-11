@@ -59,9 +59,7 @@ namespace Azure.Messaging.ServiceBus
             _scopeFactory = scopeFactory;
         }
 
-        public virtual async Task CloseReceiverIfNeeded(
-            CancellationToken cancellationToken,
-            bool forceClose = false)
+        public virtual async Task CloseReceiverIfNeeded(CancellationToken cancellationToken)
         {
             var capturedReceiver = Receiver;
             if (capturedReceiver != null)
@@ -123,11 +121,22 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
+        public virtual Task CancelAsync() => Task.CompletedTask;
+
+        public virtual void UpdatePrefetchCount(int prefetchCount)
+        {
+            if (Receiver != null && Receiver.PrefetchCount != prefetchCount)
+            {
+                Receiver.PrefetchCount = prefetchCount;
+            }
+        }
+
         protected async Task ProcessOneMessageWithinScopeAsync(ServiceBusReceivedMessage message, string activityName, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _scopeFactory.CreateScope(activityName, DiagnosticScope.ActivityKind.Consumer);
-            scope.SetMessageData(message);
+            scope.SetMessageAsParent(message);
             scope.Start();
+
             try
             {
                 await ProcessOneMessage(

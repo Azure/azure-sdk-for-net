@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public HealthcareApisNameAvailabilityContent(string name, ResourceType resourceType)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             ResourceType = resourceType;

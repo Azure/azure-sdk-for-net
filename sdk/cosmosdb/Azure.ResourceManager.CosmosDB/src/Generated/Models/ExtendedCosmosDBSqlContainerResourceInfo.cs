@@ -7,6 +7,7 @@
 
 using System;
 using Azure;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public ExtendedCosmosDBSqlContainerResourceInfo(string containerName) : base(containerName)
         {
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
+            Argument.AssertNotNull(containerName, nameof(containerName));
         }
 
         /// <summary> Initializes a new instance of ExtendedCosmosDBSqlContainerResourceInfo. </summary>

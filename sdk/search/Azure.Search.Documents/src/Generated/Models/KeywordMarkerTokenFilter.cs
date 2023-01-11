@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -20,14 +21,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="keywords"/> is null. </exception>
         public KeywordMarkerTokenFilter(string name, IEnumerable<string> keywords) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (keywords == null)
-            {
-                throw new ArgumentNullException(nameof(keywords));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(keywords, nameof(keywords));
 
             Keywords = keywords.ToList();
             ODataType = "#Microsoft.Azure.Search.KeywordMarkerTokenFilter";

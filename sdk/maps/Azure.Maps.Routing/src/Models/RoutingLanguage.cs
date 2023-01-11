@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Maps.Routing.Models
+namespace Azure.Maps.Routing
 {
     /// <summary> The rendered langauge showing on the map images or map tiles. </summary>
     public readonly partial struct RoutingLanguage : IEquatable<RoutingLanguage>
@@ -30,7 +30,7 @@ namespace Azure.Maps.Routing.Models
         private const string GermanValue = "de-DE";
         private const string GreekValue = "el-GR";
         private const string EnglishGreatBritainValue = "en-GB";
-        private const string EnglishUSAValue = "en-US";
+        private const string EnglishUsaValue = "en-US";
         private const string SpanishSpainValue = "es-ES";
         private const string SpanishMexicoValue = "es-MX";
         private const string FinnishValue = "fi-FI";
@@ -72,7 +72,7 @@ namespace Azure.Maps.Routing.Models
         /// <summary> Return English (Great Britain) ("en-GB"). </summary>
         public static RoutingLanguage EnglishGreatBritain { get; } = new RoutingLanguage(EnglishGreatBritainValue);
         /// <summary> Return English (USA) ("en-US"). </summary>
-        public static RoutingLanguage EnglishUSA { get; } = new RoutingLanguage(EnglishUSAValue);
+        public static RoutingLanguage EnglishUsa { get; } = new RoutingLanguage(EnglishUsaValue);
         /// <summary> Return Spanish (Spain) ("es-ES"). </summary>
         public static RoutingLanguage SpanishSpain { get; } = new RoutingLanguage(SpanishSpainValue);
         /// <summary> Return Spanish (Mexico) ("es-MX"). </summary>

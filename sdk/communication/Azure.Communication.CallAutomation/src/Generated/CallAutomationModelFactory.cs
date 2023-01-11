@@ -53,20 +53,22 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers to set the context for creating a new call. This property will be null for answering a call. </param>
         /// <returns> A new <see cref="CallAutomation.CallConnected"/> instance for mocking. </returns>
-        public static CallConnected CallConnected(string callConnectionId = null, string serverCallId = null, string correlationId = null)
+        public static CallConnected CallConnected(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
         {
-            return new CallConnected(callConnectionId, serverCallId, correlationId);
+            return new CallConnected(callConnectionId, serverCallId, correlationId, operationContext);
         }
 
         /// <summary> Initializes a new instance of CallDisconnected. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers to set the context for creating a new call. This property will be null for answering a call. </param>
         /// <returns> A new <see cref="CallAutomation.CallDisconnected"/> instance for mocking. </returns>
-        public static CallDisconnected CallDisconnected(string callConnectionId = null, string serverCallId = null, string correlationId = null)
+        public static CallDisconnected CallDisconnected(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
         {
-            return new CallDisconnected(callConnectionId, serverCallId, correlationId);
+            return new CallDisconnected(callConnectionId, serverCallId, correlationId, operationContext);
         }
 
         /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
@@ -93,17 +95,17 @@ namespace Azure.Communication.CallAutomation
             return new CallTransferFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
-        /// <summary> Initializes a new instance of CallRecordingStateChanged. </summary>
+        /// <summary> Initializes a new instance of RecordingStateChanged. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="recordingId"> The call recording id. </param>
         /// <param name="state"></param>
         /// <param name="startDateTime"> The time of the recording started. </param>
-        /// <returns> A new <see cref="CallAutomation.CallRecordingStateChanged"/> instance for mocking. </returns>
-        public static CallRecordingStateChanged CallRecordingStateChanged(string callConnectionId = null, string serverCallId = null, string correlationId = null, string recordingId = null, RecordingState state = default, DateTimeOffset? startDateTime = null)
+        /// <returns> A new <see cref="CallAutomation.RecordingStateChanged"/> instance for mocking. </returns>
+        public static RecordingStateChanged RecordingStateChanged(string callConnectionId = null, string serverCallId = null, string correlationId = null, string recordingId = null, RecordingState state = default, DateTimeOffset? startDateTime = null)
         {
-            return new CallRecordingStateChanged(callConnectionId, serverCallId, correlationId, recordingId, state, startDateTime);
+            return new RecordingStateChanged(callConnectionId, serverCallId, correlationId, recordingId, state, startDateTime);
         }
 
         /// <summary> Initializes a new instance of PlayCompleted. </summary>
@@ -152,10 +154,11 @@ namespace Azure.Communication.CallAutomation
         /// In case of cancel operation the this field is not set and is returned empty
         /// </param>
         /// <param name="collectTonesResult"> Defines the result for RecognitionType = Dtmf. </param>
+        /// <param name="choiceResult"> Defines the result for RecognitionType = Choices. </param>
         /// <returns> A new <see cref="CallAutomation.RecognizeCompleted"/> instance for mocking. </returns>
-        public static RecognizeCompleted RecognizeCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, CollectTonesResult collectTonesResult = null)
+        public static RecognizeCompleted RecognizeCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CallMediaRecognitionType recognitionType = default, CollectTonesResult collectTonesResult = null, ChoiceResult choiceResult = null)
         {
-            return new RecognizeCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, collectTonesResult);
+            return new RecognizeCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, collectTonesResult, choiceResult);
         }
 
         /// <summary> Initializes a new instance of CollectTonesResult. </summary>
@@ -166,6 +169,18 @@ namespace Azure.Communication.CallAutomation
             tones ??= new List<DtmfTone>();
 
             return new CollectTonesResult(tones?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of ChoiceResult. </summary>
+        /// <param name="label"> Label is the primary identifier for the choice detected. </param>
+        /// <param name="recognizedPhrase">
+        /// Phrases are set to the value if choice is selected via phrase detection.
+        /// If Dtmf input is recognized, then Label will be the identifier for the choice detected and phrases will be set to null
+        /// </param>
+        /// <returns> A new <see cref="CallAutomation.ChoiceResult"/> instance for mocking. </returns>
+        public static ChoiceResult ChoiceResult(string label = null, string recognizedPhrase = null)
+        {
+            return new ChoiceResult(label, recognizedPhrase);
         }
 
         /// <summary> Initializes a new instance of RecognizeFailed. </summary>

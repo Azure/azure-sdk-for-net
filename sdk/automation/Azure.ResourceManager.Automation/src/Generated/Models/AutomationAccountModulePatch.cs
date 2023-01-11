@@ -26,6 +26,6 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Gets or sets the tags attached to the resource. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Gets or sets the module content link. </summary>
-        public ContentLink ContentLink { get; set; }
+        public AutomationContentLink ContentLink { get; set; }
     }
 }

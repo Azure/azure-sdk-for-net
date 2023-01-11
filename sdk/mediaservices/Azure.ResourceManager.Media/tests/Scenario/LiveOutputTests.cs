@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -20,17 +21,18 @@ namespace Azure.ResourceManager.Media.Tests
 
         private MediaLiveOutputCollection liveOutputCollection => _liveEvent.GetMediaLiveOutputs();
 
-        public LiveOutputTests(bool isAsync) : base(isAsync)
+        public LiveOutputTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
         [SetUp]
         public async Task SetUp()
         {
-            var resourceGroup = await CreateResourceGroup(AzureLocation.WestUS2);
-            var storage = await CreateStorageAccount(resourceGroup, Recording.GenerateAssetName(StorageAccountNamePrefix));
-            _mediaService = await CreateMediaService(resourceGroup, Recording.GenerateAssetName("mediaforlo"), storage.Id);
-            _liveEvent = await CreateLiveEvent(_mediaService, Recording.GenerateAssetName("liveEvent"));
+            var mediaServiceName = Recording.GenerateAssetName("dotnetsdkmediatest");
+            var liveEventName = Recording.GenerateAssetName("liveEvent");
+            _mediaService = await CreateMediaService(ResourceGroup, mediaServiceName);
+            _liveEvent = await CreateLiveEvent(_mediaService, liveEventName);
         }
 
         [TearDown]

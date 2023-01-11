@@ -13,17 +13,17 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     public partial class DateTimeInterval
     {
         /// <summary> Initializes a new instance of DateTimeInterval. </summary>
-        /// <param name="start"> A datetime indicating the inclusive/closed start of the time interval, i.e. `[`**`start`**`, end)`. Specifying a `start` that occurs chronologically after `end` will result in an error. </param>
-        /// <param name="end"> A datetime indicating the exclusive/open end of the time interval, i.e. `[start, `**`end`**`)`. Specifying an `end` that occurs chronologically before `start` will result in an error. </param>
-        public DateTimeInterval(DateTimeOffset start, DateTimeOffset end)
+        /// <param name="startOn"> A datetime indicating the inclusive/closed start of the time interval, i.e. `[`**`start`**`, end)`. Specifying a `start` that occurs chronologically after `end` will result in an error. </param>
+        /// <param name="endOn"> A datetime indicating the exclusive/open end of the time interval, i.e. `[start, `**`end`**`)`. Specifying an `end` that occurs chronologically before `start` will result in an error. </param>
+        public DateTimeInterval(DateTimeOffset startOn, DateTimeOffset endOn)
         {
-            Start = start;
-            End = end;
+            StartOn = startOn;
+            EndOn = endOn;
         }
 
         /// <summary> A datetime indicating the inclusive/closed start of the time interval, i.e. `[`**`start`**`, end)`. Specifying a `start` that occurs chronologically after `end` will result in an error. </summary>
-        public DateTimeOffset Start { get; }
+        public DateTimeOffset StartOn { get; }
         /// <summary> A datetime indicating the exclusive/open end of the time interval, i.e. `[start, `**`end`**`)`. Specifying an `end` that occurs chronologically before `start` will result in an error. </summary>
-        public DateTimeOffset End { get; }
+        public DateTimeOffset EndOn { get; }
     }
 }

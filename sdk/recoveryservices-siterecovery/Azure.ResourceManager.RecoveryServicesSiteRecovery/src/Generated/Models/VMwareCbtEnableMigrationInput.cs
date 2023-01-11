@@ -25,30 +25,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="vmwareMachineId"/>, <paramref name="disksToInclude"/>, <paramref name="dataMoverRunAsAccountId"/>, <paramref name="snapshotRunAsAccountId"/>, <paramref name="targetResourceGroupId"/> or <paramref name="targetNetworkId"/> is null. </exception>
         public VMwareCbtEnableMigrationInput(string vmwareMachineId, IEnumerable<VMwareCbtDiskInput> disksToInclude, string dataMoverRunAsAccountId, string snapshotRunAsAccountId, string targetResourceGroupId, string targetNetworkId)
         {
-            if (vmwareMachineId == null)
-            {
-                throw new ArgumentNullException(nameof(vmwareMachineId));
-            }
-            if (disksToInclude == null)
-            {
-                throw new ArgumentNullException(nameof(disksToInclude));
-            }
-            if (dataMoverRunAsAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(dataMoverRunAsAccountId));
-            }
-            if (snapshotRunAsAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(snapshotRunAsAccountId));
-            }
-            if (targetResourceGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(targetResourceGroupId));
-            }
-            if (targetNetworkId == null)
-            {
-                throw new ArgumentNullException(nameof(targetNetworkId));
-            }
+            Argument.AssertNotNull(vmwareMachineId, nameof(vmwareMachineId));
+            Argument.AssertNotNull(disksToInclude, nameof(disksToInclude));
+            Argument.AssertNotNull(dataMoverRunAsAccountId, nameof(dataMoverRunAsAccountId));
+            Argument.AssertNotNull(snapshotRunAsAccountId, nameof(snapshotRunAsAccountId));
+            Argument.AssertNotNull(targetResourceGroupId, nameof(targetResourceGroupId));
+            Argument.AssertNotNull(targetNetworkId, nameof(targetNetworkId));
 
             VMwareMachineId = vmwareMachineId;
             DisksToInclude = disksToInclude.ToList();
@@ -71,6 +53,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public LicenseType? LicenseType { get; set; }
         /// <summary> The SQL Server license type. </summary>
         public SqlServerLicenseType? SqlServerLicenseType { get; set; }
+        /// <summary> A value indicating whether bulk SQL RP registration to be done. </summary>
+        public string PerformSqlBulkRegistration { get; set; }
         /// <summary> The data mover run as account Id. </summary>
         public string DataMoverRunAsAccountId { get; }
         /// <summary> The snapshot run as account Id. </summary>

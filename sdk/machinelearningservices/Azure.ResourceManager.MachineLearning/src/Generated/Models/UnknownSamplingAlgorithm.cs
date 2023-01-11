@@ -7,11 +7,17 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownSamplingAlgorithm. </summary>
+    /// <summary>
+    /// The UnknownSamplingAlgorithm.
+    /// Serialized Name: UnknownSamplingAlgorithm
+    /// </summary>
     internal partial class UnknownSamplingAlgorithm : SamplingAlgorithm
     {
         /// <summary> Initializes a new instance of UnknownSamplingAlgorithm. </summary>
-        /// <param name="samplingAlgorithmType"> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </param>
+        /// <param name="samplingAlgorithmType">
+        /// [Required] The algorithm used for generating hyperparameter values, along with configuration properties
+        /// Serialized Name: SamplingAlgorithm.samplingAlgorithmType
+        /// </param>
         internal UnknownSamplingAlgorithm(SamplingAlgorithmType samplingAlgorithmType) : base(samplingAlgorithmType)
         {
             SamplingAlgorithmType = samplingAlgorithmType;

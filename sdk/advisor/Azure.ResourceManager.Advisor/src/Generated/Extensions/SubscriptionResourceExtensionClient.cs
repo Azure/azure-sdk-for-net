@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.Advisor
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConfigData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConfigData> GetConfigurationsBySubscriptionAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConfigData> GetConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<ConfigData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ConfigurationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurationsBySubscription");
+                using var scope = ConfigurationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurations");
                 scope.Start();
                 try
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Advisor
             }
             async Task<Page<ConfigData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ConfigurationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurationsBySubscription");
+                using var scope = ConfigurationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurations");
                 scope.Start();
                 try
                 {
@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.Advisor
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConfigData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConfigData> GetConfigurationsBySubscription(CancellationToken cancellationToken = default)
+        public virtual Pageable<ConfigData> GetConfigurations(CancellationToken cancellationToken = default)
         {
             Page<ConfigData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ConfigurationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurationsBySubscription");
+                using var scope = ConfigurationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurations");
                 scope.Start();
                 try
                 {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Advisor
             }
             Page<ConfigData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ConfigurationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurationsBySubscription");
+                using var scope = ConfigurationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetConfigurations");
                 scope.Start();
                 try
                 {
@@ -144,9 +144,9 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConfigData>> CreateInSubscriptionConfigurationAsync(ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigData>> CreateConfigurationAsync(ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
         {
-            using var scope = ConfigurationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CreateInSubscriptionConfiguration");
+            using var scope = ConfigurationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CreateConfiguration");
             scope.Start();
             try
             {
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConfigData> CreateInSubscriptionConfiguration(ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigData> CreateConfiguration(ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
         {
-            using var scope = ConfigurationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CreateInSubscriptionConfiguration");
+            using var scope = ConfigurationsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CreateConfiguration");
             scope.Start();
             try
             {

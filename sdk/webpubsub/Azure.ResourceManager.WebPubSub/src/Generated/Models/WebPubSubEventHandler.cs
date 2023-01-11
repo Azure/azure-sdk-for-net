@@ -22,10 +22,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="urlTemplate"/> is null. </exception>
         public WebPubSubEventHandler(string urlTemplate)
         {
-            if (urlTemplate == null)
-            {
-                throw new ArgumentNullException(nameof(urlTemplate));
-            }
+            Argument.AssertNotNull(urlTemplate, nameof(urlTemplate));
 
             UrlTemplate = urlTemplate;
             SystemEvents = new ChangeTrackingList<string>();
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         ///     3. The single event name, for example, &quot;event1&quot;, it matches &quot;event1&quot;
         /// </param>
         /// <param name="systemEvents"> Gets ot sets the list of system events. </param>
-        /// <param name="auth"> Gets or sets the auth settings for an event handler. If not set, no auth is used. </param>
+        /// <param name="auth"> Upstream auth settings. If not set, no auth is used for upstream messages. </param>
         internal WebPubSubEventHandler(string urlTemplate, string userEventPattern, IList<string> systemEvents, UpstreamAuthSettings auth)
         {
             UrlTemplate = urlTemplate;
@@ -68,7 +65,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public string UserEventPattern { get; set; }
         /// <summary> Gets ot sets the list of system events. </summary>
         public IList<string> SystemEvents { get; }
-        /// <summary> Gets or sets the auth settings for an event handler. If not set, no auth is used. </summary>
+        /// <summary> Upstream auth settings. If not set, no auth is used for upstream messages. </summary>
         public UpstreamAuthSettings Auth { get; set; }
     }
 }

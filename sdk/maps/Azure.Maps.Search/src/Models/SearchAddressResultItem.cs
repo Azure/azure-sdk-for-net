@@ -26,12 +26,14 @@ namespace Azure.Maps.Search.Models
 
         /// <summary>
         /// One of:
-        /// * POI
-        /// * Street
-        /// * Geography
-        /// * Point Address
-        /// * Address Range
-        /// * Cross Street
+        /// <list>
+        /// <item><description> POI </description></item>
+        /// <item><description> Street </description></item>
+        /// <item><description> Geography </description></item>
+        /// <item><description> Point Address </description></item>
+        /// <item><description> Address Range </description></item>
+        /// <item><description> Cross Street </description></item>
+        /// </list>
         /// </summary>
         [CodeGenMember("Type")]
         public SearchAddressResultType? SearchAddressResultType { get; }

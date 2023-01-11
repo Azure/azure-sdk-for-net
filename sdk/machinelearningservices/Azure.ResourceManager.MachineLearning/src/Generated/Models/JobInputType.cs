@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Enum to determine the Job Input Type. </summary>
+    /// <summary>
+    /// Enum to determine the Job Input Type.
+    /// Serialized Name: JobInputType
+    /// </summary>
     internal readonly partial struct JobInputType : IEquatable<JobInputType>
     {
         private readonly string _value;
@@ -22,27 +25,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string LiteralValue = "Literal";
-        private const string UriFileValue = "UriFile";
-        private const string UriFolderValue = "UriFolder";
-        private const string MLTableValue = "MLTable";
-        private const string CustomModelValue = "CustomModel";
-        private const string MLFlowModelValue = "MLFlowModel";
-        private const string TritonModelValue = "TritonModel";
+        private const string LiteralValue = "literal";
+        private const string UriFileValue = "uri_file";
+        private const string UriFolderValue = "uri_folder";
+        private const string MltableValue = "mltable";
+        private const string CustomModelValue = "custom_model";
+        private const string MlflowModelValue = "mlflow_model";
+        private const string TritonModelValue = "triton_model";
 
-        /// <summary> Literal. </summary>
+        /// <summary>
+        /// literal
+        /// Serialized Name: JobInputType.literal
+        /// </summary>
         public static JobInputType Literal { get; } = new JobInputType(LiteralValue);
-        /// <summary> UriFile. </summary>
+        /// <summary>
+        /// uri_file
+        /// Serialized Name: JobInputType.uri_file
+        /// </summary>
         public static JobInputType UriFile { get; } = new JobInputType(UriFileValue);
-        /// <summary> UriFolder. </summary>
+        /// <summary>
+        /// uri_folder
+        /// Serialized Name: JobInputType.uri_folder
+        /// </summary>
         public static JobInputType UriFolder { get; } = new JobInputType(UriFolderValue);
-        /// <summary> MLTable. </summary>
-        public static JobInputType MLTable { get; } = new JobInputType(MLTableValue);
-        /// <summary> CustomModel. </summary>
+        /// <summary>
+        /// mltable
+        /// Serialized Name: JobInputType.mltable
+        /// </summary>
+        public static JobInputType Mltable { get; } = new JobInputType(MltableValue);
+        /// <summary>
+        /// custom_model
+        /// Serialized Name: JobInputType.custom_model
+        /// </summary>
         public static JobInputType CustomModel { get; } = new JobInputType(CustomModelValue);
-        /// <summary> MLFlowModel. </summary>
-        public static JobInputType MLFlowModel { get; } = new JobInputType(MLFlowModelValue);
-        /// <summary> TritonModel. </summary>
+        /// <summary>
+        /// mlflow_model
+        /// Serialized Name: JobInputType.mlflow_model
+        /// </summary>
+        public static JobInputType MlflowModel { get; } = new JobInputType(MlflowModelValue);
+        /// <summary>
+        /// triton_model
+        /// Serialized Name: JobInputType.triton_model
+        /// </summary>
         public static JobInputType TritonModel { get; } = new JobInputType(TritonModelValue);
         /// <summary> Determines if two <see cref="JobInputType"/> values are the same. </summary>
         public static bool operator ==(JobInputType left, JobInputType right) => left.Equals(right);

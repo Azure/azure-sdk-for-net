@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         [SetUp]
         public async Task CreateCommonClient()
         {
-            Client = GetArmClient();
+            Client = GetArmClient(enableDeleteAfter: true);
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
         }
 

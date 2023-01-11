@@ -8,8 +8,8 @@ using Azure.Core;
 namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
-    ///   Contains information about a partition whose processing surfaced an exception, as well as
-    ///   the exception that occurred.
+    ///   Contains information about an exception that occurred within the processor, whether for a specific partition
+    ///   or as part of the processor's internal operations.
     /// </summary>
     ///
     /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
@@ -17,7 +17,8 @@ namespace Azure.Messaging.EventHubs.Processor
     public struct ProcessErrorEventArgs
     {
         /// <summary>
-        ///   The identifier of the partition being processed when the exception occurred.
+        ///   The identifier of the partition being processed when the exception occurred.  If the exception did
+        ///   not occur for a specific partition, this value will be <c>null</c>.
         /// </summary>
         ///
         public string PartitionId { get; }
@@ -29,7 +30,7 @@ namespace Azure.Messaging.EventHubs.Processor
         public string Operation { get; }
 
         /// <summary>
-        ///   The exception that was occurred during partition processing.
+        ///   The exception that was occurred during processing.
         /// </summary>
         ///
         public Exception Exception { get; }

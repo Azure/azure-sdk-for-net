@@ -634,6 +634,44 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
+        #region MongoDBRoleDefinitionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MongoDBRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MongoDBRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="MongoDBRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MongoDBRoleDefinitionResource" /> object. </returns>
+        public static MongoDBRoleDefinitionResource GetMongoDBRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MongoDBRoleDefinitionResource.ValidateResourceId(id);
+                return new MongoDBRoleDefinitionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region MongoDBUserDefinitionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MongoDBUserDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MongoDBUserDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="MongoDBUserDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MongoDBUserDefinitionResource" /> object. </returns>
+        public static MongoDBUserDefinitionResource GetMongoDBUserDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MongoDBUserDefinitionResource.ValidateResourceId(id);
+                return new MongoDBUserDefinitionResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         #region CosmosDBTableResource
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBTableResource" /> along with the instance operations that can be performed on it but with no data.

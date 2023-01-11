@@ -22,10 +22,7 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public MapsAccountData(AzureLocation location, MapsSku sku) : base(location)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
         }
@@ -39,22 +36,18 @@ namespace Azure.ResourceManager.Maps
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU of this account. </param>
         /// <param name="kind"> Get or Set Kind property. </param>
-        /// <param name="identity"> Sets the identity property for maps account. </param>
         /// <param name="properties"> The map account properties. </param>
-        internal MapsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MapsSku sku, MapsKind? kind, ManagedServiceIdentity identity, MapsAccountProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal MapsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MapsSku sku, MapsAccountKind? kind, MapsAccountProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
-            Identity = identity;
             Properties = properties;
         }
 
         /// <summary> The SKU of this account. </summary>
         public MapsSku Sku { get; set; }
         /// <summary> Get or Set Kind property. </summary>
-        public MapsKind? Kind { get; set; }
-        /// <summary> Sets the identity property for maps account. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
+        public MapsAccountKind? Kind { get; set; }
         /// <summary> The map account properties. </summary>
         public MapsAccountProperties Properties { get; set; }
     }

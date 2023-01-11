@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -144,6 +143,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "Paypal": return PaypalLinkedService.DeserializePaypalLinkedService(element);
                     case "Phoenix": return PhoenixLinkedService.DeserializePhoenixLinkedService(element);
                     case "PostgreSql": return PostgreSqlLinkedService.DeserializePostgreSqlLinkedService(element);
+                    case "PowerBIWorkspace": return PowerBIWorkspaceLinkedService.DeserializePowerBIWorkspaceLinkedService(element);
                     case "Presto": return PrestoLinkedService.DeserializePrestoLinkedService(element);
                     case "QuickBooks": return QuickBooksLinkedService.DeserializeQuickBooksLinkedService(element);
                     case "Quickbase": return QuickbaseLinkedService.DeserializeQuickbaseLinkedService(element);
@@ -179,69 +179,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "Zoho": return ZohoLinkedService.DeserializeZohoLinkedService(element);
                 }
             }
-            string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("connectVia"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("description"))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("parameters"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    Dictionary<string, ParameterSpecification> dictionary = new Dictionary<string, ParameterSpecification>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, ParameterSpecification.DeserializeParameterSpecification(property0.Value));
-                    }
-                    parameters = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("annotations"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<object> array = new List<object>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetObject());
-                    }
-                    annotations = array;
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
-            }
-            additionalProperties = additionalPropertiesDictionary;
-            return new LinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties);
+            return UnknownLinkedService.DeserializeUnknownLinkedService(element);
         }
 
         internal partial class LinkedServiceConverter : JsonConverter<LinkedService>

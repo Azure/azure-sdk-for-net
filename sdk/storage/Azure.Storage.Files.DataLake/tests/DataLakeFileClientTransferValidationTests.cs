@@ -68,7 +68,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             return await client.AppendAsync(source, 0, new DataLakeFileAppendOptions
             {
-                TransferValidationOptions = hashingOptions
+                TransferValidation = hashingOptions
             });
         }
 
@@ -76,7 +76,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             var response = await client.ReadAsync(new DataLakeFileReadOptions
             {
-                TransferValidationOptions = hashingOptions,
+                TransferValidation = hashingOptions,
                 Range = range
             });
 
@@ -88,7 +88,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             await client.UploadAsync(source, new DataLakeFileUploadOptions
             {
-                TransferValidationOptions = hashingOptions,
+                TransferValidation = hashingOptions,
                 TransferOptions = transferOptions
             });
         }
@@ -97,7 +97,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             await client.ReadToAsync(destination, new DataLakeFileReadToOptions
             {
-                TransferValidationOptions = hashingOptions,
+                TransferValidation = hashingOptions,
                 TransferOptions = transferOptions
             });
         }
@@ -106,7 +106,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             return await client.OpenWriteAsync(true, new DataLakeFileOpenWriteOptions
             {
-                TransferValidationOptions = hashingOptions,
+                TransferValidation = hashingOptions,
                 BufferSize = internalBufferSize
             });
         }
@@ -115,7 +115,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
             return await client.OpenReadAsync(new DataLakeOpenReadOptions(false)
             {
-                TransferValidationOptions = hashingOptions,
+                TransferValidation = hashingOptions,
                 BufferSize = internalBufferSize
             });
         }

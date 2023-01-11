@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Represents a machine that is part of a machine group. </summary>
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="recommendationAction"> The recommendation action of the machine or rule. </param>
         /// <param name="resourceId"> The full resource id of the machine. </param>
         /// <param name="enforcementSupport"> The machine supportability of Enforce feature. </param>
-        internal VmRecommendation(ConfigurationStatus? configurationStatus, RecommendationAction? recommendationAction, string resourceId, EnforcementSupport? enforcementSupport)
+        internal VmRecommendation(SecurityCenterConfigurationStatus? configurationStatus, RecommendationAction? recommendationAction, ResourceIdentifier resourceId, SecurityCenterVmEnforcementSupportState? enforcementSupport)
         {
             ConfigurationStatus = configurationStatus;
             RecommendationAction = recommendationAction;
@@ -29,12 +31,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> The configuration status of the machines group or machine or rule. </summary>
-        public ConfigurationStatus? ConfigurationStatus { get; set; }
+        public SecurityCenterConfigurationStatus? ConfigurationStatus { get; set; }
         /// <summary> The recommendation action of the machine or rule. </summary>
         public RecommendationAction? RecommendationAction { get; set; }
         /// <summary> The full resource id of the machine. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The machine supportability of Enforce feature. </summary>
-        public EnforcementSupport? EnforcementSupport { get; set; }
+        public SecurityCenterVmEnforcementSupportState? EnforcementSupport { get; set; }
     }
 }

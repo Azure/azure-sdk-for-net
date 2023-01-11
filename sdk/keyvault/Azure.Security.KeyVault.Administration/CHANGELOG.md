@@ -1,6 +1,6 @@
 # Release History
 
-## 4.3.0-beta.1 (Unreleased)
+## 4.3.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.3.0-beta.1 (2022-11-09)
+
+### Features Added
+
+- Added `KeyVaultSettingsClient` to get and update Managed HSM settings.
+
+### Other Changes
+
+- The default service version is now "7.4-preview.1".
 
 ## 4.2.0 (2022-09-20)
 

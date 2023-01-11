@@ -5,4 +5,7 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Media.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\StreamingEndpointTests\" />
+  </ItemGroup>
 </Project>

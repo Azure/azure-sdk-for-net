@@ -57,7 +57,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://seancanaryversioning.queue.core.windows.net/test-queue-0f013590-ae6b-48e8-d76c-d8b64cb1a0ec?sv=2021-10-04\u0026ss=bqtf\u0026srt=sco\u0026se=2022-07-15T15%3A22%3A30Z\u0026sp=cudypafitrwl\u0026sig=Sanitized\u0026comp=metadata",
+      "RequestUri": "https://seancanaryversioning.queue.core.windows.net/test-queue-0f013590-ae6b-48e8-d76c-d8b64cb1a0ec?sv=2021-12-02\u0026ss=bqtf\u0026srt=sco\u0026se=2022-07-15T15%3A22%3A30Z\u0026sp=cudypafitrwl\u0026sig=Sanitized\u0026comp=metadata",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/xml",

@@ -5,8 +5,8 @@
           "OSVmImage": "MMSUbuntu20.04",
           "Pool": "azsdk-pool-mms-ubuntu-2004-storage"
       },
-      "windows-2019": {
-          "OSVmImage": "MMS2019",
+      "windows-2022": {
+          "OSVmImage": "MMS2022",
           "Pool": "azsdk-pool-mms-win-2019-storage"
       }
     },
@@ -28,7 +28,8 @@
         "V2021_04_10",
         "V2021_06_08",
         "V2021_08_06",
-        "V2021_10_04"
+        "V2021_10_04",
+        "V2021_12_02"
     ]
   }
 }
