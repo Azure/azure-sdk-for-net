@@ -5,6 +5,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.ServiceProcess;
 using System.Threading.Tasks;
@@ -194,20 +195,17 @@ namespace ServerManagement.Tests
         {
             get
             {
-                if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
-                    // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/33404
-                    // Returning false should be safe since recording on other platforms would've failed as written.
-                    return false;
+                    try
+                    {
+                        return new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
+                    }
+                    catch
+                    {
+                    }
                 }
 
-                try
-                {
-                    return new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
-                }
-                catch
-                {
-                }
                 return false;
             }
         }
