@@ -868,7 +868,7 @@ var data = new {
     poolName = "<poolName>",
 };
 
-var operation = await client.CreateDevBoxAsync(WaitUntil.Completed, "<devBoxName>", RequestContent.Create(data));
+var operation = await client.CreateDevBoxAsync(WaitUntil.Started, "<devBoxName>", RequestContent.Create(data));
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -884,7 +884,7 @@ var data = new {
     localAdministrator = "Enabled",
 };
 
-var operation = await client.CreateDevBoxAsync(WaitUntil.Completed, "<devBoxName>", RequestContent.Create(data), <me>);
+var operation = await client.CreateDevBoxAsync(WaitUntil.Started, "<devBoxName>", RequestContent.Create(data), <me>);
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1009,7 +1009,7 @@ var data = new {
     poolName = "<poolName>",
 };
 
-var operation = client.CreateDevBox(WaitUntil.Completed, "<devBoxName>", RequestContent.Create(data));
+var operation = client.CreateDevBox(WaitUntil.Started, "<devBoxName>", RequestContent.Create(data));
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1025,7 +1025,7 @@ var data = new {
     localAdministrator = "Enabled",
 };
 
-var operation = client.CreateDevBox(WaitUntil.Completed, "<devBoxName>", RequestContent.Create(data), <me>);
+var operation = client.CreateDevBox(WaitUntil.Started, "<devBoxName>", RequestContent.Create(data), <me>);
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1146,7 +1146,7 @@ This sample shows how to call DeleteDevBoxAsync with required parameters and par
 var credential = new DefaultAzureCredential();
 var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
 
-var operation = await client.DeleteDevBoxAsync(WaitUntil.Completed, "<devBoxName>");
+var operation = await client.DeleteDevBoxAsync(WaitUntil.Started, "<devBoxName>");
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1157,7 +1157,7 @@ This sample shows how to call DeleteDevBoxAsync with all parameters, and how to 
 var credential = new DefaultAzureCredential();
 var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
 
-var operation = await client.DeleteDevBoxAsync(WaitUntil.Completed, "<devBoxName>", <me>);
+var operation = await client.DeleteDevBoxAsync(WaitUntil.Started, "<devBoxName>", <me>);
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1238,7 +1238,7 @@ This sample shows how to call DeleteDevBox with required parameters and parse th
 var credential = new DefaultAzureCredential();
 var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
 
-var operation = client.DeleteDevBox(WaitUntil.Completed, "<devBoxName>");
+var operation = client.DeleteDevBox(WaitUntil.Started, "<devBoxName>");
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1249,7 +1249,7 @@ This sample shows how to call DeleteDevBox with all parameters, and how to parse
 var credential = new DefaultAzureCredential();
 var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
 
-var operation = client.DeleteDevBox(WaitUntil.Completed, "<devBoxName>", <me>);
+var operation = client.DeleteDevBox(WaitUntil.Started, "<devBoxName>", <me>);
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1330,7 +1330,7 @@ This sample shows how to call StartDevBoxAsync with required parameters and pars
 var credential = new DefaultAzureCredential();
 var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
 
-var operation = await client.StartDevBoxAsync(WaitUntil.Completed, "<devBoxName>");
+var operation = await client.StartDevBoxAsync(WaitUntil.Started, "<devBoxName>");
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1341,7 +1341,7 @@ This sample shows how to call StartDevBoxAsync with all parameters, and how to p
 var credential = new DefaultAzureCredential();
 var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
 
-var operation = await client.StartDevBoxAsync(WaitUntil.Completed, "<devBoxName>", <me>);
+var operation = await client.StartDevBoxAsync(WaitUntil.Started, "<devBoxName>", <me>);
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1422,7 +1422,7 @@ This sample shows how to call StartDevBox with required parameters and parse the
 var credential = new DefaultAzureCredential();
 var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
 
-var operation = client.StartDevBox(WaitUntil.Completed, "<devBoxName>");
+var operation = client.StartDevBox(WaitUntil.Started, "<devBoxName>");
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1433,7 +1433,7 @@ This sample shows how to call StartDevBox with all parameters, and how to parse 
 var credential = new DefaultAzureCredential();
 var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
 
-var operation = client.StartDevBox(WaitUntil.Completed, "<devBoxName>", <me>);
+var operation = client.StartDevBox(WaitUntil.Started, "<devBoxName>", <me>);
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1514,7 +1514,7 @@ This sample shows how to call StopDevBoxAsync with required parameters and parse
 var credential = new DefaultAzureCredential();
 var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
 
-var operation = await client.StopDevBoxAsync(WaitUntil.Completed, "<devBoxName>");
+var operation = await client.StopDevBoxAsync(WaitUntil.Started, "<devBoxName>");
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1525,7 +1525,7 @@ This sample shows how to call StopDevBoxAsync with all parameters, and how to pa
 var credential = new DefaultAzureCredential();
 var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
 
-var operation = await client.StopDevBoxAsync(WaitUntil.Completed, "<devBoxName>", <me>);
+var operation = await client.StopDevBoxAsync(WaitUntil.Started, "<devBoxName>", <me>);
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1606,7 +1606,7 @@ This sample shows how to call StopDevBox with required parameters and parse the 
 var credential = new DefaultAzureCredential();
 var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
 
-var operation = client.StopDevBox(WaitUntil.Completed, "<devBoxName>");
+var operation = client.StopDevBox(WaitUntil.Started, "<devBoxName>");
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1617,7 +1617,7 @@ This sample shows how to call StopDevBox with all parameters, and how to parse t
 var credential = new DefaultAzureCredential();
 var client = new DevBoxesClient("<tenantId>", "<devCenter>", "<projectName>", credential);
 
-var operation = client.StopDevBox(WaitUntil.Completed, "<devBoxName>", <me>);
+var operation = client.StopDevBox(WaitUntil.Started, "<devBoxName>", <me>);
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;

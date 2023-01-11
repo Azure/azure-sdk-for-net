@@ -43,8 +43,11 @@ namespace Azure.Storage.Files.DataLake.Samples
             await file.CreateAsync();
 
             // Verify we created one file
-            AsyncPageable<PathItem> response = filesystem.GetPathsAsync();
-            IList<PathItem> paths = await response.ToListAsync();
+            List<PathItem> paths = new List<PathItem>();
+            await foreach (PathItem path in filesystem.GetPathsAsync())
+            {
+                paths.Add(path);
+            }
             Assert.AreEqual(1, paths.Count);
 
             // Cleanup
@@ -80,8 +83,11 @@ namespace Azure.Storage.Files.DataLake.Samples
             await file.CreateAsync();
 
             // Verify we created one file
-            AsyncPageable<PathItem> response = filesystem.GetPathsAsync();
-            IList<PathItem> paths = await response.ToListAsync();
+            List<PathItem> paths = new List<PathItem>();
+            await foreach (PathItem path in filesystem.GetPathsAsync())
+            {
+                paths.Add(path);
+            }
             Assert.AreEqual(1, paths.Count);
 
             // Cleanup
@@ -113,8 +119,11 @@ namespace Azure.Storage.Files.DataLake.Samples
             await directory.CreateAsync();
 
             // Verify we created one directory
-            AsyncPageable<PathItem> response = filesystem.GetPathsAsync();
-            IList<PathItem> paths = await response.ToListAsync();
+            List<PathItem> paths = new List<PathItem>();
+            await foreach (PathItem path in filesystem.GetPathsAsync())
+            {
+                paths.Add(path);
+            }
             Assert.AreEqual(1, paths.Count);
 
             // Cleanup
@@ -198,8 +207,11 @@ namespace Azure.Storage.Files.DataLake.Samples
                 await file.CreateAsync();
 
                 // Verify we created one file
-                AsyncPageable<PathItem> response = filesystem.GetPathsAsync();
-                IList<PathItem> paths = await response.ToListAsync();
+                List<PathItem> paths = new List<PathItem>();
+                await foreach (PathItem path in filesystem.GetPathsAsync())
+                {
+                    paths.Add(path);
+                }
                 Assert.AreEqual(1, paths.Count);
 
                 // Append data to an existing DataLake File.  Append is currently limited to 4000 MB per call.
