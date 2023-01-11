@@ -33,6 +33,7 @@ namespace Azure.Identity.Tests
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeAzureCliCredential = true,
+                ExcludeAzureDeveloperCliCredential = true,
                 ExcludeVisualStudioCodeCredential = false,
             });
 
@@ -72,6 +73,7 @@ namespace Azure.Identity.Tests
                 ExcludeManagedIdentityCredential = true,
                 ExcludeVisualStudioCredential = true,
                 ExcludeAzureCliCredential = true,
+                ExcludeAzureDeveloperCliCredential = true,
                 ExcludeVisualStudioCodeCredential = false,
                 VisualStudioCodeTenantId = TestEnvironment.TestTenantId
             });
@@ -111,6 +113,7 @@ namespace Azure.Identity.Tests
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
                 ExcludeAzureCliCredential = true,
+                ExcludeAzureDeveloperCliCredential = true,
                 ExcludeVisualStudioCodeCredential = false,
                 VisualStudioCodeTenantId = TestEnvironment.TestTenantId
             });
@@ -153,15 +156,23 @@ namespace Azure.Identity.Tests
             });
 
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
+            var (expectedTokenAzd, expectedExpiresOnAzd, processOutputAzd) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
             var testProcess = new TestProcess { Output = processOutput };
+            var testProcessAzd = new TestProcess { Output = processOutputAzd };
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", null);
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment);
 
             var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, new TestProcessService(testProcess), vscAdapter);
             var credential = InstrumentClient(new DefaultAzureCredential(factory));
 
+            var factoryAzd = new TestDefaultAzureCredentialFactory(options, fileSystem, new TestProcessService(testProcessAzd), vscAdapter);
+            var credentialAzd = InstrumentClient(new DefaultAzureCredential(factoryAzd));
+
             AccessToken token;
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
+
+            AccessToken tokenAzd;
+            List<ClientDiagnosticListener.ProducedDiagnosticScope> scopesAzd;
 
             using (ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure.Identity")))
             {
@@ -169,12 +180,26 @@ namespace Azure.Identity.Tests
                 scopes = diagnosticListener.Scopes;
             }
 
+            using (ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure.Identity")))
+            {
+                tokenAzd = await credential.GetTokenAsync(new TokenRequestContext(new[] {TestEnvironment.KeyvaultScope}), CancellationToken.None);
+                scopesAzd = diagnosticListener.Scopes;
+            }
+
+            
             Assert.AreEqual(token.Token, expectedToken);
             Assert.AreEqual(token.ExpiresOn, expectedExpiresOn);
+
+            Assert.AreEqual(tokenAzd.Token, expectedTokenAzd);
+            Assert.AreEqual(tokenAzd.ExpiresOn, expectedExpiresOnAzd);
 
             Assert.AreEqual(2, scopes.Count);
             Assert.AreEqual($"{nameof(DefaultAzureCredential)}.{nameof(DefaultAzureCredential.GetToken)}", scopes[0].Name);
             Assert.AreEqual($"{nameof(AzureCliCredential)}.{nameof(AzureCliCredential.GetToken)}", scopes[1].Name);
+
+            Assert.AreEqual(2, scopesAzd.Count);
+            Assert.AreEqual($"{nameof(DefaultAzureCredential)}.{nameof(DefaultAzureCredential.GetToken)}", scopesAzd[0].Name);
+            Assert.AreEqual($"{nameof(AzureDeveloperCliCredential)}.{nameof(AzureDeveloperCliCredential.GetToken)}", scopesAzd[1].Name);
         }
 
         [RecordedTest]
@@ -192,12 +217,17 @@ namespace Azure.Identity.Tests
             });
 
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
+            var (expectedTokenAzd, expectedExpiresOnAzd, processOutputAzd) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
             var processService = new TestProcessService { CreateHandler = psi => new TestProcess { Output = processOutput }};
+            var processServiceAzd = new TestProcessService { CreateHandler = psi => new TestProcess { Output = processOutputAzd }};
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", null);
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment);
 
             var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, processService, vscAdapter);
             var credential = InstrumentClient(new DefaultAzureCredential(factory));
+
+            var factoryAzd = new TestDefaultAzureCredentialFactory(options, fileSystem, processServiceAzd, vscAdapter);
+            var credentialAzd = InstrumentClient(new DefaultAzureCredential(factoryAzd));
 
             var tasks = new List<Task<AccessToken>>();
             for (int i = 0; i < 10; i++)
@@ -211,6 +241,20 @@ namespace Azure.Identity.Tests
             {
                 Assert.AreEqual(task.Result.Token, expectedToken);
                 Assert.AreEqual(task.Result.ExpiresOn, expectedExpiresOn);
+            }
+
+            var tasksAzd = new List<Task<AccessToken>>();
+            for (int i = 0; i < 10; i++)
+            {
+                tasksAzd.Add(Task.Run(async () => await credentialAzd.GetTokenAsync(new TokenRequestContext(new[] {TestEnvironment.KeyvaultScope}), CancellationToken.None)));
+            }
+
+            await Task.WhenAll(tasksAzd);
+
+            foreach (Task<AccessToken> task in tasksAzd)
+            {
+                Assert.AreEqual(task.Result.Token, expectedTokenAzd);
+                Assert.AreEqual(task.Result.ExpiresOn, expectedExpiresOnAzd);
             }
         }
 
@@ -238,12 +282,13 @@ namespace Azure.Identity.Tests
                 scopes = diagnosticListener.Scopes;
             }
 
-            Assert.AreEqual(5, scopes.Count);
+            Assert.AreEqual(6, scopes.Count);
             Assert.AreEqual($"{nameof(DefaultAzureCredential)}.{nameof(DefaultAzureCredential.GetToken)}", scopes[0].Name);
             Assert.AreEqual($"{nameof(VisualStudioCredential)}.{nameof(VisualStudioCredential.GetToken)}", scopes[1].Name);
             Assert.AreEqual($"{nameof(VisualStudioCodeCredential)}.{nameof(VisualStudioCodeCredential.GetToken)}", scopes[2].Name);
             Assert.AreEqual($"{nameof(AzureCliCredential)}.{nameof(AzureCliCredential.GetToken)}", scopes[3].Name);
-            Assert.AreEqual($"{nameof(AzurePowerShellCredential)}.{nameof(AzurePowerShellCredential.GetToken)}", scopes[4].Name);
+            Assert.AreEqual($"{nameof(AzureDeveloperCliCredential)}.{nameof(AzureDeveloperCliCredential.GetToken)}", scopes[4].Name);
+            Assert.AreEqual($"{nameof(AzurePowerShellCredential)}.{nameof(AzurePowerShellCredential.GetToken)}", scopes[5].Name);
         }
 
         [RecordedTest]
@@ -270,11 +315,12 @@ namespace Azure.Identity.Tests
                 scopes = diagnosticListener.Scopes;
             }
 
-            Assert.AreEqual(4, scopes.Count);
+            Assert.AreEqual(5, scopes.Count);
             Assert.AreEqual($"{nameof(DefaultAzureCredential)}.{nameof(DefaultAzureCredential.GetToken)}", scopes[0].Name);
             Assert.AreEqual($"{nameof(VisualStudioCredential)}.{nameof(VisualStudioCredential.GetToken)}", scopes[1].Name);
             Assert.AreEqual($"{nameof(VisualStudioCodeCredential)}.{nameof(VisualStudioCodeCredential.GetToken)}", scopes[2].Name);
             Assert.AreEqual($"{nameof(AzureCliCredential)}.{nameof(AzureCliCredential.GetToken)}", scopes[3].Name);
+            Assert.AreEqual($"{nameof(AzureDeveloperCliCredential)}.{nameof(AzureDeveloperCliCredential.GetToken)}", scopes[4].Name);
         }
 
         [RecordedTest]
@@ -301,11 +347,12 @@ namespace Azure.Identity.Tests
                 scopes = diagnosticListener.Scopes;
             }
 
-            Assert.AreEqual(4, scopes.Count);
+            Assert.AreEqual(5, scopes.Count);
             Assert.AreEqual($"{nameof(DefaultAzureCredential)}.{nameof(DefaultAzureCredential.GetToken)}", scopes[0].Name);
             Assert.AreEqual($"{nameof(VisualStudioCredential)}.{nameof(VisualStudioCredential.GetToken)}", scopes[1].Name);
             Assert.AreEqual($"{nameof(VisualStudioCodeCredential)}.{nameof(VisualStudioCodeCredential.GetToken)}", scopes[2].Name);
             Assert.AreEqual($"{nameof(AzureCliCredential)}.{nameof(AzureCliCredential.GetToken)}", scopes[3].Name);
+            Assert.AreEqual($"{nameof(AzureDeveloperCliCredential)}.{nameof(AzureDeveloperCliCredential.GetToken)}", scopes[4].Name);
         }
     }
 }

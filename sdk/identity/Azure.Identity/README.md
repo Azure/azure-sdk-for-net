@@ -48,6 +48,18 @@ For systems without a default web browser, the `az login` command will use the d
 
 ![Azure CLI Account Device Code Sign In][azure_cli_login_device_code_image]
 
+#### Authenticate via the Azure Developer CLI
+
+Developers coding outside of an IDE can also use the [Azure Developer CLI][azure_developer_cli] to authenticate. Applications using the `DefaultAzureCredential` or the `AzureDeveloperCliCredential` can then use this account to authenticate calls in their application when running locally.
+
+To authenticate with the [Azure Developer CLI][azure_developer_cli], users can run the command `azd login`. For users running on a system with a default web browser, the Azure Developer CLI will launch the browser to authenticate the user.
+
+![Azure Developer CLI Account Sign In][azure_developer_cli_login_image]
+
+For systems without a default web browser, the `azd login` command will use the device code authentication flow. The user can also force the Azure Developer CLI to use the device code flow rather than launching a browser by specifying the `--use-device-code` argument.
+
+![Azure Developer CLI Account Device Code Sign In][azure_developer_cli_login_device_code_image]
+
 #### Authenticate via Azure PowerShell
 
 Developers coding outside of an IDE can also use [Azure PowerShell][azure_powerShell] to authenticate. Applications using the `DefaultAzureCredential` or the `AzurePowerShellCredential` can then use this account to authenticate calls in their application when running locally.
@@ -203,6 +215,8 @@ Not all credentials require this configuration. Credentials which authenticate t
 |Credential | Usage | Reference
 |-|-|-
 |[`AzureCliCredential`][ref_AzureCliCredential]|Authenticates in a development environment with the Azure CLI. | [Azure CLI authentication](https://learn.microsoft.com/cli/azure/authenticate-azure-cli)
+%% TODO add link
+|[`AzureDeveloperCliCredential`][ref_AzureDeveloperCliCredential]|Authenticates in a development environment with the Azure Developer CLI. | [Azure Developer CLI authentication]()
 |[`AzurePowerShellCredential`][ref_AzurePowerShellCredential]|Authenticates in a development environment with the Azure PowerShell. | [Azure PowerShell authentication](https://learn.microsoft.com/powershell/azure/authenticate-azureps)
 |[`VisualStudioCredential`][ref_VisualStudioCredential]|Authenticates in a development environment with Visual Studio. | [Visual Studio configuration](https://learn.microsoft.com/dotnet/azure/configure-visual-studio)
 |[`VisualStudioCodeCredential`][ref_VisualStudioCodeCredential]| Authenticates as the user signed in to the Visual Studio Code Azure Account extension. | [VS Code Azure Account extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account)
@@ -340,6 +354,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [azure_cli]: https://learn.microsoft.com/cli/azure
+[azure_developer_cli]:https://aka.ms/azure-dev
 [azure_powerShell]: https://learn.microsoft.com/powershell/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/src
@@ -359,7 +374,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [identity_api_docs]: https://learn.microsoft.com/dotnet/api/azure.identity?view=azure-dotnet
 [vs_login_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/identity/Azure.Identity/images/VsLoginDialog.png
 [azure_cli_login_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/identity/Azure.Identity/images/AzureCliLogin.png
+%% TODO
+[azure_developer_cli_login_image]: 
 [azure_cli_login_device_code_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/identity/Azure.Identity/images/AzureCliLoginDeviceCode.png
+%% TODO
+[azure_developer_cli_login_device_code_image]:
 [default_azure_credential_authflow_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/identity/Azure.Identity/images/mermaidjs/DefaultAzureCredentialAuthFlow.svg
 [ref_DefaultAzureCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
 [ref_ChainedTokenCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.chainedtokencredential?view=azure-dotnet
@@ -374,6 +393,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [ref_AuthorizationCodeCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.authorizationcodecredential?view=azure-dotnet
 [ref_OnBehalfOfCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.onbehalfofcredential?view=azure-dotnet
 [ref_AzureCliCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.azureclicredential?view=azure-dotnet
+%% TODO
+[ref_AzureDeveloperCliCredential]:
 [ref_AzurePowerShellCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.azurepowershellcredential?view=azure-dotnet
 [ref_VisualStudioCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.visualstudiocredential?view=azure-dotnet
 [ref_VisualStudioCodeCredential]: https://learn.microsoft.com/dotnet/api/azure.identity.visualstudiocodecredential?view=azure-dotnet

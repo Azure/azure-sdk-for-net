@@ -224,6 +224,12 @@ namespace Azure.Identity.Tests
                 Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(13), cred.CliProcessTimeout);
                 Assert.AreEqual(expTenantId, cred.TenantId);
                 CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, cred.AdditionallyAllowedTenantIds);
+
+                AzureDeveloperCliCredential credAzd = (AzureDeveloperCliCredential)factory.CreateAzureDeveloperCliCredential();
+
+                Assert.AreEqual(expTimeout ?? TimeSpan.FromSeconds(13), credAzd.AzdCliProcessTimeout);
+                Assert.AreEqual(expTenantId, credAzd.TenantId);
+                CollectionAssert.AreEquivalent(expAdditionallyAllowedTenants, credAzd.AdditionallyAllowedTenantIds);
             }
         }
 
@@ -324,6 +330,7 @@ namespace Azure.Identity.Tests
                                                    [Values(true, false)] bool excludeVisualStudioCredential,
                                                    [Values(true, false)] bool excludeVisualStudioCodeCredential,
                                                    [Values(true, false)] bool excludeCliCredential,
+                                                   [Values(true, false)] bool excludeDeveloperCliCredential,
                                                    [Values(true, false)] bool excludeAzurePowerShellCredential,
                                                    [Values(true, false)] bool excludeInteractiveBrowserCredential)
         {
@@ -342,6 +349,7 @@ namespace Azure.Identity.Tests
                 expCredentialTypes.ConditionalAdd(!excludeVisualStudioCredential, typeof(VisualStudioCredential));
                 expCredentialTypes.ConditionalAdd(!excludeVisualStudioCodeCredential, typeof(VisualStudioCodeCredential));
                 expCredentialTypes.ConditionalAdd(!excludeCliCredential, typeof(AzureCliCredential));
+                expCredentialTypes.ConditionalAdd(!excludeDeveloperCliCredential, typeof(AzureDeveloperCliCredential));
                 expCredentialTypes.ConditionalAdd(!excludeAzurePowerShellCredential, typeof(AzurePowerShellCredential));
                 expCredentialTypes.ConditionalAdd(!excludeInteractiveBrowserCredential, typeof(InteractiveBrowserCredential));
 
@@ -351,6 +359,7 @@ namespace Azure.Identity.Tests
                     ExcludeManagedIdentityCredential = excludeManagedIdentityCredential,
                     ExcludeSharedTokenCacheCredential = excludeSharedTokenCacheCredential,
                     ExcludeAzureCliCredential = excludeCliCredential,
+                    ExcludeAzureDeveloperCliCredential = excludeDeveloperCliCredential,
                     ExcludeInteractiveBrowserCredential = excludeInteractiveBrowserCredential,
                     ExcludeVisualStudioCredential = excludeVisualStudioCredential,
                     ExcludeVisualStudioCodeCredential = excludeVisualStudioCodeCredential,

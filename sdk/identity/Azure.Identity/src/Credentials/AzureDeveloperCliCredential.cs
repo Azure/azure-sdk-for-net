@@ -1,0 +1,228 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Text.Json;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
+
+namespace Azure.Identity
+{
+    /// <summary>
+    /// Enables authentication to Azure Active Directory using Azure Developer CLI to obtain an access token.
+    /// </summary>
+    public class AzureDeveloperCliCredential : TokenCredential
+    {
+        internal const string AzdCliNotInstalled = $"Azure Developer CLI could not be found. {Troubleshoot}";
+        internal const string AzdNotLogIn = "Please run 'azd login' from a command prompt to authenticate before using this credential.";
+        internal const string WinAzdCliError = "'azd is not recognized";
+        internal const string AzdCliTimeoutError = "Azure Developer CLI authentication timed out.";
+        internal const string AzdCliFailedError = "Azure Developer CLI authentication failed due to an unknown error.";
+        internal const string Troubleshoot = "Please visit https://aka.ms/azure-dev for installation instructions and then, once installed, authenticate to your Azure account using 'azd login'.";
+        internal const string InteractiveLoginRequired = "Azure Developer CLI could not login. Interactive login is required.";
+        private const string RefreshTokeExpired = "The provided authorization code or refresh token has expired due to inactivity. Send a new interactive authorization request for this user and resource.";
+
+        internal const string AzdCLIInternalError = "AzdCLIInternalError: The command failed with an unexpected error. Here is the traceback:";
+        internal TimeSpan AzdCliProcessTimeout { get; private set; }
+
+        // The default install paths are used to find Azure Developer CLI if no path is specified. This is to prevent executing out of the current working directory.
+        private static readonly string DefaultPathWindows = $"{EnvironmentVariables.ProgramFilesX86}\\Microsoft SDKs\\Azure\\CLI2\\wbin;{EnvironmentVariables.ProgramFiles}\\Microsoft SDKs\\Azure\\CLI2\\wbin";
+        private static readonly string DefaultWorkingDirWindows = Environment.GetFolderPath(Environment.SpecialFolder.System);
+        private const string DefaultPathNonWindows = "/usr/bin:/usr/local/bin";
+        private const string DefaultWorkingDirNonWindows = "/bin/";
+        private const string RefreshTokeExpired = "The provided authorization code or refresh token has expired due to inactivity. Send a new interactive authorization request for this user and resource.";
+        private static readonly string DefaultPath = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultPathWindows : DefaultPathNonWindows;
+        private static readonly string DefaultWorkingDir = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultWorkingDirWindows : DefaultWorkingDirNonWindows;
+        private static readonly Regex AzdNotFoundPattern = new Regex("azd:(.*)not found");
+
+        private readonly string _path;
+
+        private readonly CredentialPipeline _pipeline;
+        private readonly IProcessService _processService;
+        private readonly bool _logPII;
+        private readonly bool _logAccountDetails;
+        internal string TenantId { get; }
+        internal string[] AdditionallyAllowedTenantIds { get; }
+
+        /// <summary>
+        /// Create an instance of CliCredential class.
+        /// </summary>
+        public AzureDeveloperCliCredential()
+            : this(CredentialPipeline.GetInstance(null), default)
+        { }
+
+        /// <summary>
+        /// Create an instance of DeveloperCliCredential class.
+        /// </summary>
+        /// <param name="options"> The Azure Active Directory tenant (directory) Id of the service principal. </param>
+        public AzureDeveloperCliCredential(AzureDeveloperCliCredentialOptions options)
+            : this(CredentialPipeline.GetInstance(null), default, options)
+        { }
+
+        internal AzureDeveloperCliCredential(CredentialPipeline pipeline, IProcessService processService, AzureDeveloperCliCredentialOptions options = null)
+        {
+            _logPII = options?.IsLoggingPIIEnabled ?? false;
+            _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
+            _pipeline = pipeline;
+            _path = !string.IsNullOrEmpty(EnvironmentVariables.Path) ? EnvironmentVariables.Path : DefaultPath;
+            _processService = processService ?? ProcessService.Default;
+            TenantId = options?.TenantId;
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
+            AzdCliProcessTimeout = options?.AzdCliProcessTimeout ?? TimeSpan.FromSeconds(13);
+        }
+
+        /// <summary>
+        /// Obtains a access token from Azure Developer CLI credential, using this access token to authenticate. This method called by Azure SDK clients.
+        /// </summary>
+        /// <param name="requestContext"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        //TODO 1
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
+        {
+            return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
+        }
+
+        /// <summary>
+        /// Obtains a access token from Azure Developer CLI service, using the access token to authenticate. This method id called by Azure SDK clients.
+        /// </summary>
+        /// <param name="requestContext"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
+        {
+            return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
+        }
+
+        private async ValueTask<AccessToken> GetTokenImplAsync(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
+            using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope("AzureDeveloperCliCredential.GetToken", requestContext);
+
+            try
+            {
+                AccessToken token = await RequestCliAccessTokenAsync(async, requestContext, cancellationToken).ConfigureAwait(false);
+                return scope.Succeeded(token);
+            }
+            catch (Exception e)
+            {
+                throw scope.FailWrapAndThrow(e);
+            }
+        }
+
+        private async ValueTask<AccessToken> RequestCliAccessTokenAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
+        {
+            string resource = ScopeUtilities.ScopesToResource(context.Scopes);
+            string tenantId = TenantIdResolver.Resolve(TenantId, context, AdditionallyAllowedTenantIds);
+
+            ScopeUtilities.ValidateScope(resource);
+
+            GetFileNameAndArguments(resource, tenantId, out string fileName, out string argument);
+            ProcessStartInfo processStartInfo = GetAzureDeveloperCliProcessStartInfo(fileName, argument);
+            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), AzdCliProcessTimeout, _logPII, cancellationToken);
+
+            string output;
+            try
+            {
+                output = async ? await processRunner.RunAsync().ConfigureAwait(false) : processRunner.Run();
+            }
+            catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
+            {
+                throw new AuthenticationFailedException(AzdCliTimeoutError);
+            }
+            catch (InvalidOperationException exception)
+            {
+                bool isWinError = exception.Message.StartsWith(WinAzdCliError, StringComparison.CurrentCultureIgnoreCase);
+
+                bool isOtherOsError = AzdNotFoundPattern.IsMatch(exception.Message);
+
+                if (isWinError || isOtherOsError)
+                {
+                    throw new CredentialUnavailableException(AzdCliNotInstalled);
+                }
+
+                /// TODO AADSTS
+                bool isAADSTSError = exception.Message.Contains("AADSTS");
+                bool isLoginError = exception.Message.IndexOf("azd login", StringComparison.OrdinalIgnoreCase) != -1 ||
+                                    exception.Message.IndexOf("azd account set", StringComparison.OrdinalIgnoreCase) != -1;
+
+                if (isLoginError && !isAADSTSError)
+                {
+                    throw new CredentialUnavailableException(AzdNotLogIn);
+                }
+
+                bool isRefreshTokenFailedError = exception.Message.IndexOf(AzdCliFailedError, StringComparison.OrdinalIgnoreCase) != -1 &&
+                                                 exception.Message.IndexOf(RefreshTokeExpired, StringComparison.OrdinalIgnoreCase) != -1 ||
+                                                 exception.Message.IndexOf("CLIInternalError", StringComparison.OrdinalIgnoreCase) != -1;
+
+                if (isRefreshTokenFailedError)
+                {
+                    throw new CredentialUnavailableException(InteractiveLoginRequired);
+                }
+
+                throw new AuthenticationFailedException($"{AzdCliFailedError} {Troubleshoot} {exception.Message}");
+            }
+
+            AccessToken token = DeserializeOutput(output);
+            if (_logAccountDetails)
+            {
+                var accountDetails = TokenHelper.ParseAccountInfoFromToken(token.Token);
+                AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? TenantId, accountDetails.Upn, accountDetails.ObjectId);
+            }
+
+            return token;
+        }
+
+        private ProcessStartInfo GetAzureDeveloperCliProcessStartInfo(string fileName, string argument) =>
+            new ProcessStartInfo
+            {
+                FileName = fileName,
+                Arguments = argument,
+                UseShellExecute = false,
+                ErrorDialog = false,
+                CreateNoWindow = true,
+                WorkingDirectory = DefaultWorkingDir,
+                Environment = { { "PATH", _path } }
+            };
+
+        private static void GetFileNameAndArguments(string[] scopes, string tenantId, out string fileName, out string argument)
+        {
+            string scopeArgs = string.Join(" ", scopes.Select(scope => string.Format($"--scope {scope}")));
+            string command = tenantId switch
+            {
+                null => $"azd auth token --output json {scopeArgs}",
+                _ => $"azd auth token --output json {scopeArgs} --tenant-id {tenantId}"
+            };
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "cmd.exe");
+                argument = $"/c \"{command}\"";
+            }
+            else
+            {
+                fileName = "/bin/sh";
+                argument = $"-c \"{command}\"";
+            }
+        }
+
+        private static AccessToken DeserializeOutput(string output)
+        {
+            using JsonDocument document = JsonDocument.Parse(output);
+
+            JsonElement root = document.RootElement;
+            string accessToken = root.GetProperty("token").GetString();
+            DateTimeOffset expiresOn = root.TryGetProperty("expiresIn", out JsonElement expiresIn)
+                ? DateTimeOffset.UtcNow + TimeSpan.FromSeconds(expiresIn.GetInt64())
+                : DateTimeOffset.ParseExact(root.GetProperty("expiresOn").GetString(), "%Y-%m-%dT%H:%M:%SZ", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
+
+            return new AccessToken(accessToken, expiresOn);
+        }
+    }
+}

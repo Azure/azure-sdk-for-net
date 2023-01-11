@@ -70,6 +70,11 @@ namespace Azure.Identity
                 chain[i++] = CreateAzureCliCredential();
             }
 
+            if (!Options.ExcludeAzureDeveloperCliCredential)
+            {
+                chain[i++] = CreateAzureDeveloperCliCredential();
+            }
+
             if (!Options.ExcludeAzurePowerShellCredential)
             {
                 chain[i++] = CreateAzurePowerShellCredential();
@@ -147,6 +152,22 @@ namespace Azure.Identity
             }
 
             return new AzureCliCredential(Pipeline, default, options);
+        }
+
+        public virtual TokenCredential CreateAzureDeveloperCliCredential()
+        {
+            var options = new AzureDeveloperCliCredentialOptions
+            {
+                TenantId = Options.TenantId,
+                AzdCliProcessTimeout = Options.DeveloperCredentialTimeout
+            };
+
+            foreach (var addlTenant in Options.AdditionallyAllowedTenants)
+            {
+                options.AdditionallyAllowedTenants.Add(addlTenant);
+            }
+
+            return new AzureDeveloperCliCredential(Pipeline, default, options);
         }
 
         public virtual TokenCredential CreateVisualStudioCredential()
