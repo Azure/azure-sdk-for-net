@@ -112,15 +112,16 @@ namespace Azure.Developer.LoadTesting
         private Response GetCompletionResponse()
         {
             string testRunStatus;
-            try
-            {
+            //try
+            //{
+                Console.WriteLine(_value.ToString());
                 JsonDocument jsonDocument = JsonDocument.Parse(_value.ToString());
                 testRunStatus = jsonDocument.RootElement.GetProperty("status").GetString();
-            }
-            catch
-            {
-                throw new Exception($"Test run status not found for test run {_testRunId}");
-            }
+            //}
+            //catch
+            //{
+            //    throw new Exception($"Test run status not found for test run {_testRunId}");
+            //}
 
             if (_terminalStatus.Contains(testRunStatus))
             {
