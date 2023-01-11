@@ -80,7 +80,7 @@ namespace ServerManagement.Tests
         }
 
         /// <summary>
-        ///  the name of the SMT node to create 
+        ///  the name of the SMT node to create
         /// </summary>
         protected static string NodeName
         {
@@ -122,7 +122,7 @@ namespace ServerManagement.Tests
         }
 
         /// <summary>
-        ///  the gateway name to use when creating the gateway 
+        ///  the gateway name to use when creating the gateway
         /// </summary>
         protected static string GatewayOne
         {
@@ -144,14 +144,14 @@ namespace ServerManagement.Tests
         {
             get
             {
-                // if the SMT_GATEWAY_2 isn't set, we default to 'mygateway' ... 
+                // if the SMT_GATEWAY_2 isn't set, we default to 'mygateway' ...
                 // makes it easier to not regenerate the gateway profile every time
                 return _gatewaytwo ??
                        (_gatewaytwo =
                            HttpMockServer.GetVariable("SMT_GATEWAY_2",
                                Environment.GetEnvironmentVariable("SMT_GATEWAY_2") ??
                                "mygateway").ToLower());
-            } 
+            }
         }
 
         /// <summary>
@@ -194,6 +194,13 @@ namespace ServerManagement.Tests
         {
             get
             {
+                if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+                {
+                    // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/33404
+                    // Returning false should be safe since recording on other platforms would've failed as written.
+                    return false;
+                }
+
                 try
                 {
                     return new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
