@@ -27,7 +27,7 @@
 /sdk/extensions/                                @jsquire
 
 # PRLabel: %EngSys
-/sdk/template/                                  @hallipr @weshaggard @benbp @heaths @annelo-msft @chunyu3 @lirenhe
+/sdk/template/                                  @hallipr @weshaggard @benbp @heaths @chunyu3 @lirenhe
 
 # Smoke tests
 /common/SmokeTests/                             @schaabs @heaths @tg-msft @jsquire @pallavit
@@ -735,4 +735,4 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 /doc/Data\ Plane\ Code\ Generation           @chunyu3 @pshao25 @fengzhou-msft @lirenhe @annelo-msft
 
 # Client generation tooling
-/eng/templates/Azure.ServiceTemplate.Template   @chunyu3 @lirenhe @annelo-msft
+/eng/templates/Azure.ServiceTemplate.Template   @chunyu3 @lirenhe
