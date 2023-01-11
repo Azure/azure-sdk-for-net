@@ -54,6 +54,10 @@ if ($readmeFile) {
 
   $readme = ""
   if ($commitid -ne "") {
+    if ((-Not $readmeFile.Contains("specification")) -And $swaggerDir.Contains("specification"))
+    {
+      $readmeFile = "specification/$readmeFile"
+    }
     if ($repoHttpsUrl -ne "") {
       $readme = "$repoHttpsUrl/blob/$commitid/$readmeFile"
     } else {
