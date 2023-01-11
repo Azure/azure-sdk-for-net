@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Azure.Communication.Identity
@@ -46,18 +47,21 @@ namespace Azure.Communication.Identity
         }
 
         [Test]
-        public async Task CommunicationTokenCredential_CreateRefreshableWithoutInitialToken()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CommunicationTokenCredential_CreateRefreshableWithoutInitialToken(bool refreshProactively)
         {
             #region Snippet:CommunicationTokenCredential_CreateRefreshableWithoutInitialToken
             using var tokenCredential = new CommunicationTokenCredential(
                 new CommunicationTokenRefreshOptions(
-                    refreshProactively: true, // Indicates if the token should be proactively refreshed in the background or only on-demand
+                    refreshProactively: refreshProactively, // Indicates if the token should be proactively refreshed in the background or only on-demand
                     tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken))
                 {
                     AsyncTokenRefresher = cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken)
                 });
             #endregion
-            await tokenCredential.GetTokenAsync();
+            var accessToken = await tokenCredential.GetTokenAsync();
+            Assert.AreEqual(SampleToken, accessToken.Token);
         }
 
         [Test]
