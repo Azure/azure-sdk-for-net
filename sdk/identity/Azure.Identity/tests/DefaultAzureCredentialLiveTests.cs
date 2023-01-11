@@ -63,6 +63,7 @@ namespace Azure.Identity.Tests
 
         [RecordedTest]
         [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore_keyring" })]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27263")]
         public async Task DefaultAzureCredential_UseVisualStudioCodeCredential()
         {
             var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
@@ -75,7 +76,7 @@ namespace Azure.Identity.Tests
                 ExcludeAzureCliCredential = true,
                 ExcludeAzureDeveloperCliCredential = true,
                 ExcludeVisualStudioCodeCredential = false,
-                VisualStudioCodeTenantId = TestEnvironment.TestTenantId
+                VisualStudioCodeTenantId = TestEnvironment.IdentityTenantId
             });
 
             var cloudName = Guid.NewGuid().ToString();
@@ -104,6 +105,7 @@ namespace Azure.Identity.Tests
 
         [RecordedTest]
         [RunOnlyOnPlatforms(Windows = true, OSX = true, ContainerNames = new[] { "ubuntu_netcore_keyring" })]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27263")]
         public async Task DefaultAzureCredential_UseVisualStudioCodeCredential_ParallelCalls()
         {
             var options = InstrumentClientOptions(new DefaultAzureCredentialOptions
@@ -115,7 +117,7 @@ namespace Azure.Identity.Tests
                 ExcludeAzureCliCredential = true,
                 ExcludeAzureDeveloperCliCredential = true,
                 ExcludeVisualStudioCodeCredential = false,
-                VisualStudioCodeTenantId = TestEnvironment.TestTenantId
+                VisualStudioCodeTenantId = TestEnvironment.IdentityTenantId
             });
 
             var cloudName = Guid.NewGuid().ToString();
@@ -152,7 +154,7 @@ namespace Azure.Identity.Tests
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
                 ExcludeVisualStudioCodeCredential = false,
-                VisualStudioCodeTenantId = TestEnvironment.TestTenantId
+                VisualStudioCodeTenantId = TestEnvironment.IdentityTenantId
             });
 
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
@@ -213,7 +215,7 @@ namespace Azure.Identity.Tests
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
                 ExcludeVisualStudioCodeCredential = false,
-                VisualStudioCodeTenantId = TestEnvironment.TestTenantId
+                VisualStudioCodeTenantId = TestEnvironment.IdentityTenantId
             });
 
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();

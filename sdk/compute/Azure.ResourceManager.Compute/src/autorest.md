@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/261132757bc9806f4aa90bd5b176ecfa6a447726/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/ddca448bd879175a928b990e0f25ca3a0e6c1c33/specification/compute/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -220,7 +220,35 @@ rename-mapping:
   DiskSecurityProfile.secureVMDiskEncryptionSetId: -|arm-id
   ImageDiskReference.id: -|arm-id
   DiskImageEncryption.diskEncryptionSetId: -|arm-id
+  GalleryDiskImage.source: GallerySource
+  GalleryDiskImageSource.storageAccountId: -|arm-id
+  GalleryImageVersionStorageProfile.source: GallerySource
   GalleryArtifactVersionSource.id: -|arm-id
+  VirtualMachineExtension.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  VirtualMachineScaleSetExtension.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  VirtualMachineScaleSetExtensionUpdate.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  VirtualMachineScaleSetVMExtension.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  VirtualMachineExtensionUpdate.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  VirtualMachineScaleSetVMExtensionUpdate.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  Disk.properties.optimizedForFrequentAttach: IsOptimizedForFrequentAttach
+  DiskUpdate.properties.optimizedForFrequentAttach: IsOptimizedForFrequentAttach
+  CreationData.performancePlus: IsPerformancePlusEnabled
+  GalleryApplicationCustomActionParameter.required: IsRequired
+  GalleryImageVersionSafetyProfile.reportedForPolicyViolation: IsReportedForPolicyViolation
+  LinuxConfiguration.disablePasswordAuthentication: IsPasswordAuthenticationDisabled
+  LinuxConfiguration.enableVMAgentPlatformUpdates: IsVMAgentPlatformUpdatesEnabled
+  WindowsConfiguration.enableAutomaticUpdates: IsAutomaticUpdatesEnabled
+  WindowsConfiguration.enableVMAgentPlatformUpdates: IsVMAgentPlatformUpdatesEnabled
+  PolicyViolation: GalleryImageVersionPolicyViolation
+  PolicyViolationCategory: GalleryImageVersionPolicyViolationCategory
+  PriorityMixPolicy: VirtualMachineScaleSetPriorityMixPolicy
+  CommunityGalleryImageVersion.properties.excludeFromLatest: IsExcludedFromLatest
+  SharedGalleryImageVersion.properties.excludeFromLatest: IsExcludedFromLatest
+  GalleryArtifactPublishingProfileBase.excludeFromLatest: IsExcludedFromLatest
+  TargetRegion.excludeFromLatest: IsExcludedFromLatest
+  VirtualMachineNetworkInterfaceConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
+  VirtualMachineScaleSetNetworkConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
+  VirtualMachineScaleSetUpdateNetworkConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
@@ -323,4 +351,8 @@ directive:
   - from: virtualMachineScaleSet.json
     where: $.definitions.VirtualMachineScaleSetExtension.properties.name
     transform: $["readOnly"] = true;
+  # add a json converter to this model
+  - from: swagger-document
+    where: $.definitions.KeyVaultSecretReference
+    transform: $["x-csharp-usage"] = "converter";
 ```

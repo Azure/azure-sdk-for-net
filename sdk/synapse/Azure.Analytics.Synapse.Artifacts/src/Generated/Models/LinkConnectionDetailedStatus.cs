@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="isPartiallyFailed"> Is link connection partially failed. </param>
         /// <param name="startTime"> Link connection start time. </param>
         /// <param name="stopTime"> Link connection stop time. </param>
-        /// <param name="status"> Link connection status. </param>
+        /// <param name="status"> Link connection status, please refer to this [articles](https://learn.microsoft.com/azure/synapse-analytics/synapse-link/sql-database-synapse-link#monitoring) for details. </param>
         /// <param name="continuousRunId"> Link connection&apos;s corresponding continuous run id. </param>
         /// <param name="error"> Link connection error. </param>
         /// <param name="refreshStatus"> Link connection refresh status. </param>
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object StartTime { get; }
         /// <summary> Link connection stop time. </summary>
         public object StopTime { get; }
-        /// <summary> Link connection status. </summary>
+        /// <summary> Link connection status, please refer to this [articles](https://learn.microsoft.com/azure/synapse-analytics/synapse-link/sql-database-synapse-link#monitoring) for details. </summary>
         public string Status { get; }
         /// <summary> Link connection&apos;s corresponding continuous run id. </summary>
         public string ContinuousRunId { get; }

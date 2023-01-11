@@ -52,6 +52,8 @@ namespace Azure.ResourceManager.Sql
         private readonly DatabaseUsagesRestOperations _databaseUsagesRestClient;
         private readonly ClientDiagnostics _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics;
         private readonly SensitivityLabelsRestOperations _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient;
+        private readonly ClientDiagnostics _synapseLinkWorkspacesClientDiagnostics;
+        private readonly SynapseLinkWorkspacesRestOperations _synapseLinkWorkspacesRestClient;
         private readonly SqlDatabaseData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SqlDatabaseResource"/> class for mocking. </summary>
@@ -95,6 +97,8 @@ namespace Azure.ResourceManager.Sql
             _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabaseSensitivityLabelResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SqlDatabaseSensitivityLabelResource.ResourceType, out string sqlDatabaseSensitivityLabelSensitivityLabelsApiVersion);
             _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient = new SensitivityLabelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseSensitivityLabelSensitivityLabelsApiVersion);
+            _synapseLinkWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _synapseLinkWorkspacesRestClient = new SynapseLinkWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -698,6 +702,39 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<DatabaseAdvancedThreatProtectionResource> GetDatabaseAdvancedThreatProtection(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
         {
             return GetDatabaseAdvancedThreatProtections().Get(advancedThreatProtectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SqlDatabaseSqlVulnerabilityAssessmentResources in the SqlDatabase. </summary>
+        /// <returns> An object representing collection of SqlDatabaseSqlVulnerabilityAssessmentResources and their operations over a SqlDatabaseSqlVulnerabilityAssessmentResource. </returns>
+        public virtual SqlDatabaseSqlVulnerabilityAssessmentCollection GetSqlDatabaseSqlVulnerabilityAssessments()
+        {
+            return GetCachedClient(Client => new SqlDatabaseSqlVulnerabilityAssessmentCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets SQL Vulnerability Assessment policy for database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}
+        /// Operation Id: DatabaseSqlVulnerabilityAssessmentsSettings_Get
+        /// </summary>
+        /// <param name="vulnerabilityAssessmentName"> The name of the SQL Vulnerability Assessment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SqlDatabaseSqlVulnerabilityAssessmentResource>> GetSqlDatabaseSqlVulnerabilityAssessmentAsync(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+        {
+            return await GetSqlDatabaseSqlVulnerabilityAssessments().GetAsync(vulnerabilityAssessmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets SQL Vulnerability Assessment policy for database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}
+        /// Operation Id: DatabaseSqlVulnerabilityAssessmentsSettings_Get
+        /// </summary>
+        /// <param name="vulnerabilityAssessmentName"> The name of the SQL Vulnerability Assessment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<SqlDatabaseSqlVulnerabilityAssessmentResource> GetSqlDatabaseSqlVulnerabilityAssessment(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+        {
+            return GetSqlDatabaseSqlVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlServerDatabaseReplicationLinkResources in the SqlDatabase. </summary>
@@ -1813,6 +1850,90 @@ namespace Azure.ResourceManager.Sql
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets all synapselink workspaces for a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/linkWorkspaces
+        /// Operation Id: SynapseLinkWorkspaces_ListByDatabase
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SqlSynapseLinkWorkspace" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlSynapseLinkWorkspace> GetSynapseLinkWorkspacesAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<SqlSynapseLinkWorkspace>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _synapseLinkWorkspacesClientDiagnostics.CreateScope("SqlDatabaseResource.GetSynapseLinkWorkspaces");
+                scope.Start();
+                try
+                {
+                    var response = await _synapseLinkWorkspacesRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<SqlSynapseLinkWorkspace>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _synapseLinkWorkspacesClientDiagnostics.CreateScope("SqlDatabaseResource.GetSynapseLinkWorkspaces");
+                scope.Start();
+                try
+                {
+                    var response = await _synapseLinkWorkspacesRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets all synapselink workspaces for a database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/linkWorkspaces
+        /// Operation Id: SynapseLinkWorkspaces_ListByDatabase
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SqlSynapseLinkWorkspace" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlSynapseLinkWorkspace> GetSynapseLinkWorkspaces(CancellationToken cancellationToken = default)
+        {
+            Page<SqlSynapseLinkWorkspace> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _synapseLinkWorkspacesClientDiagnostics.CreateScope("SqlDatabaseResource.GetSynapseLinkWorkspaces");
+                scope.Start();
+                try
+                {
+                    var response = _synapseLinkWorkspacesRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<SqlSynapseLinkWorkspace> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _synapseLinkWorkspacesClientDiagnostics.CreateScope("SqlDatabaseResource.GetSynapseLinkWorkspaces");
+                scope.Start();
+                try
+                {
+                    var response = _synapseLinkWorkspacesRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
