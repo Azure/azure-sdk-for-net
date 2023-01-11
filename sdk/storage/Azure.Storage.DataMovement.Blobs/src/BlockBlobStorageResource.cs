@@ -60,6 +60,11 @@ namespace Azure.Storage.DataMovement.Blobs
         public override TransferType TransferType => TransferType.Concurrent;
 
         /// <summary>
+        /// Store Max Initial Size that a Put Blob can get to.
+        /// </summary>
+        internal static long _maxInitialSize => Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes;
+
+        /// <summary>
         /// Defines the maximum chunk size for the storage resource.
         /// </summary>
         public override long MaxChunkSize => Constants.Blob.Block.MaxStageBytes;
@@ -164,7 +169,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 // Default to Upload
                 await _blobClient.UploadAsync(
                     stream,
-                    _options.ToBlobUploadOptions(overwrite),
+                    _options.ToBlobUploadOptions(overwrite, _maxInitialSize),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 return;
             }
@@ -193,6 +198,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
         /// </param>
+        /// <param name="completeLength">
+        /// The expected complete length of the blob.
+        /// </param>
         /// <param name="options">Options for the storage resource. See <see cref="StorageResourceCopyFromUriOptions"/>.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -202,6 +210,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public override async Task CopyFromUriAsync(
             StorageResource sourceResource,
             bool overwrite,
+            long completeLength,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {

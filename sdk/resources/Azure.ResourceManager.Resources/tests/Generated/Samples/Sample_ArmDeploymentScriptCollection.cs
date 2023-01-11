@@ -7,14 +7,16 @@
 
 using System;
 using System.Threading.Tasks;
+using System.Xml;
 using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Samples
 {
     public partial class Sample_ArmDeploymentScriptCollection
     {
@@ -26,8 +28,10 @@ namespace Azure.ResourceManager.Resources
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/examples/DeploymentScripts_Create.json
             // this example is just showing the usage of "DeploymentScripts_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -41,8 +45,16 @@ namespace Azure.ResourceManager.Resources
 
             // invoke the operation
             string scriptName = "MyDeploymentScript";
-            ArmDeploymentScriptData data = new ArmDeploymentScriptData(new AzureLocation("westus"))
+            ArmDeploymentScriptData data = new AzurePowerShellScript(new AzureLocation("westus"), XmlConvert.ToTimeSpan("PT7D"), "1.7.0")
             {
+                CleanupPreference = ScriptCleanupOptions.Always,
+                SupportingScriptUris =
+{
+new Uri("https://uri1.to.supporting.script"),new Uri("https://uri2.to.supporting.script")
+},
+                ScriptContent = "Param([string]$Location,[string]$Name) $deploymentScriptOutputs['test'] = 'value' Get-AzResourceGroup -Location $Location -Name $Name",
+                Arguments = "-Location 'westus' -Name \"*rg2\"",
+                Timeout = XmlConvert.ToTimeSpan("PT1H"),
                 Identity = new ArmDeploymentScriptManagedIdentity()
                 {
                     IdentityType = ArmDeploymentScriptManagedIdentityType.UserAssigned,
@@ -51,7 +63,6 @@ namespace Azure.ResourceManager.Resources
 ["/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/scriptRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uai"] = new UserAssignedIdentity(),
 },
                 },
-                Kind = ScriptType.AzurePowerShell,
             };
             ArmOperation<ArmDeploymentScriptResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, scriptName, data);
             ArmDeploymentScriptResource result = lro.Value;
@@ -71,8 +82,10 @@ namespace Azure.ResourceManager.Resources
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/examples/DeploymentScripts_Create_No_UserManagedIdentity.json
             // this example is just showing the usage of "DeploymentScripts_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -86,9 +99,16 @@ namespace Azure.ResourceManager.Resources
 
             // invoke the operation
             string scriptName = "MyDeploymentScript";
-            ArmDeploymentScriptData data = new ArmDeploymentScriptData(new AzureLocation("westus"))
+            ArmDeploymentScriptData data = new AzurePowerShellScript(new AzureLocation("westus"), XmlConvert.ToTimeSpan("PT7D"), "1.7.0")
             {
-                Kind = ScriptType.AzurePowerShell,
+                CleanupPreference = ScriptCleanupOptions.Always,
+                SupportingScriptUris =
+{
+new Uri("https://uri1.to.supporting.script"),new Uri("https://uri2.to.supporting.script")
+},
+                ScriptContent = "Param([string]$Location,[string]$Name) $deploymentScriptOutputs['test'] = 'value' Get-AzResourceGroup -Location $Location -Name $Name",
+                Arguments = "-Location 'westus' -Name \"*rg2\"",
+                Timeout = XmlConvert.ToTimeSpan("PT1H"),
             };
             ArmOperation<ArmDeploymentScriptResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, scriptName, data);
             ArmDeploymentScriptResource result = lro.Value;
@@ -108,8 +128,10 @@ namespace Azure.ResourceManager.Resources
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/examples/DeploymentScripts_Min_Create.json
             // this example is just showing the usage of "DeploymentScripts_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -123,8 +145,10 @@ namespace Azure.ResourceManager.Resources
 
             // invoke the operation
             string scriptName = "MyDeploymentScript";
-            ArmDeploymentScriptData data = new ArmDeploymentScriptData(new AzureLocation("westus"))
+            ArmDeploymentScriptData data = new AzurePowerShellScript(new AzureLocation("westus"), XmlConvert.ToTimeSpan("P7D"), "1.7.0")
             {
+                ScriptContent = "Param([string]$Location,[string]$Name) $deploymentScriptOutputs['test'] = 'value' Get-AzResourceGroup -Location $Location -Name $Name",
+                Arguments = "-Location 'westus' -Name \"*rg2\"",
                 Identity = new ArmDeploymentScriptManagedIdentity()
                 {
                     IdentityType = ArmDeploymentScriptManagedIdentityType.UserAssigned,
@@ -133,7 +157,6 @@ namespace Azure.ResourceManager.Resources
 ["/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/scriptRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uai"] = new UserAssignedIdentity(),
 },
                 },
-                Kind = ScriptType.AzurePowerShell,
             };
             ArmOperation<ArmDeploymentScriptResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, scriptName, data);
             ArmDeploymentScriptResource result = lro.Value;
@@ -153,8 +176,10 @@ namespace Azure.ResourceManager.Resources
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/examples/DeploymentScripts_Create_Using_Custom_Aci_Name.json
             // this example is just showing the usage of "DeploymentScripts_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -168,8 +193,17 @@ namespace Azure.ResourceManager.Resources
 
             // invoke the operation
             string scriptName = "MyDeploymentScript";
-            ArmDeploymentScriptData data = new ArmDeploymentScriptData(new AzureLocation("westus"))
+            ArmDeploymentScriptData data = new AzurePowerShellScript(new AzureLocation("westus"), XmlConvert.ToTimeSpan("PT7D"), "1.7.0")
             {
+                ContainerGroupName = "contoso-aci",
+                CleanupPreference = ScriptCleanupOptions.Always,
+                SupportingScriptUris =
+{
+new Uri("https://uri1.to.supporting.script"),new Uri("https://uri2.to.supporting.script")
+},
+                ScriptContent = "Param([string]$Location,[string]$Name) $deploymentScriptOutputs['test'] = 'value' Get-AzResourceGroup -Location $Location -Name $Name",
+                Arguments = "-Location 'westus' -Name \"*rg2\"",
+                Timeout = XmlConvert.ToTimeSpan("PT1H"),
                 Identity = new ArmDeploymentScriptManagedIdentity()
                 {
                     IdentityType = ArmDeploymentScriptManagedIdentityType.UserAssigned,
@@ -178,7 +212,6 @@ namespace Azure.ResourceManager.Resources
 ["/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/scriptRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uai"] = new UserAssignedIdentity(),
 },
                 },
-                Kind = ScriptType.AzurePowerShell,
             };
             ArmOperation<ArmDeploymentScriptResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, scriptName, data);
             ArmDeploymentScriptResource result = lro.Value;
@@ -198,8 +231,10 @@ namespace Azure.ResourceManager.Resources
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/examples/DeploymentScripts_Create_Using_Existing_StorageAccount.json
             // this example is just showing the usage of "DeploymentScripts_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -213,8 +248,21 @@ namespace Azure.ResourceManager.Resources
 
             // invoke the operation
             string scriptName = "MyDeploymentScript";
-            ArmDeploymentScriptData data = new ArmDeploymentScriptData(new AzureLocation("westus"))
+            ArmDeploymentScriptData data = new AzurePowerShellScript(new AzureLocation("westus"), XmlConvert.ToTimeSpan("PT7D"), "1.7.0")
             {
+                StorageAccountSettings = new ScriptStorageConfiguration()
+                {
+                    StorageAccountName = "contosostorage",
+                    StorageAccountKey = "contosostoragekey",
+                },
+                CleanupPreference = ScriptCleanupOptions.Always,
+                SupportingScriptUris =
+{
+new Uri("https://uri1.to.supporting.script"),new Uri("https://uri2.to.supporting.script")
+},
+                ScriptContent = "Param([string]$Location,[string]$Name) $deploymentScriptOutputs['test'] = 'value' Get-AzResourceGroup -Location $Location -Name $Name",
+                Arguments = "-Location 'westus' -Name \"*rg2\"",
+                Timeout = XmlConvert.ToTimeSpan("PT1H"),
                 Identity = new ArmDeploymentScriptManagedIdentity()
                 {
                     IdentityType = ArmDeploymentScriptManagedIdentityType.UserAssigned,
@@ -223,7 +271,6 @@ namespace Azure.ResourceManager.Resources
 ["/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/scriptRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/uai"] = new UserAssignedIdentity(),
 },
                 },
-                Kind = ScriptType.AzurePowerShell,
             };
             ArmOperation<ArmDeploymentScriptResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, scriptName, data);
             ArmDeploymentScriptResource result = lro.Value;
@@ -243,8 +290,10 @@ namespace Azure.ResourceManager.Resources
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/examples/DeploymentScripts_Get.json
             // this example is just showing the usage of "DeploymentScripts_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -275,8 +324,10 @@ namespace Azure.ResourceManager.Resources
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/examples/DeploymentScripts_Get.json
             // this example is just showing the usage of "DeploymentScripts_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
@@ -303,8 +354,10 @@ namespace Azure.ResourceManager.Resources
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/examples/DeploymentScripts_ListByResourceGroup.json
             // this example is just showing the usage of "DeploymentScripts_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource

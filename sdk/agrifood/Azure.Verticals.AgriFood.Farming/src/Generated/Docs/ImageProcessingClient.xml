@@ -131,7 +131,7 @@ var data = new {
     },
 };
 
-var operation = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+var operation = await client.CreateRasterizeJobAsync(WaitUntil.Started, "<jobId>", RequestContent.Create(data));
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -158,7 +158,7 @@ var data = new {
     },
 };
 
-var operation = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+var operation = await client.CreateRasterizeJobAsync(WaitUntil.Started, "<jobId>", RequestContent.Create(data));
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -249,7 +249,7 @@ var data = new {
     },
 };
 
-var operation = client.CreateRasterizeJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+var operation = client.CreateRasterizeJob(WaitUntil.Started, "<jobId>", RequestContent.Create(data));
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -276,7 +276,7 @@ var data = new {
     },
 };
 
-var operation = client.CreateRasterizeJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
+var operation = client.CreateRasterizeJob(WaitUntil.Started, "<jobId>", RequestContent.Create(data));
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;

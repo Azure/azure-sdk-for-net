@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AvailableRuntimeVersions. </summary>
         internal AvailableRuntimeVersions()
         {
-            Value = new ChangeTrackingList<SupportedRuntimeVersion>();
+            Value = new ChangeTrackingList<AppPlatformSupportedRuntimeVersion>();
         }
 
         /// <summary> Initializes a new instance of AvailableRuntimeVersions. </summary>
         /// <param name="value"> A list of all supported runtime versions. </param>
-        internal AvailableRuntimeVersions(IReadOnlyList<SupportedRuntimeVersion> value)
+        internal AvailableRuntimeVersions(IReadOnlyList<AppPlatformSupportedRuntimeVersion> value)
         {
             Value = value;
         }
 
         /// <summary> A list of all supported runtime versions. </summary>
-        public IReadOnlyList<SupportedRuntimeVersion> Value { get; }
+        public IReadOnlyList<AppPlatformSupportedRuntimeVersion> Value { get; }
     }
 }

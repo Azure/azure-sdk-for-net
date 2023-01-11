@@ -1400,7 +1400,7 @@ var data = new {
     environmentType = "<environmentType>",
 };
 
-var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
+var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Started, "<environmentName>", RequestContent.Create(data));
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1431,7 +1431,7 @@ var data = new {
     },
 };
 
-var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
+var operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Started, "<environmentName>", RequestContent.Create(data), <me>);
 
 BinaryData data = await operation.WaitForCompletionAsync();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1502,7 +1502,7 @@ var data = new {
     environmentType = "<environmentType>",
 };
 
-var operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
+var operation = client.CreateOrUpdateEnvironment(WaitUntil.Started, "<environmentName>", RequestContent.Create(data));
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1533,7 +1533,7 @@ var data = new {
     },
 };
 
-var operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
+var operation = client.CreateOrUpdateEnvironment(WaitUntil.Started, "<environmentName>", RequestContent.Create(data), <me>);
 
 BinaryData data = operation.WaitForCompletion();
 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
@@ -1600,7 +1600,7 @@ This sample shows how to call DeleteEnvironmentAsync with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
 
-var operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<environmentName>");
+var operation = await client.DeleteEnvironmentAsync(WaitUntil.Started, "<environmentName>");
 
 var response = await operation.WaitForCompletionResponseAsync();
 Console.WriteLine(response.Status)
@@ -1610,7 +1610,7 @@ This sample shows how to call DeleteEnvironmentAsync with all parameters.
 var credential = new DefaultAzureCredential();
 var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
 
-var operation = await client.DeleteEnvironmentAsync(WaitUntil.Completed, "<environmentName>", <me>);
+var operation = await client.DeleteEnvironmentAsync(WaitUntil.Started, "<environmentName>", <me>);
 
 var response = await operation.WaitForCompletionResponseAsync();
 Console.WriteLine(response.Status)
@@ -1624,7 +1624,7 @@ This sample shows how to call DeleteEnvironment with required parameters.
 var credential = new DefaultAzureCredential();
 var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
 
-var operation = client.DeleteEnvironment(WaitUntil.Completed, "<environmentName>");
+var operation = client.DeleteEnvironment(WaitUntil.Started, "<environmentName>");
 
 var response = operation.WaitForCompletionResponse();
 Console.WriteLine(response.Status)
@@ -1634,7 +1634,7 @@ This sample shows how to call DeleteEnvironment with all parameters.
 var credential = new DefaultAzureCredential();
 var client = new EnvironmentsClient("<tenantId>", "<devCenter>", "<projectName>", credential);
 
-var operation = client.DeleteEnvironment(WaitUntil.Completed, "<environmentName>", <me>);
+var operation = client.DeleteEnvironment(WaitUntil.Started, "<environmentName>", <me>);
 
 var response = operation.WaitForCompletionResponse();
 Console.WriteLine(response.Status)
@@ -1652,7 +1652,7 @@ var data = new {
     actionId = "<actionId>",
 };
 
-var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
+var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Started, "<environmentName>", RequestContent.Create(data));
 
 var response = await operation.WaitForCompletionResponseAsync();
 Console.WriteLine(response.Status)
@@ -1667,7 +1667,7 @@ var data = new {
     parameters = new {},
 };
 
-var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
+var operation = await client.DeployEnvironmentActionAsync(WaitUntil.Started, "<environmentName>", RequestContent.Create(data), <me>);
 
 var response = await operation.WaitForCompletionResponseAsync();
 Console.WriteLine(response.Status)
@@ -1698,7 +1698,7 @@ var data = new {
     actionId = "<actionId>",
 };
 
-var operation = client.DeployEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
+var operation = client.DeployEnvironmentAction(WaitUntil.Started, "<environmentName>", RequestContent.Create(data));
 
 var response = operation.WaitForCompletionResponse();
 Console.WriteLine(response.Status)
@@ -1713,7 +1713,7 @@ var data = new {
     parameters = new {},
 };
 
-var operation = client.DeployEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
+var operation = client.DeployEnvironmentAction(WaitUntil.Started, "<environmentName>", RequestContent.Create(data), <me>);
 
 var response = operation.WaitForCompletionResponse();
 Console.WriteLine(response.Status)
@@ -1744,7 +1744,7 @@ var data = new {
     actionId = "<actionId>",
 };
 
-var operation = await client.DeleteEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
+var operation = await client.DeleteEnvironmentActionAsync(WaitUntil.Started, "<environmentName>", RequestContent.Create(data));
 
 var response = await operation.WaitForCompletionResponseAsync();
 Console.WriteLine(response.Status)
@@ -1759,7 +1759,7 @@ var data = new {
     parameters = new {},
 };
 
-var operation = await client.DeleteEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
+var operation = await client.DeleteEnvironmentActionAsync(WaitUntil.Started, "<environmentName>", RequestContent.Create(data), <me>);
 
 var response = await operation.WaitForCompletionResponseAsync();
 Console.WriteLine(response.Status)
@@ -1790,7 +1790,7 @@ var data = new {
     actionId = "<actionId>",
 };
 
-var operation = client.DeleteEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
+var operation = client.DeleteEnvironmentAction(WaitUntil.Started, "<environmentName>", RequestContent.Create(data));
 
 var response = operation.WaitForCompletionResponse();
 Console.WriteLine(response.Status)
@@ -1805,7 +1805,7 @@ var data = new {
     parameters = new {},
 };
 
-var operation = client.DeleteEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
+var operation = client.DeleteEnvironmentAction(WaitUntil.Started, "<environmentName>", RequestContent.Create(data), <me>);
 
 var response = operation.WaitForCompletionResponse();
 Console.WriteLine(response.Status)
@@ -1836,7 +1836,7 @@ var data = new {
     actionId = "<actionId>",
 };
 
-var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
+var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Started, "<environmentName>", RequestContent.Create(data));
 
 var response = await operation.WaitForCompletionResponseAsync();
 Console.WriteLine(response.Status)
@@ -1851,7 +1851,7 @@ var data = new {
     parameters = new {},
 };
 
-var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
+var operation = await client.CustomEnvironmentActionAsync(WaitUntil.Started, "<environmentName>", RequestContent.Create(data), <me>);
 
 var response = await operation.WaitForCompletionResponseAsync();
 Console.WriteLine(response.Status)
@@ -1882,7 +1882,7 @@ var data = new {
     actionId = "<actionId>",
 };
 
-var operation = client.CustomEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data));
+var operation = client.CustomEnvironmentAction(WaitUntil.Started, "<environmentName>", RequestContent.Create(data));
 
 var response = operation.WaitForCompletionResponse();
 Console.WriteLine(response.Status)
@@ -1897,7 +1897,7 @@ var data = new {
     parameters = new {},
 };
 
-var operation = client.CustomEnvironmentAction(WaitUntil.Completed, "<environmentName>", RequestContent.Create(data), <me>);
+var operation = client.CustomEnvironmentAction(WaitUntil.Started, "<environmentName>", RequestContent.Create(data), <me>);
 
 var response = operation.WaitForCompletionResponse();
 Console.WriteLine(response.Status)

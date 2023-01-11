@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of BindingResourceList. </summary>
         internal BindingResourceList()
         {
-            Value = new ChangeTrackingList<BindingResourceData>();
+            Value = new ChangeTrackingList<AppPlatformBindingData>();
         }
 
         /// <summary> Initializes a new instance of BindingResourceList. </summary>
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
         /// </param>
-        internal BindingResourceList(IReadOnlyList<BindingResourceData> value, string nextLink)
+        internal BindingResourceList(IReadOnlyList<AppPlatformBindingData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of Binding resources. </summary>
-        public IReadOnlyList<BindingResourceData> Value { get; }
+        public IReadOnlyList<AppPlatformBindingData> Value { get; }
         /// <summary>
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.

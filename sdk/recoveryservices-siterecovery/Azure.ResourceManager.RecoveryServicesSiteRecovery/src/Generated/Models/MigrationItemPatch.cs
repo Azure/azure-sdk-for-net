@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// The provider specific input to update migration item.
         /// Please note <see cref="UpdateMigrationItemProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VMwareCbtUpdateMigrationItemInput"/>.
+        /// Please note <see cref="UpdateMigrationItemProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="VMwareCbtUpdateMigrationItemInput"/>.
         /// </summary>
         public UpdateMigrationItemProviderSpecificInput UpdateMigrationItemInputProviderSpecificDetails
         {

@@ -44,7 +44,9 @@ namespace Azure.ResourceManager.Sql.Models
         public ResourceIdentifier SourceDatabaseId { get; set; }
         /// <summary> The restorable dropped database resource id to restore when creating this database. </summary>
         public ResourceIdentifier RestorableDroppedDatabaseId { get; set; }
-        /// <summary> Conditional. If createMode is RestoreExternalBackup, this value is required. Specifies the storage container sas token. </summary>
+        /// <summary> Conditional. If createMode is RestoreExternalBackup, this value is used. Specifies the identity used for storage container authentication. Can be &apos;SharedAccessSignature&apos; or &apos;ManagedIdentity&apos;; if not specified &apos;SharedAccessSignature&apos; is assumed. </summary>
+        public string StorageContainerIdentity { get; set; }
+        /// <summary> Conditional. If createMode is RestoreExternalBackup and storageContainerIdentity is not ManagedIdentity, this value is required. Specifies the storage container sas token. </summary>
         public string StorageContainerSasToken { get; set; }
         /// <summary> Instance Failover Group resource identifier that this managed database belongs to. </summary>
         public ResourceIdentifier FailoverGroupId { get; }

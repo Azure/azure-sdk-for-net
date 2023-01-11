@@ -1,50 +1,50 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027lwuhsdmj\u0027)/docs/search.index?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027kltikpql\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "Content-Length": "152",
+        "Content-Length": "220",
         "Content-Type": "application/json",
-        "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
-          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
-        ],
-        "x-ms-client-request-id": "024524334adee593f5ff620e2e46cb84",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3620949f1d89dd88c1b7cad58e338614",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "value": [
           {
             "@search.action": "upload",
-            "hotelId": "783",
-            "hotelName": "Upload Inn"
+            "HotelId": "783",
+            "HotelName": "Upload Inn",
+            "GeoLocation": null,
+            "Address": null
           },
           {
             "@search.action": "merge",
-            "hotelId": "12",
-            "hotelName": "Renovated Ranch"
+            "HotelId": "12",
+            "HotelName": "Renovated Ranch",
+            "GeoLocation": null,
+            "Address": null
           }
         ]
       },
       "StatusCode": 403,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "02452433-4ade-e593-f5ff-620e2e46cb84",
+        "client-request-id": "3620949f-1d89-dd88-c1b7-cad58e338614",
         "Content-Language": "en",
         "Content-Length": "55",
-        "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Sat, 27 Mar 2021 18:43:13 GMT",
-        "elapsed-time": "67",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 06 Jan 2023 20:43:58 GMT",
+        "elapsed-time": "57",
         "Expires": "-1",
-        "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "02452433-4ade-e593-f5ff-620e2e46cb84",
+        "request-id": "3620949f-1d89-dd88-c1b7-cad58e338614",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "02452433-4ade-e593-f5ff-620e2e46cb84"
+        "x-ms-client-request-id": "3620949f-1d89-dd88-c1b7-cad58e338614"
       },
       "ResponseBody": {
         "error": {
@@ -54,41 +54,38 @@
       }
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027lwuhsdmj\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027kltikpql\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-370d8174adf9b144b67738cb8c41811c-70e87ff0bc260643-00",
-        "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
-          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
-        ],
-        "x-ms-client-request-id": "a522fd35141b7174122ccf9c9ccbaae0",
+        "traceparent": "00-3d64dc375cfe82c81e6537d71683def3-2e6c9267a78d646a-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "6bc22d7e40ec3d881a44e1c0da28e2c6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "a522fd35-141b-7174-122c-cf9c9ccbaae0",
-        "Date": "Sat, 27 Mar 2021 18:43:13 GMT",
-        "elapsed-time": "199",
+        "client-request-id": "6bc22d7e-40ec-3d88-1a44-e1c0da28e2c6",
+        "Date": "Fri, 06 Jan 2023 20:43:58 GMT",
+        "elapsed-time": "200",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "request-id": "a522fd35-141b-7174-122c-cf9c9ccbaae0",
+        "request-id": "6bc22d7e-40ec-3d88-1a44-e1c0da28e2c6",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "a522fd35-141b-7174-122c-cf9c9ccbaae0"
+        "x-ms-client-request-id": "6bc22d7e-40ec-3d88-1a44-e1c0da28e2c6"
       },
-      "ResponseBody": []
+      "ResponseBody": null
     }
   ],
   "Variables": {
-    "RandomSeed": "978400005",
-    "SearchIndexName": "lwuhsdmj",
+    "RandomSeed": "2090605161",
+    "SearchIndexName": "kltikpql",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
-    "SEARCH_ENDPOINT_SUFFIX": null,
+    "SEARCH_ENDPOINT_SUFFIX": "search.windows.net",
     "SEARCH_QUERY_API_KEY": "Sanitized",
-    "SEARCH_SERVICE_NAME": "mohitc-acs"
+    "SEARCH_SERVICE_NAME": "azs-net-shrejaazsearch"
   }
 }

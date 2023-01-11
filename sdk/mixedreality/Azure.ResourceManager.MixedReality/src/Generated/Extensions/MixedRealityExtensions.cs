@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.MixedReality
         /// <param name="content"> Check Name Availability Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityLocalAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<MixedRealityNameAvailabilityResult>> CheckMixedRealityNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, MixedRealityNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckNameAvailabilityLocalAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).CheckMixedRealityNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.MixedReality
         /// <param name="content"> Check Name Availability Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResponse> CheckNameAvailabilityLocal(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<MixedRealityNameAvailabilityResult> CheckMixedRealityNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, MixedRealityNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckNameAvailabilityLocal(location, content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).CheckMixedRealityNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -112,32 +112,6 @@ namespace Azure.ResourceManager.MixedReality
         public static Pageable<RemoteRenderingAccountResource> GetRemoteRenderingAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetRemoteRenderingAccounts(cancellationToken);
-        }
-
-        /// <summary>
-        /// List Object Anchors Accounts by Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/objectAnchorsAccounts
-        /// Operation Id: ObjectAnchorsAccounts_ListBySubscription
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ObjectAnchorsAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ObjectAnchorsAccountResource> GetObjectAnchorsAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetObjectAnchorsAccountsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List Object Anchors Accounts by Subscription
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MixedReality/objectAnchorsAccounts
-        /// Operation Id: ObjectAnchorsAccounts_ListBySubscription
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ObjectAnchorsAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ObjectAnchorsAccountResource> GetObjectAnchorsAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetObjectAnchorsAccounts(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -229,46 +203,6 @@ namespace Azure.ResourceManager.MixedReality
             return resourceGroupResource.GetRemoteRenderingAccounts().Get(accountName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ObjectAnchorsAccountResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ObjectAnchorsAccountResources and their operations over a ObjectAnchorsAccountResource. </returns>
-        public static ObjectAnchorsAccountCollection GetObjectAnchorsAccounts(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetExtensionClient(resourceGroupResource).GetObjectAnchorsAccounts();
-        }
-
-        /// <summary>
-        /// Retrieve an Object Anchors Account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/objectAnchorsAccounts/{accountName}
-        /// Operation Id: ObjectAnchorsAccounts_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="accountName"> Name of an Mixed Reality Account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ObjectAnchorsAccountResource>> GetObjectAnchorsAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetObjectAnchorsAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve an Object Anchors Account.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/objectAnchorsAccounts/{accountName}
-        /// Operation Id: ObjectAnchorsAccounts_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="accountName"> Name of an Mixed Reality Account. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ObjectAnchorsAccountResource> GetObjectAnchorsAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetObjectAnchorsAccounts().Get(accountName, cancellationToken);
-        }
-
         #region SpatialAnchorsAccountResource
         /// <summary>
         /// Gets an object representing a <see cref="SpatialAnchorsAccountResource" /> along with the instance operations that can be performed on it but with no data.
@@ -302,25 +236,6 @@ namespace Azure.ResourceManager.MixedReality
             {
                 RemoteRenderingAccountResource.ValidateResourceId(id);
                 return new RemoteRenderingAccountResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ObjectAnchorsAccountResource
-        /// <summary>
-        /// Gets an object representing an <see cref="ObjectAnchorsAccountResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ObjectAnchorsAccountResource.CreateResourceIdentifier" /> to create an <see cref="ObjectAnchorsAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ObjectAnchorsAccountResource" /> object. </returns>
-        public static ObjectAnchorsAccountResource GetObjectAnchorsAccountResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ObjectAnchorsAccountResource.ValidateResourceId(id);
-                return new ObjectAnchorsAccountResource(client, id);
             }
             );
         }
