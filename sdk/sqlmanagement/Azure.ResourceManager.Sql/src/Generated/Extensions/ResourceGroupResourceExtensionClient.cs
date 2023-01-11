@@ -103,14 +103,6 @@ namespace Azure.ResourceManager.Sql
             return GetCachedClient(Client => new ManagedInstanceCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ManagedDatabaseMoveOperationResultResources in the ResourceGroupResource. </summary>
-        /// <param name="locationName"> The String to use. </param>
-        /// <returns> An object representing collection of ManagedDatabaseMoveOperationResultResources and their operations over a ManagedDatabaseMoveOperationResultResource. </returns>
-        public virtual ManagedDatabaseMoveOperationResultCollection GetManagedDatabaseMoveOperationResults(AzureLocation locationName)
-        {
-            return new ManagedDatabaseMoveOperationResultCollection(Client, Id, locationName);
-        }
-
         /// <summary> Gets a collection of VirtualClusterResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of VirtualClusterResources and their operations over a VirtualClusterResource. </returns>
         public virtual VirtualClusterCollection GetVirtualClusters()
