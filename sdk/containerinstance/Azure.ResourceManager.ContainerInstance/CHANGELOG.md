@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.1 (2023-01-11)
 
 ### Bugs Fixed
 
-### Other Changes
+- Allowed to construct `ContainerGroupImageRegistryCredential` only with Server as Username should not be required when Identity is present.
 
 ## 1.0.0 (2022-08-29)
 
