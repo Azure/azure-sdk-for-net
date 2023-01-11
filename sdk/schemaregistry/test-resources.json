@@ -44,7 +44,7 @@
     }
   },
   "variables": {
-    "apiVersion": "2018-01-01-preview",
+    "apiVersion": "2022-10-01-preview",
     "schemaRegistryGroup": "azsdk_net_test_group",
     "baseNameAvro": "[concat(parameters('baseName'), '-avro')]",
     "baseNameJson": "[concat(parameters('baseName'), '-json')]",
