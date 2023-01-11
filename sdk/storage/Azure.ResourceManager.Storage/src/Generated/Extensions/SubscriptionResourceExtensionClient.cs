@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -72,22 +71,8 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An async collection of <see cref="StorageSkuInformation" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageSkuInformation> GetSkusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StorageSkuInformation>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkus");
-                scope.Start();
-                try
-                {
-                    var response = await SkusRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, StorageSkuInformation.DeserializeStorageSkuInformation, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -99,22 +84,8 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of <see cref="StorageSkuInformation" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageSkuInformation> GetSkus(CancellationToken cancellationToken = default)
         {
-            Page<StorageSkuInformation> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkus");
-                scope.Start();
-                try
-                {
-                    var response = SkusRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, StorageSkuInformation.DeserializeStorageSkuInformation, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -172,37 +143,9 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An async collection of <see cref="StorageAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageAccountResource> GetStorageAccountsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<StorageAccountResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = StorageAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await StorageAccountRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<StorageAccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = StorageAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await StorageAccountRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageAccountRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageAccountRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageAccountResource(Client, StorageAccountData.DeserializeStorageAccountData(e)), StorageAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -214,37 +157,9 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of <see cref="StorageAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageAccountResource> GetStorageAccounts(CancellationToken cancellationToken = default)
         {
-            Page<StorageAccountResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = StorageAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageAccounts");
-                scope.Start();
-                try
-                {
-                    var response = StorageAccountRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<StorageAccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = StorageAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetStorageAccounts");
-                scope.Start();
-                try
-                {
-                    var response = StorageAccountRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new StorageAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageAccountRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageAccountRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageAccountResource(Client, StorageAccountData.DeserializeStorageAccountData(e)), StorageAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,37 +171,9 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An async collection of <see cref="DeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeletedAccountResource> GetDeletedAccountsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DeletedAccountResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DeletedAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await DeletedAccountRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DeletedAccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DeletedAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedAccounts");
-                scope.Start();
-                try
-                {
-                    var response = await DeletedAccountRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedAccountRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeletedAccountRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeletedAccountResource(Client, DeletedAccountData.DeserializeDeletedAccountData(e)), DeletedAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -298,37 +185,9 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of <see cref="DeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeletedAccountResource> GetDeletedAccounts(CancellationToken cancellationToken = default)
         {
-            Page<DeletedAccountResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DeletedAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedAccounts");
-                scope.Start();
-                try
-                {
-                    var response = DeletedAccountRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DeletedAccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DeletedAccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDeletedAccounts");
-                scope.Start();
-                try
-                {
-                    var response = DeletedAccountRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeletedAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedAccountRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeletedAccountRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeletedAccountResource(Client, DeletedAccountData.DeserializeDeletedAccountData(e)), DeletedAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -341,22 +200,8 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An async collection of <see cref="StorageUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageUsage> GetUsagesByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<StorageUsage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsagesByLocation");
-                scope.Start();
-                try
-                {
-                    var response = await UsagesRestClient.ListByLocationAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, StorageUsage.DeserializeStorageUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsagesByLocation", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -369,22 +214,8 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of <see cref="StorageUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageUsage> GetUsagesByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<StorageUsage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsagesByLocation");
-                scope.Start();
-                try
-                {
-                    var response = UsagesRestClient.ListByLocation(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, StorageUsage.DeserializeStorageUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsagesByLocation", "value", null, cancellationToken);
         }
     }
 }

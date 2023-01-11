@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -157,37 +156,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProfileResource> GetProfilesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProfileResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ProfileClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProfiles");
-                scope.Start();
-                try
-                {
-                    var response = await ProfileRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProfileResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ProfileClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProfiles");
-                scope.Start();
-                try
-                {
-                    var response = await ProfileRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProfileRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProfileRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProfileResource(Client, ProfileData.DeserializeProfileData(e)), ProfileClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProfiles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -199,37 +170,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProfileResource> GetProfiles(CancellationToken cancellationToken = default)
         {
-            Page<ProfileResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ProfileClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProfiles");
-                scope.Start();
-                try
-                {
-                    var response = ProfileRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProfileResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ProfileClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProfiles");
-                scope.Start();
-                try
-                {
-                    var response = ProfileRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProfileResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProfileRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProfileRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProfileResource(Client, ProfileData.DeserializeProfileData(e)), ProfileClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProfiles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,37 +184,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CdnUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CdnUsage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ResourceUsageClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceUsages");
-                scope.Start();
-                try
-                {
-                    var response = await ResourceUsageRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<CdnUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ResourceUsageClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceUsages");
-                scope.Start();
-                try
-                {
-                    var response = await ResourceUsageRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceUsageRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceUsageRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CdnUsage.DeserializeCdnUsage, ResourceUsageClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourceUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -283,37 +198,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CdnUsage> GetResourceUsages(CancellationToken cancellationToken = default)
         {
-            Page<CdnUsage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ResourceUsageClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceUsages");
-                scope.Start();
-                try
-                {
-                    var response = ResourceUsageRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<CdnUsage> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ResourceUsageClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetResourceUsages");
-                scope.Start();
-                try
-                {
-                    var response = ResourceUsageRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceUsageRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceUsageRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CdnUsage.DeserializeCdnUsage, ResourceUsageClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourceUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -325,37 +212,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="ManagedRuleSetDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedRuleSetDefinition> GetManagedRuleSetsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedRuleSetDefinition>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ManagedRuleSetsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedRuleSets");
-                scope.Start();
-                try
-                {
-                    var response = await ManagedRuleSetsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedRuleSetDefinition>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ManagedRuleSetsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedRuleSets");
-                scope.Start();
-                try
-                {
-                    var response = await ManagedRuleSetsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedRuleSetsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedRuleSetsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedRuleSetDefinition.DeserializeManagedRuleSetDefinition, ManagedRuleSetsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedRuleSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -367,37 +226,9 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="ManagedRuleSetDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedRuleSetDefinition> GetManagedRuleSets(CancellationToken cancellationToken = default)
         {
-            Page<ManagedRuleSetDefinition> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ManagedRuleSetsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedRuleSets");
-                scope.Start();
-                try
-                {
-                    var response = ManagedRuleSetsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedRuleSetDefinition> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ManagedRuleSetsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedRuleSets");
-                scope.Start();
-                try
-                {
-                    var response = ManagedRuleSetsRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedRuleSetsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedRuleSetsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedRuleSetDefinition.DeserializeManagedRuleSetDefinition, ManagedRuleSetsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedRuleSets", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -605,37 +605,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationJobStream" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationJobStream> GetTestJobStreamsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutomationJobStream>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _testJobStreamsClientDiagnostics.CreateScope("AutomationRunbookResource.GetTestJobStreams");
-                scope.Start();
-                try
-                {
-                    var response = await _testJobStreamsRestClient.ListByTestJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AutomationJobStream>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _testJobStreamsClientDiagnostics.CreateScope("AutomationRunbookResource.GetTestJobStreams");
-                scope.Start();
-                try
-                {
-                    var response = await _testJobStreamsRestClient.ListByTestJobNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _testJobStreamsRestClient.CreateListByTestJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _testJobStreamsRestClient.CreateListByTestJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AutomationJobStream.DeserializeAutomationJobStream, _testJobStreamsClientDiagnostics, Pipeline, "AutomationRunbookResource.GetTestJobStreams", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -648,37 +620,9 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationJobStream" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationJobStream> GetTestJobStreams(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<AutomationJobStream> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _testJobStreamsClientDiagnostics.CreateScope("AutomationRunbookResource.GetTestJobStreams");
-                scope.Start();
-                try
-                {
-                    var response = _testJobStreamsRestClient.ListByTestJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AutomationJobStream> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _testJobStreamsClientDiagnostics.CreateScope("AutomationRunbookResource.GetTestJobStreams");
-                scope.Start();
-                try
-                {
-                    var response = _testJobStreamsRestClient.ListByTestJobNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _testJobStreamsRestClient.CreateListByTestJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _testJobStreamsRestClient.CreateListByTestJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AutomationJobStream.DeserializeAutomationJobStream, _testJobStreamsClientDiagnostics, Pipeline, "AutomationRunbookResource.GetTestJobStreams", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

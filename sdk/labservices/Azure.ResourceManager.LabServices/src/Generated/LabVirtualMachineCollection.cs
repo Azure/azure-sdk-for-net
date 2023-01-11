@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -121,37 +120,9 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An async collection of <see cref="LabVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LabVirtualMachineResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<LabVirtualMachineResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _labVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("LabVirtualMachineCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _labVirtualMachineVirtualMachinesRestClient.ListByLabAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LabVirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<LabVirtualMachineResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _labVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("LabVirtualMachineCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _labVirtualMachineVirtualMachinesRestClient.ListByLabNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LabVirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _labVirtualMachineVirtualMachinesRestClient.CreateListByLabRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labVirtualMachineVirtualMachinesRestClient.CreateListByLabNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LabVirtualMachineResource(Client, LabVirtualMachineData.DeserializeLabVirtualMachineData(e)), _labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "LabVirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -164,37 +135,9 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> A collection of <see cref="LabVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LabVirtualMachineResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<LabVirtualMachineResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _labVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("LabVirtualMachineCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _labVirtualMachineVirtualMachinesRestClient.ListByLab(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LabVirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<LabVirtualMachineResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _labVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("LabVirtualMachineCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _labVirtualMachineVirtualMachinesRestClient.ListByLabNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LabVirtualMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _labVirtualMachineVirtualMachinesRestClient.CreateListByLabRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _labVirtualMachineVirtualMachinesRestClient.CreateListByLabNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LabVirtualMachineResource(Client, LabVirtualMachineData.DeserializeLabVirtualMachineData(e)), _labVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "LabVirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> An async collection of <see cref="FrontDoorRulesEngineResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorRulesEngineResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<FrontDoorRulesEngineResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _frontDoorRulesEngineRulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _frontDoorRulesEngineRulesEnginesRestClient.ListByFrontDoorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorRulesEngineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<FrontDoorRulesEngineResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _frontDoorRulesEngineRulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _frontDoorRulesEngineRulesEnginesRestClient.ListByFrontDoorNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorRulesEngineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRulesEngineRulesEnginesRestClient.CreateListByFrontDoorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRulesEngineRulesEnginesRestClient.CreateListByFrontDoorNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorRulesEngineResource(Client, FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(e)), _frontDoorRulesEngineRulesEnginesClientDiagnostics, Pipeline, "FrontDoorRulesEngineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> A collection of <see cref="FrontDoorRulesEngineResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorRulesEngineResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<FrontDoorRulesEngineResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _frontDoorRulesEngineRulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _frontDoorRulesEngineRulesEnginesRestClient.ListByFrontDoor(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorRulesEngineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<FrontDoorRulesEngineResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _frontDoorRulesEngineRulesEnginesClientDiagnostics.CreateScope("FrontDoorRulesEngineCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _frontDoorRulesEngineRulesEnginesRestClient.ListByFrontDoorNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new FrontDoorRulesEngineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorRulesEngineRulesEnginesRestClient.CreateListByFrontDoorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorRulesEngineRulesEnginesRestClient.CreateListByFrontDoorNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorRulesEngineResource(Client, FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(e)), _frontDoorRulesEngineRulesEnginesClientDiagnostics, Pipeline, "FrontDoorRulesEngineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

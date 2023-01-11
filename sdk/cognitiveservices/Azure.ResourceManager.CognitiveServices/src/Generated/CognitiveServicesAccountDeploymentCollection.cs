@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CognitiveServicesAccountDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CognitiveServicesAccountDeploymentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CognitiveServicesAccountDeploymentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics.CreateScope("CognitiveServicesAccountDeploymentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _cognitiveServicesAccountDeploymentDeploymentsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CognitiveServicesAccountDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<CognitiveServicesAccountDeploymentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics.CreateScope("CognitiveServicesAccountDeploymentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _cognitiveServicesAccountDeploymentDeploymentsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CognitiveServicesAccountDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesAccountDeploymentResource(Client, CognitiveServicesAccountDeploymentData.DeserializeCognitiveServicesAccountDeploymentData(e)), _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics, Pipeline, "CognitiveServicesAccountDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CognitiveServicesAccountDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CognitiveServicesAccountDeploymentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<CognitiveServicesAccountDeploymentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics.CreateScope("CognitiveServicesAccountDeploymentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _cognitiveServicesAccountDeploymentDeploymentsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CognitiveServicesAccountDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<CognitiveServicesAccountDeploymentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics.CreateScope("CognitiveServicesAccountDeploymentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _cognitiveServicesAccountDeploymentDeploymentsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CognitiveServicesAccountDeploymentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesAccountDeploymentResource(Client, CognitiveServicesAccountDeploymentData.DeserializeCognitiveServicesAccountDeploymentData(e)), _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics, Pipeline, "CognitiveServicesAccountDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

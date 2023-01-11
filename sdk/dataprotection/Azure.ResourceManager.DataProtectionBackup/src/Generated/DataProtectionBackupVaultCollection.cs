@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> An async collection of <see cref="DataProtectionBackupVaultResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataProtectionBackupVaultResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataProtectionBackupVaultResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("DataProtectionBackupVaultCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataProtectionBackupVaultBackupVaultsRestClient.GetInResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataProtectionBackupVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataProtectionBackupVaultResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("DataProtectionBackupVaultCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataProtectionBackupVaultBackupVaultsRestClient.GetInResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataProtectionBackupVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataProtectionBackupVaultBackupVaultsRestClient.CreateGetInResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataProtectionBackupVaultBackupVaultsRestClient.CreateGetInResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupVaultResource(Client, DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(e)), _dataProtectionBackupVaultBackupVaultsClientDiagnostics, Pipeline, "DataProtectionBackupVaultCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> A collection of <see cref="DataProtectionBackupVaultResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataProtectionBackupVaultResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DataProtectionBackupVaultResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("DataProtectionBackupVaultCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataProtectionBackupVaultBackupVaultsRestClient.GetInResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataProtectionBackupVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataProtectionBackupVaultResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataProtectionBackupVaultBackupVaultsClientDiagnostics.CreateScope("DataProtectionBackupVaultCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataProtectionBackupVaultBackupVaultsRestClient.GetInResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataProtectionBackupVaultResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataProtectionBackupVaultBackupVaultsRestClient.CreateGetInResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataProtectionBackupVaultBackupVaultsRestClient.CreateGetInResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupVaultResource(Client, DataProtectionBackupVaultData.DeserializeDataProtectionBackupVaultData(e)), _dataProtectionBackupVaultBackupVaultsClientDiagnostics, Pipeline, "DataProtectionBackupVaultCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

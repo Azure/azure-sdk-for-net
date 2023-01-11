@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -256,37 +255,9 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="DataCollectionRuleAssociationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataCollectionRuleAssociationResource> GetDataCollectionRuleAssociationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataCollectionRuleAssociationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionEndpointResource.GetDataCollectionRuleAssociations");
-                scope.Start();
-                try
-                {
-                    var response = await _dataCollectionRuleAssociationRestClient.ListByDataCollectionEndpointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataCollectionRuleAssociationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionEndpointResource.GetDataCollectionRuleAssociations");
-                scope.Start();
-                try
-                {
-                    var response = await _dataCollectionRuleAssociationRestClient.ListByDataCollectionEndpointNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataCollectionRuleAssociationRestClient.CreateListByDataCollectionEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataCollectionRuleAssociationRestClient.CreateListByDataCollectionEndpointNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleAssociationResource(Client, DataCollectionRuleAssociationData.DeserializeDataCollectionRuleAssociationData(e)), _dataCollectionRuleAssociationClientDiagnostics, Pipeline, "DataCollectionEndpointResource.GetDataCollectionRuleAssociations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -298,37 +269,9 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="DataCollectionRuleAssociationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataCollectionRuleAssociationResource> GetDataCollectionRuleAssociations(CancellationToken cancellationToken = default)
         {
-            Page<DataCollectionRuleAssociationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionEndpointResource.GetDataCollectionRuleAssociations");
-                scope.Start();
-                try
-                {
-                    var response = _dataCollectionRuleAssociationRestClient.ListByDataCollectionEndpoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataCollectionRuleAssociationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionEndpointResource.GetDataCollectionRuleAssociations");
-                scope.Start();
-                try
-                {
-                    var response = _dataCollectionRuleAssociationRestClient.ListByDataCollectionEndpointNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataCollectionRuleAssociationRestClient.CreateListByDataCollectionEndpointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataCollectionRuleAssociationRestClient.CreateListByDataCollectionEndpointNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleAssociationResource(Client, DataCollectionRuleAssociationData.DeserializeDataCollectionRuleAssociationData(e)), _dataCollectionRuleAssociationClientDiagnostics, Pipeline, "DataCollectionEndpointResource.GetDataCollectionRuleAssociations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

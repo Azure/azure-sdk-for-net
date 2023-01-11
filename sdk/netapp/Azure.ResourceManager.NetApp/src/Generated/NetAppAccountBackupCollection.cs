@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,22 +119,8 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> An async collection of <see cref="NetAppAccountBackupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetAppAccountBackupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NetAppAccountBackupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _netAppAccountBackupAccountBackupsClientDiagnostics.CreateScope("NetAppAccountBackupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _netAppAccountBackupAccountBackupsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetAppAccountBackupResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppAccountBackupAccountBackupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new NetAppAccountBackupResource(Client, NetAppBackupData.DeserializeNetAppBackupData(e)), _netAppAccountBackupAccountBackupsClientDiagnostics, Pipeline, "NetAppAccountBackupCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -147,22 +132,8 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> A collection of <see cref="NetAppAccountBackupResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetAppAccountBackupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<NetAppAccountBackupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _netAppAccountBackupAccountBackupsClientDiagnostics.CreateScope("NetAppAccountBackupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _netAppAccountBackupAccountBackupsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetAppAccountBackupResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppAccountBackupAccountBackupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new NetAppAccountBackupResource(Client, NetAppBackupData.DeserializeNetAppBackupData(e)), _netAppAccountBackupAccountBackupsClientDiagnostics, Pipeline, "NetAppAccountBackupCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

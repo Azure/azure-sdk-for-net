@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -190,37 +189,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<JitNetworkAccessPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<JitNetworkAccessPolicyResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _jitNetworkAccessPolicyClientDiagnostics.CreateScope("JitNetworkAccessPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _jitNetworkAccessPolicyRestClient.ListByResourceGroupAndRegionAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JitNetworkAccessPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<JitNetworkAccessPolicyResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _jitNetworkAccessPolicyClientDiagnostics.CreateScope("JitNetworkAccessPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _jitNetworkAccessPolicyRestClient.ListByResourceGroupAndRegionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new JitNetworkAccessPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _jitNetworkAccessPolicyRestClient.CreateListByResourceGroupAndRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jitNetworkAccessPolicyRestClient.CreateListByResourceGroupAndRegionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation));
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), _jitNetworkAccessPolicyClientDiagnostics, Pipeline, "JitNetworkAccessPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -232,37 +203,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<JitNetworkAccessPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<JitNetworkAccessPolicyResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _jitNetworkAccessPolicyClientDiagnostics.CreateScope("JitNetworkAccessPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _jitNetworkAccessPolicyRestClient.ListByResourceGroupAndRegion(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JitNetworkAccessPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<JitNetworkAccessPolicyResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _jitNetworkAccessPolicyClientDiagnostics.CreateScope("JitNetworkAccessPolicyCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _jitNetworkAccessPolicyRestClient.ListByResourceGroupAndRegionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new JitNetworkAccessPolicyResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _jitNetworkAccessPolicyRestClient.CreateListByResourceGroupAndRegionRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jitNetworkAccessPolicyRestClient.CreateListByResourceGroupAndRegionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation));
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JitNetworkAccessPolicyResource(Client, JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(e)), _jitNetworkAccessPolicyClientDiagnostics, Pipeline, "JitNetworkAccessPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

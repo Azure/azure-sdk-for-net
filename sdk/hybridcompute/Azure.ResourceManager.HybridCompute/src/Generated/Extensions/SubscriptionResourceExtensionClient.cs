@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -57,37 +56,9 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> An async collection of <see cref="HybridComputeMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridComputeMachineResource> GetHybridComputeMachinesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HybridComputeMachineResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HybridComputeMachineMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHybridComputeMachines");
-                scope.Start();
-                try
-                {
-                    var response = await HybridComputeMachineMachinesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridComputeMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HybridComputeMachineResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = HybridComputeMachineMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHybridComputeMachines");
-                scope.Start();
-                try
-                {
-                    var response = await HybridComputeMachineMachinesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridComputeMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridComputeMachineMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridComputeMachineMachinesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridComputeMachineResource(Client, HybridComputeMachineData.DeserializeHybridComputeMachineData(e)), HybridComputeMachineMachinesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHybridComputeMachines", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -99,37 +70,9 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> A collection of <see cref="HybridComputeMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridComputeMachineResource> GetHybridComputeMachines(CancellationToken cancellationToken = default)
         {
-            Page<HybridComputeMachineResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HybridComputeMachineMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHybridComputeMachines");
-                scope.Start();
-                try
-                {
-                    var response = HybridComputeMachineMachinesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridComputeMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<HybridComputeMachineResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = HybridComputeMachineMachinesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHybridComputeMachines");
-                scope.Start();
-                try
-                {
-                    var response = HybridComputeMachineMachinesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridComputeMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridComputeMachineMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridComputeMachineMachinesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridComputeMachineResource(Client, HybridComputeMachineData.DeserializeHybridComputeMachineData(e)), HybridComputeMachineMachinesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHybridComputeMachines", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -141,37 +84,9 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> An async collection of <see cref="HybridComputePrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridComputePrivateLinkScopeResource> GetHybridComputePrivateLinkScopesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HybridComputePrivateLinkScopeResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHybridComputePrivateLinkScopes");
-                scope.Start();
-                try
-                {
-                    var response = await HybridComputePrivateLinkScopePrivateLinkScopesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridComputePrivateLinkScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HybridComputePrivateLinkScopeResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = HybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHybridComputePrivateLinkScopes");
-                scope.Start();
-                try
-                {
-                    var response = await HybridComputePrivateLinkScopePrivateLinkScopesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridComputePrivateLinkScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridComputePrivateLinkScopeResource(Client, HybridComputePrivateLinkScopeData.DeserializeHybridComputePrivateLinkScopeData(e)), HybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHybridComputePrivateLinkScopes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -183,37 +98,9 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> A collection of <see cref="HybridComputePrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridComputePrivateLinkScopeResource> GetHybridComputePrivateLinkScopes(CancellationToken cancellationToken = default)
         {
-            Page<HybridComputePrivateLinkScopeResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = HybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHybridComputePrivateLinkScopes");
-                scope.Start();
-                try
-                {
-                    var response = HybridComputePrivateLinkScopePrivateLinkScopesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridComputePrivateLinkScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<HybridComputePrivateLinkScopeResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = HybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetHybridComputePrivateLinkScopes");
-                scope.Start();
-                try
-                {
-                    var response = HybridComputePrivateLinkScopePrivateLinkScopesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridComputePrivateLinkScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridComputePrivateLinkScopeResource(Client, HybridComputePrivateLinkScopeData.DeserializeHybridComputePrivateLinkScopeData(e)), HybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHybridComputePrivateLinkScopes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
