@@ -6,11 +6,8 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -1040,24 +1037,9 @@ namespace Azure.AI.AnomalyDetector
         /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='GetMultivariateModelsAsync(Int32,Int32,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetMultivariateModelsAsync(int? skip = null, int? maxCount = null, RequestContext context = null)
         {
-            return GetMultivariateModelsImplementationAsync("AnomalyDetectorClient.GetMultivariateModels", skip, maxCount, context);
-        }
-
-        private AsyncPageable<BinaryData> GetMultivariateModelsImplementationAsync(string diagnosticsScopeName, int? skip, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
-            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetMultivariateModelsRequest(skip, maxCount, context)
-                        : CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
-                    var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "models", "nextLink", cancellationToken).ConfigureAwait(false);
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMultivariateModelsRequest(skip, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, i => BinaryData.FromString(i.GetRawText()), ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
         }
 
         /// <summary> List Multivariate Models. </summary>
@@ -1069,24 +1051,9 @@ namespace Azure.AI.AnomalyDetector
         /// <include file="Docs/AnomalyDetectorClient.xml" path="doc/members/member[@name='GetMultivariateModels(Int32,Int32,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetMultivariateModels(int? skip = null, int? maxCount = null, RequestContext context = null)
         {
-            return GetMultivariateModelsImplementation("AnomalyDetectorClient.GetMultivariateModels", skip, maxCount, context);
-        }
-
-        private Pageable<BinaryData> GetMultivariateModelsImplementation(string diagnosticsScopeName, int? skip, int? maxCount, RequestContext context)
-        {
-            return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
-            IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
-            {
-                do
-                {
-                    var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetMultivariateModelsRequest(skip, maxCount, context)
-                        : CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
-                    var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "models", "nextLink");
-                    nextLink = page.ContinuationToken;
-                    yield return page;
-                } while (!string.IsNullOrEmpty(nextLink));
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMultivariateModelsRequest(skip, maxCount, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMultivariateModelsNextPageRequest(nextLink, skip, maxCount, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, i => BinaryData.FromString(i.GetRawText()), ClientDiagnostics, _pipeline, "AnomalyDetectorClient.GetMultivariateModels", "models", "nextLink", context);
         }
 
         internal HttpMessage CreateDetectUnivariateEntireSeriesRequest(RequestContent content, RequestContext context)
