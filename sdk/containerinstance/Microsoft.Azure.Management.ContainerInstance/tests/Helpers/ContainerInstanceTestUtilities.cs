@@ -37,7 +37,7 @@ namespace ContainerInstance.Tests
             });
         }
 
-        public static ContainerGroup CreateTestContainerGroup(string containerGroupName, bool doNotEncrypt = false)
+        public static ContainerGroup CreateTestContainerGroup(string containerGroupName, bool doNotEncrypt = false, string containerGroupPriority = null, bool isConfidentialSku = false, string ccepolicy=null)
         {
             var containers = new Container[]
             {
@@ -84,6 +84,8 @@ namespace ContainerInstance.Tests
                 keyName: "testencryptionkey",
                 keyVersion: "804d3f1d5ce2456b9bc3dc9e35aaa67e");
 
+	    var priority= containerGroupPriority == null ? null: containerGroupPriority;
+
             var containerGroup = new ContainerGroup(
                 name: containerGroupName,
                 location: "westus",
@@ -95,7 +97,39 @@ namespace ContainerInstance.Tests
                 diagnostics: new ContainerGroupDiagnostics(logAnalytics: logAnalytics),
                 sku: "Standard",
                 initContainers: initContainers,
-                encryptionProperties: encryptionProps);
+                encryptionProperties: encryptionProps,
+		priority: priority);
+
+
+	    if(containerGroupPriority == "Spot")
+	    {
+                var priorityContainers = new Container[]
+		{ new Container(
+                        name: containerGroupName,
+                        image: "alpine",
+                        command: new List<string>() { "/bin/sh", "-c", "while true; do sleep 10; done" },
+                        environmentVariables: new List<EnvironmentVariable>
+                        {
+                            new EnvironmentVariable(name: "secretEnv", secureValue: "secretValue1")
+                        },
+                        resources: new ResourceRequirements(requests: new ResourceRequests(memoryInGB: 1.5, cpu: 1.0)))
+		};
+
+                var priorityContainerGroup = new ContainerGroup(
+                    name: containerGroupName,
+                    location: "eastus2euap",
+                    osType: OperatingSystemTypes.Linux,
+                    restartPolicy: "Never",
+                    containers: priorityContainers,
+                    identity: msiIdentity,
+                    diagnostics: new ContainerGroupDiagnostics(logAnalytics: logAnalytics),
+                    sku: "Standard",
+                    initContainers: initContainers,
+                    encryptionProperties: encryptionProps,
+                    priority: priority);
+
+	        return priorityContainerGroup;
+            }
 
             return containerGroup;
         }
@@ -109,23 +143,31 @@ namespace ContainerInstance.Tests
             Assert.Equal(expected.RestartPolicy, actual.RestartPolicy);
             Assert.Equal(expected.Identity.Type, actual.Identity.Type);
             Assert.Equal(expected.Sku, actual.Sku);
-            Assert.Equal(expected.Diagnostics.LogAnalytics.WorkspaceId, actual.Diagnostics.LogAnalytics.WorkspaceId);
+            Assert.Equal(expected.Diagnostics?.LogAnalytics?.WorkspaceId, actual.Diagnostics?.LogAnalytics?.WorkspaceId);
             Assert.NotNull(actual.Containers);
             Assert.Equal(1, actual.Containers.Count);
-            Assert.NotNull(actual.IpAddress);
-            Assert.NotNull(actual.IpAddress.Ip);
-            Assert.Equal(expected.EncryptionProperties?.KeyName, actual.EncryptionProperties?.KeyName);
+	    if (expected.IpAddress != null)
+	    {
+                Assert.NotNull(actual.IpAddress);
+                Assert.NotNull(actual.IpAddress.Ip);
+	    }
+	    Assert.Equal(expected.EncryptionProperties?.KeyName, actual.EncryptionProperties?.KeyName);
             Assert.Equal(expected.EncryptionProperties?.KeyVersion, actual.EncryptionProperties?.KeyVersion);
             Assert.Equal(expected.EncryptionProperties?.VaultBaseUrl, actual.EncryptionProperties?.VaultBaseUrl);
-            Assert.Equal(expected.IpAddress.DnsNameLabel, actual.IpAddress.DnsNameLabel);
+            Assert.Equal(expected.IpAddress?.DnsNameLabel, actual.IpAddress?.DnsNameLabel);
             Assert.Equal(expected.Containers[0].Name, actual.Containers[0].Name);
             Assert.Equal(expected.Containers[0].Image, actual.Containers[0].Image);
-            Assert.Equal(expected.Containers[0].LivenessProbe.PeriodSeconds, actual.Containers[0].LivenessProbe.PeriodSeconds);
+            Assert.Equal(expected.Containers[0].LivenessProbe?.PeriodSeconds, actual.Containers[0].LivenessProbe?.PeriodSeconds);
             Assert.Equal(expected.Containers[0].EnvironmentVariables[0].Name, actual.Containers[0].EnvironmentVariables[0].Name);
             Assert.Equal(expected.Containers[0].Resources.Requests.Cpu, actual.Containers[0].Resources.Requests.Cpu);
             Assert.Equal(expected.Containers[0].Resources.Requests.MemoryInGB, actual.Containers[0].Resources.Requests.MemoryInGB);
-            Assert.Equal(expected.InitContainers[0].Name, actual.InitContainers[0].Name);
-            Assert.Equal(expected.InitContainers[0].Image, actual.InitContainers[0].Image);
+	    if (expected.InitContainers.Count > 0)
+	    {
+		    Assert.Equal(expected.InitContainers[0].Name, actual.InitContainers[0].Name);
+		    Assert.Equal(expected.InitContainers[0].Image, actual.InitContainers[0].Image);
+	    }
+                Assert.Equal(expected.Priority, actual.Priority);
+	        Assert.Equal(expected.ConfidentialComputeProperties?.CcePolicy, actual.ConfidentialComputeProperties?.CcePolicy);
         }
     }
 }

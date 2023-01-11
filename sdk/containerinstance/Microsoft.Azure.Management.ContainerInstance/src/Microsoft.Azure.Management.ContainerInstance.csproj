@@ -11,7 +11,7 @@
     <PackageTags>Microsoft Azure Container Instance Management;Container Instance;2022-10-01-preview;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a release of the Azure Container Instance SDK. Included with this release is the addition of Priority property for Container group.
+        This is a release of the Azure Container Instance SDK. Included with this release is the addition of Priority property for Container group, and ConfidentialComputeProperties for SevSNP based containers.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
