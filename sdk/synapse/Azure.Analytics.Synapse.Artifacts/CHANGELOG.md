@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-preview.18 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-preview.17 (2023-01-10)
 - Added `workspaceResourceId` to AzureSynapseArtifactsLinkedServiceTypeProperties
 - Added `pythonCodeReference`, `filesV2`, `scanFolder`, `configurationType`, `targetSparkConfiguration` and `sparkConfig` properties to SparkJobActivity
