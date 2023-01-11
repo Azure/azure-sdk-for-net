@@ -12,7 +12,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 {
     public class CallConnectionTests : CallAutomationTestBase
     {
-        private const string TransferCallOrRemoveParticipantsPayload = "{" +
+        private const string OperationContextPayload = "{" +
                                         "\"operationContext\": \"someOperationContext\"" +
                                         "}";
 
@@ -126,7 +126,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
         public async Task TransferCallToParticipantAsync_202Accepted(CommunicationIdentifier targetParticipant)
         {
-            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
             var response = await callConnection.TransferCallToParticipantAsync(new TransferToParticipantOptions(targetParticipant)).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
@@ -136,7 +136,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
         public void TransferCallToParticipant_202Accepted(CommunicationIdentifier targetParticipant)
         {
-            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
             var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(targetParticipant));
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
@@ -370,7 +370,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
         public async Task RemoveParticipantsAsync_202Accepted(CommunicationIdentifier[] participants)
         {
-            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
             var response = await callConnection.RemoveParticipantsAsync(participants).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
@@ -380,7 +380,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
         public void RemoveParticipants_202Accepted(CommunicationIdentifier[] participants)
         {
-            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
             var response = callConnection.RemoveParticipants(participants);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
@@ -390,7 +390,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         [Test]
         public void RemoveParticipants_EmptyParticipantsToRemove()
         {
-            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
             ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.RemoveParticipantsAsync(new CommunicationIdentifier[] { }).ConfigureAwait(false));
             Assert.NotNull(ex);
@@ -400,7 +400,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipants))]
         public void RemoveParticipants_ExceedsMaxOperationContextLength(CommunicationIdentifier[] participants)
         {
-            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
             var operationContext = new string('a', 1 + CallAutomationConstants.InputValidation.StringMaxLength);
             ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callConnection.RemoveParticipantsAsync(participants, operationContext).ConfigureAwait(false));
@@ -442,85 +442,136 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         [TestCaseSource(nameof(TestData_MuteParticipant))]
         public void MuteParticipant_202Accepted(CommunicationIdentifier participant)
         {
-            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
-            // TODO: to fill this when working on SDK.
-            //var response = callConnection.UnmuteParticipant(participant);
-            //Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
-            //Assert.AreEqual(OperationContext, response.Value.OperationContext);
-            NotImplementedException? ex = Assert.Throws<NotImplementedException>(() => callConnection.MuteParticipant(participant));
-            Assert.NotNull(ex);
+            var response = callConnection.MuteParticipant(participant, OperationContext);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual(OperationContext, response.Value.OperationContext);
         }
 
         [Test]
         public void MuteAllParticipants_NoInitiator_202Accepted()
         {
-            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
-            // TODO: to fill this when working on SDK.
-            //var response = callConnection.MuteAllParticipants();
-            //Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
-            //Assert.AreEqual(OperationContext, response.Value.OperationContext);
-            NotImplementedException? ex = Assert.Throws<NotImplementedException>(() => callConnection.MuteAllParticipants());
-            Assert.NotNull(ex);
+            var response = callConnection.MuteAllParticipants(operationalContext: OperationContext);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual(OperationContext, response.Value.OperationContext);
         }
 
         [TestCaseSource(nameof(TestData_MuteParticipant))]
         public void MuteAllParticipants_WithInitiator_202Accepted(CommunicationIdentifier initiator)
         {
-            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
-            // TODO: to fill this when working on SDK.
-            //var response = callConnection.MuteAllParticipants(initiator);
-            //Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
-            //Assert.AreEqual(OperationContext, response.Value.OperationContext);
-            NotImplementedException? ex = Assert.Throws<NotImplementedException>(() => callConnection.MuteAllParticipants(initiator));
-            Assert.NotNull(ex);
+            var response = callConnection.MuteAllParticipants(initiator, OperationContext);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual(OperationContext, response.Value.OperationContext);
         }
 
         [TestCaseSource(nameof(TestData_MuteParticipant))]
         public void UnmuteParticipant_202Accepted(CommunicationIdentifier participant)
         {
-            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
-            // TODO: to fill this when working on SDK.
-            //var response = callConnection.MuteParticipant(participant);
-            //Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
-            //Assert.AreEqual(OperationContext, response.Value.OperationContext);
-            NotImplementedException? ex = Assert.Throws<NotImplementedException>(() => callConnection.UnmuteParticipant(participant));
-            Assert.NotNull(ex);
+            var response = callConnection.UnmuteParticipant(participant, OperationContext);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual(OperationContext, response.Value.OperationContext);
         }
 
         [Test]
         public void UnmuteAllParticipants_202Accepted()
         {
-            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
-            // TODO: to fill this when working on SDK.
-            //var response = callConnection.UnmuteAllParticipants();
-            //Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
-            //Assert.AreEqual(OperationContext, response.Value.OperationContext);
-            NotImplementedException? ex = Assert.Throws<NotImplementedException>(() => callConnection.UnmuteAllParticipants());
-            Assert.NotNull(ex);
+            var response = callConnection.UnmuteAllParticipants(OperationContext);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual(OperationContext, response.Value.OperationContext);
         }
 
         [TestCaseSource(nameof(TestData_MuteParticipant))]
-        public void MuteParticipantAsync_202Accepted(CommunicationIdentifier participant)
+        public void MuteParticipant_WithOptions_202Accepted(CommunicationIdentifier participant)
         {
-            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+            var options = new MuteParticipantOptions(participant)
+            {
+                OperationContext = OperationContext
+            };
+            var response = callConnection.MuteParticipant(options);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual(OperationContext, response.Value.OperationContext);
+        }
 
-            // TODO: to fill this when working on SDK.
-            //var response = callConnection.UnmuteParticipant(participant);
-            //Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
-            //Assert.AreEqual(OperationContext, response.Value.OperationContext);
-            NotImplementedException? ex = Assert.ThrowsAsync<NotImplementedException>(async () => await callConnection.MuteParticipantAsync(participant));
-            Assert.NotNull(ex);
+        [Test]
+        public void MuteAllParticipants_WithOptions_NoInitiator_202Accepted()
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+            var options = new MuteAllParticipantsOptions()
+            {
+                OperationContext = OperationContext
+            };
+
+            var response = callConnection.MuteAllParticipants(options);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual(OperationContext, response.Value.OperationContext);
+        }
+
+        [TestCaseSource(nameof(TestData_MuteParticipant))]
+        public void MuteAllParticipants_WithOptions_WithInitiator_202Accepted(CommunicationIdentifier initiator)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+            var options = new MuteAllParticipantsOptions()
+            {
+                RequestInitiator = initiator,
+                OperationContext = OperationContext
+            };
+            var response = callConnection.MuteAllParticipants(options);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual(OperationContext, response.Value.OperationContext);
+        }
+
+        [TestCaseSource(nameof(TestData_MuteParticipant))]
+        public void UnmuteParticipant_WithOptions_202Accepted(CommunicationIdentifier participant)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+            var options = new UnmuteParticipantOptions(participant)
+            {
+                OperationContext = OperationContext
+            };
+
+            var response = callConnection.UnmuteParticipant(options);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual(OperationContext, response.Value.OperationContext);
+        }
+
+        [Test]
+        public void UnmuteAllParticipants_WithOptions_202Accepted()
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+            var options = new UnmuteAllParticipantsOptions()
+            {
+                OperationContext = OperationContext
+            };
+
+            var response = callConnection.UnmuteAllParticipants(options);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual(OperationContext, response.Value.OperationContext);
+        }
+
+        [TestCaseSource(nameof(TestData_MuteParticipant))]
+        public async Task MuteParticipantAsync_202Accepted(CommunicationIdentifier participant)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+
+            var response = await callConnection.MuteParticipantAsync(participant);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual(OperationContext, response.Value.OperationContext);
         }
 
         [Test]
         public void MuteAllParticipantsAsync_NoInitiator_202Accepted()
         {
-            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
             // TODO: to fill this when working on SDK.
             //var response = callConnection.MuteAllParticipants();
@@ -533,7 +584,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         [TestCaseSource(nameof(TestData_MuteParticipant))]
         public void MuteAllParticipantsAsync_WithInitiator_202Accepted(CommunicationIdentifier initiator)
         {
-            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
             // TODO: to fill this when working on SDK.
             //var response = callConnection.MuteAllParticipants(initiator);
@@ -546,7 +597,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         [TestCaseSource(nameof(TestData_MuteParticipant))]
         public void UnmuteParticipantAsync_202Accepted(CommunicationIdentifier participant)
         {
-            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
             // TODO: to fill this when working on SDK.
             //var response = callConnection.MuteParticipant(participant);
@@ -559,7 +610,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         [Test]
         public void UnmuteAllParticipantsAsync_202Accepted()
         {
-            var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
             // TODO: to fill this when working on SDK.
             //var response = callConnection.UnmuteAllParticipants();

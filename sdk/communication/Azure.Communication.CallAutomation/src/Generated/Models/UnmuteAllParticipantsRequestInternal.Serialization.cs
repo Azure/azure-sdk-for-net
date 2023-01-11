@@ -8,9 +8,9 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication.CallAutomation.Models
 {
-    public partial class UnmuteAllParticipantsRequest : IUtf8JsonSerializable
+    internal partial class UnmuteAllParticipantsRequestInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
