@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -27,6 +28,8 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="patch"> The updated SQL pool properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        [Obsolete("This method is obsolete and will be removed in a future release, please use UpdateAsync(WaitUntil waitUntil, SynapseSqlPoolPatch patch, CancellationToken cancellationToken = default).", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual async Task<Response<SynapseSqlPoolResource>> UpdateAsync(SynapseSqlPoolPatch patch, CancellationToken cancellationToken = default) =>
             await (await UpdateAsync(WaitUntil.Started, patch, cancellationToken).ConfigureAwait(false)).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -39,6 +42,8 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="patch"> The updated SQL pool properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        [Obsolete("This method is obsolete and will be removed in a future release, please use Update(WaitUntil waitUntil, SynapseSqlPoolPatch patch, CancellationToken cancellationToken = default).", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual Response<SynapseSqlPoolResource> Update(SynapseSqlPoolPatch patch, CancellationToken cancellationToken = default) =>
             Update(WaitUntil.Started, patch, cancellationToken).WaitForCompletion(cancellationToken);
