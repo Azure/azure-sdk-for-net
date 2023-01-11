@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -947,22 +946,8 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            async Task<Page<SqlMetric>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _metricsClientDiagnostics.CreateScope("SqlDatabaseResource.GetMetrics");
-                scope.Start();
-                try
-                {
-                    var response = await _metricsRestClient.ListDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _metricsRestClient.CreateListDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SqlMetric.DeserializeSqlMetric, _metricsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetMetrics", "value", null);
         }
 
         /// <summary>
@@ -978,22 +963,8 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(filter, nameof(filter));
 
-            Page<SqlMetric> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _metricsClientDiagnostics.CreateScope("SqlDatabaseResource.GetMetrics");
-                scope.Start();
-                try
-                {
-                    var response = _metricsRestClient.ListDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _metricsRestClient.CreateListDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SqlMetric.DeserializeSqlMetric, _metricsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetMetrics", "value", null);
         }
 
         /// <summary>
@@ -1005,22 +976,8 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SqlMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlMetricDefinition> GetMetricDefinitionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlMetricDefinition>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _metricDefinitionsClientDiagnostics.CreateScope("SqlDatabaseResource.GetMetricDefinitions");
-                scope.Start();
-                try
-                {
-                    var response = await _metricDefinitionsRestClient.ListDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _metricDefinitionsRestClient.CreateListDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SqlMetricDefinition.DeserializeSqlMetricDefinition, _metricDefinitionsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetMetricDefinitions", "value", null);
         }
 
         /// <summary>
@@ -1032,22 +989,8 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlMetricDefinition" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlMetricDefinition> GetMetricDefinitions(CancellationToken cancellationToken = default)
         {
-            Page<SqlMetricDefinition> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _metricDefinitionsClientDiagnostics.CreateScope("SqlDatabaseResource.GetMetricDefinitions");
-                scope.Start();
-                try
-                {
-                    var response = _metricDefinitionsRestClient.ListDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _metricDefinitionsRestClient.CreateListDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SqlMetricDefinition.DeserializeSqlMetricDefinition, _metricDefinitionsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetMetricDefinitions", "value", null);
         }
 
         /// <summary>
@@ -1064,37 +1007,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SqlDatabaseColumnResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlDatabaseColumnResource> GetDatabaseColumnsAsync(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlDatabaseColumnResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlDatabaseColumnDatabaseColumnsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseColumns");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlDatabaseColumnDatabaseColumnsRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlDatabaseColumnResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlDatabaseColumnDatabaseColumnsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseColumns");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlDatabaseColumnDatabaseColumnsRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseColumnDatabaseColumnsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseColumnDatabaseColumnsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _sqlDatabaseColumnDatabaseColumnsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseColumns", "value", "nextLink");
         }
 
         /// <summary>
@@ -1111,37 +1026,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlDatabaseColumnResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlDatabaseColumnResource> GetDatabaseColumns(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<SqlDatabaseColumnResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlDatabaseColumnDatabaseColumnsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseColumns");
-                scope.Start();
-                try
-                {
-                    var response = _sqlDatabaseColumnDatabaseColumnsRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlDatabaseColumnResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlDatabaseColumnDatabaseColumnsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseColumns");
-                scope.Start();
-                try
-                {
-                    var response = _sqlDatabaseColumnDatabaseColumnsRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseColumnDatabaseColumnsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseColumnDatabaseColumnsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _sqlDatabaseColumnDatabaseColumnsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseColumns", "value", "nextLink");
         }
 
         /// <summary>
@@ -1279,37 +1166,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ImportExportExtensionsOperationResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ImportExportExtensionsOperationResult> GetDatabaseExtensionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ImportExportExtensionsOperationResult>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _databaseExtensionsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseExtensions");
-                scope.Start();
-                try
-                {
-                    var response = await _databaseExtensionsRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ImportExportExtensionsOperationResult>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _databaseExtensionsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseExtensions");
-                scope.Start();
-                try
-                {
-                    var response = await _databaseExtensionsRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseExtensionsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseExtensionsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ImportExportExtensionsOperationResult.DeserializeImportExportExtensionsOperationResult, _databaseExtensionsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseExtensions", "value", "nextLink");
         }
 
         /// <summary>
@@ -1321,37 +1180,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ImportExportExtensionsOperationResult" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ImportExportExtensionsOperationResult> GetDatabaseExtensions(CancellationToken cancellationToken = default)
         {
-            Page<ImportExportExtensionsOperationResult> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _databaseExtensionsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseExtensions");
-                scope.Start();
-                try
-                {
-                    var response = _databaseExtensionsRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ImportExportExtensionsOperationResult> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _databaseExtensionsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseExtensions");
-                scope.Start();
-                try
-                {
-                    var response = _databaseExtensionsRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseExtensionsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseExtensionsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ImportExportExtensionsOperationResult.DeserializeImportExportExtensionsOperationResult, _databaseExtensionsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseExtensions", "value", "nextLink");
         }
 
         /// <summary>
@@ -1409,37 +1240,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="DatabaseOperationData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DatabaseOperationData> GetDatabaseOperationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DatabaseOperationData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _databaseOperationsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseOperations");
-                scope.Start();
-                try
-                {
-                    var response = await _databaseOperationsRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DatabaseOperationData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _databaseOperationsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseOperations");
-                scope.Start();
-                try
-                {
-                    var response = await _databaseOperationsRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseOperationsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseOperationsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DatabaseOperationData.DeserializeDatabaseOperationData, _databaseOperationsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseOperations", "value", "nextLink");
         }
 
         /// <summary>
@@ -1451,37 +1254,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="DatabaseOperationData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DatabaseOperationData> GetDatabaseOperations(CancellationToken cancellationToken = default)
         {
-            Page<DatabaseOperationData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _databaseOperationsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseOperations");
-                scope.Start();
-                try
-                {
-                    var response = _databaseOperationsRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DatabaseOperationData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _databaseOperationsClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseOperations");
-                scope.Start();
-                try
-                {
-                    var response = _databaseOperationsRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseOperationsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseOperationsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DatabaseOperationData.DeserializeDatabaseOperationData, _databaseOperationsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseOperations", "value", "nextLink");
         }
 
         /// <summary>
@@ -1493,37 +1268,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="DatabaseUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DatabaseUsage> GetDatabaseUsagesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DatabaseUsage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _databaseUsagesClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseUsages");
-                scope.Start();
-                try
-                {
-                    var response = await _databaseUsagesRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DatabaseUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _databaseUsagesClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseUsages");
-                scope.Start();
-                try
-                {
-                    var response = await _databaseUsagesRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseUsagesRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseUsagesRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DatabaseUsage.DeserializeDatabaseUsage, _databaseUsagesClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseUsages", "value", "nextLink");
         }
 
         /// <summary>
@@ -1535,37 +1282,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="DatabaseUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DatabaseUsage> GetDatabaseUsages(CancellationToken cancellationToken = default)
         {
-            Page<DatabaseUsage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _databaseUsagesClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseUsages");
-                scope.Start();
-                try
-                {
-                    var response = _databaseUsagesRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DatabaseUsage> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _databaseUsagesClientDiagnostics.CreateScope("SqlDatabaseResource.GetDatabaseUsages");
-                scope.Start();
-                try
-                {
-                    var response = _databaseUsagesRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseUsagesRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseUsagesRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DatabaseUsage.DeserializeDatabaseUsage, _databaseUsagesClientDiagnostics, Pipeline, "SqlDatabaseResource.GetDatabaseUsages", "value", "nextLink");
         }
 
         /// <summary>
@@ -1580,37 +1299,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SqlDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlDatabaseSensitivityLabelResource> GetCurrentSensitivityLabelsAsync(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlDatabaseSensitivityLabelResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetCurrentSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.ListCurrentByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlDatabaseSensitivityLabelResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetCurrentSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.ListCurrentByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListCurrentByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListCurrentByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetCurrentSensitivityLabels", "value", "nextLink");
         }
 
         /// <summary>
@@ -1625,37 +1316,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlDatabaseSensitivityLabelResource> GetCurrentSensitivityLabels(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<SqlDatabaseSensitivityLabelResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetCurrentSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.ListCurrentByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlDatabaseSensitivityLabelResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetCurrentSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.ListCurrentByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListCurrentByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListCurrentByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetCurrentSensitivityLabels", "value", "nextLink");
         }
 
         /// <summary>
@@ -1722,37 +1385,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SqlDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlDatabaseSensitivityLabelResource> GetRecommendedSensitivityLabelsAsync(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlDatabaseSensitivityLabelResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetRecommendedSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.ListRecommendedByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlDatabaseSensitivityLabelResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetRecommendedSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.ListRecommendedByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListRecommendedByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListRecommendedByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetRecommendedSensitivityLabels", "value", "nextLink");
         }
 
         /// <summary>
@@ -1767,37 +1402,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlDatabaseSensitivityLabelResource> GetRecommendedSensitivityLabels(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<SqlDatabaseSensitivityLabelResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetRecommendedSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.ListRecommendedByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlDatabaseSensitivityLabelResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.GetRecommendedSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.ListRecommendedByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListRecommendedByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateListRecommendedByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics, Pipeline, "SqlDatabaseResource.GetRecommendedSensitivityLabels", "value", "nextLink");
         }
 
         /// <summary>
@@ -1861,37 +1468,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SqlSynapseLinkWorkspace" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlSynapseLinkWorkspace> GetSynapseLinkWorkspacesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlSynapseLinkWorkspace>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseLinkWorkspacesClientDiagnostics.CreateScope("SqlDatabaseResource.GetSynapseLinkWorkspaces");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseLinkWorkspacesRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlSynapseLinkWorkspace>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseLinkWorkspacesClientDiagnostics.CreateScope("SqlDatabaseResource.GetSynapseLinkWorkspaces");
-                scope.Start();
-                try
-                {
-                    var response = await _synapseLinkWorkspacesRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseLinkWorkspacesRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseLinkWorkspacesRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SqlSynapseLinkWorkspace.DeserializeSqlSynapseLinkWorkspace, _synapseLinkWorkspacesClientDiagnostics, Pipeline, "SqlDatabaseResource.GetSynapseLinkWorkspaces", "value", "nextLink");
         }
 
         /// <summary>
@@ -1903,37 +1482,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlSynapseLinkWorkspace" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlSynapseLinkWorkspace> GetSynapseLinkWorkspaces(CancellationToken cancellationToken = default)
         {
-            Page<SqlSynapseLinkWorkspace> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _synapseLinkWorkspacesClientDiagnostics.CreateScope("SqlDatabaseResource.GetSynapseLinkWorkspaces");
-                scope.Start();
-                try
-                {
-                    var response = _synapseLinkWorkspacesRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlSynapseLinkWorkspace> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _synapseLinkWorkspacesClientDiagnostics.CreateScope("SqlDatabaseResource.GetSynapseLinkWorkspaces");
-                scope.Start();
-                try
-                {
-                    var response = _synapseLinkWorkspacesRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseLinkWorkspacesRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseLinkWorkspacesRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SqlSynapseLinkWorkspace.DeserializeSqlSynapseLinkWorkspace, _synapseLinkWorkspacesClientDiagnostics, Pipeline, "SqlDatabaseResource.GetSynapseLinkWorkspaces", "value", "nextLink");
         }
 
         /// <summary>

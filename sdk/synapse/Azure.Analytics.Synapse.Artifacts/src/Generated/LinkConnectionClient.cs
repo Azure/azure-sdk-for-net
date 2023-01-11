@@ -505,74 +505,20 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<LinkConnectionResource> ListByWorkspaceAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<LinkConnectionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.ListByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListByWorkspaceAsync(cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<LinkConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.ListByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = await RestClient.ListByWorkspaceNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            var context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListByWorkspaceRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListByWorkspaceNextPageRequest(nextLink);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LinkConnectionResource.DeserializeLinkConnectionResource, _clientDiagnostics, _pipeline, "LinkConnectionClient.ListByWorkspace", "value", "nextLink", context);
         }
 
         /// <summary> List link connections. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<LinkConnectionResource> ListByWorkspace(CancellationToken cancellationToken = default)
         {
-            Page<LinkConnectionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.ListByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListByWorkspace(cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<LinkConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.ListByWorkspace");
-                scope.Start();
-                try
-                {
-                    var response = RestClient.ListByWorkspaceNextPage(nextLink, cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            var context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListByWorkspaceRequest();
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListByWorkspaceNextPageRequest(nextLink);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LinkConnectionResource.DeserializeLinkConnectionResource, _clientDiagnostics, _pipeline, "LinkConnectionClient.ListByWorkspace", "value", "nextLink", context);
         }
     }
 }
