@@ -194,7 +194,7 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
   $packageInfoLocation = Join-Path $DocRepoLocation "metadata/$metadataMoniker"
   $docsMetadata = $packageInfo
   if (Test-Path $packageInfoLocation) {
-    $docsMetadata = Get-Content -packageInfoLocation -Raw | ConvertFrom-Json
+    $docsMetadata = Get-Content "$packageInfoLocation/$packageMetadataName" -Raw | ConvertFrom-Json
     $docsMetadata.PSObject.Properties | ForEach-Object {
       $packageInfo | Add-Member -MemberType $_.MemberType -Name $_.Name -Value $_.Value -Force
     }
