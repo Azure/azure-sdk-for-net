@@ -636,30 +636,12 @@ namespace Azure.Communication.CallAutomation
         /// <returns>A Response containing MuteParticipantsResponse</returns>
         public virtual Response<MuteParticipantsResponse> MuteParticipant(CommunicationIdentifier participant, string operationalContext = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MuteParticipant)}");
-            scope.Start();
-            try
+            var options = new MuteParticipantOptions(participant)
             {
-                if (participant == null)
-                    throw new ArgumentNullException(nameof(participant));
+                OperationContext = operationalContext
+            };
 
-                MuteParticipantRequestInternal request = new MuteParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(participant));
-                if (operationalContext != null && operationalContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
-                {
-                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
-                }
-                else
-                {
-                    request.OperationContext = operationalContext;
-                }
-
-                return RestClient.Mute(CallConnectionId, request, cancellationToken: cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return MuteParticipant(options, cancellationToken);
         }
 
         /// <summary>
@@ -710,27 +692,11 @@ namespace Azure.Communication.CallAutomation
         /// <returns></returns>
         public virtual Response<UnmuteParticipantsResponse> UnmuteParticipant(CommunicationIdentifier participant, string operationalContext = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(UnmuteParticipant)}");
-            scope.Start();
-            try
+            var options = new UnmuteParticipantOptions(participant)
             {
-                UnmuteParticipantRequestInternal request = new UnmuteParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(participant));
-                if (operationalContext != null && operationalContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
-                {
-                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
-                }
-                else
-                {
-                    request.OperationContext = operationalContext;
-                }
-
-                return RestClient.Unmute(CallConnectionId, request, cancellationToken: cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                OperationContext = operationalContext,
+            };
+            return UnmuteParticipant(options, cancellationToken);
         }
 
         /// <summary>
@@ -778,32 +744,13 @@ namespace Azure.Communication.CallAutomation
         /// <returns></returns>
         public virtual Response<MuteParticipantsResponse> MuteAllParticipants(CommunicationIdentifier initiator = default, string operationalContext = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MuteAllParticipants)}");
-            scope.Start();
-            try
+            var options = new MuteAllParticipantsOptions()
             {
-                MuteAllParticipantsRequestInternal request = new MuteAllParticipantsRequestInternal();
-                if (operationalContext != null && operationalContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
-                {
-                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
-                }
-                else
-                {
-                    request.OperationContext = operationalContext;
-                }
+                RequestInitiator = initiator,
+                OperationContext = operationalContext,
+            };
 
-                if (initiator != null)
-                {
-                    request.RequestInitiator = CommunicationIdentifierSerializer.Serialize(initiator);
-                }
-
-                return RestClient.MuteAll(CallConnectionId, request, cancellationToken: cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return MuteAllParticipants(options, cancellationToken);
         }
 
         /// <summary>
@@ -853,27 +800,12 @@ namespace Azure.Communication.CallAutomation
         /// <returns></returns>
         public virtual Response<UnmuteParticipantsResponse> UnmuteAllParticipants(string operationalContext = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(UnmuteAllParticipants)}");
-            scope.Start();
-            try
+            var options = new UnmuteAllParticipantsOptions()
             {
-                var request = new UnmuteAllParticipantsRequestInternal();
-                if (operationalContext != null && operationalContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
-                {
-                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
-                }
-                else
-                {
-                    request.OperationContext = operationalContext;
-                }
+                OperationContext = operationalContext,
+            };
 
-                return RestClient.UnmuteAll(CallConnectionId, request, cancellationToken: cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return UnmuteAllParticipants(options, cancellationToken);
         }
 
         /// <summary>
@@ -914,47 +846,221 @@ namespace Azure.Communication.CallAutomation
         /// Mute a single participant on the call.
         /// </summary>
         /// <param name="participant"></param>
+        /// <param name="operationalContext"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public virtual Task<Response<MuteParticipantsResponse>> MuteParticipantAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<MuteParticipantsResponse>> MuteParticipantAsync(CommunicationIdentifier participant, string operationalContext = default, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var options = new MuteParticipantOptions(participant)
+            {
+                OperationContext = operationalContext
+            };
+            return await MuteParticipantAsync(options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Mute a single participant on the call.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async virtual Task<Response<MuteParticipantsResponse>> MuteParticipantAsync(MuteParticipantOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MuteParticipant)}");
+            scope.Start();
+            try
+            {
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
+
+                MuteParticipantRequestInternal request = new MuteParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
+                options.RepeatabilityHeaders?.GenerateIfRepeatabilityHeadersNotProvided();
+
+                if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
+                {
+                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
+                }
+                else
+                {
+                    request.OperationContext = options.OperationContext;
+                }
+
+                return await RestClient.MuteAsync(
+                    CallConnectionId,
+                    request,
+                    options.RepeatabilityHeaders.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
         /// Unmute a single participant on the call.
         /// </summary>
         /// <param name="participant"></param>
+        /// <param name="operationalContext"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public virtual Task<Response<UnmuteParticipantsResponse>> UnmuteParticipantAsync(CommunicationIdentifier participant, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<UnmuteParticipantsResponse>> UnmuteParticipantAsync(CommunicationIdentifier participant, string operationalContext = default, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var options = new UnmuteParticipantOptions(participant)
+            {
+                OperationContext = operationalContext
+            };
+
+            return await UnmuteParticipantAsync(options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Unmute a single participant from the call.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async virtual Task<Response<UnmuteParticipantsResponse>> UnmuteParticipantAsync(UnmuteParticipantOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(UnmuteParticipant)}");
+            scope.Start();
+            try
+            {
+                UnmuteParticipantRequestInternal request = new UnmuteParticipantRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
+                if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
+                {
+                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
+                }
+                else
+                {
+                    request.OperationContext = options.OperationContext;
+                }
+
+                return await RestClient.UnmuteAsync(
+                    CallConnectionId,
+                    request,
+                    options.RepeatabilityHeaders.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
         /// Mute all participants on the call.
         /// </summary>
         /// <param name="initiator"></param>
+        /// <param name="operationalContext"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public virtual Task<Response<MuteParticipantsResponse>> MuteAllParticipantsAsync(CommunicationIdentifier initiator = default, CancellationToken cancellationToken = default)
+        public async virtual Task<Response<MuteParticipantsResponse>> MuteAllParticipantsAsync(CommunicationIdentifier initiator = default, string operationalContext = default, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var options = new MuteAllParticipantsOptions()
+            {
+                RequestInitiator = initiator,
+                OperationContext = operationalContext,
+            };
+
+            return await MuteAllParticipantsAsync(options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Mute all participants on the call.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async virtual Task<Response<MuteParticipantsResponse>> MuteAllParticipantsAsync(MuteAllParticipantsOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MuteAllParticipants)}");
+            scope.Start();
+            try
+            {
+                MuteAllParticipantsRequestInternal request = new MuteAllParticipantsRequestInternal();
+                if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
+                {
+                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
+                }
+                else
+                {
+                    request.OperationContext = options.OperationContext;
+                }
+
+                if (options.RequestInitiator != null)
+                {
+                    request.RequestInitiator = CommunicationIdentifierSerializer.Serialize(options.RequestInitiator);
+                }
+
+                return await RestClient.MuteAllAsync(
+                    CallConnectionId,
+                    request,
+                    options.RepeatabilityHeaders.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
         /// Unmute all participants on the call.
         /// </summary>
+        /// <param name="operationalContext"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public virtual Task<Response<UnmuteParticipantsResponse>> UnmuteAllParticipantsAsync(CancellationToken cancellationToken = default)
+        public async virtual Task<Response<UnmuteParticipantsResponse>> UnmuteAllParticipantsAsync(string operationalContext = default, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var options = new UnmuteAllParticipantsOptions()
+            {
+                OperationContext = operationalContext,
+            };
+
+            return await UnmuteAllParticipantsAsync(options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Unmute all participants on the call.
+        /// </summary>
+        /// <returns></returns>
+        public async virtual Task<Response<UnmuteParticipantsResponse>> UnmuteAllParticipantsAsync(UnmuteAllParticipantsOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(UnmuteAllParticipants)}");
+            scope.Start();
+            try
+            {
+                var request = new UnmuteAllParticipantsRequestInternal();
+                if (options.OperationContext != null && options.OperationContext.Length > CallAutomationConstants.InputValidation.StringMaxLength)
+                {
+                    throw new ArgumentException(CallAutomationErrorMessages.OperationContextExceedsMaxLength);
+                }
+                else
+                {
+                    request.OperationContext = options.OperationContext;
+                }
+
+                return await RestClient.UnmuteAllAsync(
+                    CallConnectionId,
+                    request,
+                    options.RepeatabilityHeaders.RepeatabilityRequestId,
+                    options.RepeatabilityHeaders.GetRepeatabilityFirstSentString(),
+                    cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
     }
 }
