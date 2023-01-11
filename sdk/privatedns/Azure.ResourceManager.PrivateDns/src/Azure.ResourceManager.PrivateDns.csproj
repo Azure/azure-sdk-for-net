@@ -4,7 +4,7 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.PrivateDns</PackageId>
-    <Description>Azure Resource Manager client SDK for Azure resource provider PrivateDns</Description>
+    <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Network PrivateDns.</Description>
     <PackageTags>azure;management;arm;resource manager;privatedns</PackageTags>
   </PropertyGroup>
 </Project>

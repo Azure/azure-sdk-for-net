@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using Azure.Core;
@@ -36,7 +39,11 @@ namespace Azure
         /// Thrown when the <paramref name="signature"/> is empty.
         /// </exception>
 #pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
-        public AzureSasCredential(string signature) => Update(signature);
+        public AzureSasCredential(string signature)
+        {
+            Argument.AssertNotNullOrWhiteSpace(signature, nameof(signature));
+            Signature = signature;
+        }
 #pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 
         /// <summary>

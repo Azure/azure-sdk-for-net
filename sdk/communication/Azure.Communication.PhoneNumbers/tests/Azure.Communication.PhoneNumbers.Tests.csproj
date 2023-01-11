@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Nullable>enable</Nullable>
@@ -19,6 +19,7 @@
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\samples\Sample_SipRoutingClient.md" Link="samples\Sample_SipRoutingClient.md" />

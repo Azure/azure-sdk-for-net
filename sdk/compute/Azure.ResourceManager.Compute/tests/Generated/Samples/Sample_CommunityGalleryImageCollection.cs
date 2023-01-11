@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_CommunityGalleryImageCollection
     {
@@ -20,11 +21,13 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetACommunityGalleryImage()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/communityGalleryExamples/CommunityGalleryImage_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/communityGalleryExamples/CommunityGalleryImage_Get.json
             // this example is just showing the usage of "CommunityGalleryImages_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CommunityGalleryResource created on azure
             // for more information of creating CommunityGalleryResource, please refer to the document of CommunityGalleryResource
@@ -53,11 +56,13 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetACommunityGalleryImage()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/communityGalleryExamples/CommunityGalleryImage_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/communityGalleryExamples/CommunityGalleryImage_Get.json
             // this example is just showing the usage of "CommunityGalleryImages_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CommunityGalleryResource created on azure
             // for more information of creating CommunityGalleryResource, please refer to the document of CommunityGalleryResource
@@ -82,11 +87,13 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListCommunityGalleryImages()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/communityGalleryExamples/CommunityGalleryImage_List.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/communityGalleryExamples/CommunityGalleryImage_List.json
             // this example is just showing the usage of "CommunityGalleryImages_List" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this CommunityGalleryResource created on azure
             // for more information of creating CommunityGalleryResource, please refer to the document of CommunityGalleryResource

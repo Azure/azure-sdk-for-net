@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of SupportedBuildpacksList. </summary>
         internal SupportedBuildpacksList()
         {
-            Value = new ChangeTrackingList<SupportedBuildpackResourceData>();
+            Value = new ChangeTrackingList<AppPlatformSupportedBuildpackData>();
         }
 
         /// <summary> Initializes a new instance of SupportedBuildpacksList. </summary>
@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.
         /// </param>
-        internal SupportedBuildpacksList(IReadOnlyList<SupportedBuildpackResourceData> value, string nextLink)
+        internal SupportedBuildpacksList(IReadOnlyList<AppPlatformSupportedBuildpackData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of supported buildpacks resources. </summary>
-        public IReadOnlyList<SupportedBuildpackResourceData> Value { get; }
+        public IReadOnlyList<AppPlatformSupportedBuildpackData> Value { get; }
         /// <summary>
         /// URL client should use to fetch the next page (per server side paging).
         /// It&apos;s null for now, added for future use.

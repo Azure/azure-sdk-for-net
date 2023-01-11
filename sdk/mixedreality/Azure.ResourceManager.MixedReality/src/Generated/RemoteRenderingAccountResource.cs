@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.MixedReality
         /// Operation Id: RemoteRenderingAccounts_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AccountKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MixedRealityAccountKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _remoteRenderingAccountClientDiagnostics.CreateScope("RemoteRenderingAccountResource.GetKeys");
             scope.Start();
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.MixedReality
         /// Operation Id: RemoteRenderingAccounts_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AccountKeys> GetKeys(CancellationToken cancellationToken = default)
+        public virtual Response<MixedRealityAccountKeys> GetKeys(CancellationToken cancellationToken = default)
         {
             using var scope = _remoteRenderingAccountClientDiagnostics.CreateScope("RemoteRenderingAccountResource.GetKeys");
             scope.Start();
@@ -290,18 +290,18 @@ namespace Azure.ResourceManager.MixedReality
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/remoteRenderingAccounts/{accountName}/regenerateKeys
         /// Operation Id: RemoteRenderingAccounts_RegenerateKeys
         /// </summary>
-        /// <param name="regenerate"> Required information for key regeneration. </param>
+        /// <param name="content"> Required information for key regeneration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regenerate"/> is null. </exception>
-        public virtual async Task<Response<AccountKeys>> RegenerateKeysAsync(AccountKeyRegenerateRequest regenerate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<MixedRealityAccountKeys>> RegenerateKeysAsync(MixedRealityAccountKeyRegenerateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(regenerate, nameof(regenerate));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _remoteRenderingAccountClientDiagnostics.CreateScope("RemoteRenderingAccountResource.RegenerateKeys");
             scope.Start();
             try
             {
-                var response = await _remoteRenderingAccountRestClient.RegenerateKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regenerate, cancellationToken).ConfigureAwait(false);
+                var response = await _remoteRenderingAccountRestClient.RegenerateKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -316,18 +316,18 @@ namespace Azure.ResourceManager.MixedReality
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MixedReality/remoteRenderingAccounts/{accountName}/regenerateKeys
         /// Operation Id: RemoteRenderingAccounts_RegenerateKeys
         /// </summary>
-        /// <param name="regenerate"> Required information for key regeneration. </param>
+        /// <param name="content"> Required information for key regeneration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regenerate"/> is null. </exception>
-        public virtual Response<AccountKeys> RegenerateKeys(AccountKeyRegenerateRequest regenerate, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<MixedRealityAccountKeys> RegenerateKeys(MixedRealityAccountKeyRegenerateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(regenerate, nameof(regenerate));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _remoteRenderingAccountClientDiagnostics.CreateScope("RemoteRenderingAccountResource.RegenerateKeys");
             scope.Start();
             try
             {
-                var response = _remoteRenderingAccountRestClient.RegenerateKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, regenerate, cancellationToken);
+                var response = _remoteRenderingAccountRestClient.RegenerateKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
