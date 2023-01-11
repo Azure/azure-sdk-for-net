@@ -52,8 +52,6 @@ namespace Azure.ResourceManager.Sql
         private readonly DatabaseUsagesRestOperations _databaseUsagesRestClient;
         private readonly ClientDiagnostics _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics;
         private readonly SensitivityLabelsRestOperations _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient;
-        private readonly ClientDiagnostics _databaseSqlVulnerabilityAssessmentExecuteScanClientDiagnostics;
-        private readonly DatabaseSqlVulnerabilityAssessmentExecuteScanRestOperations _databaseSqlVulnerabilityAssessmentExecuteScanRestClient;
         private readonly ClientDiagnostics _synapseLinkWorkspacesClientDiagnostics;
         private readonly SynapseLinkWorkspacesRestOperations _synapseLinkWorkspacesRestClient;
         private readonly SqlDatabaseData _data;
@@ -99,8 +97,6 @@ namespace Azure.ResourceManager.Sql
             _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabaseSensitivityLabelResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SqlDatabaseSensitivityLabelResource.ResourceType, out string sqlDatabaseSensitivityLabelSensitivityLabelsApiVersion);
             _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient = new SensitivityLabelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseSensitivityLabelSensitivityLabelsApiVersion);
-            _databaseSqlVulnerabilityAssessmentExecuteScanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _databaseSqlVulnerabilityAssessmentExecuteScanRestClient = new DatabaseSqlVulnerabilityAssessmentExecuteScanRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _synapseLinkWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _synapseLinkWorkspacesRestClient = new SynapseLinkWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
@@ -708,87 +704,11 @@ namespace Azure.ResourceManager.Sql
             return GetDatabaseAdvancedThreatProtections().Get(advancedThreatProtectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServerDatabaseSqlVulnerabilityAssessmentBaselineResources in the SqlDatabase. </summary>
-        /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
-        /// <returns> An object representing collection of ServerDatabaseSqlVulnerabilityAssessmentBaselineResources and their operations over a ServerDatabaseSqlVulnerabilityAssessmentBaselineResource. </returns>
-        public virtual ServerDatabaseSqlVulnerabilityAssessmentBaselineCollection GetServerDatabaseSqlVulnerabilityAssessmentBaselines(VulnerabilityAssessmentName vulnerabilityAssessmentName)
+        /// <summary> Gets a collection of SqlDatabaseSqlVulnerabilityAssessmentResources in the SqlDatabase. </summary>
+        /// <returns> An object representing collection of SqlDatabaseSqlVulnerabilityAssessmentResources and their operations over a SqlDatabaseSqlVulnerabilityAssessmentResource. </returns>
+        public virtual SqlDatabaseSqlVulnerabilityAssessmentCollection GetSqlDatabaseSqlVulnerabilityAssessments()
         {
-            return new ServerDatabaseSqlVulnerabilityAssessmentBaselineCollection(Client, Id, vulnerabilityAssessmentName);
-        }
-
-        /// <summary>
-        /// Gets a list of database&apos;s sql vulnerability assessment rule baselines.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}/baselines/{baselineName}
-        /// Operation Id: DatabaseSqlVulnerabilityAssessmentBaselines_Get
-        /// </summary>
-        /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
-        /// <param name="baselineName"> The BaselineName to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ServerDatabaseSqlVulnerabilityAssessmentBaselineResource>> GetServerDatabaseSqlVulnerabilityAssessmentBaselineAsync(VulnerabilityAssessmentName vulnerabilityAssessmentName, BaselineName baselineName, CancellationToken cancellationToken = default)
-        {
-            return await GetServerDatabaseSqlVulnerabilityAssessmentBaselines(vulnerabilityAssessmentName).GetAsync(baselineName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a list of database&apos;s sql vulnerability assessment rule baselines.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}/baselines/{baselineName}
-        /// Operation Id: DatabaseSqlVulnerabilityAssessmentBaselines_Get
-        /// </summary>
-        /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
-        /// <param name="baselineName"> The BaselineName to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ServerDatabaseSqlVulnerabilityAssessmentBaselineResource> GetServerDatabaseSqlVulnerabilityAssessmentBaseline(VulnerabilityAssessmentName vulnerabilityAssessmentName, BaselineName baselineName, CancellationToken cancellationToken = default)
-        {
-            return GetServerDatabaseSqlVulnerabilityAssessmentBaselines(vulnerabilityAssessmentName).Get(baselineName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ServerDatabaseSqlVulnerabilityAssessmentScanResources in the SqlDatabase. </summary>
-        /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
-        /// <returns> An object representing collection of ServerDatabaseSqlVulnerabilityAssessmentScanResources and their operations over a ServerDatabaseSqlVulnerabilityAssessmentScanResource. </returns>
-        public virtual ServerDatabaseSqlVulnerabilityAssessmentScanCollection GetServerDatabaseSqlVulnerabilityAssessmentScans(VulnerabilityAssessmentName vulnerabilityAssessmentName)
-        {
-            return new ServerDatabaseSqlVulnerabilityAssessmentScanCollection(Client, Id, vulnerabilityAssessmentName);
-        }
-
-        /// <summary>
-        /// Get a database vulnerability assessment scan result.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}/scans/{scanId}
-        /// Operation Id: DatabaseSqlVulnerabilityAssessmentScans_Get
-        /// </summary>
-        /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
-        /// <param name="scanId"> The vulnerability assessment scan Id of the scan to retrieve. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ServerDatabaseSqlVulnerabilityAssessmentScanResource>> GetServerDatabaseSqlVulnerabilityAssessmentScanAsync(VulnerabilityAssessmentName vulnerabilityAssessmentName, string scanId, CancellationToken cancellationToken = default)
-        {
-            return await GetServerDatabaseSqlVulnerabilityAssessmentScans(vulnerabilityAssessmentName).GetAsync(scanId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a database vulnerability assessment scan result.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}/scans/{scanId}
-        /// Operation Id: DatabaseSqlVulnerabilityAssessmentScans_Get
-        /// </summary>
-        /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
-        /// <param name="scanId"> The vulnerability assessment scan Id of the scan to retrieve. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scanId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="scanId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ServerDatabaseSqlVulnerabilityAssessmentScanResource> GetServerDatabaseSqlVulnerabilityAssessmentScan(VulnerabilityAssessmentName vulnerabilityAssessmentName, string scanId, CancellationToken cancellationToken = default)
-        {
-            return GetServerDatabaseSqlVulnerabilityAssessmentScans(vulnerabilityAssessmentName).Get(scanId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ServerDatabaseSqlVulnerabilityAssessmentResources in the SqlDatabase. </summary>
-        /// <returns> An object representing collection of ServerDatabaseSqlVulnerabilityAssessmentResources and their operations over a ServerDatabaseSqlVulnerabilityAssessmentResource. </returns>
-        public virtual ServerDatabaseSqlVulnerabilityAssessmentCollection GetServerDatabaseSqlVulnerabilityAssessments()
-        {
-            return GetCachedClient(Client => new ServerDatabaseSqlVulnerabilityAssessmentCollection(Client, Id));
+            return GetCachedClient(Client => new SqlDatabaseSqlVulnerabilityAssessmentCollection(Client, Id));
         }
 
         /// <summary>
@@ -799,9 +719,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="vulnerabilityAssessmentName"> The name of the SQL Vulnerability Assessment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServerDatabaseSqlVulnerabilityAssessmentResource>> GetServerDatabaseSqlVulnerabilityAssessmentAsync(SqlVulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlDatabaseSqlVulnerabilityAssessmentResource>> GetSqlDatabaseSqlVulnerabilityAssessmentAsync(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
         {
-            return await GetServerDatabaseSqlVulnerabilityAssessments().GetAsync(vulnerabilityAssessmentName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlDatabaseSqlVulnerabilityAssessments().GetAsync(vulnerabilityAssessmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -812,9 +732,9 @@ namespace Azure.ResourceManager.Sql
         /// <param name="vulnerabilityAssessmentName"> The name of the SQL Vulnerability Assessment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ServerDatabaseSqlVulnerabilityAssessmentResource> GetServerDatabaseSqlVulnerabilityAssessment(SqlVulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlDatabaseSqlVulnerabilityAssessmentResource> GetSqlDatabaseSqlVulnerabilityAssessment(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
         {
-            return GetServerDatabaseSqlVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
+            return GetSqlDatabaseSqlVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlServerDatabaseReplicationLinkResources in the SqlDatabase. </summary>
@@ -1933,69 +1853,15 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Executes a Vulnerability Assessment database scan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}/initiateScan
-        /// Operation Id: DatabaseSqlVulnerabilityAssessmentExecuteScan_Execute
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> ExecuteDatabaseSqlVulnerabilityAssessmentExecuteScanAsync(WaitUntil waitUntil, VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _databaseSqlVulnerabilityAssessmentExecuteScanClientDiagnostics.CreateScope("SqlDatabaseResource.ExecuteDatabaseSqlVulnerabilityAssessmentExecuteScan");
-            scope.Start();
-            try
-            {
-                var response = await _databaseSqlVulnerabilityAssessmentExecuteScanRestClient.ExecuteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vulnerabilityAssessmentName, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_databaseSqlVulnerabilityAssessmentExecuteScanClientDiagnostics, Pipeline, _databaseSqlVulnerabilityAssessmentExecuteScanRestClient.CreateExecuteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vulnerabilityAssessmentName).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Executes a Vulnerability Assessment database scan.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/sqlVulnerabilityAssessments/{vulnerabilityAssessmentName}/initiateScan
-        /// Operation Id: DatabaseSqlVulnerabilityAssessmentExecuteScan_Execute
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation ExecuteDatabaseSqlVulnerabilityAssessmentExecuteScan(WaitUntil waitUntil, VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
-        {
-            using var scope = _databaseSqlVulnerabilityAssessmentExecuteScanClientDiagnostics.CreateScope("SqlDatabaseResource.ExecuteDatabaseSqlVulnerabilityAssessmentExecuteScan");
-            scope.Start();
-            try
-            {
-                var response = _databaseSqlVulnerabilityAssessmentExecuteScanRestClient.Execute(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vulnerabilityAssessmentName, cancellationToken);
-                var operation = new SqlArmOperation(_databaseSqlVulnerabilityAssessmentExecuteScanClientDiagnostics, Pipeline, _databaseSqlVulnerabilityAssessmentExecuteScanRestClient.CreateExecuteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vulnerabilityAssessmentName).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Gets all synapselink workspaces for a database.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/linkWorkspaces
         /// Operation Id: SynapseLinkWorkspaces_ListByDatabase
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseLinkWorkspace" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SynapseLinkWorkspace> GetSynapseLinkWorkspacesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlSynapseLinkWorkspace" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlSynapseLinkWorkspace> GetSynapseLinkWorkspacesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SynapseLinkWorkspace>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SqlSynapseLinkWorkspace>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _synapseLinkWorkspacesClientDiagnostics.CreateScope("SqlDatabaseResource.GetSynapseLinkWorkspaces");
                 scope.Start();
@@ -2010,7 +1876,7 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<SynapseLinkWorkspace>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SqlSynapseLinkWorkspace>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _synapseLinkWorkspacesClientDiagnostics.CreateScope("SqlDatabaseResource.GetSynapseLinkWorkspaces");
                 scope.Start();
@@ -2034,10 +1900,10 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: SynapseLinkWorkspaces_ListByDatabase
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseLinkWorkspace" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SynapseLinkWorkspace> GetSynapseLinkWorkspaces(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlSynapseLinkWorkspace" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlSynapseLinkWorkspace> GetSynapseLinkWorkspaces(CancellationToken cancellationToken = default)
         {
-            Page<SynapseLinkWorkspace> FirstPageFunc(int? pageSizeHint)
+            Page<SqlSynapseLinkWorkspace> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _synapseLinkWorkspacesClientDiagnostics.CreateScope("SqlDatabaseResource.GetSynapseLinkWorkspaces");
                 scope.Start();
@@ -2052,7 +1918,7 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<SynapseLinkWorkspace> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SqlSynapseLinkWorkspace> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _synapseLinkWorkspacesClientDiagnostics.CreateScope("SqlDatabaseResource.GetSynapseLinkWorkspaces");
                 scope.Start();
