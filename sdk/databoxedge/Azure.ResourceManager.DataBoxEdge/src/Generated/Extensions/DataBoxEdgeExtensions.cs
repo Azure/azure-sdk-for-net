@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary>
-        /// List all the available Skus and information related to them.
+        /// List all the available Skus and information related to the skus.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBoxEdge/availableSkus
         /// Operation Id: AvailableSkus_List
         /// </summary>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary>
-        /// List all the available Skus and information related to them.
+        /// List all the available Skus and information related to the skus.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.DataBoxEdge/availableSkus
         /// Operation Id: AvailableSkus_List
         /// </summary>
