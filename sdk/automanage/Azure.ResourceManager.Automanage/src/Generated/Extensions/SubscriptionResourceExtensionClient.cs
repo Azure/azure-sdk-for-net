@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual AsyncPageable<ConfigurationProfileResource> GetConfigurationProfilesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationProfileRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConfigurationProfileResource(Client, ConfigurationProfileData.DeserializeConfigurationProfileData(e)), ConfigurationProfileClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurationProfiles", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConfigurationProfileResource(Client, ConfigurationProfileData.DeserializeConfigurationProfileData(e)), ConfigurationProfileClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurationProfiles", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual Pageable<ConfigurationProfileResource> GetConfigurationProfiles(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationProfileRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileResource(Client, ConfigurationProfileData.DeserializeConfigurationProfileData(e)), ConfigurationProfileClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurationProfiles", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileResource(Client, ConfigurationProfileData.DeserializeConfigurationProfileData(e)), ConfigurationProfileClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurationProfiles", "value", null, cancellationToken);
         }
     }
 }

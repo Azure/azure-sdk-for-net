@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementEmailTemplateEmailTemplateRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementEmailTemplateEmailTemplateRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementEmailTemplateResource(Client, ApiManagementEmailTemplateData.DeserializeApiManagementEmailTemplateData(e)), _apiManagementEmailTemplateEmailTemplateClientDiagnostics, Pipeline, "ApiManagementEmailTemplateCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementEmailTemplateResource(Client, ApiManagementEmailTemplateData.DeserializeApiManagementEmailTemplateData(e)), _apiManagementEmailTemplateEmailTemplateClientDiagnostics, Pipeline, "ApiManagementEmailTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementEmailTemplateEmailTemplateRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementEmailTemplateEmailTemplateRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementEmailTemplateResource(Client, ApiManagementEmailTemplateData.DeserializeApiManagementEmailTemplateData(e)), _apiManagementEmailTemplateEmailTemplateClientDiagnostics, Pipeline, "ApiManagementEmailTemplateCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementEmailTemplateResource(Client, ApiManagementEmailTemplateData.DeserializeApiManagementEmailTemplateData(e)), _apiManagementEmailTemplateEmailTemplateClientDiagnostics, Pipeline, "ApiManagementEmailTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

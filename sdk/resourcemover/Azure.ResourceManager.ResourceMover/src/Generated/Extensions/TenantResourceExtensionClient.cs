@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ResourceMover
         public virtual AsyncPageable<MoverOperationsDiscovery> GetOperationsDiscoveriesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OperationsDiscoveryRestClient.CreateGetRequest();
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MoverOperationsDiscovery.DeserializeMoverOperationsDiscovery, OperationsDiscoveryClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetOperationsDiscoveries", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MoverOperationsDiscovery.DeserializeMoverOperationsDiscovery, OperationsDiscoveryClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetOperationsDiscoveries", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ResourceMover
         public virtual Pageable<MoverOperationsDiscovery> GetOperationsDiscoveries(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OperationsDiscoveryRestClient.CreateGetRequest();
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MoverOperationsDiscovery.DeserializeMoverOperationsDiscovery, OperationsDiscoveryClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetOperationsDiscoveries", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MoverOperationsDiscovery.DeserializeMoverOperationsDiscovery, OperationsDiscoveryClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetOperationsDiscoveries", "value", null, cancellationToken);
         }
     }
 }

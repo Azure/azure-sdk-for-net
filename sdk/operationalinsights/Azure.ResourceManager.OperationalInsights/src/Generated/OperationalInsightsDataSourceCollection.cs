@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsDataSourceDataSourcesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _operationalInsightsDataSourceDataSourcesRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OperationalInsightsDataSourceResource(Client, OperationalInsightsDataSourceData.DeserializeOperationalInsightsDataSourceData(e)), _operationalInsightsDataSourceDataSourcesClientDiagnostics, Pipeline, "OperationalInsightsDataSourceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OperationalInsightsDataSourceResource(Client, OperationalInsightsDataSourceData.DeserializeOperationalInsightsDataSourceData(e)), _operationalInsightsDataSourceDataSourcesClientDiagnostics, Pipeline, "OperationalInsightsDataSourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsDataSourceDataSourcesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _operationalInsightsDataSourceDataSourcesRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OperationalInsightsDataSourceResource(Client, OperationalInsightsDataSourceData.DeserializeOperationalInsightsDataSourceData(e)), _operationalInsightsDataSourceDataSourcesClientDiagnostics, Pipeline, "OperationalInsightsDataSourceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OperationalInsightsDataSourceResource(Client, OperationalInsightsDataSourceData.DeserializeOperationalInsightsDataSourceData(e)), _operationalInsightsDataSourceDataSourcesClientDiagnostics, Pipeline, "OperationalInsightsDataSourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

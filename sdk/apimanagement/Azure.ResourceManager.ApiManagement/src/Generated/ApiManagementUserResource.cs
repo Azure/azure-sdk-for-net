@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _userGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGroupResource(Client, ApiManagementGroupData.DeserializeApiManagementGroupData(e)), _userGroupClientDiagnostics, Pipeline, "ApiManagementUserResource.GetUserGroups", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGroupResource(Client, ApiManagementGroupData.DeserializeApiManagementGroupData(e)), _userGroupClientDiagnostics, Pipeline, "ApiManagementUserResource.GetUserGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _userGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGroupResource(Client, ApiManagementGroupData.DeserializeApiManagementGroupData(e)), _userGroupClientDiagnostics, Pipeline, "ApiManagementUserResource.GetUserGroups", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGroupResource(Client, ApiManagementGroupData.DeserializeApiManagementGroupData(e)), _userGroupClientDiagnostics, Pipeline, "ApiManagementUserResource.GetUserGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _userIdentitiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userIdentitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, UserIdentityContract.DeserializeUserIdentityContract, _userIdentitiesClientDiagnostics, Pipeline, "ApiManagementUserResource.GetUserIdentities", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, UserIdentityContract.DeserializeUserIdentityContract, _userIdentitiesClientDiagnostics, Pipeline, "ApiManagementUserResource.GetUserIdentities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _userIdentitiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userIdentitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, UserIdentityContract.DeserializeUserIdentityContract, _userIdentitiesClientDiagnostics, Pipeline, "ApiManagementUserResource.GetUserIdentities", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, UserIdentityContract.DeserializeUserIdentityContract, _userIdentitiesClientDiagnostics, Pipeline, "ApiManagementUserResource.GetUserIdentities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

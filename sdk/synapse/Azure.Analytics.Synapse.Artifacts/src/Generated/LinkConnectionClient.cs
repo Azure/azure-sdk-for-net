@@ -505,20 +505,18 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<LinkConnectionResource> ListByWorkspaceAsync(CancellationToken cancellationToken = default)
         {
-            var context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LinkConnectionResource.DeserializeLinkConnectionResource, _clientDiagnostics, _pipeline, "LinkConnectionClient.ListByWorkspace", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LinkConnectionResource.DeserializeLinkConnectionResource, _clientDiagnostics, _pipeline, "LinkConnectionClient.ListByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> List link connections. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<LinkConnectionResource> ListByWorkspace(CancellationToken cancellationToken = default)
         {
-            var context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LinkConnectionResource.DeserializeLinkConnectionResource, _clientDiagnostics, _pipeline, "LinkConnectionClient.ListByWorkspace", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LinkConnectionResource.DeserializeLinkConnectionResource, _clientDiagnostics, _pipeline, "LinkConnectionClient.ListByWorkspace", "value", "nextLink", cancellationToken);
         }
     }
 }

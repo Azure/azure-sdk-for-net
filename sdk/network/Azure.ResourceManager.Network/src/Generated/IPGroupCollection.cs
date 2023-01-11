@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _ipGroupIPGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ipGroupIPGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IPGroupResource(Client, IPGroupData.DeserializeIPGroupData(e)), _ipGroupIPGroupsClientDiagnostics, Pipeline, "IPGroupCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IPGroupResource(Client, IPGroupData.DeserializeIPGroupData(e)), _ipGroupIPGroupsClientDiagnostics, Pipeline, "IPGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _ipGroupIPGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ipGroupIPGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IPGroupResource(Client, IPGroupData.DeserializeIPGroupData(e)), _ipGroupIPGroupsClientDiagnostics, Pipeline, "IPGroupCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IPGroupResource(Client, IPGroupData.DeserializeIPGroupData(e)), _ipGroupIPGroupsClientDiagnostics, Pipeline, "IPGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

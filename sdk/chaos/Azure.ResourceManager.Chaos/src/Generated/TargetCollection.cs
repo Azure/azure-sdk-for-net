@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _targetRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _targetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, continuationToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TargetResource(Client, TargetData.DeserializeTargetData(e)), _targetClientDiagnostics, Pipeline, "TargetCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TargetResource(Client, TargetData.DeserializeTargetData(e)), _targetClientDiagnostics, Pipeline, "TargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _targetRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _targetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _parentProviderNamespace, _parentResourceType, _parentResourceName, continuationToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TargetResource(Client, TargetData.DeserializeTargetData(e)), _targetClientDiagnostics, Pipeline, "TargetCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TargetResource(Client, TargetData.DeserializeTargetData(e)), _targetClientDiagnostics, Pipeline, "TargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

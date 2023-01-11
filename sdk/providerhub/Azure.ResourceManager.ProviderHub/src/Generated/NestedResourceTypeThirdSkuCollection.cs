@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nestedResourceTypeThirdSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeThirdRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nestedResourceTypeThirdSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeThirdNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NestedResourceTypeThirdSkuResource(Client, SkuResourceData.DeserializeSkuResourceData(e)), _nestedResourceTypeThirdSkuSkusClientDiagnostics, Pipeline, "NestedResourceTypeThirdSkuCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NestedResourceTypeThirdSkuResource(Client, SkuResourceData.DeserializeSkuResourceData(e)), _nestedResourceTypeThirdSkuSkusClientDiagnostics, Pipeline, "NestedResourceTypeThirdSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nestedResourceTypeThirdSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeThirdRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nestedResourceTypeThirdSkuSkusRestClient.CreateListByResourceTypeRegistrationsNestedResourceTypeThirdNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, _nestedResourceTypeFirst, _nestedResourceTypeSecond, _nestedResourceTypeThird);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NestedResourceTypeThirdSkuResource(Client, SkuResourceData.DeserializeSkuResourceData(e)), _nestedResourceTypeThirdSkuSkusClientDiagnostics, Pipeline, "NestedResourceTypeThirdSkuCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NestedResourceTypeThirdSkuResource(Client, SkuResourceData.DeserializeSkuResourceData(e)), _nestedResourceTypeThirdSkuSkusClientDiagnostics, Pipeline, "NestedResourceTypeThirdSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

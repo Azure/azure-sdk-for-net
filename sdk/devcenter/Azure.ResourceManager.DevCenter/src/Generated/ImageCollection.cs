@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _imageRestClient.CreateListByGalleryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _imageRestClient.CreateListByGalleryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ImageResource(Client, ImageData.DeserializeImageData(e)), _imageClientDiagnostics, Pipeline, "ImageCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ImageResource(Client, ImageData.DeserializeImageData(e)), _imageClientDiagnostics, Pipeline, "ImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _imageRestClient.CreateListByGalleryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _imageRestClient.CreateListByGalleryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ImageResource(Client, ImageData.DeserializeImageData(e)), _imageClientDiagnostics, Pipeline, "ImageCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ImageResource(Client, ImageData.DeserializeImageData(e)), _imageClientDiagnostics, Pipeline, "ImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

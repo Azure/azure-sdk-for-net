@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Sql
         public virtual AsyncPageable<SqlServerCommunicationLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerCommunicationLinkServerCommunicationLinksRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SqlServerCommunicationLinkResource(Client, SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(e)), _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics, Pipeline, "SqlServerCommunicationLinkCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SqlServerCommunicationLinkResource(Client, SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(e)), _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics, Pipeline, "SqlServerCommunicationLinkCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Pageable<SqlServerCommunicationLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerCommunicationLinkServerCommunicationLinksRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SqlServerCommunicationLinkResource(Client, SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(e)), _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics, Pipeline, "SqlServerCommunicationLinkCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SqlServerCommunicationLinkResource(Client, SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(e)), _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics, Pipeline, "SqlServerCommunicationLinkCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

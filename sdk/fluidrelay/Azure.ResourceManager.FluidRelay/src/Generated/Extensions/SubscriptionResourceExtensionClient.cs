@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.FluidRelay
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FluidRelayServerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FluidRelayServerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FluidRelayServerResource(Client, FluidRelayServerData.DeserializeFluidRelayServerData(e)), FluidRelayServerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFluidRelayServers", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FluidRelayServerResource(Client, FluidRelayServerData.DeserializeFluidRelayServerData(e)), FluidRelayServerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFluidRelayServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.FluidRelay
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => FluidRelayServerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FluidRelayServerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FluidRelayServerResource(Client, FluidRelayServerData.DeserializeFluidRelayServerData(e)), FluidRelayServerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFluidRelayServers", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FluidRelayServerResource(Client, FluidRelayServerData.DeserializeFluidRelayServerData(e)), FluidRelayServerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFluidRelayServers", "value", "nextLink", cancellationToken);
         }
     }
 }

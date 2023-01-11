@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         public virtual AsyncPageable<PrivateEndpointConnectionProxyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateEndpointConnectionProxyRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PrivateEndpointConnectionProxyResource(Client, PrivateEndpointConnectionProxyData.DeserializePrivateEndpointConnectionProxyData(e)), _privateEndpointConnectionProxyClientDiagnostics, Pipeline, "PrivateEndpointConnectionProxyCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PrivateEndpointConnectionProxyResource(Client, PrivateEndpointConnectionProxyData.DeserializePrivateEndpointConnectionProxyData(e)), _privateEndpointConnectionProxyClientDiagnostics, Pipeline, "PrivateEndpointConnectionProxyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         public virtual Pageable<PrivateEndpointConnectionProxyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateEndpointConnectionProxyRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new PrivateEndpointConnectionProxyResource(Client, PrivateEndpointConnectionProxyData.DeserializePrivateEndpointConnectionProxyData(e)), _privateEndpointConnectionProxyClientDiagnostics, Pipeline, "PrivateEndpointConnectionProxyCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new PrivateEndpointConnectionProxyResource(Client, PrivateEndpointConnectionProxyData.DeserializePrivateEndpointConnectionProxyData(e)), _privateEndpointConnectionProxyClientDiagnostics, Pipeline, "PrivateEndpointConnectionProxyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

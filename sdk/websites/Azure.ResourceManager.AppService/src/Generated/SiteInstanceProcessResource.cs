@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteInstanceProcessWebAppsRestClient.CreateListInstanceProcessThreadsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteInstanceProcessWebAppsRestClient.CreateListInstanceProcessThreadsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProcessThreadInfo.DeserializeProcessThreadInfo, _siteInstanceProcessWebAppsClientDiagnostics, Pipeline, "SiteInstanceProcessResource.GetInstanceProcessThreads", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProcessThreadInfo.DeserializeProcessThreadInfo, _siteInstanceProcessWebAppsClientDiagnostics, Pipeline, "SiteInstanceProcessResource.GetInstanceProcessThreads", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteInstanceProcessWebAppsRestClient.CreateListInstanceProcessThreadsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteInstanceProcessWebAppsRestClient.CreateListInstanceProcessThreadsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProcessThreadInfo.DeserializeProcessThreadInfo, _siteInstanceProcessWebAppsClientDiagnostics, Pipeline, "SiteInstanceProcessResource.GetInstanceProcessThreads", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProcessThreadInfo.DeserializeProcessThreadInfo, _siteInstanceProcessWebAppsClientDiagnostics, Pipeline, "SiteInstanceProcessResource.GetInstanceProcessThreads", "value", "nextLink", cancellationToken);
         }
     }
 }

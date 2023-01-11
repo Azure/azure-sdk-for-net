@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual AsyncPageable<NetAppVolumeSnapshotResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeSnapshotSnapshotsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new NetAppVolumeSnapshotResource(Client, NetAppVolumeSnapshotData.DeserializeNetAppVolumeSnapshotData(e)), _netAppVolumeSnapshotSnapshotsClientDiagnostics, Pipeline, "NetAppVolumeSnapshotCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new NetAppVolumeSnapshotResource(Client, NetAppVolumeSnapshotData.DeserializeNetAppVolumeSnapshotData(e)), _netAppVolumeSnapshotSnapshotsClientDiagnostics, Pipeline, "NetAppVolumeSnapshotCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual Pageable<NetAppVolumeSnapshotResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeSnapshotSnapshotsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new NetAppVolumeSnapshotResource(Client, NetAppVolumeSnapshotData.DeserializeNetAppVolumeSnapshotData(e)), _netAppVolumeSnapshotSnapshotsClientDiagnostics, Pipeline, "NetAppVolumeSnapshotCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new NetAppVolumeSnapshotResource(Client, NetAppVolumeSnapshotData.DeserializeNetAppVolumeSnapshotData(e)), _netAppVolumeSnapshotSnapshotsClientDiagnostics, Pipeline, "NetAppVolumeSnapshotCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

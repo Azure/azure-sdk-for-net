@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionGovernanceRuleGovernanceRuleRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionGovernanceRuleGovernanceRuleRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionGovernanceRuleResource(Client, GovernanceRuleData.DeserializeGovernanceRuleData(e)), _subscriptionGovernanceRuleGovernanceRuleClientDiagnostics, Pipeline, "SubscriptionGovernanceRuleCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionGovernanceRuleResource(Client, GovernanceRuleData.DeserializeGovernanceRuleData(e)), _subscriptionGovernanceRuleGovernanceRuleClientDiagnostics, Pipeline, "SubscriptionGovernanceRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionGovernanceRuleGovernanceRuleRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionGovernanceRuleGovernanceRuleRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionGovernanceRuleResource(Client, GovernanceRuleData.DeserializeGovernanceRuleData(e)), _subscriptionGovernanceRuleGovernanceRuleClientDiagnostics, Pipeline, "SubscriptionGovernanceRuleCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionGovernanceRuleResource(Client, GovernanceRuleData.DeserializeGovernanceRuleData(e)), _subscriptionGovernanceRuleGovernanceRuleClientDiagnostics, Pipeline, "SubscriptionGovernanceRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

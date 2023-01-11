@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkVirtualApplianceSkuResource(Client, NetworkVirtualApplianceSkuData.DeserializeNetworkVirtualApplianceSkuData(e)), _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics, Pipeline, "NetworkVirtualApplianceSkuCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkVirtualApplianceSkuResource(Client, NetworkVirtualApplianceSkuData.DeserializeNetworkVirtualApplianceSkuData(e)), _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics, Pipeline, "NetworkVirtualApplianceSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkVirtualApplianceSkuVirtualApplianceSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkVirtualApplianceSkuResource(Client, NetworkVirtualApplianceSkuData.DeserializeNetworkVirtualApplianceSkuData(e)), _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics, Pipeline, "NetworkVirtualApplianceSkuCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkVirtualApplianceSkuResource(Client, NetworkVirtualApplianceSkuData.DeserializeNetworkVirtualApplianceSkuData(e)), _networkVirtualApplianceSkuVirtualApplianceSkusClientDiagnostics, Pipeline, "NetworkVirtualApplianceSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

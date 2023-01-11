@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseRestorableDroppedSqlPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseRestorableDroppedSqlPoolResource(Client, SynapseRestorableDroppedSqlPoolData.DeserializeSynapseRestorableDroppedSqlPoolData(e)), _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsClientDiagnostics, Pipeline, "SynapseRestorableDroppedSqlPoolCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseRestorableDroppedSqlPoolResource(Client, SynapseRestorableDroppedSqlPoolData.DeserializeSynapseRestorableDroppedSqlPoolData(e)), _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsClientDiagnostics, Pipeline, "SynapseRestorableDroppedSqlPoolCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseRestorableDroppedSqlPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseRestorableDroppedSqlPoolResource(Client, SynapseRestorableDroppedSqlPoolData.DeserializeSynapseRestorableDroppedSqlPoolData(e)), _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsClientDiagnostics, Pipeline, "SynapseRestorableDroppedSqlPoolCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseRestorableDroppedSqlPoolResource(Client, SynapseRestorableDroppedSqlPoolData.DeserializeSynapseRestorableDroppedSqlPoolData(e)), _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsClientDiagnostics, Pipeline, "SynapseRestorableDroppedSqlPoolCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

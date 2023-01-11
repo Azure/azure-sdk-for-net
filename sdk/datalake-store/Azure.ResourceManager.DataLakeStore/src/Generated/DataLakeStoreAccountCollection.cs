@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataLakeStore
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeStoreAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderBy, count);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeStoreAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderBy, count);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData, _dataLakeStoreAccountAccountsClientDiagnostics, Pipeline, "DataLakeStoreAccountCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData, _dataLakeStoreAccountAccountsClientDiagnostics, Pipeline, "DataLakeStoreAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DataLakeStore
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeStoreAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderBy, count);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeStoreAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderBy, count);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData, _dataLakeStoreAccountAccountsClientDiagnostics, Pipeline, "DataLakeStoreAccountCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData, _dataLakeStoreAccountAccountsClientDiagnostics, Pipeline, "DataLakeStoreAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

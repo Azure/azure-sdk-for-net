@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementOpenIdConnectProviderResource(Client, ApiManagementOpenIdConnectProviderData.DeserializeApiManagementOpenIdConnectProviderData(e)), _apiManagementOpenIdConnectProviderOpenIdConnectProviderClientDiagnostics, Pipeline, "ApiManagementOpenIdConnectProviderCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementOpenIdConnectProviderResource(Client, ApiManagementOpenIdConnectProviderData.DeserializeApiManagementOpenIdConnectProviderData(e)), _apiManagementOpenIdConnectProviderOpenIdConnectProviderClientDiagnostics, Pipeline, "ApiManagementOpenIdConnectProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementOpenIdConnectProviderOpenIdConnectProviderRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementOpenIdConnectProviderResource(Client, ApiManagementOpenIdConnectProviderData.DeserializeApiManagementOpenIdConnectProviderData(e)), _apiManagementOpenIdConnectProviderOpenIdConnectProviderClientDiagnostics, Pipeline, "ApiManagementOpenIdConnectProviderCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementOpenIdConnectProviderResource(Client, ApiManagementOpenIdConnectProviderData.DeserializeApiManagementOpenIdConnectProviderData(e)), _apiManagementOpenIdConnectProviderOpenIdConnectProviderClientDiagnostics, Pipeline, "ApiManagementOpenIdConnectProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

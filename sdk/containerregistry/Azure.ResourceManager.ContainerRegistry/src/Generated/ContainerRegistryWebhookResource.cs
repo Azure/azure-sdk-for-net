@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryWebhookWebhooksRestClient.CreateListEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryWebhookWebhooksRestClient.CreateListEventsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerRegistryWebhookEvent.DeserializeContainerRegistryWebhookEvent, _containerRegistryWebhookWebhooksClientDiagnostics, Pipeline, "ContainerRegistryWebhookResource.GetEvents", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerRegistryWebhookEvent.DeserializeContainerRegistryWebhookEvent, _containerRegistryWebhookWebhooksClientDiagnostics, Pipeline, "ContainerRegistryWebhookResource.GetEvents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryWebhookWebhooksRestClient.CreateListEventsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryWebhookWebhooksRestClient.CreateListEventsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerRegistryWebhookEvent.DeserializeContainerRegistryWebhookEvent, _containerRegistryWebhookWebhooksClientDiagnostics, Pipeline, "ContainerRegistryWebhookResource.GetEvents", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerRegistryWebhookEvent.DeserializeContainerRegistryWebhookEvent, _containerRegistryWebhookWebhooksClientDiagnostics, Pipeline, "ContainerRegistryWebhookResource.GetEvents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

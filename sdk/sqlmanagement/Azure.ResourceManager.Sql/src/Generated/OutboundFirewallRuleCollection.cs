@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _outboundFirewallRuleRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _outboundFirewallRuleRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OutboundFirewallRuleResource(Client, OutboundFirewallRuleData.DeserializeOutboundFirewallRuleData(e)), _outboundFirewallRuleClientDiagnostics, Pipeline, "OutboundFirewallRuleCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OutboundFirewallRuleResource(Client, OutboundFirewallRuleData.DeserializeOutboundFirewallRuleData(e)), _outboundFirewallRuleClientDiagnostics, Pipeline, "OutboundFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _outboundFirewallRuleRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _outboundFirewallRuleRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OutboundFirewallRuleResource(Client, OutboundFirewallRuleData.DeserializeOutboundFirewallRuleData(e)), _outboundFirewallRuleClientDiagnostics, Pipeline, "OutboundFirewallRuleCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OutboundFirewallRuleResource(Client, OutboundFirewallRuleData.DeserializeOutboundFirewallRuleData(e)), _outboundFirewallRuleClientDiagnostics, Pipeline, "OutboundFirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

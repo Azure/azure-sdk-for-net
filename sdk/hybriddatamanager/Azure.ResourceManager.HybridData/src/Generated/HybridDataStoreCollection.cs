@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.HybridData
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataStoreDataStoresRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataStoreDataStoresRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridDataStoreResource(Client, HybridDataStoreData.DeserializeHybridDataStoreData(e)), _hybridDataStoreDataStoresClientDiagnostics, Pipeline, "HybridDataStoreCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridDataStoreResource(Client, HybridDataStoreData.DeserializeHybridDataStoreData(e)), _hybridDataStoreDataStoresClientDiagnostics, Pipeline, "HybridDataStoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HybridData
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataStoreDataStoresRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataStoreDataStoresRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridDataStoreResource(Client, HybridDataStoreData.DeserializeHybridDataStoreData(e)), _hybridDataStoreDataStoresClientDiagnostics, Pipeline, "HybridDataStoreCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridDataStoreResource(Client, HybridDataStoreData.DeserializeHybridDataStoreData(e)), _hybridDataStoreDataStoresClientDiagnostics, Pipeline, "HybridDataStoreCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

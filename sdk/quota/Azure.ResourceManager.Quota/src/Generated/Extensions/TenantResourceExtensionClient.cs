@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Quota
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaOperationRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaOperationRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OperationResponse.DeserializeOperationResponse, QuotaOperationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetQuotaOperations", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OperationResponse.DeserializeOperationResponse, QuotaOperationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetQuotaOperations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Quota
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaOperationRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaOperationRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OperationResponse.DeserializeOperationResponse, QuotaOperationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetQuotaOperations", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OperationResponse.DeserializeOperationResponse, QuotaOperationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetQuotaOperations", "value", "nextLink", cancellationToken);
         }
     }
 }

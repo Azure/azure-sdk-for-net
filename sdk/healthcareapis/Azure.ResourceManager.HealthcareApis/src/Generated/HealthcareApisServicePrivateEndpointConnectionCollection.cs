@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.HealthcareApis
         public virtual AsyncPageable<HealthcareApisServicePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new HealthcareApisServicePrivateEndpointConnectionResource(Client, HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(e)), _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HealthcareApisServicePrivateEndpointConnectionCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new HealthcareApisServicePrivateEndpointConnectionResource(Client, HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(e)), _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HealthcareApisServicePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.HealthcareApis
         public virtual Pageable<HealthcareApisServicePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new HealthcareApisServicePrivateEndpointConnectionResource(Client, HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(e)), _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HealthcareApisServicePrivateEndpointConnectionCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new HealthcareApisServicePrivateEndpointConnectionResource(Client, HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(e)), _healthcareApisServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "HealthcareApisServicePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

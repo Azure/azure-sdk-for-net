@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceUpdateAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceUpdateAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeviceUpdateAccountResource(Client, DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(e)), _deviceUpdateAccountAccountsClientDiagnostics, Pipeline, "DeviceUpdateAccountCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeviceUpdateAccountResource(Client, DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(e)), _deviceUpdateAccountAccountsClientDiagnostics, Pipeline, "DeviceUpdateAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceUpdateAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deviceUpdateAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceUpdateAccountResource(Client, DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(e)), _deviceUpdateAccountAccountsClientDiagnostics, Pipeline, "DeviceUpdateAccountCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceUpdateAccountResource(Client, DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(e)), _deviceUpdateAccountAccountsClientDiagnostics, Pipeline, "DeviceUpdateAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

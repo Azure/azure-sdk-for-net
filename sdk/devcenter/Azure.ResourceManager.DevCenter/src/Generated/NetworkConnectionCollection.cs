@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkConnectionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkConnectionRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkConnectionResource(Client, NetworkConnectionData.DeserializeNetworkConnectionData(e)), _networkConnectionClientDiagnostics, Pipeline, "NetworkConnectionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkConnectionResource(Client, NetworkConnectionData.DeserializeNetworkConnectionData(e)), _networkConnectionClientDiagnostics, Pipeline, "NetworkConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkConnectionRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkConnectionRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkConnectionResource(Client, NetworkConnectionData.DeserializeNetworkConnectionData(e)), _networkConnectionClientDiagnostics, Pipeline, "NetworkConnectionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkConnectionResource(Client, NetworkConnectionData.DeserializeNetworkConnectionData(e)), _networkConnectionClientDiagnostics, Pipeline, "NetworkConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

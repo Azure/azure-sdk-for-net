@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataProtectionBackupPolicyBackupPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataProtectionBackupPolicyBackupPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupPolicyResource(Client, DataProtectionBackupPolicyData.DeserializeDataProtectionBackupPolicyData(e)), _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, "DataProtectionBackupPolicyCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupPolicyResource(Client, DataProtectionBackupPolicyData.DeserializeDataProtectionBackupPolicyData(e)), _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, "DataProtectionBackupPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataProtectionBackupPolicyBackupPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataProtectionBackupPolicyBackupPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupPolicyResource(Client, DataProtectionBackupPolicyData.DeserializeDataProtectionBackupPolicyData(e)), _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, "DataProtectionBackupPolicyCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProtectionBackupPolicyResource(Client, DataProtectionBackupPolicyData.DeserializeDataProtectionBackupPolicyData(e)), _dataProtectionBackupPolicyBackupPoliciesClientDiagnostics, Pipeline, "DataProtectionBackupPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

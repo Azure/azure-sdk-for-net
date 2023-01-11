@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Storage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageQueueQueueRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageQueueQueueRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageQueueResource(Client, StorageQueueData.DeserializeStorageQueueData(e)), _storageQueueQueueClientDiagnostics, Pipeline, "StorageQueueCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageQueueResource(Client, StorageQueueData.DeserializeStorageQueueData(e)), _storageQueueQueueClientDiagnostics, Pipeline, "StorageQueueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Storage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageQueueQueueRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageQueueQueueRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageQueueResource(Client, StorageQueueData.DeserializeStorageQueueData(e)), _storageQueueQueueClientDiagnostics, Pipeline, "StorageQueueCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageQueueResource(Client, StorageQueueData.DeserializeStorageQueueData(e)), _storageQueueQueueClientDiagnostics, Pipeline, "StorageQueueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual AsyncPageable<SecurityCenterPricingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCenterPricingPricingsRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SecurityCenterPricingResource(Client, SecurityCenterPricingData.DeserializeSecurityCenterPricingData(e)), _securityCenterPricingPricingsClientDiagnostics, Pipeline, "SecurityCenterPricingCollection.GetAll", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SecurityCenterPricingResource(Client, SecurityCenterPricingData.DeserializeSecurityCenterPricingData(e)), _securityCenterPricingPricingsClientDiagnostics, Pipeline, "SecurityCenterPricingCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public virtual Pageable<SecurityCenterPricingResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCenterPricingPricingsRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SecurityCenterPricingResource(Client, SecurityCenterPricingData.DeserializeSecurityCenterPricingData(e)), _securityCenterPricingPricingsClientDiagnostics, Pipeline, "SecurityCenterPricingCollection.GetAll", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SecurityCenterPricingResource(Client, SecurityCenterPricingData.DeserializeSecurityCenterPricingData(e)), _securityCenterPricingPricingsClientDiagnostics, Pipeline, "SecurityCenterPricingCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

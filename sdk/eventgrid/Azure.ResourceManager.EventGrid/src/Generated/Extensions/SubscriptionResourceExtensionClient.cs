@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridDomainDomainsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventGridDomainDomainsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridDomainResource(Client, EventGridDomainData.DeserializeEventGridDomainData(e)), EventGridDomainDomainsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEventGridDomains", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridDomainResource(Client, EventGridDomainData.DeserializeEventGridDomainData(e)), EventGridDomainDomainsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEventGridDomains", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridDomainDomainsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventGridDomainDomainsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridDomainResource(Client, EventGridDomainData.DeserializeEventGridDomainData(e)), EventGridDomainDomainsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEventGridDomains", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridDomainResource(Client, EventGridDomainData.DeserializeEventGridDomainData(e)), EventGridDomainDomainsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEventGridDomains", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridTopicTopicsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventGridTopicTopicsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridTopicResource(Client, EventGridTopicData.DeserializeEventGridTopicData(e)), EventGridTopicTopicsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEventGridTopics", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridTopicResource(Client, EventGridTopicData.DeserializeEventGridTopicData(e)), EventGridTopicTopicsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEventGridTopics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventGridTopicTopicsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EventGridTopicTopicsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridTopicResource(Client, EventGridTopicData.DeserializeEventGridTopicData(e)), EventGridTopicTopicsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEventGridTopics", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridTopicResource(Client, EventGridTopicData.DeserializeEventGridTopicData(e)), EventGridTopicTopicsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEventGridTopics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerConfigurationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerConfigurationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerConfigurationResource(Client, PartnerConfigurationData.DeserializePartnerConfigurationData(e)), PartnerConfigurationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerConfigurations", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerConfigurationResource(Client, PartnerConfigurationData.DeserializePartnerConfigurationData(e)), PartnerConfigurationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerConfigurationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerConfigurationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerConfigurationResource(Client, PartnerConfigurationData.DeserializePartnerConfigurationData(e)), PartnerConfigurationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerConfigurations", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerConfigurationResource(Client, PartnerConfigurationData.DeserializePartnerConfigurationData(e)), PartnerConfigurationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerNamespaceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerNamespaceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerNamespaceResource(Client, PartnerNamespaceData.DeserializePartnerNamespaceData(e)), PartnerNamespaceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerNamespaces", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerNamespaceResource(Client, PartnerNamespaceData.DeserializePartnerNamespaceData(e)), PartnerNamespaceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerNamespaceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerNamespaceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerNamespaceResource(Client, PartnerNamespaceData.DeserializePartnerNamespaceData(e)), PartnerNamespaceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerNamespaces", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerNamespaceResource(Client, PartnerNamespaceData.DeserializePartnerNamespaceData(e)), PartnerNamespaceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerRegistrationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerRegistrationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerRegistrationResource(Client, PartnerRegistrationData.DeserializePartnerRegistrationData(e)), PartnerRegistrationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerRegistrations", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerRegistrationResource(Client, PartnerRegistrationData.DeserializePartnerRegistrationData(e)), PartnerRegistrationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerRegistrations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerRegistrationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerRegistrationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerRegistrationResource(Client, PartnerRegistrationData.DeserializePartnerRegistrationData(e)), PartnerRegistrationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerRegistrations", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerRegistrationResource(Client, PartnerRegistrationData.DeserializePartnerRegistrationData(e)), PartnerRegistrationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerRegistrations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerTopicRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerTopicRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerTopicResource(Client, PartnerTopicData.DeserializePartnerTopicData(e)), PartnerTopicClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerTopics", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerTopicResource(Client, PartnerTopicData.DeserializePartnerTopicData(e)), PartnerTopicClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerTopics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PartnerTopicRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PartnerTopicRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerTopicResource(Client, PartnerTopicData.DeserializePartnerTopicData(e)), PartnerTopicClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerTopics", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerTopicResource(Client, PartnerTopicData.DeserializePartnerTopicData(e)), PartnerTopicClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPartnerTopics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SystemTopicRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SystemTopicRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SystemTopicResource(Client, SystemTopicData.DeserializeSystemTopicData(e)), SystemTopicClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSystemTopics", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SystemTopicResource(Client, SystemTopicData.DeserializeSystemTopicData(e)), SystemTopicClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSystemTopics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SystemTopicRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SystemTopicRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SystemTopicResource(Client, SystemTopicData.DeserializeSystemTopicData(e)), SystemTopicClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSystemTopics", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SystemTopicResource(Client, SystemTopicData.DeserializeSystemTopicData(e)), SystemTopicClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSystemTopics", "value", "nextLink", cancellationToken);
         }
     }
 }

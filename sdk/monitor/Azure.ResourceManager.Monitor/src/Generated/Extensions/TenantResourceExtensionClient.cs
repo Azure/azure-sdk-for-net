@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<MonitorLocalizableString> GetEventCategoriesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventCategoriesRestClient.CreateListRequest();
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorLocalizableString.DeserializeMonitorLocalizableString, EventCategoriesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetEventCategories", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorLocalizableString.DeserializeMonitorLocalizableString, EventCategoriesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetEventCategories", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<MonitorLocalizableString> GetEventCategories(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventCategoriesRestClient.CreateListRequest();
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MonitorLocalizableString.DeserializeMonitorLocalizableString, EventCategoriesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetEventCategories", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MonitorLocalizableString.DeserializeMonitorLocalizableString, EventCategoriesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetEventCategories", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => TenantActivityLogsRestClient.CreateListRequest(filter, select);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TenantActivityLogsRestClient.CreateListNextPageRequest(nextLink, filter, select);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EventDataInfo.DeserializeEventDataInfo, TenantActivityLogsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetTenantActivityLogs", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EventDataInfo.DeserializeEventDataInfo, TenantActivityLogsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetTenantActivityLogs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => TenantActivityLogsRestClient.CreateListRequest(filter, select);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TenantActivityLogsRestClient.CreateListNextPageRequest(nextLink, filter, select);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EventDataInfo.DeserializeEventDataInfo, TenantActivityLogsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetTenantActivityLogs", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EventDataInfo.DeserializeEventDataInfo, TenantActivityLogsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetTenantActivityLogs", "value", "nextLink", cancellationToken);
         }
     }
 }

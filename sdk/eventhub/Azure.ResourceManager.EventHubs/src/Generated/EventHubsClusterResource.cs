@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.EventHubs
         public virtual AsyncPageable<SubResource> GetNamespacesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsClusterClustersRestClient.CreateListNamespacesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _eventHubsClusterClustersClientDiagnostics, Pipeline, "EventHubsClusterResource.GetNamespaces", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _eventHubsClusterClustersClientDiagnostics, Pipeline, "EventHubsClusterResource.GetNamespaces", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.EventHubs
         public virtual Pageable<SubResource> GetNamespaces(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsClusterClustersRestClient.CreateListNamespacesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _eventHubsClusterClustersClientDiagnostics, Pipeline, "EventHubsClusterResource.GetNamespaces", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _eventHubsClusterClustersClientDiagnostics, Pipeline, "EventHubsClusterResource.GetNamespaces", "value", null, cancellationToken);
         }
 
         /// <summary>

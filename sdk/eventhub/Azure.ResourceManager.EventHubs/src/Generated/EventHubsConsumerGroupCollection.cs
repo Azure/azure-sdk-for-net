@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsConsumerGroupConsumerGroupsRestClient.CreateListByEventHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventHubsConsumerGroupConsumerGroupsRestClient.CreateListByEventHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventHubsConsumerGroupResource(Client, EventHubsConsumerGroupData.DeserializeEventHubsConsumerGroupData(e)), _eventHubsConsumerGroupConsumerGroupsClientDiagnostics, Pipeline, "EventHubsConsumerGroupCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventHubsConsumerGroupResource(Client, EventHubsConsumerGroupData.DeserializeEventHubsConsumerGroupData(e)), _eventHubsConsumerGroupConsumerGroupsClientDiagnostics, Pipeline, "EventHubsConsumerGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.EventHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsConsumerGroupConsumerGroupsRestClient.CreateListByEventHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventHubsConsumerGroupConsumerGroupsRestClient.CreateListByEventHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skip, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventHubsConsumerGroupResource(Client, EventHubsConsumerGroupData.DeserializeEventHubsConsumerGroupData(e)), _eventHubsConsumerGroupConsumerGroupsClientDiagnostics, Pipeline, "EventHubsConsumerGroupCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventHubsConsumerGroupResource(Client, EventHubsConsumerGroupData.DeserializeEventHubsConsumerGroupData(e)), _eventHubsConsumerGroupConsumerGroupsClientDiagnostics, Pipeline, "EventHubsConsumerGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

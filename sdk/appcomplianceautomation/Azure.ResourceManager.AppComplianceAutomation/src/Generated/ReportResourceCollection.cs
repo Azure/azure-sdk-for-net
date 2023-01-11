@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportResourceReportsRestClient.CreateListRequest(skipToken, top, select, offerGuid, reportCreatorTenantId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportResourceReportsRestClient.CreateListNextPageRequest(nextLink, skipToken, top, select, offerGuid, reportCreatorTenantId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReportResource(Client, ReportResourceData.DeserializeReportResourceData(e)), _reportResourceReportsClientDiagnostics, Pipeline, "ReportResourceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReportResource(Client, ReportResourceData.DeserializeReportResourceData(e)), _reportResourceReportsClientDiagnostics, Pipeline, "ReportResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportResourceReportsRestClient.CreateListRequest(skipToken, top, select, offerGuid, reportCreatorTenantId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportResourceReportsRestClient.CreateListNextPageRequest(nextLink, skipToken, top, select, offerGuid, reportCreatorTenantId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReportResource(Client, ReportResourceData.DeserializeReportResourceData(e)), _reportResourceReportsClientDiagnostics, Pipeline, "ReportResourceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReportResource(Client, ReportResourceData.DeserializeReportResourceData(e)), _reportResourceReportsClientDiagnostics, Pipeline, "ReportResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabVirtualNetworkVirtualNetworksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabVirtualNetworkVirtualNetworksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabVirtualNetworkResource(Client, DevTestLabVirtualNetworkData.DeserializeDevTestLabVirtualNetworkData(e)), _devTestLabVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "DevTestLabVirtualNetworkCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabVirtualNetworkResource(Client, DevTestLabVirtualNetworkData.DeserializeDevTestLabVirtualNetworkData(e)), _devTestLabVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "DevTestLabVirtualNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabVirtualNetworkVirtualNetworksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabVirtualNetworkVirtualNetworksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabVirtualNetworkResource(Client, DevTestLabVirtualNetworkData.DeserializeDevTestLabVirtualNetworkData(e)), _devTestLabVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "DevTestLabVirtualNetworkCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabVirtualNetworkResource(Client, DevTestLabVirtualNetworkData.DeserializeDevTestLabVirtualNetworkData(e)), _devTestLabVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "DevTestLabVirtualNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

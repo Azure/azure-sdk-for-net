@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual AsyncPageable<MachineLearningPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MachineLearningPrivateEndpointConnectionResource(Client, MachineLearningPrivateEndpointConnectionData.DeserializeMachineLearningPrivateEndpointConnectionData(e)), _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MachineLearningPrivateEndpointConnectionCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MachineLearningPrivateEndpointConnectionResource(Client, MachineLearningPrivateEndpointConnectionData.DeserializeMachineLearningPrivateEndpointConnectionData(e)), _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MachineLearningPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual Pageable<MachineLearningPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MachineLearningPrivateEndpointConnectionResource(Client, MachineLearningPrivateEndpointConnectionData.DeserializeMachineLearningPrivateEndpointConnectionData(e)), _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MachineLearningPrivateEndpointConnectionCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MachineLearningPrivateEndpointConnectionResource(Client, MachineLearningPrivateEndpointConnectionData.DeserializeMachineLearningPrivateEndpointConnectionData(e)), _machineLearningPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MachineLearningPrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -103,20 +103,18 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<SparkConfigurationResource> GetSparkConfigurationsByWorkspaceAsync(CancellationToken cancellationToken = default)
         {
-            var context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetSparkConfigurationsByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetSparkConfigurationsByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SparkConfigurationResource.DeserializeSparkConfigurationResource, _clientDiagnostics, _pipeline, "SparkConfigurationClient.GetSparkConfigurationsByWorkspace", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SparkConfigurationResource.DeserializeSparkConfigurationResource, _clientDiagnostics, _pipeline, "SparkConfigurationClient.GetSparkConfigurationsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists sparkconfigurations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<SparkConfigurationResource> GetSparkConfigurationsByWorkspace(CancellationToken cancellationToken = default)
         {
-            var context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetSparkConfigurationsByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetSparkConfigurationsByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SparkConfigurationResource.DeserializeSparkConfigurationResource, _clientDiagnostics, _pipeline, "SparkConfigurationClient.GetSparkConfigurationsByWorkspace", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SparkConfigurationResource.DeserializeSparkConfigurationResource, _clientDiagnostics, _pipeline, "SparkConfigurationClient.GetSparkConfigurationsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates or updates a sparkconfiguration. </summary>

@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppRevisionContainerAppsRevisionsRestClient.CreateListRevisionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppRevisionContainerAppsRevisionsRestClient.CreateListRevisionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppRevisionResource(Client, ContainerAppRevisionData.DeserializeContainerAppRevisionData(e)), _containerAppRevisionContainerAppsRevisionsClientDiagnostics, Pipeline, "ContainerAppRevisionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppRevisionResource(Client, ContainerAppRevisionData.DeserializeContainerAppRevisionData(e)), _containerAppRevisionContainerAppsRevisionsClientDiagnostics, Pipeline, "ContainerAppRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppRevisionContainerAppsRevisionsRestClient.CreateListRevisionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppRevisionContainerAppsRevisionsRestClient.CreateListRevisionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppRevisionResource(Client, ContainerAppRevisionData.DeserializeContainerAppRevisionData(e)), _containerAppRevisionContainerAppsRevisionsClientDiagnostics, Pipeline, "ContainerAppRevisionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppRevisionResource(Client, ContainerAppRevisionData.DeserializeContainerAppRevisionData(e)), _containerAppRevisionContainerAppsRevisionsClientDiagnostics, Pipeline, "ContainerAppRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

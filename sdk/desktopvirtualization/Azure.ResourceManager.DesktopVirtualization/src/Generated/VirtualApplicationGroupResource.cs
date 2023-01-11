@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _startMenuItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _startMenuItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DesktopVirtualizationStartMenuItem.DeserializeDesktopVirtualizationStartMenuItem, _startMenuItemsClientDiagnostics, Pipeline, "VirtualApplicationGroupResource.GetStartMenuItems", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DesktopVirtualizationStartMenuItem.DeserializeDesktopVirtualizationStartMenuItem, _startMenuItemsClientDiagnostics, Pipeline, "VirtualApplicationGroupResource.GetStartMenuItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _startMenuItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _startMenuItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DesktopVirtualizationStartMenuItem.DeserializeDesktopVirtualizationStartMenuItem, _startMenuItemsClientDiagnostics, Pipeline, "VirtualApplicationGroupResource.GetStartMenuItems", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DesktopVirtualizationStartMenuItem.DeserializeDesktopVirtualizationStartMenuItem, _startMenuItemsClientDiagnostics, Pipeline, "VirtualApplicationGroupResource.GetStartMenuItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Media
         public virtual AsyncPageable<MediaServicesPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MediaServicesPrivateLinkResource(Client, MediaServicesPrivateLinkResourceData.DeserializeMediaServicesPrivateLinkResourceData(e)), _mediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MediaServicesPrivateLinkResourceCollection.GetAll", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MediaServicesPrivateLinkResource(Client, MediaServicesPrivateLinkResourceData.DeserializeMediaServicesPrivateLinkResourceData(e)), _mediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MediaServicesPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Media
         public virtual Pageable<MediaServicesPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaServicesPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MediaServicesPrivateLinkResource(Client, MediaServicesPrivateLinkResourceData.DeserializeMediaServicesPrivateLinkResourceData(e)), _mediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MediaServicesPrivateLinkResourceCollection.GetAll", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MediaServicesPrivateLinkResource(Client, MediaServicesPrivateLinkResourceData.DeserializeMediaServicesPrivateLinkResourceData(e)), _mediaServicesPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MediaServicesPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

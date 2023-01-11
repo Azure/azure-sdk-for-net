@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MySql
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlWaitStatisticWaitStatisticsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlWaitStatisticWaitStatisticsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlWaitStatisticResource(Client, MySqlWaitStatisticData.DeserializeMySqlWaitStatisticData(e)), _mySqlWaitStatisticWaitStatisticsClientDiagnostics, Pipeline, "MySqlWaitStatisticCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlWaitStatisticResource(Client, MySqlWaitStatisticData.DeserializeMySqlWaitStatisticData(e)), _mySqlWaitStatisticWaitStatisticsClientDiagnostics, Pipeline, "MySqlWaitStatisticCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MySql
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlWaitStatisticWaitStatisticsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlWaitStatisticWaitStatisticsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlWaitStatisticResource(Client, MySqlWaitStatisticData.DeserializeMySqlWaitStatisticData(e)), _mySqlWaitStatisticWaitStatisticsClientDiagnostics, Pipeline, "MySqlWaitStatisticCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlWaitStatisticResource(Client, MySqlWaitStatisticData.DeserializeMySqlWaitStatisticData(e)), _mySqlWaitStatisticWaitStatisticsClientDiagnostics, Pipeline, "MySqlWaitStatisticCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

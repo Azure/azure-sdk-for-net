@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Storage
         public virtual AsyncPageable<StorageAccountLocalUserResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageAccountLocalUserLocalUsersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageAccountLocalUserResource(Client, StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(e)), _storageAccountLocalUserLocalUsersClientDiagnostics, Pipeline, "StorageAccountLocalUserCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageAccountLocalUserResource(Client, StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(e)), _storageAccountLocalUserLocalUsersClientDiagnostics, Pipeline, "StorageAccountLocalUserCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Storage
         public virtual Pageable<StorageAccountLocalUserResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageAccountLocalUserLocalUsersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageAccountLocalUserResource(Client, StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(e)), _storageAccountLocalUserLocalUsersClientDiagnostics, Pipeline, "StorageAccountLocalUserCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageAccountLocalUserResource(Client, StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(e)), _storageAccountLocalUserLocalUsersClientDiagnostics, Pipeline, "StorageAccountLocalUserCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _targetTypeRestClient.CreateListRequest(Id.SubscriptionId, _locationName, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _targetTypeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, _locationName, continuationToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TargetTypeResource(Client, TargetTypeData.DeserializeTargetTypeData(e)), _targetTypeClientDiagnostics, Pipeline, "TargetTypeCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TargetTypeResource(Client, TargetTypeData.DeserializeTargetTypeData(e)), _targetTypeClientDiagnostics, Pipeline, "TargetTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _targetTypeRestClient.CreateListRequest(Id.SubscriptionId, _locationName, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _targetTypeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, _locationName, continuationToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TargetTypeResource(Client, TargetTypeData.DeserializeTargetTypeData(e)), _targetTypeClientDiagnostics, Pipeline, "TargetTypeCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TargetTypeResource(Client, TargetTypeData.DeserializeTargetTypeData(e)), _targetTypeClientDiagnostics, Pipeline, "TargetTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

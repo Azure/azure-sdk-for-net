@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningModelContainerModelContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, listViewType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningModelContainerModelContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, listViewType);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningModelContainerResource(Client, MachineLearningModelContainerData.DeserializeMachineLearningModelContainerData(e)), _machineLearningModelContainerModelContainersClientDiagnostics, Pipeline, "MachineLearningModelContainerCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningModelContainerResource(Client, MachineLearningModelContainerData.DeserializeMachineLearningModelContainerData(e)), _machineLearningModelContainerModelContainersClientDiagnostics, Pipeline, "MachineLearningModelContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningModelContainerModelContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, listViewType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningModelContainerModelContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, count, listViewType);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningModelContainerResource(Client, MachineLearningModelContainerData.DeserializeMachineLearningModelContainerData(e)), _machineLearningModelContainerModelContainersClientDiagnostics, Pipeline, "MachineLearningModelContainerCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningModelContainerResource(Client, MachineLearningModelContainerData.DeserializeMachineLearningModelContainerData(e)), _machineLearningModelContainerModelContainersClientDiagnostics, Pipeline, "MachineLearningModelContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

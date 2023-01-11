@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfidentialLedgerLedgerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfidentialLedgerLedgerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfidentialLedgerResource(Client, ConfidentialLedgerData.DeserializeConfidentialLedgerData(e)), ConfidentialLedgerLedgerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfidentialLedgers", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfidentialLedgerResource(Client, ConfidentialLedgerData.DeserializeConfidentialLedgerData(e)), ConfidentialLedgerLedgerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfidentialLedgers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfidentialLedgerLedgerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfidentialLedgerLedgerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfidentialLedgerResource(Client, ConfidentialLedgerData.DeserializeConfidentialLedgerData(e)), ConfidentialLedgerLedgerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfidentialLedgers", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfidentialLedgerResource(Client, ConfidentialLedgerData.DeserializeConfidentialLedgerData(e)), ConfidentialLedgerLedgerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfidentialLedgers", "value", "nextLink", cancellationToken);
         }
     }
 }

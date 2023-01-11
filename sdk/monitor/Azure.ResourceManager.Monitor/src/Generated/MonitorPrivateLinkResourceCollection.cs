@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<MonitorPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitorPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MonitorPrivateLinkResource(Client, MonitorPrivateLinkResourceData.DeserializeMonitorPrivateLinkResourceData(e)), _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MonitorPrivateLinkResourceCollection.GetAll", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MonitorPrivateLinkResource(Client, MonitorPrivateLinkResourceData.DeserializeMonitorPrivateLinkResourceData(e)), _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MonitorPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<MonitorPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _monitorPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MonitorPrivateLinkResource(Client, MonitorPrivateLinkResourceData.DeserializeMonitorPrivateLinkResourceData(e)), _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MonitorPrivateLinkResourceCollection.GetAll", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MonitorPrivateLinkResource(Client, MonitorPrivateLinkResourceData.DeserializeMonitorPrivateLinkResourceData(e)), _monitorPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "MonitorPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

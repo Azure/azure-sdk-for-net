@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableDroppedManagedDatabaseRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _restorableDroppedManagedDatabaseRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RestorableDroppedManagedDatabaseResource(Client, RestorableDroppedManagedDatabaseData.DeserializeRestorableDroppedManagedDatabaseData(e)), _restorableDroppedManagedDatabaseClientDiagnostics, Pipeline, "RestorableDroppedManagedDatabaseCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RestorableDroppedManagedDatabaseResource(Client, RestorableDroppedManagedDatabaseData.DeserializeRestorableDroppedManagedDatabaseData(e)), _restorableDroppedManagedDatabaseClientDiagnostics, Pipeline, "RestorableDroppedManagedDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableDroppedManagedDatabaseRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _restorableDroppedManagedDatabaseRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RestorableDroppedManagedDatabaseResource(Client, RestorableDroppedManagedDatabaseData.DeserializeRestorableDroppedManagedDatabaseData(e)), _restorableDroppedManagedDatabaseClientDiagnostics, Pipeline, "RestorableDroppedManagedDatabaseCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RestorableDroppedManagedDatabaseResource(Client, RestorableDroppedManagedDatabaseData.DeserializeRestorableDroppedManagedDatabaseData(e)), _restorableDroppedManagedDatabaseClientDiagnostics, Pipeline, "RestorableDroppedManagedDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<MonitorIncident> GetAlertRuleIncidentsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _alertRuleIncidentsRestClient.CreateListByAlertRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorIncident.DeserializeMonitorIncident, _alertRuleIncidentsClientDiagnostics, Pipeline, "AlertRuleResource.GetAlertRuleIncidents", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorIncident.DeserializeMonitorIncident, _alertRuleIncidentsClientDiagnostics, Pipeline, "AlertRuleResource.GetAlertRuleIncidents", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<MonitorIncident> GetAlertRuleIncidents(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _alertRuleIncidentsRestClient.CreateListByAlertRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MonitorIncident.DeserializeMonitorIncident, _alertRuleIncidentsClientDiagnostics, Pipeline, "AlertRuleResource.GetAlertRuleIncidents", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MonitorIncident.DeserializeMonitorIncident, _alertRuleIncidentsClientDiagnostics, Pipeline, "AlertRuleResource.GetAlertRuleIncidents", "value", null, cancellationToken);
         }
 
         /// <summary>

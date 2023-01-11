@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobVersionJobVersionsRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobVersionJobVersionsRestClient.CreateListByJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobVersionResource(Client, SqlServerJobVersionData.DeserializeSqlServerJobVersionData(e)), _sqlServerJobVersionJobVersionsClientDiagnostics, Pipeline, "SqlServerJobVersionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobVersionResource(Client, SqlServerJobVersionData.DeserializeSqlServerJobVersionData(e)), _sqlServerJobVersionJobVersionsClientDiagnostics, Pipeline, "SqlServerJobVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobVersionJobVersionsRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobVersionJobVersionsRestClient.CreateListByJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobVersionResource(Client, SqlServerJobVersionData.DeserializeSqlServerJobVersionData(e)), _sqlServerJobVersionJobVersionsClientDiagnostics, Pipeline, "SqlServerJobVersionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobVersionResource(Client, SqlServerJobVersionData.DeserializeSqlServerJobVersionData(e)), _sqlServerJobVersionJobVersionsClientDiagnostics, Pipeline, "SqlServerJobVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

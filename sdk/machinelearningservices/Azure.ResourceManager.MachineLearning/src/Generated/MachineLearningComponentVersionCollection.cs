@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningComponentVersionComponentVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningComponentVersionComponentVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningComponentVersionResource(Client, MachineLearningComponentVersionData.DeserializeMachineLearningComponentVersionData(e)), _machineLearningComponentVersionComponentVersionsClientDiagnostics, Pipeline, "MachineLearningComponentVersionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningComponentVersionResource(Client, MachineLearningComponentVersionData.DeserializeMachineLearningComponentVersionData(e)), _machineLearningComponentVersionComponentVersionsClientDiagnostics, Pipeline, "MachineLearningComponentVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningComponentVersionComponentVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningComponentVersionComponentVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningComponentVersionResource(Client, MachineLearningComponentVersionData.DeserializeMachineLearningComponentVersionData(e)), _machineLearningComponentVersionComponentVersionsClientDiagnostics, Pipeline, "MachineLearningComponentVersionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningComponentVersionResource(Client, MachineLearningComponentVersionData.DeserializeMachineLearningComponentVersionData(e)), _machineLearningComponentVersionComponentVersionsClientDiagnostics, Pipeline, "MachineLearningComponentVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

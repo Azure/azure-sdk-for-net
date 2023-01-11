@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthMonitorStateChangeHealthMonitorsRestClient.CreateListStateChangesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, filter, expand, startTimestampUtc, endTimestampUtc);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthMonitorStateChangeHealthMonitorsRestClient.CreateListStateChangesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, filter, expand, startTimestampUtc, endTimestampUtc);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthMonitorStateChangeResource(Client, HealthMonitorStateChangeData.DeserializeHealthMonitorStateChangeData(e)), _healthMonitorStateChangeHealthMonitorsClientDiagnostics, Pipeline, "HealthMonitorStateChangeCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthMonitorStateChangeResource(Client, HealthMonitorStateChangeData.DeserializeHealthMonitorStateChangeData(e)), _healthMonitorStateChangeHealthMonitorsClientDiagnostics, Pipeline, "HealthMonitorStateChangeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthMonitorStateChangeHealthMonitorsRestClient.CreateListStateChangesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, filter, expand, startTimestampUtc, endTimestampUtc);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthMonitorStateChangeHealthMonitorsRestClient.CreateListStateChangesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, filter, expand, startTimestampUtc, endTimestampUtc);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthMonitorStateChangeResource(Client, HealthMonitorStateChangeData.DeserializeHealthMonitorStateChangeData(e)), _healthMonitorStateChangeHealthMonitorsClientDiagnostics, Pipeline, "HealthMonitorStateChangeCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthMonitorStateChangeResource(Client, HealthMonitorStateChangeData.DeserializeHealthMonitorStateChangeData(e)), _healthMonitorStateChangeHealthMonitorsClientDiagnostics, Pipeline, "HealthMonitorStateChangeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

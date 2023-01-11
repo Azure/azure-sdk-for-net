@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual AsyncPageable<ContainerAppDaprSecret> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerAppDaprSecret.DeserializeContainerAppDaprSecret, _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentDaprComponentResource.GetSecrets", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerAppDaprSecret.DeserializeContainerAppDaprSecret, _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentDaprComponentResource.GetSecrets", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual Pageable<ContainerAppDaprSecret> GetSecrets(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ContainerAppDaprSecret.DeserializeContainerAppDaprSecret, _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentDaprComponentResource.GetSecrets", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ContainerAppDaprSecret.DeserializeContainerAppDaprSecret, _containerAppConnectedEnvironmentDaprComponentConnectedEnvironmentsDaprComponentsClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentDaprComponentResource.GetSecrets", "value", null, cancellationToken);
         }
     }
 }

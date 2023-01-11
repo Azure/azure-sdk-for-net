@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dscCompilationJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dscCompilationJobRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DscCompilationJobResource(Client, DscCompilationJobData.DeserializeDscCompilationJobData(e)), _dscCompilationJobClientDiagnostics, Pipeline, "DscCompilationJobCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DscCompilationJobResource(Client, DscCompilationJobData.DeserializeDscCompilationJobData(e)), _dscCompilationJobClientDiagnostics, Pipeline, "DscCompilationJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dscCompilationJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dscCompilationJobRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DscCompilationJobResource(Client, DscCompilationJobData.DeserializeDscCompilationJobData(e)), _dscCompilationJobClientDiagnostics, Pipeline, "DscCompilationJobCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DscCompilationJobResource(Client, DscCompilationJobData.DeserializeDscCompilationJobData(e)), _dscCompilationJobClientDiagnostics, Pipeline, "DscCompilationJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseTableDatabaseTablesRestClient.CreateListBySchemaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseTableDatabaseTablesRestClient.CreateListBySchemaNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseTableResource(Client, DatabaseTableData.DeserializeDatabaseTableData(e)), _sqlDatabaseTableDatabaseTablesClientDiagnostics, Pipeline, "SqlDatabaseTableCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseTableResource(Client, DatabaseTableData.DeserializeDatabaseTableData(e)), _sqlDatabaseTableDatabaseTablesClientDiagnostics, Pipeline, "SqlDatabaseTableCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseTableDatabaseTablesRestClient.CreateListBySchemaRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseTableDatabaseTablesRestClient.CreateListBySchemaNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseTableResource(Client, DatabaseTableData.DeserializeDatabaseTableData(e)), _sqlDatabaseTableDatabaseTablesClientDiagnostics, Pipeline, "SqlDatabaseTableCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseTableResource(Client, DatabaseTableData.DeserializeDatabaseTableData(e)), _sqlDatabaseTableDatabaseTablesClientDiagnostics, Pipeline, "SqlDatabaseTableCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

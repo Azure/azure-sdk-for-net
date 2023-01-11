@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ResourceMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MoverResourceSetMoveCollectionsRestClient.CreateListMoveCollectionsBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MoverResourceSetMoveCollectionsRestClient.CreateListMoveCollectionsBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MoverResourceSetResource(Client, MoverResourceSetData.DeserializeMoverResourceSetData(e)), MoverResourceSetMoveCollectionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMoverResourceSets", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MoverResourceSetResource(Client, MoverResourceSetData.DeserializeMoverResourceSetData(e)), MoverResourceSetMoveCollectionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMoverResourceSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ResourceMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MoverResourceSetMoveCollectionsRestClient.CreateListMoveCollectionsBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MoverResourceSetMoveCollectionsRestClient.CreateListMoveCollectionsBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MoverResourceSetResource(Client, MoverResourceSetData.DeserializeMoverResourceSetData(e)), MoverResourceSetMoveCollectionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMoverResourceSets", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MoverResourceSetResource(Client, MoverResourceSetData.DeserializeMoverResourceSetData(e)), MoverResourceSetMoveCollectionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMoverResourceSets", "value", "nextLink", cancellationToken);
         }
     }
 }

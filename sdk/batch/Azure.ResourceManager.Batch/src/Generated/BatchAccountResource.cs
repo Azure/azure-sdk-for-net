@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.Batch
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BatchAccountOutboundEnvironmentEndpoint.DeserializeBatchAccountOutboundEnvironmentEndpoint, _batchAccountClientDiagnostics, Pipeline, "BatchAccountResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BatchAccountOutboundEnvironmentEndpoint.DeserializeBatchAccountOutboundEnvironmentEndpoint, _batchAccountClientDiagnostics, Pipeline, "BatchAccountResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.Batch
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BatchAccountOutboundEnvironmentEndpoint.DeserializeBatchAccountOutboundEnvironmentEndpoint, _batchAccountClientDiagnostics, Pipeline, "BatchAccountResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BatchAccountOutboundEnvironmentEndpoint.DeserializeBatchAccountOutboundEnvironmentEndpoint, _batchAccountClientDiagnostics, Pipeline, "BatchAccountResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

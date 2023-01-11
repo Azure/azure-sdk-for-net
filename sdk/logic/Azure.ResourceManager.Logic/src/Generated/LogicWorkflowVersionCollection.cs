@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowVersionWorkflowVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicWorkflowVersionWorkflowVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowVersionResource(Client, LogicWorkflowVersionData.DeserializeLogicWorkflowVersionData(e)), _logicWorkflowVersionWorkflowVersionsClientDiagnostics, Pipeline, "LogicWorkflowVersionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowVersionResource(Client, LogicWorkflowVersionData.DeserializeLogicWorkflowVersionData(e)), _logicWorkflowVersionWorkflowVersionsClientDiagnostics, Pipeline, "LogicWorkflowVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowVersionWorkflowVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logicWorkflowVersionWorkflowVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowVersionResource(Client, LogicWorkflowVersionData.DeserializeLogicWorkflowVersionData(e)), _logicWorkflowVersionWorkflowVersionsClientDiagnostics, Pipeline, "LogicWorkflowVersionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowVersionResource(Client, LogicWorkflowVersionData.DeserializeLogicWorkflowVersionData(e)), _logicWorkflowVersionWorkflowVersionsClientDiagnostics, Pipeline, "LogicWorkflowVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

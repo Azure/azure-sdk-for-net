@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iPv6FirewallRuleRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iPv6FirewallRuleRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IPv6FirewallRuleResource(Client, IPv6FirewallRuleData.DeserializeIPv6FirewallRuleData(e)), _iPv6FirewallRuleClientDiagnostics, Pipeline, "IPv6FirewallRuleCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IPv6FirewallRuleResource(Client, IPv6FirewallRuleData.DeserializeIPv6FirewallRuleData(e)), _iPv6FirewallRuleClientDiagnostics, Pipeline, "IPv6FirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iPv6FirewallRuleRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _iPv6FirewallRuleRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IPv6FirewallRuleResource(Client, IPv6FirewallRuleData.DeserializeIPv6FirewallRuleData(e)), _iPv6FirewallRuleClientDiagnostics, Pipeline, "IPv6FirewallRuleCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IPv6FirewallRuleResource(Client, IPv6FirewallRuleData.DeserializeIPv6FirewallRuleData(e)), _iPv6FirewallRuleClientDiagnostics, Pipeline, "IPv6FirewallRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

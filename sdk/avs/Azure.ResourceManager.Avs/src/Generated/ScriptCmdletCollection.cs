@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptCmdletRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptCmdletRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScriptCmdletResource(Client, ScriptCmdletData.DeserializeScriptCmdletData(e)), _scriptCmdletClientDiagnostics, Pipeline, "ScriptCmdletCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScriptCmdletResource(Client, ScriptCmdletData.DeserializeScriptCmdletData(e)), _scriptCmdletClientDiagnostics, Pipeline, "ScriptCmdletCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptCmdletRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptCmdletRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScriptCmdletResource(Client, ScriptCmdletData.DeserializeScriptCmdletData(e)), _scriptCmdletClientDiagnostics, Pipeline, "ScriptCmdletCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScriptCmdletResource(Client, ScriptCmdletData.DeserializeScriptCmdletData(e)), _scriptCmdletClientDiagnostics, Pipeline, "ScriptCmdletCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

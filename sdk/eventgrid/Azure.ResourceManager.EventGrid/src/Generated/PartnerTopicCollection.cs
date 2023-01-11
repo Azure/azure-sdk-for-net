@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerTopicRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _partnerTopicRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerTopicResource(Client, PartnerTopicData.DeserializePartnerTopicData(e)), _partnerTopicClientDiagnostics, Pipeline, "PartnerTopicCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerTopicResource(Client, PartnerTopicData.DeserializePartnerTopicData(e)), _partnerTopicClientDiagnostics, Pipeline, "PartnerTopicCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerTopicRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _partnerTopicRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerTopicResource(Client, PartnerTopicData.DeserializePartnerTopicData(e)), _partnerTopicClientDiagnostics, Pipeline, "PartnerTopicCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerTopicResource(Client, PartnerTopicData.DeserializePartnerTopicData(e)), _partnerTopicClientDiagnostics, Pipeline, "PartnerTopicCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

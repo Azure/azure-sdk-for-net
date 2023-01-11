@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppSourceControlContainerAppsSourceControlsRestClient.CreateListByContainerAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppSourceControlContainerAppsSourceControlsRestClient.CreateListByContainerAppNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppSourceControlResource(Client, ContainerAppSourceControlData.DeserializeContainerAppSourceControlData(e)), _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics, Pipeline, "ContainerAppSourceControlCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppSourceControlResource(Client, ContainerAppSourceControlData.DeserializeContainerAppSourceControlData(e)), _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics, Pipeline, "ContainerAppSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppSourceControlContainerAppsSourceControlsRestClient.CreateListByContainerAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppSourceControlContainerAppsSourceControlsRestClient.CreateListByContainerAppNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppSourceControlResource(Client, ContainerAppSourceControlData.DeserializeContainerAppSourceControlData(e)), _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics, Pipeline, "ContainerAppSourceControlCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppSourceControlResource(Client, ContainerAppSourceControlData.DeserializeContainerAppSourceControlData(e)), _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics, Pipeline, "ContainerAppSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

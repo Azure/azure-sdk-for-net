@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network
         public virtual AsyncPageable<NetworkWatcherResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkWatcherRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new NetworkWatcherResource(Client, NetworkWatcherData.DeserializeNetworkWatcherData(e)), _networkWatcherClientDiagnostics, Pipeline, "NetworkWatcherCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new NetworkWatcherResource(Client, NetworkWatcherData.DeserializeNetworkWatcherData(e)), _networkWatcherClientDiagnostics, Pipeline, "NetworkWatcherCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network
         public virtual Pageable<NetworkWatcherResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkWatcherRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new NetworkWatcherResource(Client, NetworkWatcherData.DeserializeNetworkWatcherData(e)), _networkWatcherClientDiagnostics, Pipeline, "NetworkWatcherCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new NetworkWatcherResource(Client, NetworkWatcherData.DeserializeNetworkWatcherData(e)), _networkWatcherClientDiagnostics, Pipeline, "NetworkWatcherCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Analysis
         public virtual AsyncPageable<AnalysisServerResource> GetAnalysisServersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AnalysisServerServersRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AnalysisServerResource(Client, AnalysisServerData.DeserializeAnalysisServerData(e)), AnalysisServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAnalysisServers", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AnalysisServerResource(Client, AnalysisServerData.DeserializeAnalysisServerData(e)), AnalysisServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAnalysisServers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Analysis
         public virtual Pageable<AnalysisServerResource> GetAnalysisServers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AnalysisServerServersRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AnalysisServerResource(Client, AnalysisServerData.DeserializeAnalysisServerData(e)), AnalysisServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAnalysisServers", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AnalysisServerResource(Client, AnalysisServerData.DeserializeAnalysisServerData(e)), AnalysisServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAnalysisServers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Analysis
         public virtual AsyncPageable<AnalysisResourceSku> GetEligibleSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AnalysisServerServersRestClient.CreateListSkusForNewRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AnalysisResourceSku.DeserializeAnalysisResourceSku, AnalysisServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEligibleSkus", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AnalysisResourceSku.DeserializeAnalysisResourceSku, AnalysisServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEligibleSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Analysis
         public virtual Pageable<AnalysisResourceSku> GetEligibleSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AnalysisServerServersRestClient.CreateListSkusForNewRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, AnalysisResourceSku.DeserializeAnalysisResourceSku, AnalysisServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEligibleSkus", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AnalysisResourceSku.DeserializeAnalysisResourceSku, AnalysisServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEligibleSkus", "value", null, cancellationToken);
         }
 
         /// <summary>

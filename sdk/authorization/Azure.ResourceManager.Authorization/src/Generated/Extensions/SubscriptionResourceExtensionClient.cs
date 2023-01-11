@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClassicAdministratorsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ClassicAdministratorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AuthorizationClassicAdministrator.DeserializeAuthorizationClassicAdministrator, ClassicAdministratorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClassicAdministrators", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AuthorizationClassicAdministrator.DeserializeAuthorizationClassicAdministrator, ClassicAdministratorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClassicAdministrators", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClassicAdministratorsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ClassicAdministratorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AuthorizationClassicAdministrator.DeserializeAuthorizationClassicAdministrator, ClassicAdministratorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClassicAdministrators", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AuthorizationClassicAdministrator.DeserializeAuthorizationClassicAdministrator, ClassicAdministratorsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClassicAdministrators", "value", "nextLink", cancellationToken);
         }
     }
 }

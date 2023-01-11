@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CustomLocationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomLocationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomLocationResource(Client, CustomLocationData.DeserializeCustomLocationData(e)), CustomLocationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomLocations", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomLocationResource(Client, CustomLocationData.DeserializeCustomLocationData(e)), CustomLocationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomLocations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CustomLocationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomLocationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomLocationResource(Client, CustomLocationData.DeserializeCustomLocationData(e)), CustomLocationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomLocations", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomLocationResource(Client, CustomLocationData.DeserializeCustomLocationData(e)), CustomLocationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCustomLocations", "value", "nextLink", cancellationToken);
         }
     }
 }

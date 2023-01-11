@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual AsyncPageable<OperationalInsightsIntelligencePack> GetIntelligencePacksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _intelligencePacksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationalInsightsIntelligencePack.DeserializeOperationalInsightsIntelligencePack, _intelligencePacksClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetIntelligencePacks", "", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationalInsightsIntelligencePack.DeserializeOperationalInsightsIntelligencePack, _intelligencePacksClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetIntelligencePacks", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Pageable<OperationalInsightsIntelligencePack> GetIntelligencePacks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _intelligencePacksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, OperationalInsightsIntelligencePack.DeserializeOperationalInsightsIntelligencePack, _intelligencePacksClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetIntelligencePacks", "", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, OperationalInsightsIntelligencePack.DeserializeOperationalInsightsIntelligencePack, _intelligencePacksClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetIntelligencePacks", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual AsyncPageable<OperationalInsightsManagementGroup> GetManagementGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationalInsightsManagementGroup.DeserializeOperationalInsightsManagementGroup, _managementGroupsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetManagementGroups", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationalInsightsManagementGroup.DeserializeOperationalInsightsManagementGroup, _managementGroupsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetManagementGroups", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Pageable<OperationalInsightsManagementGroup> GetManagementGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, OperationalInsightsManagementGroup.DeserializeOperationalInsightsManagementGroup, _managementGroupsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetManagementGroups", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, OperationalInsightsManagementGroup.DeserializeOperationalInsightsManagementGroup, _managementGroupsClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetManagementGroups", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual AsyncPageable<OperationalInsightsUsageMetric> GetUsagesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationalInsightsUsageMetric.DeserializeOperationalInsightsUsageMetric, _usagesClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetUsages", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationalInsightsUsageMetric.DeserializeOperationalInsightsUsageMetric, _usagesClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Pageable<OperationalInsightsUsageMetric> GetUsages(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, OperationalInsightsUsageMetric.DeserializeOperationalInsightsUsageMetric, _usagesClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetUsages", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, OperationalInsightsUsageMetric.DeserializeOperationalInsightsUsageMetric, _usagesClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual AsyncPageable<OperationalInsightsAvailableServiceTier> GetAvailableServiceTiersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availableServiceTiersRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationalInsightsAvailableServiceTier.DeserializeOperationalInsightsAvailableServiceTier, _availableServiceTiersClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetAvailableServiceTiers", "", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationalInsightsAvailableServiceTier.DeserializeOperationalInsightsAvailableServiceTier, _availableServiceTiersClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetAvailableServiceTiers", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -827,7 +827,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Pageable<OperationalInsightsAvailableServiceTier> GetAvailableServiceTiers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availableServiceTiersRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, OperationalInsightsAvailableServiceTier.DeserializeOperationalInsightsAvailableServiceTier, _availableServiceTiersClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetAvailableServiceTiers", "", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, OperationalInsightsAvailableServiceTier.DeserializeOperationalInsightsAvailableServiceTier, _availableServiceTiersClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetAvailableServiceTiers", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -886,7 +886,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual AsyncPageable<OperationalInsightsSearchSchemaValue> GetSchemasAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _schemaRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationalInsightsSearchSchemaValue.DeserializeOperationalInsightsSearchSchemaValue, _schemaClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetSchemas", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationalInsightsSearchSchemaValue.DeserializeOperationalInsightsSearchSchemaValue, _schemaClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetSchemas", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Pageable<OperationalInsightsSearchSchemaValue> GetSchemas(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _schemaRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, OperationalInsightsSearchSchemaValue.DeserializeOperationalInsightsSearchSchemaValue, _schemaClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetSchemas", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, OperationalInsightsSearchSchemaValue.DeserializeOperationalInsightsSearchSchemaValue, _schemaClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceResource.GetSchemas", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _imageVersionRestClient.CreateListByImageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _imageVersionRestClient.CreateListByImageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ImageVersionResource(Client, ImageVersionData.DeserializeImageVersionData(e)), _imageVersionClientDiagnostics, Pipeline, "ImageVersionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ImageVersionResource(Client, ImageVersionData.DeserializeImageVersionData(e)), _imageVersionClientDiagnostics, Pipeline, "ImageVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _imageVersionRestClient.CreateListByImageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _imageVersionRestClient.CreateListByImageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ImageVersionResource(Client, ImageVersionData.DeserializeImageVersionData(e)), _imageVersionClientDiagnostics, Pipeline, "ImageVersionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ImageVersionResource(Client, ImageVersionData.DeserializeImageVersionData(e)), _imageVersionClientDiagnostics, Pipeline, "ImageVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareAccountResource(Client, DataShareAccountData.DeserializeDataShareAccountData(e)), _dataShareAccountAccountsClientDiagnostics, Pipeline, "DataShareAccountCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareAccountResource(Client, DataShareAccountData.DeserializeDataShareAccountData(e)), _dataShareAccountAccountsClientDiagnostics, Pipeline, "DataShareAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareAccountResource(Client, DataShareAccountData.DeserializeDataShareAccountData(e)), _dataShareAccountAccountsClientDiagnostics, Pipeline, "DataShareAccountCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareAccountResource(Client, DataShareAccountData.DeserializeDataShareAccountData(e)), _dataShareAccountAccountsClientDiagnostics, Pipeline, "DataShareAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

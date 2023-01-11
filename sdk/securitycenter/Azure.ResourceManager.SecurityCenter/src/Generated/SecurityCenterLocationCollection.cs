@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCenterLocationLocationsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityCenterLocationLocationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityCenterLocationResource(Client, SecurityCenterLocationData.DeserializeSecurityCenterLocationData(e)), _securityCenterLocationLocationsClientDiagnostics, Pipeline, "SecurityCenterLocationCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityCenterLocationResource(Client, SecurityCenterLocationData.DeserializeSecurityCenterLocationData(e)), _securityCenterLocationLocationsClientDiagnostics, Pipeline, "SecurityCenterLocationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCenterLocationLocationsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityCenterLocationLocationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityCenterLocationResource(Client, SecurityCenterLocationData.DeserializeSecurityCenterLocationData(e)), _securityCenterLocationLocationsClientDiagnostics, Pipeline, "SecurityCenterLocationCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityCenterLocationResource(Client, SecurityCenterLocationData.DeserializeSecurityCenterLocationData(e)), _securityCenterLocationLocationsClientDiagnostics, Pipeline, "SecurityCenterLocationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

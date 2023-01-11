@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceRoleInstanceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudServiceRoleInstanceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudServiceRoleInstanceResource(Client, CloudServiceRoleInstanceData.DeserializeCloudServiceRoleInstanceData(e)), _cloudServiceRoleInstanceClientDiagnostics, Pipeline, "CloudServiceRoleInstanceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudServiceRoleInstanceResource(Client, CloudServiceRoleInstanceData.DeserializeCloudServiceRoleInstanceData(e)), _cloudServiceRoleInstanceClientDiagnostics, Pipeline, "CloudServiceRoleInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceRoleInstanceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudServiceRoleInstanceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudServiceRoleInstanceResource(Client, CloudServiceRoleInstanceData.DeserializeCloudServiceRoleInstanceData(e)), _cloudServiceRoleInstanceClientDiagnostics, Pipeline, "CloudServiceRoleInstanceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudServiceRoleInstanceResource(Client, CloudServiceRoleInstanceData.DeserializeCloudServiceRoleInstanceData(e)), _cloudServiceRoleInstanceClientDiagnostics, Pipeline, "CloudServiceRoleInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

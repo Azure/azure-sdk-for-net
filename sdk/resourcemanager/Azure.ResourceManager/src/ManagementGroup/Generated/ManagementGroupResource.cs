@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ManagementGroups
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateGetDescendantsRequest(Id.Name, skiptoken, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateGetDescendantsNextPageRequest(nextLink, Id.Name, skiptoken, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DescendantData.DeserializeDescendantData, _managementGroupClientDiagnostics, Pipeline, "ManagementGroupResource.GetDescendants", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DescendantData.DeserializeDescendantData, _managementGroupClientDiagnostics, Pipeline, "ManagementGroupResource.GetDescendants", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ManagementGroups
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateGetDescendantsRequest(Id.Name, skiptoken, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateGetDescendantsNextPageRequest(nextLink, Id.Name, skiptoken, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DescendantData.DeserializeDescendantData, _managementGroupClientDiagnostics, Pipeline, "ManagementGroupResource.GetDescendants", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DescendantData.DeserializeDescendantData, _managementGroupClientDiagnostics, Pipeline, "ManagementGroupResource.GetDescendants", "value", "nextLink", cancellationToken);
         }
     }
 }

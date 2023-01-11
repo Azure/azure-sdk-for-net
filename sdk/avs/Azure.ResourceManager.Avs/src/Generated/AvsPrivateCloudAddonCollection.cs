@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudAddonAddonsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsPrivateCloudAddonAddonsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudAddonResource(Client, AvsPrivateCloudAddonData.DeserializeAvsPrivateCloudAddonData(e)), _avsPrivateCloudAddonAddonsClientDiagnostics, Pipeline, "AvsPrivateCloudAddonCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudAddonResource(Client, AvsPrivateCloudAddonData.DeserializeAvsPrivateCloudAddonData(e)), _avsPrivateCloudAddonAddonsClientDiagnostics, Pipeline, "AvsPrivateCloudAddonCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudAddonAddonsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsPrivateCloudAddonAddonsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudAddonResource(Client, AvsPrivateCloudAddonData.DeserializeAvsPrivateCloudAddonData(e)), _avsPrivateCloudAddonAddonsClientDiagnostics, Pipeline, "AvsPrivateCloudAddonCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudAddonResource(Client, AvsPrivateCloudAddonData.DeserializeAvsPrivateCloudAddonData(e)), _avsPrivateCloudAddonAddonsClientDiagnostics, Pipeline, "AvsPrivateCloudAddonCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

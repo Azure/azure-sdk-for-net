@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobTargetGroupJobTargetGroupsRestClient.CreateListByAgentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobTargetGroupJobTargetGroupsRestClient.CreateListByAgentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobTargetGroupResource(Client, SqlServerJobTargetGroupData.DeserializeSqlServerJobTargetGroupData(e)), _sqlServerJobTargetGroupJobTargetGroupsClientDiagnostics, Pipeline, "SqlServerJobTargetGroupCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobTargetGroupResource(Client, SqlServerJobTargetGroupData.DeserializeSqlServerJobTargetGroupData(e)), _sqlServerJobTargetGroupJobTargetGroupsClientDiagnostics, Pipeline, "SqlServerJobTargetGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobTargetGroupJobTargetGroupsRestClient.CreateListByAgentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobTargetGroupJobTargetGroupsRestClient.CreateListByAgentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobTargetGroupResource(Client, SqlServerJobTargetGroupData.DeserializeSqlServerJobTargetGroupData(e)), _sqlServerJobTargetGroupJobTargetGroupsClientDiagnostics, Pipeline, "SqlServerJobTargetGroupCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobTargetGroupResource(Client, SqlServerJobTargetGroupData.DeserializeSqlServerJobTargetGroupData(e)), _sqlServerJobTargetGroupJobTargetGroupsClientDiagnostics, Pipeline, "SqlServerJobTargetGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

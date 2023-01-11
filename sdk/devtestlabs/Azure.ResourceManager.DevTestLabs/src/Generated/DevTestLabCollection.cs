@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabLabsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabLabsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabResource(Client, DevTestLabData.DeserializeDevTestLabData(e)), _devTestLabLabsClientDiagnostics, Pipeline, "DevTestLabCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabResource(Client, DevTestLabData.DeserializeDevTestLabData(e)), _devTestLabLabsClientDiagnostics, Pipeline, "DevTestLabCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabLabsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabLabsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand, filter, top, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabResource(Client, DevTestLabData.DeserializeDevTestLabData(e)), _devTestLabLabsClientDiagnostics, Pipeline, "DevTestLabCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabResource(Client, DevTestLabData.DeserializeDevTestLabData(e)), _devTestLabLabsClientDiagnostics, Pipeline, "DevTestLabCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

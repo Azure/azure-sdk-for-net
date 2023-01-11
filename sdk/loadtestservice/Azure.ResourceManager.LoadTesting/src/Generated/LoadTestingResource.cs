@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _loadTestingResourceLoadTestsRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _loadTestingResourceLoadTestsRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, "LoadTestingResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, "LoadTestingResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _loadTestingResourceLoadTestsRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _loadTestingResourceLoadTestsRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, "LoadTestingResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, "LoadTestingResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LoadTestingResourceLoadTestsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LoadTestingResourceLoadTestsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LoadTestingResource(Client, LoadTestingResourceData.DeserializeLoadTestingResourceData(e)), LoadTestingResourceLoadTestsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLoadTestingResources", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LoadTestingResource(Client, LoadTestingResourceData.DeserializeLoadTestingResourceData(e)), LoadTestingResourceLoadTestsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLoadTestingResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LoadTestingResourceLoadTestsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LoadTestingResourceLoadTestsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LoadTestingResource(Client, LoadTestingResourceData.DeserializeLoadTestingResourceData(e)), LoadTestingResourceLoadTestsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLoadTestingResources", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LoadTestingResource(Client, LoadTestingResourceData.DeserializeLoadTestingResourceData(e)), LoadTestingResourceLoadTestsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLoadTestingResources", "value", "nextLink", cancellationToken);
         }
     }
 }

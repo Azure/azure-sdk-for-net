@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlPoolUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlPoolUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SqlPoolUsage.DeserializeSqlPoolUsage, _sqlPoolUsagesClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetSqlPoolUsages", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SqlPoolUsage.DeserializeSqlPoolUsage, _sqlPoolUsagesClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetSqlPoolUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -887,7 +887,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlPoolUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlPoolUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SqlPoolUsage.DeserializeSqlPoolUsage, _sqlPoolUsagesClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetSqlPoolUsages", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SqlPoolUsage.DeserializeSqlPoolUsage, _sqlPoolUsagesClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetSqlPoolUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -902,7 +902,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.CreateListCurrentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.CreateListCurrentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseSensitivityLabelResource(Client, SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(e)), _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetCurrentSqlPoolSensitivityLabels", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseSensitivityLabelResource(Client, SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(e)), _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetCurrentSqlPoolSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -917,7 +917,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.CreateListCurrentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.CreateListCurrentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseSensitivityLabelResource(Client, SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(e)), _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetCurrentSqlPoolSensitivityLabels", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseSensitivityLabelResource(Client, SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(e)), _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetCurrentSqlPoolSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -986,7 +986,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.CreateListRecommendedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, includeDisabledRecommendations, skipToken, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.CreateListRecommendedNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, includeDisabledRecommendations, skipToken, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseSensitivityLabelResource(Client, SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(e)), _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetRecommendedSqlPoolSensitivityLabels", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseSensitivityLabelResource(Client, SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(e)), _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetRecommendedSqlPoolSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1003,7 +1003,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.CreateListRecommendedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, includeDisabledRecommendations, skipToken, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSensitivityLabelSqlPoolSensitivityLabelsRestClient.CreateListRecommendedNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, includeDisabledRecommendations, skipToken, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseSensitivityLabelResource(Client, SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(e)), _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetRecommendedSqlPoolSensitivityLabels", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseSensitivityLabelResource(Client, SynapseSensitivityLabelData.DeserializeSynapseSensitivityLabelData(e)), _synapseSensitivityLabelSqlPoolSensitivityLabelsClientDiagnostics, Pipeline, "SynapseSqlPoolResource.GetRecommendedSqlPoolSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Grafana
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedGrafanaGrafanaRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedGrafanaGrafanaRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedGrafanaResource(Client, ManagedGrafanaData.DeserializeManagedGrafanaData(e)), ManagedGrafanaGrafanaClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedGrafanas", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedGrafanaResource(Client, ManagedGrafanaData.DeserializeManagedGrafanaData(e)), ManagedGrafanaGrafanaClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedGrafanas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Grafana
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedGrafanaGrafanaRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedGrafanaGrafanaRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedGrafanaResource(Client, ManagedGrafanaData.DeserializeManagedGrafanaData(e)), ManagedGrafanaGrafanaClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedGrafanas", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedGrafanaResource(Client, ManagedGrafanaData.DeserializeManagedGrafanaData(e)), ManagedGrafanaGrafanaClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedGrafanas", "value", "nextLink", cancellationToken);
         }
     }
 }

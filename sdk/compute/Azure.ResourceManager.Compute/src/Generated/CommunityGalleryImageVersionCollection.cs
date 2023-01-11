@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _communityGalleryImageVersionRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _communityGalleryImageVersionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommunityGalleryImageVersionResource(Client, CommunityGalleryImageVersionData.DeserializeCommunityGalleryImageVersionData(e)), _communityGalleryImageVersionClientDiagnostics, Pipeline, "CommunityGalleryImageVersionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommunityGalleryImageVersionResource(Client, CommunityGalleryImageVersionData.DeserializeCommunityGalleryImageVersionData(e)), _communityGalleryImageVersionClientDiagnostics, Pipeline, "CommunityGalleryImageVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _communityGalleryImageVersionRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _communityGalleryImageVersionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommunityGalleryImageVersionResource(Client, CommunityGalleryImageVersionData.DeserializeCommunityGalleryImageVersionData(e)), _communityGalleryImageVersionClientDiagnostics, Pipeline, "CommunityGalleryImageVersionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommunityGalleryImageVersionResource(Client, CommunityGalleryImageVersionData.DeserializeCommunityGalleryImageVersionData(e)), _communityGalleryImageVersionClientDiagnostics, Pipeline, "CommunityGalleryImageVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorNetworkExperimentProfileResource(Client, FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(e)), _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorNetworkExperimentProfileResource(Client, FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(e)), _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorNetworkExperimentProfileNetworkExperimentProfilesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorNetworkExperimentProfileResource(Client, FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(e)), _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorNetworkExperimentProfileResource(Client, FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(e)), _frontDoorNetworkExperimentProfileNetworkExperimentProfilesClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

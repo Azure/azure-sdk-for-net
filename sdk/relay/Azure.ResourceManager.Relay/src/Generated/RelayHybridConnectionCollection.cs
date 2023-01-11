@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Relay
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _relayHybridConnectionHybridConnectionsRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _relayHybridConnectionHybridConnectionsRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RelayHybridConnectionResource(Client, RelayHybridConnectionData.DeserializeRelayHybridConnectionData(e)), _relayHybridConnectionHybridConnectionsClientDiagnostics, Pipeline, "RelayHybridConnectionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RelayHybridConnectionResource(Client, RelayHybridConnectionData.DeserializeRelayHybridConnectionData(e)), _relayHybridConnectionHybridConnectionsClientDiagnostics, Pipeline, "RelayHybridConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Relay
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _relayHybridConnectionHybridConnectionsRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _relayHybridConnectionHybridConnectionsRestClient.CreateListByNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RelayHybridConnectionResource(Client, RelayHybridConnectionData.DeserializeRelayHybridConnectionData(e)), _relayHybridConnectionHybridConnectionsClientDiagnostics, Pipeline, "RelayHybridConnectionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RelayHybridConnectionResource(Client, RelayHybridConnectionData.DeserializeRelayHybridConnectionData(e)), _relayHybridConnectionHybridConnectionsClientDiagnostics, Pipeline, "RelayHybridConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

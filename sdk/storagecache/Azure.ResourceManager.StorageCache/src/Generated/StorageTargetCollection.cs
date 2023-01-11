@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageTargetRestClient.CreateListByCacheRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageTargetRestClient.CreateListByCacheNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageTargetResource(Client, StorageTargetData.DeserializeStorageTargetData(e)), _storageTargetClientDiagnostics, Pipeline, "StorageTargetCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageTargetResource(Client, StorageTargetData.DeserializeStorageTargetData(e)), _storageTargetClientDiagnostics, Pipeline, "StorageTargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageTargetRestClient.CreateListByCacheRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageTargetRestClient.CreateListByCacheNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageTargetResource(Client, StorageTargetData.DeserializeStorageTargetData(e)), _storageTargetClientDiagnostics, Pipeline, "StorageTargetCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageTargetResource(Client, StorageTargetData.DeserializeStorageTargetData(e)), _storageTargetClientDiagnostics, Pipeline, "StorageTargetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

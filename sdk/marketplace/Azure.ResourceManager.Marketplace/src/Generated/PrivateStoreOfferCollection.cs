@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListNextPageRequest(nextLink, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateStoreOfferResource(Client, PrivateStoreOfferData.DeserializePrivateStoreOfferData(e)), _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreOfferCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateStoreOfferResource(Client, PrivateStoreOfferData.DeserializePrivateStoreOfferData(e)), _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreOfferCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateStoreOfferPrivateStoreCollectionOfferRestClient.CreateListNextPageRequest(nextLink, Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateStoreOfferResource(Client, PrivateStoreOfferData.DeserializePrivateStoreOfferData(e)), _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreOfferCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateStoreOfferResource(Client, PrivateStoreOfferData.DeserializePrivateStoreOfferData(e)), _privateStoreOfferPrivateStoreCollectionOfferClientDiagnostics, Pipeline, "PrivateStoreOfferCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

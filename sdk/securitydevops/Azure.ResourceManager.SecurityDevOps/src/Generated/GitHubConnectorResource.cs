@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubRepoRestClient.CreateListByConnectorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _gitHubRepoRestClient.CreateListByConnectorNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GitHubRepoResource(Client, GitHubRepoData.DeserializeGitHubRepoData(e)), _gitHubRepoClientDiagnostics, Pipeline, "GitHubConnectorResource.GetGitHubReposByConnector", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GitHubRepoResource(Client, GitHubRepoData.DeserializeGitHubRepoData(e)), _gitHubRepoClientDiagnostics, Pipeline, "GitHubConnectorResource.GetGitHubReposByConnector", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubRepoRestClient.CreateListByConnectorRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _gitHubRepoRestClient.CreateListByConnectorNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GitHubRepoResource(Client, GitHubRepoData.DeserializeGitHubRepoData(e)), _gitHubRepoClientDiagnostics, Pipeline, "GitHubConnectorResource.GetGitHubReposByConnector", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GitHubRepoResource(Client, GitHubRepoData.DeserializeGitHubRepoData(e)), _gitHubRepoClientDiagnostics, Pipeline, "GitHubConnectorResource.GetGitHubReposByConnector", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         public virtual AsyncPageable<GitHubConnectorStats> GetGitHubConnectorStatsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubConnectorStatsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, GitHubConnectorStats.DeserializeGitHubConnectorStats, _gitHubConnectorStatsClientDiagnostics, Pipeline, "GitHubConnectorResource.GetGitHubConnectorStats", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, GitHubConnectorStats.DeserializeGitHubConnectorStats, _gitHubConnectorStatsClientDiagnostics, Pipeline, "GitHubConnectorResource.GetGitHubConnectorStats", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         public virtual Pageable<GitHubConnectorStats> GetGitHubConnectorStats(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubConnectorStatsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, GitHubConnectorStats.DeserializeGitHubConnectorStats, _gitHubConnectorStatsClientDiagnostics, Pipeline, "GitHubConnectorResource.GetGitHubConnectorStats", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, GitHubConnectorStats.DeserializeGitHubConnectorStats, _gitHubConnectorStatsClientDiagnostics, Pipeline, "GitHubConnectorResource.GetGitHubConnectorStats", "value", null, cancellationToken);
         }
 
         /// <summary>

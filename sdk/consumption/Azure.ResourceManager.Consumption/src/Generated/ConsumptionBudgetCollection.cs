@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Consumption
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _consumptionBudgetBudgetsRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _consumptionBudgetBudgetsRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConsumptionBudgetResource(Client, ConsumptionBudgetData.DeserializeConsumptionBudgetData(e)), _consumptionBudgetBudgetsClientDiagnostics, Pipeline, "ConsumptionBudgetCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConsumptionBudgetResource(Client, ConsumptionBudgetData.DeserializeConsumptionBudgetData(e)), _consumptionBudgetBudgetsClientDiagnostics, Pipeline, "ConsumptionBudgetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Consumption
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _consumptionBudgetBudgetsRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _consumptionBudgetBudgetsRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConsumptionBudgetResource(Client, ConsumptionBudgetData.DeserializeConsumptionBudgetData(e)), _consumptionBudgetBudgetsClientDiagnostics, Pipeline, "ConsumptionBudgetCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConsumptionBudgetResource(Client, ConsumptionBudgetData.DeserializeConsumptionBudgetData(e)), _consumptionBudgetBudgetsClientDiagnostics, Pipeline, "ConsumptionBudgetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

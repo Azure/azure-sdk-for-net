@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual AsyncPageable<VirtualDesktopResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualDesktopDesktopsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new VirtualDesktopResource(Client, VirtualDesktopData.DeserializeVirtualDesktopData(e)), _virtualDesktopDesktopsClientDiagnostics, Pipeline, "VirtualDesktopCollection.GetAll", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new VirtualDesktopResource(Client, VirtualDesktopData.DeserializeVirtualDesktopData(e)), _virtualDesktopDesktopsClientDiagnostics, Pipeline, "VirtualDesktopCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual Pageable<VirtualDesktopResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualDesktopDesktopsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new VirtualDesktopResource(Client, VirtualDesktopData.DeserializeVirtualDesktopData(e)), _virtualDesktopDesktopsClientDiagnostics, Pipeline, "VirtualDesktopCollection.GetAll", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new VirtualDesktopResource(Client, VirtualDesktopData.DeserializeVirtualDesktopData(e)), _virtualDesktopDesktopsClientDiagnostics, Pipeline, "VirtualDesktopCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

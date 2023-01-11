@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AutomationAccountRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AutomationAccountRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationAccountResource(Client, AutomationAccountData.DeserializeAutomationAccountData(e)), AutomationAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAutomationAccounts", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationAccountResource(Client, AutomationAccountData.DeserializeAutomationAccountData(e)), AutomationAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAutomationAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AutomationAccountRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AutomationAccountRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationAccountResource(Client, AutomationAccountData.DeserializeAutomationAccountData(e)), AutomationAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAutomationAccounts", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationAccountResource(Client, AutomationAccountData.DeserializeAutomationAccountData(e)), AutomationAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAutomationAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Automation
         public virtual AsyncPageable<DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => deletedAutomationAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DeletedAutomationAccount.DeserializeDeletedAutomationAccount, deletedAutomationAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedAutomationAccountsBySubscription", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DeletedAutomationAccount.DeserializeDeletedAutomationAccount, deletedAutomationAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedAutomationAccountsBySubscription", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Automation
         public virtual Pageable<DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscription(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => deletedAutomationAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, DeletedAutomationAccount.DeserializeDeletedAutomationAccount, deletedAutomationAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedAutomationAccountsBySubscription", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, DeletedAutomationAccount.DeserializeDeletedAutomationAccount, deletedAutomationAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedAutomationAccountsBySubscription", "value", null, cancellationToken);
         }
     }
 }

@@ -931,7 +931,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformDeploymentDeploymentsRestClient.CreateListForClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformDeploymentDeploymentsRestClient.CreateListForClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformDeploymentResource(Client, AppPlatformDeploymentData.DeserializeAppPlatformDeploymentData(e)), _appPlatformDeploymentDeploymentsClientDiagnostics, Pipeline, "AppPlatformServiceResource.GetDeployments", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformDeploymentResource(Client, AppPlatformDeploymentData.DeserializeAppPlatformDeploymentData(e)), _appPlatformDeploymentDeploymentsClientDiagnostics, Pipeline, "AppPlatformServiceResource.GetDeployments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -946,7 +946,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformDeploymentDeploymentsRestClient.CreateListForClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformDeploymentDeploymentsRestClient.CreateListForClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformDeploymentResource(Client, AppPlatformDeploymentData.DeserializeAppPlatformDeploymentData(e)), _appPlatformDeploymentDeploymentsClientDiagnostics, Pipeline, "AppPlatformServiceResource.GetDeployments", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformDeploymentResource(Client, AppPlatformDeploymentData.DeserializeAppPlatformDeploymentData(e)), _appPlatformDeploymentDeploymentsClientDiagnostics, Pipeline, "AppPlatformServiceResource.GetDeployments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

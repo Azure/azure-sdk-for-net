@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementLockRestClient.CreateListByScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementLockRestClient.CreateListByScopeNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagementLockResource(Client, ManagementLockData.DeserializeManagementLockData(e)), _managementLockClientDiagnostics, Pipeline, "ManagementLockCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagementLockResource(Client, ManagementLockData.DeserializeManagementLockData(e)), _managementLockClientDiagnostics, Pipeline, "ManagementLockCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managementLockRestClient.CreateListByScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementLockRestClient.CreateListByScopeNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagementLockResource(Client, ManagementLockData.DeserializeManagementLockData(e)), _managementLockClientDiagnostics, Pipeline, "ManagementLockCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagementLockResource(Client, ManagementLockData.DeserializeManagementLockData(e)), _managementLockClientDiagnostics, Pipeline, "ManagementLockCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

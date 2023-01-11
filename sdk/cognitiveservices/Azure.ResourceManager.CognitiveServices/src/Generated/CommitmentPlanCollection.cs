@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _commitmentPlanRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _commitmentPlanRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommitmentPlanResource(Client, CommitmentPlanData.DeserializeCommitmentPlanData(e)), _commitmentPlanClientDiagnostics, Pipeline, "CommitmentPlanCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommitmentPlanResource(Client, CommitmentPlanData.DeserializeCommitmentPlanData(e)), _commitmentPlanClientDiagnostics, Pipeline, "CommitmentPlanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _commitmentPlanRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _commitmentPlanRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommitmentPlanResource(Client, CommitmentPlanData.DeserializeCommitmentPlanData(e)), _commitmentPlanClientDiagnostics, Pipeline, "CommitmentPlanCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommitmentPlanResource(Client, CommitmentPlanData.DeserializeCommitmentPlanData(e)), _commitmentPlanClientDiagnostics, Pipeline, "CommitmentPlanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

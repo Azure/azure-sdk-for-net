@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localNetworkGatewayRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localNetworkGatewayRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LocalNetworkGatewayResource(Client, LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(e)), _localNetworkGatewayClientDiagnostics, Pipeline, "LocalNetworkGatewayCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LocalNetworkGatewayResource(Client, LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(e)), _localNetworkGatewayClientDiagnostics, Pipeline, "LocalNetworkGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _localNetworkGatewayRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _localNetworkGatewayRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LocalNetworkGatewayResource(Client, LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(e)), _localNetworkGatewayClientDiagnostics, Pipeline, "LocalNetworkGatewayCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LocalNetworkGatewayResource(Client, LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(e)), _localNetworkGatewayClientDiagnostics, Pipeline, "LocalNetworkGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

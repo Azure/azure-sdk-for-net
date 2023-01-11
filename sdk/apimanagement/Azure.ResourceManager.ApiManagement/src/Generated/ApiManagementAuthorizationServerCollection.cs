@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementAuthorizationServerAuthorizationServerRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementAuthorizationServerAuthorizationServerRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementAuthorizationServerResource(Client, ApiManagementAuthorizationServerData.DeserializeApiManagementAuthorizationServerData(e)), _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics, Pipeline, "ApiManagementAuthorizationServerCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementAuthorizationServerResource(Client, ApiManagementAuthorizationServerData.DeserializeApiManagementAuthorizationServerData(e)), _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics, Pipeline, "ApiManagementAuthorizationServerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementAuthorizationServerAuthorizationServerRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementAuthorizationServerAuthorizationServerRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementAuthorizationServerResource(Client, ApiManagementAuthorizationServerData.DeserializeApiManagementAuthorizationServerData(e)), _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics, Pipeline, "ApiManagementAuthorizationServerCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementAuthorizationServerResource(Client, ApiManagementAuthorizationServerData.DeserializeApiManagementAuthorizationServerData(e)), _apiManagementAuthorizationServerAuthorizationServerClientDiagnostics, Pipeline, "ApiManagementAuthorizationServerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

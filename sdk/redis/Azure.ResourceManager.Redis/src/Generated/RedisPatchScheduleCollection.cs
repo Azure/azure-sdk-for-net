@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Redis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisPatchSchedulePatchSchedulesRestClient.CreateListByRedisResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisPatchSchedulePatchSchedulesRestClient.CreateListByRedisResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisPatchScheduleResource(Client, RedisPatchScheduleData.DeserializeRedisPatchScheduleData(e)), _redisPatchSchedulePatchSchedulesClientDiagnostics, Pipeline, "RedisPatchScheduleCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisPatchScheduleResource(Client, RedisPatchScheduleData.DeserializeRedisPatchScheduleData(e)), _redisPatchSchedulePatchSchedulesClientDiagnostics, Pipeline, "RedisPatchScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Redis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisPatchSchedulePatchSchedulesRestClient.CreateListByRedisResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisPatchSchedulePatchSchedulesRestClient.CreateListByRedisResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisPatchScheduleResource(Client, RedisPatchScheduleData.DeserializeRedisPatchScheduleData(e)), _redisPatchSchedulePatchSchedulesClientDiagnostics, Pipeline, "RedisPatchScheduleCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisPatchScheduleResource(Client, RedisPatchScheduleData.DeserializeRedisPatchScheduleData(e)), _redisPatchSchedulePatchSchedulesClientDiagnostics, Pipeline, "RedisPatchScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseEncryptionProtectorResource(Client, SynapseEncryptionProtectorData.DeserializeSynapseEncryptionProtectorData(e)), _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorClientDiagnostics, Pipeline, "SynapseEncryptionProtectorCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseEncryptionProtectorResource(Client, SynapseEncryptionProtectorData.DeserializeSynapseEncryptionProtectorData(e)), _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorClientDiagnostics, Pipeline, "SynapseEncryptionProtectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseEncryptionProtectorResource(Client, SynapseEncryptionProtectorData.DeserializeSynapseEncryptionProtectorData(e)), _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorClientDiagnostics, Pipeline, "SynapseEncryptionProtectorCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseEncryptionProtectorResource(Client, SynapseEncryptionProtectorData.DeserializeSynapseEncryptionProtectorData(e)), _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorClientDiagnostics, Pipeline, "SynapseEncryptionProtectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

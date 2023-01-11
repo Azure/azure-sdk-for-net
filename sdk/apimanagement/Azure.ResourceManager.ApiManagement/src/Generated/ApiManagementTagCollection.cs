@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementTagTagRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, scope);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementTagTagRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, scope);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementTagResource(Client, TagContractData.DeserializeTagContractData(e)), _apiManagementTagTagClientDiagnostics, Pipeline, "ApiManagementTagCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementTagResource(Client, TagContractData.DeserializeTagContractData(e)), _apiManagementTagTagClientDiagnostics, Pipeline, "ApiManagementTagCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementTagTagRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, scope);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementTagTagRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, scope);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementTagResource(Client, TagContractData.DeserializeTagContractData(e)), _apiManagementTagTagClientDiagnostics, Pipeline, "ApiManagementTagCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementTagResource(Client, TagContractData.DeserializeTagContractData(e)), _apiManagementTagTagClientDiagnostics, Pipeline, "ApiManagementTagCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

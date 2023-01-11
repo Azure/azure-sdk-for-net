@@ -977,7 +977,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerTrustGroupResource(Client, SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(e)), _sqlServerTrustGroupServerTrustGroupsClientDiagnostics, Pipeline, "ManagedInstanceResource.GetSqlServerTrustGroups", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerTrustGroupResource(Client, SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(e)), _sqlServerTrustGroupServerTrustGroupsClientDiagnostics, Pipeline, "ManagedInstanceResource.GetSqlServerTrustGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -991,7 +991,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerTrustGroupServerTrustGroupsRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerTrustGroupResource(Client, SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(e)), _sqlServerTrustGroupServerTrustGroupsClientDiagnostics, Pipeline, "ManagedInstanceResource.GetSqlServerTrustGroups", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerTrustGroupResource(Client, SqlServerTrustGroupData.DeserializeSqlServerTrustGroupData(e)), _sqlServerTrustGroupServerTrustGroupsClientDiagnostics, Pipeline, "ManagedInstanceResource.GetSqlServerTrustGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1012,7 +1012,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceRestClient.CreateListByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TopQueries.DeserializeTopQueries, _managedInstanceClientDiagnostics, Pipeline, "ManagedInstanceResource.GetTopQueries", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TopQueries.DeserializeTopQueries, _managedInstanceClientDiagnostics, Pipeline, "ManagedInstanceResource.GetTopQueries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1033,7 +1033,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedInstanceRestClient.CreateListByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, numberOfQueries, databases, startTime, endTime, interval, aggregationFunction, observationMetric);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TopQueries.DeserializeTopQueries, _managedInstanceClientDiagnostics, Pipeline, "ManagedInstanceResource.GetTopQueries", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TopQueries.DeserializeTopQueries, _managedInstanceClientDiagnostics, Pipeline, "ManagedInstanceResource.GetTopQueries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1101,7 +1101,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseResource(Client, ManagedDatabaseData.DeserializeManagedDatabaseData(e)), _managedDatabaseClientDiagnostics, Pipeline, "ManagedInstanceResource.GetInaccessibleManagedDatabases", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseResource(Client, ManagedDatabaseData.DeserializeManagedDatabaseData(e)), _managedDatabaseClientDiagnostics, Pipeline, "ManagedInstanceResource.GetInaccessibleManagedDatabases", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1115,7 +1115,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseRestClient.CreateListInaccessibleByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseResource(Client, ManagedDatabaseData.DeserializeManagedDatabaseData(e)), _managedDatabaseClientDiagnostics, Pipeline, "ManagedInstanceResource.GetInaccessibleManagedDatabases", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseResource(Client, ManagedDatabaseData.DeserializeManagedDatabaseData(e)), _managedDatabaseClientDiagnostics, Pipeline, "ManagedInstanceResource.GetInaccessibleManagedDatabases", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

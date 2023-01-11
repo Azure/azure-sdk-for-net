@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskImageImagesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _diskImageImagesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiskImageResource(Client, DiskImageData.DeserializeDiskImageData(e)), _diskImageImagesClientDiagnostics, Pipeline, "DiskImageCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiskImageResource(Client, DiskImageData.DeserializeDiskImageData(e)), _diskImageImagesClientDiagnostics, Pipeline, "DiskImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskImageImagesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _diskImageImagesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiskImageResource(Client, DiskImageData.DeserializeDiskImageData(e)), _diskImageImagesClientDiagnostics, Pipeline, "DiskImageCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiskImageResource(Client, DiskImageData.DeserializeDiskImageData(e)), _diskImageImagesClientDiagnostics, Pipeline, "DiskImageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

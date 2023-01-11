@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalizationClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _operationalizationClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OperationalizationClusterResource(Client, OperationalizationClusterData.DeserializeOperationalizationClusterData(e)), _operationalizationClusterClientDiagnostics, Pipeline, "OperationalizationClusterCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OperationalizationClusterResource(Client, OperationalizationClusterData.DeserializeOperationalizationClusterData(e)), _operationalizationClusterClientDiagnostics, Pipeline, "OperationalizationClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalizationClusterRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _operationalizationClusterRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, skiptoken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OperationalizationClusterResource(Client, OperationalizationClusterData.DeserializeOperationalizationClusterData(e)), _operationalizationClusterClientDiagnostics, Pipeline, "OperationalizationClusterCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OperationalizationClusterResource(Client, OperationalizationClusterData.DeserializeOperationalizationClusterData(e)), _operationalizationClusterClientDiagnostics, Pipeline, "OperationalizationClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

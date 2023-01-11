@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventGridTopicPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventGridTopicPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Name, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridTopicPrivateLinkResource(Client, EventGridPrivateLinkResourceData.DeserializeEventGridPrivateLinkResourceData(e)), _eventGridTopicPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "EventGridTopicPrivateLinkResourceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridTopicPrivateLinkResource(Client, EventGridPrivateLinkResourceData.DeserializeEventGridPrivateLinkResourceData(e)), _eventGridTopicPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "EventGridTopicPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventGridTopicPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventGridTopicPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Name, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridTopicPrivateLinkResource(Client, EventGridPrivateLinkResourceData.DeserializeEventGridPrivateLinkResourceData(e)), _eventGridTopicPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "EventGridTopicPrivateLinkResourceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridTopicPrivateLinkResource(Client, EventGridPrivateLinkResourceData.DeserializeEventGridPrivateLinkResourceData(e)), _eventGridTopicPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "EventGridTopicPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

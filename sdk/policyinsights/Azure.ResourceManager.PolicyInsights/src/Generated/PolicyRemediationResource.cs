@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyRemediationRemediationsRestClient.CreateListDeploymentsAtResourceRequest(Id.Parent, Id.Name, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyRemediationRemediationsRestClient.CreateListDeploymentsAtResourceNextPageRequest(nextLink, Id.Parent, Id.Name, policyQuerySettings);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RemediationDeployment.DeserializeRemediationDeployment, _policyRemediationRemediationsClientDiagnostics, Pipeline, "PolicyRemediationResource.GetDeployments", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RemediationDeployment.DeserializeRemediationDeployment, _policyRemediationRemediationsClientDiagnostics, Pipeline, "PolicyRemediationResource.GetDeployments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyRemediationRemediationsRestClient.CreateListDeploymentsAtResourceRequest(Id.Parent, Id.Name, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyRemediationRemediationsRestClient.CreateListDeploymentsAtResourceNextPageRequest(nextLink, Id.Parent, Id.Name, policyQuerySettings);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RemediationDeployment.DeserializeRemediationDeployment, _policyRemediationRemediationsClientDiagnostics, Pipeline, "PolicyRemediationResource.GetDeployments", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RemediationDeployment.DeserializeRemediationDeployment, _policyRemediationRemediationsClientDiagnostics, Pipeline, "PolicyRemediationResource.GetDeployments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.CreateListPrivateEndpointConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.CreateListPrivateEndpointConnectionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkPrivateEndpointConnectionResource(Client, NetworkPrivateEndpointConnectionData.DeserializeNetworkPrivateEndpointConnectionData(e)), _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics, Pipeline, "NetworkPrivateEndpointConnectionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkPrivateEndpointConnectionResource(Client, NetworkPrivateEndpointConnectionData.DeserializeNetworkPrivateEndpointConnectionData(e)), _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics, Pipeline, "NetworkPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.CreateListPrivateEndpointConnectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkPrivateEndpointConnectionPrivateLinkServicesRestClient.CreateListPrivateEndpointConnectionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkPrivateEndpointConnectionResource(Client, NetworkPrivateEndpointConnectionData.DeserializeNetworkPrivateEndpointConnectionData(e)), _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics, Pipeline, "NetworkPrivateEndpointConnectionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkPrivateEndpointConnectionResource(Client, NetworkPrivateEndpointConnectionData.DeserializeNetworkPrivateEndpointConnectionData(e)), _networkPrivateEndpointConnectionPrivateLinkServicesClientDiagnostics, Pipeline, "NetworkPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

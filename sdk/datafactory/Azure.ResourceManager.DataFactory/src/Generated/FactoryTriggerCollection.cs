@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryTriggerTriggersRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _factoryTriggerTriggersRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FactoryTriggerResource(Client, FactoryTriggerData.DeserializeFactoryTriggerData(e)), _factoryTriggerTriggersClientDiagnostics, Pipeline, "FactoryTriggerCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FactoryTriggerResource(Client, FactoryTriggerData.DeserializeFactoryTriggerData(e)), _factoryTriggerTriggersClientDiagnostics, Pipeline, "FactoryTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryTriggerTriggersRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _factoryTriggerTriggersRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FactoryTriggerResource(Client, FactoryTriggerData.DeserializeFactoryTriggerData(e)), _factoryTriggerTriggersClientDiagnostics, Pipeline, "FactoryTriggerCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FactoryTriggerResource(Client, FactoryTriggerData.DeserializeFactoryTriggerData(e)), _factoryTriggerTriggersClientDiagnostics, Pipeline, "FactoryTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

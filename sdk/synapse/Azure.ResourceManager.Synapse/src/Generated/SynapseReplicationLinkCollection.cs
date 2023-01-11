@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseReplicationLinkSqlPoolReplicationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseReplicationLinkSqlPoolReplicationLinksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseReplicationLinkResource(Client, SynapseReplicationLinkData.DeserializeSynapseReplicationLinkData(e)), _synapseReplicationLinkSqlPoolReplicationLinksClientDiagnostics, Pipeline, "SynapseReplicationLinkCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseReplicationLinkResource(Client, SynapseReplicationLinkData.DeserializeSynapseReplicationLinkData(e)), _synapseReplicationLinkSqlPoolReplicationLinksClientDiagnostics, Pipeline, "SynapseReplicationLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseReplicationLinkSqlPoolReplicationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseReplicationLinkSqlPoolReplicationLinksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseReplicationLinkResource(Client, SynapseReplicationLinkData.DeserializeSynapseReplicationLinkData(e)), _synapseReplicationLinkSqlPoolReplicationLinksClientDiagnostics, Pipeline, "SynapseReplicationLinkCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseReplicationLinkResource(Client, SynapseReplicationLinkData.DeserializeSynapseReplicationLinkData(e)), _synapseReplicationLinkSqlPoolReplicationLinksClientDiagnostics, Pipeline, "SynapseReplicationLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBSqlContainerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlContainerSqlResourcesRestClient.CreateListSqlContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlContainerResource(Client, CosmosDBSqlContainerData.DeserializeCosmosDBSqlContainerData(e)), _cosmosDBSqlContainerSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlContainerCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlContainerResource(Client, CosmosDBSqlContainerData.DeserializeCosmosDBSqlContainerData(e)), _cosmosDBSqlContainerSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlContainerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBSqlContainerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlContainerSqlResourcesRestClient.CreateListSqlContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlContainerResource(Client, CosmosDBSqlContainerData.DeserializeCosmosDBSqlContainerData(e)), _cosmosDBSqlContainerSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlContainerCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlContainerResource(Client, CosmosDBSqlContainerData.DeserializeCosmosDBSqlContainerData(e)), _cosmosDBSqlContainerSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlContainerCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

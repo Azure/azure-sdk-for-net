@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.TrafficManager
         public virtual AsyncPageable<TrafficManagerProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _trafficManagerProfileProfilesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new TrafficManagerProfileResource(Client, TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e)), _trafficManagerProfileProfilesClientDiagnostics, Pipeline, "TrafficManagerProfileCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new TrafficManagerProfileResource(Client, TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e)), _trafficManagerProfileProfilesClientDiagnostics, Pipeline, "TrafficManagerProfileCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.TrafficManager
         public virtual Pageable<TrafficManagerProfileResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _trafficManagerProfileProfilesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new TrafficManagerProfileResource(Client, TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e)), _trafficManagerProfileProfilesClientDiagnostics, Pipeline, "TrafficManagerProfileCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new TrafficManagerProfileResource(Client, TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e)), _trafficManagerProfileProfilesClientDiagnostics, Pipeline, "TrafficManagerProfileCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

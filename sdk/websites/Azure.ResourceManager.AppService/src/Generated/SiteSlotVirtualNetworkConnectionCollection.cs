@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService
         public virtual AsyncPageable<SiteSlotVirtualNetworkConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotVirtualNetworkConnectionWebAppsRestClient.CreateListVnetConnectionsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SiteSlotVirtualNetworkConnectionResource(Client, AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(e)), _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics, Pipeline, "SiteSlotVirtualNetworkConnectionCollection.GetAll", "", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SiteSlotVirtualNetworkConnectionResource(Client, AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(e)), _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics, Pipeline, "SiteSlotVirtualNetworkConnectionCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
         public virtual Pageable<SiteSlotVirtualNetworkConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotVirtualNetworkConnectionWebAppsRestClient.CreateListVnetConnectionsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SiteSlotVirtualNetworkConnectionResource(Client, AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(e)), _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics, Pipeline, "SiteSlotVirtualNetworkConnectionCollection.GetAll", "", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SiteSlotVirtualNetworkConnectionResource(Client, AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(e)), _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics, Pipeline, "SiteSlotVirtualNetworkConnectionCollection.GetAll", "", null, cancellationToken);
         }
 
         /// <summary>

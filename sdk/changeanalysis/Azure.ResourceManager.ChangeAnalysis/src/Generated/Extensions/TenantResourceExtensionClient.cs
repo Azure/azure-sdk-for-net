@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceChangesRestClient.CreateListRequest(resourceId, startTime, endTime, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceChangesRestClient.CreateListNextPageRequest(nextLink, resourceId, startTime, endTime, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ResourceChangesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetResourceChanges", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ResourceChangesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetResourceChanges", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceChangesRestClient.CreateListRequest(resourceId, startTime, endTime, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceChangesRestClient.CreateListNextPageRequest(nextLink, resourceId, startTime, endTime, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ResourceChangesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetResourceChanges", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ResourceChangesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetResourceChanges", "value", "nextLink", cancellationToken);
         }
     }
 }

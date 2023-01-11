@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dicomServiceRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dicomServiceRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DicomServiceResource(Client, DicomServiceData.DeserializeDicomServiceData(e)), _dicomServiceClientDiagnostics, Pipeline, "DicomServiceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DicomServiceResource(Client, DicomServiceData.DeserializeDicomServiceData(e)), _dicomServiceClientDiagnostics, Pipeline, "DicomServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dicomServiceRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dicomServiceRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DicomServiceResource(Client, DicomServiceData.DeserializeDicomServiceData(e)), _dicomServiceClientDiagnostics, Pipeline, "DicomServiceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DicomServiceResource(Client, DicomServiceData.DeserializeDicomServiceData(e)), _dicomServiceClientDiagnostics, Pipeline, "DicomServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

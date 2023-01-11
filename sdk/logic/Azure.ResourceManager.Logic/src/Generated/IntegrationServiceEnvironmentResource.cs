@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationServiceEnvironmentSkusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _integrationServiceEnvironmentSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IntegrationServiceEnvironmentSkuDefinition.DeserializeIntegrationServiceEnvironmentSkuDefinition, _integrationServiceEnvironmentSkusClientDiagnostics, Pipeline, "IntegrationServiceEnvironmentResource.GetIntegrationServiceEnvironmentSkus", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IntegrationServiceEnvironmentSkuDefinition.DeserializeIntegrationServiceEnvironmentSkuDefinition, _integrationServiceEnvironmentSkusClientDiagnostics, Pipeline, "IntegrationServiceEnvironmentResource.GetIntegrationServiceEnvironmentSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationServiceEnvironmentSkusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _integrationServiceEnvironmentSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IntegrationServiceEnvironmentSkuDefinition.DeserializeIntegrationServiceEnvironmentSkuDefinition, _integrationServiceEnvironmentSkusClientDiagnostics, Pipeline, "IntegrationServiceEnvironmentResource.GetIntegrationServiceEnvironmentSkus", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IntegrationServiceEnvironmentSkuDefinition.DeserializeIntegrationServiceEnvironmentSkuDefinition, _integrationServiceEnvironmentSkusClientDiagnostics, Pipeline, "IntegrationServiceEnvironmentResource.GetIntegrationServiceEnvironmentSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual AsyncPageable<MarketplaceAdminApprovalRequestResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _marketplaceAdminApprovalRequestPrivateStoreRestClient.CreateAdminRequestApprovalsListRequest(Guid.Parse(Id.Name));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MarketplaceAdminApprovalRequestResource(Client, MarketplaceAdminApprovalRequestData.DeserializeMarketplaceAdminApprovalRequestData(e)), _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics, Pipeline, "MarketplaceAdminApprovalRequestCollection.GetAll", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MarketplaceAdminApprovalRequestResource(Client, MarketplaceAdminApprovalRequestData.DeserializeMarketplaceAdminApprovalRequestData(e)), _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics, Pipeline, "MarketplaceAdminApprovalRequestCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Pageable<MarketplaceAdminApprovalRequestResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _marketplaceAdminApprovalRequestPrivateStoreRestClient.CreateAdminRequestApprovalsListRequest(Guid.Parse(Id.Name));
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MarketplaceAdminApprovalRequestResource(Client, MarketplaceAdminApprovalRequestData.DeserializeMarketplaceAdminApprovalRequestData(e)), _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics, Pipeline, "MarketplaceAdminApprovalRequestCollection.GetAll", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MarketplaceAdminApprovalRequestResource(Client, MarketplaceAdminApprovalRequestData.DeserializeMarketplaceAdminApprovalRequestData(e)), _marketplaceAdminApprovalRequestPrivateStoreClientDiagnostics, Pipeline, "MarketplaceAdminApprovalRequestCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

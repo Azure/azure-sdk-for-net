@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkProfileRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkProfileRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkProfileResource(Client, NetworkProfileData.DeserializeNetworkProfileData(e)), _networkProfileClientDiagnostics, Pipeline, "NetworkProfileCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkProfileResource(Client, NetworkProfileData.DeserializeNetworkProfileData(e)), _networkProfileClientDiagnostics, Pipeline, "NetworkProfileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkProfileRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkProfileRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkProfileResource(Client, NetworkProfileData.DeserializeNetworkProfileData(e)), _networkProfileClientDiagnostics, Pipeline, "NetworkProfileCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkProfileResource(Client, NetworkProfileData.DeserializeNetworkProfileData(e)), _networkProfileClientDiagnostics, Pipeline, "NetworkProfileCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

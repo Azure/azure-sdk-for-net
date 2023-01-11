@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AlertsManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _smartGroupRestClient.CreateGetAllRequest(Id.SubscriptionId, targetResource, targetResourceGroup, targetResourceType, monitorService, monitorCondition, severity, smartGroupState, timeRange, pageCount, sortBy, sortOrder);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _smartGroupRestClient.CreateGetAllNextPageRequest(nextLink, Id.SubscriptionId, targetResource, targetResourceGroup, targetResourceType, monitorService, monitorCondition, severity, smartGroupState, timeRange, pageCount, sortBy, sortOrder);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SmartGroupResource(Client, SmartGroupData.DeserializeSmartGroupData(e)), _smartGroupClientDiagnostics, Pipeline, "SmartGroupCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SmartGroupResource(Client, SmartGroupData.DeserializeSmartGroupData(e)), _smartGroupClientDiagnostics, Pipeline, "SmartGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AlertsManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _smartGroupRestClient.CreateGetAllRequest(Id.SubscriptionId, targetResource, targetResourceGroup, targetResourceType, monitorService, monitorCondition, severity, smartGroupState, timeRange, pageCount, sortBy, sortOrder);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _smartGroupRestClient.CreateGetAllNextPageRequest(nextLink, Id.SubscriptionId, targetResource, targetResourceGroup, targetResourceType, monitorService, monitorCondition, severity, smartGroupState, timeRange, pageCount, sortBy, sortOrder);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SmartGroupResource(Client, SmartGroupData.DeserializeSmartGroupData(e)), _smartGroupClientDiagnostics, Pipeline, "SmartGroupCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SmartGroupResource(Client, SmartGroupData.DeserializeSmartGroupData(e)), _smartGroupClientDiagnostics, Pipeline, "SmartGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

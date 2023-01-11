@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmVirtualMachineVirtualMachinesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scVmmVirtualMachineVirtualMachinesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineResource(Client, ScVmmVirtualMachineData.DeserializeScVmmVirtualMachineData(e)), _scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "ScVmmVirtualMachineCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineResource(Client, ScVmmVirtualMachineData.DeserializeScVmmVirtualMachineData(e)), _scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "ScVmmVirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmVirtualMachineVirtualMachinesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scVmmVirtualMachineVirtualMachinesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineResource(Client, ScVmmVirtualMachineData.DeserializeScVmmVirtualMachineData(e)), _scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "ScVmmVirtualMachineCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineResource(Client, ScVmmVirtualMachineData.DeserializeScVmmVirtualMachineData(e)), _scVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "ScVmmVirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

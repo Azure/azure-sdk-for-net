@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual AsyncPageable<OperationalInsightsSavedSearchResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsSavedSearchSavedSearchesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new OperationalInsightsSavedSearchResource(Client, OperationalInsightsSavedSearchData.DeserializeOperationalInsightsSavedSearchData(e)), _operationalInsightsSavedSearchSavedSearchesClientDiagnostics, Pipeline, "OperationalInsightsSavedSearchCollection.GetAll", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new OperationalInsightsSavedSearchResource(Client, OperationalInsightsSavedSearchData.DeserializeOperationalInsightsSavedSearchData(e)), _operationalInsightsSavedSearchSavedSearchesClientDiagnostics, Pipeline, "OperationalInsightsSavedSearchCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual Pageable<OperationalInsightsSavedSearchResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsSavedSearchSavedSearchesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new OperationalInsightsSavedSearchResource(Client, OperationalInsightsSavedSearchData.DeserializeOperationalInsightsSavedSearchData(e)), _operationalInsightsSavedSearchSavedSearchesClientDiagnostics, Pipeline, "OperationalInsightsSavedSearchCollection.GetAll", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new OperationalInsightsSavedSearchResource(Client, OperationalInsightsSavedSearchData.DeserializeOperationalInsightsSavedSearchData(e)), _operationalInsightsSavedSearchSavedSearchesClientDiagnostics, Pipeline, "OperationalInsightsSavedSearchCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

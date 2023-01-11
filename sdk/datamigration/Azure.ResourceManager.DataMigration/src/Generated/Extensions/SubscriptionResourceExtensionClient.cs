@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SqlMigrationServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlMigrationServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlMigrationServiceResource(Client, SqlMigrationServiceData.DeserializeSqlMigrationServiceData(e)), SqlMigrationServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSqlMigrationServices", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlMigrationServiceResource(Client, SqlMigrationServiceData.DeserializeSqlMigrationServiceData(e)), SqlMigrationServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSqlMigrationServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SqlMigrationServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlMigrationServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlMigrationServiceResource(Client, SqlMigrationServiceData.DeserializeSqlMigrationServiceData(e)), SqlMigrationServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSqlMigrationServices", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlMigrationServiceResource(Client, SqlMigrationServiceData.DeserializeSqlMigrationServiceData(e)), SqlMigrationServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSqlMigrationServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListSkusRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceSku.DeserializeResourceSku, ResourceSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusResourceSkus", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceSku.DeserializeResourceSku, ResourceSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListSkusRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceSku.DeserializeResourceSku, ResourceSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusResourceSkus", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceSku.DeserializeResourceSku, ResourceSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataMigrationServiceServicesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataMigrationServiceServicesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataMigrationServiceResource(Client, DataMigrationServiceData.DeserializeDataMigrationServiceData(e)), DataMigrationServiceServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataMigrationServices", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataMigrationServiceResource(Client, DataMigrationServiceData.DeserializeDataMigrationServiceData(e)), DataMigrationServiceServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataMigrationServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataMigrationServiceServicesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataMigrationServiceServicesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataMigrationServiceResource(Client, DataMigrationServiceData.DeserializeDataMigrationServiceData(e)), DataMigrationServiceServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataMigrationServices", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataMigrationServiceResource(Client, DataMigrationServiceData.DeserializeDataMigrationServiceData(e)), DataMigrationServiceServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataMigrationServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, Quota.DeserializeQuota, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsages", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, Quota.DeserializeQuota, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, Quota.DeserializeQuota, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsages", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, Quota.DeserializeQuota, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsages", "value", "nextLink", cancellationToken);
         }
     }
 }

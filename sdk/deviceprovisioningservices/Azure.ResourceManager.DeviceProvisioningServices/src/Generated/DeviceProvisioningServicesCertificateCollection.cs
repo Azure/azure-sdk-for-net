@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         public virtual AsyncPageable<DeviceProvisioningServicesCertificateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesCertificateDpsCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DeviceProvisioningServicesCertificateResource(Client, DeviceProvisioningServicesCertificateData.DeserializeDeviceProvisioningServicesCertificateData(e)), _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics, Pipeline, "DeviceProvisioningServicesCertificateCollection.GetAll", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DeviceProvisioningServicesCertificateResource(Client, DeviceProvisioningServicesCertificateData.DeserializeDeviceProvisioningServicesCertificateData(e)), _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics, Pipeline, "DeviceProvisioningServicesCertificateCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         public virtual Pageable<DeviceProvisioningServicesCertificateResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesCertificateDpsCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DeviceProvisioningServicesCertificateResource(Client, DeviceProvisioningServicesCertificateData.DeserializeDeviceProvisioningServicesCertificateData(e)), _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics, Pipeline, "DeviceProvisioningServicesCertificateCollection.GetAll", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DeviceProvisioningServicesCertificateResource(Client, DeviceProvisioningServicesCertificateData.DeserializeDeviceProvisioningServicesCertificateData(e)), _deviceProvisioningServicesCertificateDpsCertificateClientDiagnostics, Pipeline, "DeviceProvisioningServicesCertificateCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

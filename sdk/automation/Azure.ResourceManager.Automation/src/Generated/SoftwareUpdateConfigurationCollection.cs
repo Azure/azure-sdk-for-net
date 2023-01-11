@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Automation
         public virtual AsyncPageable<SoftwareUpdateConfigurationCollectionItem> GetAllAsync(string clientRequestId = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareUpdateConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SoftwareUpdateConfigurationCollectionItem.DeserializeSoftwareUpdateConfigurationCollectionItem, _softwareUpdateConfigurationClientDiagnostics, Pipeline, "SoftwareUpdateConfigurationCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SoftwareUpdateConfigurationCollectionItem.DeserializeSoftwareUpdateConfigurationCollectionItem, _softwareUpdateConfigurationClientDiagnostics, Pipeline, "SoftwareUpdateConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Automation
         public virtual Pageable<SoftwareUpdateConfigurationCollectionItem> GetAll(string clientRequestId = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareUpdateConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, SoftwareUpdateConfigurationCollectionItem.DeserializeSoftwareUpdateConfigurationCollectionItem, _softwareUpdateConfigurationClientDiagnostics, Pipeline, "SoftwareUpdateConfigurationCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SoftwareUpdateConfigurationCollectionItem.DeserializeSoftwareUpdateConfigurationCollectionItem, _softwareUpdateConfigurationClientDiagnostics, Pipeline, "SoftwareUpdateConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _projectDevBoxDefinitionDevBoxDefinitionsRestClient.CreateListByProjectRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _projectDevBoxDefinitionDevBoxDefinitionsRestClient.CreateListByProjectNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProjectDevBoxDefinitionResource(Client, DevBoxDefinitionData.DeserializeDevBoxDefinitionData(e)), _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics, Pipeline, "ProjectDevBoxDefinitionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProjectDevBoxDefinitionResource(Client, DevBoxDefinitionData.DeserializeDevBoxDefinitionData(e)), _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics, Pipeline, "ProjectDevBoxDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _projectDevBoxDefinitionDevBoxDefinitionsRestClient.CreateListByProjectRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _projectDevBoxDefinitionDevBoxDefinitionsRestClient.CreateListByProjectNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProjectDevBoxDefinitionResource(Client, DevBoxDefinitionData.DeserializeDevBoxDefinitionData(e)), _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics, Pipeline, "ProjectDevBoxDefinitionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProjectDevBoxDefinitionResource(Client, DevBoxDefinitionData.DeserializeDevBoxDefinitionData(e)), _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics, Pipeline, "ProjectDevBoxDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HybridData
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataPublicKeyPublicKeysRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataPublicKeyPublicKeysRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridDataPublicKeyResource(Client, HybridDataPublicKeyData.DeserializeHybridDataPublicKeyData(e)), _hybridDataPublicKeyPublicKeysClientDiagnostics, Pipeline, "HybridDataPublicKeyCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridDataPublicKeyResource(Client, HybridDataPublicKeyData.DeserializeHybridDataPublicKeyData(e)), _hybridDataPublicKeyPublicKeysClientDiagnostics, Pipeline, "HybridDataPublicKeyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HybridData
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataPublicKeyPublicKeysRestClient.CreateListByDataManagerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataPublicKeyPublicKeysRestClient.CreateListByDataManagerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridDataPublicKeyResource(Client, HybridDataPublicKeyData.DeserializeHybridDataPublicKeyData(e)), _hybridDataPublicKeyPublicKeysClientDiagnostics, Pipeline, "HybridDataPublicKeyCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridDataPublicKeyResource(Client, HybridDataPublicKeyData.DeserializeHybridDataPublicKeyData(e)), _hybridDataPublicKeyPublicKeysClientDiagnostics, Pipeline, "HybridDataPublicKeyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

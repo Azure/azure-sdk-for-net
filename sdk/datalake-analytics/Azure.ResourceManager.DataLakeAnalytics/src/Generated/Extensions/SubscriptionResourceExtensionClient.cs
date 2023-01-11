@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataLakeAnalyticsAccountAccountsRestClient.CreateListRequest(Id.SubscriptionId, filter, top, skip, select, orderby, count);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataLakeAnalyticsAccountAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top, skip, select, orderby, count);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataLakeAnalyticsAccountBasic.DeserializeDataLakeAnalyticsAccountBasic, DataLakeAnalyticsAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAccounts", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataLakeAnalyticsAccountBasic.DeserializeDataLakeAnalyticsAccountBasic, DataLakeAnalyticsAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataLakeAnalyticsAccountAccountsRestClient.CreateListRequest(Id.SubscriptionId, filter, top, skip, select, orderby, count);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataLakeAnalyticsAccountAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top, skip, select, orderby, count);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataLakeAnalyticsAccountBasic.DeserializeDataLakeAnalyticsAccountBasic, DataLakeAnalyticsAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAccounts", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataLakeAnalyticsAccountBasic.DeserializeDataLakeAnalyticsAccountBasic, DataLakeAnalyticsAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Sql
         public virtual AsyncPageable<DataMaskingRule> GetDataMaskingRulesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMaskingRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DataMaskingRule.DeserializeDataMaskingRule, _dataMaskingRulesClientDiagnostics, Pipeline, "DataMaskingPolicyResource.GetDataMaskingRules", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DataMaskingRule.DeserializeDataMaskingRule, _dataMaskingRulesClientDiagnostics, Pipeline, "DataMaskingPolicyResource.GetDataMaskingRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Sql
         public virtual Pageable<DataMaskingRule> GetDataMaskingRules(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMaskingRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, DataMaskingRule.DeserializeDataMaskingRule, _dataMaskingRulesClientDiagnostics, Pipeline, "DataMaskingPolicyResource.GetDataMaskingRules", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, DataMaskingRule.DeserializeDataMaskingRule, _dataMaskingRulesClientDiagnostics, Pipeline, "DataMaskingPolicyResource.GetDataMaskingRules", "value", null, cancellationToken);
         }
     }
 }

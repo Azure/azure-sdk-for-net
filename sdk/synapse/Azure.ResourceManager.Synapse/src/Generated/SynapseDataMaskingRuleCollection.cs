@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseDataMaskingRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDataMaskingRuleDataMaskingRulesRestClient.CreateListBySqlPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseDataMaskingRuleResource(Client, SynapseDataMaskingRuleData.DeserializeSynapseDataMaskingRuleData(e)), _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics, Pipeline, "SynapseDataMaskingRuleCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseDataMaskingRuleResource(Client, SynapseDataMaskingRuleData.DeserializeSynapseDataMaskingRuleData(e)), _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics, Pipeline, "SynapseDataMaskingRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseDataMaskingRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDataMaskingRuleDataMaskingRulesRestClient.CreateListBySqlPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseDataMaskingRuleResource(Client, SynapseDataMaskingRuleData.DeserializeSynapseDataMaskingRuleData(e)), _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics, Pipeline, "SynapseDataMaskingRuleCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseDataMaskingRuleResource(Client, SynapseDataMaskingRuleData.DeserializeSynapseDataMaskingRuleData(e)), _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics, Pipeline, "SynapseDataMaskingRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

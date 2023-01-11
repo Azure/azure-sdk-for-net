@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryPlanReplicationRecoveryPlansRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryPlanReplicationRecoveryPlansRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecoveryPlanResource(Client, RecoveryPlanData.DeserializeRecoveryPlanData(e)), _recoveryPlanReplicationRecoveryPlansClientDiagnostics, Pipeline, "RecoveryPlanCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecoveryPlanResource(Client, RecoveryPlanData.DeserializeRecoveryPlanData(e)), _recoveryPlanReplicationRecoveryPlansClientDiagnostics, Pipeline, "RecoveryPlanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryPlanReplicationRecoveryPlansRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryPlanReplicationRecoveryPlansRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecoveryPlanResource(Client, RecoveryPlanData.DeserializeRecoveryPlanData(e)), _recoveryPlanReplicationRecoveryPlansClientDiagnostics, Pipeline, "RecoveryPlanCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecoveryPlanResource(Client, RecoveryPlanData.DeserializeRecoveryPlanData(e)), _recoveryPlanReplicationRecoveryPlansClientDiagnostics, Pipeline, "RecoveryPlanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationRunbookRunbookRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationRunbookRunbookRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationRunbookResource(Client, AutomationRunbookData.DeserializeAutomationRunbookData(e)), _automationRunbookRunbookClientDiagnostics, Pipeline, "AutomationRunbookCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationRunbookResource(Client, AutomationRunbookData.DeserializeAutomationRunbookData(e)), _automationRunbookRunbookClientDiagnostics, Pipeline, "AutomationRunbookCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationRunbookRunbookRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationRunbookRunbookRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationRunbookResource(Client, AutomationRunbookData.DeserializeAutomationRunbookData(e)), _automationRunbookRunbookClientDiagnostics, Pipeline, "AutomationRunbookCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationRunbookResource(Client, AutomationRunbookData.DeserializeAutomationRunbookData(e)), _automationRunbookRunbookClientDiagnostics, Pipeline, "AutomationRunbookCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

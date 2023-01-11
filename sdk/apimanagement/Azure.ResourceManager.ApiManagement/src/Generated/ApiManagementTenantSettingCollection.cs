@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementTenantSettingTenantSettingsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementTenantSettingTenantSettingsRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementTenantSettingResource(Client, ApiManagementTenantSettingData.DeserializeApiManagementTenantSettingData(e)), _apiManagementTenantSettingTenantSettingsClientDiagnostics, Pipeline, "ApiManagementTenantSettingCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementTenantSettingResource(Client, ApiManagementTenantSettingData.DeserializeApiManagementTenantSettingData(e)), _apiManagementTenantSettingTenantSettingsClientDiagnostics, Pipeline, "ApiManagementTenantSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementTenantSettingTenantSettingsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementTenantSettingTenantSettingsRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementTenantSettingResource(Client, ApiManagementTenantSettingData.DeserializeApiManagementTenantSettingData(e)), _apiManagementTenantSettingTenantSettingsClientDiagnostics, Pipeline, "ApiManagementTenantSettingCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementTenantSettingResource(Client, ApiManagementTenantSettingData.DeserializeApiManagementTenantSettingData(e)), _apiManagementTenantSettingTenantSettingsClientDiagnostics, Pipeline, "ApiManagementTenantSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.HybridData
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataJobJobsRestClient.CreateListByDataServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataJobJobsRestClient.CreateListByDataServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridDataJobResource(Client, HybridDataJobData.DeserializeHybridDataJobData(e)), _hybridDataJobJobsClientDiagnostics, Pipeline, "HybridDataServiceResource.GetJobs", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridDataJobResource(Client, HybridDataJobData.DeserializeHybridDataJobData(e)), _hybridDataJobJobsClientDiagnostics, Pipeline, "HybridDataServiceResource.GetJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HybridData
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridDataJobJobsRestClient.CreateListByDataServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridDataJobJobsRestClient.CreateListByDataServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridDataJobResource(Client, HybridDataJobData.DeserializeHybridDataJobData(e)), _hybridDataJobJobsClientDiagnostics, Pipeline, "HybridDataServiceResource.GetJobs", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridDataJobResource(Client, HybridDataJobData.DeserializeHybridDataJobData(e)), _hybridDataJobJobsClientDiagnostics, Pipeline, "HybridDataServiceResource.GetJobs", "value", "nextLink", cancellationToken);
         }
     }
 }

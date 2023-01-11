@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.ContainerInstance
         public virtual AsyncPageable<string> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerGroupRestClient.CreateGetOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), _containerGroupClientDiagnostics, Pipeline, "ContainerGroupResource.GetOutboundNetworkDependenciesEndpoints", "", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), _containerGroupClientDiagnostics, Pipeline, "ContainerGroupResource.GetOutboundNetworkDependenciesEndpoints", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.ContainerInstance
         public virtual Pageable<string> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerGroupRestClient.CreateGetOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), _containerGroupClientDiagnostics, Pipeline, "ContainerGroupResource.GetOutboundNetworkDependenciesEndpoints", "", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), _containerGroupClientDiagnostics, Pipeline, "ContainerGroupResource.GetOutboundNetworkDependenciesEndpoints", "", null, cancellationToken);
         }
 
         /// <summary>

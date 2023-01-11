@@ -148,20 +148,18 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<PipelineResource> GetPipelinesByWorkspaceAsync(CancellationToken cancellationToken = default)
         {
-            var context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetPipelinesByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetPipelinesByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PipelineResource.DeserializePipelineResource, _clientDiagnostics, _pipeline, "PipelineClient.GetPipelinesByWorkspace", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PipelineResource.DeserializePipelineResource, _clientDiagnostics, _pipeline, "PipelineClient.GetPipelinesByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists pipelines. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<PipelineResource> GetPipelinesByWorkspace(CancellationToken cancellationToken = default)
         {
-            var context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetPipelinesByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetPipelinesByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PipelineResource.DeserializePipelineResource, _clientDiagnostics, _pipeline, "PipelineClient.GetPipelinesByWorkspace", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PipelineResource.DeserializePipelineResource, _clientDiagnostics, _pipeline, "PipelineClient.GetPipelinesByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates or updates a pipeline. </summary>

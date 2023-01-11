@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventGridTopicTopicsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventGridTopicTopicsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridTopicResource(Client, EventGridTopicData.DeserializeEventGridTopicData(e)), _eventGridTopicTopicsClientDiagnostics, Pipeline, "EventGridTopicCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventGridTopicResource(Client, EventGridTopicData.DeserializeEventGridTopicData(e)), _eventGridTopicTopicsClientDiagnostics, Pipeline, "EventGridTopicCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventGridTopicTopicsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventGridTopicTopicsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridTopicResource(Client, EventGridTopicData.DeserializeEventGridTopicData(e)), _eventGridTopicTopicsClientDiagnostics, Pipeline, "EventGridTopicCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventGridTopicResource(Client, EventGridTopicData.DeserializeEventGridTopicData(e)), _eventGridTopicTopicsClientDiagnostics, Pipeline, "EventGridTopicCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

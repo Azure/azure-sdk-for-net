@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _preconfiguredEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _preconfiguredEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PreconfiguredEndpoint.DeserializePreconfiguredEndpoint, _preconfiguredEndpointsClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileResource.GetPreconfiguredEndpoints", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PreconfiguredEndpoint.DeserializePreconfiguredEndpoint, _preconfiguredEndpointsClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileResource.GetPreconfiguredEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _preconfiguredEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _preconfiguredEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PreconfiguredEndpoint.DeserializePreconfiguredEndpoint, _preconfiguredEndpointsClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileResource.GetPreconfiguredEndpoints", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PreconfiguredEndpoint.DeserializePreconfiguredEndpoint, _preconfiguredEndpointsClientDiagnostics, Pipeline, "FrontDoorNetworkExperimentProfileResource.GetPreconfiguredEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

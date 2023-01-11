@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.DataFactory
         public virtual AsyncPageable<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependenciesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.DeserializeIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint, _factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "FactoryIntegrationRuntimeResource.GetOutboundNetworkDependencies", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.DeserializeIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint, _factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "FactoryIntegrationRuntimeResource.GetOutboundNetworkDependencies", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DataFactory
         public virtual Pageable<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependencies(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryIntegrationRuntimeIntegrationRuntimesRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.DeserializeIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint, _factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "FactoryIntegrationRuntimeResource.GetOutboundNetworkDependencies", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint.DeserializeIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint, _factoryIntegrationRuntimeIntegrationRuntimesClientDiagnostics, Pipeline, "FactoryIntegrationRuntimeResource.GetOutboundNetworkDependencies", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -862,7 +862,7 @@ namespace Azure.ResourceManager.DataFactory
         public virtual AsyncPageable<SsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadataAsync(GetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationRuntimeObjectMetadataRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SsisObjectMetadata.DeserializeSsisObjectMetadata, _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, "FactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SsisObjectMetadata.DeserializeSsisObjectMetadata, _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, "FactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -876,7 +876,7 @@ namespace Azure.ResourceManager.DataFactory
         public virtual Pageable<SsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadata(GetSsisObjectMetadataContent content = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationRuntimeObjectMetadataRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, SsisObjectMetadata.DeserializeSsisObjectMetadata, _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, "FactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SsisObjectMetadata.DeserializeSsisObjectMetadata, _integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, "FactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata", "value", null, cancellationToken);
         }
 
         /// <summary>

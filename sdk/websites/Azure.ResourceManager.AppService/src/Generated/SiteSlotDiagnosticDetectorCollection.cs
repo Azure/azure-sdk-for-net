@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotDiagnosticDetectorDiagnosticsRestClient.CreateListSiteDetectorsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotDiagnosticDetectorDiagnosticsRestClient.CreateListSiteDetectorsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteSlotDiagnosticDetectorResource(Client, DetectorDefinitionResourceData.DeserializeDetectorDefinitionResourceData(e)), _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteSlotDiagnosticDetectorCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteSlotDiagnosticDetectorResource(Client, DetectorDefinitionResourceData.DeserializeDetectorDefinitionResourceData(e)), _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteSlotDiagnosticDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotDiagnosticDetectorDiagnosticsRestClient.CreateListSiteDetectorsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotDiagnosticDetectorDiagnosticsRestClient.CreateListSiteDetectorsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteSlotDiagnosticDetectorResource(Client, DetectorDefinitionResourceData.DeserializeDetectorDefinitionResourceData(e)), _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteSlotDiagnosticDetectorCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteSlotDiagnosticDetectorResource(Client, DetectorDefinitionResourceData.DeserializeDetectorDefinitionResourceData(e)), _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteSlotDiagnosticDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

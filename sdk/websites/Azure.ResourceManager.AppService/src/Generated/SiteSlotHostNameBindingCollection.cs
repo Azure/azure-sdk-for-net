@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotHostNameBindingWebAppsRestClient.CreateListHostNameBindingsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotHostNameBindingWebAppsRestClient.CreateListHostNameBindingsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteSlotHostNameBindingResource(Client, HostNameBindingData.DeserializeHostNameBindingData(e)), _siteSlotHostNameBindingWebAppsClientDiagnostics, Pipeline, "SiteSlotHostNameBindingCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteSlotHostNameBindingResource(Client, HostNameBindingData.DeserializeHostNameBindingData(e)), _siteSlotHostNameBindingWebAppsClientDiagnostics, Pipeline, "SiteSlotHostNameBindingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotHostNameBindingWebAppsRestClient.CreateListHostNameBindingsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotHostNameBindingWebAppsRestClient.CreateListHostNameBindingsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteSlotHostNameBindingResource(Client, HostNameBindingData.DeserializeHostNameBindingData(e)), _siteSlotHostNameBindingWebAppsClientDiagnostics, Pipeline, "SiteSlotHostNameBindingCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteSlotHostNameBindingResource(Client, HostNameBindingData.DeserializeHostNameBindingData(e)), _siteSlotHostNameBindingWebAppsClientDiagnostics, Pipeline, "SiteSlotHostNameBindingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

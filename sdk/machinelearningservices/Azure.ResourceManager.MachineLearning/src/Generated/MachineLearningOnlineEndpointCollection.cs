@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningOnlineEndpointOnlineEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningOnlineEndpointOnlineEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningOnlineEndpointResource(Client, MachineLearningOnlineEndpointData.DeserializeMachineLearningOnlineEndpointData(e)), _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics, Pipeline, "MachineLearningOnlineEndpointCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningOnlineEndpointResource(Client, MachineLearningOnlineEndpointData.DeserializeMachineLearningOnlineEndpointData(e)), _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics, Pipeline, "MachineLearningOnlineEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningOnlineEndpointOnlineEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningOnlineEndpointOnlineEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningOnlineEndpointResource(Client, MachineLearningOnlineEndpointData.DeserializeMachineLearningOnlineEndpointData(e)), _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics, Pipeline, "MachineLearningOnlineEndpointCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningOnlineEndpointResource(Client, MachineLearningOnlineEndpointData.DeserializeMachineLearningOnlineEndpointData(e)), _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics, Pipeline, "MachineLearningOnlineEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

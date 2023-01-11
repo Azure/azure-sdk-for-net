@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _topLevelDomainRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topLevelDomainRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TopLevelDomainResource(Client, TopLevelDomainData.DeserializeTopLevelDomainData(e)), _topLevelDomainClientDiagnostics, Pipeline, "TopLevelDomainCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TopLevelDomainResource(Client, TopLevelDomainData.DeserializeTopLevelDomainData(e)), _topLevelDomainClientDiagnostics, Pipeline, "TopLevelDomainCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _topLevelDomainRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topLevelDomainRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TopLevelDomainResource(Client, TopLevelDomainData.DeserializeTopLevelDomainData(e)), _topLevelDomainClientDiagnostics, Pipeline, "TopLevelDomainCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TopLevelDomainResource(Client, TopLevelDomainData.DeserializeTopLevelDomainData(e)), _topLevelDomainClientDiagnostics, Pipeline, "TopLevelDomainCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NotificationHubNamespaceNamespacesRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NotificationHubNamespaceNamespacesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), NotificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNotificationHubNamespaces", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), NotificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNotificationHubNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NotificationHubNamespaceNamespacesRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NotificationHubNamespaceNamespacesRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), NotificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNotificationHubNamespaces", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), NotificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNotificationHubNamespaces", "value", "nextLink", cancellationToken);
         }
     }
 }

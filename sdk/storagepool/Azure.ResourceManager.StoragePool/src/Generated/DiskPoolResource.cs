@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskPoolRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _diskPoolRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StoragePoolOutboundEnvironment.DeserializeStoragePoolOutboundEnvironment, _diskPoolClientDiagnostics, Pipeline, "DiskPoolResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StoragePoolOutboundEnvironment.DeserializeStoragePoolOutboundEnvironment, _diskPoolClientDiagnostics, Pipeline, "DiskPoolResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskPoolRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _diskPoolRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StoragePoolOutboundEnvironment.DeserializeStoragePoolOutboundEnvironment, _diskPoolClientDiagnostics, Pipeline, "DiskPoolResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StoragePoolOutboundEnvironment.DeserializeStoragePoolOutboundEnvironment, _diskPoolClientDiagnostics, Pipeline, "DiskPoolResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

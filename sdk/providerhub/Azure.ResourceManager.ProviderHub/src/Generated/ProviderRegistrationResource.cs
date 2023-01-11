@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual AsyncPageable<OperationsDefinition> GenerateOperationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _providerRegistrationRestClient.CreateGenerateOperationsRequest(Id.SubscriptionId, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationsDefinition.DeserializeOperationsDefinition, _providerRegistrationClientDiagnostics, Pipeline, "ProviderRegistrationResource.GenerateOperations", "", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OperationsDefinition.DeserializeOperationsDefinition, _providerRegistrationClientDiagnostics, Pipeline, "ProviderRegistrationResource.GenerateOperations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual Pageable<OperationsDefinition> GenerateOperations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _providerRegistrationRestClient.CreateGenerateOperationsRequest(Id.SubscriptionId, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, OperationsDefinition.DeserializeOperationsDefinition, _providerRegistrationClientDiagnostics, Pipeline, "ProviderRegistrationResource.GenerateOperations", "", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, OperationsDefinition.DeserializeOperationsDefinition, _providerRegistrationClientDiagnostics, Pipeline, "ProviderRegistrationResource.GenerateOperations", "", null, cancellationToken);
         }
 
         /// <summary>

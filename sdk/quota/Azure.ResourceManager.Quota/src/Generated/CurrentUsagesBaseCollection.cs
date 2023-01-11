@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Quota
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _currentUsagesBaseUsagesRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _currentUsagesBaseUsagesRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CurrentUsagesBaseResource(Client, CurrentUsagesBaseData.DeserializeCurrentUsagesBaseData(e)), _currentUsagesBaseUsagesClientDiagnostics, Pipeline, "CurrentUsagesBaseCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CurrentUsagesBaseResource(Client, CurrentUsagesBaseData.DeserializeCurrentUsagesBaseData(e)), _currentUsagesBaseUsagesClientDiagnostics, Pipeline, "CurrentUsagesBaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Quota
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _currentUsagesBaseUsagesRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _currentUsagesBaseUsagesRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CurrentUsagesBaseResource(Client, CurrentUsagesBaseData.DeserializeCurrentUsagesBaseData(e)), _currentUsagesBaseUsagesClientDiagnostics, Pipeline, "CurrentUsagesBaseCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CurrentUsagesBaseResource(Client, CurrentUsagesBaseData.DeserializeCurrentUsagesBaseData(e)), _currentUsagesBaseUsagesClientDiagnostics, Pipeline, "CurrentUsagesBaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

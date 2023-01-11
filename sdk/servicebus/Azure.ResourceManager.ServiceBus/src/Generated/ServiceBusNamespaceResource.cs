@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual AsyncPageable<ServiceBusPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ServiceBusPrivateLinkResource.DeserializeServiceBusPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "ServiceBusNamespaceResource.GetPrivateLinkResources", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ServiceBusPrivateLinkResource.DeserializeServiceBusPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "ServiceBusNamespaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual Pageable<ServiceBusPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ServiceBusPrivateLinkResource.DeserializeServiceBusPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "ServiceBusNamespaceResource.GetPrivateLinkResources", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ServiceBusPrivateLinkResource.DeserializeServiceBusPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "ServiceBusNamespaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>

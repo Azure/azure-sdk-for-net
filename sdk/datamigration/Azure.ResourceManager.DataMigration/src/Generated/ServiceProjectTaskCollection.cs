@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceProjectTaskTasksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceProjectTaskTasksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskType);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceProjectTaskResource(Client, ProjectTaskData.DeserializeProjectTaskData(e)), _serviceProjectTaskTasksClientDiagnostics, Pipeline, "ServiceProjectTaskCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceProjectTaskResource(Client, ProjectTaskData.DeserializeProjectTaskData(e)), _serviceProjectTaskTasksClientDiagnostics, Pipeline, "ServiceProjectTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceProjectTaskTasksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceProjectTaskTasksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, taskType);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceProjectTaskResource(Client, ProjectTaskData.DeserializeProjectTaskData(e)), _serviceProjectTaskTasksClientDiagnostics, Pipeline, "ServiceProjectTaskCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceProjectTaskResource(Client, ProjectTaskData.DeserializeProjectTaskData(e)), _serviceProjectTaskTasksClientDiagnostics, Pipeline, "ServiceProjectTaskCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

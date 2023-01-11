@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorePointGroupRestorePointCollectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _restorePointGroupRestorePointCollectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RestorePointGroupResource(Client, RestorePointGroupData.DeserializeRestorePointGroupData(e)), _restorePointGroupRestorePointCollectionsClientDiagnostics, Pipeline, "RestorePointGroupCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RestorePointGroupResource(Client, RestorePointGroupData.DeserializeRestorePointGroupData(e)), _restorePointGroupRestorePointCollectionsClientDiagnostics, Pipeline, "RestorePointGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorePointGroupRestorePointCollectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _restorePointGroupRestorePointCollectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RestorePointGroupResource(Client, RestorePointGroupData.DeserializeRestorePointGroupData(e)), _restorePointGroupRestorePointCollectionsClientDiagnostics, Pipeline, "RestorePointGroupCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RestorePointGroupResource(Client, RestorePointGroupData.DeserializeRestorePointGroupData(e)), _restorePointGroupRestorePointCollectionsClientDiagnostics, Pipeline, "RestorePointGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

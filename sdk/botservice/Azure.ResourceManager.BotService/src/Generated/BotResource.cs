@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.BotService
         public virtual AsyncPageable<BotServicePrivateLinkResource> GetPrivateLinkResourcesByBotResourceAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByBotResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, BotServicePrivateLinkResource.DeserializeBotServicePrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "BotResource.GetPrivateLinkResourcesByBotResource", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, BotServicePrivateLinkResource.DeserializeBotServicePrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "BotResource.GetPrivateLinkResourcesByBotResource", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.BotService
         public virtual Pageable<BotServicePrivateLinkResource> GetPrivateLinkResourcesByBotResource(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByBotResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, BotServicePrivateLinkResource.DeserializeBotServicePrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "BotResource.GetPrivateLinkResourcesByBotResource", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, BotServicePrivateLinkResource.DeserializeBotServicePrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "BotResource.GetPrivateLinkResourcesByBotResource", "value", null, cancellationToken);
         }
 
         /// <summary>

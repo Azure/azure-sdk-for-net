@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subnetRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subnetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubnetResource(Client, SubnetData.DeserializeSubnetData(e)), _subnetClientDiagnostics, Pipeline, "SubnetCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubnetResource(Client, SubnetData.DeserializeSubnetData(e)), _subnetClientDiagnostics, Pipeline, "SubnetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subnetRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subnetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubnetResource(Client, SubnetData.DeserializeSubnetData(e)), _subnetClientDiagnostics, Pipeline, "SubnetCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubnetResource(Client, SubnetData.DeserializeSubnetData(e)), _subnetClientDiagnostics, Pipeline, "SubnetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

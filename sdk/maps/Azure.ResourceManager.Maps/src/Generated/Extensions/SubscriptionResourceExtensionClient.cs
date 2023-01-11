@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Maps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MapsAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MapsAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MapsAccountResource(Client, MapsAccountData.DeserializeMapsAccountData(e)), MapsAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMapsAccounts", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MapsAccountResource(Client, MapsAccountData.DeserializeMapsAccountData(e)), MapsAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMapsAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Maps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MapsAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MapsAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MapsAccountResource(Client, MapsAccountData.DeserializeMapsAccountData(e)), MapsAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMapsAccounts", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MapsAccountResource(Client, MapsAccountData.DeserializeMapsAccountData(e)), MapsAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMapsAccounts", "value", "nextLink", cancellationToken);
         }
     }
 }

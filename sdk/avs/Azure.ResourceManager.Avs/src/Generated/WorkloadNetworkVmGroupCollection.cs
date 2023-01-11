@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateListVmGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateListVmGroupsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkVmGroupResource(Client, WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(e)), _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkVmGroupCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkVmGroupResource(Client, WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(e)), _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkVmGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateListVmGroupsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workloadNetworkVmGroupWorkloadNetworksRestClient.CreateListVmGroupsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkVmGroupResource(Client, WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(e)), _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkVmGroupCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkloadNetworkVmGroupResource(Client, WorkloadNetworkVmGroupData.DeserializeWorkloadNetworkVmGroupData(e)), _workloadNetworkVmGroupWorkloadNetworksClientDiagnostics, Pipeline, "WorkloadNetworkVmGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

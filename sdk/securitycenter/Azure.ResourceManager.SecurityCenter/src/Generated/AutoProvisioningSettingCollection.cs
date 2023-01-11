@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _autoProvisioningSettingRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _autoProvisioningSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutoProvisioningSettingResource(Client, AutoProvisioningSettingData.DeserializeAutoProvisioningSettingData(e)), _autoProvisioningSettingClientDiagnostics, Pipeline, "AutoProvisioningSettingCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutoProvisioningSettingResource(Client, AutoProvisioningSettingData.DeserializeAutoProvisioningSettingData(e)), _autoProvisioningSettingClientDiagnostics, Pipeline, "AutoProvisioningSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _autoProvisioningSettingRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _autoProvisioningSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutoProvisioningSettingResource(Client, AutoProvisioningSettingData.DeserializeAutoProvisioningSettingData(e)), _autoProvisioningSettingClientDiagnostics, Pipeline, "AutoProvisioningSettingCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutoProvisioningSettingResource(Client, AutoProvisioningSettingData.DeserializeAutoProvisioningSettingData(e)), _autoProvisioningSettingClientDiagnostics, Pipeline, "AutoProvisioningSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

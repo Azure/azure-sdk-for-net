@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationWatcherWatcherRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationWatcherWatcherRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationWatcherResource(Client, AutomationWatcherData.DeserializeAutomationWatcherData(e)), _automationWatcherWatcherClientDiagnostics, Pipeline, "AutomationWatcherCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutomationWatcherResource(Client, AutomationWatcherData.DeserializeAutomationWatcherData(e)), _automationWatcherWatcherClientDiagnostics, Pipeline, "AutomationWatcherCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationWatcherWatcherRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _automationWatcherWatcherRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationWatcherResource(Client, AutomationWatcherData.DeserializeAutomationWatcherData(e)), _automationWatcherWatcherClientDiagnostics, Pipeline, "AutomationWatcherCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutomationWatcherResource(Client, AutomationWatcherData.DeserializeAutomationWatcherData(e)), _automationWatcherWatcherClientDiagnostics, Pipeline, "AutomationWatcherCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

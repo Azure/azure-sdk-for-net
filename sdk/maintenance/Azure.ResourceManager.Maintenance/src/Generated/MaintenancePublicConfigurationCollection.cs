@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Maintenance
         public virtual AsyncPageable<MaintenancePublicConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MaintenancePublicConfigurationResource(Client, MaintenanceConfigurationData.DeserializeMaintenanceConfigurationData(e)), _maintenancePublicConfigurationPublicMaintenanceConfigurationsClientDiagnostics, Pipeline, "MaintenancePublicConfigurationCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MaintenancePublicConfigurationResource(Client, MaintenanceConfigurationData.DeserializeMaintenanceConfigurationData(e)), _maintenancePublicConfigurationPublicMaintenanceConfigurationsClientDiagnostics, Pipeline, "MaintenancePublicConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Maintenance
         public virtual Pageable<MaintenancePublicConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MaintenancePublicConfigurationResource(Client, MaintenanceConfigurationData.DeserializeMaintenanceConfigurationData(e)), _maintenancePublicConfigurationPublicMaintenanceConfigurationsClientDiagnostics, Pipeline, "MaintenancePublicConfigurationCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MaintenancePublicConfigurationResource(Client, MaintenanceConfigurationData.DeserializeMaintenanceConfigurationData(e)), _maintenancePublicConfigurationPublicMaintenanceConfigurationsClientDiagnostics, Pipeline, "MaintenancePublicConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

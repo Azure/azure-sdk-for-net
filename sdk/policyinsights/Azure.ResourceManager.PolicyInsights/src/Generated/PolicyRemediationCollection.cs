@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyRemediationRemediationsRestClient.CreateListForResourceRequest(Id, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyRemediationRemediationsRestClient.CreateListForResourceNextPageRequest(nextLink, Id, policyQuerySettings);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyRemediationResource(Client, PolicyRemediationData.DeserializePolicyRemediationData(e)), _policyRemediationRemediationsClientDiagnostics, Pipeline, "PolicyRemediationCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyRemediationResource(Client, PolicyRemediationData.DeserializePolicyRemediationData(e)), _policyRemediationRemediationsClientDiagnostics, Pipeline, "PolicyRemediationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyRemediationRemediationsRestClient.CreateListForResourceRequest(Id, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyRemediationRemediationsRestClient.CreateListForResourceNextPageRequest(nextLink, Id, policyQuerySettings);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyRemediationResource(Client, PolicyRemediationData.DeserializePolicyRemediationData(e)), _policyRemediationRemediationsClientDiagnostics, Pipeline, "PolicyRemediationCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyRemediationResource(Client, PolicyRemediationData.DeserializePolicyRemediationData(e)), _policyRemediationRemediationsClientDiagnostics, Pipeline, "PolicyRemediationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

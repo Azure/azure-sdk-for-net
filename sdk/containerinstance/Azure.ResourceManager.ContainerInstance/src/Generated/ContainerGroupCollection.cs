@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerGroupRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerGroupResource(Client, ContainerGroupData.DeserializeContainerGroupData(e)), _containerGroupClientDiagnostics, Pipeline, "ContainerGroupCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerGroupResource(Client, ContainerGroupData.DeserializeContainerGroupData(e)), _containerGroupClientDiagnostics, Pipeline, "ContainerGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerGroupRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerGroupResource(Client, ContainerGroupData.DeserializeContainerGroupData(e)), _containerGroupClientDiagnostics, Pipeline, "ContainerGroupCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerGroupResource(Client, ContainerGroupData.DeserializeContainerGroupData(e)), _containerGroupClientDiagnostics, Pipeline, "ContainerGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

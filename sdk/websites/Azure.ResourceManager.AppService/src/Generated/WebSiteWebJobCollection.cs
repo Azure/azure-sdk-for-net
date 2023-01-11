@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebJobWebAppsRestClient.CreateListWebJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteWebJobWebAppsRestClient.CreateListWebJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteWebJobResource(Client, WebJobData.DeserializeWebJobData(e)), _webSiteWebJobWebAppsClientDiagnostics, Pipeline, "WebSiteWebJobCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteWebJobResource(Client, WebJobData.DeserializeWebJobData(e)), _webSiteWebJobWebAppsClientDiagnostics, Pipeline, "WebSiteWebJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebJobWebAppsRestClient.CreateListWebJobsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteWebJobWebAppsRestClient.CreateListWebJobsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteWebJobResource(Client, WebJobData.DeserializeWebJobData(e)), _webSiteWebJobWebAppsClientDiagnostics, Pipeline, "WebSiteWebJobCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteWebJobResource(Client, WebJobData.DeserializeWebJobData(e)), _webSiteWebJobWebAppsClientDiagnostics, Pipeline, "WebSiteWebJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

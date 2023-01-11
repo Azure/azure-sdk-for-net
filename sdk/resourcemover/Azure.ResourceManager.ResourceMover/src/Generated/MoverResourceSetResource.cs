@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.ResourceMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _unresolvedDependenciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _unresolvedDependenciesRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MoverUnresolvedDependency.DeserializeMoverUnresolvedDependency, _unresolvedDependenciesClientDiagnostics, Pipeline, "MoverResourceSetResource.GetUnresolvedDependencies", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MoverUnresolvedDependency.DeserializeMoverUnresolvedDependency, _unresolvedDependenciesClientDiagnostics, Pipeline, "MoverResourceSetResource.GetUnresolvedDependencies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.ResourceMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _unresolvedDependenciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _unresolvedDependenciesRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MoverUnresolvedDependency.DeserializeMoverUnresolvedDependency, _unresolvedDependenciesClientDiagnostics, Pipeline, "MoverResourceSetResource.GetUnresolvedDependencies", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MoverUnresolvedDependency.DeserializeMoverUnresolvedDependency, _unresolvedDependenciesClientDiagnostics, Pipeline, "MoverResourceSetResource.GetUnresolvedDependencies", "value", "nextLink", cancellationToken);
         }
     }
 }

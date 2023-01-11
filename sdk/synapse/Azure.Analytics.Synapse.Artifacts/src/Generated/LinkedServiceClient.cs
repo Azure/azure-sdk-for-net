@@ -103,20 +103,18 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<LinkedServiceResource> GetLinkedServicesByWorkspaceAsync(CancellationToken cancellationToken = default)
         {
-            var context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetLinkedServicesByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetLinkedServicesByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LinkedServiceResource.DeserializeLinkedServiceResource, _clientDiagnostics, _pipeline, "LinkedServiceClient.GetLinkedServicesByWorkspace", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LinkedServiceResource.DeserializeLinkedServiceResource, _clientDiagnostics, _pipeline, "LinkedServiceClient.GetLinkedServicesByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists linked services. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<LinkedServiceResource> GetLinkedServicesByWorkspace(CancellationToken cancellationToken = default)
         {
-            var context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetLinkedServicesByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetLinkedServicesByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LinkedServiceResource.DeserializeLinkedServiceResource, _clientDiagnostics, _pipeline, "LinkedServiceClient.GetLinkedServicesByWorkspace", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LinkedServiceResource.DeserializeLinkedServiceResource, _clientDiagnostics, _pipeline, "LinkedServiceClient.GetLinkedServicesByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates or updates a linked service. </summary>

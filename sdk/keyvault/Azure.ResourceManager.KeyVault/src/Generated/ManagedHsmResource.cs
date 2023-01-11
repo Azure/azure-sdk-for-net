@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.KeyVault
         public virtual AsyncPageable<ManagedHsmPrivateLinkResourceData> GetMHSMPrivateLinkResourcesByManagedHsmResourceAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mhsmPrivateLinkResourcesRestClient.CreateListByManagedHsmResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ManagedHsmPrivateLinkResourceData.DeserializeManagedHsmPrivateLinkResourceData, _mhsmPrivateLinkResourcesClientDiagnostics, Pipeline, "ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ManagedHsmPrivateLinkResourceData.DeserializeManagedHsmPrivateLinkResourceData, _mhsmPrivateLinkResourcesClientDiagnostics, Pipeline, "ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.KeyVault
         public virtual Pageable<ManagedHsmPrivateLinkResourceData> GetMHSMPrivateLinkResourcesByManagedHsmResource(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mhsmPrivateLinkResourcesRestClient.CreateListByManagedHsmResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ManagedHsmPrivateLinkResourceData.DeserializeManagedHsmPrivateLinkResourceData, _mhsmPrivateLinkResourcesClientDiagnostics, Pipeline, "ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ManagedHsmPrivateLinkResourceData.DeserializeManagedHsmPrivateLinkResourceData, _mhsmPrivateLinkResourcesClientDiagnostics, Pipeline, "ManagedHsmResource.GetMHSMPrivateLinkResourcesByManagedHsmResource", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -137,20 +137,18 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<DataFlowDebugSessionInfo> QueryDataFlowDebugSessionsByWorkspaceAsync(CancellationToken cancellationToken = default)
         {
-            var context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateQueryDataFlowDebugSessionsByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateQueryDataFlowDebugSessionsByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo, _clientDiagnostics, _pipeline, "DataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo, _clientDiagnostics, _pipeline, "DataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Query all active data flow debug sessions. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<DataFlowDebugSessionInfo> QueryDataFlowDebugSessionsByWorkspace(CancellationToken cancellationToken = default)
         {
-            var context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateQueryDataFlowDebugSessionsByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateQueryDataFlowDebugSessionsByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo, _clientDiagnostics, _pipeline, "DataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo, _clientDiagnostics, _pipeline, "DataFlowDebugSessionClient.QueryDataFlowDebugSessionsByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates a data flow debug session. </summary>

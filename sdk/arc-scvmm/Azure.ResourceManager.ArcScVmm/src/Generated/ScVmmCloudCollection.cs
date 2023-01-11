@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmCloudCloudsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scVmmCloudCloudsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmCloudResource(Client, ScVmmCloudData.DeserializeScVmmCloudData(e)), _scVmmCloudCloudsClientDiagnostics, Pipeline, "ScVmmCloudCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmCloudResource(Client, ScVmmCloudData.DeserializeScVmmCloudData(e)), _scVmmCloudCloudsClientDiagnostics, Pipeline, "ScVmmCloudCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scVmmCloudCloudsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scVmmCloudCloudsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmCloudResource(Client, ScVmmCloudData.DeserializeScVmmCloudData(e)), _scVmmCloudCloudsClientDiagnostics, Pipeline, "ScVmmCloudCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmCloudResource(Client, ScVmmCloudData.DeserializeScVmmCloudData(e)), _scVmmCloudCloudsClientDiagnostics, Pipeline, "ScVmmCloudCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

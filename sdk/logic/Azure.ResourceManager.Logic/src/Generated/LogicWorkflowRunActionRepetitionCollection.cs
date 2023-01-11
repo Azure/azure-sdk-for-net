@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Logic
         public virtual AsyncPageable<LogicWorkflowRunActionRepetitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowRunActionRepetitionWorkflowRunActionRepetitionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new LogicWorkflowRunActionRepetitionResource(Client, LogicWorkflowRunActionRepetitionDefinitionData.DeserializeLogicWorkflowRunActionRepetitionDefinitionData(e)), _logicWorkflowRunActionRepetitionWorkflowRunActionRepetitionsClientDiagnostics, Pipeline, "LogicWorkflowRunActionRepetitionCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new LogicWorkflowRunActionRepetitionResource(Client, LogicWorkflowRunActionRepetitionDefinitionData.DeserializeLogicWorkflowRunActionRepetitionDefinitionData(e)), _logicWorkflowRunActionRepetitionWorkflowRunActionRepetitionsClientDiagnostics, Pipeline, "LogicWorkflowRunActionRepetitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Logic
         public virtual Pageable<LogicWorkflowRunActionRepetitionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowRunActionRepetitionWorkflowRunActionRepetitionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new LogicWorkflowRunActionRepetitionResource(Client, LogicWorkflowRunActionRepetitionDefinitionData.DeserializeLogicWorkflowRunActionRepetitionDefinitionData(e)), _logicWorkflowRunActionRepetitionWorkflowRunActionRepetitionsClientDiagnostics, Pipeline, "LogicWorkflowRunActionRepetitionCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new LogicWorkflowRunActionRepetitionResource(Client, LogicWorkflowRunActionRepetitionDefinitionData.DeserializeLogicWorkflowRunActionRepetitionDefinitionData(e)), _logicWorkflowRunActionRepetitionWorkflowRunActionRepetitionsClientDiagnostics, Pipeline, "LogicWorkflowRunActionRepetitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

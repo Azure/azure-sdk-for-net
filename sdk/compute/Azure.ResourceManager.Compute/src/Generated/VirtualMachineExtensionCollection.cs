@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Compute
         public virtual AsyncPageable<VirtualMachineExtensionResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineExtensionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new VirtualMachineExtensionResource(Client, VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(e)), _virtualMachineExtensionClientDiagnostics, Pipeline, "VirtualMachineExtensionCollection.GetAll", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new VirtualMachineExtensionResource(Client, VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(e)), _virtualMachineExtensionClientDiagnostics, Pipeline, "VirtualMachineExtensionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute
         public virtual Pageable<VirtualMachineExtensionResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineExtensionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new VirtualMachineExtensionResource(Client, VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(e)), _virtualMachineExtensionClientDiagnostics, Pipeline, "VirtualMachineExtensionCollection.GetAll", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new VirtualMachineExtensionResource(Client, VirtualMachineExtensionData.DeserializeVirtualMachineExtensionData(e)), _virtualMachineExtensionClientDiagnostics, Pipeline, "VirtualMachineExtensionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

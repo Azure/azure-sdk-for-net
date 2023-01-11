@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual AsyncPageable<NetAppVolumeResource> GetVolumesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _snapshotPolicyRestClient.CreateListVolumesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new NetAppVolumeResource(Client, NetAppVolumeData.DeserializeNetAppVolumeData(e)), _snapshotPolicyClientDiagnostics, Pipeline, "SnapshotPolicyResource.GetVolumes", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new NetAppVolumeResource(Client, NetAppVolumeData.DeserializeNetAppVolumeData(e)), _snapshotPolicyClientDiagnostics, Pipeline, "SnapshotPolicyResource.GetVolumes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual Pageable<NetAppVolumeResource> GetVolumes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _snapshotPolicyRestClient.CreateListVolumesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new NetAppVolumeResource(Client, NetAppVolumeData.DeserializeNetAppVolumeData(e)), _snapshotPolicyClientDiagnostics, Pipeline, "SnapshotPolicyResource.GetVolumes", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new NetAppVolumeResource(Client, NetAppVolumeData.DeserializeNetAppVolumeData(e)), _snapshotPolicyClientDiagnostics, Pipeline, "SnapshotPolicyResource.GetVolumes", "value", null, cancellationToken);
         }
 
         /// <summary>

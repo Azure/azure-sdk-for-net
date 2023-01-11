@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Storage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tableRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tableRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TableResource(Client, TableData.DeserializeTableData(e)), _tableClientDiagnostics, Pipeline, "TableCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TableResource(Client, TableData.DeserializeTableData(e)), _tableClientDiagnostics, Pipeline, "TableCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Storage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tableRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tableRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TableResource(Client, TableData.DeserializeTableData(e)), _tableClientDiagnostics, Pipeline, "TableCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TableResource(Client, TableData.DeserializeTableData(e)), _tableClientDiagnostics, Pipeline, "TableCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

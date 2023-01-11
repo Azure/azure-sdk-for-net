@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MySql
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlQueryStatisticTopQueryStatisticsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlQueryStatisticTopQueryStatisticsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlQueryStatisticResource(Client, MySqlQueryStatisticData.DeserializeMySqlQueryStatisticData(e)), _mySqlQueryStatisticTopQueryStatisticsClientDiagnostics, Pipeline, "MySqlQueryStatisticCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlQueryStatisticResource(Client, MySqlQueryStatisticData.DeserializeMySqlQueryStatisticData(e)), _mySqlQueryStatisticTopQueryStatisticsClientDiagnostics, Pipeline, "MySqlQueryStatisticCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MySql
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlQueryStatisticTopQueryStatisticsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlQueryStatisticTopQueryStatisticsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlQueryStatisticResource(Client, MySqlQueryStatisticData.DeserializeMySqlQueryStatisticData(e)), _mySqlQueryStatisticTopQueryStatisticsClientDiagnostics, Pipeline, "MySqlQueryStatisticCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlQueryStatisticResource(Client, MySqlQueryStatisticData.DeserializeMySqlQueryStatisticData(e)), _mySqlQueryStatisticTopQueryStatisticsClientDiagnostics, Pipeline, "MySqlQueryStatisticCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

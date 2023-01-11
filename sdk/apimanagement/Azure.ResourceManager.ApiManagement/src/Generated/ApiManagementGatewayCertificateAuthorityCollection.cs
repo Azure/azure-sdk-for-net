@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGatewayCertificateAuthorityResource(Client, ApiManagementGatewayCertificateAuthorityData.DeserializeApiManagementGatewayCertificateAuthorityData(e)), _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityClientDiagnostics, Pipeline, "ApiManagementGatewayCertificateAuthorityCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGatewayCertificateAuthorityResource(Client, ApiManagementGatewayCertificateAuthorityData.DeserializeApiManagementGatewayCertificateAuthorityData(e)), _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityClientDiagnostics, Pipeline, "ApiManagementGatewayCertificateAuthorityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGatewayCertificateAuthorityResource(Client, ApiManagementGatewayCertificateAuthorityData.DeserializeApiManagementGatewayCertificateAuthorityData(e)), _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityClientDiagnostics, Pipeline, "ApiManagementGatewayCertificateAuthorityCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGatewayCertificateAuthorityResource(Client, ApiManagementGatewayCertificateAuthorityData.DeserializeApiManagementGatewayCertificateAuthorityData(e)), _apiManagementGatewayCertificateAuthorityGatewayCertificateAuthorityClientDiagnostics, Pipeline, "ApiManagementGatewayCertificateAuthorityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

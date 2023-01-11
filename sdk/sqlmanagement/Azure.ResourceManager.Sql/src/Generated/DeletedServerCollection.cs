@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedServerRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_locationName));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deletedServerRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeletedServerResource(Client, DeletedServerData.DeserializeDeletedServerData(e)), _deletedServerClientDiagnostics, Pipeline, "DeletedServerCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeletedServerResource(Client, DeletedServerData.DeserializeDeletedServerData(e)), _deletedServerClientDiagnostics, Pipeline, "DeletedServerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedServerRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_locationName));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _deletedServerRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeletedServerResource(Client, DeletedServerData.DeserializeDeletedServerData(e)), _deletedServerClientDiagnostics, Pipeline, "DeletedServerCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeletedServerResource(Client, DeletedServerData.DeserializeDeletedServerData(e)), _deletedServerClientDiagnostics, Pipeline, "DeletedServerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

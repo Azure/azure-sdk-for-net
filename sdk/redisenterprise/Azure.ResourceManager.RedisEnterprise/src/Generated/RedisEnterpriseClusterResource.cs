@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         public virtual AsyncPageable<RedisEnterprisePrivateLinkResource> GetPrivateLinkResourcesByClusterAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RedisEnterprisePrivateLinkResource.DeserializeRedisEnterprisePrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "RedisEnterpriseClusterResource.GetPrivateLinkResourcesByCluster", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RedisEnterprisePrivateLinkResource.DeserializeRedisEnterprisePrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "RedisEnterpriseClusterResource.GetPrivateLinkResourcesByCluster", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         public virtual Pageable<RedisEnterprisePrivateLinkResource> GetPrivateLinkResourcesByCluster(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, RedisEnterprisePrivateLinkResource.DeserializeRedisEnterprisePrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "RedisEnterpriseClusterResource.GetPrivateLinkResourcesByCluster", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, RedisEnterprisePrivateLinkResource.DeserializeRedisEnterprisePrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "RedisEnterpriseClusterResource.GetPrivateLinkResourcesByCluster", "value", null, cancellationToken);
         }
 
         /// <summary>

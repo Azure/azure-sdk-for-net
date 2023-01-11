@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Advisor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metadataEntityRecommendationMetadataRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _metadataEntityRecommendationMetadataRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MetadataEntityResource(Client, MetadataEntityData.DeserializeMetadataEntityData(e)), _metadataEntityRecommendationMetadataClientDiagnostics, Pipeline, "MetadataEntityCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MetadataEntityResource(Client, MetadataEntityData.DeserializeMetadataEntityData(e)), _metadataEntityRecommendationMetadataClientDiagnostics, Pipeline, "MetadataEntityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Advisor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _metadataEntityRecommendationMetadataRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _metadataEntityRecommendationMetadataRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MetadataEntityResource(Client, MetadataEntityData.DeserializeMetadataEntityData(e)), _metadataEntityRecommendationMetadataClientDiagnostics, Pipeline, "MetadataEntityCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MetadataEntityResource(Client, MetadataEntityData.DeserializeMetadataEntityData(e)), _metadataEntityRecommendationMetadataClientDiagnostics, Pipeline, "MetadataEntityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Search
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _searchPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _searchPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SearchPrivateEndpointConnectionResource(Client, SearchPrivateEndpointConnectionData.DeserializeSearchPrivateEndpointConnectionData(e)), _searchPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "SearchPrivateEndpointConnectionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SearchPrivateEndpointConnectionResource(Client, SearchPrivateEndpointConnectionData.DeserializeSearchPrivateEndpointConnectionData(e)), _searchPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "SearchPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Search
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _searchPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _searchPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SearchPrivateEndpointConnectionResource(Client, SearchPrivateEndpointConnectionData.DeserializeSearchPrivateEndpointConnectionData(e)), _searchPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "SearchPrivateEndpointConnectionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SearchPrivateEndpointConnectionResource(Client, SearchPrivateEndpointConnectionData.DeserializeSearchPrivateEndpointConnectionData(e)), _searchPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "SearchPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

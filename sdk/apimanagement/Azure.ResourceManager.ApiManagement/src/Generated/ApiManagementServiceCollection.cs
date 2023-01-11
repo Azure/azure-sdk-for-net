@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementServiceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementServiceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementServiceResource(Client, ApiManagementServiceData.DeserializeApiManagementServiceData(e)), _apiManagementServiceClientDiagnostics, Pipeline, "ApiManagementServiceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementServiceResource(Client, ApiManagementServiceData.DeserializeApiManagementServiceData(e)), _apiManagementServiceClientDiagnostics, Pipeline, "ApiManagementServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementServiceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementServiceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementServiceResource(Client, ApiManagementServiceData.DeserializeApiManagementServiceData(e)), _apiManagementServiceClientDiagnostics, Pipeline, "ApiManagementServiceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementServiceResource(Client, ApiManagementServiceData.DeserializeApiManagementServiceData(e)), _apiManagementServiceClientDiagnostics, Pipeline, "ApiManagementServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

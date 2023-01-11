@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeDeviceDevicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeDeviceDevicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeDeviceResource(Client, DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(e)), _dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeDeviceResource(Client, DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(e)), _dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeDeviceDevicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeDeviceDevicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeDeviceResource(Client, DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(e)), _dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeDeviceResource(Client, DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(e)), _dataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

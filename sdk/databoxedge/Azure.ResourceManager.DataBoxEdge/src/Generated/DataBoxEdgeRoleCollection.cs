@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeRoleRolesRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeRoleRolesRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeRoleResource(Client, DataBoxEdgeRoleData.DeserializeDataBoxEdgeRoleData(e)), _dataBoxEdgeRoleRolesClientDiagnostics, Pipeline, "DataBoxEdgeRoleCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeRoleResource(Client, DataBoxEdgeRoleData.DeserializeDataBoxEdgeRoleData(e)), _dataBoxEdgeRoleRolesClientDiagnostics, Pipeline, "DataBoxEdgeRoleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeRoleRolesRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeRoleRolesRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeRoleResource(Client, DataBoxEdgeRoleData.DeserializeDataBoxEdgeRoleData(e)), _dataBoxEdgeRoleRolesClientDiagnostics, Pipeline, "DataBoxEdgeRoleCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeRoleResource(Client, DataBoxEdgeRoleData.DeserializeDataBoxEdgeRoleData(e)), _dataBoxEdgeRoleRolesClientDiagnostics, Pipeline, "DataBoxEdgeRoleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

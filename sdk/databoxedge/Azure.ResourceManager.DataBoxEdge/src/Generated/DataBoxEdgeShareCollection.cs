@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeShareSharesRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeShareSharesRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeShareResource(Client, DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(e)), _dataBoxEdgeShareSharesClientDiagnostics, Pipeline, "DataBoxEdgeShareCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeShareResource(Client, DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(e)), _dataBoxEdgeShareSharesClientDiagnostics, Pipeline, "DataBoxEdgeShareCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeShareSharesRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxEdgeShareSharesRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeShareResource(Client, DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(e)), _dataBoxEdgeShareSharesClientDiagnostics, Pipeline, "DataBoxEdgeShareCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeShareResource(Client, DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(e)), _dataBoxEdgeShareSharesClientDiagnostics, Pipeline, "DataBoxEdgeShareCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

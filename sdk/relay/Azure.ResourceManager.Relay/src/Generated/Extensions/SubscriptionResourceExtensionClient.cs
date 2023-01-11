@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Relay
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RelayNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RelayNamespaceNamespacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RelayNamespaceResource(Client, RelayNamespaceData.DeserializeRelayNamespaceData(e)), RelayNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRelayNamespaces", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RelayNamespaceResource(Client, RelayNamespaceData.DeserializeRelayNamespaceData(e)), RelayNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRelayNamespaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Relay
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RelayNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RelayNamespaceNamespacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RelayNamespaceResource(Client, RelayNamespaceData.DeserializeRelayNamespaceData(e)), RelayNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRelayNamespaces", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RelayNamespaceResource(Client, RelayNamespaceData.DeserializeRelayNamespaceData(e)), RelayNamespaceNamespacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRelayNamespaces", "value", "nextLink", cancellationToken);
         }
     }
 }

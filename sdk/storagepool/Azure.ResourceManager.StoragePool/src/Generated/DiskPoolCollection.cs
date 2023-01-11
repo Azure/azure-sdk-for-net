@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskPoolRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _diskPoolRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiskPoolResource(Client, DiskPoolData.DeserializeDiskPoolData(e)), _diskPoolClientDiagnostics, Pipeline, "DiskPoolCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiskPoolResource(Client, DiskPoolData.DeserializeDiskPoolData(e)), _diskPoolClientDiagnostics, Pipeline, "DiskPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskPoolRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _diskPoolRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiskPoolResource(Client, DiskPoolData.DeserializeDiskPoolData(e)), _diskPoolClientDiagnostics, Pipeline, "DiskPoolCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiskPoolResource(Client, DiskPoolData.DeserializeDiskPoolData(e)), _diskPoolClientDiagnostics, Pipeline, "DiskPoolCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

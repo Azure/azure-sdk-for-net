@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skiptoken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkResource(Client, ManagedNetworkData.DeserializeManagedNetworkData(e)), ManagedNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedNetworks", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkResource(Client, ManagedNetworkData.DeserializeManagedNetworkData(e)), ManagedNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skiptoken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkResource(Client, ManagedNetworkData.DeserializeManagedNetworkData(e)), ManagedNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedNetworks", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkResource(Client, ManagedNetworkData.DeserializeManagedNetworkData(e)), ManagedNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedNetworks", "value", "nextLink", cancellationToken);
         }
     }
 }

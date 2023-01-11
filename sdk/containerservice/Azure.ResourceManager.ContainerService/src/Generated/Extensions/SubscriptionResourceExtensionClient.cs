@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerServiceManagedClusterManagedClustersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerServiceManagedClusterManagedClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceManagedClusterResource(Client, ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(e)), ContainerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerServiceManagedClusters", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceManagedClusterResource(Client, ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(e)), ContainerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerServiceManagedClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerServiceManagedClusterManagedClustersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerServiceManagedClusterManagedClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceManagedClusterResource(Client, ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(e)), ContainerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerServiceManagedClusters", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceManagedClusterResource(Client, ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(e)), ContainerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerServiceManagedClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AgentPoolSnapshotSnapshotsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AgentPoolSnapshotSnapshotsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AgentPoolSnapshotResource(Client, AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(e)), AgentPoolSnapshotSnapshotsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAgentPoolSnapshots", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AgentPoolSnapshotResource(Client, AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(e)), AgentPoolSnapshotSnapshotsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAgentPoolSnapshots", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AgentPoolSnapshotSnapshotsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AgentPoolSnapshotSnapshotsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AgentPoolSnapshotResource(Client, AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(e)), AgentPoolSnapshotSnapshotsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAgentPoolSnapshots", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AgentPoolSnapshotResource(Client, AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(e)), AgentPoolSnapshotSnapshotsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAgentPoolSnapshots", "value", "nextLink", cancellationToken);
         }
     }
 }

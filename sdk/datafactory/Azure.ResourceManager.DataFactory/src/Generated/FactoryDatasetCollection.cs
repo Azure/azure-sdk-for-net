@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryDatasetDatasetsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _factoryDatasetDatasetsRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FactoryDatasetResource(Client, FactoryDatasetData.DeserializeFactoryDatasetData(e)), _factoryDatasetDatasetsClientDiagnostics, Pipeline, "FactoryDatasetCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FactoryDatasetResource(Client, FactoryDatasetData.DeserializeFactoryDatasetData(e)), _factoryDatasetDatasetsClientDiagnostics, Pipeline, "FactoryDatasetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryDatasetDatasetsRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _factoryDatasetDatasetsRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FactoryDatasetResource(Client, FactoryDatasetData.DeserializeFactoryDatasetData(e)), _factoryDatasetDatasetsClientDiagnostics, Pipeline, "FactoryDatasetCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FactoryDatasetResource(Client, FactoryDatasetData.DeserializeFactoryDatasetData(e)), _factoryDatasetDatasetsClientDiagnostics, Pipeline, "FactoryDatasetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

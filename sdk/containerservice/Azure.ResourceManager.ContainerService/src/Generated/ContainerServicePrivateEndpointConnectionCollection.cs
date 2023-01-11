@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ContainerService
         public virtual AsyncPageable<ContainerServicePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ContainerServicePrivateEndpointConnectionResource(Client, ContainerServicePrivateEndpointConnectionData.DeserializeContainerServicePrivateEndpointConnectionData(e)), _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "ContainerServicePrivateEndpointConnectionCollection.GetAll", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ContainerServicePrivateEndpointConnectionResource(Client, ContainerServicePrivateEndpointConnectionData.DeserializeContainerServicePrivateEndpointConnectionData(e)), _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "ContainerServicePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ContainerService
         public virtual Pageable<ContainerServicePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ContainerServicePrivateEndpointConnectionResource(Client, ContainerServicePrivateEndpointConnectionData.DeserializeContainerServicePrivateEndpointConnectionData(e)), _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "ContainerServicePrivateEndpointConnectionCollection.GetAll", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ContainerServicePrivateEndpointConnectionResource(Client, ContainerServicePrivateEndpointConnectionData.DeserializeContainerServicePrivateEndpointConnectionData(e)), _containerServicePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "ContainerServicePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

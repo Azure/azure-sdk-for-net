@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<MongoDBCollectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoDBCollectionMongoDBResourcesRestClient.CreateListMongoDBCollectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MongoDBCollectionResource(Client, MongoDBCollectionData.DeserializeMongoDBCollectionData(e)), _mongoDBCollectionMongoDBResourcesClientDiagnostics, Pipeline, "MongoDBCollectionCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MongoDBCollectionResource(Client, MongoDBCollectionData.DeserializeMongoDBCollectionData(e)), _mongoDBCollectionMongoDBResourcesClientDiagnostics, Pipeline, "MongoDBCollectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<MongoDBCollectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mongoDBCollectionMongoDBResourcesRestClient.CreateListMongoDBCollectionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MongoDBCollectionResource(Client, MongoDBCollectionData.DeserializeMongoDBCollectionData(e)), _mongoDBCollectionMongoDBResourcesClientDiagnostics, Pipeline, "MongoDBCollectionCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MongoDBCollectionResource(Client, MongoDBCollectionData.DeserializeMongoDBCollectionData(e)), _mongoDBCollectionMongoDBResourcesClientDiagnostics, Pipeline, "MongoDBCollectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

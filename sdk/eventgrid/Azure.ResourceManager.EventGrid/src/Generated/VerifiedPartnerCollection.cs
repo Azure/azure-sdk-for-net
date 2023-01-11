@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _verifiedPartnerRestClient.CreateListRequest(filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _verifiedPartnerRestClient.CreateListNextPageRequest(nextLink, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VerifiedPartnerResource(Client, VerifiedPartnerData.DeserializeVerifiedPartnerData(e)), _verifiedPartnerClientDiagnostics, Pipeline, "VerifiedPartnerCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VerifiedPartnerResource(Client, VerifiedPartnerData.DeserializeVerifiedPartnerData(e)), _verifiedPartnerClientDiagnostics, Pipeline, "VerifiedPartnerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _verifiedPartnerRestClient.CreateListRequest(filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _verifiedPartnerRestClient.CreateListNextPageRequest(nextLink, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VerifiedPartnerResource(Client, VerifiedPartnerData.DeserializeVerifiedPartnerData(e)), _verifiedPartnerClientDiagnostics, Pipeline, "VerifiedPartnerCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VerifiedPartnerResource(Client, VerifiedPartnerData.DeserializeVerifiedPartnerData(e)), _verifiedPartnerClientDiagnostics, Pipeline, "VerifiedPartnerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

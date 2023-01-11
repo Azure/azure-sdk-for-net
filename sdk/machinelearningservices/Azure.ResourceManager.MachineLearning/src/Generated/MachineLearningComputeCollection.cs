@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningComputeComputeRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningComputeComputeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningComputeResource(Client, MachineLearningComputeData.DeserializeMachineLearningComputeData(e)), _machineLearningComputeComputeClientDiagnostics, Pipeline, "MachineLearningComputeCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningComputeResource(Client, MachineLearningComputeData.DeserializeMachineLearningComputeData(e)), _machineLearningComputeComputeClientDiagnostics, Pipeline, "MachineLearningComputeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningComputeComputeRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningComputeComputeRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningComputeResource(Client, MachineLearningComputeData.DeserializeMachineLearningComputeData(e)), _machineLearningComputeComputeClientDiagnostics, Pipeline, "MachineLearningComputeCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningComputeResource(Client, MachineLearningComputeData.DeserializeMachineLearningComputeData(e)), _machineLearningComputeComputeClientDiagnostics, Pipeline, "MachineLearningComputeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

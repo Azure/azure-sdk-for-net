@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorWebApplicationFirewallPolicyResource(Client, FrontDoorWebApplicationFirewallPolicyData.DeserializeFrontDoorWebApplicationFirewallPolicyData(e)), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, "FrontDoorWebApplicationFirewallPolicyCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorWebApplicationFirewallPolicyResource(Client, FrontDoorWebApplicationFirewallPolicyData.DeserializeFrontDoorWebApplicationFirewallPolicyData(e)), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, "FrontDoorWebApplicationFirewallPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorWebApplicationFirewallPolicyPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorWebApplicationFirewallPolicyResource(Client, FrontDoorWebApplicationFirewallPolicyData.DeserializeFrontDoorWebApplicationFirewallPolicyData(e)), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, "FrontDoorWebApplicationFirewallPolicyCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorWebApplicationFirewallPolicyResource(Client, FrontDoorWebApplicationFirewallPolicyData.DeserializeFrontDoorWebApplicationFirewallPolicyData(e)), _frontDoorWebApplicationFirewallPolicyPoliciesClientDiagnostics, Pipeline, "FrontDoorWebApplicationFirewallPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

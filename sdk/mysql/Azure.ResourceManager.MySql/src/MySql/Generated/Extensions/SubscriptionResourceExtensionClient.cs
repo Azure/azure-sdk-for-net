@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MySql
         public virtual AsyncPageable<MySqlServerResource> GetMySqlServersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MySqlServerServersRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), MySqlServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMySqlServers", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), MySqlServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMySqlServers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MySql
         public virtual Pageable<MySqlServerResource> GetMySqlServers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MySqlServerServersRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), MySqlServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMySqlServers", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MySqlServerResource(Client, MySqlServerData.DeserializeMySqlServerData(e)), MySqlServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMySqlServers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MySql
         public virtual AsyncPageable<MySqlPerformanceTier> GetLocationBasedPerformanceTiersAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationBasedPerformanceTierRestClient.CreateListRequest(Id.SubscriptionId, locationName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MySqlPerformanceTier.DeserializeMySqlPerformanceTier, LocationBasedPerformanceTierClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLocationBasedPerformanceTiers", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MySqlPerformanceTier.DeserializeMySqlPerformanceTier, LocationBasedPerformanceTierClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLocationBasedPerformanceTiers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MySql
         public virtual Pageable<MySqlPerformanceTier> GetLocationBasedPerformanceTiers(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationBasedPerformanceTierRestClient.CreateListRequest(Id.SubscriptionId, locationName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MySqlPerformanceTier.DeserializeMySqlPerformanceTier, LocationBasedPerformanceTierClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLocationBasedPerformanceTiers", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MySqlPerformanceTier.DeserializeMySqlPerformanceTier, LocationBasedPerformanceTierClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLocationBasedPerformanceTiers", "value", null, cancellationToken);
         }
 
         /// <summary>

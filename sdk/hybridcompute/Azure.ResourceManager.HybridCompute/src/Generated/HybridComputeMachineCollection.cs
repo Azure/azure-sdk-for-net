@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputeMachineMachinesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputeMachineMachinesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridComputeMachineResource(Client, HybridComputeMachineData.DeserializeHybridComputeMachineData(e)), _hybridComputeMachineMachinesClientDiagnostics, Pipeline, "HybridComputeMachineCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridComputeMachineResource(Client, HybridComputeMachineData.DeserializeHybridComputeMachineData(e)), _hybridComputeMachineMachinesClientDiagnostics, Pipeline, "HybridComputeMachineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputeMachineMachinesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputeMachineMachinesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridComputeMachineResource(Client, HybridComputeMachineData.DeserializeHybridComputeMachineData(e)), _hybridComputeMachineMachinesClientDiagnostics, Pipeline, "HybridComputeMachineCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridComputeMachineResource(Client, HybridComputeMachineData.DeserializeHybridComputeMachineData(e)), _hybridComputeMachineMachinesClientDiagnostics, Pipeline, "HybridComputeMachineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

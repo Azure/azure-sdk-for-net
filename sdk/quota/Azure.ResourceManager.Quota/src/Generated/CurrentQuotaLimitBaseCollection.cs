@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Quota
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _currentQuotaLimitBaseQuotaRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _currentQuotaLimitBaseQuotaRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CurrentQuotaLimitBaseResource(Client, CurrentQuotaLimitBaseData.DeserializeCurrentQuotaLimitBaseData(e)), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, "CurrentQuotaLimitBaseCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CurrentQuotaLimitBaseResource(Client, CurrentQuotaLimitBaseData.DeserializeCurrentQuotaLimitBaseData(e)), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, "CurrentQuotaLimitBaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Quota
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _currentQuotaLimitBaseQuotaRestClient.CreateListRequest(Id);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _currentQuotaLimitBaseQuotaRestClient.CreateListNextPageRequest(nextLink, Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CurrentQuotaLimitBaseResource(Client, CurrentQuotaLimitBaseData.DeserializeCurrentQuotaLimitBaseData(e)), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, "CurrentQuotaLimitBaseCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CurrentQuotaLimitBaseResource(Client, CurrentQuotaLimitBaseData.DeserializeCurrentQuotaLimitBaseData(e)), _currentQuotaLimitBaseQuotaClientDiagnostics, Pipeline, "CurrentQuotaLimitBaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

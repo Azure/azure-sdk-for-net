@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareDataSetMappingDataSetMappingsRestClient.CreateListByShareSubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareDataSetMappingDataSetMappingsRestClient.CreateListByShareSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ShareDataSetMappingResource(Client, ShareDataSetMappingData.DeserializeShareDataSetMappingData(e)), _shareDataSetMappingDataSetMappingsClientDiagnostics, Pipeline, "ShareDataSetMappingCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ShareDataSetMappingResource(Client, ShareDataSetMappingData.DeserializeShareDataSetMappingData(e)), _shareDataSetMappingDataSetMappingsClientDiagnostics, Pipeline, "ShareDataSetMappingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareDataSetMappingDataSetMappingsRestClient.CreateListByShareSubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareDataSetMappingDataSetMappingsRestClient.CreateListByShareSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ShareDataSetMappingResource(Client, ShareDataSetMappingData.DeserializeShareDataSetMappingData(e)), _shareDataSetMappingDataSetMappingsClientDiagnostics, Pipeline, "ShareDataSetMappingCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ShareDataSetMappingResource(Client, ShareDataSetMappingData.DeserializeShareDataSetMappingData(e)), _shareDataSetMappingDataSetMappingsClientDiagnostics, Pipeline, "ShareDataSetMappingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

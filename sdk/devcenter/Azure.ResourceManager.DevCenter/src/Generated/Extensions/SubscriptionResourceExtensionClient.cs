@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevCenterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterResource(Client, DevCenterData.DeserializeDevCenterData(e)), DevCenterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevCenters", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterResource(Client, DevCenterData.DeserializeDevCenterData(e)), DevCenterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevCenters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevCenterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterResource(Client, DevCenterData.DeserializeDevCenterData(e)), DevCenterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevCenters", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterResource(Client, DevCenterData.DeserializeDevCenterData(e)), DevCenterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevCenters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProjectRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProjectRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProjectResource(Client, ProjectData.DeserializeProjectData(e)), ProjectClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProjects", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProjectResource(Client, ProjectData.DeserializeProjectData(e)), ProjectClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProjectRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProjectRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProjectResource(Client, ProjectData.DeserializeProjectData(e)), ProjectClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProjects", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProjectResource(Client, ProjectData.DeserializeProjectData(e)), ProjectClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevCenterUsage.DeserializeDevCenterUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsagesByLocation", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevCenterUsage.DeserializeDevCenterUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsagesByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevCenterUsage.DeserializeDevCenterUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsagesByLocation", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevCenterUsage.DeserializeDevCenterUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsagesByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevCenterSkuDetails.DeserializeDevCenterSkuDetails, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusBySubscription", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevCenterSkuDetails.DeserializeDevCenterSkuDetails, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevCenterSkuDetails.DeserializeDevCenterSkuDetails, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusBySubscription", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevCenterSkuDetails.DeserializeDevCenterSkuDetails, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkConnectionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkConnectionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkConnectionResource(Client, NetworkConnectionData.DeserializeNetworkConnectionData(e)), NetworkConnectionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkConnections", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkConnectionResource(Client, NetworkConnectionData.DeserializeNetworkConnectionData(e)), NetworkConnectionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkConnections", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkConnectionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkConnectionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkConnectionResource(Client, NetworkConnectionData.DeserializeNetworkConnectionData(e)), NetworkConnectionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkConnections", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkConnectionResource(Client, NetworkConnectionData.DeserializeNetworkConnectionData(e)), NetworkConnectionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkConnections", "value", "nextLink", cancellationToken);
         }
     }
 }

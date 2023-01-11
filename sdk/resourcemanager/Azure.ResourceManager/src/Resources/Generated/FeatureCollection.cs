@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _featureRestClient.CreateListRequest(Id.SubscriptionId, Id.Provider);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _featureRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Provider);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FeatureResource(Client, FeatureData.DeserializeFeatureData(e)), _featureClientDiagnostics, Pipeline, "FeatureCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FeatureResource(Client, FeatureData.DeserializeFeatureData(e)), _featureClientDiagnostics, Pipeline, "FeatureCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _featureRestClient.CreateListRequest(Id.SubscriptionId, Id.Provider);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _featureRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Provider);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FeatureResource(Client, FeatureData.DeserializeFeatureData(e)), _featureClientDiagnostics, Pipeline, "FeatureCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FeatureResource(Client, FeatureData.DeserializeFeatureData(e)), _featureClientDiagnostics, Pipeline, "FeatureCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedNetworkPeeringPolicyRestClient.CreateListByManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedNetworkPeeringPolicyRestClient.CreateListByManagedNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkPeeringPolicyResource(Client, ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(e)), _managedNetworkPeeringPolicyClientDiagnostics, Pipeline, "ManagedNetworkPeeringPolicyCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkPeeringPolicyResource(Client, ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(e)), _managedNetworkPeeringPolicyClientDiagnostics, Pipeline, "ManagedNetworkPeeringPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedNetworkPeeringPolicyRestClient.CreateListByManagedNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedNetworkPeeringPolicyRestClient.CreateListByManagedNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, skiptoken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkPeeringPolicyResource(Client, ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(e)), _managedNetworkPeeringPolicyClientDiagnostics, Pipeline, "ManagedNetworkPeeringPolicyCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedNetworkPeeringPolicyResource(Client, ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(e)), _managedNetworkPeeringPolicyClientDiagnostics, Pipeline, "ManagedNetworkPeeringPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

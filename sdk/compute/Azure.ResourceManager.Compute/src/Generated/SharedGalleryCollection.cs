@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedGalleryRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location), sharedTo);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sharedGalleryRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), sharedTo);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SharedGalleryResource(Client, SharedGalleryData.DeserializeSharedGalleryData(e)), _sharedGalleryClientDiagnostics, Pipeline, "SharedGalleryCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SharedGalleryResource(Client, SharedGalleryData.DeserializeSharedGalleryData(e)), _sharedGalleryClientDiagnostics, Pipeline, "SharedGalleryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedGalleryRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location), sharedTo);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sharedGalleryRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), sharedTo);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SharedGalleryResource(Client, SharedGalleryData.DeserializeSharedGalleryData(e)), _sharedGalleryClientDiagnostics, Pipeline, "SharedGalleryCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SharedGalleryResource(Client, SharedGalleryData.DeserializeSharedGalleryData(e)), _sharedGalleryClientDiagnostics, Pipeline, "SharedGalleryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

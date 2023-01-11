@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Compute
         public virtual AsyncPageable<ComputePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskAccessRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ComputePrivateLinkResourceData.DeserializeComputePrivateLinkResourceData, _diskAccessClientDiagnostics, Pipeline, "DiskAccessResource.GetPrivateLinkResources", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ComputePrivateLinkResourceData.DeserializeComputePrivateLinkResourceData, _diskAccessClientDiagnostics, Pipeline, "DiskAccessResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Compute
         public virtual Pageable<ComputePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskAccessRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ComputePrivateLinkResourceData.DeserializeComputePrivateLinkResourceData, _diskAccessClientDiagnostics, Pipeline, "DiskAccessResource.GetPrivateLinkResources", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ComputePrivateLinkResourceData.DeserializeComputePrivateLinkResourceData, _diskAccessClientDiagnostics, Pipeline, "DiskAccessResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>

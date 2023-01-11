@@ -186,10 +186,9 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         {
             Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
 
-            var context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListRequest(managedVirtualNetworkName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListNextPageRequest(nextLink, managedVirtualNetworkName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedPrivateEndpoint.DeserializeManagedPrivateEndpoint, _clientDiagnostics, _pipeline, "ManagedPrivateEndpointsClient.List", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedPrivateEndpoint.DeserializeManagedPrivateEndpoint, _clientDiagnostics, _pipeline, "ManagedPrivateEndpointsClient.List", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> List Managed Private Endpoints. </summary>
@@ -200,10 +199,9 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         {
             Argument.AssertNotNullOrEmpty(managedVirtualNetworkName, nameof(managedVirtualNetworkName));
 
-            var context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListRequest(managedVirtualNetworkName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListNextPageRequest(nextLink, managedVirtualNetworkName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedPrivateEndpoint.DeserializeManagedPrivateEndpoint, _clientDiagnostics, _pipeline, "ManagedPrivateEndpointsClient.List", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedPrivateEndpoint.DeserializeManagedPrivateEndpoint, _clientDiagnostics, _pipeline, "ManagedPrivateEndpointsClient.List", "value", "nextLink", cancellationToken);
         }
     }
 }

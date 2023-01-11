@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateListByManagedClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateListByManagedClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceMaintenanceConfigurationResource(Client, ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(e)), _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics, Pipeline, "ContainerServiceMaintenanceConfigurationCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceMaintenanceConfigurationResource(Client, ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(e)), _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics, Pipeline, "ContainerServiceMaintenanceConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateListByManagedClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceMaintenanceConfigurationMaintenanceConfigurationsRestClient.CreateListByManagedClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceMaintenanceConfigurationResource(Client, ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(e)), _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics, Pipeline, "ContainerServiceMaintenanceConfigurationCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerServiceMaintenanceConfigurationResource(Client, ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(e)), _containerServiceMaintenanceConfigurationMaintenanceConfigurationsClientDiagnostics, Pipeline, "ContainerServiceMaintenanceConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

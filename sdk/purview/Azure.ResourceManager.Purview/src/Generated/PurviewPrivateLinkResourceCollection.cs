@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Purview
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _purviewPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _purviewPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PurviewPrivateLinkResource(Client, PurviewPrivateLinkResourceData.DeserializePurviewPrivateLinkResourceData(e)), _purviewPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "PurviewPrivateLinkResourceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PurviewPrivateLinkResource(Client, PurviewPrivateLinkResourceData.DeserializePurviewPrivateLinkResourceData(e)), _purviewPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "PurviewPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Purview
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _purviewPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _purviewPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PurviewPrivateLinkResource(Client, PurviewPrivateLinkResourceData.DeserializePurviewPrivateLinkResourceData(e)), _purviewPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "PurviewPrivateLinkResourceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PurviewPrivateLinkResource(Client, PurviewPrivateLinkResourceData.DeserializePurviewPrivateLinkResourceData(e)), _purviewPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "PurviewPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

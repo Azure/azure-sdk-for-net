@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.StorageSync
         public virtual AsyncPageable<StorageSyncWorkflowResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncWorkflowWorkflowsRestClient.CreateListByStorageSyncServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageSyncWorkflowResource(Client, StorageSyncWorkflowData.DeserializeStorageSyncWorkflowData(e)), _storageSyncWorkflowWorkflowsClientDiagnostics, Pipeline, "StorageSyncWorkflowCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StorageSyncWorkflowResource(Client, StorageSyncWorkflowData.DeserializeStorageSyncWorkflowData(e)), _storageSyncWorkflowWorkflowsClientDiagnostics, Pipeline, "StorageSyncWorkflowCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.StorageSync
         public virtual Pageable<StorageSyncWorkflowResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageSyncWorkflowWorkflowsRestClient.CreateListByStorageSyncServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageSyncWorkflowResource(Client, StorageSyncWorkflowData.DeserializeStorageSyncWorkflowData(e)), _storageSyncWorkflowWorkflowsClientDiagnostics, Pipeline, "StorageSyncWorkflowCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new StorageSyncWorkflowResource(Client, StorageSyncWorkflowData.DeserializeStorageSyncWorkflowData(e)), _storageSyncWorkflowWorkflowsClientDiagnostics, Pipeline, "StorageSyncWorkflowCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

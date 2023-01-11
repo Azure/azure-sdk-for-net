@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Network
         public virtual AsyncPageable<ExpressRouteConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ExpressRouteConnectionResource(Client, ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(e)), _expressRouteConnectionClientDiagnostics, Pipeline, "ExpressRouteConnectionCollection.GetAll", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ExpressRouteConnectionResource(Client, ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(e)), _expressRouteConnectionClientDiagnostics, Pipeline, "ExpressRouteConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network
         public virtual Pageable<ExpressRouteConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ExpressRouteConnectionResource(Client, ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(e)), _expressRouteConnectionClientDiagnostics, Pipeline, "ExpressRouteConnectionCollection.GetAll", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ExpressRouteConnectionResource(Client, ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(e)), _expressRouteConnectionClientDiagnostics, Pipeline, "ExpressRouteConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webApplicationFirewallPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webApplicationFirewallPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebApplicationFirewallPolicyResource(Client, WebApplicationFirewallPolicyData.DeserializeWebApplicationFirewallPolicyData(e)), _webApplicationFirewallPolicyClientDiagnostics, Pipeline, "WebApplicationFirewallPolicyCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebApplicationFirewallPolicyResource(Client, WebApplicationFirewallPolicyData.DeserializeWebApplicationFirewallPolicyData(e)), _webApplicationFirewallPolicyClientDiagnostics, Pipeline, "WebApplicationFirewallPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webApplicationFirewallPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webApplicationFirewallPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebApplicationFirewallPolicyResource(Client, WebApplicationFirewallPolicyData.DeserializeWebApplicationFirewallPolicyData(e)), _webApplicationFirewallPolicyClientDiagnostics, Pipeline, "WebApplicationFirewallPolicyCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebApplicationFirewallPolicyResource(Client, WebApplicationFirewallPolicyData.DeserializeWebApplicationFirewallPolicyData(e)), _webApplicationFirewallPolicyClientDiagnostics, Pipeline, "WebApplicationFirewallPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

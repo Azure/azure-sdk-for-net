@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudClusterVirtualMachineVirtualMachinesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsPrivateCloudClusterVirtualMachineVirtualMachinesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudClusterVirtualMachineResource(Client, AvsPrivateCloudClusterVirtualMachineData.DeserializeAvsPrivateCloudClusterVirtualMachineData(e)), _avsPrivateCloudClusterVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "AvsPrivateCloudClusterVirtualMachineCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudClusterVirtualMachineResource(Client, AvsPrivateCloudClusterVirtualMachineData.DeserializeAvsPrivateCloudClusterVirtualMachineData(e)), _avsPrivateCloudClusterVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "AvsPrivateCloudClusterVirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudClusterVirtualMachineVirtualMachinesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsPrivateCloudClusterVirtualMachineVirtualMachinesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudClusterVirtualMachineResource(Client, AvsPrivateCloudClusterVirtualMachineData.DeserializeAvsPrivateCloudClusterVirtualMachineData(e)), _avsPrivateCloudClusterVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "AvsPrivateCloudClusterVirtualMachineCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudClusterVirtualMachineResource(Client, AvsPrivateCloudClusterVirtualMachineData.DeserializeAvsPrivateCloudClusterVirtualMachineData(e)), _avsPrivateCloudClusterVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "AvsPrivateCloudClusterVirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

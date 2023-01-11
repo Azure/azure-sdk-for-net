@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineRunCommandRestClient.CreateListByVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineRunCommandRestClient.CreateListByVirtualMachineNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineRunCommandResource(Client, VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(e)), _virtualMachineRunCommandClientDiagnostics, Pipeline, "VirtualMachineRunCommandCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineRunCommandResource(Client, VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(e)), _virtualMachineRunCommandClientDiagnostics, Pipeline, "VirtualMachineRunCommandCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineRunCommandRestClient.CreateListByVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineRunCommandRestClient.CreateListByVirtualMachineNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineRunCommandResource(Client, VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(e)), _virtualMachineRunCommandClientDiagnostics, Pipeline, "VirtualMachineRunCommandCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineRunCommandResource(Client, VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(e)), _virtualMachineRunCommandClientDiagnostics, Pipeline, "VirtualMachineRunCommandCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

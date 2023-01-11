@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDiagnosticDetectorDiagnosticsRestClient.CreateListSiteDetectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteDiagnosticDetectorDiagnosticsRestClient.CreateListSiteDetectorsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteDiagnosticDetectorResource(Client, DetectorDefinitionResourceData.DeserializeDetectorDefinitionResourceData(e)), _siteDiagnosticDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteDiagnosticDetectorCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteDiagnosticDetectorResource(Client, DetectorDefinitionResourceData.DeserializeDetectorDefinitionResourceData(e)), _siteDiagnosticDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteDiagnosticDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteDiagnosticDetectorDiagnosticsRestClient.CreateListSiteDetectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteDiagnosticDetectorDiagnosticsRestClient.CreateListSiteDetectorsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteDiagnosticDetectorResource(Client, DetectorDefinitionResourceData.DeserializeDetectorDefinitionResourceData(e)), _siteDiagnosticDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteDiagnosticDetectorCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteDiagnosticDetectorResource(Client, DetectorDefinitionResourceData.DeserializeDetectorDefinitionResourceData(e)), _siteDiagnosticDetectorDiagnosticsClientDiagnostics, Pipeline, "SiteDiagnosticDetectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

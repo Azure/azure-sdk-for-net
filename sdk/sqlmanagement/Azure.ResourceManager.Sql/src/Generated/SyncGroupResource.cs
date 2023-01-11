@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncGroupRestClient.CreateListHubSchemasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncGroupRestClient.CreateListHubSchemasNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SyncFullSchemaProperties.DeserializeSyncFullSchemaProperties, _syncGroupClientDiagnostics, Pipeline, "SyncGroupResource.GetHubSchemas", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SyncFullSchemaProperties.DeserializeSyncFullSchemaProperties, _syncGroupClientDiagnostics, Pipeline, "SyncGroupResource.GetHubSchemas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncGroupRestClient.CreateListHubSchemasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncGroupRestClient.CreateListHubSchemasNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SyncFullSchemaProperties.DeserializeSyncFullSchemaProperties, _syncGroupClientDiagnostics, Pipeline, "SyncGroupResource.GetHubSchemas", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SyncFullSchemaProperties.DeserializeSyncFullSchemaProperties, _syncGroupClientDiagnostics, Pipeline, "SyncGroupResource.GetHubSchemas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Sql
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncGroupRestClient.CreateListLogsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, startTime, endTime, type, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncGroupRestClient.CreateListLogsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, startTime, endTime, type, continuationToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SyncGroupLogProperties.DeserializeSyncGroupLogProperties, _syncGroupClientDiagnostics, Pipeline, "SyncGroupResource.GetLogs", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SyncGroupLogProperties.DeserializeSyncGroupLogProperties, _syncGroupClientDiagnostics, Pipeline, "SyncGroupResource.GetLogs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Sql
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncGroupRestClient.CreateListLogsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, startTime, endTime, type, continuationToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncGroupRestClient.CreateListLogsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, startTime, endTime, type, continuationToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SyncGroupLogProperties.DeserializeSyncGroupLogProperties, _syncGroupClientDiagnostics, Pipeline, "SyncGroupResource.GetLogs", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SyncGroupLogProperties.DeserializeSyncGroupLogProperties, _syncGroupClientDiagnostics, Pipeline, "SyncGroupResource.GetLogs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

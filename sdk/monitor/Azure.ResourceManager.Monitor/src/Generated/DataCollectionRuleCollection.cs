@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataCollectionRuleRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataCollectionRuleRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleResource(Client, DataCollectionRuleData.DeserializeDataCollectionRuleData(e)), _dataCollectionRuleClientDiagnostics, Pipeline, "DataCollectionRuleCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleResource(Client, DataCollectionRuleData.DeserializeDataCollectionRuleData(e)), _dataCollectionRuleClientDiagnostics, Pipeline, "DataCollectionRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataCollectionRuleRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataCollectionRuleRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleResource(Client, DataCollectionRuleData.DeserializeDataCollectionRuleData(e)), _dataCollectionRuleClientDiagnostics, Pipeline, "DataCollectionRuleCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleResource(Client, DataCollectionRuleData.DeserializeDataCollectionRuleData(e)), _dataCollectionRuleClientDiagnostics, Pipeline, "DataCollectionRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

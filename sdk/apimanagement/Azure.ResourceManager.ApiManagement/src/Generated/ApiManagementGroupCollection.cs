@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementGroupGroupRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementGroupGroupRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGroupResource(Client, ApiManagementGroupData.DeserializeApiManagementGroupData(e)), _apiManagementGroupGroupClientDiagnostics, Pipeline, "ApiManagementGroupCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGroupResource(Client, ApiManagementGroupData.DeserializeApiManagementGroupData(e)), _apiManagementGroupGroupClientDiagnostics, Pipeline, "ApiManagementGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementGroupGroupRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementGroupGroupRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGroupResource(Client, ApiManagementGroupData.DeserializeApiManagementGroupData(e)), _apiManagementGroupGroupClientDiagnostics, Pipeline, "ApiManagementGroupCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementGroupResource(Client, ApiManagementGroupData.DeserializeApiManagementGroupData(e)), _apiManagementGroupGroupClientDiagnostics, Pipeline, "ApiManagementGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

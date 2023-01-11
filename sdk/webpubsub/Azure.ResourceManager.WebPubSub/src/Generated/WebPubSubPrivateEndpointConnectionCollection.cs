@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubPrivateEndpointConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webPubSubPrivateEndpointConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebPubSubPrivateEndpointConnectionResource(Client, WebPubSubPrivateEndpointConnectionData.DeserializeWebPubSubPrivateEndpointConnectionData(e)), _webPubSubPrivateEndpointConnectionClientDiagnostics, Pipeline, "WebPubSubPrivateEndpointConnectionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebPubSubPrivateEndpointConnectionResource(Client, WebPubSubPrivateEndpointConnectionData.DeserializeWebPubSubPrivateEndpointConnectionData(e)), _webPubSubPrivateEndpointConnectionClientDiagnostics, Pipeline, "WebPubSubPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubPrivateEndpointConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webPubSubPrivateEndpointConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebPubSubPrivateEndpointConnectionResource(Client, WebPubSubPrivateEndpointConnectionData.DeserializeWebPubSubPrivateEndpointConnectionData(e)), _webPubSubPrivateEndpointConnectionClientDiagnostics, Pipeline, "WebPubSubPrivateEndpointConnectionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebPubSubPrivateEndpointConnectionResource(Client, WebPubSubPrivateEndpointConnectionData.DeserializeWebPubSubPrivateEndpointConnectionData(e)), _webPubSubPrivateEndpointConnectionClientDiagnostics, Pipeline, "WebPubSubPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

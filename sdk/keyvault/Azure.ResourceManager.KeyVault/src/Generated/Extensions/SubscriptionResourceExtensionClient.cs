@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => KeyVaultVaultsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => KeyVaultVaultsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KeyVaultResource(Client, KeyVaultData.DeserializeKeyVaultData(e)), KeyVaultVaultsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetKeyVaults", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KeyVaultResource(Client, KeyVaultData.DeserializeKeyVaultData(e)), KeyVaultVaultsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetKeyVaults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => KeyVaultVaultsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => KeyVaultVaultsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KeyVaultResource(Client, KeyVaultData.DeserializeKeyVaultData(e)), KeyVaultVaultsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetKeyVaults", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KeyVaultResource(Client, KeyVaultData.DeserializeKeyVaultData(e)), KeyVaultVaultsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetKeyVaults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VaultsRestClient.CreateListDeletedRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VaultsRestClient.CreateListDeletedNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeletedKeyVaultResource(Client, DeletedKeyVaultData.DeserializeDeletedKeyVaultData(e)), VaultsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedKeyVaults", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeletedKeyVaultResource(Client, DeletedKeyVaultData.DeserializeDeletedKeyVaultData(e)), VaultsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedKeyVaults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VaultsRestClient.CreateListDeletedRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VaultsRestClient.CreateListDeletedNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeletedKeyVaultResource(Client, DeletedKeyVaultData.DeserializeDeletedKeyVaultData(e)), VaultsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedKeyVaults", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeletedKeyVaultResource(Client, DeletedKeyVaultData.DeserializeDeletedKeyVaultData(e)), VaultsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedKeyVaults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedHsmRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedHsmRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedHsmResource(Client, ManagedHsmData.DeserializeManagedHsmData(e)), ManagedHsmClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedHsms", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedHsmResource(Client, ManagedHsmData.DeserializeManagedHsmData(e)), ManagedHsmClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedHsms", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedHsmRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedHsmRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedHsmResource(Client, ManagedHsmData.DeserializeManagedHsmData(e)), ManagedHsmClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedHsms", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedHsmResource(Client, ManagedHsmData.DeserializeManagedHsmData(e)), ManagedHsmClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedHsms", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedHsmsRestClient.CreateListDeletedRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedHsmsRestClient.CreateListDeletedNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeletedManagedHsmResource(Client, DeletedManagedHsmData.DeserializeDeletedManagedHsmData(e)), ManagedHsmsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedManagedHsms", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeletedManagedHsmResource(Client, DeletedManagedHsmData.DeserializeDeletedManagedHsmData(e)), ManagedHsmsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedManagedHsms", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedHsmsRestClient.CreateListDeletedRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedHsmsRestClient.CreateListDeletedNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeletedManagedHsmResource(Client, DeletedManagedHsmData.DeserializeDeletedManagedHsmData(e)), ManagedHsmsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedManagedHsms", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeletedManagedHsmResource(Client, DeletedManagedHsmData.DeserializeDeletedManagedHsmData(e)), ManagedHsmsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedManagedHsms", "value", "nextLink", cancellationToken);
         }
     }
 }

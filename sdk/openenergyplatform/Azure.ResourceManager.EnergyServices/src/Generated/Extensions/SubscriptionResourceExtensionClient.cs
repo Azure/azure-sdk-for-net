@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EnergyServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EnergyServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EnergyServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EnergyServiceResource(Client, EnergyServiceData.DeserializeEnergyServiceData(e)), EnergyServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEnergyServices", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EnergyServiceResource(Client, EnergyServiceData.DeserializeEnergyServiceData(e)), EnergyServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEnergyServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EnergyServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EnergyServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EnergyServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EnergyServiceResource(Client, EnergyServiceData.DeserializeEnergyServiceData(e)), EnergyServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEnergyServices", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EnergyServiceResource(Client, EnergyServiceData.DeserializeEnergyServiceData(e)), EnergyServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEnergyServices", "value", "nextLink", cancellationToken);
         }
     }
 }

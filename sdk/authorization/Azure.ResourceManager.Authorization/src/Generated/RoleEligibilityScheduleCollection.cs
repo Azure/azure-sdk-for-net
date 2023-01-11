@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleEligibilityScheduleRestClient.CreateListForScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleEligibilityScheduleRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleEligibilityScheduleResource(Client, RoleEligibilityScheduleData.DeserializeRoleEligibilityScheduleData(e)), _roleEligibilityScheduleClientDiagnostics, Pipeline, "RoleEligibilityScheduleCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleEligibilityScheduleResource(Client, RoleEligibilityScheduleData.DeserializeRoleEligibilityScheduleData(e)), _roleEligibilityScheduleClientDiagnostics, Pipeline, "RoleEligibilityScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleEligibilityScheduleRestClient.CreateListForScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleEligibilityScheduleRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleEligibilityScheduleResource(Client, RoleEligibilityScheduleData.DeserializeRoleEligibilityScheduleData(e)), _roleEligibilityScheduleClientDiagnostics, Pipeline, "RoleEligibilityScheduleCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleEligibilityScheduleResource(Client, RoleEligibilityScheduleData.DeserializeRoleEligibilityScheduleData(e)), _roleEligibilityScheduleClientDiagnostics, Pipeline, "RoleEligibilityScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

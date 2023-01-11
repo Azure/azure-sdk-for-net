@@ -178,20 +178,18 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<LibraryResource> ListAsync(CancellationToken cancellationToken = default)
         {
-            var context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LibraryResource.DeserializeLibraryResource, _clientDiagnostics, _pipeline, "LibraryClient.List", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LibraryResource.DeserializeLibraryResource, _clientDiagnostics, _pipeline, "LibraryClient.List", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists Library. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<LibraryResource> List(CancellationToken cancellationToken = default)
         {
-            var context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LibraryResource.DeserializeLibraryResource, _clientDiagnostics, _pipeline, "LibraryClient.List", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LibraryResource.DeserializeLibraryResource, _clientDiagnostics, _pipeline, "LibraryClient.List", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Flush Library. </summary>

@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.EventHubs
         public virtual AsyncPageable<EventHubsPrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, EventHubsPrivateLinkResourceData.DeserializeEventHubsPrivateLinkResourceData, _privateLinkResourcesClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetPrivateLinkResources", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, EventHubsPrivateLinkResourceData.DeserializeEventHubsPrivateLinkResourceData, _privateLinkResourcesClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.EventHubs
         public virtual Pageable<EventHubsPrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, EventHubsPrivateLinkResourceData.DeserializeEventHubsPrivateLinkResourceData, _privateLinkResourcesClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetPrivateLinkResources", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, EventHubsPrivateLinkResourceData.DeserializeEventHubsPrivateLinkResourceData, _privateLinkResourcesClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.EventHubs
         public virtual AsyncPageable<EventHubsNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityPerimeterConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, EventHubsNetworkSecurityPerimeterConfiguration.DeserializeEventHubsNetworkSecurityPerimeterConfiguration, _networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetNetworkSecurityPerimeterConfigurations", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, EventHubsNetworkSecurityPerimeterConfiguration.DeserializeEventHubsNetworkSecurityPerimeterConfiguration, _networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetNetworkSecurityPerimeterConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.EventHubs
         public virtual Pageable<EventHubsNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityPerimeterConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, EventHubsNetworkSecurityPerimeterConfiguration.DeserializeEventHubsNetworkSecurityPerimeterConfiguration, _networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetNetworkSecurityPerimeterConfigurations", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, EventHubsNetworkSecurityPerimeterConfiguration.DeserializeEventHubsNetworkSecurityPerimeterConfiguration, _networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, "EventHubsNamespaceResource.GetNetworkSecurityPerimeterConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>

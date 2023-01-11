@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual AsyncPageable<ConfigurationProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConfigurationProfileResource(Client, ConfigurationProfileData.DeserializeConfigurationProfileData(e)), _configurationProfileClientDiagnostics, Pipeline, "ConfigurationProfileCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConfigurationProfileResource(Client, ConfigurationProfileData.DeserializeConfigurationProfileData(e)), _configurationProfileClientDiagnostics, Pipeline, "ConfigurationProfileCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual Pageable<ConfigurationProfileResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileResource(Client, ConfigurationProfileData.DeserializeConfigurationProfileData(e)), _configurationProfileClientDiagnostics, Pipeline, "ConfigurationProfileCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileResource(Client, ConfigurationProfileData.DeserializeConfigurationProfileData(e)), _configurationProfileClientDiagnostics, Pipeline, "ConfigurationProfileCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

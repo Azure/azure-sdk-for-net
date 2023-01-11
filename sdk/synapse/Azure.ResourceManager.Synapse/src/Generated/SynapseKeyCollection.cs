@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKeyKeysRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseKeyKeysRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseKeyResource(Client, SynapseKeyData.DeserializeSynapseKeyData(e)), _synapseKeyKeysClientDiagnostics, Pipeline, "SynapseKeyCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseKeyResource(Client, SynapseKeyData.DeserializeSynapseKeyData(e)), _synapseKeyKeysClientDiagnostics, Pipeline, "SynapseKeyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseKeyKeysRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseKeyKeysRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseKeyResource(Client, SynapseKeyData.DeserializeSynapseKeyData(e)), _synapseKeyKeysClientDiagnostics, Pipeline, "SynapseKeyCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseKeyResource(Client, SynapseKeyData.DeserializeSynapseKeyData(e)), _synapseKeyKeysClientDiagnostics, Pipeline, "SynapseKeyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

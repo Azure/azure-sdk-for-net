@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupEngineBaseResourceBackupEnginesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupEngineBaseResourceBackupEnginesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupEngineBaseResource(Client, BackupEngineBaseResourceData.DeserializeBackupEngineBaseResourceData(e)), _backupEngineBaseResourceBackupEnginesClientDiagnostics, Pipeline, "BackupEngineBaseResourceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BackupEngineBaseResource(Client, BackupEngineBaseResourceData.DeserializeBackupEngineBaseResourceData(e)), _backupEngineBaseResourceBackupEnginesClientDiagnostics, Pipeline, "BackupEngineBaseResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupEngineBaseResourceBackupEnginesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupEngineBaseResourceBackupEnginesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupEngineBaseResource(Client, BackupEngineBaseResourceData.DeserializeBackupEngineBaseResourceData(e)), _backupEngineBaseResourceBackupEnginesClientDiagnostics, Pipeline, "BackupEngineBaseResourceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BackupEngineBaseResource(Client, BackupEngineBaseResourceData.DeserializeBackupEngineBaseResourceData(e)), _backupEngineBaseResourceBackupEnginesClientDiagnostics, Pipeline, "BackupEngineBaseResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

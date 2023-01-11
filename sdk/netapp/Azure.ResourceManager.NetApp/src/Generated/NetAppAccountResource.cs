@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual AsyncPageable<NetAppVault> GetVaultsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vaultsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetAppVault.DeserializeNetAppVault, _vaultsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVaults", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetAppVault.DeserializeNetAppVault, _vaultsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVaults", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual Pageable<NetAppVault> GetVaults(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vaultsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, NetAppVault.DeserializeNetAppVault, _vaultsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVaults", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, NetAppVault.DeserializeNetAppVault, _vaultsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVaults", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual AsyncPageable<NetAppVolumeGroupResult> GetVolumeGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeGroupVolumeGroupsRestClient.CreateListByNetAppAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetAppVolumeGroupResult.DeserializeNetAppVolumeGroupResult, _netAppVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVolumeGroups", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetAppVolumeGroupResult.DeserializeNetAppVolumeGroupResult, _netAppVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVolumeGroups", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual Pageable<NetAppVolumeGroupResult> GetVolumeGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeGroupVolumeGroupsRestClient.CreateListByNetAppAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, NetAppVolumeGroupResult.DeserializeNetAppVolumeGroupResult, _netAppVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVolumeGroups", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, NetAppVolumeGroupResult.DeserializeNetAppVolumeGroupResult, _netAppVolumeGroupVolumeGroupsClientDiagnostics, Pipeline, "NetAppAccountResource.GetVolumeGroups", "value", null, cancellationToken);
         }
 
         /// <summary>

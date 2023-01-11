@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteTriggeredWebJobHistoryWebAppsRestClient.CreateListTriggeredWebJobHistorySlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteTriggeredWebJobHistoryWebAppsRestClient.CreateListTriggeredWebJobHistorySlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteTriggeredWebJobHistoryResource(Client, TriggeredJobHistoryData.DeserializeTriggeredJobHistoryData(e)), _webSiteTriggeredWebJobHistoryWebAppsClientDiagnostics, Pipeline, "WebSiteTriggeredWebJobHistoryCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteTriggeredWebJobHistoryResource(Client, TriggeredJobHistoryData.DeserializeTriggeredJobHistoryData(e)), _webSiteTriggeredWebJobHistoryWebAppsClientDiagnostics, Pipeline, "WebSiteTriggeredWebJobHistoryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteTriggeredWebJobHistoryWebAppsRestClient.CreateListTriggeredWebJobHistorySlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteTriggeredWebJobHistoryWebAppsRestClient.CreateListTriggeredWebJobHistorySlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteTriggeredWebJobHistoryResource(Client, TriggeredJobHistoryData.DeserializeTriggeredJobHistoryData(e)), _webSiteTriggeredWebJobHistoryWebAppsClientDiagnostics, Pipeline, "WebSiteTriggeredWebJobHistoryCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteTriggeredWebJobHistoryResource(Client, TriggeredJobHistoryData.DeserializeTriggeredJobHistoryData(e)), _webSiteTriggeredWebJobHistoryWebAppsClientDiagnostics, Pipeline, "WebSiteTriggeredWebJobHistoryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

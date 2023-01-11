@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Reservations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationDetailReservationRestClient.CreateListRequest(Guid.Parse(Id.Name));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationDetailReservationRestClient.CreateListNextPageRequest(nextLink, Guid.Parse(Id.Name));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), _reservationDetailReservationClientDiagnostics, Pipeline, "ReservationDetailCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), _reservationDetailReservationClientDiagnostics, Pipeline, "ReservationDetailCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Reservations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationDetailReservationRestClient.CreateListRequest(Guid.Parse(Id.Name));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationDetailReservationRestClient.CreateListNextPageRequest(nextLink, Guid.Parse(Id.Name));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), _reservationDetailReservationClientDiagnostics, Pipeline, "ReservationDetailCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), _reservationDetailReservationClientDiagnostics, Pipeline, "ReservationDetailCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Reservations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationDetailReservationRestClient.CreateListRevisionsRequest(Guid.Parse(Id.Name), reservationId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationDetailReservationRestClient.CreateListRevisionsNextPageRequest(nextLink, Guid.Parse(Id.Name), reservationId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), _reservationDetailReservationClientDiagnostics, Pipeline, "ReservationDetailCollection.GetRevisions", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), _reservationDetailReservationClientDiagnostics, Pipeline, "ReservationDetailCollection.GetRevisions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Reservations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationDetailReservationRestClient.CreateListRevisionsRequest(Guid.Parse(Id.Name), reservationId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationDetailReservationRestClient.CreateListRevisionsNextPageRequest(nextLink, Guid.Parse(Id.Name), reservationId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), _reservationDetailReservationClientDiagnostics, Pipeline, "ReservationDetailCollection.GetRevisions", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), _reservationDetailReservationClientDiagnostics, Pipeline, "ReservationDetailCollection.GetRevisions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

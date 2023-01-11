@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _relationshipLinkResourceFormatRelationshipLinksRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _relationshipLinkResourceFormatRelationshipLinksRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RelationshipLinkResourceFormatResource(Client, RelationshipLinkResourceFormatData.DeserializeRelationshipLinkResourceFormatData(e)), _relationshipLinkResourceFormatRelationshipLinksClientDiagnostics, Pipeline, "RelationshipLinkResourceFormatCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RelationshipLinkResourceFormatResource(Client, RelationshipLinkResourceFormatData.DeserializeRelationshipLinkResourceFormatData(e)), _relationshipLinkResourceFormatRelationshipLinksClientDiagnostics, Pipeline, "RelationshipLinkResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.CustomerInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _relationshipLinkResourceFormatRelationshipLinksRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _relationshipLinkResourceFormatRelationshipLinksRestClient.CreateListByHubNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RelationshipLinkResourceFormatResource(Client, RelationshipLinkResourceFormatData.DeserializeRelationshipLinkResourceFormatData(e)), _relationshipLinkResourceFormatRelationshipLinksClientDiagnostics, Pipeline, "RelationshipLinkResourceFormatCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RelationshipLinkResourceFormatResource(Client, RelationshipLinkResourceFormatData.DeserializeRelationshipLinkResourceFormatData(e)), _relationshipLinkResourceFormatRelationshipLinksClientDiagnostics, Pipeline, "RelationshipLinkResourceFormatCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

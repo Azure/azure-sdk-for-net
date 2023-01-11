@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationProviderOperationsMetadataProviderOperationsMetadataRestClient.CreateListRequest(expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _authorizationProviderOperationsMetadataProviderOperationsMetadataRestClient.CreateListNextPageRequest(nextLink, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AuthorizationProviderOperationsMetadataResource(Client, AuthorizationProviderOperationsMetadataData.DeserializeAuthorizationProviderOperationsMetadataData(e)), _authorizationProviderOperationsMetadataProviderOperationsMetadataClientDiagnostics, Pipeline, "AuthorizationProviderOperationsMetadataCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AuthorizationProviderOperationsMetadataResource(Client, AuthorizationProviderOperationsMetadataData.DeserializeAuthorizationProviderOperationsMetadataData(e)), _authorizationProviderOperationsMetadataProviderOperationsMetadataClientDiagnostics, Pipeline, "AuthorizationProviderOperationsMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationProviderOperationsMetadataProviderOperationsMetadataRestClient.CreateListRequest(expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _authorizationProviderOperationsMetadataProviderOperationsMetadataRestClient.CreateListNextPageRequest(nextLink, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AuthorizationProviderOperationsMetadataResource(Client, AuthorizationProviderOperationsMetadataData.DeserializeAuthorizationProviderOperationsMetadataData(e)), _authorizationProviderOperationsMetadataProviderOperationsMetadataClientDiagnostics, Pipeline, "AuthorizationProviderOperationsMetadataCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AuthorizationProviderOperationsMetadataResource(Client, AuthorizationProviderOperationsMetadataData.DeserializeAuthorizationProviderOperationsMetadataData(e)), _authorizationProviderOperationsMetadataProviderOperationsMetadataClientDiagnostics, Pipeline, "AuthorizationProviderOperationsMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

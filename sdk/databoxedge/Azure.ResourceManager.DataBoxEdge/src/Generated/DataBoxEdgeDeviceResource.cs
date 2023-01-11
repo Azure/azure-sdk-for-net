@@ -1224,7 +1224,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nodesRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nodesRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataBoxEdgeNode.DeserializeDataBoxEdgeNode, _nodesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceResource.GetEdgeNodes", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataBoxEdgeNode.DeserializeDataBoxEdgeNode, _nodesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1238,7 +1238,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nodesRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nodesRestClient.CreateListByDataBoxEdgeDeviceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataBoxEdgeNode.DeserializeDataBoxEdgeNode, _nodesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceResource.GetEdgeNodes", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataBoxEdgeNode.DeserializeDataBoxEdgeNode, _nodesClientDiagnostics, Pipeline, "DataBoxEdgeDeviceResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

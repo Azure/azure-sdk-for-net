@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual AsyncPageable<ConfigurationProfileVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileVersionConfigurationProfilesVersionsRestClient.CreateListChildResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConfigurationProfileVersionResource(Client, ConfigurationProfileData.DeserializeConfigurationProfileData(e)), _configurationProfileVersionConfigurationProfilesVersionsClientDiagnostics, Pipeline, "ConfigurationProfileVersionCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ConfigurationProfileVersionResource(Client, ConfigurationProfileData.DeserializeConfigurationProfileData(e)), _configurationProfileVersionConfigurationProfilesVersionsClientDiagnostics, Pipeline, "ConfigurationProfileVersionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual Pageable<ConfigurationProfileVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _configurationProfileVersionConfigurationProfilesVersionsRestClient.CreateListChildResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileVersionResource(Client, ConfigurationProfileData.DeserializeConfigurationProfileData(e)), _configurationProfileVersionConfigurationProfilesVersionsClientDiagnostics, Pipeline, "ConfigurationProfileVersionCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ConfigurationProfileVersionResource(Client, ConfigurationProfileData.DeserializeConfigurationProfileData(e)), _configurationProfileVersionConfigurationProfilesVersionsClientDiagnostics, Pipeline, "ConfigurationProfileVersionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

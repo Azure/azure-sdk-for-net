@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _phpWorkloadResourcePhpWorkloadsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _phpWorkloadResourcePhpWorkloadsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PhpWorkloadResource(Client, PhpWorkloadResourceData.DeserializePhpWorkloadResourceData(e)), _phpWorkloadResourcePhpWorkloadsClientDiagnostics, Pipeline, "PhpWorkloadResourceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PhpWorkloadResource(Client, PhpWorkloadResourceData.DeserializePhpWorkloadResourceData(e)), _phpWorkloadResourcePhpWorkloadsClientDiagnostics, Pipeline, "PhpWorkloadResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Workloads
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _phpWorkloadResourcePhpWorkloadsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _phpWorkloadResourcePhpWorkloadsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PhpWorkloadResource(Client, PhpWorkloadResourceData.DeserializePhpWorkloadResourceData(e)), _phpWorkloadResourcePhpWorkloadsClientDiagnostics, Pipeline, "PhpWorkloadResourceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PhpWorkloadResource(Client, PhpWorkloadResourceData.DeserializePhpWorkloadResourceData(e)), _phpWorkloadResourcePhpWorkloadsClientDiagnostics, Pipeline, "PhpWorkloadResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Attestation
         public virtual AsyncPageable<AttestationPrivateLinkResource> GetPrivateLinkResourcesByProviderAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByProviderRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AttestationPrivateLinkResource.DeserializeAttestationPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "AttestationProviderResource.GetPrivateLinkResourcesByProvider", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AttestationPrivateLinkResource.DeserializeAttestationPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "AttestationProviderResource.GetPrivateLinkResourcesByProvider", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Attestation
         public virtual Pageable<AttestationPrivateLinkResource> GetPrivateLinkResourcesByProvider(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByProviderRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, AttestationPrivateLinkResource.DeserializeAttestationPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "AttestationProviderResource.GetPrivateLinkResourcesByProvider", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AttestationPrivateLinkResource.DeserializeAttestationPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "AttestationProviderResource.GetPrivateLinkResourcesByProvider", "value", null, cancellationToken);
         }
 
         /// <summary>

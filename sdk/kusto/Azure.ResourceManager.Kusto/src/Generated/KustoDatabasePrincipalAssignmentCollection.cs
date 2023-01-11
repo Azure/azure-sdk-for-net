@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual AsyncPageable<KustoDatabasePrincipalAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoDatabasePrincipalAssignmentResource(Client, KustoDatabasePrincipalAssignmentData.DeserializeKustoDatabasePrincipalAssignmentData(e)), _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsClientDiagnostics, Pipeline, "KustoDatabasePrincipalAssignmentCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new KustoDatabasePrincipalAssignmentResource(Client, KustoDatabasePrincipalAssignmentData.DeserializeKustoDatabasePrincipalAssignmentData(e)), _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsClientDiagnostics, Pipeline, "KustoDatabasePrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Kusto
         public virtual Pageable<KustoDatabasePrincipalAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoDatabasePrincipalAssignmentResource(Client, KustoDatabasePrincipalAssignmentData.DeserializeKustoDatabasePrincipalAssignmentData(e)), _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsClientDiagnostics, Pipeline, "KustoDatabasePrincipalAssignmentCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new KustoDatabasePrincipalAssignmentResource(Client, KustoDatabasePrincipalAssignmentData.DeserializeKustoDatabasePrincipalAssignmentData(e)), _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsClientDiagnostics, Pipeline, "KustoDatabasePrincipalAssignmentCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

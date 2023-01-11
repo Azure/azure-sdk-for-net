@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppConnectedEnvironmentResource(Client, ContainerAppConnectedEnvironmentData.DeserializeContainerAppConnectedEnvironmentData(e)), _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppConnectedEnvironmentResource(Client, ContainerAppConnectedEnvironmentData.DeserializeContainerAppConnectedEnvironmentData(e)), _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppConnectedEnvironmentResource(Client, ContainerAppConnectedEnvironmentData.DeserializeContainerAppConnectedEnvironmentData(e)), _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppConnectedEnvironmentResource(Client, ContainerAppConnectedEnvironmentData.DeserializeContainerAppConnectedEnvironmentData(e)), _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

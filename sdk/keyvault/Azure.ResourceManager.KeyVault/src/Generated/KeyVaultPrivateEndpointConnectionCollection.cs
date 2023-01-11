@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KeyVaultPrivateEndpointConnectionResource(Client, KeyVaultPrivateEndpointConnectionData.DeserializeKeyVaultPrivateEndpointConnectionData(e)), _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "KeyVaultPrivateEndpointConnectionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new KeyVaultPrivateEndpointConnectionResource(Client, KeyVaultPrivateEndpointConnectionData.DeserializeKeyVaultPrivateEndpointConnectionData(e)), _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "KeyVaultPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KeyVaultPrivateEndpointConnectionResource(Client, KeyVaultPrivateEndpointConnectionData.DeserializeKeyVaultPrivateEndpointConnectionData(e)), _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "KeyVaultPrivateEndpointConnectionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new KeyVaultPrivateEndpointConnectionResource(Client, KeyVaultPrivateEndpointConnectionData.DeserializeKeyVaultPrivateEndpointConnectionData(e)), _keyVaultPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "KeyVaultPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

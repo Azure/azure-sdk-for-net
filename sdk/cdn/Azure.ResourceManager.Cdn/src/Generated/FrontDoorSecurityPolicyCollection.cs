@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Cdn
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorSecurityPolicyRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorSecurityPolicyRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorSecurityPolicyResource(Client, FrontDoorSecurityPolicyData.DeserializeFrontDoorSecurityPolicyData(e)), _frontDoorSecurityPolicyClientDiagnostics, Pipeline, "FrontDoorSecurityPolicyCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorSecurityPolicyResource(Client, FrontDoorSecurityPolicyData.DeserializeFrontDoorSecurityPolicyData(e)), _frontDoorSecurityPolicyClientDiagnostics, Pipeline, "FrontDoorSecurityPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Cdn
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorSecurityPolicyRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorSecurityPolicyRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorSecurityPolicyResource(Client, FrontDoorSecurityPolicyData.DeserializeFrontDoorSecurityPolicyData(e)), _frontDoorSecurityPolicyClientDiagnostics, Pipeline, "FrontDoorSecurityPolicyCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorSecurityPolicyResource(Client, FrontDoorSecurityPolicyData.DeserializeFrontDoorSecurityPolicyData(e)), _frontDoorSecurityPolicyClientDiagnostics, Pipeline, "FrontDoorSecurityPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual AsyncPageable<DeliveryAttributeMapping> GetDeliveryAttributesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateGetDeliveryAttributesRequest(Id.Parent, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping, _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionResource.GetDeliveryAttributes", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping, _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionResource.GetDeliveryAttributes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Pageable<DeliveryAttributeMapping> GetDeliveryAttributes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateGetDeliveryAttributesRequest(Id.Parent, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping, _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionResource.GetDeliveryAttributes", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping, _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionResource.GetDeliveryAttributes", "value", null, cancellationToken);
         }
     }
 }

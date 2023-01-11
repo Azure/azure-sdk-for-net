@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteCircuitConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRouteCircuitConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteCircuitConnectionResource(Client, ExpressRouteCircuitConnectionData.DeserializeExpressRouteCircuitConnectionData(e)), _expressRouteCircuitConnectionClientDiagnostics, Pipeline, "ExpressRouteCircuitConnectionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteCircuitConnectionResource(Client, ExpressRouteCircuitConnectionData.DeserializeExpressRouteCircuitConnectionData(e)), _expressRouteCircuitConnectionClientDiagnostics, Pipeline, "ExpressRouteCircuitConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteCircuitConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRouteCircuitConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteCircuitConnectionResource(Client, ExpressRouteCircuitConnectionData.DeserializeExpressRouteCircuitConnectionData(e)), _expressRouteCircuitConnectionClientDiagnostics, Pipeline, "ExpressRouteCircuitConnectionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteCircuitConnectionResource(Client, ExpressRouteCircuitConnectionData.DeserializeExpressRouteCircuitConnectionData(e)), _expressRouteCircuitConnectionClientDiagnostics, Pipeline, "ExpressRouteCircuitConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

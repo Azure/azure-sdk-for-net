@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Analysis
         public virtual AsyncPageable<AnalysisExistingSku> GetExistingSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _analysisServerServersRestClient.CreateListSkusForExistingRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AnalysisExistingSku.DeserializeAnalysisExistingSku, _analysisServerServersClientDiagnostics, Pipeline, "AnalysisServerResource.GetExistingSkus", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AnalysisExistingSku.DeserializeAnalysisExistingSku, _analysisServerServersClientDiagnostics, Pipeline, "AnalysisServerResource.GetExistingSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Analysis
         public virtual Pageable<AnalysisExistingSku> GetExistingSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _analysisServerServersRestClient.CreateListSkusForExistingRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, AnalysisExistingSku.DeserializeAnalysisExistingSku, _analysisServerServersClientDiagnostics, Pipeline, "AnalysisServerResource.GetExistingSkus", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AnalysisExistingSku.DeserializeAnalysisExistingSku, _analysisServerServersClientDiagnostics, Pipeline, "AnalysisServerResource.GetExistingSkus", "value", null, cancellationToken);
         }
 
         /// <summary>

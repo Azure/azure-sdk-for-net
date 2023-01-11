@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlTimeZoneTimeZonesRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_locationName));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlTimeZoneTimeZonesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlTimeZoneResource(Client, SqlTimeZoneData.DeserializeSqlTimeZoneData(e)), _sqlTimeZoneTimeZonesClientDiagnostics, Pipeline, "SqlTimeZoneCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlTimeZoneResource(Client, SqlTimeZoneData.DeserializeSqlTimeZoneData(e)), _sqlTimeZoneTimeZonesClientDiagnostics, Pipeline, "SqlTimeZoneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlTimeZoneTimeZonesRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_locationName));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlTimeZoneTimeZonesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_locationName));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlTimeZoneResource(Client, SqlTimeZoneData.DeserializeSqlTimeZoneData(e)), _sqlTimeZoneTimeZonesClientDiagnostics, Pipeline, "SqlTimeZoneCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlTimeZoneResource(Client, SqlTimeZoneData.DeserializeSqlTimeZoneData(e)), _sqlTimeZoneTimeZonesClientDiagnostics, Pipeline, "SqlTimeZoneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

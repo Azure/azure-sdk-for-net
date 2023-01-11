@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vpnSiteLinkConnectionVpnLinkConnectionsRestClient.CreateListByVpnConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vpnSiteLinkConnectionVpnLinkConnectionsRestClient.CreateListByVpnConnectionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VpnSiteLinkConnectionResource(Client, VpnSiteLinkConnectionData.DeserializeVpnSiteLinkConnectionData(e)), _vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics, Pipeline, "VpnSiteLinkConnectionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VpnSiteLinkConnectionResource(Client, VpnSiteLinkConnectionData.DeserializeVpnSiteLinkConnectionData(e)), _vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics, Pipeline, "VpnSiteLinkConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vpnSiteLinkConnectionVpnLinkConnectionsRestClient.CreateListByVpnConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vpnSiteLinkConnectionVpnLinkConnectionsRestClient.CreateListByVpnConnectionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VpnSiteLinkConnectionResource(Client, VpnSiteLinkConnectionData.DeserializeVpnSiteLinkConnectionData(e)), _vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics, Pipeline, "VpnSiteLinkConnectionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VpnSiteLinkConnectionResource(Client, VpnSiteLinkConnectionData.DeserializeVpnSiteLinkConnectionData(e)), _vpnSiteLinkConnectionVpnLinkConnectionsClientDiagnostics, Pipeline, "VpnSiteLinkConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

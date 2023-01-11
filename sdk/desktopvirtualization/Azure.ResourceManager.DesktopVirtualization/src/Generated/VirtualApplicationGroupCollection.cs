@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualApplicationGroupApplicationGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualApplicationGroupApplicationGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualApplicationGroupResource(Client, VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(e)), _virtualApplicationGroupApplicationGroupsClientDiagnostics, Pipeline, "VirtualApplicationGroupCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualApplicationGroupResource(Client, VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(e)), _virtualApplicationGroupApplicationGroupsClientDiagnostics, Pipeline, "VirtualApplicationGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualApplicationGroupApplicationGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualApplicationGroupApplicationGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualApplicationGroupResource(Client, VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(e)), _virtualApplicationGroupApplicationGroupsClientDiagnostics, Pipeline, "VirtualApplicationGroupCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualApplicationGroupResource(Client, VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(e)), _virtualApplicationGroupApplicationGroupsClientDiagnostics, Pipeline, "VirtualApplicationGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

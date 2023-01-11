@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseLibraryLibrariesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseLibraryLibrariesRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseLibraryResource(Client, SynapseLibraryData.DeserializeSynapseLibraryData(e)), _synapseLibraryLibrariesClientDiagnostics, Pipeline, "SynapseLibraryCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseLibraryResource(Client, SynapseLibraryData.DeserializeSynapseLibraryData(e)), _synapseLibraryLibrariesClientDiagnostics, Pipeline, "SynapseLibraryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseLibraryLibrariesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseLibraryLibrariesRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseLibraryResource(Client, SynapseLibraryData.DeserializeSynapseLibraryData(e)), _synapseLibraryLibrariesClientDiagnostics, Pipeline, "SynapseLibraryCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseLibraryResource(Client, SynapseLibraryData.DeserializeSynapseLibraryData(e)), _synapseLibraryLibrariesClientDiagnostics, Pipeline, "SynapseLibraryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

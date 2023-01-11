@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobVersionStepJobStepsRestClient.CreateListByVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobVersionStepJobStepsRestClient.CreateListByVersionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobVersionStepResource(Client, SqlServerJobStepData.DeserializeSqlServerJobStepData(e)), _sqlServerJobVersionStepJobStepsClientDiagnostics, Pipeline, "SqlServerJobVersionStepCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobVersionStepResource(Client, SqlServerJobStepData.DeserializeSqlServerJobStepData(e)), _sqlServerJobVersionStepJobStepsClientDiagnostics, Pipeline, "SqlServerJobVersionStepCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobVersionStepJobStepsRestClient.CreateListByVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name));
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobVersionStepJobStepsRestClient.CreateListByVersionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, int.Parse(Id.Name));
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobVersionStepResource(Client, SqlServerJobStepData.DeserializeSqlServerJobStepData(e)), _sqlServerJobVersionStepJobStepsClientDiagnostics, Pipeline, "SqlServerJobVersionStepCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobVersionStepResource(Client, SqlServerJobStepData.DeserializeSqlServerJobStepData(e)), _sqlServerJobVersionStepJobStepsClientDiagnostics, Pipeline, "SqlServerJobVersionStepCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

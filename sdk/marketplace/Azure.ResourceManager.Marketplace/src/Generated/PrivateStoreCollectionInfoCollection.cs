@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual AsyncPageable<PrivateStoreCollectionInfoResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateListRequest(Guid.Parse(Id.Name));
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PrivateStoreCollectionInfoResource(Client, PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(e)), _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoCollection.GetAll", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new PrivateStoreCollectionInfoResource(Client, PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(e)), _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Pageable<PrivateStoreCollectionInfoResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateListRequest(Guid.Parse(Id.Name));
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new PrivateStoreCollectionInfoResource(Client, PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(e)), _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoCollection.GetAll", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new PrivateStoreCollectionInfoResource(Client, PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(e)), _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics, Pipeline, "PrivateStoreCollectionInfoCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DigitalTwins
         public virtual AsyncPageable<DigitalTwinsPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _digitalTwinsPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DigitalTwinsPrivateLinkResource(Client, DigitalTwinsPrivateLinkResourceData.DeserializeDigitalTwinsPrivateLinkResourceData(e)), _digitalTwinsPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "DigitalTwinsPrivateLinkResourceCollection.GetAll", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DigitalTwinsPrivateLinkResource(Client, DigitalTwinsPrivateLinkResourceData.DeserializeDigitalTwinsPrivateLinkResourceData(e)), _digitalTwinsPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "DigitalTwinsPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DigitalTwins
         public virtual Pageable<DigitalTwinsPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _digitalTwinsPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DigitalTwinsPrivateLinkResource(Client, DigitalTwinsPrivateLinkResourceData.DeserializeDigitalTwinsPrivateLinkResourceData(e)), _digitalTwinsPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "DigitalTwinsPrivateLinkResourceCollection.GetAll", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DigitalTwinsPrivateLinkResource(Client, DigitalTwinsPrivateLinkResourceData.DeserializeDigitalTwinsPrivateLinkResourceData(e)), _digitalTwinsPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "DigitalTwinsPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

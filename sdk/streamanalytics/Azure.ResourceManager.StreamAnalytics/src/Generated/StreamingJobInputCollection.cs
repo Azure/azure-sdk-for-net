@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingJobInputInputsRestClient.CreateListByStreamingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingJobInputInputsRestClient.CreateListByStreamingJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingJobInputResource(Client, StreamingJobInputData.DeserializeStreamingJobInputData(e)), _streamingJobInputInputsClientDiagnostics, Pipeline, "StreamingJobInputCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingJobInputResource(Client, StreamingJobInputData.DeserializeStreamingJobInputData(e)), _streamingJobInputInputsClientDiagnostics, Pipeline, "StreamingJobInputCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingJobInputInputsRestClient.CreateListByStreamingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingJobInputInputsRestClient.CreateListByStreamingJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingJobInputResource(Client, StreamingJobInputData.DeserializeStreamingJobInputData(e)), _streamingJobInputInputsClientDiagnostics, Pipeline, "StreamingJobInputCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingJobInputResource(Client, StreamingJobInputData.DeserializeStreamingJobInputData(e)), _streamingJobInputInputsClientDiagnostics, Pipeline, "StreamingJobInputCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentScheduleInstanceRestClient.CreateListForScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentScheduleInstanceRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentScheduleInstanceResource(Client, RoleAssignmentScheduleInstanceData.DeserializeRoleAssignmentScheduleInstanceData(e)), _roleAssignmentScheduleInstanceClientDiagnostics, Pipeline, "RoleAssignmentScheduleInstanceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentScheduleInstanceResource(Client, RoleAssignmentScheduleInstanceData.DeserializeRoleAssignmentScheduleInstanceData(e)), _roleAssignmentScheduleInstanceClientDiagnostics, Pipeline, "RoleAssignmentScheduleInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Authorization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentScheduleInstanceRestClient.CreateListForScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentScheduleInstanceRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentScheduleInstanceResource(Client, RoleAssignmentScheduleInstanceData.DeserializeRoleAssignmentScheduleInstanceData(e)), _roleAssignmentScheduleInstanceClientDiagnostics, Pipeline, "RoleAssignmentScheduleInstanceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentScheduleInstanceResource(Client, RoleAssignmentScheduleInstanceData.DeserializeRoleAssignmentScheduleInstanceData(e)), _roleAssignmentScheduleInstanceClientDiagnostics, Pipeline, "RoleAssignmentScheduleInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

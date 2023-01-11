@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Reservations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationDetailReservationRestClient.CreateListAllRequest(filter, orderby, refreshSummary, skiptoken, selectedState, take);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationDetailReservationRestClient.CreateListAllNextPageRequest(nextLink, filter, orderby, refreshSummary, skiptoken, selectedState, take);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), ReservationDetailReservationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetReservationDetails", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), ReservationDetailReservationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetReservationDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Reservations
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationDetailReservationRestClient.CreateListAllRequest(filter, orderby, refreshSummary, skiptoken, selectedState, take);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationDetailReservationRestClient.CreateListAllNextPageRequest(nextLink, filter, orderby, refreshSummary, skiptoken, selectedState, take);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), ReservationDetailReservationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetReservationDetails", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), ReservationDetailReservationClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetReservationDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

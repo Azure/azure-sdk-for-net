@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _ingestionSettingRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ingestionSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IngestionSettingResource(Client, IngestionSettingData.DeserializeIngestionSettingData(e)), _ingestionSettingClientDiagnostics, Pipeline, "IngestionSettingCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IngestionSettingResource(Client, IngestionSettingData.DeserializeIngestionSettingData(e)), _ingestionSettingClientDiagnostics, Pipeline, "IngestionSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _ingestionSettingRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ingestionSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IngestionSettingResource(Client, IngestionSettingData.DeserializeIngestionSettingData(e)), _ingestionSettingClientDiagnostics, Pipeline, "IngestionSettingCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IngestionSettingResource(Client, IngestionSettingData.DeserializeIngestionSettingData(e)), _ingestionSettingClientDiagnostics, Pipeline, "IngestionSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

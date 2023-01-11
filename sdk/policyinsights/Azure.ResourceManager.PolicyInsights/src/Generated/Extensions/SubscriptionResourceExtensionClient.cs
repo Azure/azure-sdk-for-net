@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyTrackedResourceType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyTrackedResourceType, policyQuerySettings);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord, PolicyTrackedResourcesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPolicyTrackedResourceQueryResults", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord, PolicyTrackedResourcesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPolicyTrackedResourceQueryResults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyTrackedResourceType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyTrackedResourceType, policyQuerySettings);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord, PolicyTrackedResourcesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPolicyTrackedResourceQueryResults", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord, PolicyTrackedResourcesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPolicyTrackedResourceQueryResults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyEventType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyEventType, policyQuerySettings);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyEvent.DeserializePolicyEvent, PolicyEventsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPolicyEventQueryResults", "value", "@odata.nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyEvent.DeserializePolicyEvent, PolicyEventsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPolicyEventQueryResults", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyEventType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyEventType, policyQuerySettings);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyEvent.DeserializePolicyEvent, PolicyEventsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPolicyEventQueryResults", "value", "@odata.nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyEvent.DeserializePolicyEvent, PolicyEventsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPolicyEventQueryResults", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyStateType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyStateType, policyQuerySettings);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyState.DeserializePolicyState, PolicyStatesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPolicyStateQueryResults", "value", "@odata.nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyState.DeserializePolicyState, PolicyStatesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPolicyStateQueryResults", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyStateType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyStateType, policyQuerySettings);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyState.DeserializePolicyState, PolicyStatesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPolicyStateQueryResults", "value", "@odata.nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyState.DeserializePolicyState, PolicyStatesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPolicyStateQueryResults", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.PolicyInsights
         public virtual AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForSubscriptionRequest(Id.SubscriptionId, policyStateSummaryType, policyQuerySettings);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PolicySummary.DeserializePolicySummary, PolicyStatesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.SummarizePolicyStates", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PolicySummary.DeserializePolicySummary, PolicyStatesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.SummarizePolicyStates", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.PolicyInsights
         public virtual Pageable<PolicySummary> SummarizePolicyStates(PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForSubscriptionRequest(Id.SubscriptionId, policyStateSummaryType, policyQuerySettings);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, PolicySummary.DeserializePolicySummary, PolicyStatesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.SummarizePolicyStates", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, PolicySummary.DeserializePolicySummary, PolicyStatesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.SummarizePolicyStates", "value", null, cancellationToken);
         }
 
         /// <summary>

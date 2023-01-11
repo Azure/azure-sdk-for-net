@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Storage
         public virtual AsyncPageable<StoragePrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storagePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StoragePrivateEndpointConnectionResource(Client, StoragePrivateEndpointConnectionData.DeserializeStoragePrivateEndpointConnectionData(e)), _storagePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "StoragePrivateEndpointConnectionCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new StoragePrivateEndpointConnectionResource(Client, StoragePrivateEndpointConnectionData.DeserializeStoragePrivateEndpointConnectionData(e)), _storagePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "StoragePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Storage
         public virtual Pageable<StoragePrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storagePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new StoragePrivateEndpointConnectionResource(Client, StoragePrivateEndpointConnectionData.DeserializeStoragePrivateEndpointConnectionData(e)), _storagePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "StoragePrivateEndpointConnectionCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new StoragePrivateEndpointConnectionResource(Client, StoragePrivateEndpointConnectionData.DeserializeStoragePrivateEndpointConnectionData(e)), _storagePrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "StoragePrivateEndpointConnectionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

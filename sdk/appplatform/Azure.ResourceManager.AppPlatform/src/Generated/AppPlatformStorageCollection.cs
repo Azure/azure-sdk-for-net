@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformStorageStoragesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformStorageStoragesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformStorageResource(Client, AppPlatformStorageData.DeserializeAppPlatformStorageData(e)), _appPlatformStorageStoragesClientDiagnostics, Pipeline, "AppPlatformStorageCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppPlatformStorageResource(Client, AppPlatformStorageData.DeserializeAppPlatformStorageData(e)), _appPlatformStorageStoragesClientDiagnostics, Pipeline, "AppPlatformStorageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppPlatform
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformStorageStoragesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appPlatformStorageStoragesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformStorageResource(Client, AppPlatformStorageData.DeserializeAppPlatformStorageData(e)), _appPlatformStorageStoragesClientDiagnostics, Pipeline, "AppPlatformStorageCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppPlatformStorageResource(Client, AppPlatformStorageData.DeserializeAppPlatformStorageData(e)), _appPlatformStorageStoragesClientDiagnostics, Pipeline, "AppPlatformStorageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

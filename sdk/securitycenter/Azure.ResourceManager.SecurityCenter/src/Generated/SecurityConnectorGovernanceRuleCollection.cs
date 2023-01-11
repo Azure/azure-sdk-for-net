@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityConnectorGovernanceRuleRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityConnectorGovernanceRuleRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityConnectorGovernanceRuleResource(Client, GovernanceRuleData.DeserializeGovernanceRuleData(e)), _securityConnectorGovernanceRuleClientDiagnostics, Pipeline, "SecurityConnectorGovernanceRuleCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityConnectorGovernanceRuleResource(Client, GovernanceRuleData.DeserializeGovernanceRuleData(e)), _securityConnectorGovernanceRuleClientDiagnostics, Pipeline, "SecurityConnectorGovernanceRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityConnectorGovernanceRuleRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityConnectorGovernanceRuleRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityConnectorGovernanceRuleResource(Client, GovernanceRuleData.DeserializeGovernanceRuleData(e)), _securityConnectorGovernanceRuleClientDiagnostics, Pipeline, "SecurityConnectorGovernanceRuleCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityConnectorGovernanceRuleResource(Client, GovernanceRuleData.DeserializeGovernanceRuleData(e)), _securityConnectorGovernanceRuleClientDiagnostics, Pipeline, "SecurityConnectorGovernanceRuleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

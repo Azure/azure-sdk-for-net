@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<DiagnosticSettingsCategoryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diagnosticSettingsCategoryRestClient.CreateListRequest(Id);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DiagnosticSettingsCategoryResource(Client, DiagnosticSettingsCategoryData.DeserializeDiagnosticSettingsCategoryData(e)), _diagnosticSettingsCategoryClientDiagnostics, Pipeline, "DiagnosticSettingsCategoryCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DiagnosticSettingsCategoryResource(Client, DiagnosticSettingsCategoryData.DeserializeDiagnosticSettingsCategoryData(e)), _diagnosticSettingsCategoryClientDiagnostics, Pipeline, "DiagnosticSettingsCategoryCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<DiagnosticSettingsCategoryResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diagnosticSettingsCategoryRestClient.CreateListRequest(Id);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DiagnosticSettingsCategoryResource(Client, DiagnosticSettingsCategoryData.DeserializeDiagnosticSettingsCategoryData(e)), _diagnosticSettingsCategoryClientDiagnostics, Pipeline, "DiagnosticSettingsCategoryCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DiagnosticSettingsCategoryResource(Client, DiagnosticSettingsCategoryData.DeserializeDiagnosticSettingsCategoryData(e)), _diagnosticSettingsCategoryClientDiagnostics, Pipeline, "DiagnosticSettingsCategoryCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

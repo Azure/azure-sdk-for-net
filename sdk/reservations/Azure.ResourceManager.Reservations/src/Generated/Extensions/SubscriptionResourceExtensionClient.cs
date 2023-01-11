@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Reservations
         public virtual AsyncPageable<ReservationCatalog> GetCatalogAsync(string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateGetCatalogRequest(Id.SubscriptionId, reservedResourceType, location, publisherId, offerId, planId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ReservationCatalog.DeserializeReservationCatalog, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCatalog", "", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ReservationCatalog.DeserializeReservationCatalog, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCatalog", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Reservations
         public virtual Pageable<ReservationCatalog> GetCatalog(string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateGetCatalogRequest(Id.SubscriptionId, reservedResourceType, location, publisherId, offerId, planId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ReservationCatalog.DeserializeReservationCatalog, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCatalog", "", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ReservationCatalog.DeserializeReservationCatalog, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCatalog", "", null, cancellationToken);
         }
 
         /// <summary>

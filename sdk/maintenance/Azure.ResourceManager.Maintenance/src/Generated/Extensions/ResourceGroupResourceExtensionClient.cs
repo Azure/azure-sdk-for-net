@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Maintenance
         public virtual AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsRestClient.CreateListParentRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurationAssignmentsByParent", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurationAssignmentsByParent", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Maintenance
         public virtual Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsRestClient.CreateListParentRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurationAssignmentsByParent", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurationAssignmentsByParent", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Maintenance
         public virtual AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsAsync(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurationAssignments", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurationAssignments", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.Maintenance
         public virtual Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignments(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationAssignmentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurationAssignments", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData, ConfigurationAssignmentsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurationAssignments", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Maintenance
         public virtual AsyncPageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdatesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplyUpdateForResourceGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MaintenanceApplyUpdateResource(Client, MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(e)), ApplyUpdateForResourceGroupClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetMaintenanceApplyUpdates", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MaintenanceApplyUpdateResource(Client, MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(e)), ApplyUpdateForResourceGroupClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetMaintenanceApplyUpdates", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Maintenance
         public virtual Pageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdates(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplyUpdateForResourceGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MaintenanceApplyUpdateResource(Client, MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(e)), ApplyUpdateForResourceGroupClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetMaintenanceApplyUpdates", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MaintenanceApplyUpdateResource(Client, MaintenanceApplyUpdateData.DeserializeMaintenanceApplyUpdateData(e)), ApplyUpdateForResourceGroupClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetMaintenanceApplyUpdates", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.Maintenance
         public virtual AsyncPageable<MaintenanceUpdate> GetUpdatesByParentAsync(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UpdatesRestClient.CreateListParentRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceUpdate.DeserializeMaintenanceUpdate, UpdatesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetUpdatesByParent", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceUpdate.DeserializeMaintenanceUpdate, UpdatesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetUpdatesByParent", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Maintenance
         public virtual Pageable<MaintenanceUpdate> GetUpdatesByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UpdatesRestClient.CreateListParentRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceUpdate.DeserializeMaintenanceUpdate, UpdatesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetUpdatesByParent", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceUpdate.DeserializeMaintenanceUpdate, UpdatesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetUpdatesByParent", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Maintenance
         public virtual AsyncPageable<MaintenanceUpdate> GetUpdatesAsync(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UpdatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceUpdate.DeserializeMaintenanceUpdate, UpdatesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetUpdates", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MaintenanceUpdate.DeserializeMaintenanceUpdate, UpdatesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetUpdates", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.Maintenance
         public virtual Pageable<MaintenanceUpdate> GetUpdates(string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UpdatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceUpdate.DeserializeMaintenanceUpdate, UpdatesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetUpdates", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MaintenanceUpdate.DeserializeMaintenanceUpdate, UpdatesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetUpdates", "value", null, cancellationToken);
         }
     }
 }

@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual AsyncPageable<SynapseAttachedDatabaseConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsRestClient.CreateListByKustoPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseAttachedDatabaseConfigurationResource(Client, SynapseAttachedDatabaseConfigurationData.DeserializeSynapseAttachedDatabaseConfigurationData(e)), _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, "SynapseAttachedDatabaseConfigurationCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseAttachedDatabaseConfigurationResource(Client, SynapseAttachedDatabaseConfigurationData.DeserializeSynapseAttachedDatabaseConfigurationData(e)), _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, "SynapseAttachedDatabaseConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Synapse
         public virtual Pageable<SynapseAttachedDatabaseConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsRestClient.CreateListByKustoPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseAttachedDatabaseConfigurationResource(Client, SynapseAttachedDatabaseConfigurationData.DeserializeSynapseAttachedDatabaseConfigurationData(e)), _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, "SynapseAttachedDatabaseConfigurationCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseAttachedDatabaseConfigurationResource(Client, SynapseAttachedDatabaseConfigurationData.DeserializeSynapseAttachedDatabaseConfigurationData(e)), _synapseAttachedDatabaseConfigurationKustoPoolAttachedDatabaseConfigurationsClientDiagnostics, Pipeline, "SynapseAttachedDatabaseConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingEndpointRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingEndpointRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingEndpointResource(Client, StreamingEndpointData.DeserializeStreamingEndpointData(e)), _streamingEndpointClientDiagnostics, Pipeline, "StreamingEndpointCollection.GetAll", "value", "@odata.nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingEndpointResource(Client, StreamingEndpointData.DeserializeStreamingEndpointData(e)), _streamingEndpointClientDiagnostics, Pipeline, "StreamingEndpointCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingEndpointRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingEndpointRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingEndpointResource(Client, StreamingEndpointData.DeserializeStreamingEndpointData(e)), _streamingEndpointClientDiagnostics, Pipeline, "StreamingEndpointCollection.GetAll", "value", "@odata.nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingEndpointResource(Client, StreamingEndpointData.DeserializeStreamingEndpointData(e)), _streamingEndpointClientDiagnostics, Pipeline, "StreamingEndpointCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

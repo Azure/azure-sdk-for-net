@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudPrivateCloudsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsPrivateCloudPrivateCloudsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudResource(Client, AvsPrivateCloudData.DeserializeAvsPrivateCloudData(e)), _avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, "AvsPrivateCloudCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudResource(Client, AvsPrivateCloudData.DeserializeAvsPrivateCloudData(e)), _avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, "AvsPrivateCloudCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Avs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudPrivateCloudsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _avsPrivateCloudPrivateCloudsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudResource(Client, AvsPrivateCloudData.DeserializeAvsPrivateCloudData(e)), _avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, "AvsPrivateCloudCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AvsPrivateCloudResource(Client, AvsPrivateCloudData.DeserializeAvsPrivateCloudData(e)), _avsPrivateCloudPrivateCloudsClientDiagnostics, Pipeline, "AvsPrivateCloudCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Confluent
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceAgreementsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceAgreementsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfluentAgreement.DeserializeConfluentAgreement, MarketplaceAgreementsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMarketplaceAgreements", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfluentAgreement.DeserializeConfluentAgreement, MarketplaceAgreementsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Confluent
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceAgreementsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceAgreementsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfluentAgreement.DeserializeConfluentAgreement, MarketplaceAgreementsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMarketplaceAgreements", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfluentAgreement.DeserializeConfluentAgreement, MarketplaceAgreementsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Confluent
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfluentOrganizationOrganizationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfluentOrganizationOrganizationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfluentOrganizationResource(Client, ConfluentOrganizationData.DeserializeConfluentOrganizationData(e)), ConfluentOrganizationOrganizationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfluentOrganizations", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfluentOrganizationResource(Client, ConfluentOrganizationData.DeserializeConfluentOrganizationData(e)), ConfluentOrganizationOrganizationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfluentOrganizations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Confluent
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfluentOrganizationOrganizationRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfluentOrganizationOrganizationRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfluentOrganizationResource(Client, ConfluentOrganizationData.DeserializeConfluentOrganizationData(e)), ConfluentOrganizationOrganizationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfluentOrganizations", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfluentOrganizationResource(Client, ConfluentOrganizationData.DeserializeConfluentOrganizationData(e)), ConfluentOrganizationOrganizationClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfluentOrganizations", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -139,20 +139,18 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<TriggerResource> GetTriggersByWorkspaceAsync(CancellationToken cancellationToken = default)
         {
-            var context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetTriggersByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetTriggersByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TriggerResource.DeserializeTriggerResource, _clientDiagnostics, _pipeline, "TriggerClient.GetTriggersByWorkspace", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TriggerResource.DeserializeTriggerResource, _clientDiagnostics, _pipeline, "TriggerClient.GetTriggersByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists triggers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<TriggerResource> GetTriggersByWorkspace(CancellationToken cancellationToken = default)
         {
-            var context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetTriggersByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetTriggersByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TriggerResource.DeserializeTriggerResource, _clientDiagnostics, _pipeline, "TriggerClient.GetTriggersByWorkspace", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TriggerResource.DeserializeTriggerResource, _clientDiagnostics, _pipeline, "TriggerClient.GetTriggersByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates or updates a trigger. </summary>

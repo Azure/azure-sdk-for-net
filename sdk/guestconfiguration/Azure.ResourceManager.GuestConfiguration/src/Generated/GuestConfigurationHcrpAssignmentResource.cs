@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         public virtual AsyncPageable<GuestConfigurationAssignmentReport> GetReportsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationHcrpAssignmentReportsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, GuestConfigurationAssignmentReport.DeserializeGuestConfigurationAssignmentReport, _guestConfigurationHcrpAssignmentReportsClientDiagnostics, Pipeline, "GuestConfigurationHcrpAssignmentResource.GetReports", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, GuestConfigurationAssignmentReport.DeserializeGuestConfigurationAssignmentReport, _guestConfigurationHcrpAssignmentReportsClientDiagnostics, Pipeline, "GuestConfigurationHcrpAssignmentResource.GetReports", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         public virtual Pageable<GuestConfigurationAssignmentReport> GetReports(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _guestConfigurationHcrpAssignmentReportsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, GuestConfigurationAssignmentReport.DeserializeGuestConfigurationAssignmentReport, _guestConfigurationHcrpAssignmentReportsClientDiagnostics, Pipeline, "GuestConfigurationHcrpAssignmentResource.GetReports", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, GuestConfigurationAssignmentReport.DeserializeGuestConfigurationAssignmentReport, _guestConfigurationHcrpAssignmentReportsClientDiagnostics, Pipeline, "GuestConfigurationHcrpAssignmentResource.GetReports", "value", null, cancellationToken);
         }
 
         /// <summary>

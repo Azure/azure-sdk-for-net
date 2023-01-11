@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         public virtual AsyncPageable<DedicatedCapacityResource> GetDedicatedCapacitiesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedCapacityCapacitiesRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DedicatedCapacityResource(Client, DedicatedCapacityData.DeserializeDedicatedCapacityData(e)), DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDedicatedCapacities", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DedicatedCapacityResource(Client, DedicatedCapacityData.DeserializeDedicatedCapacityData(e)), DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDedicatedCapacities", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         public virtual Pageable<DedicatedCapacityResource> GetDedicatedCapacities(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedCapacityCapacitiesRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DedicatedCapacityResource(Client, DedicatedCapacityData.DeserializeDedicatedCapacityData(e)), DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDedicatedCapacities", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DedicatedCapacityResource(Client, DedicatedCapacityData.DeserializeDedicatedCapacityData(e)), DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDedicatedCapacities", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         public virtual AsyncPageable<CapacitySku> GetSkusCapacitiesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedCapacityCapacitiesRestClient.CreateListSkusRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CapacitySku.DeserializeCapacitySku, DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusCapacities", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CapacitySku.DeserializeCapacitySku, DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusCapacities", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         public virtual Pageable<CapacitySku> GetSkusCapacities(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedCapacityCapacitiesRestClient.CreateListSkusRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, CapacitySku.DeserializeCapacitySku, DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusCapacities", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, CapacitySku.DeserializeCapacitySku, DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusCapacities", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         public virtual AsyncPageable<AutoScaleVCoreResource> GetAutoScaleVCoresAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AutoScaleVCoreRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutoScaleVCoreResource(Client, AutoScaleVCoreData.DeserializeAutoScaleVCoreData(e)), AutoScaleVCoreClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAutoScaleVCores", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AutoScaleVCoreResource(Client, AutoScaleVCoreData.DeserializeAutoScaleVCoreData(e)), AutoScaleVCoreClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAutoScaleVCores", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         public virtual Pageable<AutoScaleVCoreResource> GetAutoScaleVCores(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AutoScaleVCoreRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutoScaleVCoreResource(Client, AutoScaleVCoreData.DeserializeAutoScaleVCoreData(e)), AutoScaleVCoreClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAutoScaleVCores", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AutoScaleVCoreResource(Client, AutoScaleVCoreData.DeserializeAutoScaleVCoreData(e)), AutoScaleVCoreClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAutoScaleVCores", "value", null, cancellationToken);
         }
     }
 }

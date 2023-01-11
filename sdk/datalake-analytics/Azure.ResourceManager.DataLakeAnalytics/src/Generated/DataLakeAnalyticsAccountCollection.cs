@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeAnalyticsAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderby, count);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeAnalyticsAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderby, count);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataLakeAnalyticsAccountBasic.DeserializeDataLakeAnalyticsAccountBasic, _dataLakeAnalyticsAccountAccountsClientDiagnostics, Pipeline, "DataLakeAnalyticsAccountCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataLakeAnalyticsAccountBasic.DeserializeDataLakeAnalyticsAccountBasic, _dataLakeAnalyticsAccountAccountsClientDiagnostics, Pipeline, "DataLakeAnalyticsAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeAnalyticsAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderby, count);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeAnalyticsAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderby, count);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataLakeAnalyticsAccountBasic.DeserializeDataLakeAnalyticsAccountBasic, _dataLakeAnalyticsAccountAccountsClientDiagnostics, Pipeline, "DataLakeAnalyticsAccountCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataLakeAnalyticsAccountBasic.DeserializeDataLakeAnalyticsAccountBasic, _dataLakeAnalyticsAccountAccountsClientDiagnostics, Pipeline, "DataLakeAnalyticsAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

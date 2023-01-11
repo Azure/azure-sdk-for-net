@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseWorkloadClassifierSqlPoolWorkloadClassifierRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseWorkloadClassifierSqlPoolWorkloadClassifierRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkloadClassifierResource(Client, SynapseWorkloadClassifierData.DeserializeSynapseWorkloadClassifierData(e)), _synapseWorkloadClassifierSqlPoolWorkloadClassifierClientDiagnostics, Pipeline, "SynapseWorkloadClassifierCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkloadClassifierResource(Client, SynapseWorkloadClassifierData.DeserializeSynapseWorkloadClassifierData(e)), _synapseWorkloadClassifierSqlPoolWorkloadClassifierClientDiagnostics, Pipeline, "SynapseWorkloadClassifierCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseWorkloadClassifierSqlPoolWorkloadClassifierRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseWorkloadClassifierSqlPoolWorkloadClassifierRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkloadClassifierResource(Client, SynapseWorkloadClassifierData.DeserializeSynapseWorkloadClassifierData(e)), _synapseWorkloadClassifierSqlPoolWorkloadClassifierClientDiagnostics, Pipeline, "SynapseWorkloadClassifierCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseWorkloadClassifierResource(Client, SynapseWorkloadClassifierData.DeserializeSynapseWorkloadClassifierData(e)), _synapseWorkloadClassifierSqlPoolWorkloadClassifierClientDiagnostics, Pipeline, "SynapseWorkloadClassifierCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

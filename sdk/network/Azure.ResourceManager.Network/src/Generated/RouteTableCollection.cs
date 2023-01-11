@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _routeTableRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _routeTableRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RouteTableResource(Client, RouteTableData.DeserializeRouteTableData(e)), _routeTableClientDiagnostics, Pipeline, "RouteTableCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RouteTableResource(Client, RouteTableData.DeserializeRouteTableData(e)), _routeTableClientDiagnostics, Pipeline, "RouteTableCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _routeTableRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _routeTableRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RouteTableResource(Client, RouteTableData.DeserializeRouteTableData(e)), _routeTableClientDiagnostics, Pipeline, "RouteTableCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RouteTableResource(Client, RouteTableData.DeserializeRouteTableData(e)), _routeTableClientDiagnostics, Pipeline, "RouteTableCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Search
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _queryKeysRestClient.CreateListBySearchServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _queryKeysRestClient.CreateListBySearchServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SearchServiceQueryKey.DeserializeSearchServiceQueryKey, _queryKeysClientDiagnostics, Pipeline, "SearchServiceResource.GetQueryKeysBySearchService", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SearchServiceQueryKey.DeserializeSearchServiceQueryKey, _queryKeysClientDiagnostics, Pipeline, "SearchServiceResource.GetQueryKeysBySearchService", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.Search
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _queryKeysRestClient.CreateListBySearchServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _queryKeysRestClient.CreateListBySearchServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SearchServiceQueryKey.DeserializeSearchServiceQueryKey, _queryKeysClientDiagnostics, Pipeline, "SearchServiceResource.GetQueryKeysBySearchService", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SearchServiceQueryKey.DeserializeSearchServiceQueryKey, _queryKeysClientDiagnostics, Pipeline, "SearchServiceResource.GetQueryKeysBySearchService", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.Search
         public virtual AsyncPageable<SearchPrivateLinkResource> GetSupportedPrivateLinkResourcesAsync(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListSupportedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SearchPrivateLinkResource.DeserializeSearchPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "SearchServiceResource.GetSupportedPrivateLinkResources", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SearchPrivateLinkResource.DeserializeSearchPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "SearchServiceResource.GetSupportedPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.Search
         public virtual Pageable<SearchPrivateLinkResource> GetSupportedPrivateLinkResources(SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListSupportedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, searchManagementRequestOptions);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, SearchPrivateLinkResource.DeserializeSearchPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "SearchServiceResource.GetSupportedPrivateLinkResources", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SearchPrivateLinkResource.DeserializeSearchPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "SearchServiceResource.GetSupportedPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>

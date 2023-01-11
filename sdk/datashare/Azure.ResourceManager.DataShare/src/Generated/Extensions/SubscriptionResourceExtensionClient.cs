@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataShareAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataShareAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareAccountResource(Client, DataShareAccountData.DeserializeDataShareAccountData(e)), DataShareAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataShareAccounts", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareAccountResource(Client, DataShareAccountData.DeserializeDataShareAccountData(e)), DataShareAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataShareAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataShareAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataShareAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareAccountResource(Client, DataShareAccountData.DeserializeDataShareAccountData(e)), DataShareAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataShareAccounts", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareAccountResource(Client, DataShareAccountData.DeserializeDataShareAccountData(e)), DataShareAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataShareAccounts", "value", "nextLink", cancellationToken);
         }
     }
 }

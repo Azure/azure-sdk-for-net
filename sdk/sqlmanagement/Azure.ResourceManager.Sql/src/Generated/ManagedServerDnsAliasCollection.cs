@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServerDnsAliasRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedServerDnsAliasRestClient.CreateListByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedServerDnsAliasResource(Client, ManagedServerDnsAliasData.DeserializeManagedServerDnsAliasData(e)), _managedServerDnsAliasClientDiagnostics, Pipeline, "ManagedServerDnsAliasCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedServerDnsAliasResource(Client, ManagedServerDnsAliasData.DeserializeManagedServerDnsAliasData(e)), _managedServerDnsAliasClientDiagnostics, Pipeline, "ManagedServerDnsAliasCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServerDnsAliasRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedServerDnsAliasRestClient.CreateListByManagedInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedServerDnsAliasResource(Client, ManagedServerDnsAliasData.DeserializeManagedServerDnsAliasData(e)), _managedServerDnsAliasClientDiagnostics, Pipeline, "ManagedServerDnsAliasCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedServerDnsAliasResource(Client, ManagedServerDnsAliasData.DeserializeManagedServerDnsAliasData(e)), _managedServerDnsAliasClientDiagnostics, Pipeline, "ManagedServerDnsAliasCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

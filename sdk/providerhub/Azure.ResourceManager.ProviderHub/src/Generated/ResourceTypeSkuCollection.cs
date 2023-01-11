@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceTypeSkuSkusRestClient.CreateListByResourceTypeRegistrationsRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceTypeSkuSkusRestClient.CreateListByResourceTypeRegistrationsNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceTypeSkuResource(Client, SkuResourceData.DeserializeSkuResourceData(e)), _resourceTypeSkuSkusClientDiagnostics, Pipeline, "ResourceTypeSkuCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceTypeSkuResource(Client, SkuResourceData.DeserializeSkuResourceData(e)), _resourceTypeSkuSkusClientDiagnostics, Pipeline, "ResourceTypeSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceTypeSkuSkusRestClient.CreateListByResourceTypeRegistrationsRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceTypeSkuSkusRestClient.CreateListByResourceTypeRegistrationsNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceTypeSkuResource(Client, SkuResourceData.DeserializeSkuResourceData(e)), _resourceTypeSkuSkusClientDiagnostics, Pipeline, "ResourceTypeSkuCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceTypeSkuResource(Client, SkuResourceData.DeserializeSkuResourceData(e)), _resourceTypeSkuSkusClientDiagnostics, Pipeline, "ResourceTypeSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

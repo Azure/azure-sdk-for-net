@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LogicWorkflowWorkflowsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LogicWorkflowWorkflowsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowResource(Client, LogicWorkflowData.DeserializeLogicWorkflowData(e)), LogicWorkflowWorkflowsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLogicWorkflows", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowResource(Client, LogicWorkflowData.DeserializeLogicWorkflowData(e)), LogicWorkflowWorkflowsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLogicWorkflows", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LogicWorkflowWorkflowsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LogicWorkflowWorkflowsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowResource(Client, LogicWorkflowData.DeserializeLogicWorkflowData(e)), LogicWorkflowWorkflowsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLogicWorkflows", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogicWorkflowResource(Client, LogicWorkflowData.DeserializeLogicWorkflowData(e)), LogicWorkflowWorkflowsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLogicWorkflows", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IntegrationAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IntegrationAccountRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountResource(Client, IntegrationAccountData.DeserializeIntegrationAccountData(e)), IntegrationAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIntegrationAccounts", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountResource(Client, IntegrationAccountData.DeserializeIntegrationAccountData(e)), IntegrationAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIntegrationAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IntegrationAccountRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IntegrationAccountRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountResource(Client, IntegrationAccountData.DeserializeIntegrationAccountData(e)), IntegrationAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIntegrationAccounts", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountResource(Client, IntegrationAccountData.DeserializeIntegrationAccountData(e)), IntegrationAccountClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIntegrationAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IntegrationServiceEnvironmentRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IntegrationServiceEnvironmentRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IntegrationServiceEnvironmentResource(Client, IntegrationServiceEnvironmentData.DeserializeIntegrationServiceEnvironmentData(e)), IntegrationServiceEnvironmentClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIntegrationServiceEnvironments", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IntegrationServiceEnvironmentResource(Client, IntegrationServiceEnvironmentData.DeserializeIntegrationServiceEnvironmentData(e)), IntegrationServiceEnvironmentClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIntegrationServiceEnvironments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => IntegrationServiceEnvironmentRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IntegrationServiceEnvironmentRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IntegrationServiceEnvironmentResource(Client, IntegrationServiceEnvironmentData.DeserializeIntegrationServiceEnvironmentData(e)), IntegrationServiceEnvironmentClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIntegrationServiceEnvironments", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IntegrationServiceEnvironmentResource(Client, IntegrationServiceEnvironmentData.DeserializeIntegrationServiceEnvironmentData(e)), IntegrationServiceEnvironmentClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetIntegrationServiceEnvironments", "value", "nextLink", cancellationToken);
         }
     }
 }

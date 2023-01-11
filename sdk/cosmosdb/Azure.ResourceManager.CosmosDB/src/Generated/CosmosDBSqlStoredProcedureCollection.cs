@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBSqlStoredProcedureResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlStoredProcedureSqlResourcesRestClient.CreateListSqlStoredProceduresRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlStoredProcedureResource(Client, CosmosDBSqlStoredProcedureData.DeserializeCosmosDBSqlStoredProcedureData(e)), _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlStoredProcedureCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBSqlStoredProcedureResource(Client, CosmosDBSqlStoredProcedureData.DeserializeCosmosDBSqlStoredProcedureData(e)), _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlStoredProcedureCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBSqlStoredProcedureResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlStoredProcedureSqlResourcesRestClient.CreateListSqlStoredProceduresRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlStoredProcedureResource(Client, CosmosDBSqlStoredProcedureData.DeserializeCosmosDBSqlStoredProcedureData(e)), _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlStoredProcedureCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBSqlStoredProcedureResource(Client, CosmosDBSqlStoredProcedureData.DeserializeCosmosDBSqlStoredProcedureData(e)), _cosmosDBSqlStoredProcedureSqlResourcesClientDiagnostics, Pipeline, "CosmosDBSqlStoredProcedureCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

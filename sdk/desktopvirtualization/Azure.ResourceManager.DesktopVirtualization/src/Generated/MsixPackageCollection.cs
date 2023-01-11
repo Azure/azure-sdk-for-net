@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _msixPackageMSIXPackagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _msixPackageMSIXPackagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MsixPackageResource(Client, MsixPackageData.DeserializeMsixPackageData(e)), _msixPackageMSIXPackagesClientDiagnostics, Pipeline, "MsixPackageCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MsixPackageResource(Client, MsixPackageData.DeserializeMsixPackageData(e)), _msixPackageMSIXPackagesClientDiagnostics, Pipeline, "MsixPackageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _msixPackageMSIXPackagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _msixPackageMSIXPackagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MsixPackageResource(Client, MsixPackageData.DeserializeMsixPackageData(e)), _msixPackageMSIXPackagesClientDiagnostics, Pipeline, "MsixPackageCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MsixPackageResource(Client, MsixPackageData.DeserializeMsixPackageData(e)), _msixPackageMSIXPackagesClientDiagnostics, Pipeline, "MsixPackageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

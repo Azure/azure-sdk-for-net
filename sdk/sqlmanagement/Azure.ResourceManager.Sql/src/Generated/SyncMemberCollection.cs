@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncMemberRestClient.CreateListBySyncGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncMemberRestClient.CreateListBySyncGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SyncMemberResource(Client, SyncMemberData.DeserializeSyncMemberData(e)), _syncMemberClientDiagnostics, Pipeline, "SyncMemberCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SyncMemberResource(Client, SyncMemberData.DeserializeSyncMemberData(e)), _syncMemberClientDiagnostics, Pipeline, "SyncMemberCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncMemberRestClient.CreateListBySyncGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncMemberRestClient.CreateListBySyncGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SyncMemberResource(Client, SyncMemberData.DeserializeSyncMemberData(e)), _syncMemberClientDiagnostics, Pipeline, "SyncMemberCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SyncMemberResource(Client, SyncMemberData.DeserializeSyncMemberData(e)), _syncMemberClientDiagnostics, Pipeline, "SyncMemberCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

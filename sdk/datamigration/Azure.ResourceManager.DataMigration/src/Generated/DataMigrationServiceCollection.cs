@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMigrationServiceServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataMigrationServiceServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataMigrationServiceResource(Client, DataMigrationServiceData.DeserializeDataMigrationServiceData(e)), _dataMigrationServiceServicesClientDiagnostics, Pipeline, "DataMigrationServiceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataMigrationServiceResource(Client, DataMigrationServiceData.DeserializeDataMigrationServiceData(e)), _dataMigrationServiceServicesClientDiagnostics, Pipeline, "DataMigrationServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMigrationServiceServicesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataMigrationServiceServicesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataMigrationServiceResource(Client, DataMigrationServiceData.DeserializeDataMigrationServiceData(e)), _dataMigrationServiceServicesClientDiagnostics, Pipeline, "DataMigrationServiceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataMigrationServiceResource(Client, DataMigrationServiceData.DeserializeDataMigrationServiceData(e)), _dataMigrationServiceServicesClientDiagnostics, Pipeline, "DataMigrationServiceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

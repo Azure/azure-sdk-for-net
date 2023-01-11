@@ -1031,7 +1031,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceManagedSqlServerUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workspaceManagedSqlServerUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SynapseServerUsage.DeserializeSynapseServerUsage, _workspaceManagedSqlServerUsagesClientDiagnostics, Pipeline, "SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SynapseServerUsage.DeserializeSynapseServerUsage, _workspaceManagedSqlServerUsagesClientDiagnostics, Pipeline, "SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1045,7 +1045,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceManagedSqlServerUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workspaceManagedSqlServerUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SynapseServerUsage.DeserializeSynapseServerUsage, _workspaceManagedSqlServerUsagesClientDiagnostics, Pipeline, "SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SynapseServerUsage.DeserializeSynapseServerUsage, _workspaceManagedSqlServerUsagesClientDiagnostics, Pipeline, "SynapseWorkspaceResource.GetWorkspaceManagedSqlServerUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

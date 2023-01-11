@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectedRegistryRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectedRegistryRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectedRegistryResource(Client, ConnectedRegistryData.DeserializeConnectedRegistryData(e)), _connectedRegistryClientDiagnostics, Pipeline, "ConnectedRegistryCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectedRegistryResource(Client, ConnectedRegistryData.DeserializeConnectedRegistryData(e)), _connectedRegistryClientDiagnostics, Pipeline, "ConnectedRegistryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectedRegistryRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectedRegistryRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectedRegistryResource(Client, ConnectedRegistryData.DeserializeConnectedRegistryData(e)), _connectedRegistryClientDiagnostics, Pipeline, "ConnectedRegistryCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectedRegistryResource(Client, ConnectedRegistryData.DeserializeConnectedRegistryData(e)), _connectedRegistryClientDiagnostics, Pipeline, "ConnectedRegistryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteLinkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRouteLinkRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteLinkResource(Client, ExpressRouteLinkData.DeserializeExpressRouteLinkData(e)), _expressRouteLinkClientDiagnostics, Pipeline, "ExpressRouteLinkCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteLinkResource(Client, ExpressRouteLinkData.DeserializeExpressRouteLinkData(e)), _expressRouteLinkClientDiagnostics, Pipeline, "ExpressRouteLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteLinkRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _expressRouteLinkRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteLinkResource(Client, ExpressRouteLinkData.DeserializeExpressRouteLinkData(e)), _expressRouteLinkClientDiagnostics, Pipeline, "ExpressRouteLinkCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteLinkResource(Client, ExpressRouteLinkData.DeserializeExpressRouteLinkData(e)), _expressRouteLinkClientDiagnostics, Pipeline, "ExpressRouteLinkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

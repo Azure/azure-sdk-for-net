@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _domainTopicRestClient.CreateListByDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _domainTopicRestClient.CreateListByDomainNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DomainTopicResource(Client, DomainTopicData.DeserializeDomainTopicData(e)), _domainTopicClientDiagnostics, Pipeline, "DomainTopicCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DomainTopicResource(Client, DomainTopicData.DeserializeDomainTopicData(e)), _domainTopicClientDiagnostics, Pipeline, "DomainTopicCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _domainTopicRestClient.CreateListByDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _domainTopicRestClient.CreateListByDomainNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DomainTopicResource(Client, DomainTopicData.DeserializeDomainTopicData(e)), _domainTopicClientDiagnostics, Pipeline, "DomainTopicCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DomainTopicResource(Client, DomainTopicData.DeserializeDomainTopicData(e)), _domainTopicClientDiagnostics, Pipeline, "DomainTopicCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteConfigConnectionStringWebAppsRestClient.CreateGetSiteConnectionStringKeyVaultReferencesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteConfigConnectionStringWebAppsRestClient.CreateGetSiteConnectionStringKeyVaultReferencesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteConfigConnectionStringResource(Client, ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(e)), _webSiteConfigConnectionStringWebAppsClientDiagnostics, Pipeline, "WebSiteConfigConnectionStringCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteConfigConnectionStringResource(Client, ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(e)), _webSiteConfigConnectionStringWebAppsClientDiagnostics, Pipeline, "WebSiteConfigConnectionStringCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteConfigConnectionStringWebAppsRestClient.CreateGetSiteConnectionStringKeyVaultReferencesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteConfigConnectionStringWebAppsRestClient.CreateGetSiteConnectionStringKeyVaultReferencesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteConfigConnectionStringResource(Client, ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(e)), _webSiteConfigConnectionStringWebAppsClientDiagnostics, Pipeline, "WebSiteConfigConnectionStringCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteConfigConnectionStringResource(Client, ApiKeyVaultReferenceData.DeserializeApiKeyVaultReferenceData(e)), _webSiteConfigConnectionStringWebAppsClientDiagnostics, Pipeline, "WebSiteConfigConnectionStringCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsClusterClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamAnalyticsClusterClustersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsClusterResource(Client, StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(e)), _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, "StreamAnalyticsClusterCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsClusterResource(Client, StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(e)), _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, "StreamAnalyticsClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamAnalyticsClusterClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamAnalyticsClusterClustersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsClusterResource(Client, StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(e)), _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, "StreamAnalyticsClusterCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsClusterResource(Client, StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(e)), _streamAnalyticsClusterClustersClientDiagnostics, Pipeline, "StreamAnalyticsClusterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

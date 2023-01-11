@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListWorkloadProfileStatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListWorkloadProfileStatesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerAppWorkloadProfileState.DeserializeContainerAppWorkloadProfileState, _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentResource.GetWorkloadProfileStates", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerAppWorkloadProfileState.DeserializeContainerAppWorkloadProfileState, _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentResource.GetWorkloadProfileStates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListWorkloadProfileStatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListWorkloadProfileStatesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerAppWorkloadProfileState.DeserializeContainerAppWorkloadProfileState, _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentResource.GetWorkloadProfileStates", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerAppWorkloadProfileState.DeserializeContainerAppWorkloadProfileState, _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentResource.GetWorkloadProfileStates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

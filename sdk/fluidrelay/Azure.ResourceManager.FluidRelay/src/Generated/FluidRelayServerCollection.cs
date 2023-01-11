@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.FluidRelay
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fluidRelayServerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fluidRelayServerRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FluidRelayServerResource(Client, FluidRelayServerData.DeserializeFluidRelayServerData(e)), _fluidRelayServerClientDiagnostics, Pipeline, "FluidRelayServerCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FluidRelayServerResource(Client, FluidRelayServerData.DeserializeFluidRelayServerData(e)), _fluidRelayServerClientDiagnostics, Pipeline, "FluidRelayServerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.FluidRelay
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fluidRelayServerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fluidRelayServerRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FluidRelayServerResource(Client, FluidRelayServerData.DeserializeFluidRelayServerData(e)), _fluidRelayServerClientDiagnostics, Pipeline, "FluidRelayServerCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FluidRelayServerResource(Client, FluidRelayServerData.DeserializeFluidRelayServerData(e)), _fluidRelayServerClientDiagnostics, Pipeline, "FluidRelayServerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

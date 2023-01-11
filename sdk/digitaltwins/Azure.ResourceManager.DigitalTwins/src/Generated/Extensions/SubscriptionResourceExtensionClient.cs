@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DigitalTwins
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DigitalTwinsDescriptionDigitalTwinsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DigitalTwinsDescriptionDigitalTwinsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DigitalTwinsDescriptionResource(Client, DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(e)), DigitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDigitalTwinsDescriptions", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DigitalTwinsDescriptionResource(Client, DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(e)), DigitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDigitalTwinsDescriptions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DigitalTwins
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DigitalTwinsDescriptionDigitalTwinsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DigitalTwinsDescriptionDigitalTwinsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DigitalTwinsDescriptionResource(Client, DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(e)), DigitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDigitalTwinsDescriptions", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DigitalTwinsDescriptionResource(Client, DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(e)), DigitalTwinsDescriptionDigitalTwinsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDigitalTwinsDescriptions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

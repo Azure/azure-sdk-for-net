@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupWorkloadItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupWorkloadItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, WorkloadItemResource.DeserializeWorkloadItemResource, _backupWorkloadItemsClientDiagnostics, Pipeline, "ProtectionContainerResource.GetBackupWorkloadItems", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, WorkloadItemResource.DeserializeWorkloadItemResource, _backupWorkloadItemsClientDiagnostics, Pipeline, "ProtectionContainerResource.GetBackupWorkloadItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _backupWorkloadItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _backupWorkloadItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, filter, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, WorkloadItemResource.DeserializeWorkloadItemResource, _backupWorkloadItemsClientDiagnostics, Pipeline, "ProtectionContainerResource.GetBackupWorkloadItems", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, WorkloadItemResource.DeserializeWorkloadItemResource, _backupWorkloadItemsClientDiagnostics, Pipeline, "ProtectionContainerResource.GetBackupWorkloadItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

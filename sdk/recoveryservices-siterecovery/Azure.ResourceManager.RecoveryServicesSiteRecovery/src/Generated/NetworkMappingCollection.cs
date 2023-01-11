@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkMappingReplicationNetworkMappingsRestClient.CreateListByReplicationNetworksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkMappingReplicationNetworkMappingsRestClient.CreateListByReplicationNetworksNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkMappingResource(Client, NetworkMappingData.DeserializeNetworkMappingData(e)), _networkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, "NetworkMappingCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkMappingResource(Client, NetworkMappingData.DeserializeNetworkMappingData(e)), _networkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, "NetworkMappingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkMappingReplicationNetworkMappingsRestClient.CreateListByReplicationNetworksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkMappingReplicationNetworkMappingsRestClient.CreateListByReplicationNetworksNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkMappingResource(Client, NetworkMappingData.DeserializeNetworkMappingData(e)), _networkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, "NetworkMappingCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkMappingResource(Client, NetworkMappingData.DeserializeNetworkMappingData(e)), _networkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, "NetworkMappingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

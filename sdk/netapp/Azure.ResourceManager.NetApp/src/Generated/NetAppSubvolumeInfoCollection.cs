@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.NetApp
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppSubvolumeInfoSubvolumesRestClient.CreateListByVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _netAppSubvolumeInfoSubvolumesRestClient.CreateListByVolumeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetAppSubvolumeInfoResource(Client, NetAppSubvolumeInfoData.DeserializeNetAppSubvolumeInfoData(e)), _netAppSubvolumeInfoSubvolumesClientDiagnostics, Pipeline, "NetAppSubvolumeInfoCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetAppSubvolumeInfoResource(Client, NetAppSubvolumeInfoData.DeserializeNetAppSubvolumeInfoData(e)), _netAppSubvolumeInfoSubvolumesClientDiagnostics, Pipeline, "NetAppSubvolumeInfoCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.NetApp
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppSubvolumeInfoSubvolumesRestClient.CreateListByVolumeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _netAppSubvolumeInfoSubvolumesRestClient.CreateListByVolumeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetAppSubvolumeInfoResource(Client, NetAppSubvolumeInfoData.DeserializeNetAppSubvolumeInfoData(e)), _netAppSubvolumeInfoSubvolumesClientDiagnostics, Pipeline, "NetAppSubvolumeInfoCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetAppSubvolumeInfoResource(Client, NetAppSubvolumeInfoData.DeserializeNetAppSubvolumeInfoData(e)), _netAppSubvolumeInfoSubvolumesClientDiagnostics, Pipeline, "NetAppSubvolumeInfoCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CognitiveServicesAccountAccountsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CognitiveServicesAccountAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesAccountResource(Client, CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(e)), CognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCognitiveServicesAccounts", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesAccountResource(Client, CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(e)), CognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCognitiveServicesAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CognitiveServicesAccountAccountsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CognitiveServicesAccountAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesAccountResource(Client, CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(e)), CognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCognitiveServicesAccounts", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesAccountResource(Client, CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(e)), CognitiveServicesAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCognitiveServicesAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CognitiveServicesDeletedAccountDeletedAccountsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CognitiveServicesDeletedAccountDeletedAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesDeletedAccountResource(Client, CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(e)), CognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedAccounts", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesDeletedAccountResource(Client, CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(e)), CognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CognitiveServicesDeletedAccountDeletedAccountsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CognitiveServicesDeletedAccountDeletedAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesDeletedAccountResource(Client, CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(e)), CognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedAccounts", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesDeletedAccountResource(Client, CognitiveServicesAccountData.DeserializeCognitiveServicesAccountData(e)), CognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableCognitiveServicesSku.DeserializeAvailableCognitiveServicesSku, ResourceSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourceSkus", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableCognitiveServicesSku.DeserializeAvailableCognitiveServicesSku, ResourceSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableCognitiveServicesSku.DeserializeAvailableCognitiveServicesSku, ResourceSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourceSkus", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableCognitiveServicesSku.DeserializeAvailableCognitiveServicesSku, ResourceSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CognitiveServices
         public virtual AsyncPageable<CognitiveServicesSkuAvailabilityList> CheckSkuAvailabilityAsync(AzureLocation location, CognitiveServicesSkuAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateCheckSkuAvailabilityRequest(Id.SubscriptionId, location, content);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CognitiveServicesSkuAvailabilityList.DeserializeCognitiveServicesSkuAvailabilityList, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.CheckSkuAvailability", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CognitiveServicesSkuAvailabilityList.DeserializeCognitiveServicesSkuAvailabilityList, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.CheckSkuAvailability", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CognitiveServices
         public virtual Pageable<CognitiveServicesSkuAvailabilityList> CheckSkuAvailability(AzureLocation location, CognitiveServicesSkuAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateCheckSkuAvailabilityRequest(Id.SubscriptionId, location, content);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, CognitiveServicesSkuAvailabilityList.DeserializeCognitiveServicesSkuAvailabilityList, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.CheckSkuAvailability", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, CognitiveServicesSkuAvailabilityList.DeserializeCognitiveServicesSkuAvailabilityList, DefaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.CheckSkuAvailability", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CommitmentTiersRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommitmentTiersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CommitmentTier.DeserializeCommitmentTier, CommitmentTiersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCommitmentTiers", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CommitmentTier.DeserializeCommitmentTier, CommitmentTiersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCommitmentTiers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CommitmentTiersRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommitmentTiersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CommitmentTier.DeserializeCommitmentTier, CommitmentTiersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCommitmentTiers", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CommitmentTier.DeserializeCommitmentTier, CommitmentTiersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCommitmentTiers", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _userAssignedIdentityRestClient.CreateListAssociatedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userAssignedIdentityRestClient.CreateListAssociatedResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IdentityAssociatedResourceData.DeserializeIdentityAssociatedResourceData, _userAssignedIdentityClientDiagnostics, Pipeline, "UserAssignedIdentityResource.GetAssociatedResources", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, IdentityAssociatedResourceData.DeserializeIdentityAssociatedResourceData, _userAssignedIdentityClientDiagnostics, Pipeline, "UserAssignedIdentityResource.GetAssociatedResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _userAssignedIdentityRestClient.CreateListAssociatedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userAssignedIdentityRestClient.CreateListAssociatedResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderby, top, skip, skiptoken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IdentityAssociatedResourceData.DeserializeIdentityAssociatedResourceData, _userAssignedIdentityClientDiagnostics, Pipeline, "UserAssignedIdentityResource.GetAssociatedResources", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, IdentityAssociatedResourceData.DeserializeIdentityAssociatedResourceData, _userAssignedIdentityClientDiagnostics, Pipeline, "UserAssignedIdentityResource.GetAssociatedResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

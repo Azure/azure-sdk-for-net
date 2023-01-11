@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteConfigSnapshotWebAppsRestClient.CreateListConfigurationSnapshotInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteConfigSnapshotWebAppsRestClient.CreateListConfigurationSnapshotInfoNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SiteConfigurationSnapshotInfo.DeserializeSiteConfigurationSnapshotInfo, _siteConfigSnapshotWebAppsClientDiagnostics, Pipeline, "WebSiteConfigResource.GetConfigurationSnapshotInfo", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SiteConfigurationSnapshotInfo.DeserializeSiteConfigurationSnapshotInfo, _siteConfigSnapshotWebAppsClientDiagnostics, Pipeline, "WebSiteConfigResource.GetConfigurationSnapshotInfo", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteConfigSnapshotWebAppsRestClient.CreateListConfigurationSnapshotInfoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteConfigSnapshotWebAppsRestClient.CreateListConfigurationSnapshotInfoNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SiteConfigurationSnapshotInfo.DeserializeSiteConfigurationSnapshotInfo, _siteConfigSnapshotWebAppsClientDiagnostics, Pipeline, "WebSiteConfigResource.GetConfigurationSnapshotInfo", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SiteConfigurationSnapshotInfo.DeserializeSiteConfigurationSnapshotInfo, _siteConfigSnapshotWebAppsClientDiagnostics, Pipeline, "WebSiteConfigResource.GetConfigurationSnapshotInfo", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Nginx
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nginxConfigurationConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nginxConfigurationConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NginxConfigurationResource(Client, NginxConfigurationData.DeserializeNginxConfigurationData(e)), _nginxConfigurationConfigurationsClientDiagnostics, Pipeline, "NginxConfigurationCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NginxConfigurationResource(Client, NginxConfigurationData.DeserializeNginxConfigurationData(e)), _nginxConfigurationConfigurationsClientDiagnostics, Pipeline, "NginxConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Nginx
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nginxConfigurationConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nginxConfigurationConfigurationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NginxConfigurationResource(Client, NginxConfigurationData.DeserializeNginxConfigurationData(e)), _nginxConfigurationConfigurationsClientDiagnostics, Pipeline, "NginxConfigurationCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NginxConfigurationResource(Client, NginxConfigurationData.DeserializeNginxConfigurationData(e)), _nginxConfigurationConfigurationsClientDiagnostics, Pipeline, "NginxConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

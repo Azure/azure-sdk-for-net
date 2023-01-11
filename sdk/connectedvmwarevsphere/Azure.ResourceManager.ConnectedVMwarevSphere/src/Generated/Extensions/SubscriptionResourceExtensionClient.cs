@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourcePoolRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourcePoolRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourcePoolResource(Client, ResourcePoolData.DeserializeResourcePoolData(e)), ResourcePoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourcePools", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourcePoolResource(Client, ResourcePoolData.DeserializeResourcePoolData(e)), ResourcePoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourcePools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourcePoolRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourcePoolRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourcePoolResource(Client, ResourcePoolData.DeserializeResourcePoolData(e)), ResourcePoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourcePools", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourcePoolResource(Client, ResourcePoolData.DeserializeResourcePoolData(e)), ResourcePoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetResourcePools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareClusterClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareClusterResource(Client, VMwareClusterData.DeserializeVMwareClusterData(e)), VMwareClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVMwareClusters", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareClusterResource(Client, VMwareClusterData.DeserializeVMwareClusterData(e)), VMwareClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVMwareClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareClusterClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareClusterResource(Client, VMwareClusterData.DeserializeVMwareClusterData(e)), VMwareClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVMwareClusters", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareClusterResource(Client, VMwareClusterData.DeserializeVMwareClusterData(e)), VMwareClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVMwareClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareHostHostsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareHostHostsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareHostResource(Client, VMwareHostData.DeserializeVMwareHostData(e)), VMwareHostHostsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVMwareHosts", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareHostResource(Client, VMwareHostData.DeserializeVMwareHostData(e)), VMwareHostHostsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVMwareHosts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareHostHostsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareHostHostsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareHostResource(Client, VMwareHostData.DeserializeVMwareHostData(e)), VMwareHostHostsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVMwareHosts", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareHostResource(Client, VMwareHostData.DeserializeVMwareHostData(e)), VMwareHostHostsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVMwareHosts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareDatastoreDatastoresRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareDatastoreDatastoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareDatastoreResource(Client, VMwareDatastoreData.DeserializeVMwareDatastoreData(e)), VMwareDatastoreDatastoresClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVMwareDatastores", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VMwareDatastoreResource(Client, VMwareDatastoreData.DeserializeVMwareDatastoreData(e)), VMwareDatastoreDatastoresClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVMwareDatastores", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VMwareDatastoreDatastoresRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VMwareDatastoreDatastoresRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareDatastoreResource(Client, VMwareDatastoreData.DeserializeVMwareDatastoreData(e)), VMwareDatastoreDatastoresClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVMwareDatastores", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VMwareDatastoreResource(Client, VMwareDatastoreData.DeserializeVMwareDatastoreData(e)), VMwareDatastoreDatastoresClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVMwareDatastores", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VCenterRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VCenterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VCenterResource(Client, VCenterData.DeserializeVCenterData(e)), VCenterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVCenters", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VCenterResource(Client, VCenterData.DeserializeVCenterData(e)), VCenterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVCenters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VCenterRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VCenterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VCenterResource(Client, VCenterData.DeserializeVCenterData(e)), VCenterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVCenters", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VCenterResource(Client, VCenterData.DeserializeVCenterData(e)), VCenterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVCenters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), VirtualMachineClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachines", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), VirtualMachineClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachines", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), VirtualMachineClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachines", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), VirtualMachineClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachines", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineTemplateRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineTemplateRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineTemplateResource(Client, VirtualMachineTemplateData.DeserializeVirtualMachineTemplateData(e)), VirtualMachineTemplateClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineTemplates", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineTemplateResource(Client, VirtualMachineTemplateData.DeserializeVirtualMachineTemplateData(e)), VirtualMachineTemplateClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineTemplates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineTemplateRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineTemplateRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineTemplateResource(Client, VirtualMachineTemplateData.DeserializeVirtualMachineTemplateData(e)), VirtualMachineTemplateClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineTemplates", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineTemplateResource(Client, VirtualMachineTemplateData.DeserializeVirtualMachineTemplateData(e)), VirtualMachineTemplateClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachineTemplates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualNetworkRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualNetworkRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkResource(Client, VirtualNetworkData.DeserializeVirtualNetworkData(e)), VirtualNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualNetworks", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkResource(Client, VirtualNetworkData.DeserializeVirtualNetworkData(e)), VirtualNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualNetworkRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualNetworkRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkResource(Client, VirtualNetworkData.DeserializeVirtualNetworkData(e)), VirtualNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualNetworks", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkResource(Client, VirtualNetworkData.DeserializeVirtualNetworkData(e)), VirtualNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualNetworks", "value", "nextLink", cancellationToken);
         }
     }
 }

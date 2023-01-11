@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobResourceBackupJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobResourceBackupJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JobResource(Client, JobResourceData.DeserializeJobResourceData(e)), _jobResourceBackupJobsClientDiagnostics, Pipeline, "JobResourceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JobResource(Client, JobResourceData.DeserializeJobResourceData(e)), _jobResourceBackupJobsClientDiagnostics, Pipeline, "JobResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _jobResourceBackupJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobResourceBackupJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _vaultName, filter, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JobResource(Client, JobResourceData.DeserializeJobResourceData(e)), _jobResourceBackupJobsClientDiagnostics, Pipeline, "JobResourceCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JobResource(Client, JobResourceData.DeserializeJobResourceData(e)), _jobResourceBackupJobsClientDiagnostics, Pipeline, "JobResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

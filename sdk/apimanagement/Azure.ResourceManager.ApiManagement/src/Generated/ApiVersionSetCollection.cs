@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiVersionSetRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiVersionSetRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiVersionSetResource(Client, ApiVersionSetData.DeserializeApiVersionSetData(e)), _apiVersionSetClientDiagnostics, Pipeline, "ApiVersionSetCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiVersionSetResource(Client, ApiVersionSetData.DeserializeApiVersionSetData(e)), _apiVersionSetClientDiagnostics, Pipeline, "ApiVersionSetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiVersionSetRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiVersionSetRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiVersionSetResource(Client, ApiVersionSetData.DeserializeApiVersionSetData(e)), _apiVersionSetClientDiagnostics, Pipeline, "ApiVersionSetCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiVersionSetResource(Client, ApiVersionSetData.DeserializeApiVersionSetData(e)), _apiVersionSetClientDiagnostics, Pipeline, "ApiVersionSetCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

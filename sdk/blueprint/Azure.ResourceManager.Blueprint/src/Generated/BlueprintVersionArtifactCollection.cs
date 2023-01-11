@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintVersionArtifactPublishedArtifactsRestClient.CreateListRequest(Id.Parent.Parent, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blueprintVersionArtifactPublishedArtifactsRestClient.CreateListNextPageRequest(nextLink, Id.Parent.Parent, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BlueprintVersionArtifactResource(Client, ArtifactData.DeserializeArtifactData(e)), _blueprintVersionArtifactPublishedArtifactsClientDiagnostics, Pipeline, "BlueprintVersionArtifactCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BlueprintVersionArtifactResource(Client, ArtifactData.DeserializeArtifactData(e)), _blueprintVersionArtifactPublishedArtifactsClientDiagnostics, Pipeline, "BlueprintVersionArtifactCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Blueprint
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _blueprintVersionArtifactPublishedArtifactsRestClient.CreateListRequest(Id.Parent.Parent, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _blueprintVersionArtifactPublishedArtifactsRestClient.CreateListNextPageRequest(nextLink, Id.Parent.Parent, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BlueprintVersionArtifactResource(Client, ArtifactData.DeserializeArtifactData(e)), _blueprintVersionArtifactPublishedArtifactsClientDiagnostics, Pipeline, "BlueprintVersionArtifactCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BlueprintVersionArtifactResource(Client, ArtifactData.DeserializeArtifactData(e)), _blueprintVersionArtifactPublishedArtifactsClientDiagnostics, Pipeline, "BlueprintVersionArtifactCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

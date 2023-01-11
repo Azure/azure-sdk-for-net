@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Network
         public virtual AsyncPageable<ResourceNavigationLink> GetResourceNavigationLinksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceNavigationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ResourceNavigationLink.DeserializeResourceNavigationLink, _resourceNavigationLinksClientDiagnostics, Pipeline, "SubnetResource.GetResourceNavigationLinks", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ResourceNavigationLink.DeserializeResourceNavigationLink, _resourceNavigationLinksClientDiagnostics, Pipeline, "SubnetResource.GetResourceNavigationLinks", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Network
         public virtual Pageable<ResourceNavigationLink> GetResourceNavigationLinks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceNavigationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ResourceNavigationLink.DeserializeResourceNavigationLink, _resourceNavigationLinksClientDiagnostics, Pipeline, "SubnetResource.GetResourceNavigationLinks", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ResourceNavigationLink.DeserializeResourceNavigationLink, _resourceNavigationLinksClientDiagnostics, Pipeline, "SubnetResource.GetResourceNavigationLinks", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Network
         public virtual AsyncPageable<ServiceAssociationLink> GetServiceAssociationLinksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceAssociationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ServiceAssociationLink.DeserializeServiceAssociationLink, _serviceAssociationLinksClientDiagnostics, Pipeline, "SubnetResource.GetServiceAssociationLinks", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ServiceAssociationLink.DeserializeServiceAssociationLink, _serviceAssociationLinksClientDiagnostics, Pipeline, "SubnetResource.GetServiceAssociationLinks", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Network
         public virtual Pageable<ServiceAssociationLink> GetServiceAssociationLinks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceAssociationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ServiceAssociationLink.DeserializeServiceAssociationLink, _serviceAssociationLinksClientDiagnostics, Pipeline, "SubnetResource.GetServiceAssociationLinks", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ServiceAssociationLink.DeserializeServiceAssociationLink, _serviceAssociationLinksClientDiagnostics, Pipeline, "SubnetResource.GetServiceAssociationLinks", "value", null, cancellationToken);
         }
     }
 }

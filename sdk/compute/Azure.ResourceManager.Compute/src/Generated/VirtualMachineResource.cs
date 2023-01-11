@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.Compute
         public virtual AsyncPageable<VirtualMachineSize> GetAvailableSizesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineRestClient.CreateListAvailableSizesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineSize.DeserializeVirtualMachineSize, _virtualMachineClientDiagnostics, Pipeline, "VirtualMachineResource.GetAvailableSizes", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, VirtualMachineSize.DeserializeVirtualMachineSize, _virtualMachineClientDiagnostics, Pipeline, "VirtualMachineResource.GetAvailableSizes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.Compute
         public virtual Pageable<VirtualMachineSize> GetAvailableSizes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineRestClient.CreateListAvailableSizesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineSize.DeserializeVirtualMachineSize, _virtualMachineClientDiagnostics, Pipeline, "VirtualMachineResource.GetAvailableSizes", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, VirtualMachineSize.DeserializeVirtualMachineSize, _virtualMachineClientDiagnostics, Pipeline, "VirtualMachineResource.GetAvailableSizes", "value", null, cancellationToken);
         }
 
         /// <summary>

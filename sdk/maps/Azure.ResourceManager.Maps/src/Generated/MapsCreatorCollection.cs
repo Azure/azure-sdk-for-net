@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Maps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mapsCreatorCreatorsRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mapsCreatorCreatorsRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MapsCreatorResource(Client, MapsCreatorData.DeserializeMapsCreatorData(e)), _mapsCreatorCreatorsClientDiagnostics, Pipeline, "MapsCreatorCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MapsCreatorResource(Client, MapsCreatorData.DeserializeMapsCreatorData(e)), _mapsCreatorCreatorsClientDiagnostics, Pipeline, "MapsCreatorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Maps
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mapsCreatorCreatorsRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mapsCreatorCreatorsRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MapsCreatorResource(Client, MapsCreatorData.DeserializeMapsCreatorData(e)), _mapsCreatorCreatorsClientDiagnostics, Pipeline, "MapsCreatorCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MapsCreatorResource(Client, MapsCreatorData.DeserializeMapsCreatorData(e)), _mapsCreatorCreatorsClientDiagnostics, Pipeline, "MapsCreatorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

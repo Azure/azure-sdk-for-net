@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReplicationAppliancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReplicationAppliancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReplicationAppliance.DeserializeReplicationAppliance, ReplicationAppliancesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetReplicationAppliances", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReplicationAppliance.DeserializeReplicationAppliance, ReplicationAppliancesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetReplicationAppliances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReplicationAppliancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReplicationAppliancesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReplicationAppliance.DeserializeReplicationAppliance, ReplicationAppliancesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetReplicationAppliances", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReplicationAppliance.DeserializeReplicationAppliance, ReplicationAppliancesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetReplicationAppliances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkReplicationNetworksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkReplicationNetworksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkResource(Client, NetworkData.DeserializeNetworkData(e)), NetworkReplicationNetworksClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetNetworks", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkResource(Client, NetworkData.DeserializeNetworkData(e)), NetworkReplicationNetworksClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkReplicationNetworksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkReplicationNetworksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkResource(Client, NetworkData.DeserializeNetworkData(e)), NetworkReplicationNetworksClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetNetworks", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkResource(Client, NetworkData.DeserializeNetworkData(e)), NetworkReplicationNetworksClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkMappingReplicationNetworkMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkMappingReplicationNetworkMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkMappingResource(Client, NetworkMappingData.DeserializeNetworkMappingData(e)), NetworkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetNetworkMappings", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkMappingResource(Client, NetworkMappingData.DeserializeNetworkMappingData(e)), NetworkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetNetworkMappings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkMappingReplicationNetworkMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkMappingReplicationNetworkMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkMappingResource(Client, NetworkMappingData.DeserializeNetworkMappingData(e)), NetworkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetNetworkMappings", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkMappingResource(Client, NetworkMappingData.DeserializeNetworkMappingData(e)), NetworkMappingReplicationNetworkMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetNetworkMappings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProtectionContainerReplicationProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProtectionContainerReplicationProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerResource(Client, ProtectionContainerData.DeserializeProtectionContainerData(e)), ProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionContainers", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerResource(Client, ProtectionContainerData.DeserializeProtectionContainerData(e)), ProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProtectionContainerReplicationProtectionContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProtectionContainerReplicationProtectionContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerResource(Client, ProtectionContainerData.DeserializeProtectionContainerData(e)), ProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionContainers", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerResource(Client, ProtectionContainerData.DeserializeProtectionContainerData(e)), ProtectionContainerReplicationProtectionContainersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionContainers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MigrationItemReplicationMigrationItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, takeToken, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MigrationItemReplicationMigrationItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, takeToken, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MigrationItemResource(Client, MigrationItemData.DeserializeMigrationItemData(e)), MigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetMigrationItems", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MigrationItemResource(Client, MigrationItemData.DeserializeMigrationItemData(e)), MigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetMigrationItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MigrationItemReplicationMigrationItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, takeToken, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MigrationItemReplicationMigrationItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, takeToken, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MigrationItemResource(Client, MigrationItemData.DeserializeMigrationItemData(e)), MigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetMigrationItems", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MigrationItemResource(Client, MigrationItemData.DeserializeMigrationItemData(e)), MigrationItemReplicationMigrationItemsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetMigrationItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReplicationProtectedItemRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReplicationProtectedItemRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReplicationProtectedItemResource(Client, ReplicationProtectedItemData.DeserializeReplicationProtectedItemData(e)), ReplicationProtectedItemClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetReplicationProtectedItems", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReplicationProtectedItemResource(Client, ReplicationProtectedItemData.DeserializeReplicationProtectedItemData(e)), ReplicationProtectedItemClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetReplicationProtectedItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReplicationProtectedItemRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReplicationProtectedItemRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName, skipToken, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReplicationProtectedItemResource(Client, ReplicationProtectedItemData.DeserializeReplicationProtectedItemData(e)), ReplicationProtectedItemClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetReplicationProtectedItems", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReplicationProtectedItemResource(Client, ReplicationProtectedItemData.DeserializeReplicationProtectedItemData(e)), ReplicationProtectedItemClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetReplicationProtectedItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerMappingResource(Client, ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(e)), ProtectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionContainerMappings", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerMappingResource(Client, ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(e)), ProtectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionContainerMappings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProtectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerMappingResource(Client, ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(e)), ProtectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionContainerMappings", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerMappingResource(Client, ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(e)), ProtectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetProtectionContainerMappings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesProviderResource(Client, RecoveryServicesProviderData.DeserializeRecoveryServicesProviderData(e)), RecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetRecoveryServicesProviders", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesProviderResource(Client, RecoveryServicesProviderData.DeserializeRecoveryServicesProviderData(e)), RecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetRecoveryServicesProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RecoveryServicesProviderReplicationRecoveryServicesProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesProviderResource(Client, RecoveryServicesProviderData.DeserializeRecoveryServicesProviderData(e)), RecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetRecoveryServicesProviders", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesProviderResource(Client, RecoveryServicesProviderData.DeserializeRecoveryServicesProviderData(e)), RecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetRecoveryServicesProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageClassificationReplicationStorageClassificationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageClassificationReplicationStorageClassificationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationResource(Client, StorageClassificationData.DeserializeStorageClassificationData(e)), StorageClassificationReplicationStorageClassificationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetStorageClassifications", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationResource(Client, StorageClassificationData.DeserializeStorageClassificationData(e)), StorageClassificationReplicationStorageClassificationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetStorageClassifications", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageClassificationReplicationStorageClassificationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageClassificationReplicationStorageClassificationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationResource(Client, StorageClassificationData.DeserializeStorageClassificationData(e)), StorageClassificationReplicationStorageClassificationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetStorageClassifications", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationResource(Client, StorageClassificationData.DeserializeStorageClassificationData(e)), StorageClassificationReplicationStorageClassificationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetStorageClassifications", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationMappingResource(Client, StorageClassificationMappingData.DeserializeStorageClassificationMappingData(e)), StorageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetStorageClassificationMappings", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationMappingResource(Client, StorageClassificationMappingData.DeserializeStorageClassificationMappingData(e)), StorageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetStorageClassificationMappings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StorageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageClassificationMappingReplicationStorageClassificationMappingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationMappingResource(Client, StorageClassificationMappingData.DeserializeStorageClassificationMappingData(e)), StorageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetStorageClassificationMappings", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationMappingResource(Client, StorageClassificationMappingData.DeserializeStorageClassificationMappingData(e)), StorageClassificationMappingReplicationStorageClassificationMappingsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetStorageClassificationMappings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VCenterReplicationvCentersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VCenterReplicationvCentersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VCenterResource(Client, VCenterData.DeserializeVCenterData(e)), VCenterReplicationvCentersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetVCenters", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VCenterResource(Client, VCenterData.DeserializeVCenterData(e)), VCenterReplicationvCentersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetVCenters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VCenterReplicationvCentersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VCenterReplicationvCentersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VCenterResource(Client, VCenterData.DeserializeVCenterData(e)), VCenterReplicationvCentersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetVCenters", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VCenterResource(Client, VCenterData.DeserializeVCenterData(e)), VCenterReplicationvCentersClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetVCenters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

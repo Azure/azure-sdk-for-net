@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantPolicyDefinitionPolicyDefinitionsRestClient.CreateListBuiltInRequest(filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantPolicyDefinitionPolicyDefinitionsRestClient.CreateListBuiltInNextPageRequest(nextLink, filter, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TenantPolicyDefinitionResource(Client, PolicyDefinitionData.DeserializePolicyDefinitionData(e)), _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics, Pipeline, "TenantPolicyDefinitionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TenantPolicyDefinitionResource(Client, PolicyDefinitionData.DeserializePolicyDefinitionData(e)), _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics, Pipeline, "TenantPolicyDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantPolicyDefinitionPolicyDefinitionsRestClient.CreateListBuiltInRequest(filter, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantPolicyDefinitionPolicyDefinitionsRestClient.CreateListBuiltInNextPageRequest(nextLink, filter, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantPolicyDefinitionResource(Client, PolicyDefinitionData.DeserializePolicyDefinitionData(e)), _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics, Pipeline, "TenantPolicyDefinitionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantPolicyDefinitionResource(Client, PolicyDefinitionData.DeserializePolicyDefinitionData(e)), _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics, Pipeline, "TenantPolicyDefinitionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

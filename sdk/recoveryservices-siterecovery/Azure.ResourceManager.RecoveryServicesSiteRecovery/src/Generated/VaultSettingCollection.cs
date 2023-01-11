@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vaultSettingReplicationVaultSettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vaultSettingReplicationVaultSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VaultSettingResource(Client, VaultSettingData.DeserializeVaultSettingData(e)), _vaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, "VaultSettingCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VaultSettingResource(Client, VaultSettingData.DeserializeVaultSettingData(e)), _vaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, "VaultSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _vaultSettingReplicationVaultSettingRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _vaultSettingReplicationVaultSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VaultSettingResource(Client, VaultSettingData.DeserializeVaultSettingData(e)), _vaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, "VaultSettingCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VaultSettingResource(Client, VaultSettingData.DeserializeVaultSettingData(e)), _vaultSettingReplicationVaultSettingClientDiagnostics, Pipeline, "VaultSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

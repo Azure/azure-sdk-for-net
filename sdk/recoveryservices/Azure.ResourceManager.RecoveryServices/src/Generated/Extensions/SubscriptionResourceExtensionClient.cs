@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VaultRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VaultRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VaultResource(Client, VaultData.DeserializeVaultData(e)), VaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVaults", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VaultResource(Client, VaultData.DeserializeVaultData(e)), VaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVaults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VaultRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VaultRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VaultResource(Client, VaultData.DeserializeVaultData(e)), VaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVaults", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VaultResource(Client, VaultData.DeserializeVaultData(e)), VaultClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVaults", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _regulatoryComplianceControlRestClient.CreateListRequest(Id.SubscriptionId, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _regulatoryComplianceControlRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RegulatoryComplianceControlResource(Client, RegulatoryComplianceControlData.DeserializeRegulatoryComplianceControlData(e)), _regulatoryComplianceControlClientDiagnostics, Pipeline, "RegulatoryComplianceControlCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RegulatoryComplianceControlResource(Client, RegulatoryComplianceControlData.DeserializeRegulatoryComplianceControlData(e)), _regulatoryComplianceControlClientDiagnostics, Pipeline, "RegulatoryComplianceControlCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _regulatoryComplianceControlRestClient.CreateListRequest(Id.SubscriptionId, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _regulatoryComplianceControlRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RegulatoryComplianceControlResource(Client, RegulatoryComplianceControlData.DeserializeRegulatoryComplianceControlData(e)), _regulatoryComplianceControlClientDiagnostics, Pipeline, "RegulatoryComplianceControlCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RegulatoryComplianceControlResource(Client, RegulatoryComplianceControlData.DeserializeRegulatoryComplianceControlData(e)), _regulatoryComplianceControlClientDiagnostics, Pipeline, "RegulatoryComplianceControlCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

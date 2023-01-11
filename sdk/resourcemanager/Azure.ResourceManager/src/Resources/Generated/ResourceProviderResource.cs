@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Resources
         public virtual AsyncPageable<ProviderPermission> ProviderPermissionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateProviderPermissionsRequest(Id.SubscriptionId, Id.Provider);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ProviderPermission.DeserializeProviderPermission, _resourceProviderProvidersClientDiagnostics, Pipeline, "ResourceProviderResource.ProviderPermissions", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ProviderPermission.DeserializeProviderPermission, _resourceProviderProvidersClientDiagnostics, Pipeline, "ResourceProviderResource.ProviderPermissions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Resources
         public virtual Pageable<ProviderPermission> ProviderPermissions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateProviderPermissionsRequest(Id.SubscriptionId, Id.Provider);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ProviderPermission.DeserializeProviderPermission, _resourceProviderProvidersClientDiagnostics, Pipeline, "ResourceProviderResource.ProviderPermissions", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ProviderPermission.DeserializeProviderPermission, _resourceProviderProvidersClientDiagnostics, Pipeline, "ResourceProviderResource.ProviderPermissions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Resources
         public virtual AsyncPageable<ProviderResourceType> GetProviderResourceTypesAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _providerResourceTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.Provider, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ProviderResourceType.DeserializeProviderResourceType, _providerResourceTypesClientDiagnostics, Pipeline, "ResourceProviderResource.GetProviderResourceTypes", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ProviderResourceType.DeserializeProviderResourceType, _providerResourceTypesClientDiagnostics, Pipeline, "ResourceProviderResource.GetProviderResourceTypes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Resources
         public virtual Pageable<ProviderResourceType> GetProviderResourceTypes(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _providerResourceTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.Provider, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ProviderResourceType.DeserializeProviderResourceType, _providerResourceTypesClientDiagnostics, Pipeline, "ResourceProviderResource.GetProviderResourceTypes", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ProviderResourceType.DeserializeProviderResourceType, _providerResourceTypesClientDiagnostics, Pipeline, "ResourceProviderResource.GetProviderResourceTypes", "value", null, cancellationToken);
         }
     }
 }

@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSparkConfigurationSparkConfigurationsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSparkConfigurationSparkConfigurationsRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseSparkConfigurationResource(Client, SynapseSparkConfigurationData.DeserializeSynapseSparkConfigurationData(e)), _synapseSparkConfigurationSparkConfigurationsClientDiagnostics, Pipeline, "SynapseSparkConfigurationCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseSparkConfigurationResource(Client, SynapseSparkConfigurationData.DeserializeSynapseSparkConfigurationData(e)), _synapseSparkConfigurationSparkConfigurationsClientDiagnostics, Pipeline, "SynapseSparkConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseSparkConfigurationSparkConfigurationsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseSparkConfigurationSparkConfigurationsRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseSparkConfigurationResource(Client, SynapseSparkConfigurationData.DeserializeSynapseSparkConfigurationData(e)), _synapseSparkConfigurationSparkConfigurationsClientDiagnostics, Pipeline, "SynapseSparkConfigurationCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseSparkConfigurationResource(Client, SynapseSparkConfigurationData.DeserializeSynapseSparkConfigurationData(e)), _synapseSparkConfigurationSparkConfigurationsClientDiagnostics, Pipeline, "SynapseSparkConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

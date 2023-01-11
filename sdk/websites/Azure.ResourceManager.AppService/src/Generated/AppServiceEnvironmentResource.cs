@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateListCapacitiesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceEnvironmentRestClient.CreateListCapacitiesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StampCapacity.DeserializeStampCapacity, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetCapacities", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StampCapacity.DeserializeStampCapacity, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetCapacities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateListCapacitiesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceEnvironmentRestClient.CreateListCapacitiesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StampCapacity.DeserializeStampCapacity, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetCapacities", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StampCapacity.DeserializeStampCapacity, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetCapacities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.AppService
         public virtual AsyncPageable<HostingEnvironmentDiagnostics> GetDiagnosticsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateListDiagnosticsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, HostingEnvironmentDiagnostics.DeserializeHostingEnvironmentDiagnostics, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetDiagnostics", "", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, HostingEnvironmentDiagnostics.DeserializeHostingEnvironmentDiagnostics, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetDiagnostics", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.AppService
         public virtual Pageable<HostingEnvironmentDiagnostics> GetDiagnostics(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateListDiagnosticsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, HostingEnvironmentDiagnostics.DeserializeHostingEnvironmentDiagnostics, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetDiagnostics", "", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, HostingEnvironmentDiagnostics.DeserializeHostingEnvironmentDiagnostics, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetDiagnostics", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateGetInboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceEnvironmentRestClient.CreateGetInboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, InboundEnvironmentEndpoint.DeserializeInboundEnvironmentEndpoint, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetInboundNetworkDependenciesEndpoints", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, InboundEnvironmentEndpoint.DeserializeInboundEnvironmentEndpoint, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetInboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateGetInboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceEnvironmentRestClient.CreateGetInboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, InboundEnvironmentEndpoint.DeserializeInboundEnvironmentEndpoint, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetInboundNetworkDependenciesEndpoints", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, InboundEnvironmentEndpoint.DeserializeInboundEnvironmentEndpoint, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetInboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.AppService
         public virtual AsyncPageable<AppServiceOperation> GetOperationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateListOperationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppServiceOperation.DeserializeAppServiceOperation, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetOperations", "", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppServiceOperation.DeserializeAppServiceOperation, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetOperations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.AppService
         public virtual Pageable<AppServiceOperation> GetOperations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateListOperationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, AppServiceOperation.DeserializeAppServiceOperation, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetOperations", "", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AppServiceOperation.DeserializeAppServiceOperation, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetOperations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateGetOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceEnvironmentRestClient.CreateGetOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateGetOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceEnvironmentRestClient.CreateGetOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.AppService
         public virtual AsyncPageable<AppServicePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetPrivateLinkResources", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.AppService
         public virtual Pageable<AppServicePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetPrivateLinkResources", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AppServicePrivateLinkResourceData.DeserializeAppServicePrivateLinkResourceData, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateListAppServicePlansRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceEnvironmentRestClient.CreateListAppServicePlansNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppServicePlanResource(Client, AppServicePlanData.DeserializeAppServicePlanData(e)), _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetAppServicePlans", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppServicePlanResource(Client, AppServicePlanData.DeserializeAppServicePlanData(e)), _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetAppServicePlans", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateListAppServicePlansRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceEnvironmentRestClient.CreateListAppServicePlansNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppServicePlanResource(Client, AppServicePlanData.DeserializeAppServicePlanData(e)), _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetAppServicePlans", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppServicePlanResource(Client, AppServicePlanData.DeserializeAppServicePlanData(e)), _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetAppServicePlans", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceEnvironmentRestClient.CreateListUsagesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CsmUsageQuota.DeserializeCsmUsageQuota, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetUsages", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CsmUsageQuota.DeserializeCsmUsageQuota, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceEnvironmentRestClient.CreateListUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appServiceEnvironmentRestClient.CreateListUsagesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CsmUsageQuota.DeserializeCsmUsageQuota, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetUsages", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CsmUsageQuota.DeserializeCsmUsageQuota, _appServiceEnvironmentClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -798,7 +798,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recommendationsRestClient.CreateListHistoryForHostingEnvironmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expiredOnly, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recommendationsRestClient.CreateListHistoryForHostingEnvironmentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expiredOnly, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServiceRecommendation.DeserializeAppServiceRecommendation, _recommendationsClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetHistoryForHostingEnvironmentRecommendations", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServiceRecommendation.DeserializeAppServiceRecommendation, _recommendationsClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetHistoryForHostingEnvironmentRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recommendationsRestClient.CreateListHistoryForHostingEnvironmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expiredOnly, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recommendationsRestClient.CreateListHistoryForHostingEnvironmentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expiredOnly, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServiceRecommendation.DeserializeAppServiceRecommendation, _recommendationsClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetHistoryForHostingEnvironmentRecommendations", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServiceRecommendation.DeserializeAppServiceRecommendation, _recommendationsClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetHistoryForHostingEnvironmentRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentRecommendationRecommendationsRestClient.CreateListRecommendedRulesForHostingEnvironmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentRecommendationRecommendationsRestClient.CreateListRecommendedRulesForHostingEnvironmentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServiceRecommendation.DeserializeAppServiceRecommendation, _hostingEnvironmentRecommendationRecommendationsClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetRecommendedRulesForHostingEnvironmentRecommendations", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServiceRecommendation.DeserializeAppServiceRecommendation, _hostingEnvironmentRecommendationRecommendationsClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetRecommendedRulesForHostingEnvironmentRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentRecommendationRecommendationsRestClient.CreateListRecommendedRulesForHostingEnvironmentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentRecommendationRecommendationsRestClient.CreateListRecommendedRulesForHostingEnvironmentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featured, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServiceRecommendation.DeserializeAppServiceRecommendation, _hostingEnvironmentRecommendationRecommendationsClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetRecommendedRulesForHostingEnvironmentRecommendations", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServiceRecommendation.DeserializeAppServiceRecommendation, _hostingEnvironmentRecommendationRecommendationsClientDiagnostics, Pipeline, "AppServiceEnvironmentResource.GetRecommendedRulesForHostingEnvironmentRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

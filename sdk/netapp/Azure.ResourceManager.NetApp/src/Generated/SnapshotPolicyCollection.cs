@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual AsyncPageable<SnapshotPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _snapshotPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SnapshotPolicyResource(Client, SnapshotPolicyData.DeserializeSnapshotPolicyData(e)), _snapshotPolicyClientDiagnostics, Pipeline, "SnapshotPolicyCollection.GetAll", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SnapshotPolicyResource(Client, SnapshotPolicyData.DeserializeSnapshotPolicyData(e)), _snapshotPolicyClientDiagnostics, Pipeline, "SnapshotPolicyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.NetApp
         public virtual Pageable<SnapshotPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _snapshotPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SnapshotPolicyResource(Client, SnapshotPolicyData.DeserializeSnapshotPolicyData(e)), _snapshotPolicyClientDiagnostics, Pipeline, "SnapshotPolicyCollection.GetAll", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SnapshotPolicyResource(Client, SnapshotPolicyData.DeserializeSnapshotPolicyData(e)), _snapshotPolicyClientDiagnostics, Pipeline, "SnapshotPolicyCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

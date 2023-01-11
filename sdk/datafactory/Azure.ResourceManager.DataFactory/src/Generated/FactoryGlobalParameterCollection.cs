@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryGlobalParameterGlobalParametersRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _factoryGlobalParameterGlobalParametersRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FactoryGlobalParameterResource(Client, FactoryGlobalParameterData.DeserializeFactoryGlobalParameterData(e)), _factoryGlobalParameterGlobalParametersClientDiagnostics, Pipeline, "FactoryGlobalParameterCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FactoryGlobalParameterResource(Client, FactoryGlobalParameterData.DeserializeFactoryGlobalParameterData(e)), _factoryGlobalParameterGlobalParametersClientDiagnostics, Pipeline, "FactoryGlobalParameterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _factoryGlobalParameterGlobalParametersRestClient.CreateListByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _factoryGlobalParameterGlobalParametersRestClient.CreateListByFactoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FactoryGlobalParameterResource(Client, FactoryGlobalParameterData.DeserializeFactoryGlobalParameterData(e)), _factoryGlobalParameterGlobalParametersClientDiagnostics, Pipeline, "FactoryGlobalParameterCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FactoryGlobalParameterResource(Client, FactoryGlobalParameterData.DeserializeFactoryGlobalParameterData(e)), _factoryGlobalParameterGlobalParametersClientDiagnostics, Pipeline, "FactoryGlobalParameterCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

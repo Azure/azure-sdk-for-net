@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantAssessmentMetadataAssessmentsMetadataRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantAssessmentMetadataAssessmentsMetadataRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TenantAssessmentMetadataResource(Client, SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(e)), _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics, Pipeline, "TenantAssessmentMetadataCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TenantAssessmentMetadataResource(Client, SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(e)), _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics, Pipeline, "TenantAssessmentMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantAssessmentMetadataAssessmentsMetadataRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantAssessmentMetadataAssessmentsMetadataRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantAssessmentMetadataResource(Client, SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(e)), _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics, Pipeline, "TenantAssessmentMetadataCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantAssessmentMetadataResource(Client, SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(e)), _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics, Pipeline, "TenantAssessmentMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

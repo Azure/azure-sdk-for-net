@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualNetworkGatewayConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualNetworkGatewayConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkGatewayConnectionResource(Client, VirtualNetworkGatewayConnectionData.DeserializeVirtualNetworkGatewayConnectionData(e)), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, "VirtualNetworkGatewayConnectionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkGatewayConnectionResource(Client, VirtualNetworkGatewayConnectionData.DeserializeVirtualNetworkGatewayConnectionData(e)), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, "VirtualNetworkGatewayConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualNetworkGatewayConnectionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualNetworkGatewayConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkGatewayConnectionResource(Client, VirtualNetworkGatewayConnectionData.DeserializeVirtualNetworkGatewayConnectionData(e)), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, "VirtualNetworkGatewayConnectionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkGatewayConnectionResource(Client, VirtualNetworkGatewayConnectionData.DeserializeVirtualNetworkGatewayConnectionData(e)), _virtualNetworkGatewayConnectionClientDiagnostics, Pipeline, "VirtualNetworkGatewayConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

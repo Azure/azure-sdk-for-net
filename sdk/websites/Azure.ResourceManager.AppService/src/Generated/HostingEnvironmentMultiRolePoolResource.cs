@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.AppService
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateListMultiRolePoolInstanceMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, instance);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateListMultiRolePoolInstanceMetricDefinitionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, instance);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceMetricDefinition.DeserializeResourceMetricDefinition, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentMultiRolePoolResource.GetMultiRolePoolInstanceMetricDefinitions", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceMetricDefinition.DeserializeResourceMetricDefinition, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentMultiRolePoolResource.GetMultiRolePoolInstanceMetricDefinitions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppService
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateListMultiRolePoolInstanceMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, instance);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateListMultiRolePoolInstanceMetricDefinitionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, instance);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceMetricDefinition.DeserializeResourceMetricDefinition, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentMultiRolePoolResource.GetMultiRolePoolInstanceMetricDefinitions", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceMetricDefinition.DeserializeResourceMetricDefinition, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentMultiRolePoolResource.GetMultiRolePoolInstanceMetricDefinitions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateListMultiRoleMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateListMultiRoleMetricDefinitionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceMetricDefinition.DeserializeResourceMetricDefinition, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentMultiRolePoolResource.GetMultiRoleMetricDefinitions", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceMetricDefinition.DeserializeResourceMetricDefinition, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentMultiRolePoolResource.GetMultiRoleMetricDefinitions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateListMultiRoleMetricDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateListMultiRoleMetricDefinitionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceMetricDefinition.DeserializeResourceMetricDefinition, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentMultiRolePoolResource.GetMultiRoleMetricDefinitions", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceMetricDefinition.DeserializeResourceMetricDefinition, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentMultiRolePoolResource.GetMultiRoleMetricDefinitions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateListMultiRolePoolSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateListMultiRolePoolSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServicePoolSkuInfo.DeserializeAppServicePoolSkuInfo, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentMultiRolePoolResource.GetMultiRolePoolSkus", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServicePoolSkuInfo.DeserializeAppServicePoolSkuInfo, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentMultiRolePoolResource.GetMultiRolePoolSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateListMultiRolePoolSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateListMultiRolePoolSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServicePoolSkuInfo.DeserializeAppServicePoolSkuInfo, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentMultiRolePoolResource.GetMultiRolePoolSkus", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServicePoolSkuInfo.DeserializeAppServicePoolSkuInfo, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentMultiRolePoolResource.GetMultiRolePoolSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateListMultiRoleUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateListMultiRoleUsagesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServiceUsage.DeserializeAppServiceUsage, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentMultiRolePoolResource.GetMultiRoleUsages", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServiceUsage.DeserializeAppServiceUsage, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentMultiRolePoolResource.GetMultiRoleUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateListMultiRoleUsagesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsRestClient.CreateListMultiRoleUsagesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServiceUsage.DeserializeAppServiceUsage, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentMultiRolePoolResource.GetMultiRoleUsages", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServiceUsage.DeserializeAppServiceUsage, _hostingEnvironmentMultiRolePoolAppServiceEnvironmentsClientDiagnostics, Pipeline, "HostingEnvironmentMultiRolePoolResource.GetMultiRoleUsages", "value", "nextLink", cancellationToken);
         }
     }
 }

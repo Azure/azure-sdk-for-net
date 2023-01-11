@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual AsyncPageable<Report> GetReportsByConfigurationProfileAssignmentsAsync(string vmName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => reportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, configurationProfileAssignmentName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Report.DeserializeReport, reportsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetReportsByConfigurationProfileAssignments", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Report.DeserializeReport, reportsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetReportsByConfigurationProfileAssignments", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual Pageable<Report> GetReportsByConfigurationProfileAssignments(string vmName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => reportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, configurationProfileAssignmentName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, Report.DeserializeReport, reportsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetReportsByConfigurationProfileAssignments", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, Report.DeserializeReport, reportsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetReportsByConfigurationProfileAssignments", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual AsyncPageable<Report> GetHCRPReportsByConfigurationProfileAssignmentsAsync(string machineName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HCRPReportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, machineName, configurationProfileAssignmentName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Report.DeserializeReport, HCRPReportsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetHCRPReportsByConfigurationProfileAssignments", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Report.DeserializeReport, HCRPReportsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetHCRPReportsByConfigurationProfileAssignments", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual Pageable<Report> GetHCRPReportsByConfigurationProfileAssignments(string machineName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HCRPReportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, machineName, configurationProfileAssignmentName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, Report.DeserializeReport, HCRPReportsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetHCRPReportsByConfigurationProfileAssignments", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, Report.DeserializeReport, HCRPReportsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetHCRPReportsByConfigurationProfileAssignments", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual AsyncPageable<Report> GetHCIReportsByConfigurationProfileAssignmentsAsync(string clusterName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HCIReportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, configurationProfileAssignmentName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Report.DeserializeReport, HCIReportsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetHCIReportsByConfigurationProfileAssignments", "value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Report.DeserializeReport, HCIReportsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetHCIReportsByConfigurationProfileAssignments", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Automanage
         public virtual Pageable<Report> GetHCIReportsByConfigurationProfileAssignments(string clusterName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HCIReportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, configurationProfileAssignmentName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, Report.DeserializeReport, HCIReportsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetHCIReportsByConfigurationProfileAssignments", "value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, Report.DeserializeReport, HCIReportsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetHCIReportsByConfigurationProfileAssignments", "value", null, cancellationToken);
         }
     }
 }

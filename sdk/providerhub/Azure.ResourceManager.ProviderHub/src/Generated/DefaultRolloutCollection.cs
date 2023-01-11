@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRolloutRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _defaultRolloutRestClient.CreateListByProviderRegistrationNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DefaultRolloutResource(Client, DefaultRolloutData.DeserializeDefaultRolloutData(e)), _defaultRolloutClientDiagnostics, Pipeline, "DefaultRolloutCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DefaultRolloutResource(Client, DefaultRolloutData.DeserializeDefaultRolloutData(e)), _defaultRolloutClientDiagnostics, Pipeline, "DefaultRolloutCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _defaultRolloutRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _defaultRolloutRestClient.CreateListByProviderRegistrationNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DefaultRolloutResource(Client, DefaultRolloutData.DeserializeDefaultRolloutData(e)), _defaultRolloutClientDiagnostics, Pipeline, "DefaultRolloutCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DefaultRolloutResource(Client, DefaultRolloutData.DeserializeDefaultRolloutData(e)), _defaultRolloutClientDiagnostics, Pipeline, "DefaultRolloutCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

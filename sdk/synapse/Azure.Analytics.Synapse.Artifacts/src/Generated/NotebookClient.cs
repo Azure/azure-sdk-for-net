@@ -103,40 +103,36 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<NotebookResource> GetNotebooksByWorkspaceAsync(CancellationToken cancellationToken = default)
         {
-            var context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetNotebooksByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetNotebooksByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NotebookResource.DeserializeNotebookResource, _clientDiagnostics, _pipeline, "NotebookClient.GetNotebooksByWorkspace", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NotebookResource.DeserializeNotebookResource, _clientDiagnostics, _pipeline, "NotebookClient.GetNotebooksByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists Notebooks. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<NotebookResource> GetNotebooksByWorkspace(CancellationToken cancellationToken = default)
         {
-            var context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetNotebooksByWorkspaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetNotebooksByWorkspaceNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NotebookResource.DeserializeNotebookResource, _clientDiagnostics, _pipeline, "NotebookClient.GetNotebooksByWorkspace", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NotebookResource.DeserializeNotebookResource, _clientDiagnostics, _pipeline, "NotebookClient.GetNotebooksByWorkspace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists a summary of Notebooks. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<NotebookResource> GetNotebookSummaryByWorkSpaceAsync(CancellationToken cancellationToken = default)
         {
-            var context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetNotebookSummaryByWorkSpaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetNotebookSummaryByWorkSpaceNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NotebookResource.DeserializeNotebookResource, _clientDiagnostics, _pipeline, "NotebookClient.GetNotebookSummaryByWorkSpace", "value", "nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NotebookResource.DeserializeNotebookResource, _clientDiagnostics, _pipeline, "NotebookClient.GetNotebookSummaryByWorkSpace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Lists a summary of Notebooks. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<NotebookResource> GetNotebookSummaryByWorkSpace(CancellationToken cancellationToken = default)
         {
-            var context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestClient.CreateGetNotebookSummaryByWorkSpaceRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RestClient.CreateGetNotebookSummaryByWorkSpaceNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NotebookResource.DeserializeNotebookResource, _clientDiagnostics, _pipeline, "NotebookClient.GetNotebookSummaryByWorkSpace", "value", "nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NotebookResource.DeserializeNotebookResource, _clientDiagnostics, _pipeline, "NotebookClient.GetNotebookSummaryByWorkSpace", "value", "nextLink", cancellationToken);
         }
 
         /// <summary> Creates or updates a Note Book. </summary>

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataFactoryFactoriesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataFactoryFactoriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataFactoryResource(Client, DataFactoryData.DeserializeDataFactoryData(e)), DataFactoryFactoriesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataFactories", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataFactoryResource(Client, DataFactoryData.DeserializeDataFactoryData(e)), DataFactoryFactoriesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataFactories", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataFactoryFactoriesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataFactoryFactoriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataFactoryResource(Client, DataFactoryData.DeserializeDataFactoryData(e)), DataFactoryFactoriesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataFactories", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataFactoryResource(Client, DataFactoryData.DeserializeDataFactoryData(e)), DataFactoryFactoriesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataFactories", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

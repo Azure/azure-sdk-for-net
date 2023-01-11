@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _encryptionProtectorRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _encryptionProtectorRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EncryptionProtectorResource(Client, EncryptionProtectorData.DeserializeEncryptionProtectorData(e)), _encryptionProtectorClientDiagnostics, Pipeline, "EncryptionProtectorCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EncryptionProtectorResource(Client, EncryptionProtectorData.DeserializeEncryptionProtectorData(e)), _encryptionProtectorClientDiagnostics, Pipeline, "EncryptionProtectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _encryptionProtectorRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _encryptionProtectorRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EncryptionProtectorResource(Client, EncryptionProtectorData.DeserializeEncryptionProtectorData(e)), _encryptionProtectorClientDiagnostics, Pipeline, "EncryptionProtectorCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EncryptionProtectorResource(Client, EncryptionProtectorData.DeserializeEncryptionProtectorData(e)), _encryptionProtectorClientDiagnostics, Pipeline, "EncryptionProtectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

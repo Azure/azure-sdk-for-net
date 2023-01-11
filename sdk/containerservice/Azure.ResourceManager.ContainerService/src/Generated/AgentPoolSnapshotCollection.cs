@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _agentPoolSnapshotSnapshotsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _agentPoolSnapshotSnapshotsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AgentPoolSnapshotResource(Client, AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(e)), _agentPoolSnapshotSnapshotsClientDiagnostics, Pipeline, "AgentPoolSnapshotCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AgentPoolSnapshotResource(Client, AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(e)), _agentPoolSnapshotSnapshotsClientDiagnostics, Pipeline, "AgentPoolSnapshotCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _agentPoolSnapshotSnapshotsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _agentPoolSnapshotSnapshotsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AgentPoolSnapshotResource(Client, AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(e)), _agentPoolSnapshotSnapshotsClientDiagnostics, Pipeline, "AgentPoolSnapshotCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AgentPoolSnapshotResource(Client, AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(e)), _agentPoolSnapshotSnapshotsClientDiagnostics, Pipeline, "AgentPoolSnapshotCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

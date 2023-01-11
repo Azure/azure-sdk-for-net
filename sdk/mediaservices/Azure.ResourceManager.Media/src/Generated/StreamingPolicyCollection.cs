@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingPolicyResource(Client, StreamingPolicyData.DeserializeStreamingPolicyData(e)), _streamingPolicyClientDiagnostics, Pipeline, "StreamingPolicyCollection.GetAll", "value", "@odata.nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingPolicyResource(Client, StreamingPolicyData.DeserializeStreamingPolicyData(e)), _streamingPolicyClientDiagnostics, Pipeline, "StreamingPolicyCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Media
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingPolicyResource(Client, StreamingPolicyData.DeserializeStreamingPolicyData(e)), _streamingPolicyClientDiagnostics, Pipeline, "StreamingPolicyCollection.GetAll", "value", "@odata.nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingPolicyResource(Client, StreamingPolicyData.DeserializeStreamingPolicyData(e)), _streamingPolicyClientDiagnostics, Pipeline, "StreamingPolicyCollection.GetAll", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>

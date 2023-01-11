@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeAnalyticsStorageContainerStorageAccountsRestClient.CreateListSasTokensRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeAnalyticsStorageContainerStorageAccountsRestClient.CreateListSasTokensNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataLakeAnalyticsSasTokenInformation.DeserializeDataLakeAnalyticsSasTokenInformation, _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics, Pipeline, "DataLakeAnalyticsStorageContainerResource.GetSasTokens", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataLakeAnalyticsSasTokenInformation.DeserializeDataLakeAnalyticsSasTokenInformation, _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics, Pipeline, "DataLakeAnalyticsStorageContainerResource.GetSasTokens", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeAnalyticsStorageContainerStorageAccountsRestClient.CreateListSasTokensRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeAnalyticsStorageContainerStorageAccountsRestClient.CreateListSasTokensNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataLakeAnalyticsSasTokenInformation.DeserializeDataLakeAnalyticsSasTokenInformation, _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics, Pipeline, "DataLakeAnalyticsStorageContainerResource.GetSasTokens", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataLakeAnalyticsSasTokenInformation.DeserializeDataLakeAnalyticsSasTokenInformation, _dataLakeAnalyticsStorageContainerStorageAccountsClientDiagnostics, Pipeline, "DataLakeAnalyticsStorageContainerResource.GetSasTokens", "value", "nextLink", cancellationToken);
         }
     }
 }

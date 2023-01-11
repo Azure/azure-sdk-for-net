@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataLakeStore
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataLakeStoreTrustedIdProviderResource(Client, DataLakeStoreTrustedIdProviderData.DeserializeDataLakeStoreTrustedIdProviderData(e)), _dataLakeStoreTrustedIdProviderTrustedIdProvidersClientDiagnostics, Pipeline, "DataLakeStoreTrustedIdProviderCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataLakeStoreTrustedIdProviderResource(Client, DataLakeStoreTrustedIdProviderData.DeserializeDataLakeStoreTrustedIdProviderData(e)), _dataLakeStoreTrustedIdProviderTrustedIdProvidersClientDiagnostics, Pipeline, "DataLakeStoreTrustedIdProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataLakeStore
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeStoreTrustedIdProviderTrustedIdProvidersRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataLakeStoreTrustedIdProviderResource(Client, DataLakeStoreTrustedIdProviderData.DeserializeDataLakeStoreTrustedIdProviderData(e)), _dataLakeStoreTrustedIdProviderTrustedIdProvidersClientDiagnostics, Pipeline, "DataLakeStoreTrustedIdProviderCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataLakeStoreTrustedIdProviderResource(Client, DataLakeStoreTrustedIdProviderData.DeserializeDataLakeStoreTrustedIdProviderData(e)), _dataLakeStoreTrustedIdProviderTrustedIdProvidersClientDiagnostics, Pipeline, "DataLakeStoreTrustedIdProviderCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

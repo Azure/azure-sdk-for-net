@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorExperimentExperimentsRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorExperimentExperimentsRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorExperimentResource(Client, FrontDoorExperimentData.DeserializeFrontDoorExperimentData(e)), _frontDoorExperimentExperimentsClientDiagnostics, Pipeline, "FrontDoorExperimentCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FrontDoorExperimentResource(Client, FrontDoorExperimentData.DeserializeFrontDoorExperimentData(e)), _frontDoorExperimentExperimentsClientDiagnostics, Pipeline, "FrontDoorExperimentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorExperimentExperimentsRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _frontDoorExperimentExperimentsRestClient.CreateListByProfileNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorExperimentResource(Client, FrontDoorExperimentData.DeserializeFrontDoorExperimentData(e)), _frontDoorExperimentExperimentsClientDiagnostics, Pipeline, "FrontDoorExperimentCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FrontDoorExperimentResource(Client, FrontDoorExperimentData.DeserializeFrontDoorExperimentData(e)), _frontDoorExperimentExperimentsClientDiagnostics, Pipeline, "FrontDoorExperimentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

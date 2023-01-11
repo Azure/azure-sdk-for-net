@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         public virtual AsyncPageable<ResourceOperation> GetAvailableOperationsMachineLearningComputesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MachineLearningComputeRestClient.CreateListAvailableOperationsRequest();
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ResourceOperation.DeserializeResourceOperation, MachineLearningComputeClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetAvailableOperationsMachineLearningComputes", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ResourceOperation.DeserializeResourceOperation, MachineLearningComputeClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetAvailableOperationsMachineLearningComputes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         public virtual Pageable<ResourceOperation> GetAvailableOperationsMachineLearningComputes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MachineLearningComputeRestClient.CreateListAvailableOperationsRequest();
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ResourceOperation.DeserializeResourceOperation, MachineLearningComputeClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetAvailableOperationsMachineLearningComputes", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ResourceOperation.DeserializeResourceOperation, MachineLearningComputeClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetAvailableOperationsMachineLearningComputes", "value", null, cancellationToken);
         }
     }
 }

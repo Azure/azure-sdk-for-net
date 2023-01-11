@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Kubernetes
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConnectedClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConnectedClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectedClusterResource(Client, ConnectedClusterData.DeserializeConnectedClusterData(e)), ConnectedClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConnectedClusters", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectedClusterResource(Client, ConnectedClusterData.DeserializeConnectedClusterData(e)), ConnectedClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConnectedClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Kubernetes
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConnectedClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConnectedClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectedClusterResource(Client, ConnectedClusterData.DeserializeConnectedClusterData(e)), ConnectedClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConnectedClusters", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectedClusterResource(Client, ConnectedClusterData.DeserializeConnectedClusterData(e)), ConnectedClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConnectedClusters", "value", "nextLink", cancellationToken);
         }
     }
 }

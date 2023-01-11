@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MySql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlPrivateEndpointConnectionResource(Client, MySqlPrivateEndpointConnectionData.DeserializeMySqlPrivateEndpointConnectionData(e)), _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MySqlPrivateEndpointConnectionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlPrivateEndpointConnectionResource(Client, MySqlPrivateEndpointConnectionData.DeserializeMySqlPrivateEndpointConnectionData(e)), _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MySqlPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.MySql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlPrivateEndpointConnectionResource(Client, MySqlPrivateEndpointConnectionData.DeserializeMySqlPrivateEndpointConnectionData(e)), _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MySqlPrivateEndpointConnectionCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlPrivateEndpointConnectionResource(Client, MySqlPrivateEndpointConnectionData.DeserializeMySqlPrivateEndpointConnectionData(e)), _mySqlPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, "MySqlPrivateEndpointConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

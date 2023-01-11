@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSchemaDatabaseSchemasRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseSchemaDatabaseSchemasRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseSchemaResource(Client, DatabaseSchemaData.DeserializeDatabaseSchemaData(e)), _sqlDatabaseSchemaDatabaseSchemasClientDiagnostics, Pipeline, "SqlDatabaseSchemaCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseSchemaResource(Client, DatabaseSchemaData.DeserializeDatabaseSchemaData(e)), _sqlDatabaseSchemaDatabaseSchemasClientDiagnostics, Pipeline, "SqlDatabaseSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSchemaDatabaseSchemasRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlDatabaseSchemaDatabaseSchemasRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseSchemaResource(Client, DatabaseSchemaData.DeserializeDatabaseSchemaData(e)), _sqlDatabaseSchemaDatabaseSchemasClientDiagnostics, Pipeline, "SqlDatabaseSchemaCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlDatabaseSchemaResource(Client, DatabaseSchemaData.DeserializeDatabaseSchemaData(e)), _sqlDatabaseSchemaDatabaseSchemasClientDiagnostics, Pipeline, "SqlDatabaseSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

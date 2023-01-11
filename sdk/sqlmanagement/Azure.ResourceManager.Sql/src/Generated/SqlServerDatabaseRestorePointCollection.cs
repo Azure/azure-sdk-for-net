@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDatabaseRestorePointRestorePointsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDatabaseRestorePointRestorePointsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerDatabaseRestorePointResource(Client, SqlServerDatabaseRestorePointData.DeserializeSqlServerDatabaseRestorePointData(e)), _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics, Pipeline, "SqlServerDatabaseRestorePointCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerDatabaseRestorePointResource(Client, SqlServerDatabaseRestorePointData.DeserializeSqlServerDatabaseRestorePointData(e)), _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics, Pipeline, "SqlServerDatabaseRestorePointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDatabaseRestorePointRestorePointsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDatabaseRestorePointRestorePointsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerDatabaseRestorePointResource(Client, SqlServerDatabaseRestorePointData.DeserializeSqlServerDatabaseRestorePointData(e)), _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics, Pipeline, "SqlServerDatabaseRestorePointCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerDatabaseRestorePointResource(Client, SqlServerDatabaseRestorePointData.DeserializeSqlServerDatabaseRestorePointData(e)), _sqlServerDatabaseRestorePointRestorePointsClientDiagnostics, Pipeline, "SqlServerDatabaseRestorePointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

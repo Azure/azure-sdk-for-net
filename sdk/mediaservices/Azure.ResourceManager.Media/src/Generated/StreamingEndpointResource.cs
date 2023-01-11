@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Media
         public virtual AsyncPageable<StreamingEndpointSkuInfo> GetSupportedSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingEndpointRestClient.CreateSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, StreamingEndpointSkuInfo.DeserializeStreamingEndpointSkuInfo, _streamingEndpointClientDiagnostics, Pipeline, "StreamingEndpointResource.GetSupportedSkus", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, StreamingEndpointSkuInfo.DeserializeStreamingEndpointSkuInfo, _streamingEndpointClientDiagnostics, Pipeline, "StreamingEndpointResource.GetSupportedSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Media
         public virtual Pageable<StreamingEndpointSkuInfo> GetSupportedSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingEndpointRestClient.CreateSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, StreamingEndpointSkuInfo.DeserializeStreamingEndpointSkuInfo, _streamingEndpointClientDiagnostics, Pipeline, "StreamingEndpointResource.GetSupportedSkus", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, StreamingEndpointSkuInfo.DeserializeStreamingEndpointSkuInfo, _streamingEndpointClientDiagnostics, Pipeline, "StreamingEndpointResource.GetSupportedSkus", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _integrationAccountCertificateRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountCertificateResource(Client, IntegrationAccountCertificateData.DeserializeIntegrationAccountCertificateData(e)), _integrationAccountCertificateClientDiagnostics, Pipeline, "IntegrationAccountCertificateCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountCertificateResource(Client, IntegrationAccountCertificateData.DeserializeIntegrationAccountCertificateData(e)), _integrationAccountCertificateClientDiagnostics, Pipeline, "IntegrationAccountCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _integrationAccountCertificateRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountCertificateResource(Client, IntegrationAccountCertificateData.DeserializeIntegrationAccountCertificateData(e)), _integrationAccountCertificateClientDiagnostics, Pipeline, "IntegrationAccountCertificateCollection.GetAll", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountCertificateResource(Client, IntegrationAccountCertificateData.DeserializeIntegrationAccountCertificateData(e)), _integrationAccountCertificateClientDiagnostics, Pipeline, "IntegrationAccountCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

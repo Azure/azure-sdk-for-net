@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Subscription
         public virtual AsyncPageable<SubscriptionAliasResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionAliasAliasRestClient.CreateListRequest();
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SubscriptionAliasResource(Client, SubscriptionAliasData.DeserializeSubscriptionAliasData(e)), _subscriptionAliasAliasClientDiagnostics, Pipeline, "SubscriptionAliasCollection.GetAll", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SubscriptionAliasResource(Client, SubscriptionAliasData.DeserializeSubscriptionAliasData(e)), _subscriptionAliasAliasClientDiagnostics, Pipeline, "SubscriptionAliasCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Subscription
         public virtual Pageable<SubscriptionAliasResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionAliasAliasRestClient.CreateListRequest();
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SubscriptionAliasResource(Client, SubscriptionAliasData.DeserializeSubscriptionAliasData(e)), _subscriptionAliasAliasClientDiagnostics, Pipeline, "SubscriptionAliasCollection.GetAll", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SubscriptionAliasResource(Client, SubscriptionAliasData.DeserializeSubscriptionAliasData(e)), _subscriptionAliasAliasClientDiagnostics, Pipeline, "SubscriptionAliasCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

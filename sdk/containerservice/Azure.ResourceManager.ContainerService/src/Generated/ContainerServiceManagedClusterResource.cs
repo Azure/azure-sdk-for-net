@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceManagedClusterManagedClustersRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceManagedClusterManagedClustersRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerServiceOutboundEnvironmentEndpoint.DeserializeContainerServiceOutboundEnvironmentEndpoint, _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerServiceOutboundEnvironmentEndpoint.DeserializeContainerServiceOutboundEnvironmentEndpoint, _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerServiceManagedClusterManagedClustersRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerServiceManagedClusterManagedClustersRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerServiceOutboundEnvironmentEndpoint.DeserializeContainerServiceOutboundEnvironmentEndpoint, _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerServiceOutboundEnvironmentEndpoint.DeserializeContainerServiceOutboundEnvironmentEndpoint, _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.ContainerService
         public virtual AsyncPageable<ContainerServicePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData, _privateLinkResourcesClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetPrivateLinkResources", "Value", null);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData, _privateLinkResourcesClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.ContainerService
         public virtual Pageable<ContainerServicePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData, _privateLinkResourcesClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetPrivateLinkResources", "Value", null);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData, _privateLinkResourcesClientDiagnostics, Pipeline, "ContainerServiceManagedClusterResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>

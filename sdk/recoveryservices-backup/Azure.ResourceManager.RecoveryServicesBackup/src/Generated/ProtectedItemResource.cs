@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryPointsRecommendedForMoveRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryPointsRecommendedForMoveRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecoveryPointResource(Client, RecoveryPointResourceData.DeserializeRecoveryPointResourceData(e)), _recoveryPointsRecommendedForMoveClientDiagnostics, Pipeline, "ProtectedItemResource.GetRecoveryPointsRecommendedForMoves", "value", "nextLink");
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecoveryPointResource(Client, RecoveryPointResourceData.DeserializeRecoveryPointResourceData(e)), _recoveryPointsRecommendedForMoveClientDiagnostics, Pipeline, "ProtectedItemResource.GetRecoveryPointsRecommendedForMoves", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _recoveryPointsRecommendedForMoveRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoveryPointsRecommendedForMoveRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecoveryPointResource(Client, RecoveryPointResourceData.DeserializeRecoveryPointResourceData(e)), _recoveryPointsRecommendedForMoveClientDiagnostics, Pipeline, "ProtectedItemResource.GetRecoveryPointsRecommendedForMoves", "value", "nextLink");
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecoveryPointResource(Client, RecoveryPointResourceData.DeserializeRecoveryPointResourceData(e)), _recoveryPointsRecommendedForMoveClientDiagnostics, Pipeline, "ProtectedItemResource.GetRecoveryPointsRecommendedForMoves", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
