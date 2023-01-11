@@ -13,8 +13,8 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(AzureSynapseArtifactsLinkedServiceConverter))]
-    public partial class AzureSynapseArtifactsLinkedService : IUtf8JsonSerializable
+    [JsonConverter(typeof(PowerBIWorkspaceLinkedServiceConverter))]
+    public partial class PowerBIWorkspaceLinkedService : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -54,18 +54,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
-            writer.WritePropertyName("endpoint");
-            writer.WriteObjectValue(Endpoint);
-            if (Optional.IsDefined(Authentication))
-            {
-                writer.WritePropertyName("authentication");
-                writer.WriteObjectValue(Authentication);
-            }
-            if (Optional.IsDefined(WorkspaceResourceId))
-            {
-                writer.WritePropertyName("workspaceResourceId");
-                writer.WriteObjectValue(WorkspaceResourceId);
-            }
+            writer.WritePropertyName("workspaceId");
+            writer.WriteStringValue(WorkspaceId);
+            writer.WritePropertyName("tenantId");
+            writer.WriteStringValue(TenantId);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -75,16 +67,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureSynapseArtifactsLinkedService DeserializeAzureSynapseArtifactsLinkedService(JsonElement element)
+        internal static PowerBIWorkspaceLinkedService DeserializePowerBIWorkspaceLinkedService(JsonElement element)
         {
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
             Optional<IList<object>> annotations = default;
-            object endpoint = default;
-            Optional<object> authentication = default;
-            Optional<object> workspaceResourceId = default;
+            string workspaceId = default;
+            string tenantId = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -148,29 +139,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("endpoint"))
+                        if (property0.NameEquals("workspaceId"))
                         {
-                            endpoint = property0.Value.GetObject();
+                            workspaceId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("authentication"))
+                        if (property0.NameEquals("tenantId"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            authentication = property0.Value.GetObject();
-                            continue;
-                        }
-                        if (property0.NameEquals("workspaceResourceId"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            workspaceResourceId = property0.Value.GetObject();
+                            tenantId = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -179,19 +155,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureSynapseArtifactsLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, endpoint, authentication.Value, workspaceResourceId.Value);
+            return new PowerBIWorkspaceLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, workspaceId, tenantId);
         }
 
-        internal partial class AzureSynapseArtifactsLinkedServiceConverter : JsonConverter<AzureSynapseArtifactsLinkedService>
+        internal partial class PowerBIWorkspaceLinkedServiceConverter : JsonConverter<PowerBIWorkspaceLinkedService>
         {
-            public override void Write(Utf8JsonWriter writer, AzureSynapseArtifactsLinkedService model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, PowerBIWorkspaceLinkedService model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
-            public override AzureSynapseArtifactsLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override PowerBIWorkspaceLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAzureSynapseArtifactsLinkedService(document.RootElement);
+                return DeserializePowerBIWorkspaceLinkedService(document.RootElement);
             }
         }
     }
