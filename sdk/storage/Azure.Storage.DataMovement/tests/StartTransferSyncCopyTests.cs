@@ -233,6 +233,49 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
+        public async Task BlockBlobToBlockBlob_Simple()
+        {
+            // Arrange
+            // Create source local file for checking, and source blob
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync(publicAccessType: Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            string blobName = GetNewBlobName();
+            string originalSourceFile = Path.GetTempFileName();
+            int size = 44160;
+            BlockBlobClient destinationClient = testContainer.Container.GetBlockBlobClient(blobName);
+
+            // Act
+
+            // Create new source block blob.
+            string newSourceFile = Path.GetTempFileName();
+            BlockBlobClient blockBlobClient = await CreateBlockBlob(
+                testContainer.Container,
+                newSourceFile,
+                GetNewBlobName(),
+                size);
+            StorageResource sourceResource = new BlockBlobStorageResource(blockBlobClient);
+            StorageResource destinationResource = new BlockBlobStorageResource(destinationClient);
+            TransferManager transferManager = new TransferManager();
+
+            // Start transfer and await for completion.
+            DataTransfer transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource);
+            //CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            await transfer.AwaitCompletion();
+
+            // Assert
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
+            Assert.IsTrue(await destinationClient.ExistsAsync());
+            // Verify Upload - That we skipped over and didn't reupload something new.
+            using (FileStream fileStream = File.OpenRead(newSourceFile))
+            {
+                await DownloadAndAssertAsync(fileStream, destinationClient);
+            }
+        }
+
+        [RecordedTest]
         public async Task BlockBlobToBlockBlob_SmallChunk()
         {
             long size = Constants.KB;
