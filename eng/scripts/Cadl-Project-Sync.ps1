@@ -99,7 +99,7 @@ if ( $configuration["repo"] -and $configuration["commit"]) {
     $gitRemoteValue = GetGitRemoteValue $configuration["repo"]
 
     Write-Host "Setting up sparse clone for $projectName at $specCloneDir"
-    
+
     Push-Location $specCloneDir.Path
     try {
         if (!(Test-Path ".git")) {
@@ -107,6 +107,7 @@ if ( $configuration["repo"] -and $configuration["commit"]) {
             UpdateSparseCheckoutFile $specSubDirectory $configuration["additionalDirectories"]
         }
         git checkout $configuration["commit"]
+        if ($LASTEXITCODE) { exit $LASTEXITCODE }
     }
     finally {
         Pop-Location
