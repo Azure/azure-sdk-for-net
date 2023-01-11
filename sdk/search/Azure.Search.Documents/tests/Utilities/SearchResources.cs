@@ -455,10 +455,11 @@ namespace Azure.Search.Documents.Tests
 
                 if (populate)
                 {
+                    List<Task> tasks;
                     if (isSample)
                     {
                         Samples.Hotel[] hotels = SearchResourcesSample.TestDocumentsForSample;
-                        List<Task> tasks = new List<Task>(hotels.Length);
+                        tasks = new List<Task>(hotels.Length);
 
                         foreach (Samples.Hotel hotel in hotels)
                         {
@@ -478,13 +479,11 @@ namespace Azure.Search.Documents.Tests
 
                             tasks.Add(task);
                         }
-
-                        await Task.WhenAll(tasks);
                     }
                     else
                     {
                         Hotel[] hotels = TestDocuments;
-                        List<Task> tasks = new List<Task>(hotels.Length);
+                        tasks = new List<Task>(hotels.Length);
 
                         foreach (Hotel hotel in hotels)
                         {
@@ -504,9 +503,9 @@ namespace Azure.Search.Documents.Tests
 
                             tasks.Add(task);
                         }
-
-                        await Task.WhenAll(tasks);
                     }
+
+                    await Task.WhenAll(tasks);
                 }
             }
 

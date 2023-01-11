@@ -319,7 +319,7 @@ SearchOptions options = new SearchOptions
     // Filter to only Rating greater than or equal our preference
     Filter = SearchFilter.Create($"Rating ge {stars}"),
     Size = 5, // Take only 5 results
-    OrderBy = { "Rating desc" } // Sort by Rating from high to low
+    OrderBy = new[] { "Rating desc" } // Sort by Rating from high to low
 };
 SearchResults<Hotel> response = client.Search<Hotel>("luxury", options);
 // ...
