@@ -27,4 +27,5 @@
     <None Include="..\samples\Sample1_CommunicationIdentityClient.md" Link="samples\Sample1_CommunicationIdentityClient.md" />
     <None Include="..\samples\Sample1_CommunicationIdentityClientAsync.md" Link="samples\Sample1_CommunicationIdentityClientAsync.md" />
   </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties sessionrecords_4communicationidentityclientlivetests_4createuserandtokenwithchatscope_1json__JsonSchema="https://download.stackhawk.com/hawk/jsonschema/hawkconfig.json" /></VisualStudio></ProjectExtensions>
 </Project>

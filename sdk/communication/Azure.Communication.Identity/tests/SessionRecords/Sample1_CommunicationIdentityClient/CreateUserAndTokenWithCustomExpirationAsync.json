@@ -8,11 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "56",
         "Content-Type": "application/json",
-        "traceparent": "00-593051a096d9d148a7e25029020fa065-6c115dfa0467db4e-00",
-        "User-Agent": "azsdk-net-Communication.Identity/1.2.0-alpha.20220905.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "ddd4e4f1e49f9af4af2c8f819eb0bfb3",
+        "traceparent": "00-b4f923b627f7da1ffab687b38b49c244-0300e027d16d527c-00",
+        "User-Agent": "azsdk-net-Communication.Identity/1.3.0-alpha.20230112.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "7904d7b63a03f92761d6ae9e8e5ddde2",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 05 Sep 2022 10:39:51 GMT",
+        "x-ms-date": "Thu, 12 Jan 2023 11:02:28 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -26,14 +26,14 @@
         "api-supported-versions": "2020-07-20-preview2, 2021-02-22-preview1, 2021-03-07, 2021-10-31-preview, 2021-11-01, 2022-06-01, 2022-10-01",
         "Content-Length": "115",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 05 Sep 2022 10:39:51 GMT",
-        "MS-CV": "ypQFLhH\u002BwUKsQ7V0aXcv1g.0",
+        "Date": "Thu, 12 Jan 2023 11:02:28 GMT",
+        "MS-CV": "fo/NI6LSUUyTtE36pVJFYQ.2.0",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "099EVYwAAAABoXuh3zOeyQ5JNjXf6chaDUFJHMDFFREdFMDkxNwBmMDlhNGMxMy0yMWYxLTQ4ZWMtOWNmNy02NjU0NTY4NGI2NDI=",
+        "X-Azure-Ref": "0xOi/YwAAAABb3WBikz\u002BjRKGFcsmm3yInSEVMMDFFREdFMjAxMQA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
         "X-Cache": "CONFIG_NOCACHE",
-        "x-ms-client-request-id": "ddd4e4f1e49f9af4af2c8f819eb0bfb3",
-        "X-Processing-Time": "68ms"
+        "x-ms-client-request-id": "7904d7b63a03f92761d6ae9e8e5ddde2",
+        "X-Processing-Time": "108ms"
       },
       "ResponseBody": {
         "identity": {
@@ -41,13 +41,13 @@
         },
         "accessToken": {
           "token": "Sanitized",
-          "expiresOn": "2022-09-05T11:39:51.8072143\u002B00:00"
+          "expiresOn": "2023-01-12T12:02:28.4481258\u002B00:00"
         }
       }
     }
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1760600983"
+    "RandomSeed": "30487881"
   }
 }
