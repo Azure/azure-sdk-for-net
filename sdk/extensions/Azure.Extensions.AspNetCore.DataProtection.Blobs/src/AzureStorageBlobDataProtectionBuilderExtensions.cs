@@ -9,6 +9,7 @@ using Azure.Extensions.AspNetCore.DataProtection.Blobs;
 using Azure.Storage;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 #pragma warning disable AZC0001 // Extension methods have to be in the correct namespace to appear in intellisense.
 namespace Microsoft.AspNetCore.DataProtection
@@ -88,6 +89,36 @@ namespace Microsoft.AspNetCore.DataProtection
             var client = new BlobClient(blobUri, tokenCredential);
 
             return PersistKeysToAzureBlobStorage(builder, client);
+        }
+
+        /// <summary>
+        /// Configures the data protection system to persist keys to the specified path
+        /// in Azure Blob Storage.
+        /// </summary>
+        /// <param name="builder">The builder instance to modify.</param>
+        /// <param name="sasUri">The full URI where the key file should be stored.
+        /// The URI must contain the SAS token as a query string parameter.</param>
+        /// <param name="tokenCredential">The credentials to connect to the blob.</param>
+        /// <returns>The value <paramref name="builder"/>.</returns>
+        /// <remarks>
+        /// The container referenced by <paramref name="blobUri"/> must already exist.
+        /// </remarks>
+        public static IDataProtectionBuilder PersistKeysToAzureBlobStorage(this IDataProtectionBuilder builder, Uri blobUri, Func<IServiceProvider, TokenCredential> tokenCredentialFactory)
+        {
+            if (builder == null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+            if (blobUri == null)
+            {
+                throw new ArgumentNullException(nameof(blobUri));
+            }
+            if (tokenCredentialFactory == null)
+            {
+                throw new ArgumentNullException(nameof(tokenCredentialFactory));
+            }
+
+            return builder;
         }
 
         /// <summary>
@@ -187,6 +218,37 @@ namespace Microsoft.AspNetCore.DataProtection
             {
                 options.XmlRepository = new AzureBlobXmlRepository(blobClient);
             });
+
+            return builder;
+        }
+
+        /// <summary>
+        /// Configures the data protection system to persist keys to the specified path
+        /// in Azure Blob Storage.
+        /// </summary>
+        /// <param name="builder">The builder instance to modify.</param>
+        /// <param name="blobClientFactory">The factory delegate used to create the <see cref="BlobClient"/> in which the
+        /// key file should be stored.</param>
+        /// <returns>The value <paramref name="builder"/>.</returns>
+        /// <remarks>
+        /// The blob referenced by <paramref name="blobClient"/> must already exist.
+        /// </remarks>
+        public static IDataProtectionBuilder PersistKeysToAzureBlobStorage(this IDataProtectionBuilder builder, Func<IServiceProvider, BlobClient> blobClientFactory)
+        {
+            if (builder == null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
+            if (blobClientFactory == null)
+            {
+                throw new ArgumentNullException(nameof(blobClientFactory));
+            }
+
+            builder.Services.AddSingleton(sp => new AzureBlobXmlRepository(blobClientFactory(sp)));
+
+            builder.Services.AddSingleton<IConfigureOptions<KeyManagementOptions>, ConfigureKeyManagementBlobClientOptions>();
+
             return builder;
         }
     }
