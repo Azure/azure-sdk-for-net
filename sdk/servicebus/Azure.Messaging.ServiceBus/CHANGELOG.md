@@ -8,7 +8,12 @@ Thank you to our developer community members who helped to make the Service Bus 
 - Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
 
 ### Features Added
+
 - Added `UpdatePrefetchCount` methods to `ServiceBusProcessor` and `ServiceBusSessionProcessor` to allow updating the prefetch count of a running processor. _(A community contribution, courtesy of [danielmarbach](https://github.com/danielmarbach))_
+
+### Other Changes
+
+- Update AMQP library dependency to leverage new `DrainAsync` method.
 
 ### Bugs Fixed
 
