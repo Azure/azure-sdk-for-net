@@ -254,22 +254,8 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="MetricAlertStatus" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MetricAlertStatus> GetAllMetricAlertsStatusAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MetricAlertStatus>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _metricAlertsStatusClientDiagnostics.CreateScope("MetricAlertResource.GetAllMetricAlertsStatus");
-                scope.Start();
-                try
-                {
-                    var response = await _metricAlertsStatusRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _metricAlertsStatusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MetricAlertStatus.DeserializeMetricAlertStatus, _metricAlertsStatusClientDiagnostics, Pipeline, "MetricAlertResource.GetAllMetricAlertsStatus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -281,22 +267,8 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="MetricAlertStatus" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MetricAlertStatus> GetAllMetricAlertsStatus(CancellationToken cancellationToken = default)
         {
-            Page<MetricAlertStatus> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _metricAlertsStatusClientDiagnostics.CreateScope("MetricAlertResource.GetAllMetricAlertsStatus");
-                scope.Start();
-                try
-                {
-                    var response = _metricAlertsStatusRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _metricAlertsStatusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MetricAlertStatus.DeserializeMetricAlertStatus, _metricAlertsStatusClientDiagnostics, Pipeline, "MetricAlertResource.GetAllMetricAlertsStatus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -313,22 +285,8 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(statusName, nameof(statusName));
 
-            async Task<Page<MetricAlertStatus>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _metricAlertsStatusClientDiagnostics.CreateScope("MetricAlertResource.GetAllMetricAlertsStatusByName");
-                scope.Start();
-                try
-                {
-                    var response = await _metricAlertsStatusRestClient.ListByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, statusName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _metricAlertsStatusRestClient.CreateListByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, statusName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MetricAlertStatus.DeserializeMetricAlertStatus, _metricAlertsStatusClientDiagnostics, Pipeline, "MetricAlertResource.GetAllMetricAlertsStatusByName", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -345,22 +303,8 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(statusName, nameof(statusName));
 
-            Page<MetricAlertStatus> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _metricAlertsStatusClientDiagnostics.CreateScope("MetricAlertResource.GetAllMetricAlertsStatusByName");
-                scope.Start();
-                try
-                {
-                    var response = _metricAlertsStatusRestClient.ListByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, statusName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _metricAlertsStatusRestClient.CreateListByNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, statusName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MetricAlertStatus.DeserializeMetricAlertStatus, _metricAlertsStatusClientDiagnostics, Pipeline, "MetricAlertResource.GetAllMetricAlertsStatusByName", "value", null, cancellationToken);
         }
 
         /// <summary>

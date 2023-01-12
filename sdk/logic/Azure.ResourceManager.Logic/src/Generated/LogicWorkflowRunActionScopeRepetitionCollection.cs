@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,22 +119,8 @@ namespace Azure.ResourceManager.Logic
         /// <returns> An async collection of <see cref="LogicWorkflowRunActionScopeRepetitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LogicWorkflowRunActionScopeRepetitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<LogicWorkflowRunActionScopeRepetitionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _logicWorkflowRunActionScopeRepetitionWorkflowRunActionScopeRepetitionsClientDiagnostics.CreateScope("LogicWorkflowRunActionScopeRepetitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _logicWorkflowRunActionScopeRepetitionWorkflowRunActionScopeRepetitionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogicWorkflowRunActionScopeRepetitionResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowRunActionScopeRepetitionWorkflowRunActionScopeRepetitionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new LogicWorkflowRunActionScopeRepetitionResource(Client, LogicWorkflowRunActionRepetitionDefinitionData.DeserializeLogicWorkflowRunActionRepetitionDefinitionData(e)), _logicWorkflowRunActionScopeRepetitionWorkflowRunActionScopeRepetitionsClientDiagnostics, Pipeline, "LogicWorkflowRunActionScopeRepetitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -147,22 +132,8 @@ namespace Azure.ResourceManager.Logic
         /// <returns> A collection of <see cref="LogicWorkflowRunActionScopeRepetitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LogicWorkflowRunActionScopeRepetitionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<LogicWorkflowRunActionScopeRepetitionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _logicWorkflowRunActionScopeRepetitionWorkflowRunActionScopeRepetitionsClientDiagnostics.CreateScope("LogicWorkflowRunActionScopeRepetitionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _logicWorkflowRunActionScopeRepetitionWorkflowRunActionScopeRepetitionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogicWorkflowRunActionScopeRepetitionResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowRunActionScopeRepetitionWorkflowRunActionScopeRepetitionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new LogicWorkflowRunActionScopeRepetitionResource(Client, LogicWorkflowRunActionRepetitionDefinitionData.DeserializeLogicWorkflowRunActionRepetitionDefinitionData(e)), _logicWorkflowRunActionScopeRepetitionWorkflowRunActionScopeRepetitionsClientDiagnostics, Pipeline, "LogicWorkflowRunActionScopeRepetitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

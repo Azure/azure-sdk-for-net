@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("replicaCount");
                 writer.WriteNumberValue(ReplicaCount.Value);
             }
-            if (Optional.IsDefined(ExcludeFromLatest))
+            if (Optional.IsDefined(IsExcludedFromLatest))
             {
                 writer.WritePropertyName("excludeFromLatest");
-                writer.WriteBooleanValue(ExcludeFromLatest.Value);
+                writer.WriteBooleanValue(IsExcludedFromLatest.Value);
             }
             if (Optional.IsDefined(EndOfLifeOn))
             {

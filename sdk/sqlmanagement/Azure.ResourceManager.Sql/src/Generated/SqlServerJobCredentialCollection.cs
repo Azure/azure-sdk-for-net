@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SqlServerJobCredentialResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerJobCredentialResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlServerJobCredentialResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlServerJobCredentialJobCredentialsClientDiagnostics.CreateScope("SqlServerJobCredentialCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlServerJobCredentialJobCredentialsRestClient.ListByAgentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerJobCredentialResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SqlServerJobCredentialResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlServerJobCredentialJobCredentialsClientDiagnostics.CreateScope("SqlServerJobCredentialCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlServerJobCredentialJobCredentialsRestClient.ListByAgentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerJobCredentialResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobCredentialJobCredentialsRestClient.CreateListByAgentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobCredentialJobCredentialsRestClient.CreateListByAgentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobCredentialResource(Client, SqlServerJobCredentialData.DeserializeSqlServerJobCredentialData(e)), _sqlServerJobCredentialJobCredentialsClientDiagnostics, Pipeline, "SqlServerJobCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlServerJobCredentialResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerJobCredentialResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SqlServerJobCredentialResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlServerJobCredentialJobCredentialsClientDiagnostics.CreateScope("SqlServerJobCredentialCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sqlServerJobCredentialJobCredentialsRestClient.ListByAgent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerJobCredentialResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SqlServerJobCredentialResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _sqlServerJobCredentialJobCredentialsClientDiagnostics.CreateScope("SqlServerJobCredentialCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sqlServerJobCredentialJobCredentialsRestClient.ListByAgentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerJobCredentialResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerJobCredentialJobCredentialsRestClient.CreateListByAgentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerJobCredentialJobCredentialsRestClient.CreateListByAgentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerJobCredentialResource(Client, SqlServerJobCredentialData.DeserializeSqlServerJobCredentialData(e)), _sqlServerJobCredentialJobCredentialsClientDiagnostics, Pipeline, "SqlServerJobCredentialCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

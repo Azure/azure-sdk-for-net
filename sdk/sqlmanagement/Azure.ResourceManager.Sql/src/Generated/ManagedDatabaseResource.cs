@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -210,39 +209,6 @@ namespace Azure.ResourceManager.Sql
             return GetManagedBackupShortTermRetentionPolicies().Get(policyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagedDatabaseRestoreDetailResources in the ManagedDatabase. </summary>
-        /// <returns> An object representing collection of ManagedDatabaseRestoreDetailResources and their operations over a ManagedDatabaseRestoreDetailResource. </returns>
-        public virtual ManagedDatabaseRestoreDetailCollection GetManagedDatabaseRestoreDetails()
-        {
-            return GetCachedClient(Client => new ManagedDatabaseRestoreDetailCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets managed database restore details.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/restoreDetails/{restoreDetailsName}
-        /// Operation Id: ManagedDatabaseRestoreDetails_Get
-        /// </summary>
-        /// <param name="restoreDetailsName"> The name of the restore details to retrieve. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedDatabaseRestoreDetailResource>> GetManagedDatabaseRestoreDetailAsync(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
-        {
-            return await GetManagedDatabaseRestoreDetails().GetAsync(restoreDetailsName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets managed database restore details.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/restoreDetails/{restoreDetailsName}
-        /// Operation Id: ManagedDatabaseRestoreDetails_Get
-        /// </summary>
-        /// <param name="restoreDetailsName"> The name of the restore details to retrieve. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ManagedDatabaseRestoreDetailResource> GetManagedDatabaseRestoreDetail(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
-        {
-            return GetManagedDatabaseRestoreDetails().Get(restoreDetailsName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of ManagedDatabaseSecurityAlertPolicyResources in the ManagedDatabase. </summary>
         /// <returns> An object representing collection of ManagedDatabaseSecurityAlertPolicyResources and their operations over a ManagedDatabaseSecurityAlertPolicyResource. </returns>
         public virtual ManagedDatabaseSecurityAlertPolicyCollection GetManagedDatabaseSecurityAlertPolicies()
@@ -373,6 +339,39 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<ManagedDatabaseAdvancedThreatProtectionResource> GetManagedDatabaseAdvancedThreatProtection(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
         {
             return GetManagedDatabaseAdvancedThreatProtections().Get(advancedThreatProtectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ManagedDatabaseRestoreDetailResources in the ManagedDatabase. </summary>
+        /// <returns> An object representing collection of ManagedDatabaseRestoreDetailResources and their operations over a ManagedDatabaseRestoreDetailResource. </returns>
+        public virtual ManagedDatabaseRestoreDetailCollection GetManagedDatabaseRestoreDetails()
+        {
+            return GetCachedClient(Client => new ManagedDatabaseRestoreDetailCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets managed database restore details.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/restoreDetails/{restoreDetailsName}
+        /// Operation Id: ManagedDatabaseRestoreDetails_Get
+        /// </summary>
+        /// <param name="restoreDetailsName"> The name of the restore details to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedDatabaseRestoreDetailResource>> GetManagedDatabaseRestoreDetailAsync(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedDatabaseRestoreDetails().GetAsync(restoreDetailsName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets managed database restore details.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/restoreDetails/{restoreDetailsName}
+        /// Operation Id: ManagedDatabaseRestoreDetails_Get
+        /// </summary>
+        /// <param name="restoreDetailsName"> The name of the restore details to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedDatabaseRestoreDetailResource> GetManagedDatabaseRestoreDetail(RestoreDetailsName restoreDetailsName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedDatabaseRestoreDetails().Get(restoreDetailsName, cancellationToken);
         }
 
         /// <summary>
@@ -549,37 +548,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ManagedDatabaseColumnResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedDatabaseColumnResource> GetManagedDatabaseColumnsByDatabaseAsync(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedDatabaseColumnResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseColumnRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedDatabaseColumnResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseColumnRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseColumnRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseColumnRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _managedDatabaseColumnClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -596,37 +567,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedDatabaseColumnResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedDatabaseColumnResource> GetManagedDatabaseColumnsByDatabase(IEnumerable<string> schema = null, IEnumerable<string> table = null, IEnumerable<string> column = null, IEnumerable<string> orderBy = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagedDatabaseColumnResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseColumnRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedDatabaseColumnResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseColumnRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseColumnResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseColumnRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseColumnRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseColumnResource(Client, DatabaseColumnData.DeserializeDatabaseColumnData(e)), _managedDatabaseColumnClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -700,37 +643,9 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
 
-            async Task<Page<QueryStatistics>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseQueriesClientDiagnostics.CreateScope("ManagedDatabaseResource.GetQueryStatistics");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseQueriesRestClient.ListByQueryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<QueryStatistics>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseQueriesClientDiagnostics.CreateScope("ManagedDatabaseResource.GetQueryStatistics");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseQueriesRestClient.ListByQueryNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseQueriesRestClient.CreateListByQueryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseQueriesRestClient.CreateListByQueryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, QueryStatistics.DeserializeQueryStatistics, _managedDatabaseQueriesClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetQueryStatistics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -750,97 +665,9 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNullOrEmpty(queryId, nameof(queryId));
 
-            Page<QueryStatistics> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseQueriesClientDiagnostics.CreateScope("ManagedDatabaseResource.GetQueryStatistics");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseQueriesRestClient.ListByQuery(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<QueryStatistics> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseQueriesClientDiagnostics.CreateScope("ManagedDatabaseResource.GetQueryStatistics");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseQueriesRestClient.ListByQueryNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// Completes the restore operation on a managed database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/completeRestore
-        /// Operation Id: ManagedDatabases_CompleteRestore
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="completeDatabaseRestoreDefinition"> The definition for completing the restore of this managed database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="completeDatabaseRestoreDefinition"/> is null. </exception>
-        public virtual async Task<ArmOperation> CompleteRestoreAsync(WaitUntil waitUntil, CompleteDatabaseRestoreDefinition completeDatabaseRestoreDefinition, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(completeDatabaseRestoreDefinition, nameof(completeDatabaseRestoreDefinition));
-
-            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.CompleteRestore");
-            scope.Start();
-            try
-            {
-                var response = await _managedDatabaseRestClient.CompleteRestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, completeDatabaseRestoreDefinition, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation(_managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateCompleteRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, completeDatabaseRestoreDefinition).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Completes the restore operation on a managed database.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/completeRestore
-        /// Operation Id: ManagedDatabases_CompleteRestore
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="completeDatabaseRestoreDefinition"> The definition for completing the restore of this managed database. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="completeDatabaseRestoreDefinition"/> is null. </exception>
-        public virtual ArmOperation CompleteRestore(WaitUntil waitUntil, CompleteDatabaseRestoreDefinition completeDatabaseRestoreDefinition, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(completeDatabaseRestoreDefinition, nameof(completeDatabaseRestoreDefinition));
-
-            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.CompleteRestore");
-            scope.Start();
-            try
-            {
-                var response = _managedDatabaseRestClient.CompleteRestore(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, completeDatabaseRestoreDefinition, cancellationToken);
-                var operation = new SqlArmOperation(_managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateCompleteRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, completeDatabaseRestoreDefinition).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseQueriesRestClient.CreateListByQueryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseQueriesRestClient.CreateListByQueryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, queryId, startTime, endTime, interval);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, QueryStatistics.DeserializeQueryStatistics, _managedDatabaseQueriesClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetQueryStatistics", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -856,37 +683,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SecurityEvent" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityEvent> GetManagedDatabaseSecurityEventsByDatabaseAsync(string filter = null, int? skip = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecurityEvent>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSecurityEventsClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseSecurityEventsByDatabase");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseSecurityEventsRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skip, top, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SecurityEvent>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSecurityEventsClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseSecurityEventsByDatabase");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseSecurityEventsRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skip, top, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSecurityEventsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skip, top, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSecurityEventsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skip, top, skiptoken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SecurityEvent.DeserializeSecurityEvent, _managedDatabaseSecurityEventsClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetManagedDatabaseSecurityEventsByDatabase", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -902,37 +701,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SecurityEvent" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityEvent> GetManagedDatabaseSecurityEventsByDatabase(string filter = null, int? skip = null, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            Page<SecurityEvent> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSecurityEventsClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseSecurityEventsByDatabase");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseSecurityEventsRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skip, top, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SecurityEvent> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSecurityEventsClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseSecurityEventsByDatabase");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseSecurityEventsRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skip, top, skiptoken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSecurityEventsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skip, top, skiptoken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSecurityEventsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skip, top, skiptoken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SecurityEvent.DeserializeSecurityEvent, _managedDatabaseSecurityEventsClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetManagedDatabaseSecurityEventsByDatabase", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -947,37 +718,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ManagedDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedDatabaseSensitivityLabelResource> GetCurrentManagedDatabaseSensitivityLabelsAsync(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedDatabaseSensitivityLabelResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseSensitivityLabelRestClient.ListCurrentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedDatabaseSensitivityLabelResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseSensitivityLabelRestClient.ListCurrentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSensitivityLabelRestClient.CreateListCurrentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSensitivityLabelRestClient.CreateListCurrentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _managedDatabaseSensitivityLabelClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -992,37 +735,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedDatabaseSensitivityLabelResource> GetCurrentManagedDatabaseSensitivityLabels(string skipToken = null, bool? count = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagedDatabaseSensitivityLabelResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseSensitivityLabelRestClient.ListCurrent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedDatabaseSensitivityLabelResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseSensitivityLabelRestClient.ListCurrentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSensitivityLabelRestClient.CreateListCurrentRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSensitivityLabelRestClient.CreateListCurrentNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _managedDatabaseSensitivityLabelClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1089,37 +804,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ManagedDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedDatabaseSensitivityLabelResource> GetRecommendedManagedDatabaseSensitivityLabelsAsync(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedDatabaseSensitivityLabelResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseSensitivityLabelRestClient.ListRecommendedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedDatabaseSensitivityLabelResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = await _managedDatabaseSensitivityLabelRestClient.ListRecommendedNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSensitivityLabelRestClient.CreateListRecommendedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSensitivityLabelRestClient.CreateListRecommendedNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _managedDatabaseSensitivityLabelClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1134,37 +821,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedDatabaseSensitivityLabelResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedDatabaseSensitivityLabelResource> GetRecommendedManagedDatabaseSensitivityLabels(string skipToken = null, bool? includeDisabledRecommendations = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagedDatabaseSensitivityLabelResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseSensitivityLabelRestClient.ListRecommended(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedDatabaseSensitivityLabelResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels");
-                scope.Start();
-                try
-                {
-                    var response = _managedDatabaseSensitivityLabelRestClient.ListRecommendedNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedDatabaseSensitivityLabelResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedDatabaseSensitivityLabelRestClient.CreateListRecommendedRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedDatabaseSensitivityLabelRestClient.CreateListRecommendedNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedDatabaseSensitivityLabelResource(Client, SensitivityLabelData.DeserializeSensitivityLabelData(e)), _managedDatabaseSensitivityLabelClientDiagnostics, Pipeline, "ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1211,6 +870,246 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _managedDatabaseSensitivityLabelRestClient.UpdateRecommended(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendedSensitivityLabelUpdateList, cancellationToken);
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancels a managed database move operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/cancelMove
+        /// Operation Id: ManagedDatabases_CancelMove
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="managedDatabaseMoveDefinition"> Parameters of the cancel managed database move operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedDatabaseMoveDefinition"/> is null. </exception>
+        public virtual async Task<ArmOperation> CancelMoveAsync(WaitUntil waitUntil, ManagedDatabaseMoveDefinition managedDatabaseMoveDefinition, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managedDatabaseMoveDefinition, nameof(managedDatabaseMoveDefinition));
+
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.CancelMove");
+            scope.Start();
+            try
+            {
+                var response = await _managedDatabaseRestClient.CancelMoveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, managedDatabaseMoveDefinition, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation(_managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateCancelMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, managedDatabaseMoveDefinition).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancels a managed database move operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/cancelMove
+        /// Operation Id: ManagedDatabases_CancelMove
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="managedDatabaseMoveDefinition"> Parameters of the cancel managed database move operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedDatabaseMoveDefinition"/> is null. </exception>
+        public virtual ArmOperation CancelMove(WaitUntil waitUntil, ManagedDatabaseMoveDefinition managedDatabaseMoveDefinition, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managedDatabaseMoveDefinition, nameof(managedDatabaseMoveDefinition));
+
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.CancelMove");
+            scope.Start();
+            try
+            {
+                var response = _managedDatabaseRestClient.CancelMove(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, managedDatabaseMoveDefinition, cancellationToken);
+                var operation = new SqlArmOperation(_managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateCancelMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, managedDatabaseMoveDefinition).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Completes a managed database move operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/completeMove
+        /// Operation Id: ManagedDatabases_CompleteMove
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="managedDatabaseMoveDefinition"> Parameters of the complete managed database move operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedDatabaseMoveDefinition"/> is null. </exception>
+        public virtual async Task<ArmOperation> CompleteMoveAsync(WaitUntil waitUntil, ManagedDatabaseMoveDefinition managedDatabaseMoveDefinition, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managedDatabaseMoveDefinition, nameof(managedDatabaseMoveDefinition));
+
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.CompleteMove");
+            scope.Start();
+            try
+            {
+                var response = await _managedDatabaseRestClient.CompleteMoveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, managedDatabaseMoveDefinition, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation(_managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateCompleteMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, managedDatabaseMoveDefinition).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Completes a managed database move operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/completeMove
+        /// Operation Id: ManagedDatabases_CompleteMove
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="managedDatabaseMoveDefinition"> Parameters of the complete managed database move operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedDatabaseMoveDefinition"/> is null. </exception>
+        public virtual ArmOperation CompleteMove(WaitUntil waitUntil, ManagedDatabaseMoveDefinition managedDatabaseMoveDefinition, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managedDatabaseMoveDefinition, nameof(managedDatabaseMoveDefinition));
+
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.CompleteMove");
+            scope.Start();
+            try
+            {
+                var response = _managedDatabaseRestClient.CompleteMove(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, managedDatabaseMoveDefinition, cancellationToken);
+                var operation = new SqlArmOperation(_managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateCompleteMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, managedDatabaseMoveDefinition).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Completes the restore operation on a managed database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/completeRestore
+        /// Operation Id: ManagedDatabases_CompleteRestore
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="completeDatabaseRestoreDefinition"> The definition for completing the restore of this managed database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="completeDatabaseRestoreDefinition"/> is null. </exception>
+        public virtual async Task<ArmOperation> CompleteRestoreAsync(WaitUntil waitUntil, CompleteDatabaseRestoreDefinition completeDatabaseRestoreDefinition, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(completeDatabaseRestoreDefinition, nameof(completeDatabaseRestoreDefinition));
+
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.CompleteRestore");
+            scope.Start();
+            try
+            {
+                var response = await _managedDatabaseRestClient.CompleteRestoreAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, completeDatabaseRestoreDefinition, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation(_managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateCompleteRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, completeDatabaseRestoreDefinition).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Completes the restore operation on a managed database.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/completeRestore
+        /// Operation Id: ManagedDatabases_CompleteRestore
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="completeDatabaseRestoreDefinition"> The definition for completing the restore of this managed database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="completeDatabaseRestoreDefinition"/> is null. </exception>
+        public virtual ArmOperation CompleteRestore(WaitUntil waitUntil, CompleteDatabaseRestoreDefinition completeDatabaseRestoreDefinition, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(completeDatabaseRestoreDefinition, nameof(completeDatabaseRestoreDefinition));
+
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.CompleteRestore");
+            scope.Start();
+            try
+            {
+                var response = _managedDatabaseRestClient.CompleteRestore(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, completeDatabaseRestoreDefinition, cancellationToken);
+                var operation = new SqlArmOperation(_managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateCompleteRestoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, completeDatabaseRestoreDefinition).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts a managed database move operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/startMove
+        /// Operation Id: ManagedDatabases_StartMove
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="managedDatabaseStartMoveDefinition"> Parameters of the start managed database move operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedDatabaseStartMoveDefinition"/> is null. </exception>
+        public virtual async Task<ArmOperation> StartMoveAsync(WaitUntil waitUntil, ManagedDatabaseStartMoveDefinition managedDatabaseStartMoveDefinition, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managedDatabaseStartMoveDefinition, nameof(managedDatabaseStartMoveDefinition));
+
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.StartMove");
+            scope.Start();
+            try
+            {
+                var response = await _managedDatabaseRestClient.StartMoveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, managedDatabaseStartMoveDefinition, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation(_managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateStartMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, managedDatabaseStartMoveDefinition).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts a managed database move operation.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/startMove
+        /// Operation Id: ManagedDatabases_StartMove
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="managedDatabaseStartMoveDefinition"> Parameters of the start managed database move operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedDatabaseStartMoveDefinition"/> is null. </exception>
+        public virtual ArmOperation StartMove(WaitUntil waitUntil, ManagedDatabaseStartMoveDefinition managedDatabaseStartMoveDefinition, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(managedDatabaseStartMoveDefinition, nameof(managedDatabaseStartMoveDefinition));
+
+            using var scope = _managedDatabaseClientDiagnostics.CreateScope("ManagedDatabaseResource.StartMove");
+            scope.Start();
+            try
+            {
+                var response = _managedDatabaseRestClient.StartMove(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, managedDatabaseStartMoveDefinition, cancellationToken);
+                var operation = new SqlArmOperation(_managedDatabaseClientDiagnostics, Pipeline, _managedDatabaseRestClient.CreateStartMoveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, managedDatabaseStartMoveDefinition).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {

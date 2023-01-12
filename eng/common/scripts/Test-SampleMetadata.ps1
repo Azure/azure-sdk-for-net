@@ -227,6 +227,7 @@ begin {
         "azure-live-ondemand-streaming",
         "azure-live-video-analytics",
         "azure-load-balancer",
+        "azure-load-testing",
         "azure-log-analytics",
         "azure-logic-apps",
         "azure-machine-learning",

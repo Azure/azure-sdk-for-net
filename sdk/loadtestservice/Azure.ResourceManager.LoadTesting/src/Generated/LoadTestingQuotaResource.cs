@@ -144,11 +144,11 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="content"> Quota Bucket Request data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<LoadTestingQuotaAvailabilityResponse>> CheckAvailabilityAsync(LoadTestingQuotaBucketContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LoadTestingQuotaAvailabilityResult>> CheckLoadTestingQuotaAvailabilityAsync(LoadTestingQuotaBucketContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _loadTestingQuotaQuotasClientDiagnostics.CreateScope("LoadTestingQuotaResource.CheckAvailability");
+            using var scope = _loadTestingQuotaQuotasClientDiagnostics.CreateScope("LoadTestingQuotaResource.CheckLoadTestingQuotaAvailability");
             scope.Start();
             try
             {
@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.LoadTesting
         /// <param name="content"> Quota Bucket Request data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<LoadTestingQuotaAvailabilityResponse> CheckAvailability(LoadTestingQuotaBucketContent content, CancellationToken cancellationToken = default)
+        public virtual Response<LoadTestingQuotaAvailabilityResult> CheckLoadTestingQuotaAvailability(LoadTestingQuotaBucketContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _loadTestingQuotaQuotasClientDiagnostics.CreateScope("LoadTestingQuotaResource.CheckAvailability");
+            using var scope = _loadTestingQuotaQuotasClientDiagnostics.CreateScope("LoadTestingQuotaResource.CheckLoadTestingQuotaAvailability");
             scope.Start();
             try
             {

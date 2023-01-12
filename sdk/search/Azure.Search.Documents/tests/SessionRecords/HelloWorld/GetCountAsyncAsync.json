@@ -1,44 +1,41 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027mbqvlxmt\u0027)/docs/$count?api-version=2020-06-30",
+      "RequestUri": "https://azs-net-shrejaazsearch.search.windows.net/indexes(\u0027urwsditp\u0027)/docs/$count?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-91c30a8206c6cb4ba78cc9ab776939f1-476903bf52fe2248-00",
-        "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
-          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
-        ],
-        "x-ms-client-request-id": "6626ad329da6fd3193b5a92b98b5b74f",
+        "traceparent": "00-0404edf43a83bbffb1deb7b1a4085358-ae82f77a632ca494-00",
+        "User-Agent": "azsdk-net-Search.Documents/11.5.0-alpha.20230106.1 (.NET 6.0.12; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0ac1dcccca9e32916a7e3cf2e086e86d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "client-request-id": "6626ad32-9da6-fd31-93b5-a92b98b5b74f",
+        "client-request-id": "0ac1dccc-ca9e-3291-6a7e-3cf2e086e86d",
         "Content-Length": "5",
         "Content-Type": "text/plain",
-        "Date": "Sat, 27 Mar 2021 18:39:51 GMT",
-        "elapsed-time": "5",
+        "Date": "Fri, 06 Jan 2023 20:48:31 GMT",
+        "elapsed-time": "62",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
         "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
-        "request-id": "6626ad32-9da6-fd31-93b5-a92b98b5b74f",
+        "request-id": "0ac1dccc-ca9e-3291-6a7e-3cf2e086e86d",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
-        "x-ms-client-request-id": "6626ad32-9da6-fd31-93b5-a92b98b5b74f"
+        "x-ms-client-request-id": "0ac1dccc-ca9e-3291-6a7e-3cf2e086e86d"
       },
       "ResponseBody": "\uFEFF10"
     }
   ],
   "Variables": {
-    "RandomSeed": "2104098183",
-    "SearchIndexName": "mbqvlxmt",
+    "RandomSeed": "1139274502",
+    "SearchIndexName": "urwsditp",
     "SEARCH_ADMIN_API_KEY": "Sanitized",
-    "SEARCH_ENDPOINT_SUFFIX": null,
-    "SEARCH_SERVICE_NAME": "mohitc-acs"
+    "SEARCH_ENDPOINT_SUFFIX": "search.windows.net",
+    "SEARCH_SERVICE_NAME": "azs-net-shrejaazsearch"
   }
 }

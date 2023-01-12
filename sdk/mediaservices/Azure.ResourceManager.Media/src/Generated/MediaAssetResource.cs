@@ -326,22 +326,8 @@ namespace Azure.ResourceManager.Media
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            async Task<Page<Uri>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetResource.GetStorageContainerUris");
-                scope.Start();
-                try
-                {
-                    var response = await _mediaAssetAssetsRestClient.ListContainerSasAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.AssetContainerSasUris, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetAssetsRestClient.CreateListContainerSasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new Uri(e.GetString()), _mediaAssetAssetsClientDiagnostics, Pipeline, "MediaAssetResource.GetStorageContainerUris", "assetContainerSasUrls", null, cancellationToken);
         }
 
         /// <summary>
@@ -357,22 +343,8 @@ namespace Azure.ResourceManager.Media
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            Page<Uri> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetResource.GetStorageContainerUris");
-                scope.Start();
-                try
-                {
-                    var response = _mediaAssetAssetsRestClient.ListContainerSas(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.AssetContainerSasUris, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetAssetsRestClient.CreateListContainerSasRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new Uri(e.GetString()), _mediaAssetAssetsClientDiagnostics, Pipeline, "MediaAssetResource.GetStorageContainerUris", "assetContainerSasUrls", null, cancellationToken);
         }
 
         /// <summary>
@@ -428,22 +400,8 @@ namespace Azure.ResourceManager.Media
         /// <returns> An async collection of <see cref="MediaAssetStreamingLocator" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MediaAssetStreamingLocator> GetStreamingLocatorsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MediaAssetStreamingLocator>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetResource.GetStreamingLocators");
-                scope.Start();
-                try
-                {
-                    var response = await _mediaAssetAssetsRestClient.ListStreamingLocatorsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.StreamingLocators, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetAssetsRestClient.CreateListStreamingLocatorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MediaAssetStreamingLocator.DeserializeMediaAssetStreamingLocator, _mediaAssetAssetsClientDiagnostics, Pipeline, "MediaAssetResource.GetStreamingLocators", "streamingLocators", null, cancellationToken);
         }
 
         /// <summary>
@@ -455,22 +413,8 @@ namespace Azure.ResourceManager.Media
         /// <returns> A collection of <see cref="MediaAssetStreamingLocator" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MediaAssetStreamingLocator> GetStreamingLocators(CancellationToken cancellationToken = default)
         {
-            Page<MediaAssetStreamingLocator> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetResource.GetStreamingLocators");
-                scope.Start();
-                try
-                {
-                    var response = _mediaAssetAssetsRestClient.ListStreamingLocators(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.StreamingLocators, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetAssetsRestClient.CreateListStreamingLocatorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, MediaAssetStreamingLocator.DeserializeMediaAssetStreamingLocator, _mediaAssetAssetsClientDiagnostics, Pipeline, "MediaAssetResource.GetStreamingLocators", "streamingLocators", null, cancellationToken);
         }
     }
 }

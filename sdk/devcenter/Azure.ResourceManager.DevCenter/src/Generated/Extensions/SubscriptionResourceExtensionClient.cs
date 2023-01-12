@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -74,37 +73,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="DevCenterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterResource> GetDevCentersAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DevCenterResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DevCenterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDevCenters");
-                scope.Start();
-                try
-                {
-                    var response = await DevCenterRestClient.ListBySubscriptionAsync(Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevCenterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DevCenterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DevCenterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDevCenters");
-                scope.Start();
-                try
-                {
-                    var response = await DevCenterRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevCenterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevCenterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevCenterResource(Client, DevCenterData.DeserializeDevCenterData(e)), DevCenterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevCenters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -117,37 +88,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="DevCenterResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterResource> GetDevCenters(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<DevCenterResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = DevCenterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDevCenters");
-                scope.Start();
-                try
-                {
-                    var response = DevCenterRestClient.ListBySubscription(Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevCenterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DevCenterResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = DevCenterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDevCenters");
-                scope.Start();
-                try
-                {
-                    var response = DevCenterRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DevCenterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DevCenterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevCenterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevCenterResource(Client, DevCenterData.DeserializeDevCenterData(e)), DevCenterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevCenters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -160,37 +103,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="ProjectResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProjectResource> GetProjectsAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProjectResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ProjectClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProjects");
-                scope.Start();
-                try
-                {
-                    var response = await ProjectRestClient.ListBySubscriptionAsync(Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProjectResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ProjectResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ProjectClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProjects");
-                scope.Start();
-                try
-                {
-                    var response = await ProjectRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProjectResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProjectRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProjectRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProjectResource(Client, ProjectData.DeserializeProjectData(e)), ProjectClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -203,37 +118,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="ProjectResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProjectResource> GetProjects(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<ProjectResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = ProjectClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProjects");
-                scope.Start();
-                try
-                {
-                    var response = ProjectRestClient.ListBySubscription(Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProjectResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ProjectResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = ProjectClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetProjects");
-                scope.Start();
-                try
-                {
-                    var response = ProjectRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ProjectResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProjectRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProjectRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProjectResource(Client, ProjectData.DeserializeProjectData(e)), ProjectClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetProjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -294,37 +181,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="DevCenterUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterUsage> GetUsagesByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DevCenterUsage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsagesByLocation");
-                scope.Start();
-                try
-                {
-                    var response = await UsagesRestClient.ListByLocationAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DevCenterUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsagesByLocation");
-                scope.Start();
-                try
-                {
-                    var response = await UsagesRestClient.ListByLocationNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevCenterUsage.DeserializeDevCenterUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsagesByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -337,37 +196,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="DevCenterUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterUsage> GetUsagesByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<DevCenterUsage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsagesByLocation");
-                scope.Start();
-                try
-                {
-                    var response = UsagesRestClient.ListByLocation(Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DevCenterUsage> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsagesByLocation");
-                scope.Start();
-                try
-                {
-                    var response = UsagesRestClient.ListByLocationNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevCenterUsage.DeserializeDevCenterUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsagesByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -380,37 +211,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="DevCenterSkuDetails" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterSkuDetails> GetSkusBySubscriptionAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DevCenterSkuDetails>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkusBySubscription");
-                scope.Start();
-                try
-                {
-                    var response = await SkusRestClient.ListBySubscriptionAsync(Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DevCenterSkuDetails>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkusBySubscription");
-                scope.Start();
-                try
-                {
-                    var response = await SkusRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevCenterSkuDetails.DeserializeDevCenterSkuDetails, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -423,37 +226,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="DevCenterSkuDetails" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterSkuDetails> GetSkusBySubscription(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<DevCenterSkuDetails> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkusBySubscription");
-                scope.Start();
-                try
-                {
-                    var response = SkusRestClient.ListBySubscription(Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DevCenterSkuDetails> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = SkusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSkusBySubscription");
-                scope.Start();
-                try
-                {
-                    var response = SkusRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevCenterSkuDetails.DeserializeDevCenterSkuDetails, SkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSkusBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -466,37 +241,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="NetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkConnectionResource> GetNetworkConnectionsAsync(int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<NetworkConnectionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NetworkConnectionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetworkConnections");
-                scope.Start();
-                try
-                {
-                    var response = await NetworkConnectionRestClient.ListBySubscriptionAsync(Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<NetworkConnectionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NetworkConnectionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetworkConnections");
-                scope.Start();
-                try
-                {
-                    var response = await NetworkConnectionRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkConnectionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkConnectionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkConnectionResource(Client, NetworkConnectionData.DeserializeNetworkConnectionData(e)), NetworkConnectionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkConnections", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -509,37 +256,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="NetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkConnectionResource> GetNetworkConnections(int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<NetworkConnectionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = NetworkConnectionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetworkConnections");
-                scope.Start();
-                try
-                {
-                    var response = NetworkConnectionRestClient.ListBySubscription(Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<NetworkConnectionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = NetworkConnectionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNetworkConnections");
-                scope.Start();
-                try
-                {
-                    var response = NetworkConnectionRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkConnectionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkConnectionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkConnectionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkConnectionResource(Client, NetworkConnectionData.DeserializeNetworkConnectionData(e)), NetworkConnectionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkConnections", "value", "nextLink", cancellationToken);
         }
     }
 }

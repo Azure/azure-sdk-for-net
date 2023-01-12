@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -191,37 +190,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiDiagnosticResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiDiagnosticResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ApiDiagnosticResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _apiDiagnosticClientDiagnostics.CreateScope("ApiDiagnosticCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _apiDiagnosticRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiDiagnosticResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ApiDiagnosticResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _apiDiagnosticClientDiagnostics.CreateScope("ApiDiagnosticCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _apiDiagnosticRestClient.ListByServiceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiDiagnosticResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiDiagnosticRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiDiagnosticRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiDiagnosticResource(Client, DiagnosticContractData.DeserializeDiagnosticContractData(e)), _apiDiagnosticClientDiagnostics, Pipeline, "ApiDiagnosticCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -236,37 +207,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiDiagnosticResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiDiagnosticResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            Page<ApiDiagnosticResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _apiDiagnosticClientDiagnostics.CreateScope("ApiDiagnosticCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _apiDiagnosticRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiDiagnosticResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ApiDiagnosticResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _apiDiagnosticClientDiagnostics.CreateScope("ApiDiagnosticCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _apiDiagnosticRestClient.ListByServiceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ApiDiagnosticResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiDiagnosticRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiDiagnosticRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiDiagnosticResource(Client, DiagnosticContractData.DeserializeDiagnosticContractData(e)), _apiDiagnosticClientDiagnostics, Pipeline, "ApiDiagnosticCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

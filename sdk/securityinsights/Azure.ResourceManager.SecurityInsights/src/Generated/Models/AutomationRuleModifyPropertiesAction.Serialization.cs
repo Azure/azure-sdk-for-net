@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static AutomationRuleModifyPropertiesAction DeserializeAutomationRuleModifyPropertiesAction(JsonElement element)
         {
-            Optional<IncidentPropertiesAction> actionConfiguration = default;
+            Optional<SecurityInsightsIncidentActionConfiguration> actionConfiguration = default;
             int order = default;
             ActionType actionType = default;
             foreach (var property in element.EnumerateObject())
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    actionConfiguration = IncidentPropertiesAction.DeserializeIncidentPropertiesAction(property.Value);
+                    actionConfiguration = SecurityInsightsIncidentActionConfiguration.DeserializeSecurityInsightsIncidentActionConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("order"))

@@ -2,19 +2,29 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Communication.Pipeline;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
 {
     public class SipRoutingClientLiveTestBase : RecordedTestBase<SipRoutingClientTestEnvironment>
     {
+        protected TestData? TestData;
+
         public SipRoutingClientLiveTestBase(bool isAsync) : base(isAsync)
         {
             JsonPathSanitizers.Add("$..credential");
             SanitizedHeaders.Add("x-ms-content-sha256");
+        }
+
+        [SetUp]
+        public void SetUpTestData()
+        {
+            TestData = new TestData(Recording.Random.NewGuid());
         }
 
         public bool SkipSipRoutingLiveTests
@@ -29,7 +39,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         protected SipRoutingClient CreateClient(bool isInstrumented = true)
         {
             var client = new SipRoutingClient(
-                    TestEnvironment.LiveTestStaticConnectionString,
+                    TestEnvironment.LiveTestDynamicConnectionString,
                     InstrumentClientOptions(new SipRoutingClientOptions()));
 
             // We always create the instrumented client to suppress the instrumentation check
@@ -45,7 +55,7 @@ namespace Azure.Communication.PhoneNumbers.SipRouting.Tests
         protected SipRoutingClient CreateClientWithTokenCredential(bool isInstrumented = true)
         {
             var client = new SipRoutingClient(
-                    new Uri(ConnectionString.Parse(TestEnvironment.LiveTestStaticConnectionString, allowEmptyValues: true).GetRequired("endpoint")),
+                    new Uri(ConnectionString.Parse(TestEnvironment.LiveTestDynamicConnectionString, allowEmptyValues: true).GetRequired("endpoint")),
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
                     InstrumentClientOptions(new SipRoutingClientOptions()));
 

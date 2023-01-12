@@ -114,6 +114,34 @@ namespace Azure.ResourceManager.Kusto
             return GetExtensionClient(subscriptionResource).CheckKustoClusterNameAvailability(location, content, cancellationToken);
         }
 
+        /// <summary>
+        /// Lists eligible region SKUs for Kusto resource provider by Azure region.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/skus
+        /// Operation Id: Skus_List
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> Azure location (region) name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<KustoSkuDescription> GetSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetSkusAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists eligible region SKUs for Kusto resource provider by Azure region.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Kusto/locations/{location}/skus
+        /// Operation Id: Skus_List
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> Azure location (region) name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="KustoSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<KustoSkuDescription> GetSkus(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            return GetExtensionClient(subscriptionResource).GetSkus(location, cancellationToken);
+        }
+
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
         {
             return resourceGroupResource.GetCachedClient((client) =>

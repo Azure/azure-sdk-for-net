@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <param name="content"> Request specifying query and its options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<QueryResponse>> ResourcesAsync(this TenantResource tenantResource, QueryContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<ResourceQueryResult>> GetResourcesAsync(this TenantResource tenantResource, ResourceQueryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(tenantResource).ResourcesAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(tenantResource).GetResourcesAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <param name="content"> Request specifying query and its options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<QueryResponse> Resources(this TenantResource tenantResource, QueryContent content, CancellationToken cancellationToken = default)
+        public static Response<ResourceQueryResult> GetResources(this TenantResource tenantResource, ResourceQueryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(tenantResource).Resources(content, cancellationToken);
+            return GetExtensionClient(tenantResource).GetResources(content, cancellationToken);
         }
 
         /// <summary>
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <param name="content"> Request specifying the query and its options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<BinaryData>> ResourcesHistoryAsync(this TenantResource tenantResource, ResourcesHistoryContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<BinaryData>> GetResourceHistoryAsync(this TenantResource tenantResource, ResourcesHistoryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(tenantResource).ResourcesHistoryAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(tenantResource).GetResourceHistoryAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <param name="content"> Request specifying the query and its options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<BinaryData> ResourcesHistory(this TenantResource tenantResource, ResourcesHistoryContent content, CancellationToken cancellationToken = default)
+        public static Response<BinaryData> GetResourceHistory(this TenantResource tenantResource, ResourcesHistoryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(tenantResource).ResourcesHistory(content, cancellationToken);
+            return GetExtensionClient(tenantResource).GetResourceHistory(content, cancellationToken);
         }
     }
 }
