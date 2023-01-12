@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,22 +119,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> An async collection of <see cref="DeviceProvisioningServicesPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceProvisioningServicesPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DeviceProvisioningServicesPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.ListPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceProvisioningServicesPrivateLinkResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.CreateListPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DeviceProvisioningServicesPrivateLinkResource(Client, DeviceProvisioningServicesPrivateLinkResourceData.DeserializeDeviceProvisioningServicesPrivateLinkResourceData(e)), _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServicesPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -147,22 +132,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> A collection of <see cref="DeviceProvisioningServicesPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceProvisioningServicesPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<DeviceProvisioningServicesPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.ListPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new DeviceProvisioningServicesPrivateLinkResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient.CreateListPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new DeviceProvisioningServicesPrivateLinkResource(Client, DeviceProvisioningServicesPrivateLinkResourceData.DeserializeDeviceProvisioningServicesPrivateLinkResourceData(e)), _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceClientDiagnostics, Pipeline, "DeviceProvisioningServicesPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

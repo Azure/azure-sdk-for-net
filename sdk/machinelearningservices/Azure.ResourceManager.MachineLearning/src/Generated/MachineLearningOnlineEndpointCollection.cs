@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -194,37 +193,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningOnlineEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningOnlineEndpointResource> GetAllAsync(string name = null, int? count = null, MachineLearningEndpointComputeType? computeType = null, string skip = null, string tags = null, string properties = null, MachineLearningOrderString? orderBy = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<MachineLearningOnlineEndpointResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics.CreateScope("MachineLearningOnlineEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _machineLearningOnlineEndpointOnlineEndpointsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningOnlineEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<MachineLearningOnlineEndpointResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics.CreateScope("MachineLearningOnlineEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _machineLearningOnlineEndpointOnlineEndpointsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningOnlineEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningOnlineEndpointOnlineEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningOnlineEndpointOnlineEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningOnlineEndpointResource(Client, MachineLearningOnlineEndpointData.DeserializeMachineLearningOnlineEndpointData(e)), _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics, Pipeline, "MachineLearningOnlineEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -243,37 +214,9 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningOnlineEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningOnlineEndpointResource> GetAll(string name = null, int? count = null, MachineLearningEndpointComputeType? computeType = null, string skip = null, string tags = null, string properties = null, MachineLearningOrderString? orderBy = null, CancellationToken cancellationToken = default)
         {
-            Page<MachineLearningOnlineEndpointResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics.CreateScope("MachineLearningOnlineEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _machineLearningOnlineEndpointOnlineEndpointsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningOnlineEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<MachineLearningOnlineEndpointResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics.CreateScope("MachineLearningOnlineEndpointCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _machineLearningOnlineEndpointOnlineEndpointsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineLearningOnlineEndpointResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningOnlineEndpointOnlineEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningOnlineEndpointOnlineEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, count, computeType, skip, tags, properties, orderBy);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningOnlineEndpointResource(Client, MachineLearningOnlineEndpointData.DeserializeMachineLearningOnlineEndpointData(e)), _machineLearningOnlineEndpointOnlineEndpointsClientDiagnostics, Pipeline, "MachineLearningOnlineEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

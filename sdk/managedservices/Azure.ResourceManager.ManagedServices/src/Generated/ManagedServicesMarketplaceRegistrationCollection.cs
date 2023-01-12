@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -111,37 +110,9 @@ namespace Azure.ResourceManager.ManagedServices
         /// <returns> An async collection of <see cref="ManagedServicesMarketplaceRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedServicesMarketplaceRegistrationResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedServicesMarketplaceRegistrationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsClientDiagnostics.CreateScope("ManagedServicesMarketplaceRegistrationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsRestClient.ListAsync(Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedServicesMarketplaceRegistrationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ManagedServicesMarketplaceRegistrationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsClientDiagnostics.CreateScope("ManagedServicesMarketplaceRegistrationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsRestClient.ListNextPageAsync(nextLink, Id, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedServicesMarketplaceRegistrationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsRestClient.CreateListRequest(Id, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedServicesMarketplaceRegistrationResource(Client, ManagedServicesMarketplaceRegistrationData.DeserializeManagedServicesMarketplaceRegistrationData(e)), _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsClientDiagnostics, Pipeline, "ManagedServicesMarketplaceRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -154,37 +125,9 @@ namespace Azure.ResourceManager.ManagedServices
         /// <returns> A collection of <see cref="ManagedServicesMarketplaceRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedServicesMarketplaceRegistrationResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagedServicesMarketplaceRegistrationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsClientDiagnostics.CreateScope("ManagedServicesMarketplaceRegistrationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsRestClient.List(Id, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedServicesMarketplaceRegistrationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ManagedServicesMarketplaceRegistrationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsClientDiagnostics.CreateScope("ManagedServicesMarketplaceRegistrationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsRestClient.ListNextPage(nextLink, Id, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedServicesMarketplaceRegistrationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsRestClient.CreateListRequest(Id, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsRestClient.CreateListNextPageRequest(nextLink, Id, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedServicesMarketplaceRegistrationResource(Client, ManagedServicesMarketplaceRegistrationData.DeserializeManagedServicesMarketplaceRegistrationData(e)), _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsClientDiagnostics, Pipeline, "ManagedServicesMarketplaceRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

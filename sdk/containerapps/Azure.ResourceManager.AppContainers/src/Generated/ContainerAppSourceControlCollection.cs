@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppSourceControlResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppSourceControlResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerAppSourceControlResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics.CreateScope("ContainerAppSourceControlCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerAppSourceControlContainerAppsSourceControlsRestClient.ListByContainerAppAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppSourceControlResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ContainerAppSourceControlResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics.CreateScope("ContainerAppSourceControlCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _containerAppSourceControlContainerAppsSourceControlsRestClient.ListByContainerAppNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppSourceControlResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppSourceControlContainerAppsSourceControlsRestClient.CreateListByContainerAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppSourceControlContainerAppsSourceControlsRestClient.CreateListByContainerAppNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppSourceControlResource(Client, ContainerAppSourceControlData.DeserializeContainerAppSourceControlData(e)), _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics, Pipeline, "ContainerAppSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppSourceControlResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppSourceControlResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ContainerAppSourceControlResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics.CreateScope("ContainerAppSourceControlCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerAppSourceControlContainerAppsSourceControlsRestClient.ListByContainerApp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppSourceControlResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ContainerAppSourceControlResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics.CreateScope("ContainerAppSourceControlCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _containerAppSourceControlContainerAppsSourceControlsRestClient.ListByContainerAppNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ContainerAppSourceControlResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppSourceControlContainerAppsSourceControlsRestClient.CreateListByContainerAppRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppSourceControlContainerAppsSourceControlsRestClient.CreateListByContainerAppNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppSourceControlResource(Client, ContainerAppSourceControlData.DeserializeContainerAppSourceControlData(e)), _containerAppSourceControlContainerAppsSourceControlsClientDiagnostics, Pipeline, "ContainerAppSourceControlCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

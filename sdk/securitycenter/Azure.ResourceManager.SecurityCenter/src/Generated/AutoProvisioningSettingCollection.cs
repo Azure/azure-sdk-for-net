@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="AutoProvisioningSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutoProvisioningSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutoProvisioningSettingResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _autoProvisioningSettingClientDiagnostics.CreateScope("AutoProvisioningSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _autoProvisioningSettingRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutoProvisioningSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<AutoProvisioningSettingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _autoProvisioningSettingClientDiagnostics.CreateScope("AutoProvisioningSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _autoProvisioningSettingRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutoProvisioningSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _autoProvisioningSettingRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _autoProvisioningSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutoProvisioningSettingResource(Client, AutoProvisioningSettingData.DeserializeAutoProvisioningSettingData(e)), _autoProvisioningSettingClientDiagnostics, Pipeline, "AutoProvisioningSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="AutoProvisioningSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutoProvisioningSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AutoProvisioningSettingResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _autoProvisioningSettingClientDiagnostics.CreateScope("AutoProvisioningSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _autoProvisioningSettingRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutoProvisioningSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<AutoProvisioningSettingResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _autoProvisioningSettingClientDiagnostics.CreateScope("AutoProvisioningSettingCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _autoProvisioningSettingRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AutoProvisioningSettingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _autoProvisioningSettingRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _autoProvisioningSettingRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutoProvisioningSettingResource(Client, AutoProvisioningSettingData.DeserializeAutoProvisioningSettingData(e)), _autoProvisioningSettingClientDiagnostics, Pipeline, "AutoProvisioningSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -11,10 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ArcScVmm;
 using Azure.ResourceManager.ArcScVmm.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ArcScVmm
+namespace Azure.ResourceManager.ArcScVmm.Samples
 {
     public partial class Sample_ScVmmAvailabilitySetResource
     {
@@ -26,8 +27,10 @@ namespace Azure.ResourceManager.ArcScVmm
             // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/preview/2020-06-05-preview/examples/GetAvailabilitySet.json
             // this example is just showing the usage of "AvailabilitySets_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ScVmmAvailabilitySetResource created on azure
             // for more information of creating ScVmmAvailabilitySetResource, please refer to the document of ScVmmAvailabilitySetResource
@@ -55,8 +58,10 @@ namespace Azure.ResourceManager.ArcScVmm
             // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/preview/2020-06-05-preview/examples/DeleteAvailabilitySet.json
             // this example is just showing the usage of "AvailabilitySets_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ScVmmAvailabilitySetResource created on azure
             // for more information of creating ScVmmAvailabilitySetResource, please refer to the document of ScVmmAvailabilitySetResource
@@ -80,8 +85,10 @@ namespace Azure.ResourceManager.ArcScVmm
             // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/preview/2020-06-05-preview/examples/UpdateAvailabilitySet.json
             // this example is just showing the usage of "AvailabilitySets_Update" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ScVmmAvailabilitySetResource created on azure
             // for more information of creating ScVmmAvailabilitySetResource, please refer to the document of ScVmmAvailabilitySetResource
@@ -118,8 +125,10 @@ namespace Azure.ResourceManager.ArcScVmm
             // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/preview/2020-06-05-preview/examples/ListAvailabilitySetsBySubscription.json
             // this example is just showing the usage of "AvailabilitySets_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource

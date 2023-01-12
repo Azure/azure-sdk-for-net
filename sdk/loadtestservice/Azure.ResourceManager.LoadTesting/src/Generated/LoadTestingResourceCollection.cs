@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.LoadTesting
         /// <returns> An async collection of <see cref="LoadTestingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LoadTestingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<LoadTestingResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _loadTestingResourceLoadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _loadTestingResourceLoadTestsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadTestingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<LoadTestingResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _loadTestingResourceLoadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _loadTestingResourceLoadTestsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadTestingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _loadTestingResourceLoadTestsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _loadTestingResourceLoadTestsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LoadTestingResource(Client, LoadTestingResourceData.DeserializeLoadTestingResourceData(e)), _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, "LoadTestingResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.LoadTesting
         /// <returns> A collection of <see cref="LoadTestingResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LoadTestingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<LoadTestingResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _loadTestingResourceLoadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _loadTestingResourceLoadTestsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadTestingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<LoadTestingResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _loadTestingResourceLoadTestsClientDiagnostics.CreateScope("LoadTestingResourceCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _loadTestingResourceLoadTestsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LoadTestingResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _loadTestingResourceLoadTestsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _loadTestingResourceLoadTestsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LoadTestingResource(Client, LoadTestingResourceData.DeserializeLoadTestingResourceData(e)), _loadTestingResourceLoadTestsClientDiagnostics, Pipeline, "LoadTestingResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

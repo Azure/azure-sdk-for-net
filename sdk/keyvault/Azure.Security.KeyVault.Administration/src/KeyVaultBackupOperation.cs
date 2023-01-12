@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Administration
         private RequestFailedException _requestFailedException;
 
         /// <summary>
-        /// Creates an instance of a BackupOperation from a previously started operation. <see cref="UpdateStatus(CancellationToken)"/>, <see cref="UpdateStatusAsync(CancellationToken)"/>,
+        /// Creates an instance of a KeyVaultBackupOperation from a previously started operation. <see cref="UpdateStatus(CancellationToken)"/>, <see cref="UpdateStatusAsync(CancellationToken)"/>,
         ///  <see cref="WaitForCompletionAsync(CancellationToken)"/>, or <see cref="WaitForCompletionAsync(TimeSpan, CancellationToken)"/> must be called
         /// to re-populate the details of this operation.
         /// </summary>
@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Initializes a new instance of a BackupOperation.
+        /// Initializes a new instance of a KeyVaultBackupOperation.
         /// </summary>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartBackup(Uri, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartBackupAsync(Uri, string, CancellationToken)"/>.</param>
@@ -56,7 +56,7 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Initializes a new instance of a BackupOperation for mocking purposes.
+        /// Initializes a new instance of a KeyVaultBackupOperation for mocking purposes.
         /// </summary>
         /// <param name="value">The <see cref="FullBackupDetailsInternal" /> that will be returned from <see cref="Value" />.</param>
         /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="GetRawResponse" />.</param>

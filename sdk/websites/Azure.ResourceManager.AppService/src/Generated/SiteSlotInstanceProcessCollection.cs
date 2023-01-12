@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="SiteSlotInstanceProcessResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteSlotInstanceProcessResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SiteSlotInstanceProcessResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _siteSlotInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteSlotInstanceProcessWebAppsRestClient.ListInstanceProcessesSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstanceProcessResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SiteSlotInstanceProcessResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _siteSlotInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _siteSlotInstanceProcessWebAppsRestClient.ListInstanceProcessesSlotNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstanceProcessResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotInstanceProcessWebAppsRestClient.CreateListInstanceProcessesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotInstanceProcessWebAppsRestClient.CreateListInstanceProcessesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteSlotInstanceProcessResource(Client, ProcessInfoData.DeserializeProcessInfoData(e)), _siteSlotInstanceProcessWebAppsClientDiagnostics, Pipeline, "SiteSlotInstanceProcessCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="SiteSlotInstanceProcessResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteSlotInstanceProcessResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SiteSlotInstanceProcessResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _siteSlotInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteSlotInstanceProcessWebAppsRestClient.ListInstanceProcessesSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstanceProcessResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SiteSlotInstanceProcessResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _siteSlotInstanceProcessWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceProcessCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _siteSlotInstanceProcessWebAppsRestClient.ListInstanceProcessesSlotNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SiteSlotInstanceProcessResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotInstanceProcessWebAppsRestClient.CreateListInstanceProcessesSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotInstanceProcessWebAppsRestClient.CreateListInstanceProcessesSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteSlotInstanceProcessResource(Client, ProcessInfoData.DeserializeProcessInfoData(e)), _siteSlotInstanceProcessWebAppsClientDiagnostics, Pipeline, "SiteSlotInstanceProcessCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -103,37 +102,9 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An async collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CommunicationServiceResource> GetCommunicationServiceResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CommunicationServiceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = CommunicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCommunicationServiceResources");
-                scope.Start();
-                try
-                {
-                    var response = await CommunicationServiceResourceCommunicationServicesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CommunicationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<CommunicationServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = CommunicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCommunicationServiceResources");
-                scope.Start();
-                try
-                {
-                    var response = await CommunicationServiceResourceCommunicationServicesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CommunicationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CommunicationServiceResourceCommunicationServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommunicationServiceResourceCommunicationServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommunicationServiceResource(Client, CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(e)), CommunicationServiceResourceCommunicationServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCommunicationServiceResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -145,37 +116,9 @@ namespace Azure.ResourceManager.Communication
         /// <returns> A collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CommunicationServiceResource> GetCommunicationServiceResources(CancellationToken cancellationToken = default)
         {
-            Page<CommunicationServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = CommunicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCommunicationServiceResources");
-                scope.Start();
-                try
-                {
-                    var response = CommunicationServiceResourceCommunicationServicesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CommunicationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<CommunicationServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = CommunicationServiceResourceCommunicationServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCommunicationServiceResources");
-                scope.Start();
-                try
-                {
-                    var response = CommunicationServiceResourceCommunicationServicesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CommunicationServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CommunicationServiceResourceCommunicationServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommunicationServiceResourceCommunicationServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommunicationServiceResource(Client, CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(e)), CommunicationServiceResourceCommunicationServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCommunicationServiceResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -187,37 +130,9 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An async collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EmailServiceResource> GetEmailServiceResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<EmailServiceResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EmailServiceResourceEmailServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEmailServiceResources");
-                scope.Start();
-                try
-                {
-                    var response = await EmailServiceResourceEmailServicesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EmailServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EmailServiceResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = EmailServiceResourceEmailServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEmailServiceResources");
-                scope.Start();
-                try
-                {
-                    var response = await EmailServiceResourceEmailServicesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EmailServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EmailServiceResourceEmailServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EmailServiceResourceEmailServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EmailServiceResource(Client, EmailServiceResourceData.DeserializeEmailServiceResourceData(e)), EmailServiceResourceEmailServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEmailServiceResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +144,9 @@ namespace Azure.ResourceManager.Communication
         /// <returns> A collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EmailServiceResource> GetEmailServiceResources(CancellationToken cancellationToken = default)
         {
-            Page<EmailServiceResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EmailServiceResourceEmailServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEmailServiceResources");
-                scope.Start();
-                try
-                {
-                    var response = EmailServiceResourceEmailServicesRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EmailServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EmailServiceResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = EmailServiceResourceEmailServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetEmailServiceResources");
-                scope.Start();
-                try
-                {
-                    var response = EmailServiceResourceEmailServicesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EmailServiceResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EmailServiceResourceEmailServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EmailServiceResourceEmailServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EmailServiceResource(Client, EmailServiceResourceData.DeserializeEmailServiceResourceData(e)), EmailServiceResourceEmailServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetEmailServiceResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -271,22 +158,8 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<string> GetVerifiedExchangeOnlineDomainsEmailServicesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EmailServiceResourceEmailServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVerifiedExchangeOnlineDomainsEmailServices");
-                scope.Start();
-                try
-                {
-                    var response = await EmailServiceResourceEmailServicesRestClient.ListVerifiedExchangeOnlineDomainsAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EmailServiceResourceEmailServicesRestClient.CreateListVerifiedExchangeOnlineDomainsRequest(Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), EmailServiceResourceEmailServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVerifiedExchangeOnlineDomainsEmailServices", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -298,22 +171,8 @@ namespace Azure.ResourceManager.Communication
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<string> GetVerifiedExchangeOnlineDomainsEmailServices(CancellationToken cancellationToken = default)
         {
-            Page<string> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = EmailServiceResourceEmailServicesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVerifiedExchangeOnlineDomainsEmailServices");
-                scope.Start();
-                try
-                {
-                    var response = EmailServiceResourceEmailServicesRestClient.ListVerifiedExchangeOnlineDomains(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EmailServiceResourceEmailServicesRestClient.CreateListVerifiedExchangeOnlineDomainsRequest(Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), EmailServiceResourceEmailServicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVerifiedExchangeOnlineDomainsEmailServices", "", null, cancellationToken);
         }
     }
 }

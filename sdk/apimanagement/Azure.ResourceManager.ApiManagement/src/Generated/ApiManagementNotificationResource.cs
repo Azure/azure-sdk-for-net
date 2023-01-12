@@ -206,22 +206,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="RecipientUserContract" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RecipientUserContract> GetNotificationRecipientUsersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RecipientUserContract>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _notificationRecipientUserClientDiagnostics.CreateScope("ApiManagementNotificationResource.GetNotificationRecipientUsers");
-                scope.Start();
-                try
-                {
-                    var response = await _notificationRecipientUserRestClient.ListByNotificationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationRecipientUserRestClient.CreateListByNotificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RecipientUserContract.DeserializeRecipientUserContract, _notificationRecipientUserClientDiagnostics, Pipeline, "ApiManagementNotificationResource.GetNotificationRecipientUsers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -233,22 +219,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="RecipientUserContract" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RecipientUserContract> GetNotificationRecipientUsers(CancellationToken cancellationToken = default)
         {
-            Page<RecipientUserContract> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _notificationRecipientUserClientDiagnostics.CreateScope("ApiManagementNotificationResource.GetNotificationRecipientUsers");
-                scope.Start();
-                try
-                {
-                    var response = _notificationRecipientUserRestClient.ListByNotification(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationRecipientUserRestClient.CreateListByNotificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, RecipientUserContract.DeserializeRecipientUserContract, _notificationRecipientUserClientDiagnostics, Pipeline, "ApiManagementNotificationResource.GetNotificationRecipientUsers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -422,22 +394,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="RecipientEmailContract" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RecipientEmailContract> GetNotificationRecipientEmailsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RecipientEmailContract>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _notificationRecipientEmailClientDiagnostics.CreateScope("ApiManagementNotificationResource.GetNotificationRecipientEmails");
-                scope.Start();
-                try
-                {
-                    var response = await _notificationRecipientEmailRestClient.ListByNotificationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationRecipientEmailRestClient.CreateListByNotificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RecipientEmailContract.DeserializeRecipientEmailContract, _notificationRecipientEmailClientDiagnostics, Pipeline, "ApiManagementNotificationResource.GetNotificationRecipientEmails", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -449,22 +407,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="RecipientEmailContract" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RecipientEmailContract> GetNotificationRecipientEmails(CancellationToken cancellationToken = default)
         {
-            Page<RecipientEmailContract> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _notificationRecipientEmailClientDiagnostics.CreateScope("ApiManagementNotificationResource.GetNotificationRecipientEmails");
-                scope.Start();
-                try
-                {
-                    var response = _notificationRecipientEmailRestClient.ListByNotification(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationRecipientEmailRestClient.CreateListByNotificationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, RecipientEmailContract.DeserializeRecipientEmailContract, _notificationRecipientEmailClientDiagnostics, Pipeline, "ApiManagementNotificationResource.GetNotificationRecipientEmails", "value", null, cancellationToken);
         }
 
         /// <summary>

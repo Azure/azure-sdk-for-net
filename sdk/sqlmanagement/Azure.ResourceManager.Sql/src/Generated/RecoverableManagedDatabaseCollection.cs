@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="RecoverableManagedDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RecoverableManagedDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<RecoverableManagedDatabaseResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _recoverableManagedDatabaseClientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _recoverableManagedDatabaseRestClient.ListByInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecoverableManagedDatabaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<RecoverableManagedDatabaseResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _recoverableManagedDatabaseClientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _recoverableManagedDatabaseRestClient.ListByInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecoverableManagedDatabaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _recoverableManagedDatabaseRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoverableManagedDatabaseRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecoverableManagedDatabaseResource(Client, RecoverableManagedDatabaseData.DeserializeRecoverableManagedDatabaseData(e)), _recoverableManagedDatabaseClientDiagnostics, Pipeline, "RecoverableManagedDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="RecoverableManagedDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RecoverableManagedDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<RecoverableManagedDatabaseResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _recoverableManagedDatabaseClientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _recoverableManagedDatabaseRestClient.ListByInstance(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecoverableManagedDatabaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<RecoverableManagedDatabaseResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _recoverableManagedDatabaseClientDiagnostics.CreateScope("RecoverableManagedDatabaseCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _recoverableManagedDatabaseRestClient.ListByInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new RecoverableManagedDatabaseResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _recoverableManagedDatabaseRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _recoverableManagedDatabaseRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecoverableManagedDatabaseResource(Client, RecoverableManagedDatabaseData.DeserializeRecoverableManagedDatabaseData(e)), _recoverableManagedDatabaseClientDiagnostics, Pipeline, "RecoverableManagedDatabaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

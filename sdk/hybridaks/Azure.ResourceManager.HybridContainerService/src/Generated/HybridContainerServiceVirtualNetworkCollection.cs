@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -187,37 +186,9 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> An async collection of <see cref="HybridContainerServiceVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridContainerServiceVirtualNetworkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HybridContainerServiceVirtualNetworkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridContainerServiceVirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HybridContainerServiceVirtualNetworkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridContainerServiceVirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridContainerServiceVirtualNetworkResource(Client, HybridContainerServiceVirtualNetworkData.DeserializeHybridContainerServiceVirtualNetworkData(e)), _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics, Pipeline, "HybridContainerServiceVirtualNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -229,37 +200,9 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> A collection of <see cref="HybridContainerServiceVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridContainerServiceVirtualNetworkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<HybridContainerServiceVirtualNetworkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridContainerServiceVirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<HybridContainerServiceVirtualNetworkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics.CreateScope("HybridContainerServiceVirtualNetworkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HybridContainerServiceVirtualNetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridContainerServiceVirtualNetworkvirtualNetworksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridContainerServiceVirtualNetworkResource(Client, HybridContainerServiceVirtualNetworkData.DeserializeHybridContainerServiceVirtualNetworkData(e)), _hybridContainerServiceVirtualNetworkvirtualNetworksClientDiagnostics, Pipeline, "HybridContainerServiceVirtualNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

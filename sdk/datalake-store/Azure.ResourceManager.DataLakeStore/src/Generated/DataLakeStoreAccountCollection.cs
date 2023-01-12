@@ -193,37 +193,9 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> An async collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataLakeStoreAccountBasicData> GetAllAsync(string filter = null, int? top = null, int? skip = null, string select = null, string orderBy = null, bool? count = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataLakeStoreAccountBasicData>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataLakeStoreAccountAccountsClientDiagnostics.CreateScope("DataLakeStoreAccountCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataLakeStoreAccountAccountsRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderBy, count, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<DataLakeStoreAccountBasicData>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataLakeStoreAccountAccountsClientDiagnostics.CreateScope("DataLakeStoreAccountCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _dataLakeStoreAccountAccountsRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderBy, count, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeStoreAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderBy, count);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeStoreAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderBy, count);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData, _dataLakeStoreAccountAccountsClientDiagnostics, Pipeline, "DataLakeStoreAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,37 +213,9 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> A collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataLakeStoreAccountBasicData> GetAll(string filter = null, int? top = null, int? skip = null, string select = null, string orderBy = null, bool? count = null, CancellationToken cancellationToken = default)
         {
-            Page<DataLakeStoreAccountBasicData> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataLakeStoreAccountAccountsClientDiagnostics.CreateScope("DataLakeStoreAccountCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataLakeStoreAccountAccountsRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderBy, count, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<DataLakeStoreAccountBasicData> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _dataLakeStoreAccountAccountsClientDiagnostics.CreateScope("DataLakeStoreAccountCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _dataLakeStoreAccountAccountsRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderBy, count, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataLakeStoreAccountAccountsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderBy, count);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataLakeStoreAccountAccountsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top, skip, select, orderBy, count);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData, _dataLakeStoreAccountAccountsClientDiagnostics, Pipeline, "DataLakeStoreAccountCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

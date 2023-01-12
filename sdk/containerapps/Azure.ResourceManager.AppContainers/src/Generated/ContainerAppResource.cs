@@ -496,22 +496,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppSecret" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppSecret> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ContainerAppSecret>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppResource.GetSecrets");
-                scope.Start();
-                try
-                {
-                    var response = await _containerAppRestClient.ListSecretsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerAppSecret.DeserializeContainerAppSecret, _containerAppClientDiagnostics, Pipeline, "ContainerAppResource.GetSecrets", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -523,22 +509,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppSecret" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppSecret> GetSecrets(CancellationToken cancellationToken = default)
         {
-            Page<ContainerAppSecret> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _containerAppClientDiagnostics.CreateScope("ContainerAppResource.GetSecrets");
-                scope.Start();
-                try
-                {
-                    var response = _containerAppRestClient.ListSecrets(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ContainerAppSecret.DeserializeContainerAppSecret, _containerAppClientDiagnostics, Pipeline, "ContainerAppResource.GetSecrets", "value", null, cancellationToken);
         }
 
         /// <summary>

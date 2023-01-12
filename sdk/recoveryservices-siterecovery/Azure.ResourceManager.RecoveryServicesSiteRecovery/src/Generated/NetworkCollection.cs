@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="NetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<NetworkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _networkReplicationNetworksClientDiagnostics.CreateScope("NetworkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _networkReplicationNetworksRestClient.ListByReplicationFabricsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<NetworkResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _networkReplicationNetworksClientDiagnostics.CreateScope("NetworkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _networkReplicationNetworksRestClient.ListByReplicationFabricsNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkReplicationNetworksRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkReplicationNetworksRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkResource(Client, NetworkData.DeserializeNetworkData(e)), _networkReplicationNetworksClientDiagnostics, Pipeline, "NetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="NetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<NetworkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _networkReplicationNetworksClientDiagnostics.CreateScope("NetworkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _networkReplicationNetworksRestClient.ListByReplicationFabrics(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<NetworkResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _networkReplicationNetworksClientDiagnostics.CreateScope("NetworkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _networkReplicationNetworksRestClient.ListByReplicationFabricsNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetworkResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkReplicationNetworksRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkReplicationNetworksRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkResource(Client, NetworkData.DeserializeNetworkData(e)), _networkReplicationNetworksClientDiagnostics, Pipeline, "NetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

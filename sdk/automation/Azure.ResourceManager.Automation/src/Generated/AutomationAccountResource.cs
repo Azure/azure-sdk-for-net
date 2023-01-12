@@ -1085,22 +1085,8 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationPrivateLinkResource> AutomationPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutomationPrivateLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("AutomationAccountResource.AutomationPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = await _privateLinkResourcesRestClient.AutomationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateAutomationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomationPrivateLinkResource.DeserializeAutomationPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "AutomationAccountResource.AutomationPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1112,22 +1098,8 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationPrivateLinkResource> AutomationPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            Page<AutomationPrivateLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _privateLinkResourcesClientDiagnostics.CreateScope("AutomationAccountResource.AutomationPrivateLinkResources");
-                scope.Start();
-                try
-                {
-                    var response = _privateLinkResourcesRestClient.Automation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateAutomationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AutomationPrivateLinkResource.DeserializeAutomationPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "AutomationAccountResource.AutomationPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1292,22 +1264,8 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationJobStream" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationJobStream> GetDscCompilationJobStreamsAsync(Guid jobId, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutomationJobStream>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dscCompilationJobStreamClientDiagnostics.CreateScope("AutomationAccountResource.GetDscCompilationJobStreams");
-                scope.Start();
-                try
-                {
-                    var response = await _dscCompilationJobStreamRestClient.ListByJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dscCompilationJobStreamRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomationJobStream.DeserializeAutomationJobStream, _dscCompilationJobStreamClientDiagnostics, Pipeline, "AutomationAccountResource.GetDscCompilationJobStreams", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1320,22 +1278,8 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationJobStream" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationJobStream> GetDscCompilationJobStreams(Guid jobId, CancellationToken cancellationToken = default)
         {
-            Page<AutomationJobStream> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dscCompilationJobStreamClientDiagnostics.CreateScope("AutomationAccountResource.GetDscCompilationJobStreams");
-                scope.Start();
-                try
-                {
-                    var response = _dscCompilationJobStreamRestClient.ListByJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dscCompilationJobStreamRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AutomationJobStream.DeserializeAutomationJobStream, _dscCompilationJobStreamClientDiagnostics, Pipeline, "AutomationAccountResource.GetDscCompilationJobStreams", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1348,22 +1292,8 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="DscNodeCount" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DscNodeCount> GetAllNodeCountInformationAsync(AutomationCountType countType, CancellationToken cancellationToken = default)
         {
-            async Task<Page<DscNodeCount>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _nodeCountInformationClientDiagnostics.CreateScope("AutomationAccountResource.GetAllNodeCountInformation");
-                scope.Start();
-                try
-                {
-                    var response = await _nodeCountInformationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, countType, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _nodeCountInformationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, countType);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DscNodeCount.DeserializeDscNodeCount, _nodeCountInformationClientDiagnostics, Pipeline, "AutomationAccountResource.GetAllNodeCountInformation", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1376,22 +1306,8 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="DscNodeCount" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DscNodeCount> GetAllNodeCountInformation(AutomationCountType countType, CancellationToken cancellationToken = default)
         {
-            Page<DscNodeCount> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _nodeCountInformationClientDiagnostics.CreateScope("AutomationAccountResource.GetAllNodeCountInformation");
-                scope.Start();
-                try
-                {
-                    var response = _nodeCountInformationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, countType, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _nodeCountInformationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, countType);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, DscNodeCount.DeserializeDscNodeCount, _nodeCountInformationClientDiagnostics, Pipeline, "AutomationAccountResource.GetAllNodeCountInformation", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1404,22 +1320,8 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationAccountStatistics" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationAccountStatistics> GetStatisticsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutomationAccountStatistics>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _statisticsClientDiagnostics.CreateScope("AutomationAccountResource.GetStatistics");
-                scope.Start();
-                try
-                {
-                    var response = await _statisticsRestClient.ListByAutomationAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _statisticsRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomationAccountStatistics.DeserializeAutomationAccountStatistics, _statisticsClientDiagnostics, Pipeline, "AutomationAccountResource.GetStatistics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1432,22 +1334,8 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationAccountStatistics" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationAccountStatistics> GetStatistics(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<AutomationAccountStatistics> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _statisticsClientDiagnostics.CreateScope("AutomationAccountResource.GetStatistics");
-                scope.Start();
-                try
-                {
-                    var response = _statisticsRestClient.ListByAutomationAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _statisticsRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AutomationAccountStatistics.DeserializeAutomationAccountStatistics, _statisticsClientDiagnostics, Pipeline, "AutomationAccountResource.GetStatistics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1459,22 +1347,8 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationUsage> GetUsagesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutomationUsage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _usagesClientDiagnostics.CreateScope("AutomationAccountResource.GetUsages");
-                scope.Start();
-                try
-                {
-                    var response = await _usagesRestClient.ListByAutomationAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomationUsage.DeserializeAutomationUsage, _usagesClientDiagnostics, Pipeline, "AutomationAccountResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1486,22 +1360,8 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationUsage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationUsage> GetUsages(CancellationToken cancellationToken = default)
         {
-            Page<AutomationUsage> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _usagesClientDiagnostics.CreateScope("AutomationAccountResource.GetUsages");
-                scope.Start();
-                try
-                {
-                    var response = _usagesRestClient.ListByAutomationAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AutomationUsage.DeserializeAutomationUsage, _usagesClientDiagnostics, Pipeline, "AutomationAccountResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1513,22 +1373,8 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationKey" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationKey> GetAutomationAccountKeysAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AutomationKey>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _keysClientDiagnostics.CreateScope("AutomationAccountResource.GetAutomationAccountKeys");
-                scope.Start();
-                try
-                {
-                    var response = await _keysRestClient.ListByAutomationAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Keys, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _keysRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomationKey.DeserializeAutomationKey, _keysClientDiagnostics, Pipeline, "AutomationAccountResource.GetAutomationAccountKeys", "keys", null, cancellationToken);
         }
 
         /// <summary>
@@ -1540,22 +1386,8 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationKey" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationKey> GetAutomationAccountKeys(CancellationToken cancellationToken = default)
         {
-            Page<AutomationKey> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _keysClientDiagnostics.CreateScope("AutomationAccountResource.GetAutomationAccountKeys");
-                scope.Start();
-                try
-                {
-                    var response = _keysRestClient.ListByAutomationAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Keys, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _keysRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AutomationKey.DeserializeAutomationKey, _keysClientDiagnostics, Pipeline, "AutomationAccountResource.GetAutomationAccountKeys", "keys", null, cancellationToken);
         }
 
         /// <summary>
@@ -1616,22 +1448,8 @@ namespace Azure.ResourceManager.Automation
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            async Task<Page<AutomationModuleField>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _objectDataTypesClientDiagnostics.CreateScope("AutomationAccountResource.GetFieldsByType");
-                scope.Start();
-                try
-                {
-                    var response = await _objectDataTypesRestClient.ListFieldsByTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, typeName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _objectDataTypesRestClient.CreateListFieldsByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, typeName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomationModuleField.DeserializeAutomationModuleField, _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountResource.GetFieldsByType", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1648,22 +1466,8 @@ namespace Azure.ResourceManager.Automation
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            Page<AutomationModuleField> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _objectDataTypesClientDiagnostics.CreateScope("AutomationAccountResource.GetFieldsByType");
-                scope.Start();
-                try
-                {
-                    var response = _objectDataTypesRestClient.ListFieldsByType(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, typeName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _objectDataTypesRestClient.CreateListFieldsByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, typeName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, AutomationModuleField.DeserializeAutomationModuleField, _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountResource.GetFieldsByType", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1779,22 +1583,8 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="SoftwareUpdateConfigurationRun" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SoftwareUpdateConfigurationRun> GetSoftwareUpdateConfigurationRunsAsync(string clientRequestId = null, string filter = null, string skip = null, string top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SoftwareUpdateConfigurationRun>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _softwareUpdateConfigurationRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetSoftwareUpdateConfigurationRuns");
-                scope.Start();
-                try
-                {
-                    var response = await _softwareUpdateConfigurationRunsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareUpdateConfigurationRunsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter, skip, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SoftwareUpdateConfigurationRun.DeserializeSoftwareUpdateConfigurationRun, _softwareUpdateConfigurationRunsClientDiagnostics, Pipeline, "AutomationAccountResource.GetSoftwareUpdateConfigurationRuns", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1810,22 +1600,8 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="SoftwareUpdateConfigurationRun" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SoftwareUpdateConfigurationRun> GetSoftwareUpdateConfigurationRuns(string clientRequestId = null, string filter = null, string skip = null, string top = null, CancellationToken cancellationToken = default)
         {
-            Page<SoftwareUpdateConfigurationRun> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _softwareUpdateConfigurationRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetSoftwareUpdateConfigurationRuns");
-                scope.Start();
-                try
-                {
-                    var response = _softwareUpdateConfigurationRunsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareUpdateConfigurationRunsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter, skip, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SoftwareUpdateConfigurationRun.DeserializeSoftwareUpdateConfigurationRun, _softwareUpdateConfigurationRunsClientDiagnostics, Pipeline, "AutomationAccountResource.GetSoftwareUpdateConfigurationRuns", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1889,22 +1665,8 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="SoftwareUpdateConfigurationMachineRun" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SoftwareUpdateConfigurationMachineRun> GetSoftwareUpdateConfigurationMachineRunsAsync(string clientRequestId = null, string filter = null, string skip = null, string top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SoftwareUpdateConfigurationMachineRun>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _softwareUpdateConfigurationMachineRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetSoftwareUpdateConfigurationMachineRuns");
-                scope.Start();
-                try
-                {
-                    var response = await _softwareUpdateConfigurationMachineRunsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareUpdateConfigurationMachineRunsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter, skip, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SoftwareUpdateConfigurationMachineRun.DeserializeSoftwareUpdateConfigurationMachineRun, _softwareUpdateConfigurationMachineRunsClientDiagnostics, Pipeline, "AutomationAccountResource.GetSoftwareUpdateConfigurationMachineRuns", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1920,22 +1682,8 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="SoftwareUpdateConfigurationMachineRun" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SoftwareUpdateConfigurationMachineRun> GetSoftwareUpdateConfigurationMachineRuns(string clientRequestId = null, string filter = null, string skip = null, string top = null, CancellationToken cancellationToken = default)
         {
-            Page<SoftwareUpdateConfigurationMachineRun> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _softwareUpdateConfigurationMachineRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetSoftwareUpdateConfigurationMachineRuns");
-                scope.Start();
-                try
-                {
-                    var response = _softwareUpdateConfigurationMachineRunsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareUpdateConfigurationMachineRunsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter, skip, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, SoftwareUpdateConfigurationMachineRun.DeserializeSoftwareUpdateConfigurationMachineRun, _softwareUpdateConfigurationMachineRunsClientDiagnostics, Pipeline, "AutomationAccountResource.GetSoftwareUpdateConfigurationMachineRuns", "value", null, cancellationToken);
         }
 
         /// <summary>

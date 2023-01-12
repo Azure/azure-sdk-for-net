@@ -266,22 +266,8 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="DataMaskingRule" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataMaskingRule> GetDataMaskingRulesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<DataMaskingRule>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataMaskingRulesClientDiagnostics.CreateScope("DataMaskingPolicyResource.GetDataMaskingRules");
-                scope.Start();
-                try
-                {
-                    var response = await _dataMaskingRulesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMaskingRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DataMaskingRule.DeserializeDataMaskingRule, _dataMaskingRulesClientDiagnostics, Pipeline, "DataMaskingPolicyResource.GetDataMaskingRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -293,22 +279,8 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="DataMaskingRule" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataMaskingRule> GetDataMaskingRules(CancellationToken cancellationToken = default)
         {
-            Page<DataMaskingRule> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _dataMaskingRulesClientDiagnostics.CreateScope("DataMaskingPolicyResource.GetDataMaskingRules");
-                scope.Start();
-                try
-                {
-                    var response = _dataMaskingRulesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMaskingRulesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, DataMaskingRule.DeserializeDataMaskingRule, _dataMaskingRulesClientDiagnostics, Pipeline, "DataMaskingPolicyResource.GetDataMaskingRules", "value", null, cancellationToken);
         }
     }
 }
