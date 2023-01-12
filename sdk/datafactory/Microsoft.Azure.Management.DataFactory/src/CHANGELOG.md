@@ -5,6 +5,7 @@
 ### Breaking Changes
 - Added support Credential operations in DataFactory
 - Added exportsettings required in Snowflake source
+- Added scan folder and spark config support in Sparkjob activity
 
 ## Version 8.0.0
 ###  Feature Additions
