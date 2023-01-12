@@ -94,4 +94,4 @@ await disk.DeleteAsync(WaitUntil.Completed);
 
 ## Next steps
 
-Take a look at the [Managing Virtual Machines](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/compute/Azure.ResourceManager.Compute/samples/Sample2_ManagingVirtualMachines.md) samples.
+Take a look at the [Managing Virtual Machines](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/compute/Azure.ResourceManager.Compute/src/Customize/Samples/Sample2_ManagingVirtualMachines.md) samples.
