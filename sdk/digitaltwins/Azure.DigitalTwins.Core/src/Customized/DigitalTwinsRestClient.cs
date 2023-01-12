@@ -19,7 +19,6 @@ namespace Azure.DigitalTwins.Core
     {
         private const string DateTimeOffsetFormat = "MM/dd/yy H:mm:ss zzz";
 
-
         /// <summary>
         /// Retrieves a digital twin.
         /// Status codes:
