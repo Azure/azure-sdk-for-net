@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using Azure.Containers.ContainerRegistry.Specialized;
 
@@ -39,7 +40,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> The blob's digest, calculated by the registry. </param>
         /// <param name="content">The blob content.</param>
         /// <returns> A new <see cref="Specialized.DownloadBlobResult"/> instance for mocking. </returns>
-        public static DownloadBlobResult DownloadBlobResult(string digest = null, Stream content = null)
+        public static DownloadBlobResult DownloadBlobResult(string digest = null, BinaryData content = null)
         {
             return new DownloadBlobResult(digest, content);
         }

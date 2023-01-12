@@ -15,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
     {
         private static Random _random = new Random();
 
-        public static async Task UploadTestImageAsync(this ContainerRegistryBlobClient client, string tag = default)
+        public static async Task<string> UploadTestImageAsync(this ContainerRegistryBlobClient client, string tag = default)
         {
             OciManifest manifest = new()
             {
@@ -46,7 +46,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Finally, upload the manifest file
             var options = tag != null ? new UploadManifestOptions(tag) : null;
-            await client.UploadManifestAsync(manifest, options);
+            var result = await client.UploadManifestAsync(manifest, options);
+
+            // return the manifest's digest
+            return result.Value.Digest;
         }
 
         public static async Task AddTagAsync(this ContainerRegistryBlobClient client, string reference, string tag)
