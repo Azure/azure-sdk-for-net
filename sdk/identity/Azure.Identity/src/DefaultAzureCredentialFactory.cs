@@ -38,7 +38,7 @@ namespace Azure.Identity
             }
 
             int i = 0;
-            TokenCredential[] chain = new TokenCredential[8];
+            TokenCredential[] chain = new TokenCredential[9];
 
             if (!Options.ExcludeEnvironmentCredential)
             {

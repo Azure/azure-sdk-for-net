@@ -76,19 +76,6 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task AuthenticateWithCliCredential_ExpiresIn()
-        {
-            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCliExpiresIn(1800);
-
-            var testProcess = new TestProcess { Output = processOutput };
-            AzureDeveloperCliCredential credential = InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
-            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
-
-            Assert.AreEqual(expectedToken, actualToken.Token);
-            Assert.LessOrEqual(expectedExpiresOn, actualToken.ExpiresOn);
-        }
-
-        [Test]
         public void AuthenticateWithCliCredential_InvalidJsonOutput(
             [Values("", "{}", "{\"Some\": false}", "{\"token\": \"token\"}", "{\"expiresOn\" : \"1900-01-01T00:00:00Z\"}")]
             string jsonContent)

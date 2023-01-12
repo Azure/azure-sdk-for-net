@@ -154,6 +154,7 @@ namespace Azure.Identity.Tests
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
                 ExcludeVisualStudioCodeCredential = false,
+                ExcludeAzureDeveloperCliCredential = true,
                 VisualStudioCodeTenantId = TestEnvironment.IdentityTenantId
             });
 
@@ -268,11 +269,12 @@ namespace Azure.Identity.Tests
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeManagedIdentityCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
+                ExcludeAzureDeveloperCliCredential = true,
                 ExcludeVisualStudioCodeCredential = false,
             });
 
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", "{}");
-            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "'az' is not recognized" }, new TestProcess{Error = "'PowerShell' is not recognized"}, new TestProcess{Error = "'PowerShell' is not recognized"}), vscAdapter);
+            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "'az' is not recognized" }, new TestProcess { Error = "'azd' is not recognized" }, new TestProcess {Error = "'PowerShell' is not recognized"}, new TestProcess{Error = "'PowerShell' is not recognized"}), vscAdapter);
             var credential = InstrumentClient(new DefaultAzureCredential(factory));
 
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
@@ -301,6 +303,7 @@ namespace Azure.Identity.Tests
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
+                ExcludeAzureDeveloperCliCredential = true,
                 ExcludeVisualStudioCodeCredential = false,
             });
 
@@ -333,6 +336,7 @@ namespace Azure.Identity.Tests
                 ExcludeInteractiveBrowserCredential = true,
                 ExcludeSharedTokenCacheCredential = true,
                 ExcludeManagedIdentityCredential = true,
+                ExcludeAzureDeveloperCliCredential = true,
                 ExcludeVisualStudioCodeCredential = false,
             });
 
