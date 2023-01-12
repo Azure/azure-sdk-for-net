@@ -47,19 +47,30 @@ namespace Azure.Communication.Identity
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task CommunicationTokenCredential_CreateRefreshableWithoutInitialToken(bool refreshProactively)
+        public async Task CommunicationTokenCredential_CreateRefreshableWithoutInitialToken()
         {
             #region Snippet:CommunicationTokenCredential_CreateRefreshableWithoutInitialToken
             using var tokenCredential = new CommunicationTokenCredential(
                 new CommunicationTokenRefreshOptions(
-                    refreshProactively: refreshProactively, // Indicates if the token should be proactively refreshed in the background or only on-demand
+                    refreshProactively: true, // Indicates if the token should be proactively refreshed in the background or only on-demand
                     tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken))
                 {
                     AsyncTokenRefresher = cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken)
                 });
             #endregion
+            await tokenCredential.GetTokenAsync();
+        }
+
+        [Test]
+        public async Task CommunicationTokenCredential_CreateNotRefreshableWithoutInitialToken()
+        {
+            using var tokenCredential = new CommunicationTokenCredential(
+                new CommunicationTokenRefreshOptions(
+                    refreshProactively: false,
+                    tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken))
+                {
+                    AsyncTokenRefresher = cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken)
+                });
             var accessToken = await tokenCredential.GetTokenAsync();
             Assert.AreEqual(SampleToken, accessToken.Token);
         }
