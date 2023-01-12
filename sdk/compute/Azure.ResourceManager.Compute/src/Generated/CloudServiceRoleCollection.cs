@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,37 +119,9 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="CloudServiceRoleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CloudServiceRoleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CloudServiceRoleResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cloudServiceRoleClientDiagnostics.CreateScope("CloudServiceRoleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _cloudServiceRoleRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceRoleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<CloudServiceRoleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _cloudServiceRoleClientDiagnostics.CreateScope("CloudServiceRoleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _cloudServiceRoleRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceRoleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceRoleRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudServiceRoleRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudServiceRoleResource(Client, CloudServiceRoleData.DeserializeCloudServiceRoleData(e)), _cloudServiceRoleClientDiagnostics, Pipeline, "CloudServiceRoleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,37 +133,9 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="CloudServiceRoleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CloudServiceRoleResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<CloudServiceRoleResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _cloudServiceRoleClientDiagnostics.CreateScope("CloudServiceRoleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _cloudServiceRoleRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceRoleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<CloudServiceRoleResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _cloudServiceRoleClientDiagnostics.CreateScope("CloudServiceRoleCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _cloudServiceRoleRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CloudServiceRoleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceRoleRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudServiceRoleRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudServiceRoleResource(Client, CloudServiceRoleData.DeserializeCloudServiceRoleData(e)), _cloudServiceRoleClientDiagnostics, Pipeline, "CloudServiceRoleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

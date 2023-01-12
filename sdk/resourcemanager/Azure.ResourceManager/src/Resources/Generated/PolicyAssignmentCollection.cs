@@ -187,139 +187,27 @@ namespace Azure.ResourceManager.Resources
         {
             if (Id.ResourceType == ResourceGroupResource.ResourceType)
             {
-                async Task<Page<PolicyAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _policyAssignmentRestClient.ListForResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<PolicyAssignmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _policyAssignmentRestClient.ListForResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == ManagementGroupResource.ResourceType)
             {
-                async Task<Page<PolicyAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _policyAssignmentRestClient.ListForManagementGroupAsync(Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<PolicyAssignmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _policyAssignmentRestClient.ListForManagementGroupNextPageAsync(nextLink, Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForManagementGroupRequest(Id.Name, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForManagementGroupNextPageRequest(nextLink, Id.Name, filter, top);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
-                async Task<Page<PolicyAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _policyAssignmentRestClient.ListAsync(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<PolicyAssignmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _policyAssignmentRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListRequest(Id.SubscriptionId, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else
             {
-                async Task<Page<PolicyAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _policyAssignmentRestClient.ListForResourceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                async Task<Page<PolicyAssignmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = await _policyAssignmentRestClient.ListForResourceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top);
+                return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
         }
 
@@ -342,139 +230,27 @@ namespace Azure.ResourceManager.Resources
         {
             if (Id.ResourceType == ResourceGroupResource.ResourceType)
             {
-                Page<PolicyAssignmentResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _policyAssignmentRestClient.ListForResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<PolicyAssignmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _policyAssignmentRestClient.ListForResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
+                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == ManagementGroupResource.ResourceType)
             {
-                Page<PolicyAssignmentResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _policyAssignmentRestClient.ListForManagementGroup(Id.Name, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<PolicyAssignmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _policyAssignmentRestClient.ListForManagementGroupNextPage(nextLink, Id.Name, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForManagementGroupRequest(Id.Name, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForManagementGroupNextPageRequest(nextLink, Id.Name, filter, top);
+                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else if (Id.ResourceType == SubscriptionResource.ResourceType)
             {
-                Page<PolicyAssignmentResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _policyAssignmentRestClient.List(Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<PolicyAssignmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _policyAssignmentRestClient.ListNextPage(nextLink, Id.SubscriptionId, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListRequest(Id.SubscriptionId, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top);
+                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
             else
             {
-                Page<PolicyAssignmentResource> FirstPageFunc(int? pageSizeHint)
-                {
-                    using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _policyAssignmentRestClient.ListForResource(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                Page<PolicyAssignmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-                {
-                    using var scope = _policyAssignmentClientDiagnostics.CreateScope("PolicyAssignmentCollection.GetAll");
-                    scope.Start();
-                    try
-                    {
-                        var response = _policyAssignmentRestClient.ListForResourceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top, cancellationToken: cancellationToken);
-                        return Page.FromValues(response.Value.Value.Select(value => new PolicyAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                    }
-                    catch (Exception e)
-                    {
-                        scope.Failed(e);
-                        throw;
-                    }
-                }
-                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+                HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAssignmentRestClient.CreateListForResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top);
+                HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAssignmentRestClient.CreateListForResourceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.SubstringAfterProviderNamespace(), Id.ResourceType.GetLastType(), Id.Name, filter, top);
+                return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyAssignmentResource(Client, PolicyAssignmentData.DeserializePolicyAssignmentData(e)), _policyAssignmentClientDiagnostics, Pipeline, "PolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
             }
         }
 

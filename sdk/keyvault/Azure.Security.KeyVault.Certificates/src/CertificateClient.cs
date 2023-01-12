@@ -42,7 +42,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="vaultUri">
         /// A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.
         /// If you have a certificate <see cref="Uri"/>, use <see cref="KeyVaultCertificateIdentifier"/> to parse the <see cref="KeyVaultCertificateIdentifier.VaultUri"/> and other information.
-        /// You should validate that this URI references a valid Key Vault resource. See https://aka.ms/azsdk/blog/vault-uri for details.
+        /// You should validate that this URI references a valid Key Vault resource. See <see href="https://aka.ms/azsdk/blog/vault-uri"/> for details.
         /// </param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
         /// <exception cref="ArgumentNullException"><paramref name="vaultUri"/> or <paramref name="credential"/> is null.</exception>
@@ -57,7 +57,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="vaultUri">
         /// A <see cref="Uri"/> to the vault on which the client operates. Appears as "DNS Name" in the Azure portal.
         /// If you have a certificate <see cref="Uri"/>, use <see cref="KeyVaultCertificateIdentifier"/> to parse the <see cref="KeyVaultCertificateIdentifier.VaultUri"/> and other information.
-        /// You should validate that this URI references a valid Key Vault resource. See https://aka.ms/azsdk/blog/vault-uri for details.
+        /// You should validate that this URI references a valid Key Vault resource. See <see href="https://aka.ms/azsdk/blog/vault-uri"/> for details.
         /// </param>
         /// <param name="credential">A <see cref="TokenCredential"/> used to authenticate requests to the vault, such as DefaultAzureCredential.</param>
         /// <param name="options"><see cref="CertificateClientOptions"/> that allow to configure the management of the request sent to Key Vault.</param>

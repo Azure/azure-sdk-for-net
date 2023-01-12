@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -189,37 +188,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="PartnerRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PartnerRegistrationResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PartnerRegistrationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _partnerRegistrationRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PartnerRegistrationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<PartnerRegistrationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _partnerRegistrationRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PartnerRegistrationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerRegistrationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _partnerRegistrationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerRegistrationResource(Client, PartnerRegistrationData.DeserializePartnerRegistrationData(e)), _partnerRegistrationClientDiagnostics, Pipeline, "PartnerRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -233,37 +204,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="PartnerRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PartnerRegistrationResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<PartnerRegistrationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _partnerRegistrationRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PartnerRegistrationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<PartnerRegistrationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _partnerRegistrationRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PartnerRegistrationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerRegistrationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _partnerRegistrationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerRegistrationResource(Client, PartnerRegistrationData.DeserializePartnerRegistrationData(e)), _partnerRegistrationClientDiagnostics, Pipeline, "PartnerRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

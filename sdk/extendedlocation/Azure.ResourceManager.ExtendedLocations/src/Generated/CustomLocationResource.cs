@@ -250,37 +250,9 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <returns> An async collection of <see cref="CustomLocationEnabledResourceType" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CustomLocationEnabledResourceType> GetEnabledResourceTypesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CustomLocationEnabledResourceType>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationResource.GetEnabledResourceTypes");
-                scope.Start();
-                try
-                {
-                    var response = await _customLocationRestClient.ListEnabledResourceTypesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<CustomLocationEnabledResourceType>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationResource.GetEnabledResourceTypes");
-                scope.Start();
-                try
-                {
-                    var response = await _customLocationRestClient.ListEnabledResourceTypesNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _customLocationRestClient.CreateListEnabledResourceTypesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customLocationRestClient.CreateListEnabledResourceTypesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CustomLocationEnabledResourceType.DeserializeCustomLocationEnabledResourceType, _customLocationClientDiagnostics, Pipeline, "CustomLocationResource.GetEnabledResourceTypes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -292,37 +264,9 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <returns> A collection of <see cref="CustomLocationEnabledResourceType" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CustomLocationEnabledResourceType> GetEnabledResourceTypes(CancellationToken cancellationToken = default)
         {
-            Page<CustomLocationEnabledResourceType> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationResource.GetEnabledResourceTypes");
-                scope.Start();
-                try
-                {
-                    var response = _customLocationRestClient.ListEnabledResourceTypes(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<CustomLocationEnabledResourceType> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _customLocationClientDiagnostics.CreateScope("CustomLocationResource.GetEnabledResourceTypes");
-                scope.Start();
-                try
-                {
-                    var response = _customLocationRestClient.ListEnabledResourceTypesNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _customLocationRestClient.CreateListEnabledResourceTypesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customLocationRestClient.CreateListEnabledResourceTypesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CustomLocationEnabledResourceType.DeserializeCustomLocationEnabledResourceType, _customLocationClientDiagnostics, Pipeline, "CustomLocationResource.GetEnabledResourceTypes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

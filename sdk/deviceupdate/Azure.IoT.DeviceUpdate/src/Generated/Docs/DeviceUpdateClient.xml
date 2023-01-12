@@ -1061,8 +1061,7 @@ var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
 var operation = await client.DeleteUpdateAsync(WaitUntil.Completed, "<provider>", "<name>", "<version>");
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
@@ -1076,8 +1075,7 @@ var client = new DeviceUpdateClient(endpoint, "<instanceId>", credential);
 
 var operation = client.DeleteUpdate(WaitUntil.Completed, "<provider>", "<name>", "<version>");
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
     </member>
@@ -1110,8 +1108,7 @@ var data = new[] {
 
 var operation = await client.StartImportUpdateAsync(WaitUntil.Completed, RequestContent.Create(data));
 
-var response = await operation.WaitForCompletionResponseAsync();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>
@@ -1167,8 +1164,7 @@ var data = new[] {
 
 var operation = client.StartImportUpdate(WaitUntil.Completed, RequestContent.Create(data));
 
-var response = operation.WaitForCompletionResponse();
-Console.WriteLine(response.Status)
+Console.WriteLine(operation.GetRawResponse().Status)
 ]]></code>
 </example>
 <remarks>

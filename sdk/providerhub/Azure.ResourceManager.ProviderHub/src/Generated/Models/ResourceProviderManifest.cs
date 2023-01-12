@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Gets the provider authentication. </summary>
         internal ResourceProviderManifestProviderAuthentication ProviderAuthentication { get; }
-        /// <summary> Gets the allowed audiences. </summary>
+        /// <summary> Gets the provider authentication allowed audiences. </summary>
         public IList<string> ProviderAuthenticationAllowedAudiences
         {
             get => ProviderAuthentication?.AllowedAudiences;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public IReadOnlyList<string> RequiredFeatures { get; }
         /// <summary> Gets the features rule. </summary>
         internal ResourceProviderManifestFeaturesRule FeaturesRule { get; }
-        /// <summary> Gets or sets the required features policy. </summary>
+        /// <summary> Gets the required features policy. </summary>
         public FeaturesPolicy? RequiredFeaturesPolicy
         {
             get => FeaturesRule?.RequiredFeaturesPolicy;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Gets the request header options. </summary>
         internal ResourceProviderManifestRequestHeaderOptions RequestHeaderOptions { get; }
-        /// <summary> Gets or sets the opt in headers. </summary>
+        /// <summary> Gets the opt in headers. </summary>
         public OptInHeaderType? OptInHeaders
         {
             get => RequestHeaderOptions?.OptInHeaders;

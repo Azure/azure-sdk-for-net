@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -125,37 +124,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An async collection of <see cref="SubscriptionSecurityAlertResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SubscriptionSecurityAlertResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SubscriptionSecurityAlertResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _subscriptionSecurityAlertAlertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _subscriptionSecurityAlertAlertsRestClient.ListSubscriptionLevelByRegionAsync(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionSecurityAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SubscriptionSecurityAlertResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _subscriptionSecurityAlertAlertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _subscriptionSecurityAlertAlertsRestClient.ListSubscriptionLevelByRegionNextPageAsync(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionSecurityAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionSecurityAlertAlertsRestClient.CreateListSubscriptionLevelByRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionSecurityAlertAlertsRestClient.CreateListSubscriptionLevelByRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionSecurityAlertResource(Client, SecurityAlertData.DeserializeSecurityAlertData(e)), _subscriptionSecurityAlertAlertsClientDiagnostics, Pipeline, "SubscriptionSecurityAlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,37 +138,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> A collection of <see cref="SubscriptionSecurityAlertResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SubscriptionSecurityAlertResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SubscriptionSecurityAlertResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _subscriptionSecurityAlertAlertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _subscriptionSecurityAlertAlertsRestClient.ListSubscriptionLevelByRegion(Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionSecurityAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SubscriptionSecurityAlertResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _subscriptionSecurityAlertAlertsClientDiagnostics.CreateScope("SubscriptionSecurityAlertCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _subscriptionSecurityAlertAlertsRestClient.ListSubscriptionLevelByRegionNextPage(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name), cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SubscriptionSecurityAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionSecurityAlertAlertsRestClient.CreateListSubscriptionLevelByRegionRequest(Id.SubscriptionId, new AzureLocation(Id.Name));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionSecurityAlertAlertsRestClient.CreateListSubscriptionLevelByRegionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Name));
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionSecurityAlertResource(Client, SecurityAlertData.DeserializeSecurityAlertData(e)), _subscriptionSecurityAlertAlertsClientDiagnostics, Pipeline, "SubscriptionSecurityAlertCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

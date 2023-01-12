@@ -11,9 +11,10 @@ using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.DataShare.Models;
 
-namespace Azure.ResourceManager.DataShare
+namespace Azure.ResourceManager.DataShare.Samples
 {
     public partial class Sample_ShareDataSetResource
     {
@@ -25,8 +26,10 @@ namespace Azure.ResourceManager.DataShare
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSets_Get.json
             // this example is just showing the usage of "DataSets_Get" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareDataSetResource created on azure
             // for more information of creating ShareDataSetResource, please refer to the document of ShareDataSetResource
@@ -56,8 +59,10 @@ namespace Azure.ResourceManager.DataShare
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSets_Create.json
             // this example is just showing the usage of "DataSets_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareDataSetResource created on azure
             // for more information of creating ShareDataSetResource, please refer to the document of ShareDataSetResource
@@ -70,10 +75,7 @@ namespace Azure.ResourceManager.DataShare
             ShareDataSetResource shareDataSet = client.GetShareDataSetResource(shareDataSetResourceId);
 
             // invoke the operation
-            ShareDataSetData data = new ShareDataSetData()
-            {
-                Kind = DataSetKind.Blob,
-            };
+            ShareDataSetData data = new BlobDataSet("C1", "file21", "SampleResourceGroup", "storage2", "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a");
             ArmOperation<ShareDataSetResource> lro = await shareDataSet.UpdateAsync(WaitUntil.Completed, data);
             ShareDataSetResource result = lro.Value;
 
@@ -92,8 +94,10 @@ namespace Azure.ResourceManager.DataShare
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSets_KustoCluster_Create.json
             // this example is just showing the usage of "DataSets_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareDataSetResource created on azure
             // for more information of creating ShareDataSetResource, please refer to the document of ShareDataSetResource
@@ -106,10 +110,7 @@ namespace Azure.ResourceManager.DataShare
             ShareDataSetResource shareDataSet = client.GetShareDataSetResource(shareDataSetResourceId);
 
             // invoke the operation
-            ShareDataSetData data = new ShareDataSetData()
-            {
-                Kind = DataSetKind.KustoCluster,
-            };
+            ShareDataSetData data = new KustoClusterDataSet(new ResourceIdentifier("/subscriptions/433a8dfd-e5d5-4e77-ad86-90acdc75eb1a/resourceGroups/SampleResourceGroup/providers/Microsoft.Kusto/clusters/Cluster1"));
             ArmOperation<ShareDataSetResource> lro = await shareDataSet.UpdateAsync(WaitUntil.Completed, data);
             ShareDataSetResource result = lro.Value;
 
@@ -128,8 +129,10 @@ namespace Azure.ResourceManager.DataShare
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSets_KustoDatabase_Create.json
             // this example is just showing the usage of "DataSets_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareDataSetResource created on azure
             // for more information of creating ShareDataSetResource, please refer to the document of ShareDataSetResource
@@ -142,10 +145,7 @@ namespace Azure.ResourceManager.DataShare
             ShareDataSetResource shareDataSet = client.GetShareDataSetResource(shareDataSetResourceId);
 
             // invoke the operation
-            ShareDataSetData data = new ShareDataSetData()
-            {
-                Kind = DataSetKind.KustoDatabase,
-            };
+            ShareDataSetData data = new KustoDatabaseDataSet(new ResourceIdentifier("/subscriptions/433a8dfd-e5d5-4e77-ad86-90acdc75eb1a/resourceGroups/SampleResourceGroup/providers/Microsoft.Kusto/clusters/Cluster1/databases/Database1"));
             ArmOperation<ShareDataSetResource> lro = await shareDataSet.UpdateAsync(WaitUntil.Completed, data);
             ShareDataSetResource result = lro.Value;
 
@@ -164,8 +164,10 @@ namespace Azure.ResourceManager.DataShare
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSets_KustoTable_Create.json
             // this example is just showing the usage of "DataSets_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareDataSetResource created on azure
             // for more information of creating ShareDataSetResource, please refer to the document of ShareDataSetResource
@@ -178,10 +180,33 @@ namespace Azure.ResourceManager.DataShare
             ShareDataSetResource shareDataSet = client.GetShareDataSetResource(shareDataSetResourceId);
 
             // invoke the operation
-            ShareDataSetData data = new ShareDataSetData()
+            ShareDataSetData data = new KustoTableDataSet(new ResourceIdentifier("/subscriptions/433a8dfd-e5d5-4e77-ad86-90acdc75eb1a/resourceGroups/SampleResourceGroup/providers/Microsoft.Kusto/clusters/Cluster1/databases/Database1"), new TableLevelSharingProperties()
             {
-                Kind = DataSetKind.KustoTable,
-            };
+                ExternalTablesToExclude =
+{
+"test11","test12"
+},
+                ExternalTablesToInclude =
+{
+"test9","test10"
+},
+                MaterializedViewsToExclude =
+{
+"test7","test8"
+},
+                MaterializedViewsToInclude =
+{
+"test5","test6"
+},
+                TablesToExclude =
+{
+"test3","test4"
+},
+                TablesToInclude =
+{
+"test1","test2"
+},
+            });
             ArmOperation<ShareDataSetResource> lro = await shareDataSet.UpdateAsync(WaitUntil.Completed, data);
             ShareDataSetResource result = lro.Value;
 
@@ -200,8 +225,10 @@ namespace Azure.ResourceManager.DataShare
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSets_SqlDBTable_Create.json
             // this example is just showing the usage of "DataSets_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareDataSetResource created on azure
             // for more information of creating ShareDataSetResource, please refer to the document of ShareDataSetResource
@@ -214,9 +241,12 @@ namespace Azure.ResourceManager.DataShare
             ShareDataSetResource shareDataSet = client.GetShareDataSetResource(shareDataSetResourceId);
 
             // invoke the operation
-            ShareDataSetData data = new ShareDataSetData()
+            ShareDataSetData data = new SqlDBTableDataSet()
             {
-                Kind = DataSetKind.SqlDBTable,
+                DatabaseName = "SqlDB1",
+                SchemaName = "dbo",
+                SqlServerResourceId = new ResourceIdentifier("/subscriptions/433a8dfd-e5d5-4e77-ad86-90acdc75eb1a/resourceGroups/SampleResourceGroup/providers/Microsoft.Sql/servers/Server1"),
+                TableName = "Table1",
             };
             ArmOperation<ShareDataSetResource> lro = await shareDataSet.UpdateAsync(WaitUntil.Completed, data);
             ShareDataSetResource result = lro.Value;
@@ -236,8 +266,10 @@ namespace Azure.ResourceManager.DataShare
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSets_SqlDWTable_Create.json
             // this example is just showing the usage of "DataSets_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareDataSetResource created on azure
             // for more information of creating ShareDataSetResource, please refer to the document of ShareDataSetResource
@@ -250,9 +282,12 @@ namespace Azure.ResourceManager.DataShare
             ShareDataSetResource shareDataSet = client.GetShareDataSetResource(shareDataSetResourceId);
 
             // invoke the operation
-            ShareDataSetData data = new ShareDataSetData()
+            ShareDataSetData data = new SqlDWTableDataSet()
             {
-                Kind = DataSetKind.SqlDWTable,
+                DataWarehouseName = "DataWarehouse1",
+                SchemaName = "dbo",
+                SqlServerResourceId = new ResourceIdentifier("/subscriptions/433a8dfd-e5d5-4e77-ad86-90acdc75eb1a/resourceGroups/SampleResourceGroup/providers/Microsoft.Sql/servers/Server1"),
+                TableName = "Table1",
             };
             ArmOperation<ShareDataSetResource> lro = await shareDataSet.UpdateAsync(WaitUntil.Completed, data);
             ShareDataSetResource result = lro.Value;
@@ -272,8 +307,10 @@ namespace Azure.ResourceManager.DataShare
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSets_SynapseWorkspaceSqlPoolTable_Create.json
             // this example is just showing the usage of "DataSets_Create" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareDataSetResource created on azure
             // for more information of creating ShareDataSetResource, please refer to the document of ShareDataSetResource
@@ -286,10 +323,7 @@ namespace Azure.ResourceManager.DataShare
             ShareDataSetResource shareDataSet = client.GetShareDataSetResource(shareDataSetResourceId);
 
             // invoke the operation
-            ShareDataSetData data = new ShareDataSetData()
-            {
-                Kind = DataSetKind.SynapseWorkspaceSqlPoolTable,
-            };
+            ShareDataSetData data = new SynapseWorkspaceSqlPoolTableDataSet(new ResourceIdentifier("/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/SampleResourceGroup/providers/Microsoft.Synapse/workspaces/ExampleWorkspace/sqlPools/ExampleSqlPool/schemas/dbo/tables/table1"));
             ArmOperation<ShareDataSetResource> lro = await shareDataSet.UpdateAsync(WaitUntil.Completed, data);
             ShareDataSetResource result = lro.Value;
 
@@ -308,8 +342,10 @@ namespace Azure.ResourceManager.DataShare
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSets_Delete.json
             // this example is just showing the usage of "DataSets_Delete" operation, for the dependent resources, they will have to be created separately.
 
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
-            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            ArmClient client = new ArmClient(cred);
 
             // this example assumes you already have this ShareDataSetResource created on azure
             // for more information of creating ShareDataSetResource, please refer to the document of ShareDataSetResource

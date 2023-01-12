@@ -117,7 +117,8 @@ namespace Azure.Storage.DataMovement.Models
         internal SyncAsyncEventHandler<SingleTransferCompletedEventArgs> GetCompleted() => SingleTransferCompleted;
 
         /// <summary>
-        /// Number of single transfers skipped during Transfer due to no overwrite allowed as specified in
+        /// If the transfer has any skipped events that occur the event will get added to this handler.
+        /// Skipped transfer occur during Transfer due to no overwrite allowed as specified in
         /// <see cref="CreateMode"/>
         /// </summary>
         public event SyncAsyncEventHandler<TransferSkippedEventArgs> TransferSkipped;

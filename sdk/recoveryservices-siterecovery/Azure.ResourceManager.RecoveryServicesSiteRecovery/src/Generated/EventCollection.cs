@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -127,37 +126,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An async collection of <see cref="EventResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<EventResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _eventReplicationEventsClientDiagnostics.CreateScope("EventCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _eventReplicationEventsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<EventResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _eventReplicationEventsClientDiagnostics.CreateScope("EventCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _eventReplicationEventsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _eventReplicationEventsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventReplicationEventsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EventResource(Client, EventData.DeserializeEventData(e)), _eventReplicationEventsClientDiagnostics, Pipeline, "EventCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -170,37 +141,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="EventResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
-            Page<EventResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _eventReplicationEventsClientDiagnostics.CreateScope("EventCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _eventReplicationEventsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<EventResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _eventReplicationEventsClientDiagnostics.CreateScope("EventCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _eventReplicationEventsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new EventResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _eventReplicationEventsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventReplicationEventsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName, filter);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EventResource(Client, EventData.DeserializeEventData(e)), _eventReplicationEventsClientDiagnostics, Pipeline, "EventCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

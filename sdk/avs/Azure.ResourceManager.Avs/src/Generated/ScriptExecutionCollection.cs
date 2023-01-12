@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,37 +185,9 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An async collection of <see cref="ScriptExecutionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScriptExecutionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ScriptExecutionResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _scriptExecutionClientDiagnostics.CreateScope("ScriptExecutionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _scriptExecutionRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScriptExecutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ScriptExecutionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _scriptExecutionClientDiagnostics.CreateScope("ScriptExecutionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _scriptExecutionRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScriptExecutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptExecutionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptExecutionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScriptExecutionResource(Client, ScriptExecutionData.DeserializeScriptExecutionData(e)), _scriptExecutionClientDiagnostics, Pipeline, "ScriptExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -228,37 +199,9 @@ namespace Azure.ResourceManager.Avs
         /// <returns> A collection of <see cref="ScriptExecutionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScriptExecutionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ScriptExecutionResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _scriptExecutionClientDiagnostics.CreateScope("ScriptExecutionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _scriptExecutionRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScriptExecutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ScriptExecutionResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _scriptExecutionClientDiagnostics.CreateScope("ScriptExecutionCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _scriptExecutionRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScriptExecutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptExecutionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptExecutionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScriptExecutionResource(Client, ScriptExecutionData.DeserializeScriptExecutionData(e)), _scriptExecutionClientDiagnostics, Pipeline, "ScriptExecutionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

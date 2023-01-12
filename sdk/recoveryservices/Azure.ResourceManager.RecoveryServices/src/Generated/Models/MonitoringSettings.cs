@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Settings for Azure Monitor based alerts. </summary>
         internal AzureMonitorAlertSettings AzureMonitorAlertSettings { get; set; }
-        /// <summary> Gets or sets the alerts for all job failures. </summary>
+        /// <summary> Gets or sets the azure monitor alert alerts for all job failures. </summary>
         public AlertsState? AzureMonitorAlertAlertsForAllJobFailures
         {
             get => AzureMonitorAlertSettings is null ? default : AzureMonitorAlertSettings.AlertsForAllJobFailures;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Settings for classic alerts. </summary>
         internal ClassicAlertSettings ClassicAlertSettings { get; set; }
-        /// <summary> Gets or sets the alerts for critical operations. </summary>
+        /// <summary> Gets or sets the classic alert alerts for critical operations. </summary>
         public AlertsState? ClassicAlertAlertsForCriticalOperations
         {
             get => ClassicAlertSettings is null ? default : ClassicAlertSettings.AlertsForCriticalOperations;

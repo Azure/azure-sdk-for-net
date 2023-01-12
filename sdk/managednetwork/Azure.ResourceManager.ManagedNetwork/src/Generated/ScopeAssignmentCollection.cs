@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -176,37 +175,9 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> An async collection of <see cref="ScopeAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScopeAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ScopeAssignmentResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _scopeAssignmentClientDiagnostics.CreateScope("ScopeAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _scopeAssignmentRestClient.ListAsync(Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScopeAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<ScopeAssignmentResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _scopeAssignmentClientDiagnostics.CreateScope("ScopeAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _scopeAssignmentRestClient.ListNextPageAsync(nextLink, Id, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScopeAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeAssignmentRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scopeAssignmentRestClient.CreateListNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScopeAssignmentResource(Client, ScopeAssignmentData.DeserializeScopeAssignmentData(e)), _scopeAssignmentClientDiagnostics, Pipeline, "ScopeAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -218,37 +189,9 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> A collection of <see cref="ScopeAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScopeAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<ScopeAssignmentResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _scopeAssignmentClientDiagnostics.CreateScope("ScopeAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _scopeAssignmentRestClient.List(Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScopeAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<ScopeAssignmentResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _scopeAssignmentClientDiagnostics.CreateScope("ScopeAssignmentCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _scopeAssignmentRestClient.ListNextPage(nextLink, Id, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScopeAssignmentResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _scopeAssignmentRestClient.CreateListRequest(Id);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scopeAssignmentRestClient.CreateListNextPageRequest(nextLink, Id);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScopeAssignmentResource(Client, ScopeAssignmentData.DeserializeScopeAssignmentData(e)), _scopeAssignmentClientDiagnostics, Pipeline, "ScopeAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,22 +185,8 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SqlServerCommunicationLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerCommunicationLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlServerCommunicationLinkResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics.CreateScope("SqlServerCommunicationLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _sqlServerCommunicationLinkServerCommunicationLinksRestClient.ListByServerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerCommunicationLinkResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerCommunicationLinkServerCommunicationLinksRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SqlServerCommunicationLinkResource(Client, SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(e)), _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics, Pipeline, "SqlServerCommunicationLinkCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,22 +198,8 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlServerCommunicationLinkResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerCommunicationLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<SqlServerCommunicationLinkResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics.CreateScope("SqlServerCommunicationLinkCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _sqlServerCommunicationLinkServerCommunicationLinksRestClient.ListByServer(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerCommunicationLinkResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerCommunicationLinkServerCommunicationLinksRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SqlServerCommunicationLinkResource(Client, SqlServerCommunicationLinkData.DeserializeSqlServerCommunicationLinkData(e)), _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics, Pipeline, "SqlServerCommunicationLinkCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
