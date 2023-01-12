@@ -143,6 +143,7 @@ trigger:
     - sdk/servicefabric/Azure.ResourceManager.ServiceFabric
     - sdk/servicefabricmanagedclusters/Azure.ResourceManager.ServiceFabricManagedClusters
     - sdk/servicelinker/Azure.ResourceManager.ServiceLinker
+    - sdk/servicenetworking/Azure.ResourceManager.ServiceNetworking.TrafficController
     - sdk/signalr/Azure.ResourceManager.SignalR
     - sdk/sqlmanagement/Azure.ResourceManager.Sql
     - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine
@@ -305,6 +306,7 @@ pr:
     - sdk/servicefabric/Azure.ResourceManager.ServiceFabric
     - sdk/servicefabricmanagedclusters/Azure.ResourceManager.ServiceFabricManagedClusters
     - sdk/servicelinker/Azure.ResourceManager.ServiceLinker
+    - sdk/servicenetworking/Azure.ResourceManager.ServiceNetworking.TrafficController
     - sdk/signalr/Azure.ResourceManager.SignalR
     - sdk/sqlmanagement/Azure.ResourceManager.Sql
     - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine
