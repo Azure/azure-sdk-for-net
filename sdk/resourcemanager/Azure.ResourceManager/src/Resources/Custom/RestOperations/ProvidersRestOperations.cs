@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.Resources
 {
     internal partial class ProvidersRestOperations
     {
+#pragma warning disable CA1801 // Parameter top is never used.
         // Ignore the top parameter for this method
         internal HttpMessage CreateListRequest(string subscriptionId, int? top, string expand)
         {
@@ -33,6 +34,7 @@ namespace Azure.ResourceManager.Resources
 
         // Ignore the top parameter for this method
         internal HttpMessage CreateListAtTenantScopeRequest(int? top, string expand)
+#pragma warning restore CA1801 // Parameter top is never used.
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
