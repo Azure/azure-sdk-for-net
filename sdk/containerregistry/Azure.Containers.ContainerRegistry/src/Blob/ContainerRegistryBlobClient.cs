@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
@@ -403,44 +404,51 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             }
 
             // Otherwise, upload in multiple chunks.
-            byte[] buffer = new byte[chunkSize];
+            byte[] buffer = ArrayPool<byte>.Shared.Rent(chunkSize);
             int chunkCount = 0;
             long blobLength = 0;
             using SHA256 sha256 = SHA256.Create();
 
-            // Read first chunk into buffer.
-            int bytesRead = async ?
-                await stream.ReadAsync(buffer, 0, chunkSize, cancellationToken).ConfigureAwait(false) :
-                stream.Read(buffer, 0, chunkSize);
-
-            while (bytesRead > 0)
+            try
             {
-                var contentRange = GetContentRange(chunkCount * chunkSize, bytesRead);
-                location = uploadChunkResult?.Headers.Location ?? location;
-
-                // Incrementally compute hash for digest.
-                sha256.TransformBlock(buffer, 0, bytesRead, buffer, 0);
-
-                using (Stream chunk = new MemoryStream(buffer, 0, bytesRead))
-                {
-                    uploadChunkResult = async ?
-                        await _blobRestClient.UploadChunkAsync(location, chunk, contentRange, bytesRead.ToString(CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false) :
-                        _blobRestClient.UploadChunk(location, chunk, contentRange, bytesRead.ToString(CultureInfo.InvariantCulture), cancellationToken);
-                }
-
-                blobLength += bytesRead;
-                chunkCount++;
-
-                // Read next chunk into buffer
-                bytesRead = async ?
+                // Read first chunk into buffer.
+                int bytesRead = async ?
                     await stream.ReadAsync(buffer, 0, chunkSize, cancellationToken).ConfigureAwait(false) :
                     stream.Read(buffer, 0, chunkSize);
+
+                while (bytesRead > 0)
+                {
+                    var contentRange = GetContentRange(chunkCount * chunkSize, bytesRead);
+                    location = uploadChunkResult?.Headers.Location ?? location;
+
+                    // Incrementally compute hash for digest.
+                    sha256.TransformBlock(buffer, 0, bytesRead, buffer, 0);
+
+                    using (Stream chunk = new MemoryStream(buffer, 0, bytesRead))
+                    {
+                        uploadChunkResult = async ?
+                            await _blobRestClient.UploadChunkAsync(location, chunk, contentRange, bytesRead.ToString(CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false) :
+                            _blobRestClient.UploadChunk(location, chunk, contentRange, bytesRead.ToString(CultureInfo.InvariantCulture), cancellationToken);
+                    }
+
+                    blobLength += bytesRead;
+                    chunkCount++;
+
+                    // Read next chunk into buffer
+                    bytesRead = async ?
+                        await stream.ReadAsync(buffer, 0, chunkSize, cancellationToken).ConfigureAwait(false) :
+                        stream.Read(buffer, 0, chunkSize);
+                }
+
+                // Complete hash computation.
+                sha256.TransformFinalBlock(buffer, 0, 0);
+
+                return new ChunkedUploadResult(OciBlobDescriptor.FormatDigest(sha256.Hash), uploadChunkResult.Headers.Location, blobLength);
             }
-
-            // Complete hash computation.
-            sha256.TransformFinalBlock(buffer, 0, 0);
-
-            return new ChunkedUploadResult(OciBlobDescriptor.FormatDigest(sha256.Hash), uploadChunkResult.Headers.Location, blobLength);
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(buffer);
+            }
         }
 
         /// <summary>
@@ -725,54 +733,61 @@ namespace Azure.Containers.ContainerRegistry.Specialized
             }
 
             // Download in multiple chunks.
-            byte[] buffer = new byte[maxChunkSize];
+            byte[] buffer = ArrayPool<byte>.Shared.Rent(maxChunkSize);
             int chunkCount = 0;
             int bytesDownloaded = 0;
             using SHA256 sha256 = SHA256.Create();
 
-            Response result = null;
-
-            while (bytesDownloaded < blobLength)
+            try
             {
-                int chunkSize = (int)Math.Min(blobLength - bytesDownloaded, maxChunkSize);
-                int offset = bytesDownloaded;
-                HttpRange range = new HttpRange(offset, chunkSize);
+                Response result = null;
 
-                ResponseWithHeaders<Stream, ContainerRegistryBlobGetChunkHeaders> chunkResult = async ?
-                    await _blobRestClient.GetChunkAsync(_repositoryName, digest, range.ToString(), cancellationToken).ConfigureAwait(false) :
-                    _blobRestClient.GetChunk(_repositoryName, digest, range.ToString(), cancellationToken);
-
-                if (async)
+                while (bytesDownloaded < blobLength)
                 {
-                    await chunkResult.Value.ReadAsync(buffer, 0, chunkSize, cancellationToken).ConfigureAwait(false);
-                    sha256.TransformBlock(buffer, 0, chunkSize, buffer, 0);
-                    await destination.WriteAsync(buffer, 0, chunkSize, cancellationToken).ConfigureAwait(false);
+                    int chunkSize = (int)Math.Min(blobLength - bytesDownloaded, maxChunkSize);
+                    int offset = bytesDownloaded;
+                    HttpRange range = new HttpRange(offset, chunkSize);
+
+                    ResponseWithHeaders<Stream, ContainerRegistryBlobGetChunkHeaders> chunkResult = async ?
+                        await _blobRestClient.GetChunkAsync(_repositoryName, digest, range.ToString(), cancellationToken).ConfigureAwait(false) :
+                        _blobRestClient.GetChunk(_repositoryName, digest, range.ToString(), cancellationToken);
+
+                    if (async)
+                    {
+                        await chunkResult.Value.ReadAsync(buffer, 0, chunkSize, cancellationToken).ConfigureAwait(false);
+                        sha256.TransformBlock(buffer, 0, chunkSize, buffer, 0);
+                        await destination.WriteAsync(buffer, 0, chunkSize, cancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        chunkResult.Value.Read(buffer, 0, chunkSize);
+                        sha256.TransformBlock(buffer, 0, chunkSize, buffer, 0);
+                        destination.Write(buffer, 0, chunkSize);
+                    }
+
+                    chunkCount++;
+                    bytesDownloaded += chunkSize;
+
+                    result = chunkResult.GetRawResponse();
                 }
-                else
+
+                // Complete hash computation.
+                sha256.TransformFinalBlock(buffer, 0, 0);
+
+                var computedDigest = OciBlobDescriptor.FormatDigest(sha256.Hash);
+
+                if (!ValidateDigest(computedDigest, digest))
                 {
-                    chunkResult.Value.Read(buffer, 0, chunkSize);
-                    sha256.TransformBlock(buffer, 0, chunkSize, buffer, 0);
-                    destination.Write(buffer, 0, chunkSize);
+                    throw new RequestFailedException("The digest of the downloaded blob does not match the requested digest.");
                 }
 
-                chunkCount++;
-                bytesDownloaded += chunkSize;
-
-                result = chunkResult.GetRawResponse();
+                // Return the last response received.
+                return result;
             }
-
-            // Complete hash computation.
-            sha256.TransformFinalBlock(buffer, 0, 0);
-
-            var computedDigest = OciBlobDescriptor.FormatDigest(sha256.Hash);
-
-            if (!ValidateDigest(computedDigest, digest))
+            finally
             {
-                throw new RequestFailedException("The digest of the downloaded blob does not match the requested digest.");
+                ArrayPool<byte>.Shared.Return(buffer);
             }
-
-            // Return the last response received.
-            return result;
         }
 
         private async Task<long> GetBlobLengthAsync(string digest, bool async, CancellationToken cancellationToken)
