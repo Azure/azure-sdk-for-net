@@ -192,17 +192,18 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
   }
   $packageMetadataName = Split-Path $packageInfoJsonLocation -Leaf
   $packageInfoLocation = Join-Path $DocRepoLocation "metadata/$metadataMoniker"
-  $docsMetadata = $packageInfo
-  if (Test-Path $packageInfoLocation) {
+  if (Test-Path "$packageInfoLocation/$packageMetadataName") {
     $docsMetadata = Get-Content "$packageInfoLocation/$packageMetadataName" -Raw | ConvertFrom-Json
-    $docsMetadata.PSObject.Properties | ForEach-Object {
-      $packageInfo | Add-Member -MemberType $_.MemberType -Name $_.Name -Value $_.Value -Force
+    foreach ($property in $docsMetadata.PSObject.Properties) {
+      if ($packageInfo.PSObject.Properties -notcontains $property.Name) {
+        $packageInfo | Add-Member -MemberType $property.MemberType -Name $property.Name -Value $property.Value -Force
+      }
     }
   }
   else {
     New-Item -ItemType Directory -Path $packageInfoLocation -Force
   }
-  $packageInfoJson = ConvertTo-Json $docsMetadata
+  $packageInfoJson = ConvertTo-Json $packageInfo
   Set-Content `
     -Path $packageInfoLocation/$packageMetadataName `
     -Value $packageInfoJson
