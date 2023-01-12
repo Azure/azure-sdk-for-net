@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -31,6 +32,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Initializes a new instance of the SnowflakeSource class.
         /// </summary>
+        /// <param name="exportSettings">Snowflake export settings.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="sourceRetryCount">Source retry count. Type: integer
@@ -46,8 +48,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// with resultType boolean).</param>
         /// <param name="query">Snowflake Sql query. Type: string (or
         /// Expression with resultType string).</param>
-        /// <param name="exportSettings">Snowflake export settings.</param>
-        public SnowflakeSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object query = default(object), SnowflakeExportCopyCommand exportSettings = default(SnowflakeExportCopyCommand))
+        public SnowflakeSource(SnowflakeExportCopyCommand exportSettings, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object query = default(object))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection)
         {
             Query = query;
@@ -73,5 +74,18 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         [JsonProperty(PropertyName = "exportSettings")]
         public SnowflakeExportCopyCommand ExportSettings { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ExportSettings == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ExportSettings");
+            }
+        }
     }
 }
