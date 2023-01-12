@@ -18,6 +18,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.Email
 {
     /// <summary> The Email service client. </summary>
+    [CodeGenClient("EmailClient")]
     public partial class EmailClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -34,8 +35,8 @@ namespace Azure.Communication.Email
         /// </summary>
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
         public EmailClient(string connectionString)
-            : this(ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
-                 new EmailClientOptions())
+        : this(ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
+                new EmailClientOptions())
         {
         }
 
@@ -92,11 +93,10 @@ namespace Azure.Communication.Email
             : this(endpoint, options.BuildHttpPipeline(tokenCredential), options)
         { }
 
-
         /// <summary> Queues an email message to be sent to one or more recipients. </summary>
         /// <param name="message"> Message payload for sending an email. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SendEmailResult>> SendAsync(
+        public virtual async Task<EmailSendOperation> StartSendAsync(
             EmailMessage message,
             CancellationToken cancellationToken = default)
         {
@@ -120,7 +120,7 @@ namespace Azure.Communication.Email
         /// <param name="html"> Email body in HTML format. </param>
         /// <param name="plainText"> Email body in plain text format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SendEmailResult>> SendAsync(
+        public virtual async Task<EmailSendOperation> StartSendAsync(
             string senderEmail,
             string toRecipient,
             string subject,
@@ -155,7 +155,7 @@ namespace Azure.Communication.Email
         /// <summary> Queues an email message to be sent to one or more recipients. </summary>
         /// <param name="message"> Message payload for sending an email. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SendEmailResult> Send(
+        public virtual EmailSendOperation StartSend(
             EmailMessage message,
             CancellationToken cancellationToken = default)
         {
@@ -179,7 +179,7 @@ namespace Azure.Communication.Email
         /// <param name="html"> Email body in HTML format. </param>
         /// <param name="plainText"> Email body in plain text format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SendEmailResult> Send(
+        public virtual EmailSendOperation StartSend(
             string senderEmail,
             string toRecipient,
             string subject,
@@ -211,38 +211,22 @@ namespace Azure.Communication.Email
             }
         }
 
-        private async Task<Response<SendEmailResult>> SendEmailInternalAsync(EmailMessage message, CancellationToken cancellationToken)
+        private async Task<EmailSendOperation> SendEmailInternalAsync(EmailMessage message, CancellationToken cancellationToken)
         {
             ValidateEmailMessage(message);
-            ResponseWithHeaders<EmailSendHeaders> response = (await RestClient.SendAsync(
-                message,
-                Guid.NewGuid(),
-                cancellationToken).ConfigureAwait(false));
 
-            Response rawResponse = response.GetRawResponse();
-            if (!rawResponse.Headers.TryGetValue("x-ms-request-id", out var messageId))
-            {
-                messageId = null;
-            }
-
-            return Response.FromValue(new SendEmailResult(messageId), response);
+            var operationId = Guid.NewGuid();
+            var originalResponse = await RestClient.SendAsync(message, operationId, cancellationToken).ConfigureAwait(false);
+            return new EmailSendOperation(_clientDiagnostics, _pipeline, RestClient.CreateSendRequest(message, operationId).Request, originalResponse);
         }
 
-        private Response<SendEmailResult> SendEmailInternal(EmailMessage message, CancellationToken cancellationToken)
+        private EmailSendOperation SendEmailInternal(EmailMessage message, CancellationToken cancellationToken)
         {
             ValidateEmailMessage(message);
-            ResponseWithHeaders<EmailSendHeaders> response = RestClient.Send(
-                message,
-                Guid.NewGuid(),
-                cancellationToken);
 
-            Response rawResponse = response.GetRawResponse();
-            if (!rawResponse.Headers.TryGetValue("x-ms-request-id", out var messageId))
-            {
-                messageId = null;
-            }
-
-            return Response.FromValue(new SendEmailResult(messageId), response);
+            var operationId = Guid.NewGuid();
+            var originalResponse = RestClient.Send(message, operationId, cancellationToken);
+            return new EmailSendOperation(_clientDiagnostics, _pipeline, RestClient.CreateSendRequest(message, operationId).Request, originalResponse);
         }
 
         private static void ValidateEmailMessage(EmailMessage emailMessage)

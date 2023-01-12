@@ -7,12 +7,11 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication.Email.Models;
 
-namespace Azure.Communication.Email
+namespace Azure.Communication.Email.Models
 {
     /// <summary> Model factory for read-only models. </summary>
-    public static partial class CommunicationEmailModelFactory
+    public static partial class EmailModelFactory
     {
         /// <summary> Initializes a new instance of OperationStatus. </summary>
         /// <param name="id"> The unique id of the operation. </param>

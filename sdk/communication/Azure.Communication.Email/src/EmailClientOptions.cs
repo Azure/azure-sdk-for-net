@@ -6,6 +6,7 @@
 using System;
 using Azure.Core;
 
+[assembly: CodeGenSuppressType("EmailClientOptions")]
 namespace Azure.Communication.Email
 {
     /// <summary>
