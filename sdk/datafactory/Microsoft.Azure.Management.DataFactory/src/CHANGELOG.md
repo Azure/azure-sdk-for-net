@@ -3,7 +3,7 @@
 ## Version 9.0.0
 ###  Feature Additions
 ### Breaking Changes
-- Added support Credential operations in DataFactory
+- Added support for credential operations in DataFactory
 - Added exportsettings required in Snowflake source
 - Added scan folder and spark config support in Sparkjob activity
 

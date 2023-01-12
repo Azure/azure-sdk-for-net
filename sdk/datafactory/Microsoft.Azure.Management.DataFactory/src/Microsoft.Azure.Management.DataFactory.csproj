@@ -10,7 +10,7 @@
     <PackageTags>Microsoft Azure resource management;Data Factory;ADF;</PackageTags>
     <PackageReleaseNotes>
   <![CDATA[
-- Added support Credential operations in DataFactory
+- Added support for credential operations in DataFactory
 - Added exportsettings required in Snowflake source
 - Added scan folder and spark config support in Sparkjob activity
   ]]></PackageReleaseNotes>
