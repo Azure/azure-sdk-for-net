@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
             InstrumentClient(new SchemaRegistryClient(
                 TestEnvironment.SchemaRegistryEndpoint,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new SchemaRegistryClientOptions(SchemaRegistryClientOptions.ServiceVersion.V2021_10))
+                InstrumentClientOptions(new SchemaRegistryClientOptions())
             ));
     }
 }
