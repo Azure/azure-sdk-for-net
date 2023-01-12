@@ -1451,7 +1451,7 @@ Schema for <c>TestServerMetricConfig</c>:
 
 </remarks>
     </member>
-    <member name="GetTestsAsync(String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)">
+    <member name="GetTestsAsync(String,String,DateTimeOffset,DateTimeOffset,RequestContext)">
 <example>
 This sample shows how to call GetTestsAsync and parse the result.
 <code><![CDATA[
@@ -1471,7 +1471,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-await foreach (var data in client.GetTestsAsync("<orderby>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<continuationToken>", 1234))
+await foreach (var data in client.GetTestsAsync("<orderby>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
@@ -1595,7 +1595,7 @@ Schema for <c>TestsListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetTests(String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)">
+    <member name="GetTests(String,String,DateTimeOffset,DateTimeOffset,RequestContext)">
 <example>
 This sample shows how to call GetTests and parse the result.
 <code><![CDATA[
@@ -1615,7 +1615,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
-foreach (var data in client.GetTests("<orderby>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<continuationToken>", 1234))
+foreach (var data in client.GetTests("<orderby>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
@@ -1739,7 +1739,7 @@ Schema for <c>TestsListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetTestFilesAsync(String,String,RequestContext)">
+    <member name="GetTestFilesAsync(String,RequestContext)">
 <example>
 This sample shows how to call GetTestFilesAsync with required parameters and parse the result.
 <code><![CDATA[
@@ -1748,18 +1748,6 @@ var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
 await foreach (var data in client.GetTestFilesAsync("<testId>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetTestFilesAsync with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
-
-await foreach (var data in client.GetTestFilesAsync("<testId>", "<continuationToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("url").ToString());
@@ -1789,7 +1777,7 @@ Schema for <c>FileInfoListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetTestFiles(String,String,RequestContext)">
+    <member name="GetTestFiles(String,RequestContext)">
 <example>
 This sample shows how to call GetTestFiles with required parameters and parse the result.
 <code><![CDATA[
@@ -1798,18 +1786,6 @@ var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestAdministrationClient(endpoint, credential);
 
 foreach (var data in client.GetTestFiles("<testId>"))
-{
-    JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-    Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetTestFiles with all parameters, and how to parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
-
-foreach (var data in client.GetTestFiles("<testId>", "<continuationToken>"))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("url").ToString());

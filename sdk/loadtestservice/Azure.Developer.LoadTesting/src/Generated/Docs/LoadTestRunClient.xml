@@ -2111,7 +2111,7 @@ Schema for <c>TestRunServerMetricConfig</c>:
 
 </remarks>
     </member>
-    <member name="GetTestRunsAsync(String,String,String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)">
+    <member name="GetTestRunsAsync(String,String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)">
 <example>
 This sample shows how to call GetTestRunsAsync and parse the result.
 <code><![CDATA[
@@ -2131,7 +2131,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-await foreach (var data in client.GetTestRunsAsync("<orderby>", "<continuationToken>", "<search>", "<testId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<status>", 1234))
+await foreach (var data in client.GetTestRunsAsync("<orderby>", "<search>", "<testId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<status>", 1234))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
@@ -2308,7 +2308,7 @@ Schema for <c>TestRunsListValue</c>:
 
 </remarks>
     </member>
-    <member name="GetTestRuns(String,String,String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)">
+    <member name="GetTestRuns(String,String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)">
 <example>
 This sample shows how to call GetTestRuns and parse the result.
 <code><![CDATA[
@@ -2328,7 +2328,7 @@ var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new LoadTestRunClient(endpoint, credential);
 
-foreach (var data in client.GetTestRuns("<orderby>", "<continuationToken>", "<search>", "<testId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<status>", 1234))
+foreach (var data in client.GetTestRuns("<orderby>", "<search>", "<testId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<status>", 1234))
 {
     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());

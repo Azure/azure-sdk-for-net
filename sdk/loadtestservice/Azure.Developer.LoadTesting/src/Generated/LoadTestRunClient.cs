@@ -659,7 +659,6 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Get all test runs with given filters. </summary>
         /// <param name="orderby"> Sort on the supported fields in (field asc/desc) format. eg: executedDateTime asc. Supported fields - executedDateTime. </param>
-        /// <param name="continuationToken"> Continuation token to get the next page of response. </param>
         /// <param name="search"> Prefix based, case sensitive search on searchable fields - description, executedUser. For example, to search for a test run, with description 500 VUs, the search parameter can be 500. </param>
         /// <param name="testId"> Unique name of an existing load test. </param>
         /// <param name="executionFrom"> Start DateTime(ISO 8601 literal format) of test-run execution time filter range. </param>
@@ -669,13 +668,13 @@ namespace Azure.Developer.LoadTesting
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunsAsync(String,String,String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetTestRunsAsync(string orderby = null, string continuationToken = null, string search = null, string testId = null, DateTimeOffset? executionFrom = null, DateTimeOffset? executionTo = null, string status = null, int? maxpagesize = null, RequestContext context = null)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRunsAsync(String,String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetTestRunsAsync(string orderby = null, string search = null, string testId = null, DateTimeOffset? executionFrom = null, DateTimeOffset? executionTo = null, string status = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return GetTestRunsImplementationAsync("LoadTestRunClient.GetTestRuns", orderby, continuationToken, search, testId, executionFrom, executionTo, status, maxpagesize, context);
+            return GetTestRunsImplementationAsync("LoadTestRunClient.GetTestRuns", orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
         }
 
-        private AsyncPageable<BinaryData> GetTestRunsImplementationAsync(string diagnosticsScopeName, string orderby, string continuationToken, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxpagesize, RequestContext context)
+        private AsyncPageable<BinaryData> GetTestRunsImplementationAsync(string diagnosticsScopeName, string orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxpagesize, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -683,8 +682,8 @@ namespace Azure.Developer.LoadTesting
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetTestRunsRequest(orderby, continuationToken, search, testId, executionFrom, executionTo, status, maxpagesize, context)
-                        : CreateGetTestRunsNextPageRequest(nextLink, orderby, continuationToken, search, testId, executionFrom, executionTo, status, maxpagesize, context);
+                        ? CreateGetTestRunsRequest(orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context)
+                        : CreateGetTestRunsNextPageRequest(nextLink, orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -694,7 +693,6 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Get all test runs with given filters. </summary>
         /// <param name="orderby"> Sort on the supported fields in (field asc/desc) format. eg: executedDateTime asc. Supported fields - executedDateTime. </param>
-        /// <param name="continuationToken"> Continuation token to get the next page of response. </param>
         /// <param name="search"> Prefix based, case sensitive search on searchable fields - description, executedUser. For example, to search for a test run, with description 500 VUs, the search parameter can be 500. </param>
         /// <param name="testId"> Unique name of an existing load test. </param>
         /// <param name="executionFrom"> Start DateTime(ISO 8601 literal format) of test-run execution time filter range. </param>
@@ -704,13 +702,13 @@ namespace Azure.Developer.LoadTesting
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRuns(String,String,String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetTestRuns(string orderby = null, string continuationToken = null, string search = null, string testId = null, DateTimeOffset? executionFrom = null, DateTimeOffset? executionTo = null, string status = null, int? maxpagesize = null, RequestContext context = null)
+        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestRuns(String,String,String,DateTimeOffset,DateTimeOffset,String,Int32,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetTestRuns(string orderby = null, string search = null, string testId = null, DateTimeOffset? executionFrom = null, DateTimeOffset? executionTo = null, string status = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return GetTestRunsImplementation("LoadTestRunClient.GetTestRuns", orderby, continuationToken, search, testId, executionFrom, executionTo, status, maxpagesize, context);
+            return GetTestRunsImplementation("LoadTestRunClient.GetTestRuns", orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
         }
 
-        private Pageable<BinaryData> GetTestRunsImplementation(string diagnosticsScopeName, string orderby, string continuationToken, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxpagesize, RequestContext context)
+        private Pageable<BinaryData> GetTestRunsImplementation(string diagnosticsScopeName, string orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxpagesize, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -718,8 +716,8 @@ namespace Azure.Developer.LoadTesting
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetTestRunsRequest(orderby, continuationToken, search, testId, executionFrom, executionTo, status, maxpagesize, context)
-                        : CreateGetTestRunsNextPageRequest(nextLink, orderby, continuationToken, search, testId, executionFrom, executionTo, status, maxpagesize, context);
+                        ? CreateGetTestRunsRequest(orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context)
+                        : CreateGetTestRunsNextPageRequest(nextLink, orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -963,7 +961,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetTestRunsRequest(string orderby, string continuationToken, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetTestRunsRequest(string orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -975,10 +973,6 @@ namespace Azure.Developer.LoadTesting
             if (orderby != null)
             {
                 uri.AppendQuery("orderby", orderby, true);
-            }
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
             }
             if (search != null)
             {
@@ -1190,7 +1184,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetTestRunsNextPageRequest(string nextLink, string orderby, string continuationToken, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetTestRunsNextPageRequest(string nextLink, string orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
