@@ -1,36 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mreddingschemaregistry-avro.servicebus.windows.net/$schemaGroups/test-13835/schemas/azsdk_net_test_group:get-id?api-version=2022-10",
+      "RequestUri": "https://mreddingschemaregistry-avro.servicebus.windows.net/$schemaGroups/test-17244/schemas/azsdk_net_test_group:get-id?api-version=2022-10",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "154",
+        "Content-Length": "5",
         "Content-Type": "application/json; serialization=Avro",
         "User-Agent": "azsdk-net-Data.SchemaRegistry/1.4.0-alpha.20230111.1 (.NET 6.0.13; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "eda99d204b49d3a47bfea5aee531dbc1",
+        "x-ms-client-request-id": "a39ef346b13b1f9c5173a8ae4861fa6c",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": {
-        "type": "record",
-        "namespace": "TestSchema",
-        "name": "Employee",
-        "fields": [
-          {
-            "name": "Name",
-            "type": "string"
-          },
-          {
-            "name": "Age",
-            "type": "int"
-          }
-        ]
-      },
+      "RequestBody": "Hello",
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Thu, 12 Jan 2023 00:10:05 GMT",
+        "Date": "Thu, 12 Jan 2023 19:02:23 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000",
         "Transfer-Encoding": "chunked",
@@ -39,14 +25,14 @@
       "ResponseBody": {
         "error": {
           "code": "ItemNotFound",
-          "message": "Schema test-13835/azsdk_net_test_group does not exist. TrackingId:49f0968a-3e9c-41e8-85b7-f00862f9febb_G14, SystemTracker:mreddingschemaregistry-avro.servicebus.windows.net:$schemaGroups/test-13835/schemas/azsdk_net_test_group:get-id, Timestamp:2023-01-12T00:10:06"
+          "message": "Schema test-17244/azsdk_net_test_group does not exist. TrackingId:81fe4f78-cf40-43a9-b3dd-dbe67072b0f8_G12, SystemTracker:mreddingschemaregistry-avro.servicebus.windows.net:$schemaGroups/test-17244/schemas/azsdk_net_test_group:get-id, Timestamp:2023-01-12T19:02:23"
         }
       }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "1258426579",
+    "RandomSeed": "1847503015",
     "SCHEMAREGISTRY_ENDPOINT_AVRO": "mreddingschemaregistry-avro.servicebus.windows.net",
     "SCHEMAREGISTRY_GROUP": "azsdk_net_test_group"
   }
