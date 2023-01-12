@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.OpenAI.Inference.Models
@@ -18,11 +16,11 @@ namespace Azure.OpenAI.Inference.Models
         /// <summary> Initializes a new instance of EmbeddingsRequest. </summary>
         /// <param name="input"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public EmbeddingsRequest(IEnumerable<string> input)
+        public EmbeddingsRequest(string input)
         {
             Argument.AssertNotNull(input, nameof(input));
 
-            Input = input.ToList();
+            Input = input;
         }
 
         /// <summary> Gets or sets the user. </summary>
@@ -32,6 +30,6 @@ namespace Azure.OpenAI.Inference.Models
         /// <summary> Gets or sets the model. </summary>
         public string Model { get; set; }
         /// <summary> Gets the input. </summary>
-        public IList<string> Input { get; }
+        public string Input { get; }
     }
 }

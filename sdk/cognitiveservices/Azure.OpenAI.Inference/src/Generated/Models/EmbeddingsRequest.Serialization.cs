@@ -31,12 +31,7 @@ namespace Azure.OpenAI.Inference.Models
                 writer.WriteStringValue(Model);
             }
             writer.WritePropertyName("input");
-            writer.WriteStartArray();
-            foreach (var item in Input)
-            {
-                writer.WriteStringValue(item);
-            }
-            writer.WriteEndArray();
+            writer.WriteStringValue(Input);
             writer.WriteEndObject();
         }
 

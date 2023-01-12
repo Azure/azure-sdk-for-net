@@ -10,9 +10,7 @@ var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new OpenAIClient(endpoint, credential);
 
 var data = new {
-    input = new[] {
-        "<String>"
-    },
+    input = new {},
 };
 
 Response response = await client.EmbeddingsAsync("<deploymentId>", RequestContent.Create(data));
@@ -33,9 +31,7 @@ var data = new {
     user = "<user>",
     input_type = "<input_type>",
     model = "<model>",
-    input = new[] {
-        "<String>"
-    },
+    input = new {},
 };
 
 Response response = await client.EmbeddingsAsync("<deploymentId>", RequestContent.Create(data));
@@ -57,7 +53,7 @@ Schema for <c>EmbeddingsRequest</c>:
   user: string, # Optional.
   input_type: string, # Optional.
   model: string, # Optional.
-  input: [string], # Required.
+  input: Union, # Required.
 }
 </code>
 
@@ -87,9 +83,7 @@ var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new OpenAIClient(endpoint, credential);
 
 var data = new {
-    input = new[] {
-        "<String>"
-    },
+    input = new {},
 };
 
 Response response = client.Embeddings("<deploymentId>", RequestContent.Create(data));
@@ -110,9 +104,7 @@ var data = new {
     user = "<user>",
     input_type = "<input_type>",
     model = "<model>",
-    input = new[] {
-        "<String>"
-    },
+    input = new {},
 };
 
 Response response = client.Embeddings("<deploymentId>", RequestContent.Create(data));
@@ -134,7 +126,7 @@ Schema for <c>EmbeddingsRequest</c>:
   user: string, # Optional.
   input_type: string, # Optional.
   model: string, # Optional.
-  input: [string], # Required.
+  input: Union, # Required.
 }
 </code>
 
