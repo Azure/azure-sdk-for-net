@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /providers
         /// Operation Id: Providers_ListAtTenantScope
         /// </summary>
-        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. If null is passed returns all deployments. </param>
+        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="TenantResourceProvider" /> that may take multiple service requests to iterate over. </returns>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Resources
         /// Request Path: /providers
         /// Operation Id: Providers_ListAtTenantScope
         /// </summary>
-        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. If null is passed returns all deployments. </param>
+        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TenantResourceProvider" /> that may take multiple service requests to iterate over. </returns>

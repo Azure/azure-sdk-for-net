@@ -668,7 +668,7 @@ directive:
         "required": false,
         "type": "integer",
         "format": "int32",
-        "description": "[This parameter is no longer supported.] The number of results to return. If null is passed returns all deployments."
+        "description": "[This parameter is no longer supported.] The number of results to return."
       };
       $['/subscriptions/{subscriptionId}/providers'].get.parameters.unshift(topParameter);
       $['/providers'].get.parameters.unshift(topParameter);

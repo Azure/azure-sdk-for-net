@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets all resource providers for a subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. If null is passed returns all deployments. </param>
+        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets all resource providers for a subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. If null is passed returns all deployments. </param>
+        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets all resource providers for the tenant. </summary>
-        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. If null is passed returns all deployments. </param>
+        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<TenantResourceProviderListResult>> ListAtTenantScopeAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default)
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets all resource providers for the tenant. </summary>
-        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. If null is passed returns all deployments. </param>
+        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<TenantResourceProviderListResult> ListAtTenantScope(int? top = null, string expand = null, CancellationToken cancellationToken = default)
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets all resource providers for a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. If null is passed returns all deployments. </param>
+        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets all resource providers for a subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. If null is passed returns all deployments. </param>
+        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets all resource providers for the tenant. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. If null is passed returns all deployments. </param>
+        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets all resource providers for the tenant. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. If null is passed returns all deployments. </param>
+        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
