@@ -56,19 +56,15 @@ namespace Azure.ResourceManager
         }
 
         /// <summary> Initializes a new instance of ArmOperation. </summary>
-        public static ArmOperation<R> Rehydrate<R>(ArmClient client, string id) where R: ISerializable<R>
+        public static ArmOperation<R> Rehydrate<R>(ArmClient client, string id) where R: class
         {
-#if NET7_0_OR_GREATER
-            IOperationSource<R> source = new GenericOperationSource<R>(client);
+            IOperationSource<R> source = new GenericOperationSource<R>();
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id, out string finalResponse);
             // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
             var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
             DecodedResponse response;
             var operation = finalResponse == null ? new OperationInternal<R>(clientDiagnostics, nextLinkOperation, null, operationTypeName: null, fallbackStrategy: new ExponentialDelayStrategy()) : OperationInternal<R>.Succeeded(response = JsonSerializer.Deserialize<DecodedResponse>(finalResponse)!, source.CreateResult(response, CancellationToken.None));
             return new ArmOperation<R>(operation);
-#else
-            throw new InvalidOperationException("LRO rehydration is not supported in this version of .NET. Please upgrade to .NET 7.0 or later.");
-#endif
         }
 
         /// <inheritdoc />

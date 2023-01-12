@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Reflection;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -14,27 +16,30 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager
 {
-    internal class GenericOperationSource<T> : IOperationSource<T> where T : ISerializable<T>
+    internal class GenericOperationSource<T> : IOperationSource<T> where T: class
     {
-        private readonly ArmClient _client;
-
-        internal GenericOperationSource(ArmClient client)
+        T IOperationSource<T>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            _client = client;
+            using var document = JsonDocument.Parse(response.ContentStream);
+            var method = typeof(T).GetMethod($"Deserialize{typeof(T).Name}", BindingFlags.NonPublic | BindingFlags.Static);
+            if (method == null)
+                throw new InvalidOperationException($"The type {typeof(T).FullName} does not contain the Deserialize{typeof(T).Name} method. Please use a Data class.");
+            var data = method.Invoke(null, new object[] { document }) as T;
+            return data;
         }
-
-        T IOperationSource<T>.CreateResult(Response response, CancellationToken cancellationToken) =>
-#if NET7_0_OR_GREATER
-        T.Deserialize(response.ContentStream);
-#else
-        throw new InvalidOperationException("Deserialization is not supported in this version of .NET. Please upgrade to .NET 7.0 or later.");
-#endif
-
-        ValueTask<T> IOperationSource<T>.CreateResultAsync(Response response, CancellationToken cancellationToken) =>
-#if NET7_0_OR_GREATER
-        ValueTask.FromResult(T.Deserialize(response.ContentStream));
-#else
-        throw new InvalidOperationException("Deserialization is not supported in this version of .NET. Please upgrade to .NET 7.0 or later.");
-#endif
+        async ValueTask<T> IOperationSource<T>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        {
+            // using var document = JsonDocument.Parse(response.ContentStream);
+            // var method = typeof(T).GetMethod($"Deserialize{typeof(T).Name}", BindingFlags.NonPublic | BindingFlags.Static);
+            // if (method == null)
+            //     throw new InvalidOperationException($"The type {typeof(T).FullName} does not contain the Deserialize{typeof(T).Name} method. Please use a Data class.");
+            // var data = method.Invoke(null, new object[] { document }) as T;
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            var method = typeof(T).GetMethod($"Deserialize{typeof(T).Name}", BindingFlags.NonPublic | BindingFlags.Static);
+            if (method == null)
+                throw new InvalidOperationException($"The type {typeof(T).FullName} does not contain the Deserialize{typeof(T).Name} method. Please use a Data class.");
+            var data = method.Invoke(null, new object[] { document }) as T;
+            return data;
+        }
     }
 }

@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.Tests
             var rgOp = await subscription.GetResourceGroups().Construct(AzureLocation.WestUS2, tags).CreateOrUpdateAsync(rgName);
             var rgOpId = rgOp.Id;
             var rg = rgOp.Value;
-#if NET7_0_OR_GREATER
             var rehydratedLro = ArmOperation.Rehydrate<ResourceGroupData>(Client, rgOpId);
             await rehydratedLro.WaitForCompletionResponseAsync();
             // Assert.AreEqual(rehydratedLro.Id, rgOpId);
@@ -86,10 +85,6 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(deleteRehydratedLro2.HasCompleted, true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await rg.GetAsync());
             Assert.AreEqual(404, ex.Status);
-#else
-            var ex = Assert.Throws<InvalidOperationException>(() => ArmOperation.Rehydrate<ResourceGroupData>(Client, rgOpId));
-            Assert.AreEqual("LRO rehydration is not supported in this version of .NET. Please upgrade to .NET 7.0 or later.", ex.Message);
-#endif
         }
 
         [TestCase]
@@ -103,7 +98,6 @@ namespace Azure.ResourceManager.Tests
             ArmOperation<ManagementLockResource> lro = await subscription.GetManagementLocks().CreateOrUpdateAsync(WaitUntil.Completed, mgmtLockObjectName, input);
             var lroId = lro.Id;
             var mgmtLock = lro.Value;
-#if NET7_0_OR_GREATER
             var rehydratedLro = ArmOperation.Rehydrate<ManagementLockData>(Client, lroId);
             await rehydratedLro.WaitForCompletionResponseAsync();
             ManagementLockData rehydratedLock = rehydratedLro.Value;
@@ -125,10 +119,6 @@ namespace Azure.ResourceManager.Tests
             Assert.AreEqual(deleteRehydratedLro.HasCompleted, true);
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await rehydratedLockResource.GetAsync());
             Assert.AreEqual(404, ex.Status);
-#else
-            var ex = Assert.Throws<InvalidOperationException>(() => ArmOperation.Rehydrate(Client, lroId));
-            Assert.AreEqual("LRO rehydration is not supported in this version of .NET. Please upgrade to .NET 7.0 or later.", ex.Message);
-#endif
         }
 
         private void CheckResponseHeaders(ResponseHeaders left, ResponseHeaders right)
