@@ -14,27 +14,27 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    internal class CommitmentPlanOperationSource : IOperationSource<CommitmentPlanResource>
+    internal class CognitiveServicesCommitmentPlanOperationSource : IOperationSource<CognitiveServicesCommitmentPlanResource>
     {
         private readonly ArmClient _client;
 
-        internal CommitmentPlanOperationSource(ArmClient client)
+        internal CognitiveServicesCommitmentPlanOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        CommitmentPlanResource IOperationSource<CommitmentPlanResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CognitiveServicesCommitmentPlanResource IOperationSource<CognitiveServicesCommitmentPlanResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = CommitmentPlanData.DeserializeCommitmentPlanData(document.RootElement);
-            return new CommitmentPlanResource(_client, data);
+            return new CognitiveServicesCommitmentPlanResource(_client, data);
         }
 
-        async ValueTask<CommitmentPlanResource> IOperationSource<CommitmentPlanResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CognitiveServicesCommitmentPlanResource> IOperationSource<CognitiveServicesCommitmentPlanResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = CommitmentPlanData.DeserializeCommitmentPlanData(document.RootElement);
-            return new CommitmentPlanResource(_client, data);
+            return new CognitiveServicesCommitmentPlanResource(_client, data);
         }
     }
 }

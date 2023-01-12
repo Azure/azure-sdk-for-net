@@ -253,10 +253,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CommitmentPlanResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CommitmentPlanResource> GetCommitmentPlansAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CognitiveServicesCommitmentPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlansAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetCommitmentPlansAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetCognitiveServicesCommitmentPlansAsync(cancellationToken);
         }
 
         /// <summary>
@@ -266,10 +266,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CommitmentPlanResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CommitmentPlanResource> GetCommitmentPlans(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CognitiveServicesCommitmentPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlans(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetCommitmentPlans(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetCognitiveServicesCommitmentPlans(cancellationToken);
         }
 
         private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
@@ -321,12 +321,12 @@ namespace Azure.ResourceManager.CognitiveServices
             return resourceGroupResource.GetCognitiveServicesAccounts().Get(accountName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CommitmentPlanResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of CognitiveServicesCommitmentPlanResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of CommitmentPlanResources and their operations over a CommitmentPlanResource. </returns>
-        public static CommitmentPlanCollection GetCommitmentPlans(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of CognitiveServicesCommitmentPlanResources and their operations over a CognitiveServicesCommitmentPlanResource. </returns>
+        public static CognitiveServicesCommitmentPlanCollection GetCognitiveServicesCommitmentPlans(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetCommitmentPlans();
+            return GetExtensionClient(resourceGroupResource).GetCognitiveServicesCommitmentPlans();
         }
 
         /// <summary>
@@ -340,9 +340,9 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<CommitmentPlanResource>> GetCommitmentPlanAsync(this ResourceGroupResource resourceGroupResource, string commitmentPlanName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CognitiveServicesCommitmentPlanResource>> GetCognitiveServicesCommitmentPlanAsync(this ResourceGroupResource resourceGroupResource, string commitmentPlanName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetCommitmentPlans().GetAsync(commitmentPlanName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetCognitiveServicesCommitmentPlans().GetAsync(commitmentPlanName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -356,9 +356,9 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentException"> <paramref name="commitmentPlanName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commitmentPlanName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<CommitmentPlanResource> GetCommitmentPlan(this ResourceGroupResource resourceGroupResource, string commitmentPlanName, CancellationToken cancellationToken = default)
+        public static Response<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlan(this ResourceGroupResource resourceGroupResource, string commitmentPlanName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetCommitmentPlans().Get(commitmentPlanName, cancellationToken);
+            return resourceGroupResource.GetCognitiveServicesCommitmentPlans().Get(commitmentPlanName, cancellationToken);
         }
 
         #region CognitiveServicesAccountResource
@@ -437,25 +437,6 @@ namespace Azure.ResourceManager.CognitiveServices
         }
         #endregion
 
-        #region AccountCommitmentPlanResource
-        /// <summary>
-        /// Gets an object representing an <see cref="AccountCommitmentPlanResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AccountCommitmentPlanResource.CreateResourceIdentifier" /> to create an <see cref="AccountCommitmentPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AccountCommitmentPlanResource" /> object. </returns>
-        public static AccountCommitmentPlanResource GetAccountCommitmentPlanResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                AccountCommitmentPlanResource.ValidateResourceId(id);
-                return new AccountCommitmentPlanResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region CommitmentPlanResource
         /// <summary>
         /// Gets an object representing a <see cref="CommitmentPlanResource" /> along with the instance operations that can be performed on it but with no data.
@@ -470,6 +451,25 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 CommitmentPlanResource.ValidateResourceId(id);
                 return new CommitmentPlanResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region CognitiveServicesCommitmentPlanResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CognitiveServicesCommitmentPlanResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CognitiveServicesCommitmentPlanResource.CreateResourceIdentifier" /> to create a <see cref="CognitiveServicesCommitmentPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CognitiveServicesCommitmentPlanResource" /> object. </returns>
+        public static CognitiveServicesCommitmentPlanResource GetCognitiveServicesCommitmentPlanResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                CognitiveServicesCommitmentPlanResource.ValidateResourceId(id);
+                return new CognitiveServicesCommitmentPlanResource(client, id);
             }
             );
         }

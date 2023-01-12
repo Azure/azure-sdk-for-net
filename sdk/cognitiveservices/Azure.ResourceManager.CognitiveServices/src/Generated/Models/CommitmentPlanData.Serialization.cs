@@ -29,11 +29,6 @@ namespace Azure.ResourceManager.CognitiveServices
                 writer.WritePropertyName("sku");
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties");
-                writer.WriteObjectValue(Properties);
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags");
@@ -45,8 +40,16 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
-            writer.WriteStringValue(Location);
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location");
+                writer.WriteStringValue(Location.Value);
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties");
+                writer.WriteObjectValue(Properties);
+            }
             writer.WriteEndObject();
         }
 
@@ -55,9 +58,9 @@ namespace Azure.ResourceManager.CognitiveServices
             Optional<ETag> etag = default;
             Optional<string> kind = default;
             Optional<CognitiveServicesSku> sku = default;
-            Optional<CommitmentPlanProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
-            AzureLocation location = default;
+            Optional<AzureLocation> location = default;
+            Optional<CommitmentPlanProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -89,16 +92,6 @@ namespace Azure.ResourceManager.CognitiveServices
                     sku = CognitiveServicesSku.DeserializeCognitiveServicesSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    properties = CommitmentPlanProperties.DeserializeCommitmentPlanProperties(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("tags"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -116,7 +109,22 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
                 if (property.NameEquals("location"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = CommitmentPlanProperties.DeserializeCommitmentPlanProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))
@@ -145,7 +153,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     continue;
                 }
             }
-            return new CommitmentPlanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), kind.Value, sku.Value, properties.Value);
+            return new CommitmentPlanData(id, name, type, systemData.Value, Optional.ToNullable(etag), kind.Value, sku.Value, Optional.ToDictionary(tags), Optional.ToNullable(location), properties.Value);
         }
     }
 }

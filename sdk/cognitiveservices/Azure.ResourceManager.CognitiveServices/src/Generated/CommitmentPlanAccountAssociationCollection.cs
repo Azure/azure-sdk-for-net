@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
     /// A class representing a collection of <see cref="CommitmentPlanAccountAssociationResource" /> and their operations.
-    /// Each <see cref="CommitmentPlanAccountAssociationResource" /> in the collection will belong to the same instance of <see cref="CommitmentPlanResource" />.
-    /// To get a <see cref="CommitmentPlanAccountAssociationCollection" /> instance call the GetCommitmentPlanAccountAssociations method from an instance of <see cref="CommitmentPlanResource" />.
+    /// Each <see cref="CommitmentPlanAccountAssociationResource" /> in the collection will belong to the same instance of <see cref="CognitiveServicesCommitmentPlanResource" />.
+    /// To get a <see cref="CommitmentPlanAccountAssociationCollection" /> instance call the GetCommitmentPlanAccountAssociations method from an instance of <see cref="CognitiveServicesCommitmentPlanResource" />.
     /// </summary>
     public partial class CommitmentPlanAccountAssociationCollection : ArmCollection, IEnumerable<CommitmentPlanAccountAssociationResource>, IAsyncEnumerable<CommitmentPlanAccountAssociationResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.CognitiveServices
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != CommitmentPlanResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, CommitmentPlanResource.ResourceType), nameof(id));
+            if (id.ResourceType != CognitiveServicesCommitmentPlanResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, CognitiveServicesCommitmentPlanResource.ResourceType), nameof(id));
         }
 
         /// <summary>

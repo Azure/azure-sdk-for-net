@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.CognitiveServices
         private CognitiveServicesManagementRestOperations _defaultRestClient;
         private ClientDiagnostics _commitmentTiersClientDiagnostics;
         private CommitmentTiersRestOperations _commitmentTiersRestClient;
-        private ClientDiagnostics _commitmentPlanClientDiagnostics;
-        private CommitmentPlansRestOperations _commitmentPlanRestClient;
+        private ClientDiagnostics _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics;
+        private CommitmentPlansRestOperations _cognitiveServicesCommitmentPlanCommitmentPlansRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.CognitiveServices
         private CognitiveServicesManagementRestOperations DefaultRestClient => _defaultRestClient ??= new CognitiveServicesManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics CommitmentTiersClientDiagnostics => _commitmentTiersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private CommitmentTiersRestOperations CommitmentTiersRestClient => _commitmentTiersRestClient ??= new CommitmentTiersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics CommitmentPlanClientDiagnostics => _commitmentPlanClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CommitmentPlanResource.ResourceType.Namespace, Diagnostics);
-        private CommitmentPlansRestOperations CommitmentPlanRestClient => _commitmentPlanRestClient ??= new CommitmentPlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CommitmentPlanResource.ResourceType));
+        private ClientDiagnostics CognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics => _cognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", CognitiveServicesCommitmentPlanResource.ResourceType.Namespace, Diagnostics);
+        private CommitmentPlansRestOperations CognitiveServicesCommitmentPlanCommitmentPlansRestClient => _cognitiveServicesCommitmentPlanCommitmentPlansRestClient ??= new CommitmentPlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CognitiveServicesCommitmentPlanResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -266,17 +266,17 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Operation Id: CommitmentPlans_ListPlansBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CommitmentPlanResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CommitmentPlanResource> GetCommitmentPlansAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CognitiveServicesCommitmentPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlansAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CommitmentPlanResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<CognitiveServicesCommitmentPlanResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = CommitmentPlanClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCommitmentPlans");
+                using var scope = CognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCognitiveServicesCommitmentPlans");
                 scope.Start();
                 try
                 {
-                    var response = await CommitmentPlanRestClient.ListPlansBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CommitmentPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await CognitiveServicesCommitmentPlanCommitmentPlansRestClient.ListPlansBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CognitiveServicesCommitmentPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -284,14 +284,14 @@ namespace Azure.ResourceManager.CognitiveServices
                     throw;
                 }
             }
-            async Task<Page<CommitmentPlanResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<CognitiveServicesCommitmentPlanResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = CommitmentPlanClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCommitmentPlans");
+                using var scope = CognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCognitiveServicesCommitmentPlans");
                 scope.Start();
                 try
                 {
-                    var response = await CommitmentPlanRestClient.ListPlansBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CommitmentPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await CognitiveServicesCommitmentPlanCommitmentPlansRestClient.ListPlansBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new CognitiveServicesCommitmentPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -308,17 +308,17 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Operation Id: CommitmentPlans_ListPlansBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CommitmentPlanResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CommitmentPlanResource> GetCommitmentPlans(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CognitiveServicesCommitmentPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlans(CancellationToken cancellationToken = default)
         {
-            Page<CommitmentPlanResource> FirstPageFunc(int? pageSizeHint)
+            Page<CognitiveServicesCommitmentPlanResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = CommitmentPlanClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCommitmentPlans");
+                using var scope = CognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCognitiveServicesCommitmentPlans");
                 scope.Start();
                 try
                 {
-                    var response = CommitmentPlanRestClient.ListPlansBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CommitmentPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = CognitiveServicesCommitmentPlanCommitmentPlansRestClient.ListPlansBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CognitiveServicesCommitmentPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -326,14 +326,14 @@ namespace Azure.ResourceManager.CognitiveServices
                     throw;
                 }
             }
-            Page<CommitmentPlanResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<CognitiveServicesCommitmentPlanResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = CommitmentPlanClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCommitmentPlans");
+                using var scope = CognitiveServicesCommitmentPlanCommitmentPlansClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCognitiveServicesCommitmentPlans");
                 scope.Start();
                 try
                 {
-                    var response = CommitmentPlanRestClient.ListPlansBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CommitmentPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = CognitiveServicesCommitmentPlanCommitmentPlansRestClient.ListPlansBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new CognitiveServicesCommitmentPlanResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

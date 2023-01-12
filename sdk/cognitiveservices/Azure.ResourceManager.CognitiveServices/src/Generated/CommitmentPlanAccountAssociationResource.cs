@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CognitiveServices
     /// A Class representing a CommitmentPlanAccountAssociation along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CommitmentPlanAccountAssociationResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetCommitmentPlanAccountAssociationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CommitmentPlanResource" /> using the GetCommitmentPlanAccountAssociation method.
+    /// Otherwise you can get one from its parent resource <see cref="CognitiveServicesCommitmentPlanResource" /> using the GetCommitmentPlanAccountAssociation method.
     /// </summary>
     public partial class CommitmentPlanAccountAssociationResource : ArmResource
     {

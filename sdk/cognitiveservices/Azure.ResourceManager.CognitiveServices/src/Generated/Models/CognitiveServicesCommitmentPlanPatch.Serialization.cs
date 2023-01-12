@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CommitmentPlanPatch : IUtf8JsonSerializable
+    public partial class CognitiveServicesCommitmentPlanPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
