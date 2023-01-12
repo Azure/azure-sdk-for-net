@@ -79,11 +79,12 @@ namespace Azure.ResourceManager
     public partial class ArmOperation : Azure.Operation
     {
         protected ArmOperation() { }
-        public ArmOperation(Azure.ResourceManager.ArmClient client, string id) { }
         public override bool HasCompleted { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string Id { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
+        public static Azure.ResourceManager.ArmOperation Rehydrate(Azure.ResourceManager.ArmClient client, string id) { throw null; }
+        public static Azure.ResourceManager.ArmOperation<R> Rehydrate<R>(Azure.ResourceManager.ArmClient client, string id) where R : class { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override Azure.Response WaitForCompletionResponse(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -94,7 +95,6 @@ namespace Azure.ResourceManager
     public partial class ArmOperation<T> : Azure.Operation<T>
     {
         protected ArmOperation() { }
-        public ArmOperation(Azure.ResourceManager.ArmClient client, string id) { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

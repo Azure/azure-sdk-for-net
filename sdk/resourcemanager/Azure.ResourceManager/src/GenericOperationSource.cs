@@ -24,21 +24,16 @@ namespace Azure.ResourceManager
             var method = typeof(T).GetMethod($"Deserialize{typeof(T).Name}", BindingFlags.NonPublic | BindingFlags.Static);
             if (method == null)
                 throw new InvalidOperationException($"The type {typeof(T).FullName} does not contain the Deserialize{typeof(T).Name} method. Please use a Data class.");
-            var data = method.Invoke(null, new object[] { document }) as T;
+            var data = method.Invoke(null, new object[] { document.RootElement }) as T;
             return data;
         }
         async ValueTask<T> IOperationSource<T>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            // using var document = JsonDocument.Parse(response.ContentStream);
-            // var method = typeof(T).GetMethod($"Deserialize{typeof(T).Name}", BindingFlags.NonPublic | BindingFlags.Static);
-            // if (method == null)
-            //     throw new InvalidOperationException($"The type {typeof(T).FullName} does not contain the Deserialize{typeof(T).Name} method. Please use a Data class.");
-            // var data = method.Invoke(null, new object[] { document }) as T;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var method = typeof(T).GetMethod($"Deserialize{typeof(T).Name}", BindingFlags.NonPublic | BindingFlags.Static);
             if (method == null)
                 throw new InvalidOperationException($"The type {typeof(T).FullName} does not contain the Deserialize{typeof(T).Name} method. Please use a Data class.");
-            var data = method.Invoke(null, new object[] { document }) as T;
+            var data = method.Invoke(null, new object[] { document.RootElement }) as T;
             return data;
         }
     }
