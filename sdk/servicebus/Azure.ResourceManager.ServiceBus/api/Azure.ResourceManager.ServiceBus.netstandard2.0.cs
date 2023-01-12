@@ -740,9 +740,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ServiceBusMinimumTlsVersion(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion One0 { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion One1 { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion One2 { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion Tls1_0 { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion Tls1_1 { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion Tls1_2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
